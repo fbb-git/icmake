@@ -2,8 +2,8 @@ Source: icmake
 Section: devel
 Priority: optional
 Maintainer: Francesco Paolo Lovergine <frankie@debian.org>
-Build-Depends: debhelper (>= 2)
-Standards-Version: 3.6.1
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.7.2
 
 Package: icmake
 Architecture: any

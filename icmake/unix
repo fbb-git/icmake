@@ -1,0 +1,355 @@
+#!/usr/local/bin/icmake -qt /tmp/unix
+
+/*
+
+    If you want to use this file, it is assumed that you have icmake (at
+    least version 6.20) installed in /usr/local/bin. If it's somewhere else,
+    please adapt the path /usr/local/bin in the line above.
+    
+    Also, check the file destinations.im for proper path settings !
+
+        FBB
+*/
+
+#include "def/programs"
+#include "def/destinations"
+
+/*      
+        The remainder of this script should not be altered, unless
+    you know what you're doing
+*/
+
+#define VERSION     "6.22"
+
+#define LIB_ICRSS   "libicrss.a"
+#define LIB_ICMAKE  "libicmake.a"
+#define LIB_ICMPP   "libicmpp.a"
+#define LIB_ICMCOMP "libicmcomp.a"
+#define LIB_ICMEXEC "libicmexec.a"
+#define LIB_ICMUN   "libicmun.a"
+#define ZIP     "icmake.zip"
+
+list
+        examples;
+    
+void check(string subdir)
+{
+    if (!exists(subdir))
+    {
+        printf("Creating subdirectory: ");
+        exec(MKDIR, subdir);
+    }
+}    
+
+void initialize()
+{
+    examples = 
+    (list)"am"      +
+    (list)"backup"  +
+    (list)"bup"     +
+    (list)"ftpxfer" +
+    (list)"ds"      +
+    (list)"idir"    +
+    (list)"keep"    +
+        (list)"r"       +
+    (list)"tolower";
+
+    check("bin");
+    check("binlinux");
+    check("bindos");
+}           
+            
+void makelib (string dir, string lib)
+{
+    list
+        cfiles,
+        ofiles;
+    string
+        ofile,
+        cfile;
+    int
+        i;
+
+    printf ("---- Directory: ", dir, " ----\n");
+    chdir (dir);
+
+    printf ("Checking .c files against library ", lib, "\n");       
+    cfiles = makelist ("*.c");
+    for (i = sizeof (cfiles) - 1; i >= 0; i--)
+    {
+        cfile = element (i, cfiles);
+        ofile = change_ext (cfile, ".o");
+        if 
+    (
+        cfile older lib 
+        ||
+            (exists (ofile) && ofile younger cfile)
+        )
+            cfiles -= (list) cfile;
+    }
+    for (i = 0; i < sizeof (cfiles); i++)
+        exec (CC, CFLAGS, element (i, cfiles));
+    
+    printf ("Checking .o files against library ", lib, "\n");
+    ofiles = makelist ("*.o");
+    if (ofiles)
+    {
+        exec (AR, ARFLAGS, lib, "*.o");
+    exec (RM, "*.o");
+    }
+    
+    chdir ("..");
+}
+
+void makelibs ()
+{
+    printf ("\nMaking Run Time Support System library\n");
+    makelib ("rss", LIB_ICRSS);
+    
+    printf ("\nMaking lib for shell program icmake\n");
+    makelib ("make", LIB_ICMAKE);
+    
+    printf ("\nMaking lib for preprocessor icm-pp\n");
+    makelib ("pp", LIB_ICMPP);
+    
+    printf ("\nMaking lib for compiler icm-comp\n");
+    makelib ("comp", LIB_ICMCOMP);
+    
+    printf ("\nMaking lib for executor icm-exec\n");
+    makelib ("exec", LIB_ICMEXEC);
+    
+    printf ("\nMaking lib for unassembler icmun\n");
+    makelib ("un", LIB_ICMUN);
+}
+
+void makeprog (string dir, string lib, string prog)
+{
+    string
+        rsslib;
+        
+    rsslib = "../rss/libicrss.a";
+
+    printf ("---- Directory: ", dir, " ----\n");
+    chdir (dir);
+    
+    printf ("Checking prog ", prog, " against libs ", lib, 
+            " and ", rsslib, "\n");
+
+    if (lib younger prog || rsslib younger prog)
+    {
+        exec (CC, "-o ../bin/" + prog, lib, rsslib);
+        exec (STRIP, "../bin/" + prog);
+    printf("Stripped version of ", prog, " in icmake/bin\n");
+    }           
+        
+    chdir ("..");
+}
+
+void makeprogs ()
+{
+    makelibs ();
+    
+    printf ("\nMaking shell program icmake\n");
+    makeprog ("make", LIB_ICMAKE, "icmake");
+    
+    printf ("\nMaking unassembler program icmun\n");
+    makeprog ("un", LIB_ICMUN, "icmun");
+
+    printf ("\nMaking unassembler program icm-pp\n");
+    makeprog ("pp", LIB_ICMPP, "icm-pp");
+    
+    printf ("\nMaking compiler program icm-comp\n");
+    makeprog ("comp", LIB_ICMCOMP, "icm-comp");
+    
+    printf ("\nMaking executor program icm-exec\n");
+    makeprog ("exec", LIB_ICMEXEC, "icm-exec");
+}
+
+void inst (string prog)
+{
+    string
+        dest;
+
+    printf ("---- Directory: icmake/bin ----\n");
+    chdir ("bin");
+    dest = BINDIR + "/" + prog;
+    
+    if (dest older prog)
+    {
+        if (prog == "icm-exec")
+        printf("Since icm-exec itself is running, you have to copy\n"
+            "icm-exec by hand.\n"
+        "Give the command\n"
+            "\t", CP, " bin/icm-exec ", BINDIR, "\n"
+        "on completion of 'icmake unix -- install'\n");
+    else
+        exec (CP, prog, BINDIR);
+    }
+    
+    chdir ("..");
+}
+
+void install ()
+{
+    makeprogs ();
+    
+    printf ("\nInstalling shell program icmake\n");
+    inst ("icmake");
+    
+    printf ("\nInstalling unassembler program icmun\n");
+    inst ("icmun");
+    
+    printf ("\nInstalling unassembler program icm-pp\n");
+    inst ("icm-pp");
+    
+    printf ("\nInstalling compiler program icm-comp\n");
+    inst ("icm-comp");
+    
+    printf ("\nUSE HAND-INSTALLATION OF EXECUTOR PROGRAM ICM-EXEC\n");
+    inst ("icm-exec");
+}
+
+void clean (string dir)       
+{
+    printf ("---- Directory: ", dir, " ----\n");
+    chdir (dir);
+    exec (RM, "-f", "*.o");
+    chdir ("..");
+}
+
+void cleanup ()
+{
+    clean ("rss"); 
+    clean ("make");
+    clean ("pp"); 
+    clean ("comp");
+    clean ("exec");
+    clean ("un"); 
+}
+
+void realclean (string dir, string lib)
+{
+    printf ("---- Directory: ", dir, " ----\n");
+    chdir (dir);
+    exec (RM, "-f", lib,  "*.o");
+    chdir ("..");
+}
+
+void realcleanup ()
+{
+    realclean ("rss",  LIB_ICRSS); 
+    realclean ("make", LIB_ICMAKE);
+    realclean ("pp", LIB_ICMPP);
+    realclean ("comp", LIB_ICMCOMP);
+    realclean ("exec", LIB_ICMEXEC);
+    realclean ("un", LIB_ICMUN);
+}
+
+void zip ()
+{
+    cleanup ();
+    
+    exec (RM, "-f", "bin/*", "../icmake.zip");
+    chdir ("..");
+    exec ("zip", "-r", ZIP, "icmake/*");
+}
+
+void makedist ()
+{
+    string
+        tar,
+        example;
+    int
+        i;
+        
+    printf ("Have you updated the version number (if things have changed)?\n"
+            "Also, check distribution numbers in doc/icmake.1, icmake.doc,\n"
+            "CHANGES, INSTALL*, upload*\n"
+        "\n"
+            "The version used now is: ", VERSION, ".\n"
+        "Do you want to continue [y/n] ");
+    if (getch () != "y")
+        return;
+
+    printf ("\nOk..\n");
+    
+    chdir ("examples");
+    for (i = 0; i < sizeof (examples); i++)
+    {
+        example = element (i, examples);
+        if ("/home/karel/bin/" + example younger example)
+            exec (CP, "/home/karel/bin/" + example, example);
+        else if ("/usr/local/bin/" + example younger example)
+            exec (CP, "/usr/local/bin/" + example, example);
+    }
+
+    chdir ("../..");
+
+    tar = "icmake-" + VERSION + ".tgz";
+    exec (RM, "-f", tar);
+    exec ("tar", "-c -z -v --exclude-from icmake/distrib.no -f", 
+                        tar, "icmake");
+            
+    tar = "icmake-" + VERSION + ".bin.tgz";
+    exec (RM, "-f", tar);
+    exec ("tar", "-c -z -v --files-from icmake/bindist.yes -f", 
+                        tar, "icmake");
+}
+
+void doc2man ()
+{
+    string
+        src,
+    dest,
+    zdest;
+        
+    src   = "doc"   + "/" + "icmake.1";
+    dest  = CATDIR  + "/" + "icmake.1";
+    zdest = CATDIR  + "/" + "icmake.1.Z";
+    
+    if (zdest older src)
+    {
+        exec (CP, src, CATDIR);
+    exec (COMPRESS, "-f", dest);
+    }
+}
+
+void main (int argc, list argv)
+{
+    string
+        av1;
+    
+    initialize();   
+        
+    av1 = element (1, argv);
+    if (av1 == "libs")
+        makelibs ();
+    else if (av1 == "progs")
+        makeprogs ();
+    else if (av1 == "install")
+        install ();
+    else if (av1 == "clean")
+        cleanup ();
+    else if (av1 == "realclean")
+        realcleanup ();
+    else if (av1 == "doc2man")
+        doc2man ();
+    else if (av1 == "zip")
+        zip ();
+    else if (av1 == "dist")
+    makedist ();
+    else
+        printf ("\n"
+            "Select one of the following:\n"
+            "    \"unix libs\" to make libraries\n"
+            "    \"unix progs\" to make programs\n"
+            "    \"unix install\" to install programs to ",
+                                BINDIR, "\n"
+        "    \"unix clean\" to remove old mush (libs are kept)\n"
+        "    \"unix realclean\" to remove old mush (including libs)\n"
+        "    \"unix doc2man\" to install crude docs to cat\n"
+        "\n"
+        "    \"unix zip\" to clean up (keeping libs) and zip it up\n"
+        "    \"unix dist\" to make distribution\n"
+            "\n");
+}

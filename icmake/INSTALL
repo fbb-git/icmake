@@ -1,0 +1,280 @@
+INSTALLING ICMAKE
+=================
+
+                            Version 6.22
+
+        ----------------------------------------------------------
+                        NOTE for UNIX platforms:
+                    ========================
+        
+        We do our best to catch ^M's in the source files. However,
+    sometimes they slip through the net. If a file contains ^M
+    characters the compiler may choke. If so, please remove the
+    ^M's and recompile.
+        ----------------------------------------------------------
+    
+
+        The installation files for Icmake come as an archive, e.g.,
+"icmake.zip" or "icmake-6.20.tgz". These archives unpack to several
+directories and files.
+
+Please note that, starting with distribution icmake-6.17.tgz, the archive
+unpacks to directories icmake/xxx below the current directory. So, if you
+unpack icmake-6.17.tgz (or later versions) in the directory
+/usr/local/src/icmake, a directory /usr/local/src/icmake/icmake is created,
+and other subdirectories below /usr/local/src/icmake/icmake.
+
+        To unpack the archives, create an appropriate directory (e.g.,
+"/usr/local/src/icmake" for Unix platforms, or "c:\c\icmake" for DOS) and
+change-dir to that directory. Use an appropriate archiver to unpack. Some
+possibilities are described below:
+
+(a) Archives in the form ".tgz" can be unpacked using
+        "gzip -c -d icmake-6.17.tgz | tar xvf -".
+If you have GNU tar version 1.11.2 or higher, you can use
+        "tar xvzf icmake-6.17.tgz".
+
+(b) The archives with the extension ".zip" can be unpacked using
+"unzip icmake.zip" or "pkunzip -d icmake.zip".
+
+        The extraction of files from the archive should yield a lot of C
+source files in a number of directories. The default distribution of Icmake
+does not contain makefiles for the Unix-utility "make" anymore.
+
+For Linux-unix platforms, the icmake-executables are found in the subdirectory
+binlinux. For Ms-DOS platforms, the icmake-executables are found in the
+subdirectory bindos. Depending on what platform you use, install either, both,
+or none of these executables.
+
+For other UNIX-platforms the programs can be created by compiling all files "by
+hand". Even here, we made it easy for you to bootstrap icmake, by providing the
+shellscript bootstrap. Simply say
+
+                           'sh bootstrap'
+
+and the full icmake compilation is performed. This will put the executables in
+the bin subdirectory below the icmake subdirectory created by the untarring of
+icmake-X.YY.tgz. Also, it will leave a lot of compiler residues behind, such
+as .o files. However, after 'sh bootstrap' the unix-script can be used (see
+below, you have to put the icmake files in /usr/local/bin or adapt the
+'unix' script and 'def/destinations.im' to suit your system). After putting
+the icmake programs in their proper directories, say
+
+                            'unix clean'
+                
+to clean up the garbage.                
+
+Finally, you can do it all by yourself. Then compile all files as indicated
+in the following steps:
+
+(a) Note that even though grammar definition and lexical scanner definition
+    files (parser and lexer) are found at several subdirectories, the bison and
+    flex programs should *NOT* be used. The parser.c and lexer.c files are
+    already available, and you might run into name-resolution problems if you
+    try to create parser.c or lexer.c with the bison/flex found at your site.
+    The parser and lexer files were included for documentation purposes only,
+    don't feed them to bison or flex.
+
+(b) With some files the (GNU-C) compiler generates warnings. These warnings
+    fall into two categories: 'default' entry proints in switches cause the
+    compiler to complain about undefined enumeration values inside the switch,
+    and these warnings can safely be ignored.
+
+    Then, with the lexer.c and parser.c files the compiler may complain about
+    variables which were defined but not used. Again: no harm done, and you can
+    safely ignore these warnings as well.
+
+(c) Change-dir to the directory "rss". This directory contains sourcefiles for
+    the Runtime Support System. These functions are used in all the programs of
+    the Icmake family.
+
+    Compile all files, using the appropriate compiler flags which cause your
+    compiler to compile-only.
+    If your compiler supports memory models, choose the "small" model.
+    E.g., these compiler flags are:
+
+    for GNU's gcc:                  gcc -c -DHAVE_GLOB
+    for Microsoft C 7.00:           cl -c -AS
+
+
+    NOTE:
+    =====
+    This note is only relevant for the compilation of icmake under MS-DOS,
+    and can be ignored in all other cases.
+    
+    Below the ICMAKE\RSS subdirectory the subdirectory ASM is found. In this
+    directory the files REDIRECT.ASM and REDIRECT.OBJ are stored.
+
+    The REDIRECT.OBJ file is included in the ICRSS.LIB library by the DOS-MSC
+    icmake-script, and is not removed thereafter.
+
+    The file REDIRECT.ASM is included for reference purposes only.
+    REDIRECT.ASM could be assembled 'by hand' using the ML-assembler, using
+    the following commands:
+
+        set ml=-c -Cp -DMM='S'
+        ml redirect.asm
+
+    The file icmake\rss\asm\redirect.obj must be added to the icrss.lib
+    library in icmake\rss. E.g., in the directory icmake\rss the following
+    command could be given:
+
+        lib icrss -+asm\redirect ;
+    
+    NOTE:
+    =====
+    The flag -DHAVE_GLOB causes the function glob() to be included in the
+    code, which expands a filename with wildcards to a list of names. The flag
+    is not needed for MSDOS compilations. If you do not have this function,
+    leave out the -DHAVE_GLOB specification. This is further discussed below.
+
+    While compiling, you may need other special definition flags to produce
+    workable code for other systems. Please check the section below to see
+    if you need any special flags.
+
+    Next, place the produced object files into one library. A suggested name is
+    "libicrss.a" for Unix systems, or "icrss.lib" for DOS systems. See the
+    documentation of your library manager ("ar" or "lib") for the required
+    command line.
+
+    For Unix systems try:
+                              ar rsv libicrss.a *.o
+    in the directory "rss".
+
+
+(d) The following directories were also created from the archive:
+            make,
+            pp,
+            comp,
+            exec,
+            un.
+
+    The directories hold respectively the files needed for the top-level
+    program "icmake", for the preprocessor "icm-pp", for the compiler
+    "icm-comp", for the executor "icm-exec" and for the unassembler "icmun".
+    These program names are on Unix-based systems without extension; supply
+    ".exe" for DOS.
+
+    Change-dir to each of these directories, and compile and link all .c files
+    into the appropriate program. E.g., for a Unix system you might type:
+            cd make
+            gcc -DHAVE_GLOB -o icmake *.c ../rss/libicrss.a
+            cd ../pp
+            gcc -DHAVE_GLOB -o icm-pp *.c ../rss/libicrss.a
+            cd ../comp
+            gcc -DHAVE_GLOB -o icm-comp *.c ../rss/libicrss.a
+            cd ../exec
+            gcc -DHAVE_GLOB -o icm-exec *.c ../rss/libicrss.a
+            cd ../un
+            gcc -DHAVE_GLOB -o icmun *.c ../rss/libicrss.a
+            cd ..
+
+    For a DOS platform with the Microsoft compiler, you might type:
+
+            cd make
+            cl -AS -J -Feicmake.exe *.c ..\rss\icrss.lib
+            cd ..\pp
+            cl -AS -J -Feicm-pp.exe *.c ..\rss\icrss.lib
+            cd ..\comp
+            cl -AS -J -Feicm-comp.exe *.c ..\rss\icrss.lib
+            cd ..\exec
+            cl -AS -J -Feicm-exec.exe *.c ..\rss\icrss.lib
+            cd ..\un
+            cl -AS -J -Feicmun.exe *.c ..\rss\icrss.lib
+            cd ..
+
+    Whichever platform you use, please name the resulting program by the
+    appropriate name (one of "icmake", "icm-pp", "icm-comp", "icm-exec",
+    "icmun", optionally followed by an extension ".exe" for DOS systems). The
+    reason for this is the fact that the top-level program "icmake" must be
+    able to call all subsequent programs, of which the names therefore must be
+    known. Furthermore, you may need special compilation flags for rare systems
+    (see the section below).
+
+(e) If all goes well, you've now created all necessary programs. Move the
+    executable files to a system directory; e.g., "/usr/local/bin" for Unix
+    systems, "c:\sys\bin" for DOS systems, etc.
+
+(f) For all subsequent releases of Icmake which you may wish to install, you
+    can use your old programs of the Icmake family and the included
+    icmake-files. E.g., the installation includes a file "unix" to create
+    Icmake for Unix platforms.
+
+    Prior to using the unix script, you may wish to
+    edit the following files:
+
+        def/programs:           to (re)define and check the programs used
+                                by the unix-script,
+        def/destinations:       to (re)define your system directory, etc.
+
+    Even when you successfully create Icmake by hand, it may be a good
+    idea to re-make it with the makefile to check its workings. Just type
+    "unix", or "icmake dos-msc" or whatever is appropriate; then follow
+    the instructions which are printed by the makefile.
+
+Special flags while compiling
+-----------------------------
+
+        This section is also found in INSTALL.
+
+        A large part of the source code of Icmake should compile on any
+platform. The exceptions we have encountered so far are the following:
+
+(a) On MSDOS platforms, the constant MSDOS must be defined. This symbol is
+by default defined by the Microsoft compiler. For other compilers on DOS
+systems, a flag "-DMSDOS" may be necessary when invoking the compilations.
+Non-DOS systems should, obviously, *not* have a defined symbol MSDOS.
+
+(b) Many systems which are based on GNU software, such as the Linux
+operating system, have a function glob() to expand wildcards to filenames.
+Icmake should be compiled with the symbol HAVE_GLOB (flag -DHAVE_GLOB on the
+compiler command line) when this function is available.
+
+When Icmake is compiled without this flag, wildcards are expanded using a
+`poor mans solution' (PMS). See the file rss/dosfind.c for further details.
+
+Modifying Icmake: the preloaded symbols
+---------------------------------------
+
+        Icmake does not require special modifications. However, you may wish to
+take a look at the file pp/loadsym.c. In this file the function 'loadsym()'
+of the preprocessor icm-pp is found. The preloaded symbols of Icmake are 
+defined in this function. E.g., MSDOS is defined as 1 when an MSDOS platform 
+is used, linux is defined as 1 when Icmake is compiled for Linux, etc.. 
+If you plan to use these predefined symbols in your Icmake scripts, make sure 
+that the conditional code in the file pp/loadsym.c recognizes your platform.
+
+        If you are unsure whether this code recognizes your compiler, build
+Icmake as distributed and try out the sample icmake file examples/defines.im
+(i.e., say: "icmake examples/defines"). If the output of the makefile is
+not satisfatory, modify pp/loadsym.c. E.g., if your MegaC compiler defines the
+symbol MEGA_C, you might want to add the following lines to pp/loadsym.c:
+
+                        #ifdef MEGA_C
+                            preload("MEGA_C", "1");
+                        #else
+                            preload("MEGA_C", "0");
+                        #endif
+
+Currently the following symbols are built in Icmake:
+
+        --------------------------------------------------------------
+        symbol          1 when defined on the platform ... otherwise 0
+        --------------------------------------------------------------
+        MSDOS           MS-DOS platform (with MSC 7.00 compiler)
+        unix            Unix, usually with GNU's gcc compiler
+        linux           '386 or '486 running Linux (usually with gcc)
+        M_SYSV, M_UNIX  '386 or '486 running SCO/Unix (usually with
+                        Microsoft C)
+        _POSIX_SOURCE   Unix with Posix complient compiler
+        __hpux          HP-UX, with the native HP compiler
+        --------------------------------------------------------------
+
+If you want to modify something here which hasn't been done before, please
+email us about it, and we'll include it in the standard distribution.
+
+
+
+
+
+

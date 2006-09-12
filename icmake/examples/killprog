@@ -1,0 +1,61 @@
+#!/usr/local/bin/icmake -qi
+
+/*
+    Sample Icmake script. Kills programs; you can type 'killprog progname'
+    instead of having to look up the program PID using 'ps' and then typing
+    'kill -1 <PID number>'.
+    
+    For the installation: see the notes in the script file 'tolower'.
+*/
+
+#define VER	"1.00"
+#define TMPFILE	"/tmp/killprog.out"
+
+int kill (string prog)
+{
+    int
+    	nkilled;
+    list
+    	readstat;
+    list
+    	psline;
+    	
+    system ("ps -al > " + TMPFILE);
+    
+    while (readstat = fgets (TMPFILE, (int) element (1, readstat)))
+    {
+    	psline = strtok (element (0, readstat), " \n\t");
+    	if (element (12, psline) == prog)
+    	{
+    	    exec (P_NOCHECK, "kill", "-1", element (2, psline));
+    	    exec (P_NOCHECK, "kill", "-9", element (2, psline));
+    	    nkilled++;
+    	}
+    }
+    
+    system ("rm " + TMPFILE);
+    return (nkilled);
+}
+
+void main (int argc, list argv)
+{
+    echo (0);
+    
+    if (argc != 2)
+    {
+    	printf ("\n"
+    		"ICCE Program Slayer  V", VER, "\n"
+    		"Copyright (c) ICCE, 1993. All rights reserved.\n"
+    		"\n"
+    		"Usage: killprog prog\n"
+    		"Will send a 'kill -1' signal to all programs matching "
+    							"'prog', followed\n"
+    		"by a 'kill -9'.\n"
+    		"\n");
+    	exit (1);
+    }
+    
+    printf ("Processes slayed: ", kill (element (1, argv)), "\n");
+    
+    exit (0);
+}

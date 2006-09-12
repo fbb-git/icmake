@@ -1,0 +1,3 @@
+void fun_empty ()
+{
+}

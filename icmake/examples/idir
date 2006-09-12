@@ -1,0 +1,110 @@
+#!/usr/local/bin/icmake -qi
+
+/*
+    Example of the Icmake 'stat()' function. This simple makefile prints
+    something of a directory listing.
+    
+    For installation: see the sample file 'tolower'.
+*/
+
+int stringlength (string s)
+{
+    int
+    	len;
+    	
+    len = 0;
+    while (element (len, s))
+    	len++;
+    	
+    return (len);
+}
+
+void showatt (string file, list statbuf)
+{
+    int
+    	i,
+    	att;
+    string
+    	size;
+    	
+    printf ("    ");
+    att  = (int) element (0, statbuf);
+    
+    if (att & S_IFDIR)
+    	printf ("d");
+    else
+    	printf ("-");
+    	
+    if (att & S_IFCHR)
+    	printf ("c");
+    else
+    	printf ("-");
+    	
+    if (att & S_IFREG)
+    	printf ("f");
+    else
+    	printf ("-");
+    	
+    if (att & S_IREAD)
+    	printf ("r");
+    else
+    	printf ("-");
+    	
+    if (att & S_IWRITE)
+    	printf ("w");
+    else
+    	printf ("-");
+    	
+    if (att & S_IEXEC)
+    	printf ("x");
+    else
+    	printf ("-");
+    	
+    size = element (1, statbuf);
+    printf ("   " , size, " ");
+    for (i = stringlength (size); i < 10; i++)
+    	printf (" ");
+    printf (file, "\n");
+}
+
+void show (string filemask)
+{
+    list
+    	statbuf,
+    	files;
+    string
+    	file;
+    int
+    	i;
+    	
+    printf ("\n", filemask, ": "); 
+    if (! (files = makelist (O_ALL, filemask)) )
+    {
+    	printf ("not found\n");
+    	return;
+    }
+    printf ("\n");
+    
+    for (i = 0; i < sizeof (files); i++)
+    {
+    	file = element (i, files);
+    	if (! (statbuf = stat (P_NOCHECK, file)))
+    	    printf ("    can't stat ", file, "\n");
+    	else
+    	    showatt (file, statbuf);
+    }
+}
+
+void main (int argc, list argv)
+{
+    int
+    	i;
+    	
+    if (argc == 1)
+    	show ("*");
+    else
+    	for (i = 1; i < sizeof (argv); i++)
+    	    show (element (i, argv));
+    	    
+    exit (0);
+}

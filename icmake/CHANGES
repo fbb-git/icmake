@@ -1,0 +1,34 @@
+NOTE:   The version referred to here is the version of the distribution,
+        not of the icmake programs.
+    ----------------------------------------------------------------
+
+6.22    Compiler warnings and the use of gets() removed from the sources
+        All programs now use the same version, which is defined in 
+        version.c, which is defined in the rss.
+        Standard manpage (icmake.1) included in the distribution.
+    
+6.21    Elf binaries for unix
+
+6.20    Unix-icmake accepts the -t flag, to specify a temporary binary-
+        icmake file. Allowing in unix-environments the riddance of the
+        permanent bim-file. The temporary binary makefile will --in this
+        case-- get the process-id for its extension.
+
+6.18 - 6.19: Not distributed.
+
+6.17b   DOS-distribution only: Dependencies on icce.h and sicce.lib
+    removed from the distribution. Programs are *not* affected by
+    this distribution.
+    
+6.17    Comment accepted in #define directives,
+        Trailing info on #include lines ignored,
+    Minor changes to documentation files.
+
+6.17    This is as far as our memory reaches: the log of changes before
+        this distribution are lost to future generations...
+        This release never made sunsite or tsx-11. Only ftp.icce.rug.nl
+    got it, and two sub-releases beyond.
+
+
+    
+    

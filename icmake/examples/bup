@@ -1,0 +1,79 @@
+#!/usr/local/bin/icmake -qi
+
+#define ETCDIR		"/usr/local/etc"
+
+#define VER		"1.00"
+
+list
+    volumes;				// backup volumes
+
+void init ()				// definition of backup volumes
+{					// always: dirs, descrip, etc
+    volumes += 
+    	(list) "dummy_1" +		// bup 0: dummy
+    				(list) "dummy_2" +
+    	(list) "/" +			// bup 1: whole disk
+    				(list) "whole UNIX disk" +
+    	(list) "/home/karel/dos" +	// bup 2: DOS disk
+    				(list) "DOS partition" +
+    	(list) "/usr/local/bin /conf" +	//bup 3: local stuff
+    				(list) "local UNIX stuff" +
+	(list) "/home/karel" +		// bup 4: user Karel
+				(list) "user Karel, except for DOS"
+	;
+}
+
+void usage ()
+{
+    int
+    	i;
+    	
+    printf ("\n"
+    	    "ICCE Backup Runner  V", VER, "\n"
+    	    "Copyright (c) ICCE 1993. All rights reserved.\n"
+    	    "\n"
+    	    "Bup by Karel Kubat.\n"
+    	    "\n"
+    	    "Usage: bup volume-number\n"
+    	    "Where:\n"
+    	    "       volume-number: number of volume to show/run\n"
+    	    "\n"
+    	    "Volumes may be:\n");
+    for (i = 2; i < sizeof (volumes); i += 2)
+    	printf (i / 2, ":    ", element (i + 1, volumes), " (", 
+    		element (i, volumes), ")\n");
+    printf ("\n"
+    	    "The actual backup is perfomed by the Icmake program `backup'.\n"
+    	    "If the file ", ETCDIR, "/bup.<volume-number>.exclude exists,\n"
+    	    "then the files listed in this file are excluded from the backup.\n"
+    	    "\n");
+    	    
+    exit (1);
+}    
+
+void main (int argc, list argv)		// start of program
+{
+    string
+    	excludefile,
+    	volstring;
+    int
+    	volnum,
+    	showsize;
+
+    init ();
+    	
+    volstring = element (1, argv);
+    volnum = (int) volstring * 2;
+    if (volnum < 2 || volnum >= sizeof (volumes))
+    	usage ();
+    	
+    excludefile = ETCDIR + "/" + "bup." + volstring + ".exclude";
+    
+    if (exists (excludefile))    
+    	exec ("backup", "-v", "store", element (volnum, volumes),
+    	      "--exclude-from", excludefile);
+    else
+    	exec ("backup", "-v", "store", element (volnum, volumes));
+    	
+    exit (0);
+}

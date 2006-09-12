@@ -1,0 +1,252 @@
+#! /usr/bin/icmake -qt /tmp/am
+
+/*
+                            AM
+
+       This script is used to implement a non-destructive rm
+*/
+
+#define YEAR    "1994--1995"
+#define VERSION "1.14"
+
+#define ATTIC_DIR   "/.attic"	    // append after $HOME
+#define ATTIC_ZIP   "attic.zip"	    // the zip-name
+int
+    flags_done,
+    extract,
+    viewmode,
+    debug;
+
+string
+    home,
+    attic,
+    cwd,
+    progname,
+    recurs,
+    forced,
+    unzipflag;
+
+void kill(string s)
+{
+    printf(s, "\n\n");
+    exit(1);
+}
+
+void preamble(list argv, list envp)
+{
+    int
+        index;
+
+    cwd = chdir(".");                       // get cwd
+
+    for (index = 0; home = element(index, envp); index += 2)
+    {
+        if (home == "HOME")                 // HOME found
+        {                                   // get it
+            home = element(index + 1, envp);
+            break;                          // and done
+        }
+    }
+    if (!home)
+        kill("$HOME not found");
+
+    progname = change_ext(element(0, argv), "");
+
+    attic = home + ATTIC_DIR;                // set $HOME/.attic, change to
+}
+
+void check_attic()
+{
+    if (!exists(attic))                     // attic should exist
+    {
+        printf(attic, " does not exist. Create it [y/n] ? ");
+        if (getch() != "y")                 // not a "y" ?
+            kill("ok.");
+        system("mkdir " + attic);           // make the attic subdir
+        exec("chmod", 700, attic);          // private use
+    }                                       // else attic must be dir
+    else if (!((int)element(0, stat(attic)) & S_IFDIR))
+        kill("'" + attic + "' is not a directory");
+
+    attic += "/" + ATTIC_ZIP;               // append the zip-name
+    chdir("/");                             // go to the root
+}
+
+void set_flags(string arg)
+{
+    int
+        index;
+    string
+        flag;
+
+                                            // process all arguments
+    for (index = 1; flag = element(index, arg); index++)
+    {
+        if (flag == "r")                    // process encountered options
+            recurs = "-r";
+        else if (flag == "d")
+            debug++;
+        else if (flag == "f")
+            forced = "-f";
+        else if (flag == "x")
+            extract++;
+        else if (flag == "v")
+        {
+            extract++;
+            viewmode++;
+            unzipflag = "-l ";
+        }
+        else
+            kill("Unrecognized flag '-" +
+                 flag +
+                 "': " +
+                 progname +
+                 "aborted");
+    }
+
+    if (extract && unzipflag == "")
+        unzipflag = "-u ";                  // use proper unzip flag
+}
+
+list options(int argc, list argv)
+{
+    int
+        index;
+    list
+        ret;
+    string
+        arg;
+
+    for (index = 0; index < argc; index++)
+    {
+        arg = element(index, argv);         // get next argument
+        if (element(0, arg) == "-")         // first element is a - ?
+            set_flags(arg);                 // then set flags
+        else
+            ret += (list)arg;               // or add to list to return
+    }
+
+    return (ret);                           // returned list
+}
+
+void usage()
+{
+    printf
+    (
+        "\n"
+        "ICCE AM (Attic Move) non-destructive remove. Version " VERSION "\n"
+        "Copyright (c) ICCE " YEAR ". All Rights Reserved\n"
+        "\n"
+        "AM by Frank B. Brokken\n"
+        "\n"
+        "Usage: ", progname, " [options] file(s)\n"
+        "Where:\n"
+        "   options:\n"
+        "       -d: Debug mode: no execution but display of commands\n"
+        "       -f: Forced processing of indicated files\n"
+        "       -r: Recursive removal of directory contents\n"
+        "       -v: View current contents of the attic\n"
+        "       -x: Extract files from the attic to their original place\n"
+        "           (i.e., if you are permitted to do so...\n"
+        "\n"
+        "   file(s): names of files and directories to move to/from the attic\n"
+        "\n"
+        "   ", home, ATTIC_DIR, "/",  ATTIC_ZIP, " is used to store the files.\n"
+        "\n"
+    );
+    exit (1);
+}
+
+string prefix_path(string file)
+{
+    string
+        el,
+        ret;
+    int
+        index;
+
+    if (element(0, file) != "/")            // if file isn't an absolute path
+        file = cwd + file;                  // then make an absolute path
+
+    for (index = 1; el = element(index, file); index++)
+        ret += el;                          // remove first char from abs path
+
+    return (ret);                           // return modified string
+}
+
+void retrieve(string file)
+{
+    string
+        cmd;
+
+    cmd = "unzip "                          // update only
+        + unzipflag
+        + attic;
+
+    if (!viewmode)
+        cmd += " "
+             + prefix_path(file);           // and the file (+ path prefix)
+
+    if (debug)
+        printf("( cd /; ", cmd, " )\n");    // debug: show command
+    else
+        system(cmd);                        // else exec cmd
+}
+
+void remove(string file)
+{
+    string
+        cmd;
+
+    cmd = "zip -my "                        // remove, remove links as links
+        + forced                            // maybe forced
+        + " "
+        + recurs                            // maybe recursive
+        + " "
+        + attic                             // target zip
+        + " "
+        + prefix_path(file);                // and the file (+ path prefix)
+
+    if (debug)
+        printf("( cd /; ", cmd, " )\n");    // debug: show command
+    else
+        system(cmd);                        // else exec cmd
+}
+
+void one_file(string file)
+{
+    if (extract)                            // either retrieve or remove
+        retrieve(file);                     // the file
+    else
+        remove(file);
+}
+
+void process(int argc, list argv)
+{
+    int
+        index;
+
+    for (index = 1; index < argc; index++)
+        one_file(element(index, argv));     // process one file
+}
+
+int main(int argc, list argv, list envp)
+{
+    echo (OFF);
+
+    preamble(argv, envp);                   // set progname and attic dir.
+
+    argv = options(argc, argv);             // get the options
+    argc = sizeof(argv);                    // determine remaining arguments
+
+    if (argc == 1 && !viewmode)             // none left and no viewmode ?
+        usage();                            // give usage and exit 1
+
+    check_attic();                          // check accessability of attic
+
+    if (viewmode)                           // view contents
+        retrieve("");
+    else                                    // or
+        process(argc, argv);                // process remaining arguments
+    return (0);                             // done
+}

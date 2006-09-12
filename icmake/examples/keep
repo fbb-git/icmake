@@ -1,0 +1,147 @@
+#!/bin/sh
+
+###########################################################################
+# Shell script to remove all but the arguments on the commandline,
+# assuming that you're removing stuff from the current dir.
+
+VER=1.03
+PROG=`basename $0`
+
+# print info and die
+usage ()
+{
+    cat << ENDUSAGE
+
+ICCE Directory Cleaner $VER
+Copyright (c) K. Kubat (karel@icce.rug.nl) / ICCE 1995. All rights reserved.
+Another MegaHard Production!
+
+Usage: keep [-t] [-v] [-rf] file(s)
+where:
+    -t      : (optional) flag, tryout mode -- must be first argument
+    -v      : (optional) flag, increases verbosity
+    -r      : (optional) flag, specifying recursive removal of files
+    -f      : (optional) flag, specifying forced removal of files
+    file(s) : files to keep, others are removed
+              the files must be in the current directory
+ENDUSAGE
+    exit 1
+}
+
+# print error msg and die
+error ()
+{
+    echo $PROG: $*
+    exit 1
+}
+
+# verbose message
+chat ()
+{
+    if [ "$VERBOSE" != "" ] ; then
+	echo keep: $@
+    fi
+}
+
+############################################################################
+# main starts here
+
+# assume options are off
+RECURSIVE=""
+FORCED=""
+TRYOUT=no
+VERBOSE=""
+
+# parse flags
+moreargs=yes
+while [ $moreargs = yes ] ; do
+    case $1 in
+	-t )
+	    TRYOUT=yes
+	    chat "tryout mode"
+	    shift
+	    ;;
+	-rf )
+	    RECURSIVE=-r
+	    FORCED=-f
+	    chat "recursive and forced removal"
+	    shift
+	    ;;
+	-fr )
+	    RECURSIVE=-r
+	    FORCED=-f
+	    chat "recursive and forced removal"
+	    shift
+	    ;;
+	-r )
+	    RECURSIVE=-r
+	    chat "recursive removal"
+	    shift
+	    ;;
+	-f )
+	    FORCED=-f
+	    chat "forced removal"
+	    shift
+	    ;;
+	-v )
+	    VERBOSE=yes
+	    shift
+	    ;;
+	-* )
+	    error no such flag $1 defined, -r -f -fr -rf -v supported only
+	    ;;
+	* )
+	    moreargs=no
+	    ;;
+    esac	    
+done
+
+# any arguments? 
+if [ "$1" = "" ] ; then
+    usage
+fi
+
+# build list of files]
+for f in $* ; do
+    FILES=`echo $FILES $f | sed 's/\///'`
+done
+chat "all files or directories to keep: $FILES"
+
+# check that all files are real ones
+for f in $FILES ; do
+    if [ ! -f $f -a ! -d $f ] ; then
+	error specified file or directory $f not found, cannot keep it
+    fi
+done
+
+# get a listing of cur dir
+LST=`ls -1`
+
+# if not recursive removal: keep only true files in the list
+if [ "$RECURSIVE" != "-r" ] ; then
+    for f in $LST ; do
+        if [ -f $f ] ; then
+            NEWLIST=`echo $NEWLIST $f`
+        fi
+    done
+    LST=$NEWLIST
+fi
+
+for f in $FILES ; do
+    LST=`echo $LST | tr ' ' '\n' | grep -v "^$f$"`
+done
+chat "list of files to remove: $LST"
+
+if [ "$LST" = "" ] ; then
+    error "no files to remove"
+fi
+
+if [ "$TRYOUT" = "yes" ] ; then
+    echo 'Files that would be removed:'
+    echo "$LST"
+else    
+    rm $RECURSIVE $FORCED `echo "$LST"` \
+	|| error 'problem while removing files'
+fi
+
+exit 0

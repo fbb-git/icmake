@@ -1,0 +1,146 @@
+#! /usr/bin/icmake -qt /tmp/ds
+
+/*
+                                D S
+*/
+
+#define VERSION     "1.05"
+#define YEAR        "1994--1995"
+
+int
+    debug;
+string
+    progname,
+    xdev;
+
+void kill(string s)
+{
+    printf(s, "\n\n");
+    exit(1);
+}
+
+string backslash_wild(string spec)
+{
+    string
+        s,
+        ret;
+    int
+        index;
+
+    for (index = 0; s = element(index, spec); index++)
+    {
+        if (s == "*" || s == "?")           // wildcard specifiers ?
+            ret += "\\";                    // protect the wildcard spec.
+        ret += s;
+    }
+    return (ret);                           // return the protected string
+}
+
+void preamble(list argv)
+{                                         
+    progname = get_base(element(0, argv));  // determine progname without .bim
+    xdev = "-xdev";                         // no X-device find
+    echo(OFF);                              // no display of the exec-ed cmnd
+}
+
+void option(string arg)
+{
+    int
+        index;
+    string
+        optchar;
+                                            // process all option characters
+    for (index = 1; optchar = element(index, arg); index++)
+    {
+        if (optchar == "x")                 // X-dev ok ?
+            xdev == "";                     // set appropriate flag
+        else if (optchar == "d")            // debug request
+            debug++;                        // set flag
+        else                                // kill DS if optchar not found
+            kill("Unrecognized option: '-" + optchar);
+    }
+}
+
+list options(int argc, list argv)
+{
+    int
+        index;
+    list
+        new;
+    string
+        arg;
+
+    for (index = 0; index < argc; index++)  // walk all cmd line arguments
+    {
+        arg = element(index, argv);         // get next element
+        if (element(0, arg) == "-")         // found an option ?
+            option(arg);                    // then process it
+        else
+            new += (list)arg;               // else add to the returnlist
+    }
+    return (new);                           // return argv-list without options
+}
+
+void usage()
+{
+    printf
+    (
+        "\n"
+        "ICCE DS (Disk Search). Version " VERSION "\n"
+        "Copyright (c) ICCE " YEAR ". All Rights Reserved\n"
+        "\n"
+        "DS by Frank B. Brokken\n"
+        "\n"
+        "Usage: ", progname, " [options] [dir-spec] file\n"
+        "Where:\n"
+        "   options:\n"
+        "       -d: Display rather than execute the search command\n"
+        "       -x: Allow cross-device searches\n"
+        "   dir-spec:   specification of the directory where the search is to\n"
+        "               be started. By default: / (the root).\n"
+        "   file: name of file to search.\n"
+        "\n"
+        "For the 'file' argument quoted wildcards (e.g., ds '*.local') are ok.\n"
+        "\n"
+    );
+    exit (1);
+}
+
+void process(int argc, list argv)
+{
+    string
+        cmd,
+        filespec,
+        startdir;
+
+    if (argc == 2)                          // a file given as argument
+        startdir = "/";			    // start at the root
+    else
+        startdir = element(1, argv);        // otherwise start at specified dir
+
+                                            // protect wildcards in the
+                                            // filespecification with \-char
+    filespec = backslash_wild(element(argc - 1, argv));
+    
+    cmd = "find " + startdir + " " + xdev + " -name " + filespec + 
+                                            " 2>/dev/null"; 
+
+    if (!debug)
+        system(P_NOCHECK, cmd);
+    else
+        printf(cmd, "\n");
+}
+
+int main(int argc, list argv)
+{
+    preamble(argv);                         // preamble: determine progname etc.
+    argv = options(argc, argv);             // process options
+    argc = sizeof(argv);
+
+    if (argc == 1)                          // no arguments ?
+        usage();                            // give help
+	
+    process(argc, argv);                    // else process arguments
+    
+    return (0);
+}

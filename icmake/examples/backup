@@ -1,0 +1,17 @@
+#!/bin/sh
+
+ORGPROG=/usr/local/etc/backup/backup
+
+if [ "$1" = "" ]
+then
+    $ORGPROG
+else    
+    insmod /sbin/ftape.o
+    $ORGPROG $*
+    mt -f /dev/ftape rewind
+    sleep 20
+    rmmod ftape
+fi
+
+exit 0
+

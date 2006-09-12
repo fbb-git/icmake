@@ -1,0 +1,105 @@
+#!/usr/bin/icmake -qt /tmp/r
+
+/* 
+    This simple icmake script starts a given command in the current
+    directory, and then recursively in all subdirectories. For the
+    installation: see the sample script "tolower" (or, "tolower.im").
+*/
+
+#define VER "1.04"
+
+int haswildcard (string s)                      // does s have wildcards
+{                                               // in it?
+    if (substr (s, "?") > -1 ||                 // if ? or * occurs:
+        substr (s, "*") > -1                    // yes -- it has wildcards
+       )
+        return (1);
+    return (0);                                 // otherwise, none
+}
+
+string makecmd (list cmd)			// make one long cmd by
+{						// expanding list elements
+    string
+    	ret;					// returned cmd
+    int
+    	i,					// outer/inner loop
+    	j,					// counters
+	expanded;                               // flag: expanded stuff?
+    list
+    	aux;					// expanded inner list
+    	
+    expanded = sizeof (cmd) <= 1;               // expansion must occur when
+                                                // arguments are in cmd
+						
+    ret = element (0, cmd);			// add program name itself
+    
+    for (i = 1; i < sizeof (cmd); i++)		// for all other elements:
+    	if (aux = makelist (element (i, cmd)))	// expand element, and add
+	{
+	    expanded = 1;                       // argument expanded
+    	    for (j = 0; j < sizeof (aux); j++)	// add expansion
+    	    	ret += " " + element (j, aux);
+	}
+	else if (! haswildcard (element (i,     // when no expansion: add
+	        cmd)))                          // only if no wildcards in it
+	    ret += " " + element (i, cmd);
+    
+    if (expanded)                               // when args expanded:
+        return (ret);				// return the string
+    return ("");                                // else, it's a non-valid cmd
+}
+
+void process (list cmd)
+{
+    list
+    	dirs;					// list of subdirs
+    int
+    	i;					// counter for subdirs or
+    string					// command name list
+    	cwd,					// stored current working dir
+    	sys;					// expanded command to run
+    						
+    cwd = chdir (".");				// get cwd
+    
+    if (sys = makecmd (cmd))                    // make cmd
+    {
+        printf ("==== r: directory ", cwd,	// print this dir
+        " ====\n");
+        system (P_NOCHECK, sys);                // run the cmd
+    }
+    
+    if (dirs = makelist (O_SUBDIR, "*"))	// get list of subdirs
+    {
+	for (i = 0; i < sizeof (dirs); i++)	// for each one:
+	{
+	    chdir (element (i, dirs));		// go there
+	    process (cmd);			// recursively run cmd
+	    chdir (cwd);			// and.. back again
+	}    
+    }    
+}
+
+void main (int argc, list argv)
+{
+    echo (0);					// suppress re-echoing
+
+    if (argc == 1)				// usage info if no
+    {						// cmdline arguments
+    	printf ("ICCE Recursive Command-expander  Version ", VER, "\n"
+    		"Copyright (c) ICCE 1993,1994. All rights reserved.\n"
+    		"\n"
+    		"Usage: r program arguments\n"
+    		"Will run \"program arguments\" in this directory and"
+    					" recursively in the\n"
+    		"subdirectories.\n"
+    		"\n");
+    	exit (1);
+    }
+    
+    argv -= (list) element (0, argv);		// remove makefile name
+    
+    process (argv);				// and.. start at current
+    						// dir
+    						
+    exit (0);					// done.
+}

@@ -1,0 +1,74 @@
+#!/usr/local/bin/icmake -qi
+
+/*
+    tolower: Icmake script to rename files to lower case. 
+    Use as follows.
+    
+    (1) Place this file in a given directory, e.g., $HOME/im.
+    (2) To rename all *.C in a directory to lowercase, try this (assuming
+    	that the tcsh is used)
+    	icmake -q ~/im/tolower -- *.C
+    (3) Alternatively, try the following tcsh alias (e.g., in your .tcshrc):
+    	alias tolower 'icmake -q ~/im/tolower -- \!*'
+    	(the quotes are needed here.)
+    	then do:
+    	tolower *.C
+    (4) Or another: make a shell script 'tolower' in your $HOME/bin 
+	directory, containing:
+		#!/bin/sh
+		icmake -q $HOME/im/tolower -- $*
+	Make the shell script executable, with "chmod +x tolower".
+    (5) Yet another method, which is preferred, is the following:
+        You can use this script as a literal executable, by renaming it to 
+    	an extension-less file in your local bin directory:
+    		mv <thisfile> ~/bin/tolower
+    	Then, make it executable:
+    		chmod +x ~/bin/tolower
+    	Finally, add the following string as the first line to this file:
+    		#!/usr/local/bin/icmake -qi
+    	This line may actually be at the top of this file, check there.
+    	This will cause the command "tolower" to start Icmake, with 
+	"-qi tolower" as arguments. Make sure that the /usr/local/bin/icmake
+	part of the text points to your icmake program; e.g., if you have 
+	icmake in /usr/bin, then that part should be /usr/bin/icmake.
+*/
+
+#define VERSION "1.01"
+
+void process (string file)
+{
+    string
+    	lower;
+    	
+    lower = strlwr (file);
+    if (lower != file)
+    	if (exec (P_NOCHECK, "mv", file, lower))
+    	    printf ("tolower: can't rename ", file, " to ", lower, "\n");
+}
+
+void main (int argc, list argv)
+{
+    int
+    	i;
+    	
+    echo (0);
+    	
+    if (argc < 2)
+    {
+    	printf ("\n"
+    		"ICCE Filecase Converter Version ", VERSION, "\n"
+    		"Copyright (c) ICCE 1993.  All rights reserved.\n"
+    		"\n"
+    		"Usage: tolower file(s)\n"
+    		"Where: file(s) are the filenames to be renamed to their "
+				    		"lower case names\n"
+		"\n"
+		);
+	exit (1);
+    }
+    
+    for (i = 1; i < sizeof (argv); i++)
+    	process (element (i, argv));
+    exit (0);
+}
+

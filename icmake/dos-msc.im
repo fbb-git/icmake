@@ -1,0 +1,267 @@
+// These two defines are the C compiler and the flags. -c is needed to
+// ensure compilation-only; -O is selected to turn debugging off.
+#define CC              "cl"
+#define CFLAGS          "-c -W3 -O -AS"
+
+// The following two macros are the library manager. That program
+// is started as "AR ARFLAGS library-name object-files".
+#define AR              "lib"
+
+// A remove program..
+#define RM              "del"
+
+// The destination directory to copy executables to, and your install
+// program ("cp" for a poor man's solution).
+#define BINDIR          "c:\\sys\\ec"
+#define CP              "copy"
+
+// You've edited enough now. Try making it.
+
+#define LIB_ICRSS       "icrss.lib"
+#define LIB_ICMAKE      "icmake.lib"
+#define LIB_ICMPP       "icmpp.lib"
+#define LIB_ICMCOMP     "icmcomp.lib"
+#define LIB_ICMEXEC     "icmexec.lib"
+#define LIB_ICMUN       "icmun.lib"
+#define ZIP             "icmake.zip"
+
+list loadass (string dir, string lib)
+{
+    int
+        i;
+    string
+        ofile;
+    list
+        ofiles;
+
+    chdir (dir);
+
+    printf ("Checking asm/*.obj files against library ", lib, "\n");
+
+    ofiles = makelist ("asm\\*.obj");        // list of obj files
+
+    for (i = 0; i < sizeof (ofiles); i++)
+    {
+        ofile = element (i, ofiles);
+        if (ofile older lib)
+        {
+            ofiles -= (list) ofile;
+            i--;
+        }
+    }
+
+    chdir ("..");
+
+    return (ofiles);
+}
+
+void makelib (string dir, string lib, string mainobj, list extraobj)
+{
+    list
+        cfiles,
+        ofiles;
+    string
+        ofile,
+        cfile;
+    int
+        i;
+
+    chdir (dir);
+
+    mainobj = change_ext (mainobj, ".obj");
+
+    printf ("Checking .c files against library ", lib, "\n");
+    cfiles = makelist ("*.c");
+    for (i = 0; i < sizeof (cfiles); i++)
+    {
+        cfile = element (i, cfiles);
+        ofile = change_ext (cfile, ".obj");
+        if (cfile older lib ||
+            (exists (ofile) && ofile younger cfile)
+           )
+        {
+            cfiles -= (list) cfile;
+            i--;
+        }
+    }
+    if (cfiles)
+        execute (CC, CFLAGS, "", cfiles, "", "");
+
+    printf ("Checking .obj files against library ", lib, "\n");
+    ofiles = makelist ("*.obj") - (list) mainobj;
+    if (ofiles)
+    {
+        execute (AR, lib, "-+", ofiles, "", ";");
+        for (i = 0; i < sizeof (ofiles); i++)
+            system (RM + " " + element (i, ofiles));
+    }
+
+    if (extraobj)
+        execute (AR, lib, "-+", extraobj, "", ";");
+
+    system (RM + " " + change_ext(lib, "bak"));
+
+    chdir ("..");
+}
+
+void makelibs ()
+{
+    printf ("\nLoading Assembler modules in RSS Library\n");
+
+
+    printf ("\nMaking Run Time Support System library\n");
+    makelib ("rss", LIB_ICRSS, "", loadass ("rss", LIB_ICRSS));
+
+    printf ("\nMaking lib for shell program icmake\n");
+    makelib ("make", LIB_ICMAKE, "icmake", (list)"");
+
+    printf ("\nMaking lib for preprocessor icm-pp\n");
+    makelib ("pp", LIB_ICMPP, "icm-pp", (list)"");
+
+    printf ("\nMaking lib for compiler icm-comp\n");
+    makelib ("comp", LIB_ICMCOMP, "icm-comp", (list)"");
+
+    printf ("\nMaking lib for executor icm-exec\n");
+    makelib ("exec", LIB_ICMEXEC, "icm-exec", (list)"");
+
+    printf ("\nMaking lib for unassembler icmun\n");
+    makelib ("un", LIB_ICMUN, "icmun", (list)"");
+}
+
+void makeprog (string dir, string lib, string prog)
+{
+    string
+        exepacked_prog,
+        rsslib;
+
+
+    rsslib = "..\\rss\\icrss.lib";
+    exepacked_prog = "..\\bindos\\" + prog;
+
+    chdir (dir);
+
+    printf ("Checking prog ", exepacked_prog, " against libs ", lib,
+            " and ", rsslib, "\n");
+    if (lib younger exepacked_prog || rsslib younger exepacked_prog)
+    {
+        exec (CC, change_ext (prog, ".obj"), lib, rsslib);
+        exec ("exepack", prog, exepacked_prog);
+        system("del " + prog);
+    }
+
+
+    chdir ("..");
+}
+
+void makeprogs ()
+{
+    makelibs ();
+
+    printf ("\nMaking shell program icmake\n");
+    makeprog ("make", LIB_ICMAKE, "icmake.exe");
+
+    printf ("\nMaking preprocessor program icm-pp\n");
+    makeprog ("pp", LIB_ICMPP, "icm-pp.exe");
+
+    printf ("\nMaking compiler program icm-comp\n");
+    makeprog ("comp", LIB_ICMCOMP, "icm-comp.exe");
+
+    printf ("\nMaking executor program icm-exec\n");
+    makeprog ("exec", LIB_ICMEXEC, "icm-exec.exe");
+
+    printf ("\nMaking unassembler program icmun\n");
+    makeprog ("un", LIB_ICMUN, "icmun.exe");
+}
+
+void inst (string prog)
+{
+    string
+        dest;
+
+    chdir ("bindos");
+    dest = BINDIR + "\\" + prog;
+
+    if (prog newer dest)
+        system (CP + " " + prog + " " + BINDIR);
+
+    chdir ("..");
+}
+
+void install ()
+{
+    makeprogs ();
+
+    printf ("\nInstalling shell program icmake\n");
+    inst ("icmake.exe");
+
+    printf ("\nInstalling preprocessor program icm-pp\n");
+    inst ("icm-pp.exe");
+
+    printf ("\nInstalling compiler program icm-comp\n");
+    inst ("icm-comp.exe");
+
+    printf ("\nInstalling executor program icm-exec\n");
+    inst ("icm-exec.exe");
+
+    printf ("\nInstalling unassembler program icmun\n");
+    inst ("icmun.exe");
+}
+
+void clean (string dir, string lib, string prog)
+{
+    chdir (dir);
+
+    printf ("Cleaning ", dir, "\n");
+
+    lib = change_ext (lib, ".bak");
+    if (exists (lib))
+        system (RM + " " + lib);
+    if (prog && exists (prog))
+        system (RM + " " + prog);
+
+    chdir ("..");
+    printf (dir, ": clean.\n");
+}
+
+void cleanup ()
+{
+    clean ("rss", LIB_ICRSS, "");
+    clean ("make", LIB_ICMAKE, "icmake.exe");
+    clean ("pp", LIB_ICMPP, "icm-pp.exe");
+    clean ("comp", LIB_ICMCOMP, "icm-comp.exe");
+    clean ("exec", LIB_ICMEXEC, "icm-exec.exe");
+    clean ("un", LIB_ICMUN, "icmun.exe");
+}
+
+void main (int argc, list argv)
+{
+    string
+        av1;
+
+    echo (1);
+
+    av1 = element (1, argv);
+    if (av1 == "libs")
+        makelibs ();
+    else if (av1 == "progs")
+        makeprogs ();
+    else if (av1 == "install")
+        install ();
+    else if (av1 == "clean")
+        cleanup ();
+    else if (av1 == "fresh")
+    {
+        install ();
+        cleanup ();
+    }
+    else
+        printf ("Make what?\n"
+                "Select one of the following:\n"
+                "    \"icmake dos-msc -- libs\" to make libraries\n"
+                "    \"icmake dos-msc -- progs\" to make programs\n"
+                "    \"icmake dos-msc -- install\" to install programs to ",
+                                                        BINDIR, "\n"
+                "    \"icmake dos-msc -- clean\" to remove old mush\n"
+                "    \"icmake dos-msc -- fresh\" to install and clean\n"
+                "\n");
+}

@@ -1,0 +1,173 @@
+#!/usr/bin/icmake -qi
+
+/***************************************************************************
+
+    This file shows an example of a shell around ftp. I use this program a 
+lot in situations where I want to transfer a file from one unix host to 
+another, and when I know beforehand what file from what directory I want to 
+transfer. For the installation:
+	- copy this file to your personal bin directory, under the name
+	  ftpxfer
+	- make the file executable: chmod +x ftpxfer
+	
+    The program will prompt for the user name and password to use for the 
+ftp transfer. If you often access one host with this program, and don't wont 
+to type the user/password all the time, you can do the follwing for bash:
+	> set FTPUSER my_login_name_on_that_host
+	> export FTPUSER
+	> set FTPASS my_password_on_that_host
+	> export FTPASS
+For tcsh, try:
+	> setenv FTPUSER my_login_name_on_that_host
+	> setenv FTPASS my_password_on_that_host
+Net result: this program won't prompt you for the strings, but will retrieve 
+them from the environment table. You can, of course, place these commands in 
+your .login or .tcshrc file, to be executed automatically during the login 
+procedure. But then it may be a good idea to make these files read/write 
+only for you and for nobody else (e.g., by: chmod 644 .login).
+
+OB    The actual ftp transfer occurs using an intermediate temporary file, 
+TMPFILE in the below #define's. The user name and password _are_ stated in 
+that file, but this should not be a security risk. First, the file is 
+read/write for the user only, and for no-one else. Second, the file gets 
+deleted as soon as it's no longer needed. If you consider this feature still 
+a security hazard, take a valium and don't use this program.
+
+*****************************************************************************/
+
+// here's a couple of defines, no need to change them..
+#define VER 		"1.02"
+#define YEARS 		"1993"
+
+// the following define controls ftp's `verbatim' mode, set it to "-v" 
+// if you want verbatim, or to "" if you don't
+#define VERBATIM	"-v"
+
+list
+    envp;					// environment strings
+
+string
+    tmpfile,					// temp file for ftp use
+    host,					// host to transfer from/to
+    dir,					// foreign directory
+    file,					// local file
+    direction;					// "get" or "put" file?
+    
+string getenv (string varname)    		// purpose: returns setting
+{						// of environment variable
+    int						// 'varname'
+    	i;
+    	
+    for (i = 0; i < sizeof (envp); i += 2)	// loop thru envp...
+    	if (element (i, envp) == varname)	// found varname?
+    	    return (element (i + 1, envp));	// yes -- return setting
+    	    
+    return ("");				// no -- return empty string
+}
+
+void inittmp ()					// purpose: initialize temp
+{						// file
+
+    if (exists (tmpfile))			// remove any old version
+    	exec ("rm", tmpfile);			// if it exists
+    	
+    exec ("touch", tmpfile);			// make empty file
+    exec ("chmod", "600", tmpfile);		// make it r/w only for user
+}
+    
+void process ()					// purpose: do the actual 
+{						// ftp transfer
+
+    string
+    	user,					// user name on foreign host
+    	password,				// password
+    	foreignfile;				// full name of foreign file
+    	
+    inittmp ();					// make new temp file
+
+    if (dir)					// if foreign dir specified:
+	foreignfile = change_path (file, dir);	// use that
+    else if (get_path (file))			// if file spec has its own
+    	foreignfile = file;			// directory: keep it
+    else					// otherwise: use current
+    	foreignfile = change_path (file, 	// directory as dest dir
+    	    chdir ("."));
+    	    
+    if (! (user = getenv ("FTPUSER")) )		// get username from envp
+    {						// or prompt for it
+    	printf ("User name: ");
+    	user = gets ();
+    }
+    if (! (password = getenv ("FTPASS")) )	// get passwd from envp
+    {						// or prompt for it
+    	printf ("Password : ");
+    	password = gets ();
+    }
+    
+    fprintf (tmpfile, 				// write ftp login procedure
+    	"open ", host, "\n",			// to tmpfile, followed
+    	"user ", user, " ", password, "\n",	// by transfer commands
+    	"binary\n",
+    	direction, " ", file, " ", foreignfile, "\n",
+    	"quit\n");
+    
+    exec (P_NOCHECK, "ftp", VERBATIM, 		// do the ftp transfer
+        "-n -i", "< ", tmpfile);
+    exec (P_NOCHECK, "rm", tmpfile);		// remove temp file
+}    
+    
+void usage ()					// purpose: print usage info
+{						// and die
+    printf ("\n"
+    	    "ICCE Ftp-based File Transfer Shell  V", VER, "\n"
+    	    "Copyright (c) ICCE ", YEARS, ". All rights reserved.\n"
+    	    "\n"
+    	    "Usage: ftpxfer -p|-g host file [directory]\n"
+    	    "where:\n"
+    	    "       -p         : selects putting of file\n"
+    	    "       -g         : selects getting of file\n"
+    	    "       host       : host to put/get from/to\n"
+    	    "       file       : file to transfer\n"
+    	    "       directory  : optional directory at foreign host, if "
+						    	    "not given:\n"
+	    "                    directory in file argument is used, if not "
+	    						    "present:\n"
+	    "                    current directory is used for destination\n"
+    	    "Ftpxfer will use the environment variables FTPUSER and FTPASS "
+    	    						"when available,\n"
+	    "or will prompt for the user and password.\n"
+    	    "\n");
+    exit (1);
+}
+    
+void main (int argc, list argv, list evp)	// main function
+{
+    envp = evp;					// store environment
+    echo (OFF);					// no re-echoing of commands
+    tmpfile = "/tmp/ftpxfer." 			// make temporary filename
+    	+ (string) getpid ();
+    
+    if (element (1, argv) == "-p")		// first argument: must
+    	direction = "put";			// be -p or -g
+    else if (element (1, argv) == "-g")
+    	direction = "get";
+    else
+    	usage ();
+    	
+    if (! (host = element (2, argv)) )		// second argument: must be
+    	usage ();				// foreign host
+    if (! (file = element (3, argv)) )		// third argument: must be
+    	usage ();				// file to transfer
+    if (direction == "put" && ! exists (file))	// if putting: file must
+    {						// exist
+    	printf ("File to put does not exist.\n");
+    	exit (1);
+    }    
+    
+    dir = element (4, argv);			// fourth element: may be 
+    						// foreign directory
+    
+    process ();					// hit it!
+    	
+    exit (0);					// exitstatus: success
+}

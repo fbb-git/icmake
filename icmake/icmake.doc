@@ -1,0 +1,175 @@
+=============================================================================
+                                ICMAKE
+                  the Intelligent C-like MAKEr, or
+                        the ICce MAKE utility
+
+            Copyright (c) Frank B. Brokken and Karel Kubat
+                 frank@icce.rug.nl, karel@icce.rug.nl
+
+           ICCE, State University of Groningen, Netherlands
+	   
+         This document is part of distribution 6.20 of ICMAKE
+=============================================================================
+
+
+Introduction
+------------
+
+        Icmake is a hybrid between a 'make' utility and a 'shell script'
+language.  Originally, it was concocted to provide a useful tool for
+automatic program maintenance and system administrative tasks on MS-DOS
+platforms.  As we learned to appreciate its flexibility, Icmake was
+eventually ported to Unix platforms (SCO and Linux). By now Icmake also runs
+on a HP-Unix platform.
+
+        To give an impression of "what Icmake does", take a look at the
+following makefile. It is used for automatic program maintenance, where it
+is assumed that in some directory all files with the extension ".c" (C
+source files) constitute a program "myprog". The automatic maintenance makes
+sure that, once Icmake is invoked, C source files which are more recent
+(newer) than a library file "libmyprog.a" are recompiled and placed in the
+library. A new program is then made and installed in a directory
+"/home/user/bin".
+
+void main ()
+{
+    list
+        cfiles;                                 // list of .c files
+    int
+        i;                                      // counter variable
+    string
+        sourcefile;                             // string with name of
+                                                // 1 source file
+
+    cfiles = makelist ("*.c", younger,          // cfiles is now a list of
+        "libmyprog.a");                         // all files to recompile
+
+    if (cfiles)                                 // if there are any files..
+        for (i = 0; i < sizeof (cfiles),        // recompile them
+             i++)
+        {
+            sourcefile = element (i, cfiles);   // get the name from the list
+            exec ("gcc", "-c -Wall", sourcefile); // recompile
+        }
+
+    if (makelist ("*.o"))                       // any "*.o" files here?
+    {
+        exec ("ar", "rvs", "libmyprog.a", "*.o");  // add to library
+        exec ("rm", "*.o");                        // remove them
+        exec ("gcc", "-o myprog", "libmyprog.a");  // re-link program
+        exec ("mv", "myprog", "/home/user/bin");   // and install in bin dir
+    }
+}
+
+        The source files for Icmake look remarkably like C sourcefiles. The
+resemblance is so close that this cannot be pure chance!  Yes, we have
+implemented Icmake to be a language with a syntax which largely overlaps C.
+Since we know how to program in C, we decided that we didn't want to learn
+some new macro language.  The Icmake language is a "subset" of C in the
+sence that not all operators or functions of C are implemented (but a good
+deal are, e.g., gets(), getch(), printf(), etc.).  The Icmake language has
+its own extensions to make it a handy language for the purpose of
+maintenance: e.g., the operator "younger" compares two files in respect to
+their date of last modification, a type "list" is defined to hold several
+strings.
+
+        The usage of Icmake is not restricted to program maintenance. The
+setup, which allows for functions, arguments, local or global variables, the
+calling of external programs, etc.  makes Icmake also extremely suitable as
+a shell script language.  E.g., it is easy to accomplish to let Icmake
+figure out which files need to be backupped since the last backup date and
+to start a process to do so, to send mail about it etc.
+
+        This guide provides a short description how Icmake can be ported to
+new platforms.  The documentation for the usage of Icmake, including a
+description of the grammar and of all built-in functions, comes with the
+distribution files.
+
+
+Installing Icmake
+-----------------
+
+The icmake-X.YY.tgz contains all source files and installation information
+if you want to install icmake from scratch. You *need* this file if you
+want to install icmake on systems not running Linux or Ms-DOS.
+
+The icmake-X.YY.bin.tgz contains linux and ms-dos executables. If you only
+want to use the icmake programs, you can get this file, unpack it and start
+using icmake.
+
+See the file INSTALL for details. INSTALL is in icmake-X.YY.tgz, 
+containing all other files necessary for installing icmake. 
+
+To unpack the archives use (GNU-tar 1.11.2):
+        
+	        tar xzvf icmake-X.YY.tgz
+and/or:		
+	        tar xzvf icmake-X.YY.bin.tgz
+
+which unpacks into an 'icmake' subdirectory below the current subdirectory.
+Also, separate gzip and tar steps could be used, as in:
+
+                gzip -c -d icmake-X.YY.tgz | tar xvf -
+and/or:		
+                gzip -c -d icmake-X.YY.bin.tgz | tar xvf -
+		
+The Documentation
+-----------------
+
+        Icmake is documented in a Postscript file, "icmake.ps", located in
+the directory "doc".  This file is generated from a .dvi file using dvips,
+and can be processed with GhostScript.  Note that the file is generated for
+a printer resolution of 300 dpi, which suits a LaserJet family printer.  If
+your site lacks the means to print this file, you can mail us at the address
+below to obtain a printed copy of the documentation.  (However, we will
+charge you a small amount to cover our costs).
+
+        The directory "doc" furthermore contains the file "icmake.1". This
+is a crude "man" page for Unix systems.  You can install it by copying it to
+a directory which contains formatted manual pages.  To use this feature,
+your "man" command must be able to show an already-formatted manual entry.
+E.g., on Linux systems you can copy this file to "/usr/man/cat1".  Typing
+"man icmake" will then show the information.  Some man systems also support
+compressed manual pages.  On these systems you may achieve a lower disk
+usage by compressing the file "icmake.1" to "icmake.1.Z", using the Unix
+program "compress".
+
+        A few makefiles are provided as examples in the directory
+"examples". You may wish to look at these to see how makefiles can be
+organized.
+
+Some Legal Stuff
+----------------
+
+        You don't have to pay us for Icmake. This means that no fee is
+charged for it by us.  As with everything that's free, there's no pay but
+also *absolutely no warranty*.  Furthermore, you are allowed (and
+encouraged) to distribute Icmake, provided that you include this information
+with each distribution.  It is strongly suggested that you do *not* charge
+money for the distribution of Icmake (possibly not even the $5 for
+shipping).
+
+        The source files and the documentation for Icmake are copyrighted by
+us.  The reason for this is (a) that we'd like to have always the last
+version of Icmake, and (b) that we'd like to have the last word in all
+modifications.  If you have requests (or even better, "working code" to
+include in Icmake) please mail us and we'll gladly oblige when we find the
+time.
+
+
+Requests, Bug Reports, etc.
+---------------------------
+
+        We'd very much appreciate it if you'd let us know if you encounter any 
+bugs. Also, if you have requests or comments about the programs or the 
+documentation, mail us. We can be reached at:
+
+                Frank Brokken                   Karel Kubat
+e-mail:         F.B.Brokken@icce.rug.nl         K.Kubat@icce.rug.nl
+phone:          (+31) 50 63 36 88               (+31) 50 63 36 47
+address:        Westerhaven 16                  Westerhaven 16
+                Groningen                       Groningen
+                Netherlands                     Netherlands
+
+-----------------------------------------------------------------------------
+(end of icmake.doc)

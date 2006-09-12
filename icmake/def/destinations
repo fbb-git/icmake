@@ -1,0 +1,12 @@
+// unix doc2man will install icmake.1.Z in the following subdirectory:
+#define CATDIR 		"/usr/local/man/cat1"
+
+// unix install will install the executables in the following subdirectory:
+#define BINDIR  "/usr/local/bin"
+
+/*
+        Note that BINDIR is also used in the first line of the unix-script.
+
+	If you don't use /usr/local/bin, make sure you adapt the first line
+	in the 'unix' script *AND* the BINDIR define above.
+*/

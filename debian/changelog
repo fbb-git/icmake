@@ -1,0 +1,96 @@
+icmake (6.22-7) unstable; urgency=low
+
+  * New patch: negate.c.dpatch
+    Removed invalid lvalue casting which causes FTBS with recent gcc.
+    (closes: #286426)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 21 Dec 2004 22:32:59 +0100
+
+icmake (6.22-6) unstable; urgency=low
+
+  * Added patch:
+  	missing_break.dpatch
+    (closes: #266703)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 19 Aug 2004 14:56:09 +0200
+
+icmake (6.22-5) unstable; urgency=low
+
+  * Policy updated to 3.6.1. No more changes.
+  * Added dpatch support.
+  * Added patches: 
+        funchdir.dpatch
+        man.dpatch
+    (closes: #183785)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 30 Jul 2004 11:20:38 +0200
+
+icmake (6.22-4) unstable; urgency=low
+
+  * New maintainer
+    (closes: #88382)
+  * Updated policy.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sat, 28 Dec 2002 12:28:43 +0100
+
+icmake (6.22-3) unstable; urgency=low
+
+  * QA upload.
+  * Switched from debstd to debhelper.
+  * Moved internal binaries to /usr/lib/icmake.  Closes: #63636.
+  * Linked icmun.1 to icmake.1.
+  * bootstrap: Compile with debugging information and do not strip.
+  * debian/copyright: Update upstream URL.
+  * debian/changelog: Remove obsolete Emacs local variables.
+  * Conforms to Standards version 3.5.6.
+
+ -- Matej Vela <vela@debian.org>  Tue, 10 Sep 2002 08:17:08 +0200
+
+icmake (6.22-2) unstable; urgency=low
+
+  * Orphaned this package.
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Fri, 25 Jan 2002 14:11:29 +0100
+
+icmake (6.22-1) unstable; urgency=low
+
+  * New maintainer. (closes: #71851)
+  * New upstream release.
+  * Added "-isp" to dpkg-gencontrol in debian/rules.
+  * Added build dependencies.
+  * Standards-Version: 3.1.1
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Mon, 19 Feb 2001 17:29:38 +0100
+
+icmake (6.21-5) unstable; urgency=low
+
+  * Changed maintainer to QA. After all I orphaned this package two years
+    ago. 
+
+ -- Michael Meskes <meskes@debian.org>  Thu,  7 Sep 2000 13:17:47 -0700
+
+icmake (6.21-4) unstable; urgency=low
+
+  * Added missing copyright addition. 
+
+ -- Michael Meskes <meskes@debian.org>  Wed, 11 Feb 1998 15:23:11 +0100
+
+icmake (6.21-3) unstable; urgency=low
+
+  * Fixed for lintian.
+  * Replaced gets() with fgets().
+
+ -- Michael Meskes <meskes@debian.org>  Wed, 11 Feb 1998 14:11:52 +0100
+
+icmake (6.21-2) unstable; urgency=low
+
+  * Reworked with debmake (#12740).
+  * Added links to undocumented man page.
+
+ -- Michael Meskes <meskes@debian.org>  Thu, 11 Sep 1997 12:05:44 +0200
+
+icmake (6.21-1) unstable; urgency=LOW
+
+  * Initial upload
+
+ -- Michael Meskes <meskes@debian.org>  Mon, 21 Oct 1996 12:16:24 +0200

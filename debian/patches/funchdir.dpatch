@@ -1,0 +1,37 @@
+#! /bin/sh -e
+## funchdir.dpatch by Francesco Paolo Lovergine <frankie@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+if [ $# -lt 1 ]; then
+    echo "`basename $0`: script expects -patch|-unpatch as argument" >&2
+    exit 1
+fi
+
+[ -f debian/patches/00patch-opts ] && . debian/patches/00patch-opts
+patch_opts="${patch_opts:--f --no-backup-if-mismatch} ${2:+-d $2}"
+
+case "$1" in
+    -patch) patch -p1 ${patch_opts} < $0;;
+    -unpatch) patch -R -p1 ${patch_opts} < $0;;
+    *)
+        echo "`basename $0`: script expects -patch|-unpatch as argument" >&2
+        exit 1;;
+esac
+
+exit 0
+
+@DPATCH@
+diff -urNad /users/frankie/debian/mypkgs/icmake/icmake-6.22/exec/funchdir.c icmake-6.22/exec/funchdir.c
+--- /users/frankie/debian/mypkgs/icmake/icmake-6.22/exec/funchdir.c	1994-03-14 14:47:56.000000000 +0100
++++ icmake-6.22/exec/funchdir.c	2004-07-30 11:15:38.000000000 +0200
+@@ -41,7 +41,7 @@
+     dir  = xstrdup (stack [sp - 1].vu.i->ls.str);	/* duplicate dest */
+ 
+     if (! *dir)						/* empty dest: */
+-        dir = orgdir;					/* change to org dir */
++        dir = xstrdup(orgdir);				/* change to org dir */
+ 
+     last = dir + strlen (dir) - 1;			/* remove dir */
+     if ( last != dir &&					/* separator */

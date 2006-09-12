@@ -5,5 +5,5 @@
 #include "../rss/icrss.h"
 
 char
-    version[] = "6.18",
-    release[] = "1992-1999";
+    version[] = "6.22",
+    release[] = "1992-2006";

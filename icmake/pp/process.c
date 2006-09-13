@@ -40,38 +40,43 @@ void process (LEXER_ token)
     switch (token)
     {
         case l_eof:
-	    if (! output_active)
-		error ("%s: end-of-file inside #if(n)def",
-		       filestack [filesp].n);
-	    popfile ();
-	    break;
+            if (! output_active)
+                error ("%s: end-of-file inside #if(n)def",
+                   filestack [filesp].n);
+            popfile ();
+        break;
+
         case l_space:
-	    fputc (lexbuf [0], outfile);
-            break;
+            fputc (lexbuf [0], outfile);
+        break;
+
         case l_string:
-	    if (output_active)
-	    {
-		fputc ('\"', outfile);
-		fputs (lexbuf, outfile);
-		fputc ('\"', outfile);
-	    }
-            break;
+            if (output_active)
+            {
+                fputc ('\"', outfile);
+                fputs (lexbuf, outfile);
+                fputc ('\"', outfile);
+            }
+        break;
+
         case l_single:
-	    if (output_active)
-		fputc (lexbuf [0], outfile);
-            break;
+            if (output_active)
+                fputc (lexbuf [0], outfile);
+        break;
+
         case l_ident:
-	    if (output_active)
-	    {
-		if ( (i = finddef (lexbuf)) != -1 )
-		    fputs (defined [i].redef, outfile);
-		else
-		    fputs (lexbuf, outfile);
-	    }
-            break;
+            if (output_active)
+            {
+                if ( (i = finddef (lexbuf)) != -1 )
+                    fputs (defined [i].redef, outfile);
+                else
+                    fputs (lexbuf, outfile);
+            }
+        break;
+
         case l_other:
-	    if (output_active)
-		fputs (lexbuf, outfile);
-            break;
+            if (output_active)
+                fputs (lexbuf, outfile);
+        break;
     }
 }

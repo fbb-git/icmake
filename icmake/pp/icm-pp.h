@@ -58,9 +58,13 @@ extern LEXER_
     lexer (void);
 
 extern int
-    finddef (char *);
-
+    finddef (char *),
+    negate_active(void),    /* negate the current request */
+    pop_active(void),       /* returns previous output_active value */
+    push_active(int);       /* actual activity request */
+    
 extern void
+    construct_active(void),
     delete_std_comment (char *),
     directive (void),
     getident (char *),
@@ -71,3 +75,4 @@ extern void
     preload (char *, char *),
     process (LEXER_),
     pushfile (char *);
+    

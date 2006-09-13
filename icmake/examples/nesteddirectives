@@ -1,0 +1,32 @@
+#!/usr/bin/icmake -qt /tmp/nesteddirectives
+
+/* 
+    This simple icmake script illustrates the use of nested directives
+*/
+
+#ifdef HELLO
+    this is not compiled
+    #ifdef ALSO_NOT
+        this is also not compiled
+    #else
+        but this isn't compiled either, since we're in the not-defined HELLO
+        section
+    #endif
+
+    #define NESTED
+        nested is not defined
+
+    #include <file>
+        file is not included
+#else
+    void fun()
+    {
+        printf("The function fun() is defined\n");
+    }
+#endif
+
+void main (int argc, list argv)
+{
+    fun();
+    exit(0);
+}

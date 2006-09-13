@@ -69,8 +69,6 @@ static void skipblanks()
     while ((ch = fgetc (filestack [filesp].f)) == ' ' || ch == '\t')
         ;
 
-    printf("Skipblanks pushes back: `%c'\n", ch);
-
     ungetc(ch, filestack[filesp].f);      /* push back next char, not ' ' */
 }
 
@@ -161,7 +159,7 @@ static void ifndef_directive()
     skipblanks();
     getident (idname);                      /* get the name of the define */
     terminate_line("ifndef");
-    output_active = ! isdefd (idname);
+    output_active = push_active(!isdefd(idname));
 }
 
 static void ifdef_directive()
@@ -170,19 +168,19 @@ static void ifdef_directive()
     getident (idname);                      /* get the name of the define */
     terminate_line("ifdef");
 
-    output_active = isdefd (idname);
+    output_active = push_active(isdefd(idname));
 }
 
 static void else_directive()
 {
     terminate_line("else");
-    output_active = !output_active;
+    output_active = negate_active();
 }
 
 static void endif_directive()
 {
     terminate_line("endif");
-    output_active = 1;
+    output_active = pop_active();
 }
 
 void directive ()
@@ -221,12 +219,3 @@ void directive ()
         error ("%s: %d: bad preprocessor directive `%s'",
                filestack [filesp].n, filestack [filesp].l, lexbuf);
 }
-
-
-
-
-
-
-
-
-

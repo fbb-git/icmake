@@ -1,0 +1,15 @@
+#!/usr/bin/icmake -qt /tmp/defines
+
+#define FIRST   "This text"
+#define SECOND  "will be printed, starting with: " ${FIRST}
+
+#define TEXT    ${FIRST} ${SECOND} "${UNCHANGED}\n"
+
+#define BASE /usr/local
+#define BIN  "${BASE}/bin"
+
+int main()
+{
+    printf(TEXT);
+    printf(BIN "\n");
+}

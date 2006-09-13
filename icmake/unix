@@ -1,10 +1,10 @@
-#!/usr/local/bin/icmake -qt /tmp/unix
+#!/usr/bin/icmake -qt /tmp/unix
 
 /*
 
     If you want to use this file, it is assumed that you have icmake (at
-    least version 6.20) installed in /usr/local/bin. If it's somewhere else,
-    please adapt the path /usr/local/bin in the line above.
+    least version 6.20) installed in /usr/bin. If it's somewhere else,
+    please adapt the path /usr/bin in the line above.
     
     Also, check the file destinations.im for proper path settings !
 

@@ -56,5 +56,5 @@ char *name;
     filestack [filesp].l = 1;
 
     if (! nofileinfo)
-	fprintf (outfile, "#%s\n", name);
+    fprintf (outfile, "#%s\n", name);
 }

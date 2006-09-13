@@ -48,31 +48,31 @@ int main(int argc, char **argv)
     
     while (argc > 1 && *argv [1] == '-')
     {
-    if (! strcmp (argv [1], "-nocomment"))
-        nocomment++;
-    else if (! strcmp (argv [1], "-define"))
-    {
-        if (argc < 3)
-        error ("missing symbol after \"-define\"");
-        preload (argv [2], "1");
+        if (! strcmp (argv [1], "-nocomment"))
+            nocomment++;
+        else if (! strcmp (argv [1], "-define"))
+        {
+            if (argc < 3)
+            error ("missing symbol after \"-define\"");
+            preload (argv [2], "1");
+            argv++;
+            argc--;
+        }
+        else if (! strcmp (argv [1], "-nostrings"))
+            nostrings++;
+        else if (! strcmp (argv [1], "-nostdsymbols"))
+            load_symbols = 0;
+        else if (! strcmp (argv [1], "-strictdirectives"))
+            strict_directives++;
+        else if (! strcmp (argv [1], "-nofileinfo"))
+            nofileinfo++;
+        else if (! strcmp (argv [1], "-dumpsymbols"))
+            dump_symbols++;
+        else 
+            error ("no such flag \"%s\" recognized", argv [1]);
+    
         argv++;
         argc--;
-    }
-    else if (! strcmp (argv [1], "-nostrings"))
-        nostrings++;
-    else if (! strcmp (argv [1], "-nostdsymbols"))
-        load_symbols = 0;
-    else if (! strcmp (argv [1], "-strictdirectives"))
-        strict_directives++;
-    else if (! strcmp (argv [1], "-nofileinfo"))
-        nofileinfo++;
-    else if (! strcmp (argv [1], "-dumpsymbols"))
-        dump_symbols++;
-    else 
-        error ("no such flag \"%s\" recognized", argv [1]);
-
-    argv++;
-    argc--;
     }
 
     if (load_symbols)
@@ -80,9 +80,9 @@ int main(int argc, char **argv)
 
     if (dump_symbols)
     {
-    printf ("%s: loaded symbols:\n", progname);
-    for (i = 0; i < ndefined; i++)
-        printf ("    %s [%s]\n", defined [i].ident, defined [i].redef);
+        printf ("%s: loaded symbols:\n", progname);
+        for (i = 0; i < ndefined; i++)
+            printf ("    %s [%s]\n", defined [i].ident, defined [i].redef);
     }
     
     if (argc != 3)
@@ -113,10 +113,12 @@ int main(int argc, char **argv)
 
     if (! (outfile = fopen (argv [2], "w")) )
         error ("cannot open input file %s", argv [2]);
-    pushfile (argv [1]);
+
+    pushfile(argv[1]);
+    construct_active();
 
     while (filesp >= 0)
-        process (lexer ());
+        process(lexer());
 
     return 0;
 }

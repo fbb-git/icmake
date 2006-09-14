@@ -30,8 +30,14 @@ ESTRUC_ *addition (lval, rval)
         else if (test_type(lval, e_str))
             catstrings(lval, rval);         /* create (cat) new string */
     }
-    else
+    else 
     {
+        if (initialization)
+        {
+            semantic(init_expr_not_const);
+            return nullframe(lval);
+        }
+
         defcode(lval, rval, op_add);
         set_type(lval, (type & ALLTYPES) | e_code);
     }

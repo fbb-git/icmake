@@ -29,6 +29,11 @@ ESTRUC_ fetchvar()
 
     ret = stackframe(0);
 
+    if (initialization)
+    {
+        semantic(init_expr_not_const);
+        return ret;
+    }
                                             /* not a local variable ? */
     if ((index = looksym(&local)) == local.n_defined)
     {                                       /* not a global variable ? */

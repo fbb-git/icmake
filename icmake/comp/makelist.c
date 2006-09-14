@@ -16,6 +16,12 @@ ESTRUC_ *makelist(ESTRUC_ *args, E_TYPE_ type)
     ESTRUC_
         *e0;
 
+    if (initialization)
+    {
+        semantic(init_expr_not_const);
+        return nullframe(args);
+    }
+
     e0 = codestruc(args, 0);
     e0 = codestruc(args, 1);
 
@@ -45,3 +51,6 @@ ESTRUC_ *makelist(ESTRUC_ *args, E_TYPE_ type)
 
     return (args);                          /* return called function code */
 }
+
+
+

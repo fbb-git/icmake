@@ -96,7 +96,7 @@
 
 %expect 1
 
-        /* Grammar Rules */
+       /* Grammar Rules */
 
 %%
 
@@ -167,9 +167,6 @@ comma_expr:
         zeroframe
     ;
 
-comma_or_closepar:
-            { parse_error = err_comma_or_closepar_expected; }   ',' ;
-
 compound:
         '{'                                 /* } (for matching) */
         statements
@@ -187,7 +184,6 @@ def_var_or_fun:
         funcdef
     ;
                                             /* E */
-
 else_tail:
         ELSE
         statement
@@ -204,6 +200,13 @@ enterid:
             entervar();
         }
     ;
+
+entervarid:
+    enterid
+    {
+        $$ = fetchvar();
+    }
+;
 
 err_expression:
         {
@@ -551,11 +554,11 @@ for_stat:
 
 funcdef:
         funid
-        funvars
+        funvars                         /* returns init code */
         statements
         closebrace
         {
-            close_fun(&$3);
+            close_fun(catcode(&$2, &$3));
         }
     ;
 
@@ -661,12 +664,26 @@ funvars:
         opt_locals
         {
             make_frame();
+            $$ = $5;                    /* code of local initializations */
         }
     ;
 
                                             /* G */
                                             /* H */
                                             /* I */
+idexpr:
+    enterid
+    zeroframe                           /* no explicit initialization */
+|
+    entervarid
+    initassign
+    expr_code
+    {
+        initialization = 0;
+        $$ = *expr_stmnt(assign(&$1, &$3));    /* explicit initialization */
+    }        
+;
+
 if:
         IF
         nesting
@@ -686,6 +703,13 @@ if_stat:
             $$ = *if_stmnt(&$3, &$5, &$8);
         }
     ;
+
+initassign:
+    '='
+    {
+        initialization = 1;
+    }
+
                                             /* J */
                                             /* K */
                                             /* L */
@@ -697,15 +721,21 @@ leave_key:
 
 local_list:
         type_of_var
-        vardefs
+        vardefs                         /* + semicol, initialization code */
+        {
+            $$ = $2;
+        }
     ;
 
 locals:
-        locals
-        local_list
-    |
-        local_list
-    ;
+    locals
+    local_list                          /* type + variables */
+    {
+        $$ = *catcode(&$1, &$2);        /* cat initialization code */
+    }            
+|
+    local_list                          /* initialization code of 1st var */
+;
                                             /* M */
 makelist:
                                              /* makelist(expr) */
@@ -859,7 +889,7 @@ one_arg_funs:
 
 openpar:    {parse_error = err_openpar_expected; }      '(' ;
 openbrace:  {parse_error = err_openbrace_expected; }    '{' ;
-                                            /* } for matching */
+                                                     /* } for matching */
 opt_arglist:
         args
     |
@@ -896,8 +926,9 @@ optint_string:
     ;
 
 opt_locals:
-        locals
+        locals                              /* initialization code */
     |
+        zeroframe                           /* empty init. code */
     ;
 
 opt_parlist:
@@ -1051,19 +1082,30 @@ type_of_var:
                                             /* U */
                                             /* V */
 vardefs:
-        varnames
-        semicol
-    ;
+    varnames
+    semicol
+    {
+        $$ = $1;                    /* initialization code */
+    }
+;
 
 varnames:
         varnames
         comma
-        enterid
+        idexpr  // enterid
+        {
+            $$ = *catcode(&$1, &$3);    /* catenate variable    */
+                                        /* initialization code  */
+        }            
     |
-        enterid
+        idexpr  // enterid
     |
         error
         ok
+        zeroframe                       /* Empty stmnt  */
+        {
+            $$ = $3;
+        }
     ;
 
 var_or_fun:

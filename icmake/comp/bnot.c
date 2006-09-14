@@ -14,6 +14,11 @@ ESTRUC_ *bnot (ESTRUC_ *e)                   /* expression so far */
 
     if ((e->type & ~ALLTYPES) == e_const)   /* immediate value */
         e->evalue = ~e->evalue;
+    else if (initialization)
+    {
+        semantic(init_expr_not_const);
+        return nullframe(e);
+    }
     else
     {
         etoc(e);                            /* convert to code */

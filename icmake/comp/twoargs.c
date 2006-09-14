@@ -14,6 +14,13 @@ ESTRUC_ *twoargs(type, larg, rarg)
     register int
         ok;
 
+    if (initialization)
+    {
+        semantic(init_expr_not_const);
+        return nullframe(larg);
+    }
+
+
     etoc(larg);                             /* arg to stack */
     etoc(rarg);                             /* arg to stack */
 

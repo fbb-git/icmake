@@ -20,8 +20,13 @@ ESTRUC_ *multiply (lval, rval)
 
     if ((lval->type & rval->type & ~ALLTYPES) == e_const)
         lval->evalue *= rval->evalue;
-    else
-        defcode(lval, rval, op_mul);
+    else if (initialization)
+    {
+        semantic(init_expr_not_const);
+        return nullframe(lval);
+    }
+
+    defcode(lval, rval, op_mul);
 
     return (lval);                          /* return new expression */
 }

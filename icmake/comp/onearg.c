@@ -13,6 +13,12 @@ ESTRUC_ *onearg(type, arg)
     register int
         ok;
 
+    if (initialization)
+    {
+        semantic(init_expr_not_const);
+        return nullframe(arg);
+    }
+
     etoc(arg);                               /* arg to stack */
 
     switch (type)

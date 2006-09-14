@@ -27,6 +27,12 @@ ESTRUC_ *subtract (lval, rval)
         lval->evalue -= rval->evalue;
     else
     {
+        if (initialization)
+        {
+            semantic(init_expr_not_const);
+            return nullframe(lval);
+        }
+
         defcode(lval, rval, op_sub);
         set_type(lval, type & (ALLTYPES | e_code));
     }

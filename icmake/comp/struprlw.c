@@ -7,6 +7,12 @@
 
 ESTRUC_ *strupr_lwr(E_TYPE_ type, ESTRUC_ *arg)
 {
+    if (initialization)
+    {
+        semantic(init_expr_not_const);
+        return nullframe(arg);
+    }
+
     etoc(arg);                              /* arg to stack */
 
                                             /* test type of argument */

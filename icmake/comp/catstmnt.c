@@ -4,10 +4,7 @@
 
 #include "iccomp.h"
 
-ESTRUC_ *cat_stmnt(lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+ESTRUC_ *cat_stmnt(ESTRUC_ *lval, ESTRUC_ *rval)
 {
     patchup_false(lval, 1);
 
@@ -15,8 +12,8 @@ ESTRUC_ *cat_stmnt(lval, rval)
     {
         outbin(lval->code, lval->codelen);
         discard(lval);
-        return (rval);
+        return rval;
     }
 
-    return (catcode(lval, rval));
+    return catcode(lval, rval);
 }

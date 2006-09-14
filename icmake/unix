@@ -11,6 +11,9 @@
         FBB
 */
 
+// #define VERBOSE       // for babbling script
+// #define USE_DEBUG
+
 #include "def/programs"
 #include "def/destinations"
 
@@ -31,12 +34,15 @@
 
 list
         examples;
+
     
 void check(string subdir)
 {
     if (!exists(subdir))
     {
+#ifdef VERBOSE
         printf("Creating subdirectory: ");
+#endif
         exec(MKDIR, subdir);
     }
 }    
@@ -70,10 +76,14 @@ void makelib (string dir, string lib)
     int
         i;
 
+#ifdef VERBOSE
     printf ("---- Directory: ", dir, " ----\n");
+#endif
     chdir (dir);
 
+#ifdef VERBOSE
     printf ("Checking .c files against library ", lib, "\n");       
+#endif
     cfiles = makelist ("*.c");
     for (i = sizeof (cfiles) - 1; i >= 0; i--)
     {
@@ -88,9 +98,15 @@ void makelib (string dir, string lib)
             cfiles -= (list) cfile;
     }
     for (i = 0; i < sizeof (cfiles); i++)
-        exec (CC, CFLAGS, element (i, cfiles));
+        exec (CC, CFLAGS, 
+#ifdef USE_DEBUG
+                "-DYYDEBUG=1",
+#endif
+                    element (i, cfiles));
     
+#ifdef VERBOSE
     printf ("Checking .o files against library ", lib, "\n");
+#endif
     ofiles = makelist ("*.o");
     if (ofiles)
     {
@@ -103,22 +119,43 @@ void makelib (string dir, string lib)
 
 void makelibs ()
 {
+#ifdef VERBOSE
     printf ("\nMaking Run Time Support System library\n");
+#endif
     makelib ("rss", LIB_ICRSS);
     
+#ifdef VERBOSE
     printf ("\nMaking lib for shell program icmake\n");
+#endif
     makelib ("make", LIB_ICMAKE);
     
+#ifdef VERBOSE
     printf ("\nMaking lib for preprocessor icm-pp\n");
+#endif
     makelib ("pp", LIB_ICMPP);
     
+#ifdef VERBOSE
     printf ("\nMaking lib for compiler icm-comp\n");
+#endif
+    chdir ("comp");
+
+    if ("parser" younger "parser.c")
+        system("bison -d -o parser.c parser");
+    if ("lexer" younger "lexer2.c" || "parser" younger "lexer2.c")
+        system("flex -o lexer2.c lexer");
+
+    chdir("..");
+
     makelib ("comp", LIB_ICMCOMP);
     
+#ifdef VERBOSE
     printf ("\nMaking lib for executor icm-exec\n");
+#endif
     makelib ("exec", LIB_ICMEXEC);
     
+#ifdef VERBOSE
     printf ("\nMaking lib for unassembler icmun\n");
+#endif
     makelib ("un", LIB_ICMUN);
 }
 
@@ -129,17 +166,28 @@ void makeprog (string dir, string lib, string prog)
         
     rsslib = "../rss/libicrss.a";
 
+#ifdef VERBOSE
     printf ("---- Directory: ", dir, " ----\n");
+#endif
     chdir (dir);
     
+#ifdef VERBOSE
     printf ("Checking prog ", prog, " against libs ", lib, 
             " and ", rsslib, "\n");
+#endif
 
     if (lib younger prog || rsslib younger prog)
     {
-        exec (CC, "-o ../bin/" + prog, lib, rsslib);
+        exec (CC, 
+#ifdef USE_DEBUG
+                "-DYYDEBUG=1",
+#endif
+                "-o ../bin/" + prog, lib, rsslib);
+
         exec (STRIP, "../bin/" + prog);
+#ifdef VERBOSE
     printf("Stripped version of ", prog, " in icmake/bin\n");
+#endif
     }           
         
     chdir ("..");
@@ -149,19 +197,29 @@ void makeprogs ()
 {
     makelibs ();
     
+#ifdef VERBOSE
     printf ("\nMaking shell program icmake\n");
+#endif
     makeprog ("make", LIB_ICMAKE, "icmake");
     
+#ifdef VERBOSE
     printf ("\nMaking unassembler program icmun\n");
+#endif
     makeprog ("un", LIB_ICMUN, "icmun");
 
+#ifdef VERBOSE
     printf ("\nMaking unassembler program icm-pp\n");
+#endif
     makeprog ("pp", LIB_ICMPP, "icm-pp");
     
+#ifdef VERBOSE
     printf ("\nMaking compiler program icm-comp\n");
+#endif
     makeprog ("comp", LIB_ICMCOMP, "icm-comp");
     
+#ifdef VERBOSE
     printf ("\nMaking executor program icm-exec\n");
+#endif
     makeprog ("exec", LIB_ICMEXEC, "icm-exec");
 }
 
@@ -170,7 +228,9 @@ void inst (string prog)
     string
         dest;
 
+#ifdef VERBOSE
     printf ("---- Directory: icmake/bin ----\n");
+#endif
     chdir ("bin");
     dest = BINDIR + "/" + prog;
     
@@ -193,25 +253,37 @@ void install ()
 {
     makeprogs ();
     
-    printf ("\nInstalling shell program icmake\n");
+    #ifdef VERBOSE
+        printf ("\nInstalling shell program icmake\n");
+    #endif
     inst ("icmake");
     
+#ifdef VERBOSE
     printf ("\nInstalling unassembler program icmun\n");
+#endif
     inst ("icmun");
     
+#ifdef VERBOSE
     printf ("\nInstalling unassembler program icm-pp\n");
+#endif
     inst ("icm-pp");
     
+#ifdef VERBOSE
     printf ("\nInstalling compiler program icm-comp\n");
+#endif
     inst ("icm-comp");
     
+#ifdef VERBOSE
     printf ("\nUSE HAND-INSTALLATION OF EXECUTOR PROGRAM ICM-EXEC\n");
+#endif
     inst ("icm-exec");
 }
 
 void clean (string dir)       
 {
+#ifdef VERBOSE
     printf ("---- Directory: ", dir, " ----\n");
+#endif
     chdir (dir);
     exec (RM, "-f", "*.o");
     chdir ("..");
@@ -229,7 +301,9 @@ void cleanup ()
 
 void realclean (string dir, string lib)
 {
+#ifdef VERBOSE
     printf ("---- Directory: ", dir, " ----\n");
+#endif
     chdir (dir);
     exec (RM, "-f", lib,  "*.o");
     chdir ("..");
@@ -241,6 +315,11 @@ void realcleanup ()
     realclean ("make", LIB_ICMAKE);
     realclean ("pp", LIB_ICMPP);
     realclean ("comp", LIB_ICMCOMP);
+
+    chdir("comp");
+    system("rm -f parser.c lexer2.c");
+    chdir("..");
+
     realclean ("exec", LIB_ICMEXEC);
     realclean ("un", LIB_ICMUN);
 }
@@ -271,7 +350,9 @@ void makedist ()
     if (getch () != "y")
         return;
 
+#ifdef VERBOSE
     printf ("\nOk..\n");
+#endif
     
     chdir ("examples");
     for (i = 0; i < sizeof (examples); i++)

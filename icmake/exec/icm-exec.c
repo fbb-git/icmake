@@ -95,5 +95,5 @@ char **envp;
 
     process ();
 
-    exit (retval);
+    return retval;
 }

@@ -19,6 +19,12 @@ ESTRUC_ *and_boolean(lexp, rexp)
     }
     else                                    /* at least one code-part */
     {
+        if (initialization)
+        {
+            semantic(init_expr_not_const);
+            return nullframe(lexp);
+        }
+
         fetob(lexp);
         fetob(rexp);
 

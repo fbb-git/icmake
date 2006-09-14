@@ -15,6 +15,12 @@ ESTRUC_ *optint_special(type, larg, rarg)
     ESTRUC_
         tmp;
 
+    if (initialization)
+    {
+        semantic(init_expr_not_const);
+        return nullframe(larg);
+    }
+
     etoc(larg);                             /* arg to stack */
 
     if (!test_type(larg, e_int))            /* no first int arg */

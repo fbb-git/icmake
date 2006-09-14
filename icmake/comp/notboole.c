@@ -19,6 +19,12 @@ ESTRUC_ *not_boolean(e)
     }
     else
     {
+        if (initialization)
+        {
+            semantic(init_expr_not_const);
+            return nullframe(e);
+        }
+
         fetob(e);
 
         len = e->truelen;                   /* cross the links */

@@ -25,5 +25,5 @@ ESTRUC_ stackframe(E_TYPE_ type)
             frame.evalue = 0;
     }
 
-    return (frame);
+    return frame;
 }

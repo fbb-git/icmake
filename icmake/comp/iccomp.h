@@ -159,11 +159,12 @@ extern FILE
     *yyout;                                 /* yylex() output file */
 
 extern int
+    initialization,                         /* for initialization expr. */
     yy_init,                                /* yylex() initializer: 1 to init. */
     yyleng,                                 /* strlen(yytext) */
-    yynerr;                                 /* number of parse errors so far */
+    yynerrs;                                 /* number of parse errors so far */
 
-extern unsigned
+extern int
     yylineno;                               /* yylex() line counter */
 
 extern char
@@ -209,6 +210,7 @@ extern char
     illegal_argcount[],
     illegal_cast[],
     illegal_type[],
+    init_expr_not_const[],
     lvalue_needed[],
     not_on_lists[],
     not_on_strings[],
@@ -256,8 +258,7 @@ extern unsigned
     n_params,
     n_strings,
     sem_err,
-    stringsize,
-    yylineno;
+    stringsize;
 
 
 int conflict (ESTRUC_ *, ESTRUC_ *,     /* conflicting binary types */
@@ -276,8 +277,9 @@ unsigned rm_jmp_zero (unsigned,         /* remove jmp 0 from || && lists */
 
 ESTRUC_ *addition (ESTRUC_ *, ESTRUC_ *);  /* + code */
 ESTRUC_ *and_boolean (ESTRUC_ *, ESTRUC_ *);/* && code */
-ESTRUC_ *assign  (ESTRUC_ *, ESTRUC_ *);   /*  = code (shell) */
-ESTRUC_ *assignment  (ESTRUC_ *, ESTRUC_ *, /*  = code */
+ESTRUC_ *assign  (ESTRUC_ *, ESTRUC_ *);        /*  = code (shell) */
+ESTRUC_ *assignconst(ESTRUC_ *, ESTRUC_ *);     /* initialization code */
+ESTRUC_ *assignment  (ESTRUC_ *, ESTRUC_ *,     /*  = code */
                                     char *);
 ESTRUC_ *band (ESTRUC_ *, ESTRUC_ *);           /* & (binary) code */
 ESTRUC_ *bnot (ESTRUC_ *);                      /* ~ code */
@@ -319,6 +321,7 @@ ESTRUC_ *multargs (ESTRUC_ *, ESTRUC_ *);  /* (arg1, arg2, ... code */
 ESTRUC_ *multiply (ESTRUC_ *, ESTRUC_ *);  /* * code */
 ESTRUC_ *negate (ESTRUC_ *);               /* - (unary) code */
 ESTRUC_ *not_boolean (ESTRUC_ *);          /* ! code */
+ESTRUC_ *nullframe(ESTRUC_ *e);              /* discard(e) + *e = stackfr(0) */
 ESTRUC_ *old (ESTRUC_ *, ESTRUC_ *);       /* older code */
 ESTRUC_ *onearg (E_TYPE_, ESTRUC_ *);      /* fun(x)  code */
 ESTRUC_ *optint_special (E_TYPE_,           /* fun([int,] ...) */

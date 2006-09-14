@@ -4,8 +4,12 @@
 
 #include "iccomp.h"
 
+#ifdef MSDOS
 #pragma comment(lib, "icmcomp")
 #pragma comment(lib, "../rss/icrss")
+#endif
+
+extern int yydebug;
 
 int main (argc, argv)            /* icm-comp source(txt) dest(bin) */
     int
@@ -41,12 +45,16 @@ int main (argc, argv)            /* icm-comp source(txt) dest(bin) */
                                             /* go to first codebyte pos */
     fseek(s_bin, sizeof(BIN_HEADER_), SEEK_SET);
 
+    #ifdef YYDEBUG
+        yydebug = YYDEBUG;
+    #endif
+
     yyparse();                              /* parse the source */
 
-    if (!yynerr)                            /* backend if no errors */
+    if (!yynerrs)                            /* backend if no errors */
         backend();
     else                                    /* informative message */
         printf("\n%d error(s) detected\n", errcount);
 
-    return(yynerr != 0);                    /* returnvalue */
+    return(yynerrs != 0);                    /* returnvalue */
 }

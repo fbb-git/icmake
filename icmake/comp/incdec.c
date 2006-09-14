@@ -15,6 +15,12 @@ ESTRUC_ *incdec (pp, opcode, e)
     register unsigned
         varnr;
 
+    if (initialization)
+    {
+        semantic(init_expr_not_const);
+        return nullframe(e);
+    }
+
     if (test_operand(e, opcode))
     {
         semantic(illegal_type, opstring[opcode]);

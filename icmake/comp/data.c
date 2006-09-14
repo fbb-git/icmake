@@ -55,6 +55,7 @@ char
     illegal_argcount[]  = "%s(): too few arguments",
     illegal_cast[]      = "illegal cast",
     illegal_type[]      = "illegal type for %s",
+    init_expr_not_const[] = "initialization expression must be const",
     lvalue_needed[]     = "lvalue needed for %s",
     nullstring[]        = "",
     *opstring[] =
@@ -163,6 +164,7 @@ FILE
     *s_bin;
 
 int
+    initialization = 0,
     parse_error = err_code_or_vars_expected,
     (*yylex_input)(char *, int) =           /* pointer to yylex input to use */
                             yylex_file;     /* start reading from file       */
@@ -344,5 +346,4 @@ unsigned
     n_strings,
     n_symbols,
     sem_err,
-    stringsize,
-    yylineno = 1;
+    stringsize;

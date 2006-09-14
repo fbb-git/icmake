@@ -24,6 +24,12 @@ ESTRUC_ *assignment(lval, rval, opstr)      /* opstr is '=', or "/=", etc. */
         return (lval);
     }
 
+    if (initialization)
+    {
+        semantic(init_expr_not_const);
+        return nullframe(lval);
+    }
+
     etoc(rval);                             /* convert rval to code */
 
                                             /* same types */
@@ -38,10 +44,13 @@ ESTRUC_ *assignment(lval, rval, opstr)      /* opstr is '=', or "/=", etc. */
         tmp->evalue = value;                /* set lvalue type and index */
         tmp->type = type;
 
-        return (tmp);
+        return tmp;
     }
 
     semantic(type_conflict, opstr);
     discard(rval);
-    return (lval);
+
+    return lval;
 }
+
+

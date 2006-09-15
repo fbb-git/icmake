@@ -34,7 +34,7 @@
 
 #include "icm-exec.h"
 
-void main (argc, argv, envp)
+int main (argc, argv, envp)
 int argc;
 char **argv;
 char **envp;

@@ -14,13 +14,6 @@ ESTRUC_ *twoargs(type, larg, rarg)
     register int
         ok;
 
-//    if (initialization)
-//    {
-//        semantic(init_expr_not_const);
-//        return nullframe(larg);
-//    }
-
-
     etoc(larg);                             /* arg to stack */
     etoc(rarg);                             /* arg to stack */
 
@@ -48,7 +41,7 @@ ESTRUC_ *twoargs(type, larg, rarg)
                 case f_c_ext:
                 case f_c_base:
                 case f_c_path:
-                case f_substr:
+                case f_strfind:
             */
             ok = larg->type & rarg->type & e_str;
     }
@@ -56,7 +49,7 @@ ESTRUC_ *twoargs(type, larg, rarg)
     if (ok)
     {
         catcode(rarg, larg);                /* make one code vector */
-        if (type == f_substr)               /* hidden func */
+        if (type == f_strfind)               /* hidden func */
             callhidden (he_substr, rarg);
         else                                /* real rss func */
             callrss(rarg, type);

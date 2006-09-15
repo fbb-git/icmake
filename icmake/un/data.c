@@ -45,9 +45,13 @@ char
         NULL,                               /* occupied by strlwr */
         NULL,                               /* occupied by strupr */
         "system",
-        NULL,				    /* occupied by strlen */
-        NULL,				    /* occupied by substr */
+
+        NULL,                   /* occupied by strlen */
+        NULL,                   /* occupied by "strfind */
         "getpid",
+
+        "substr",
+        "getenv",
     };
 
 FILE

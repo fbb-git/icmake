@@ -6,7 +6,7 @@
 
 #include "icmun.h"
 
-void main (argc, argv)
+int main (argc, argv)
 int argc;
 char **argv;
 {
@@ -24,7 +24,7 @@ char **argv;
         printf ("Usage: %s bimfile\n"
                 "where: bimfile - binary makefile (default extension: %s)\n\n"
             , progname, bimext);
-        exit (2);
+        return 2;
     }
 
     infname = change_ext (argv [1], bimext);
@@ -39,5 +39,5 @@ char **argv;
 
     process ();
 
-    exit (0);
+    return 0;
 }

@@ -33,6 +33,7 @@
         FIELDS
         FOR
         FPRINTF
+        GETENV
         GETCH
         GETPID
         GETS
@@ -53,6 +54,7 @@
         STRLEN
         STRLWR
         STRUPR
+        STRFIND
         SUBSTR
         SYSTEM
         VOID
@@ -595,6 +597,17 @@ function:
             $$ = *twoargs($1.type, &$3, &$5);
         }
     |
+        three_arg_funs
+        openpar
+        err_expression
+        comma
+        err_expression
+        comma
+        err_expression
+        {
+            $$ = *threeargs($1.type, &$3, &$5, &$7);
+        }
+    |
         optint_string                       /* CHDIR, SYSTEM, STAT */
         openpar
         err_expression                      /* int inserted if string */
@@ -884,6 +897,8 @@ one_arg_funs:
     |
         PUTENV
     |
+        GETENV
+    |
         STRLEN
     ;
 
@@ -1069,9 +1084,13 @@ two_arg_funs:
     |
         FIELDS                              /* string, string */
     |
-        SUBSTR                              /* string, string */
+        STRFIND                              /* string, string */
     ;
 
+three_arg_funs:
+    SUBSTR
+;
+        
 type_of_var:
         vartype
         {

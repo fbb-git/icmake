@@ -160,6 +160,9 @@ extern void
     fun_ret ARG ((void)),
     fun_pop_reg ARG ((void)),
     fun_empty ARG ((void)),
+    fun_substr ARG ((void)),
+    fun_getenv ARG ((void)),
+    fun_strlen ARG ((void)),
     outstring ARG ((char *)),
     process ARG ((void)),
     push ARG ((VAR_));

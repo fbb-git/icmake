@@ -146,6 +146,10 @@ fgets                   {
 for                     {
                             return(FOR);
                         }
+getenv                  {
+                            yylval.type = f_getenv;
+                            return GETENV;
+                        }
 if                      {
                             return(IF);
                         }
@@ -210,9 +214,13 @@ strtok                  {
                             yylval.type = f_fields;
                             return(FIELDS);
                         }
+strfind                 {
+                            yylval.type = f_strfind;
+                            return STRFIND;
+                        }
 substr                  {
                             yylval.type = f_substr;
-                            return(SUBSTR);
+                            return SUBSTR;
                         }
 system                  {
                             yylval.type = f_system;

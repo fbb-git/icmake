@@ -49,7 +49,6 @@ char
         "strupr",
         "system",
         "strlen",
-        "substr",
     },
     icm_comp[]          = "ICM-COMP:",
     illegal_argcount[]  = "%s(): too few arguments",
@@ -305,9 +304,9 @@ HIDDEN_FUNCTION_
             1,
         },
         {
-            "h_substr",
+            "h_strfind",
 
-            "int h_substr(string str, string sub)"
+            "int h_strfind(string str, string sub)"
             "{"
             "    int"
             "        strindex,"

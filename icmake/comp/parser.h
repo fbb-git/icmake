@@ -62,52 +62,54 @@
      FIELDS = 278,
      FOR = 279,
      FPRINTF = 280,
-     GETCH = 281,
-     GETPID = 282,
-     GETS = 283,
-     IDENTIFIER = 284,
-     IF = 285,
-     INT = 286,
-     LIST = 287,
-     MAKELIST = 288,
-     M_ECHO = 289,
-     NUMBER = 290,
-     PRINTF = 291,
-     PUTENV = 292,
-     RETURN = 293,
-     SIZEOFLIST = 294,
-     STAT = 295,
-     STRING = 296,
-     STRINGTYPE = 297,
-     STRLEN = 298,
-     STRLWR = 299,
-     STRUPR = 300,
-     SUBSTR = 301,
-     SYSTEM = 302,
-     VOID = 303,
-     WHILE = 304,
-     PLUS_IS = 305,
-     MOD_IS = 306,
-     MUL_IS = 307,
-     MINUS_IS = 308,
-     DIV_IS = 309,
-     SHR_IS = 310,
-     SHL_IS = 311,
-     XOR_IS = 312,
-     OR_IS = 313,
-     AND_IS = 314,
-     OR = 315,
-     AND = 316,
-     NOT_EQUAL = 317,
-     EQUAL = 318,
-     YOUNGER = 319,
-     OLDER = 320,
-     GREATER_EQUAL = 321,
-     SMALLER_EQUAL = 322,
-     SHR = 323,
-     SHL = 324,
-     DEC = 325,
-     INC = 326
+     GETENV = 281,
+     GETCH = 282,
+     GETPID = 283,
+     GETS = 284,
+     IDENTIFIER = 285,
+     IF = 286,
+     INT = 287,
+     LIST = 288,
+     MAKELIST = 289,
+     M_ECHO = 290,
+     NUMBER = 291,
+     PRINTF = 292,
+     PUTENV = 293,
+     RETURN = 294,
+     SIZEOFLIST = 295,
+     STAT = 296,
+     STRING = 297,
+     STRINGTYPE = 298,
+     STRLEN = 299,
+     STRLWR = 300,
+     STRUPR = 301,
+     STRFIND = 302,
+     SUBSTR = 303,
+     SYSTEM = 304,
+     VOID = 305,
+     WHILE = 306,
+     PLUS_IS = 307,
+     MOD_IS = 308,
+     MUL_IS = 309,
+     MINUS_IS = 310,
+     DIV_IS = 311,
+     SHR_IS = 312,
+     SHL_IS = 313,
+     XOR_IS = 314,
+     OR_IS = 315,
+     AND_IS = 316,
+     OR = 317,
+     AND = 318,
+     NOT_EQUAL = 319,
+     EQUAL = 320,
+     YOUNGER = 321,
+     OLDER = 322,
+     GREATER_EQUAL = 323,
+     SMALLER_EQUAL = 324,
+     SHR = 325,
+     SHL = 326,
+     DEC = 327,
+     INC = 328
    };
 #endif
 /* Tokens.  */
@@ -134,52 +136,54 @@
 #define FIELDS 278
 #define FOR 279
 #define FPRINTF 280
-#define GETCH 281
-#define GETPID 282
-#define GETS 283
-#define IDENTIFIER 284
-#define IF 285
-#define INT 286
-#define LIST 287
-#define MAKELIST 288
-#define M_ECHO 289
-#define NUMBER 290
-#define PRINTF 291
-#define PUTENV 292
-#define RETURN 293
-#define SIZEOFLIST 294
-#define STAT 295
-#define STRING 296
-#define STRINGTYPE 297
-#define STRLEN 298
-#define STRLWR 299
-#define STRUPR 300
-#define SUBSTR 301
-#define SYSTEM 302
-#define VOID 303
-#define WHILE 304
-#define PLUS_IS 305
-#define MOD_IS 306
-#define MUL_IS 307
-#define MINUS_IS 308
-#define DIV_IS 309
-#define SHR_IS 310
-#define SHL_IS 311
-#define XOR_IS 312
-#define OR_IS 313
-#define AND_IS 314
-#define OR 315
-#define AND 316
-#define NOT_EQUAL 317
-#define EQUAL 318
-#define YOUNGER 319
-#define OLDER 320
-#define GREATER_EQUAL 321
-#define SMALLER_EQUAL 322
-#define SHR 323
-#define SHL 324
-#define DEC 325
-#define INC 326
+#define GETENV 281
+#define GETCH 282
+#define GETPID 283
+#define GETS 284
+#define IDENTIFIER 285
+#define IF 286
+#define INT 287
+#define LIST 288
+#define MAKELIST 289
+#define M_ECHO 290
+#define NUMBER 291
+#define PRINTF 292
+#define PUTENV 293
+#define RETURN 294
+#define SIZEOFLIST 295
+#define STAT 296
+#define STRING 297
+#define STRINGTYPE 298
+#define STRLEN 299
+#define STRLWR 300
+#define STRUPR 301
+#define STRFIND 302
+#define SUBSTR 303
+#define SYSTEM 304
+#define VOID 305
+#define WHILE 306
+#define PLUS_IS 307
+#define MOD_IS 308
+#define MUL_IS 309
+#define MINUS_IS 310
+#define DIV_IS 311
+#define SHR_IS 312
+#define SHL_IS 313
+#define XOR_IS 314
+#define OR_IS 315
+#define AND_IS 316
+#define OR 317
+#define AND 318
+#define NOT_EQUAL 319
+#define EQUAL 320
+#define YOUNGER 321
+#define OLDER 322
+#define GREATER_EQUAL 323
+#define SMALLER_EQUAL 324
+#define SHR 325
+#define SHL 326
+#define DEC 327
+#define INC 328
 
 
 

@@ -35,6 +35,7 @@ void callrss(ESTRUC_ *e, FUNNR_ funnr, ...)
         case f_g_base:
         case f_g_ext:
         case f_g_path:
+        case f_getenv:
             type = e_str | e_reg;
         break;
                                             /* 2 arguments, returning int */
@@ -49,6 +50,12 @@ void callrss(ESTRUC_ *e, FUNNR_ funnr, ...)
         case f_str_el:
         case f_element:
             args++;                         /* two arguments */
+            type = e_str | e_reg;           /* returning string */
+        break;
+
+                                            /* 3 args, returning string */
+        case f_substr:
+            args = 3;                       /* three arguments */
             type = e_str | e_reg;           /* returning string */
         break;
 
@@ -84,6 +91,7 @@ void callrss(ESTRUC_ *e, FUNNR_ funnr, ...)
             case f_echo:
             case f_exists:
             case f_sizeoflist:
+            case f_strlen:
         */
     break;
     }
@@ -91,3 +99,6 @@ void callrss(ESTRUC_ *e, FUNNR_ funnr, ...)
         gencode (e, op_asp, args);          /* add stack pointer */
     set_type(e, type);                      /* type of resulting expression */
 }
+
+
+

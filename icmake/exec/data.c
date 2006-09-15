@@ -121,16 +121,17 @@ void
         fun_sizeoflist,
         fun_stat,
         fun_str_el,
-        fun_empty,                      /* strlwr */
-        fun_empty,                      /* strupr */
+        fun_empty,                  /* strlwr, compiler generated */
+        fun_empty,                  /* strupr, compiler generated */
         fun_system,
         
-        fun_empty,			/* strlen */
-        fun_empty,			/* substr */
+        fun_empty,                 /* strlen, compiler generated   */
+
+        fun_empty,          /* strfind, compiler generated  */
         fun_getpid,
 
-        fun_empty,
-        fun_empty,
+        fun_substr,
+        fun_getenv,
         fun_empty,
         fun_empty,
         fun_empty,

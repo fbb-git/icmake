@@ -267,8 +267,11 @@ typedef enum                                /* names of rss-functions */
 
                       /* reserved rss function opcodes for subreleases */
     f_strlen,                               /* NEW: only for the compiler */
-    f_substr,                               /* IDEM */
+    f_strfind,                              /* IDEM */
     f_getpid,                               /* used by several programs  */
+
+    f_substr,
+    f_getenv,
 
     f_hlt = f_system + 10,                  /* dummy marker for non-existing */
 } FUNNR_;

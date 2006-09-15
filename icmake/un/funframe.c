@@ -2,7 +2,7 @@
 
 void fun_frame ()
 {
-    char
+    int
         i,
         nlocals;
 

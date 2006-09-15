@@ -339,9 +339,9 @@ ESTRUC_ *sm_equal (ESTRUC_ *, ESTRUC_ *);  /* <= code */
 ESTRUC_ stackframe (E_TYPE_);              /* initialize a stack-element */
 ESTRUC_ *subtract (ESTRUC_ *, ESTRUC_ *);  /* - (binary) code */
 ESTRUC_ *strupr_lwr (E_TYPE_, ESTRUC_ *);       /* strupr<->strlwr */
-ESTRUC_ *threeargs (ESTRUC_ *,              /* fun(x, y, z)  code */
+ESTRUC_ *threeargs (E_TYPE_, ESTRUC_ *,         /* fun(x, y, z)  code */
                         ESTRUC_ *, ESTRUC_ *);
-ESTRUC_ *twoargs (E_TYPE_, ESTRUC_ *,       /* fun(x, y)  code */
+ESTRUC_ *twoargs (E_TYPE_, ESTRUC_ *,           /* fun(x, y)  code */
                                ESTRUC_ *);
 ESTRUC_ *unequal (ESTRUC_ *, ESTRUC_ *);   /* != code */
 ESTRUC_ *while_stmnt (ESTRUC_ *, ESTRUC_ *);/* while code */

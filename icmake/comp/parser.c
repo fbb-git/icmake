@@ -2294,7 +2294,7 @@ yyreduce:
   case 79:
 #line 562 "parser"
     {
-            close_fun(catcode(&(yyvsp[(2) - (4)]), &(yyvsp[(3) - (4)])));
+            close_fun(&(yyvsp[(3) - (4)]));
         ;}
     break;
 
@@ -2393,7 +2393,7 @@ yyreduce:
 #line 678 "parser"
     {
             make_frame();
-            (yyval) = (yyvsp[(5) - (5)]);                    /* code of local initializations */
+            outbin((yyvsp[(5) - (5)]).code, (yyvsp[(5) - (5)]).codelen);
         ;}
     break;
 

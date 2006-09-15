@@ -286,35 +286,6 @@ HIDDEN_FUNCTION_
             0,
             1,
         },
-        {
-            "h_strfind",
-
-            "int h_strfind(string str, string sub)"
-            "{"
-            "    int"
-            "        strindex,"
-            "        subindex,"
-            "        mismatch;"
-            ""
-            "    for (strindex = 0; element (strindex, str); strindex++)"
-            "    {"
-            "        mismatch = 0;"
-            "        for (subindex = 0; element (subindex, sub) && !mismatch; subindex++)"
-            "            if (element (strindex + subindex, str) !="
-            "                element (subindex, sub)"
-            "               )"
-            "                mismatch = 1;"
-            "        if (! mismatch)"
-            "            return (strindex);"
-            "    }"
-            ""
-            "    return (-1);"
-            "}",
-
-            e_reg | e_int,
-            0,
-            2,
-        },
     };
 
 unsigned

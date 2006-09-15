@@ -49,10 +49,7 @@ ESTRUC_ *twoargs(type, larg, rarg)
     if (ok)
     {
         catcode(rarg, larg);                /* make one code vector */
-        if (type == f_strfind)               /* hidden func */
-            callhidden (he_strfind, rarg);
-        else                                /* real rss func */
-            callrss(rarg, type);
+        callrss(rarg, type);
     }
     else
     {

@@ -12,13 +12,6 @@ ESTRUC_ *zeroargs(type)
         type;
 {
     e = stackframe(0);                      /* reinitialize e */
-
-//    if (initialization)
-//    {
-//        semantic(init_expr_not_const);
-//        return &e;
-//    }
-
     callrss(&e, type);
 
     return (&e);

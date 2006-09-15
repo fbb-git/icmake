@@ -47,7 +47,7 @@ char
         "system",
 
         "strlen",
-        NULL,                   /* occupied by "strfind */
+        "strfind",              /* occupied by "strfind */
         "getpid",
 
         "substr",

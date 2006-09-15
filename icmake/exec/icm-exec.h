@@ -163,6 +163,7 @@ extern void
     fun_substr ARG ((void)),
     fun_getenv ARG ((void)),
     fun_strlen ARG ((void)),
+    fun_strfind ARG ((void)),
     outstring ARG ((char *)),
     process ARG ((void)),
     push ARG ((VAR_));

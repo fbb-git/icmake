@@ -52,7 +52,7 @@ ESTRUC_ *onearg(type, arg)
     }
 
     if (ok)
-            callrss(arg, type);
+        callrss(arg, type);
     else
         semantic(type_conflict, funstring[type]);
 

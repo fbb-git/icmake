@@ -16,12 +16,6 @@ ESTRUC_ *exec_fprintf(type, args)
     ESTRUC_
         *e0;
 
-//    if (initialization)
-//    {
-//        semantic(init_expr_not_const);
-//        return nullframe(args);
-//    }
-
     if (args->type < 2)                     /* argcount must be at least 2 */
     {
         semantic(illegal_argcount, funstring[type]);

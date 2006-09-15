@@ -39,6 +39,7 @@ void callrss(ESTRUC_ *e, FUNNR_ funnr, ...)
             type = e_str | e_reg;
         break;
                                             /* 2 arguments, returning int */
+        case f_strfind:
         case f_system:
             args++;
         break;

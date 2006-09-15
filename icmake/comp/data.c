@@ -48,7 +48,6 @@ char
         "strlwr",
         "strupr",
         "system",
-//        "strlen",
     },
     icm_comp[]          = "ICM-COMP:",
     illegal_argcount[]  = "%s(): too few arguments",
@@ -300,3 +299,5 @@ unsigned
     n_symbols,
     sem_err,
     stringsize;
+
+ESTRUC_ global_init;             /* code for initializing globals */

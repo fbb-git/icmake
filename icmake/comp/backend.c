@@ -40,6 +40,10 @@ void backend()
 
     fseek(s_bin, 0, SEEK_END);              /* upwind to EOF again */
 
+                                            /* write global vars initializ. */
+                                            /* code                         */
+    outbin(global_init.code, global_init.codelen);
+
     outbin(&opcall, sizeof(INT8));          /* call main() at its offset */
     outbin(&funtab.symbol[index].var.vu.i->count, sizeof(INT16));
 
@@ -67,6 +71,4 @@ void backend()
     rewind(s_bin);
                                             /* write the offset info */
     fwrite(&hdr, sizeof(BIN_HEADER_), 1, s_bin);
-
-
 }

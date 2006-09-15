@@ -1129,6 +1129,9 @@ varnames:
 
 var_or_fun:
         vardefs
+        {
+            global_init = *catcode(&global_init, &$1);
+        }
     |
         funcdef
     ;

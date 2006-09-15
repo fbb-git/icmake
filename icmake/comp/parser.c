@@ -639,8 +639,8 @@ static const yytype_uint16 yyrline[] =
     1003,  1006,  1006,  1009,  1016,  1022,  1026,  1028,  1034,  1037,
     1039,  1041,  1043,  1046,  1049,  1054,  1060,  1068,  1070,  1075,
     1077,  1079,  1081,  1083,  1085,  1087,  1091,  1095,  1104,  1112,
-    1120,  1122,  1131,  1133,  1137,  1139,  1141,  1145,  1152,  1157,
-    1173,  1175,  1177,  1181
+    1120,  1122,  1131,  1136,  1140,  1142,  1144,  1148,  1155,  1160,
+    1176,  1178,  1180,  1184
 };
 #endif
 
@@ -2666,22 +2666,29 @@ yyreduce:
         ;}
     break;
 
+  case 192:
+#line 1132 "parser"
+    {
+            global_init = *catcode(&global_init, &(yyvsp[(1) - (1)]));
+        ;}
+    break;
+
   case 197:
-#line 1146 "parser"
+#line 1149 "parser"
     {
             vartype = 0;
         ;}
     break;
 
   case 199:
-#line 1164 "parser"
+#line 1167 "parser"
     {
             (yyval) = *while_stmnt(&(yyvsp[(3) - (7)]), &(yyvsp[(6) - (7)]));
         ;}
     break;
 
   case 203:
-#line 1181 "parser"
+#line 1184 "parser"
     {
             (yyval) = stackframe(0);
         ;}
@@ -2689,7 +2696,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 2693 "parser.c"
+#line 2700 "parser.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2903,7 +2910,7 @@ yyreturn:
 }
 
 
-#line 1185 "parser"
+#line 1188 "parser"
 
 
 int yywrap()

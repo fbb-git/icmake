@@ -46,7 +46,7 @@ char
         NULL,                               /* occupied by strupr */
         "system",
 
-        NULL,                   /* occupied by strlen */
+        "strlen",
         NULL,                   /* occupied by "strfind */
         "getpid",
 

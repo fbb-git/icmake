@@ -124,8 +124,7 @@ void
         fun_empty,                  /* strlwr, compiler generated */
         fun_empty,                  /* strupr, compiler generated */
         fun_system,
-        
-        fun_empty,                 /* strlen, compiler generated   */
+        fun_strlen,
 
         fun_empty,          /* strfind, compiler generated  */
         fun_getpid,

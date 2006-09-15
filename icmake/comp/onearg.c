@@ -52,12 +52,7 @@ ESTRUC_ *onearg(type, arg)
     }
 
     if (ok)
-    {
-        if (type == f_strlen)
-            callhidden(he_strlen, arg);
-        else
             callrss(arg, type);
-    }
     else
         semantic(type_conflict, funstring[type]);
 

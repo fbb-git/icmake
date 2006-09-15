@@ -48,7 +48,7 @@ char
         "strlwr",
         "strupr",
         "system",
-        "strlen",
+//        "strlen",
     },
     icm_comp[]          = "ICM-COMP:",
     illegal_argcount[]  = "%s(): too few arguments",
@@ -283,23 +283,6 @@ HIDDEN_FUNCTION_
             "}",
 
             e_reg | e_str,
-            0,
-            1,
-        },
-        {
-            "h_strlen",
-
-            "int h_strlen(string s)"
-            "{"
-            "   int"
-            "       len;"
-            ""
-            "   while (element(len, s))"
-            "       len++;"
-            "   return (len);"
-            "}",
-
-            e_reg | e_int,
             0,
             1,
         },

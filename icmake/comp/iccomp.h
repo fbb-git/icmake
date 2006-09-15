@@ -58,8 +58,7 @@ typedef enum                                /* order of elements must follow */
     he_younger = 1,                         /* reserved values 0 and 1 */
     he_strlwr,                              /* strlwr macro */
     he_strupr,                              /* strupr macro */
-    he_strlen,                              /* strlen macro */
-    he_substr,                              /* substr macro */
+    he_strfind,                             /* strfind macro */
 
     he_,                                    /* must be last ! */
 } HIDDEN_ENUM_;

@@ -294,6 +294,12 @@ younger                 {
 "<<"                    {
                             return(SHL);
                         }
+0x[0-9]+                {
+                            int value;
+                            sscanf(yytext + 2, "%x", &value);
+                            sprintf(string, "%d", value);
+                            return(NUMBER);
+                        }
 [0-9]+                  {
                             strcpy(string, yytext);
                             return(NUMBER);

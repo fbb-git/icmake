@@ -1,0 +1,14 @@
+#!/usr/bin/icmake -qt /tmp/initialization
+
+
+int main()
+{
+    int one;    // = 5;
+    string a, b;
+
+    a = "initialization";
+    b = "initialization";
+
+    if (a older b)
+        printf(one, "\n");
+}

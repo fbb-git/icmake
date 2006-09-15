@@ -31,13 +31,8 @@ ESTRUC_ *unequal (lval, rval)
             set_type(lval, e_int | e_const);
         }
     }
-    else if (initialization)
-    {
-        semantic(init_expr_not_const);
-        return nullframe(lval);
-    }
-
-    defcode(lval, rval, op_neq);
+    else
+        defcode(lval, rval, op_neq);
 
     return (lval);                          /* return new expression */
 }

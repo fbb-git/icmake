@@ -19,11 +19,11 @@ ESTRUC_ *callfun(x, e)
         err,
         old_sem;
 
-    if (initialization)
-    {
-        semantic(init_expr_not_const);
-        return nullframe(e);
-    }
+//    if (initialization)
+//    {
+//        semantic(init_expr_not_const);
+//        return nullframe(e);
+//    }
 
     if (x != funtab.n_defined)              /* function name found ? */
     {                                       /* then check correct # of args */

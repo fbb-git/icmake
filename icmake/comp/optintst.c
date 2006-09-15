@@ -12,12 +12,12 @@ ESTRUC_ *optint_string(type, larg, rarg)
         *larg,
         *rarg;
 {
-    if (initialization)
-    {
-        semantic(init_expr_not_const);
-        return nullframe(larg);
-    }
-
+//    if (initialization)
+//    {
+//        semantic(init_expr_not_const);
+//        return nullframe(larg);
+//    }
+//
     etoc(larg);                             /* argument to stack */
 
     if

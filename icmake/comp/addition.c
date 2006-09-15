@@ -32,12 +32,6 @@ ESTRUC_ *addition (lval, rval)
     }
     else 
     {
-        if (initialization)
-        {
-            semantic(init_expr_not_const);
-            return nullframe(lval);
-        }
-
         defcode(lval, rval, op_add);
         set_type(lval, (type & ALLTYPES) | e_code);
     }

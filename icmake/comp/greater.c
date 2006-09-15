@@ -32,12 +32,8 @@ ESTRUC_ *greater (lval, rval)
             set_type(lval, e_int | e_const);
         }
     }
-    else if (initialization)
-    {
-        semantic(init_expr_not_const);
-        return nullframe(lval);
-    }
-    defcode(lval, rval, op_gr);
+    else
+        defcode(lval, rval, op_gr);
 
     return (lval);                          /* return new expression */
 }

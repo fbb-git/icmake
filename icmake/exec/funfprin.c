@@ -52,4 +52,7 @@ void fun_fprintf ()
     }
 
     fclose (outf);
+
+    reg.type = e_int;               /* Set return type to # args printed */
+    reg.vu.intval = nargs - 1;
 }

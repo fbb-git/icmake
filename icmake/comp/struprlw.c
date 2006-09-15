@@ -7,11 +7,11 @@
 
 ESTRUC_ *strupr_lwr(E_TYPE_ type, ESTRUC_ *arg)
 {
-    if (initialization)
-    {
-        semantic(init_expr_not_const);
-        return nullframe(arg);
-    }
+//    if (initialization)
+//    {
+//        semantic(init_expr_not_const);
+//        return nullframe(arg);
+//    }
 
     etoc(arg);                              /* arg to stack */
 
@@ -22,8 +22,10 @@ ESTRUC_ *strupr_lwr(E_TYPE_ type, ESTRUC_ *arg)
         return (arg);
     }
 
-    callhidden                                  /* call a hidden function */
-    (
+    callhidden                                  /* call a hidden function   */
+    (                                           /* these functions are      */
+                                                /* generated as code,       */
+                                                /* defined in data.c        */
         type == f_strlwr ?
             he_strlwr
         :
@@ -33,3 +35,6 @@ ESTRUC_ *strupr_lwr(E_TYPE_ type, ESTRUC_ *arg)
 
     return (arg);                           /* return called function code */
 }
+
+
+

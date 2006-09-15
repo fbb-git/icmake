@@ -15,11 +15,11 @@ ESTRUC_ *optint_special(type, larg, rarg)
     ESTRUC_
         tmp;
 
-    if (initialization)
-    {
-        semantic(init_expr_not_const);
-        return nullframe(larg);
-    }
+//    if (initialization)
+//    {
+//        semantic(init_expr_not_const);
+//        return nullframe(larg);
+//    }
 
     etoc(larg);                             /* arg to stack */
 

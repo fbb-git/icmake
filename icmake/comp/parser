@@ -677,7 +677,7 @@ idexpr:
 |
     entervarid
     initassign
-    expr_code
+    expression
     {
         initialization = 0;
         $$ = *expr_stmnt(assign(&$1, &$3));    /* explicit initialization */

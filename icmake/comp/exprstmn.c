@@ -18,7 +18,10 @@ ESTRUC_ *expr_stmnt(e)
         &&
         !test_type(e, e_pre_inc_dec | e_post_inc_dec)
     )
+    {
+        puts("generating asp 1");
         gencode(e, op_asp, 1);
+    }
 
     return (e);
 }

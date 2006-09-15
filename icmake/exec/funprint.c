@@ -40,4 +40,7 @@ void fun_printf ()
         printf ("%s%s", string, space);
         xrealloc (string, 0);
     }
+
+    reg.type = e_int;               /* Set return type to # args printed */
+    reg.vu.intval = nargs;
 }

@@ -13,11 +13,11 @@ ESTRUC_ *specials(type, marg)
     register unsigned
         count;
 
-    if (initialization)
-    {
-        semantic(init_expr_not_const);
-        return nullframe(marg);
-    }
+//    if (initialization)
+//    {
+//        semantic(init_expr_not_const);
+//        return nullframe(marg);
+//    }
 
     if (type == f_execute)
         return(execute(marg));              /* full list of arguments */

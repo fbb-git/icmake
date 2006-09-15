@@ -9,11 +9,12 @@ ESTRUC_ *old (lval, rval)
         *lval,
         *rval;
 {
-    if (initialization)
-    {
-        semantic(init_expr_not_const);
-        return nullframe(lval);
-    }
+//    if (initialization)
+//        
+//    {
+//        semantic(init_expr_not_const);
+//        return nullframe(lval);
+//    }
 
     if (test_binop(op_older, lval, rval))
         return (lval);                      /* test for correct types */
@@ -25,3 +26,5 @@ ESTRUC_ *old (lval, rval)
 
     return (lval);                          /* return new expression */
 }
+
+

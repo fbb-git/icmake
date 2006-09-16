@@ -34,6 +34,7 @@ ESTRUC_ *execute(arr)
 
     argp = codestruc(arr, 0);               /* point to first arg */
     e = *(argp + 2);                        /* cmd head info at e */
+
     callrss(&e, f_cmd_head);                /* code for cmd_head at e */
 
     callrss(argp + 3, f_arg_head);          /* code for arg_head */
@@ -62,11 +63,9 @@ ESTRUC_ *execute(arr)
     gencode(&e, op_call_rss, f_cmd_tail);   /* used with cmd_tail..cmd_head */
     gencode(&e, op_call_rss, f_arg_tail);
     gencode(&e, op_call_rss, f_arg_head);
+
     callrss(&e, f_cmd_head);
 
-    return ((ESTRUC_ *)NULL);               /* done */
-    /*
-        A pointer is returned as the parser needs this pointer for its
-        stacktype.   It is not used, though.
-    */
+    *arr = e;
+    return arr;
 }

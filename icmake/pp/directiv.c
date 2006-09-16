@@ -130,10 +130,27 @@ void include_directive()
             static char dirsep[2] = { DIRSEP, '\0' };
             char filename [_MAX_PATH];
 
-            strcpy (filename, imdir);
-            strcat (filename, dirsep);
-            strcat (filename, lexbuf);
-            pushfile (filename);
+            char *im = xstrdup(imdir);
+            char *path = strtok(im, ":");   /* get the first path element */
+            while (path)
+            {
+                strcpy (filename, path);
+                strcat (filename, dirsep);
+                strcat (filename, lexbuf);
+
+                if (access(filename, R_OK) == 0)
+                {
+                    pushfile (filename);
+                    break;
+                }
+                /* maybe try again/first using .im extension ? */
+
+                path = strtok(0, ":");
+            }
+            free(im);
+
+            if (!path)
+                error ("cannot find `%s' in `%s'", lexbuf, imdir);
         }
         else
             pushfile (lexbuf);

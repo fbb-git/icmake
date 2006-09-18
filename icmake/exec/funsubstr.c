@@ -7,7 +7,7 @@ void fun_substr()
 {
     char *str;
     int offset;
-    size_t count;
+    int count;
     size_t str_len;
 
     reg = newvar(e_str);
@@ -21,7 +21,7 @@ void fun_substr()
     if (offset < 0)
         offset = 0;
 
-    if (offset >= str_len)
+    if (offset >= str_len || count <= 0)
         reg.vu.i->ls.str = xstrdup("");
     else
     {

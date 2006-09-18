@@ -85,17 +85,17 @@ int main (argc, argv)              /* icmake source(txt) dest(bin) */
 
     if (!(flags & f_icmake))                /* do not take source literally */
     {
-        source_name =                       /* determine source */
-            change_ext(argv[1], "im");      /* update the extension    */
+        source_name = try_source(argv[1]);  /* determine source */
+//          change_ext(argv[1], "im");      /* update the extension    */
 
-        if (!(flags & f_tmpbim))            /* only if not a temp. bimfile */
+        if (!(flags & f_tmpbim))            /* unless it's a temp. bimfile */
             dest_name =
                 argc2 >= 3 ?
                     argv[2]
                 :
                     argv[1];
     }
-    else if (!(flags & f_tmpbim))           /* only if not a temp. bimfile */
+    else if (!(flags & f_tmpbim))           /* unless it's a temp. bimfile */
         dest_name = source_name;
 
     if (!(flags & f_tmpbim))                /* adapt extension of destination */

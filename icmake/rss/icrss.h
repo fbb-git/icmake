@@ -199,6 +199,7 @@
 
 #include "../icm.h"
 #include <stdio.h>
+#include <unistd.h>
 
 /*
                     The compiler uses E_TYPE 0 to indicate
@@ -424,9 +425,10 @@ unsigned    redirect_end(unsigned, unsigned);
 
 #endif  /*  MSDOS   */
 
-char     *change_ext (char *, char *);
-char     *change_base (char *, char *);
-char     *change_path (char *, char *);
+char     *change_ext (char const *, char const *);  /* fname.c */
+char     *change_base (char const *, char const *);
+char     *change_path (char const *, char const *);
+
 int      chesc(char *, int *);
 void     copyright(char *, char *, char *, int);/* copyright message */
 char     *filefound();                          /* test attrib/pattern  */
@@ -447,7 +449,8 @@ char     *hexstring (UNS16, UNS16);
 char     *program_name(char *);                 /* make programname from argv[0] */
 unsigned redirect_start(unsigned, unsigned);    /* ASM function for DOS */
 char     *stresc(char *);
-char     *xstrdup (char *);
+char     *try_source(char const *);         /* return allocated source[.im] */
+char     *xstrdup(char const *);
 char     *xstrcat (char *, char *);
 
 void     error (char *, ...);

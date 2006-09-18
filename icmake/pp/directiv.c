@@ -143,8 +143,6 @@ void include_directive()
                     pushfile (filename);
                     break;
                 }
-                /* maybe try again/first using .im extension ? */
-
                 path = strtok(0, ":");
             }
             free(im);

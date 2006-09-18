@@ -20,7 +20,7 @@
 #include "icrssdef.h"
 
 char *xstrdup (s)
-char *s;
+char const *s;
 {
     register char
         *ret;

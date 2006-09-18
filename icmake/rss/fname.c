@@ -14,7 +14,7 @@ static char
     fname [_MAX_PATH],
     ext [_MAX_PATH];
 
-static void split (char *n)
+static void split (char const *n)
 {
     _splitpath (n, drive, dir, fname, ext);
 }
@@ -24,7 +24,7 @@ static void join ()
     _makepath (name, drive, dir, fname, ext);
 }
 
-char *change_ext (char *n, char *e)
+char *change_ext (char const *n, char const *e)
 {
     split (n);
     *ext = 0;
@@ -34,7 +34,7 @@ char *change_ext (char *n, char *e)
     return (xstrdup (name));
 }
 
-char *change_base (char *n, char *b)
+char *change_base (char const *n, char const *b)
 {
     split (n);
     *fname = 0;
@@ -44,7 +44,7 @@ char *change_base (char *n, char *b)
     return (xstrdup (name));
 }
 
-char *change_path (char *n, char *p)
+char *change_path (char const *n, char const *p)
 {
     register char
         *cp;

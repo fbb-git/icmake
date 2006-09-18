@@ -423,7 +423,7 @@ char        *_strlwr(char *);                                         /* ok */
 
 unsigned    redirect_end(unsigned, unsigned);
 
-#endif  /*  MSDOS   */
+#endif  /*  not MSDOS   */
 
 char     *change_ext (char const *, char const *);  /* fname.c */
 char     *change_base (char const *, char const *);

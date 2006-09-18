@@ -35,8 +35,11 @@ void callrss(ESTRUC_ *e, FUNNR_ funnr, ...)
         case f_g_base:
         case f_g_ext:
         case f_g_path:
-        case f_getenv:
             type = e_str | e_reg;
+        break;
+
+        case f_getenv:                      /* 1 arg, returning list */
+            type = e_list | e_reg;
         break;
                                             /* 2 arguments, returning int */
         case f_strfind:

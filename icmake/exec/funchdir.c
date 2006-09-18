@@ -31,33 +31,33 @@ void fun_chdir ()
         *dir,
         *last;
     register int
-    	mode;						/* mode of operation */
+        mode;                       /* mode of operation */
     char
         newdir [_MAX_PATH];
     static char
-    	dirsep [2] = { DIRSEP, '\0' };
-    	
-    mode = stack [sp].vu.intval;			/* get mode */
-    dir  = xstrdup (stack [sp - 1].vu.i->ls.str);	/* duplicate dest */
+        dirsep [2] = { DIRSEP, '\0' };
+        
+    mode = stack [sp].vu.intval;            /* get mode */
+    dir  = xstrdup (stack [sp - 1].vu.i->ls.str);   /* duplicate dest */
 
-    if (! *dir)						/* empty dest: */
-        dir = orgdir;					/* change to org dir */
+    if (! *dir)                             /* empty dest: */
+        dir = xstrdup(orgdir);              /* change to org dir */
 
-    last = dir + strlen (dir) - 1;			/* remove dir */
-    if ( last != dir &&					/* separator */
+    last = dir + strlen (dir) - 1;          /* remove dir */
+    if ( last != dir &&                 /* separator */
          (*last == '\\' || *last == '/') &&
          *(last - 1) != ':'
        )
         *last = '\0';
 
-    if (chdir (dir) && P_CHECKMODE (mode))		/* go to dir */
-    	error ("chdir - can't change dir to %s", dir);	/* or quit if */
-    							/* P_CHECK is on */
+    if (chdir (dir) && P_CHECKMODE (mode))      /* go to dir */
+        error ("chdir - can't change dir to %s", dir);  /* or quit if */
+                                /* P_CHECK is on */
     
-    xrealloc (dir, 0);					/* free duplicate */
+    xrealloc (dir, 0);                  /* free duplicate */
     
-    getcwd (newdir, _MAX_PATH);				/* return value: */
-    if (newdir [strlen (newdir) - 1] != DIRSEP)		/* cwd */
+    getcwd (newdir, _MAX_PATH);             /* return value: */
+    if (newdir [strlen (newdir) - 1] != DIRSEP)     /* cwd */
         strcat (newdir, dirsep);
 
     reg = newvar (e_str);

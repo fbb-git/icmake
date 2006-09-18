@@ -6,10 +6,18 @@ void fun_getenv()
 {
     char *env = getenv(stack[sp].vu.i->ls.str);
 
-    reg = newvar(e_str);
+    reg = newvar(e_list);
     
     if (!env)
-        reg.vu.i->ls.str = xstrdup("");
-    else
-        reg.vu.i->ls.str = xstrcat(xstrdup("="), env);
+    {
+        reg = addtolist (reg, "0");
+        reg = addtolist(reg, "");
+    }
+    else    
+    {        
+        reg = addtolist (reg, "1");
+        reg = addtolist(reg, env);
+    }
+
+    return reg;
 }

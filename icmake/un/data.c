@@ -42,12 +42,12 @@ char
         "sizeoflist",
         "stat",
         "string_element",
-        NULL,                               /* occupied by strlwr */
-        NULL,                               /* occupied by strupr */
+        "strlwr",
+        "strupr",
         "system",
 
         "strlen",
-        "strfind",              /* occupied by "strfind */
+        "strfind",
         "getpid",
 
         "substr",

@@ -237,54 +237,6 @@ HIDDEN_FUNCTION_
             0,
             3,
         },
-
-        {
-            "h_strlwr",
-            "string h_strlwr(string str)"
-            "{"
-            "   int"
-            "       index;"
-            "   string"
-            "       c,"
-            "       dest;"
-            ""
-            "   for (index = 0; c = element(index, str); index++)"
-            "   {"
-            "       if (c >= \"A\" && c <= \"Z\")"
-            "           c = ascii('a' - 'A' + ascii(c));"
-            "       dest += c;"
-            "   }"
-            "   return (dest);"
-            "}",
-
-            e_reg | e_str,
-            0,
-            1,
-        },
-        {
-            "h_strupr",
-
-            "string h_strupr(string str)"
-            "{"
-            "   int"
-            "       index;"
-            "   string"
-            "       c,"
-            "       dest;"
-            ""
-            "   for (index = 0; c = element(index, str); index++)"
-            "   {"
-            "       if (c >= \"a\" && c <= \"z\")"
-            "           c = ascii('A' - 'a' + ascii(c));"
-            "       dest += c;"
-            "   }"
-            "   return (dest);"
-            "}",
-
-            e_reg | e_str,
-            0,
-            1,
-        },
     };
 
 unsigned

@@ -416,6 +416,7 @@ unsigned    _dos_findnext(struct _find_t *);
 int         _spawnlp(int, const char *, const char *, ...);           /* ok */
 int         _spawnvp(int, const char *, const char **);               /* ok */
 char        *_strlwr(char *);                                         /* ok */
+char        *_strupr(char *);
 
 #define     _heapmin()
 

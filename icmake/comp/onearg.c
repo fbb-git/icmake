@@ -47,6 +47,8 @@ ESTRUC_ *onearg(type, arg)
             case f_g_base:
             case f_g_ext:
             case f_strlen:
+            case f_strlwr:
+            case f_strupr:
         */
             ok = test_type(arg, e_str);
     }

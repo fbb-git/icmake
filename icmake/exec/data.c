@@ -121,8 +121,8 @@ void
         fun_sizeoflist,
         fun_stat,
         fun_str_el,
-        fun_empty,                  /* strlwr, compiler generated */
-        fun_empty,                  /* strupr, compiler generated */
+        fun_strlwr,
+        fun_strupr,
         fun_system,
         fun_strlen,
         fun_strfind,

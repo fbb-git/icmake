@@ -18,6 +18,4 @@ void fun_getenv()
         reg = addtolist (reg, "1");
         reg = addtolist(reg, env);
     }
-
-    return reg;
 }

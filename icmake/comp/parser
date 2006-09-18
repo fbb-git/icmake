@@ -646,13 +646,13 @@ function:
         }
     |
         makelist
-    |
-        strupr_lwr
-        openpar
-        err_expression
-        {
-            $$ = *strupr_lwr($1.type, &$3);  /* string conversion */
-        }
+//    |
+//        strupr_lwr
+//        openpar
+//        err_expression
+//        {
+//            $$ = *strupr_lwr($1.type, &$3);  /* string conversion */
+//        }
     ;
 
 funid:
@@ -900,6 +900,10 @@ one_arg_funs:
         GETENV
     |
         STRLEN
+    |
+        STRUPR
+    |
+        STRLWR
     ;
 
 openpar:    {parse_error = err_openpar_expected; }      '(' ;
@@ -1063,12 +1067,6 @@ string:
         stringbuf = xstrdup(string);        /* duplicate initial string */
     }
 ;
-
-strupr_lwr:
-        STRUPR
-    |
-        STRLWR
-    ;
 
                                         /* T */
 two_arg_funs:

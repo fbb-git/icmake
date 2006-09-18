@@ -1,416 +1,1019 @@
-.TH "icmake" "1" "Nov\&. 1999" "icmake" "icmake-X\&.YY\&.tar\&.gz" 
-.SH "NAME" 
-icmake \- an alternative to \fImake\fP
-.SH "SYNOPSIS" 
+.TH "icmake" "1" "1999-2006" "icmake\&.7\&.00\&.tar\&.gz" "A program maintenance utility"
+
 .PP 
-icmake [flags] source[\&.im] [dest[\&.bim]] [-- [args]]
+.SH "NAME"
+icmake \- An program maintenance (\fImake\fP) utility using a
+\fBC\fP-like grammar
 .PP 
-.SH "OPTIONS" 
+.SH "SYNOPSIS"
+\fBicmake\fP [options] \fIsource[\&.im] [dest[\&.bim]]\fP [-- [args]]
 .PP 
-.IP o 
-flags:  optional flags:
-.IP o 
-\fI-a\fP: information about ICMAKE
-.IP o 
-\fI-b\fP: blunt execution of the destinationfile
-.IP o 
-\fI-c\fP: the destination file is compiled
-.IP o 
-\fI-i file\fP: \'file\': name of source, end of icmake arguments
-.IP o 
-\fI-o file\fP: all icmake output is redirected to `file\' (Not
-implemented on unix platforms)   
-.IP o 
-\fI-p\fP: only the preprocessor is activated
-.IP o 
-\fI-q\fP: quiet mode: copyright banner not displayed
-.IP o 
-\fI-t file\fP: \'file\' is used as a temporary bim-file, to be
-removed on exit\&. Argument processing stops\&.
-.IP o 
-\fIsource\fP: make description source file (default extension: \&.im)
-.IP o 
-\fIdest\fP:   binary make file             (default:    source\&.bim)
-.IP o 
-\fI--\fP:   optional icmake-file arguments separator
-.IP o 
-\fIargs\fP:  optional arguments following -- received by
-the icmake file in its argv-list
-With \fIicmun\fP:
-.br 
-em (icmun bimfile)
-.IP o 
-bimfile: file to unassemble
+\fBicmun\fP \fIbimfile\fP
 .PP 
-.SH "DESCRIPTION" 
+.SH "DESCRIPTION"
+
 .PP 
-\fIicmake\fP is a program that can be used as an alternative to
-\fImake\fP\&. \fIIcmake\fP is a shell program, normally calling the following
-programs:
+\fBIcmake\fP(1) can be used as an alternative to \fBmake\fP(1)\&. In its standard
+operation more, it calls the following programs:
 .IP o 
-\fIicm-pp\fP    to preprocess the icmake file 
+\fIicm-pp\fP  to preprocess the icmake file 
 .IP o 
-\fIicm-comp\fP   to compile the icmake file to byte-code
+\fIicm-comp\fP   to byte-code compile the \fBicmake\fP  \fBs\fP
 .IP o 
 \fIicm-exec\fP   to interpret the byte-code file
-The program \fIicmun\fP may be used to disassemble the compiled 
+
+.PP 
+\fBIcmake\fP allows the programmer to use a program language (closely resembling
+the well-known \fBC\fP-programming language) to define the actions involved in
+(complex) program maintenance\&. For this, \fBicmake\fP offers various special
+operators as well as a set of support functions that have proven to be useful
+in program maintenance\&.
+.PP 
+The program \fBicmun\fP(1) may be used to disassemble the compiled 
 byte-code file\&.
 .PP 
-.IP o 
-\fISyntax elements of the icmake file\fP:
-.IP 
-.IP o 
-Preprocessor directives:
-    
-.nf 
- 
+.SH "NEW IN VERSION 7\&.00"
 
-    // comment              : comment until end-of-line
-    /* comment */           : comment between /* and */
-    #include "filename"     : includes a file
-    #include <filename>     : includes a file from directory
-                              pointed to by IM variable
-    #define ident redef     : defines ident to expand to redef
-    #! \&.\&.\&.                  : ignored line
-    
-.fi 
- 
+.PP 
+.IP o 
+Integral constants may be specified using hexadecimal notation (e\&.g\&.,
+\fI0x12ab\fP); 
+.IP o 
+The \fIIM\fP environment variable may contain multiple directories,
+separated from each other by colons (\fI:\fP)\&.
+.IP o 
+\fI#define\fP-directives may refer to other macro definitions using the
+\fI${identifier}\fP format\&.
+.IP o 
+\fI#ifdef\fP, \fI#ifndef\fP, \fI#else\fP and \fI#endif\fP directives can be
+nested\&. 
+.IP o 
+The function \fIstring getenv(string envvar)\fP is predefined\&.
+.IP o 
+The function \fIint strstr(string haystack, string needle)\fP is 
+renamed to \fIint strfind(string haystack, string needle)\fP\&. 
+.IP 
+\fBNOTE: this is the only modification in version 7\&.00 that could
+affect your earlier (6\&.xx) icmake scripts\&. Changing `strstr\&'
+into `strfind\&' should bring your older scripts up-to-date again\&.\fP
 
-Note: 
+.PP 
+.SH "OPTIONS"
+
+.PP 
+\fBIcmake\fP:
+.PP 
+\fIsource\fP: \fBicmake\fP script source file (default extension: \fI\&.im\fP)\&.
+.PP 
+\fIdest\fP:   binary \fBicmake\fP script file (default:  \fI`source\&'\&.bim\fP)\&.
+.PP 
+\fI--\fP:  \fBicmake\fP/\fBicmake\fP-script arguments separator
+.PP 
+\fIargs\fP:  arguments following \fI--\fP are entered into the \fBicmake\fP scipt 
+\fImain()\fP function\&'s \fIargv\fP-list (see below at section
+\fBUSER DEFINED FUNCTIONS\fP)\&.
+.PP 
+.IP o 
+\fB-a\fP  
+.br 
+information about \fBicmake\fP
+.IP o 
+\fB-b\fP  
+.br 
+blunt execution of the destinationfile
+.IP o 
+\fB-c\fP  
+.br 
+the destination file is only compiled
+.IP o 
+\fB-i\fP file 
+.br 
+\fIfile\fP: name of source\&.  \fBIcmake\fP argument processing stops\&.
+.IP o 
+\fB-o\fP file 
+.br 
+all \fBicmake\fP output is written to \fIfile\fP (Not
+implemented on unix platforms)
+.IP o 
+\fB-p\fP  
+.br 
+only the preprocessor is activated
+.IP o 
+\fB-q\fP  
+.br 
+quiet mode: copyright banner not displayed
+.IP o 
+\fB-t\fP file 
+.br 
+\fIfile\fP is used as a temporary bim-file, to be
+removed on exit\&. \fBIcmake\fP argument processing stops\&.
+
+.PP 
+\fBIcmun\fP:
+.PP 
+\fIbimfile\fP:  binary \fBicmake\fP script file\&.
+.PP 
+.SH "PREPROCESSOR DIRECTIVES"
+
+.PP 
+The following preprocessor directives are available:
+.IP o 
+comment:
+.br 
+standard \fBC\fP comment (all between \fI/*\fP and \fI*/\fP) as well as
+comment-to-end-of-line (all line contents following \fI//\fP) are
+ignored\&.
+.IP o 
+Shell startup: The first line of the \fBicmake\fP-script may start with
+\fI#!path\fP, where \fIpath\fP defines the absolute location of the \fBicmake\fP
+program\&. By making the script executable, it can be called without
+explicitly calling \fBicmake\fP\&.  
 .IP 
-.IP o 
-Any character on a line beyond an \fI#include \&.\&.\&.\fP directive
-is ignored\&.
-.IP o 
-Comment in a \fI#define\fP is removed, but must given be on 
-one line\&.
-.IP o 
-\fI#!\fP may be used on unix platforms to use icmake-shell
-scripts, in combination with the -i or -t flags\&.
-.IP 
-E\&.g\&., if the first line of an (executable) icmakefile \'icm\'
+E\&.g\&., if the first line of an (executable) icmakefile \&'icm\&'
 (without extension) contains
-centt(#! /usr/bin/icmake -qi)
-then \'icm\' may be given as a command, thus executing
-centt(/usr/bin/icmake -qi icm \&.\&.\&.)
+.nf 
+
+            #!/usr/bin/icmake -qi
+        
+.fi 
+then \fIicm\fP may be given as a command, thus executing
+.nf 
+
+            /usr/bin/icmake -qi icm \&.\&.\&.
+        
+.fi 
 Alternatively, 
-centt(#! /usr/bin/icmake -qt /tmp/icm)
-can be used, executing
-centt(#! /usr/bin/icmake -qt /tmp/icm icm \&.\&.\&.)
-In this case the binary makefile is not kept, but a
-temporary file \fI/tmp/icm\&.PID\fP
-is used and removed on exit\&. The
-PID extension being the process-id of the icmake program
-executing icm\&.
-.IP 
-.IP o 
-Types and variables:
-    
 .nf 
- 
 
-int             (-0x8000\&.\&.0x7fff or \'x\', x: ASCII character)
-string          (a piece of text)
-list            (a number of strings)
-void            (may be used for user-defined functions)
-    
-.fi 
- 
-
-Global and local variables are supported, as well as arguments
-to user-defined functions\&.
-.IP o 
-Escape sequences in strings:
-    
-.nf 
- 
-
-\ea \eb \ef \en \er \et
-    
-.fi 
- 
-
-Other escape-sequences \fI\x\fP is interpreted as a literal \fIx\fP 
-(e\&.g\&., use \fI\\\fP for \fI\\fP)\&. 
-.IP o 
-Flow control statements:
-    
-.nf 
- 
-
-    if (condition) statement
-    if (condition) statement else statement
-    for (init; condition; increment) statement 
-    return (expression) - no (expression) with void functions
-    break
-    exit (expression)
-    
-.fi 
- 
-    
-With the \fIfor\fP statement, init, condition and increment are optional\&.
-With \fIvoid\fP functions, the \fIreturn\fP statement must not have a trailing
-expression\&. In those cases use \fIreturn;\fP
-.IP o 
-The user-defined function main():
-.IP 
-Arguments may be (int argc, list argv, list envp)
-or a subset of those, similar to C\&.
-.IP 
-Argc is the number of elements in argv\&.
-.IP 
-Argv holds the arguments, with element 0 the \&.bim filename,
-element 1 the first argument etc\&.
-.IP 
-Envp holds the environment, element 0 is the first variable,
-element 1 its value, element 2 the second variable,
-element 3 its value, etc\&.
-.IP o 
-Operators:
-.IP 
-The ternary C-operator  ?:  is not supported\&.
-.IP 
-All other arithmetic operators of C are supported, operating
-on int-operands\&.
-.IP 
-Operators available for string-operands:
-        
-.nf 
- 
-
-a + b           concatenates b to a
-+=              concatenation and assignment
-== != <= >= < > equality testing
-!a              empty string test
-a younger b     true if file a is more recent
-a older b       true if file b is more recent
-a newer b       synonym for younger
+            #! /usr/bin/icmake -qt /tmp/icm
         
 .fi 
- 
-
-Note: Equality testing is also alphabetically, using the
-ordering of the ASCII-set\&. Internally \fIstrcmp()\fP
-is
-used to compare strings\&.
-.IP 
-Operators available for list-operands:
-        
+may be used, resulting in the execution of
 .nf 
- 
 
-a + b           merging of lists
-a - b           opposite
-+= -=           merging/subtraction and assignment
-== !=           equality testing
-!a              empty list test
+            #! /usr/bin/icmake -qt /tmp/icm icm \&.\&.\&.
         
 .fi 
- 
-
-.IP 
-Typecasts:
-.IP 
-Strings may be cast to ints and vice versa\&. 
-Strings may be cast to lists\&.
-.IP 
+In this case the binary makefile is not kept, but a temporary file
+\fI/tmp/icm\&.PID\fP is used and removed on exit\&. The PID extension being
+the process-id of the \fBicmake\fP program executing \fIicm\fP\&.
 .IP o 
-Predefined symbols:
-    
-.nf 
- 
-
---------------------------------------------------------------
-symbol          1 when defined on the platform \&.\&.\&. otherwise 0
---------------------------------------------------------------
-MSDOS           MS-DOS platform (with MSC 7\&.00 compiler)
-unix            Unix, usually with GNU\'s gcc compiler
-linux           \'386 or \'486 running Linux (usually with gcc)
-M_SYSV, M_UNIX  \'386 or \'486 running SCO/Unix (usually with
-Microsoft C)
-_POSIX_SOURCE   Unix with Posix complient compiler
-__hpux          HP-UX, with the native HP compiler
---------------------------------------------------------------
-    
-.fi 
- 
-
+\fI#include "filename"\fP
+.br 
+The file \fIfilename\fP is included at the location of the directive
 .IP o 
-Predefined constants:    
-    
-.nf 
- 
-
-Used with makelist():
----------------------
-O_ALL       8           O_FILE      1           O_DIR       2
-O_SUBDIR    4
-
-Used with echo():
------------------
-OFF         0           ON          1
-
-Used with execute() and system() etc\&.:
---------------------------------------
-P_CHECK     0           P_NOCHECK   1
-
-Used with stat():
------------------
-S_IFCHR     1           S_IFDIR     2           S_IFREG     4
-S_IREAD     8           S_IWRITE   16           S_IEXEC    32
-    
-.fi 
- 
-
+\fI#include <filename>\fP
+.br 
+The file \fIfilename\fP is included at the location of the \fI#include\fP
+directive; \fIfilename\fP is searched in the directories pointed to by 
+the \fIIM\fP environment variable\&.
 .IP o 
-Predefined functions:
-Note: In parameterlists below, the notation [type = value,] indicates
-a default function argument of the indicated type and value\&.
-An argument of the indicated type may be prvided to overrule the
-default\&.
-    
+\fI#define identifier definition\fP
+.br 
+The text \fIidentifier\fP will be replaced by \fIdefinition\fP\&. The
+definition may contain references to already defined identifiers,
+using the \fI${identifier}\fP format\&. If the \fI${identifier}\fP hasn\&'t
+been defined (yet), the text \fI${identifier}\fP is literally kept\&. At
+each \fI#define\fP at most 100 text-replacements are performed,
+preventing infinite recursion\&.
+.IP o 
+\fI#ifdef identifier\fP
+.br 
+If the \fIidentifier\fP macro was defined the next block of code (until
+a matching \fI#else\fP or \fI#endif\fP directive was detected) is
+byte-compiled\&. Otherwise, the block of code is ignored\&.
+.IP o 
+\fI#ifndef identifier\fP
+.br 
+If the \fIidentifier\fP macro was \fInot\fP defined the next block of code
+(until a matching \fI#else\fP or \fI#endif\fP directive was detected) is
+byte-compiled\&. Otherwise, the block of code is ignored\&.
+.IP o 
+\fI#else\fP
+.br 
+Terminates a \fI#ifdef\fP and \fI#ifndef\fP directive, reversing the
+acceptance decision about  the following code\&.
+.IP o 
+\fI#endif\fP
+.br 
+Terminates the preprocessor block starting at the matching 
+\fI#ifdef\fP, \fI#ifndef\fP or \fI#else\fP directive\&.
+
+.PP 
+.SH "DATA TYPES"
+
+.PP 
+The following data types are available:
+.IP o 
+\fIint\fP
+.br 
+Integral values, ranging from \fI-0x8000\fP until \fI0x7fff\fP\&. \fIint\fP
+constants may be specified as decimal numbers, hexadecimal numbers or
+as \fIASCII\fP character constants (e\&.g\&., \fI\&'x\&'\fP)\&.
+.IP o 
+\fIstring\fP
+.br 
+Text variables\&. Text constants are delimited by double quotes\&. Multiple
+text constants may be concatenated, but a text constant may not extend
+over multiple lines\&. To indicate an end-of-line in a text constant use
+the \fI\en\fP escape sequence\&. The escape sequences \fI\ea \eb \ef \en \er\fP
+and \fI\et\fP are available\&. Otherwise, \fI\ex\fP is interpreted as a
+literal \fIx\fP\&. So, use \fI\e\e\fP to indicate \fI\e\fP within a text
+constant\&. 
+.IP o 
+\fIlist\fP
+.br 
+A data structure containing a series of individually accessible
+\fIstring\fP values\&. When a list contains elements, its first element is
+indicated by index 0\&.
+.IP o 
+\fIvoid\fP
+.br 
+Used with function definitions to indicate that the function does not
+return a value\&.
+
+.PP 
+Variables may be defined both at the global level as well as locally to
+functions\&. Variables are strongly typed\&. A variable cannot have the type 
+\fIvoid\fP\&.
+.PP 
+Variables may be initialized when they are defined\&. The initialization can
+use return values of functions, but cannot use variables\&. Consider
+initializations as being constructed from constant values\&.
+.PP 
+.SH "PREDEFINED SYMBOLS"
+
+.PP 
+The following symbols are predefined by \fBicmake\fP\&. All are constant \fIint\fP 
+values:
+.TS 
+ tab(~);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+lll
+---
+lll
+lll
+lll
+lll
+---
+lll
+lll
+---
+lll
+lll
+---
+lll
+lll
+lll
+lll
+lll
+lll
+---
+c.
+symbol~value~intended for
+O_ALL~8~makelist
+O_DIR~2~makelist
+O_FILE~1~makelist
+O_SUBDIR~4~makelist
+OFF~0~echo
+ON~1~echo
+P_CHECK~0~system calls
+P_NOCHECK~1~system calls
+S_IEXEC~32~stat
+S_IFCHR~1~stat
+S_IFDIR~2~stat        
+S_IFREG~4~stat
+S_IREAD~8~stat        
+S_IWRITE~16~stat
+
+.TE 
+
+.PP 
+The following symbols are available depending on the architecture:
+.TS 
+ tab(~);
+
+
+
+
+
+
+
+
+
+
+
+
+--
+ll
+--
+ll
+ll
+ll
+ll
+ll
+ll
+--
+c.
+symbol~1 when defined on the platform, otherwise 0
+MSDOS~MS-DOS platform (with MSC 7\&.00 compiler)
+unix~Unix, usually with GNU\&'s gcc compiler
+linux~x86 running Linux (usually with gcc)
+M_SYSV, M_UNIX~x86 running SCO/Unix (usually with) Microsoft C
+_POSIX~_SOURCE   Unix with Posix complient compiler
+__hpux~HP-UX, with the native HP compiler
+
+.TE 
+.SH "OPERATORS"
+
+.PP 
+All \fBC\fP operators, except for the ternary operator, are supported,
+operating like their \fBC\fP counterparts on \fIint\fP variables and/or values\&.
+.PP 
+Additionally, for \fIstring\fP type variables and/or values the following
+operators are available:
+.IP o 
+\fIa + b\fP: returns a new \fIstring\fP value containing the concatenation of
+\fIstring\fP values \fIa\fP and \fIb\fP\&. Note that \fIstring\fP constants may be
+concatetated without using the \fI+\fP operator, e\&.g\&.,
 .nf 
- 
 
-arghead (string h)
-        defines argument head, to be used with execute ()
-argtail (string t)
-        defines argument tail, to be used with execute ()
-int ascii (string s)
-        returns first character of \'s\' as an int; e\&.g\&.,
-        ascii ("A") gives 65
-string ascii (int i)
-        returns i as a string, e\&.g\&., ascii (65) gives "A"
-string change_base (string file, string newbase)
-        changes basename of file, returns changed name
-string change_ext (string file, string newext)
-        changes extension of file, returns changed name
-string change_path (string file, string newpath)
-        changes path specification of file, returns changed name
-string chdir ([int = P_CHECK,] string newdir)
-        changes directory, returns the previous dir\&.
-        Use "\&." for newdir to get current working directory\&.
-        Use ""  for newdir to get startup working directory\&.
-cmdhead (string h)
-        defines command head, to be used with execute ()
-cmdtail (string t)
-        defines command tail, to be used with execute ()
-echo (int opt)
-        sets re-echoing of called programs, OFF for no echo 
-        (default: ON)
-string element (int index, list lst)
-        returns index-th string from list
-string element (int index, string str)
-        returns index-th character from string as a mini-string
-exec ([int = P_CHECK,] string cmd, \&.\&.\&.)
-        runs command with arguments\&.
-execute ([int = P_CHECK,] string cmd, string cmdhd, 
-            string arghd, \&.\&.\&., string argtl, string cmdtl)
-        same as exec(), except for command head/tail and argument
-        head/tail\&. The actual executed program will start with the
-        cmd, followed by the cmdhd\&. Next is a series of arguments,
-        all enclosed by arghd and argtl\&. The command terminates 
-        with cmdtl\&.
-int exists (string file)
-        returns non-zero if file exists
-list fgets (string file, int offset)
-        reads next string from file at offset\&. Return value:
-        element(0,retlist) is the read string (including \en),
-        element(1,retlist) is the next offset to read\&.
-        An empty return list signifies EOF\&.
-fprintf (string file, \&.\&.\&.)
-        same as printf, but appends to file
-string get_base (string file)
-        returns basename of file
-string get_ext (string file)
-        returns extension of file
-string getch ()
-        returns keypress as mini-string
-string get_path (string file)
-        returns path of file
-int getpid ()
-        returns process-id (UNIX) or PSP-paragraph (DOS) of
-        icm-exec
-string gets ()
-        returns string read from keyboard
-list makelist ([int = O_FILE,] string mask)
-        returns list of all files matching mask
-        Use:
-            O_ALL     to obtain all directory entries,
-            O_DIR     to obtain a list of (sub)directories,
-            O_FILE    (default) to obtain a list of only files,
-            O_SUBDIR  to obtain a list of only subdirectories\&.
-list makelist ([int = O_FILE,] string mask, newer, 
-                string comparefile)
-        returns list of all files matching mask which are newer
-        than the comparefile\&. Operator younger is synonymous to
-        newer\&.
-list makelist ([int = O_FILE,] string mask, older, 
-                string comparefile)
-        see above; returns list of files older than the 
-        comparefile\&.
-list makelist ([int = O_FILE,] string mask, newer, 
-                string comparefile)
-    returns list of all files matching mask which are newer than
-    the comparefile\&. Operator younger is synonymous to newer\&.
-list makelist ([int = O_FILE,] string mask, older, string comparefile)
-        see above; returns list of files which are older than the
-        comparefile\&.
-printf (\&.\&.\&.)
-        prints arguments to screen
-putenv (string)
-        adds string to environment (as long as icmake is running)\&.
-        Use format: "VAR=value"\&.
-int sizeof (list l), int sizeoflist (list l)
-        returns number of strings in list
-list stat ([int = P_CHECK,] string entry)
-        returns \'stat\' information of directory entry \'entry\' as 
-        a list\&. The following list-elements are defined:
-            Element             Definition
-            --------------------------------------
-                0               attribute value
-                1               size of the file
-            --------------------------------------
-        Attributes are  returned as bit-flags, composed from the
-        following predefined constants:
-            -----------------------------------------------------
-            S_IFCHR     1       S_IFDIR     2       S_IFREG     4
-            S_IREAD     8       S_IWRITE   16       S_IEXEC    32
-            -----------------------------------------------------
-int strlen (string s)
-        returns number of characters in s 
-        (as C\'s strlen() function)
-string strlwr (string s)
-        returns lower-case duplicate of s
-string strupr (string s)
-        returns upper-case duplicate of s
-list strtok (string str, string separators)
-        returns list holding substrings of cut-up string
-int substr (string big, string small)
-        returns index in big where small occurs, or -1 if small 
-        does not occur in big
-int system ([int = P_CHECK,] string command)
-        runs command\&. Return value indicates exit status\&.
-    
+    "hello "   "world"
+    "hello " + "world"
+        
 .fi 
- 
+.IP o 
+\fIa += b\fP: \fIa\fP must be a  \fIstring\fP variable, to which the \fIstring\fP
+variable or value \fIb\fP is appended\&.
+.IP o 
+string comparisons: operators \fI== != <= >= < > !=\fP and \fI==\fP may
+be applied to \fIstring\fP values or variables, returning 1 if the comparison
+succeeds, otherwise 0\&. Comparison is case sensitively, and follows the
+\fIASCII\fP character set\&.
+.IP o 
+\fI!a\fP: the boolean \fI!\fP operator returns 1 if the \fIstring a\fP is
+empty, otherwise 0 is returned\&.
+.IP o 
+\fIa younger b, a newer b\fP: returns 1 if file \fIa\fP is more recent than
+file \fIb\fP\&. E\&.g\&., \fI"source\&.cc" newer "source\&.o"\fP\&. If \fIb\fP doesn\&'t exist, 1
+is returned; if \fIa\fP doesn\&'t exist 0 is returned; if neither \fIa\fP nor \fIb\fP
+exists, 0 is returned; if they are of the same age, 0 is returned\&. Explicit
+tests for the existence of a file can be performed using the \fIexists()\fP
+predefined function (see below, section \fBPREDEFINED FUNCTIONS\fP)\&.
+.IP o 
+\fIa older b\fP: turns 1 if file \fIa\fP is older than file \fIb\fP\&. E\&.g\&.,
+\fI"libprog\&.a" older "source\&.o"\fP\&. If \fIa\fP doesn\&'t exist, 1 is returned; if
+\fIb\fP doesn\&'t exist 0 is returned; if neither \fIa\fP nor \fIb\fP exists, 0 is
+returned; if they are of the same age, 0 is returned\&.
+
+.PP 
+For \fIlist\fP type variables and/or values the following
+operators are available:
+.IP o 
+\fIa + b\fP: returns a new \fIlist\fP value containing the concatenation of
+\fIlist\fP values \fIa\fP and \fIb\fP\&. This is \fInot\fP a set operation: if an
+element appears both in \fIa\fP and in \fIb\fP, they will appear twice in the
+resulting list\&.
+.IP o 
+\fIa - b\fP: returns a new \fIlist\fP value containing the elements in \fIa\fP
+that are not present in \fIb\fP\&. This \fIis\fP a set operation\&.
+.IP o 
+\fIa += b\fP: elements in \fIb\fP are added to the elements in \fIa\fP, which 
+must be a  \fIlist\fP variable\&.  This is \fInot\fP a set operation\&.
+.IP o 
+\fIa -= b\fP: elements in \fIb\fP are removed from the elements in \fIa\fP,
+which must be a \fIlist\fP variable\&.  This \fIis\fP a set operation\&.
+.IP o 
+list equality comparisons: operators \fI!=\fP and \fI==\fP may be applied
+to \fIlist\fP values or variables\&. Operator \fI==\fP returns 1 if both lists have
+element-by-element identical elements, 0 otherwise\&. Operator \fI!=\fP reverses
+the result of \fI==\fP\&.
+.IP o 
+\fI!a\fP: the boolean \fI!\fP operator returns 1 if the \fIlist a\fP is
+empty, otherwise 0 is returned\&.
+
+.PP 
+Typecasts may be performed using the standard \fBC\fP cast-operator to cast:
+.IP o 
+Strings to ints and vice versa (\fI(int)"123", (string)55\fP)
+.IP o 
+Strings may be cast to lists (\fIlist lst = (list)"hello"\fP)
+
+.PP 
+.SH "FLOW CONTROL"
+
+.PP 
+\fBIcmake\fP offers the following subset of \fBC\fP\&'s statement types\&. They can be
+used as in the \fBC\fP programming language\&.
+.IP o 
+\fIexpression ;\fP
+.br 
+The plain expression statement;
+.IP o 
+The compound statement 
+.br 
+Different from \fBC\fP \fBicmake\fP does not support variable definitions
+inside a compound statement\&. All variables used locally
+by a function must be defined as either function parameters or
+as variables that are defined immediately at the beginning of a
+function\&'s body\&.
+.IP o 
+\fIif (condition) statement\fP
+.IP o 
+\fIif (condition) statement else statement\fP
+.IP o 
+\fIfor (init; condition; increment) statement\fP
+.br 
+The variable(s) used in the initialization section must already have
+been defined\&. The \fIinit\fP, \fIcondition\fP and \fIincrement\fP sections
+may be left empty\&. The empty condition section is interpreted as
+`always \fItrue\fP\&'\&.
+.IP o 
+\fIwhile (condition) statement\fP
+.br 
+The \fIdo \&.\&.\&. while()\fP statement is not implemented for \fBicmake\fP\&.
+.IP o 
+\fIreturn\fP (for \fIvoid\fP functions) and \fIreturn expression\fP for other
+functions\&. 
+.IP o 
+\fIbreak\fP
+.br 
+To leave \fIfor\fP and \fIwhile\fP statements, overruling the statement\&'s
+condition\&. \fBC\fP\&'s \fIcontinue\fP is not available\&.
+.IP o 
+\fIexit(expression)\fP
+.br 
+To terminate the \fBicmake\fP-script\&. The \fIexpression\fP must evaluate to an
+\fIint\fP value, which becomes the script\&'s exit value\&.
+
+.PP 
+.SH "USER DEFINED FUNCTIONS"
+
+.PP 
+\fBIcmake\fP scripts may define functions, and a function \fImain()\fP \fImust\fP be
+defined\&. Functions must have the following elements:
+.IP o 
+The function\&'s return type\&. One of the available types must be
+used explicitly, e\&.g\&., \fIvoid\fP\&. There is no default type\&. 
+.IP o 
+The function\&'s name, e\&.g\&., \fIcompile\fP\&.
+.IP o 
+A parameter list, defining zero or more comma-separated
+parameters\&. The parameters themselves consist of a type name followed by the
+parameter\&'s identifier\&. E\&.g\&., \fI(string outfile, string source)\fP\&.
+.IP o 
+A \fIbody\fP surrounded by a pair of curly braces (\fI{\fP and \fI}\fP)\&.
+.IP 
+Function bodies may contain (optionally initialized) variable
+definitions\&. Variable definitions start with a type name, followed by one or
+more comma separated (optionally initialized) variable identifiers\&.  If a
+variable is not explicitly initialized it is initialized by default\&. An
+\fIint\fP variable is initialized to 0, a \fIstring\fP is initialized to empty
+text (\fI""\fP) and a \fIlist\fP is initialized to a list of zero elements\&.
+.IP 
+Following variable definitions, bodies may contain zero or more statements
+(see below at section \fBFLOW CONTROL\fP for the various flow-control
+statements)\&. Note that all local variables must be defined at the very
+beginning of function bodies\&.
+
+.PP 
+User defined functions must be defined before they can be used, although they
+may be called recursively\&. Therefore, indirect recursion is not supported by
+\fBicmake\fP\&.
+.PP 
+The user-defined function \fImain()\fP has three optional arguments, which may
+be omitted from the last one (\fIenvp\fP) to the first (\fIargc\fP), as in
+\fBC\fP\&. Its full prototype is (note: \fBvoid\fP return type):
+.nf 
+
+    void main(int argc, list argv, list envp)
+        
+.fi 
+In \fImain()\fP,
+.IP o 
+\fIargc\fP represents the number of elements in \fIargv\fP;
+.IP o 
+\fIargv\fP contains the arguments, with element 0 the compiled \fBicmake\fP script
+(the `\fI\&.bim\fP\&' file);
+.IP o 
+\fIenvp\fP containts the `environment\&' variables\&. The function \fIsizeof()\fP
+(see below) may be used to determine its elements\&. Elements in \fIenvp\fP have
+the form \fIvariable=value\fP\&. Alternatively, the functino \fIgetenv()\fP (see
+below) can be used to retrieve a specific environment variable immediately\&.
+Example:
+.nf 
+
+    void main(int argc, list argv)
+    {
+        list toCompile;
+        int idx;
+
+        if (argc == 1)
+            usage(element(0, argv));
+
+        if (toCompile = altered("*\&.cc"))
+        {
+            for (idx = sizeof(toCompile); idx--; )
+                compile(element(idx, toCompile));
+
+            linking(element(2, argv));
+        }
+        exit (0);
+    }    
+        
+.fi 
+
+.PP 
+.SH "PREDEFINED FUNCTIONS"
+
+.PP 
+\fBIcmake\fP offers the following predefined functions, which can be used
+immediately by \fBicmake\fP scripts\&. The function overview is ordered alphabetically
+by function name, but where appropriate short summary labels are
+provided: 
+.PP 
+Helper functions of \fIexec()\fP (see also below at \fIexec()\fP):
+.IP o 
+\fIvoid arghead(string h)\fP
+.br 
+Defines the `argument head\&', to be used with \fIexec()\fP\&. By default,
+the `argument head\&' is an empty string\&.
+.IP o 
+\fIvoid argtail (string t)\fP
+.br 
+Defines the `argument tail\&', to be used with \fIexec()\fP\&. By default,
+the `argument tail\&' is an empty string\&.
+
+.PP 
+String-to-ascii converters:
+.IP o 
+\fIint ascii(string s)\fP
+.br 
+Returns the first character of \fIs\fP as an int; e\&.g\&.,
+\fIascii("A")\fP returns 65;
+.IP o 
+\fIstring ascii(int i)\fP
+.br 
+Returns \fIi\fP as a string, e\&.g\&., \fIascii(65)\fP returns the string
+\fI"A"\fP;
+
+.PP 
+Filename modifiers:
+.IP o 
+\fIstring change_base(string file, string newbase)\fP
+.br 
+Changes the basename of \fIfile\fP, returns the changed name\&. E\&.g, 
+\fIchange_base("/path/demo\&.im", "out")\fP returns \fI"/path/out\&.im"\fP;
+.IP o 
+\fIstring change_ext(string file, string newext)\fP
+.br 
+Changes the extension of \fIfile\fP, returns the changed name\&. E\&.g, 
+\fIchange_ext("source\&.cc", "o")\fP returns \fI"source\&.o"\fP;
+.IP o 
+\fIstring change_path(string file, string newpath)\fP
+.br 
+Changes the path specification of \fIfile\fP, returns the changed name\&.
+E\&.g, \fIchange_path("tmp/binary", "/usr/bin")\fP returns 
+\fI"/usr/bin/binary"\fP\&. Note that the \fI/\fP-separator is inserted if
+required\&. 
+
+.PP 
+System calls:
+.IP o 
+\fIstring chdir(string newdir)\fP
+.br 
+Changes the script\&'s working directory, returns the previous dir as an
+absolute path\&.
+.br 
+Use \fIchdir("\&.")\fP to get current working directory, 
+\fIchdir("")\fP may be used to obtain the startup working directory (this
+functionality was broken in releases before than 7\&.00, but is now
+operational)\&. The function terminates the \fBicmake\fP-script if the
+specified \fInewdir\fP does not exist\&.
+.IP o 
+\fIstring chdir(int checking, string newdir)\fP
+.br 
+Same functionality as the previous function, but by specifying
+\fIchecking\fP as \fIP_NOCHECK\fP the function won\&'t terminate the
+script\&. Rather, it will return the script\&'s current working
+directory\&. 
+
+.PP 
+Helper functions of \fIexec()\fP (see also below at \fIexec()\fP):
+.IP o 
+\fIcmdhead(string h)\fP
+.br 
+Defines a `command head\&', to be used with \fIexec()\fP\&. By default,
+the `command head\&' is an empty string\&.
+.IP o 
+\fIcmdtail(string t)\fP
+.br 
+Defines a `command tail\&', to be used with \fIexec()\fP\&. By default,
+the `command tail\&' is an empty string\&.
+
+.PP 
+\fBIcmake\fP execution modifier:
+.IP o 
+\fIecho(int opt)\fP
+.br 
+Controls echoing of called programs (and their arguments), specify
+\fIOFF\fP if echoing is not requested\&. By default \fION\fP is active\&.
+
+.PP 
+Functions returning elements of aggregates:
+.IP o 
+\fIstring element(int index, list lst)\fP
+.br 
+Returns string \fIindex\fP (0-based) from \fIlst\fP\&. An empty string is
+returned if an unavailable index value is provided\&.
+.IP o 
+\fIstring element(int index, string str)\fP
+.br 
+Returns character \fIindex\fP (0-based) from \fIstr\fP\&. An empty string is
+returned if an unavailable index value is provided\&.
+
+.PP 
+System calls:
+.IP o 
+\fIexec(string cmd, \&.\&.\&.)\fP
+.br 
+Executes command with arguments\&. Each argument will be prefixed by
+\fIarghead()\fP\&'s argument and postfixed by \fIargtail()\fP\&'s
+argument\&. Note that no blanks are inserted between \fIarghead()\fP\&'s
+contents, the argument proper, and \fIargtail()\fP\&'s argument\&. All thus
+modified arguments are concatenated, this time separated by single
+blanks, and then \fIcmdhead()\fP\&'s contents are inserted between the
+command and the first argument (on either side delimited by single
+blanks) and \fIcmdtail()\fP\&'s contents are appended to the arguments
+(again, separated by a single blank)\&. \fIPATH\fP is searched to locate
+\fIcmd\fP\&. 0 is returned\&.
+.IP o 
+\fIexec(int checkcmd, string cmd, \&.\&.\&.)\fP
+.br 
+Same functionality as the previous function, but by specifying
+\fIchecking\fP as \fIP_NOCHECK\fP the function won\&'t terminate the
+script\&. Rather, it will return the called command\&'s exit status, or
+\fI0x7f00\fP if the command wasn\&'t found\&.
+.IP o 
+\fIexecute(string cmd, string cmdhd,
+string arghd, \&.\&.\&., string argtl, string cmdtl)\fP
+.br 
+Same as \fIexec()\fP, but command head/tail and argument
+head/tail must be specified\&. 
+The actually executed command starts with \fIcmd\fP, followed by 
+\fIcmdhd\fP\&. Next is a series of arguments follows, each 
+enclosed by \fIarghd\fP and \fIargtl\fP\&. The command terminates 
+with \fIcmdtl\fP\&. 0 is returned
+.IP o 
+\fIexecute(int checking, string cmd, string cmdhd,
+string arghd, \&.\&.\&., string argtl, string cmdtl)\fP
+.br 
+Same functionality as the previous function, but by specifying
+\fIchecking\fP as \fIP_NOCHECK\fP the function won\&'t terminate the
+script\&. Rather, it will return the called command\&'s exit status, or
+\fI0x7f00\fP if the command wasn\&'t found\&.
+)
+.PP 
+System interface:
+.IP o 
+\fIint exists(string file)\fP
+.br 
+Returns a non-zero value if \fIfile\fP exists, otherwise 0 is returned\&. 
+
+.PP 
+Input interface:
+.IP o 
+\fIlist fgets(string file, int offset)\fP
+.br 
+The next line found at offet \fIoffset\fP is read from \fIfile\fP\&. 
+It returns a list \fIretlist\fP containing two elements:
+.br 
+\fIelement(0, retlist)\fP is the string that was read 
+(including the \fI\en\fP, if found)
+.br 
+\fIelement(1, retlist)\fP is the next offset to read\&.
+.br 
 
 .IP 
-.SH "FILES" 
--
-.SH "SEE ALSO" 
-\fBmake(1)\fP
-.SH "DIAGNOSTICS" 
--
-.SH "BUGS" 
-No Documented Bugs\&.
-.SH "ORGANIZATION" 
-ICCE, University of Groningen\&.
-.SH "COPYRIGHT" 
+An empty return list signifies \fIEOF\fP\&. Since an empty list\&'s `first\&'
+eement is an empty string, which is converted to the value 0, a file
+may be read and processed as follows:
+.nf 
+
+        list line;
+        while (1)
+        {
+            line = fgets("filename", element(1, line));
+            if (!line)
+                break;
+            process(element(0, line));
+        }
+            
+.fi 
+
+.PP 
+Output interface:
+.IP o 
+\fIint fprintf(string filename, \&.\&.\&.)\fP
+.br 
+Appends all (comma separated) arguments to the file
+\fIfilename\fP\&. Returns the number of printed arguments\&.
+
+.PP 
+Filename modifier:
+.IP o 
+\fIstring get_base(string file)\fP
+.br 
+Returns the base name of \fIfile\fP\&. The base name is the file without
+its path prefix and without its extension\&. The extension is all
+information starting at the final dot in the filename\&. If no final dot
+is found, the file name is the base name\&. Eg\&., the base name of
+\fIa\&.b\fP equals \fIa\fP, the base name of \fIa\&.b\&.c\fP equals \fIa\&.b\fP, the
+base name of \fIa/b/c\fP equals \fIc\fP\&. 
+
+.PP 
+System interface:
+.IP o 
+\fIlist getenv(string envvar)\fP
+.br 
+Returns the value of environment variable \fIenvvar\fP in a list
+containing two elements:
+.br 
+the first element indicates whether the environment variable was
+defined (value \fI"1"\fP) or not (value \fI"0"\fP);
+.br 
+the second element indicates the value of the environment variable\&.
 .IP 
-This is free software, distributed under the terms of the GNU General
-Public License\&.
+Enivironment variables are of the form \fIvariable=value\fP, and if
+defined the list\&'s second element contains \fIvalue\fP\&. If the value is
+empty, the variable is defined, but has no text associated with it\&.
+
+.PP 
+Filename modifier:
+.IP o 
+\fIstring get_ext(string file)\fP
+.br 
+Returns the extension of \fIfile\fP, except for the separating dot\&. The
+extension is all information starting at the final dot
+in the filename\&. If no final dot is found, the extension is an empty
+string\&. 
+
+.PP 
+Input interface:
+.IP o 
+\fIstring getch()\fP
+.br 
+Returns the next pressed key (no `Enter\&' required) as a string\&.
+
+.PP 
+Filename modifier:
+.IP o 
+\fIstring get_path(string file)\fP
+.br 
+Returns the path-prefix of \fIfile\fP\&. The path prefix is all information
+up to (and including) the final directory separator (which is,
+depending on the operating system, a forward- or backslash)\&.
 .IP 
-.SH "AUTHOR" 
-Frank B\&. Brokken (\fBfrank@icce\&.rug\&.nl\fP)\&.
+If no path is found, an empty strring is returned\&.
+
+.PP 
+System interface:
+.IP o 
+\fIint getpid()\fP
+.br 
+Returns the process-id (UNIX) or PSP-paragraph (DOS) of the icmake byte
+code interpreter \fBicm-exec\fP\&.
+
+.PP 
+Input interface:
+.IP o 
+\fIstring gets()\fP
+.br 
+Returns the next line read from the keyboard as a \fIstring\fP\&. The line
+entered on the keyboard must be terminated by an `Enter\&' key, which is
+not stored in the returned string\&.
+
+.PP 
+Functions creating lists of files:
+.IP o 
+\fIlist makelist(string mask)\fP
+.br 
+Returns a list of all files matching \fImask\fP\&. E\&.g\&.,
+\fImakelist("*\&.c")\fP returns a list containing all files ending in
+\fI\&.c\fP\&. 
+.IP o 
+\fIlist makelist(type, string mask)\fP
+.br 
+Same as the previous function, but the type of the directory elements
+may be specified as its first argument:
+.TS 
+ tab(~);
+
+
+
+
+
+
+
+
+
+
+ll
+
+ll
+ll
+ll
+ll
+
+c.
+symbol~meaning~
+O_ALL~obtain all directory entries~
+O_DIR~obtain all directories, including \&. and \&.\&.~
+O_FILE~obtain a list of files~
+O_SUBDIR~obtain all subdirectories~
+
+.TE 
+Note that the pattern \fI*\fP will not match hidden entries under Unix-type
+operating systems\&. Use \fI\&.*\fP for that\&.
+.IP o 
+\fIlist makelist(string mask, newer, string comparefile)\fP
+.br 
+Returns list of all files matching mask which are newer
+than a provided comparefile\&. Operator \fIyounger\fP may be used instead
+of \fInewer\fP\&. Note that \fInewer\fP and \fIyounger\fP are operators, not
+strings\&. 
+.IP o 
+\fIlist makelist([int = O_FILE,] string mask, newer,
+string comparefile)\fP
+.br 
+Same as the previous function, but \fItype\fP may be specified as in
+\fIlist makelist(type, string mask)\fP\&.
+.IP o 
+\fImakelist(string mask, older, string comparefile)\fP
+.br 
+See above; returns a list of files that are older than the 
+comparefile\&.
+.IP o 
+\fImakelist(type, string mask, older, string comparefile)\fP
+.br 
+Same as the previous function, but \fItype\fP may be specified as in
+\fIlist makelist(type, string mask)\fP\&.
+
+.PP 
+Output interface:
+.IP o 
+\fIint printf(\&.\&.\&.)\fP
+.br 
+Shows all (comma separated) arguments to screen (i\&.e\&., the standard
+output stream)\&. Returns the number of printed arguments\&.
+
+.PP 
+System interface:
+.IP o 
+\fIint putenv(string envvar)\fP
+.br 
+Adds \fIenvvar\fP to the current (\fBicmake\fP) environment
+Use the format: "VAR=value"\&. Returns 0\&.
+
+.PP 
+List information:
+.IP o 
+\fIint sizeof(list l)\fP
+.br 
+Returns the number of elements in \fIlist\fP
+
+.PP 
+System information:
+.IP o 
+\fIlist stat(string entry)\fP
+.br 
+Returns \fBstat\fP(2) information of directory entry \fIentry\fP as 
+a list\&. The returned list has two elements: element 0 is the
+\fIattribute value\fP, element 1 contains the size of the file\&.
 .IP 
+Attributes are  returned as bit-flags, composed from the
+following predefined constants: 
+.nf 
+
+            S_IFCHR     S_IFDIR     S_IFREG
+            S_IREAD     S_IWRITE    S_IEXEC
+        
+.fi 
+See the \fBstat\fP(2) manual page for the meanings of these constants\&.
+.IP o 
+\fIlist stat(checking, string entry)\fP
+.br 
+Same as the previous function, but by specifying \fIchecking\fP as
+\fIP_NOCHECK\fP the function won\&'t terminate the script\&. Rather, it will
+rturn \fBstat\fP(2)\&'s return value\&.
+
+.PP 
+String support:
+.IP o 
+\fIint strlen(string s)\fP
+.br 
+Returns the number of characters in \fIs\fP (not counting the final 0)\&.
+.IP o 
+\fIint strfind(string haystack, string needle)\fP
+.br 
+returns index in \fIhaystack\fP where \fIneedle\fP is found, or -1 if 
+\fIneedle\fP is not contained in \fIhaystack\fP\&.
+.br 
+\fBThis function was called strstr() in versions before 7\&.00\fP\&.
+.IP o 
+\fIstring strlwr(string s)\fP
+.br 
+Returns a lower-case duplicate of \fIs\fP\&.
+.IP o 
+\fIlist strtok(string str, string separators)\fP
+.br 
+Returns a list containing all substrings of \fIstr\fP separated by one
+or more (consecutive) characters in \fIseparators\fP\&. E\&.g\&.,
+\fIstrtok("hello icmake\&'s+world", " +")\fP returns the list containing
+the three strings \fI"hello"\fP, \fI"icmake\&'s"\fP, and \fI"world"\fP\&.
+.IP o 
+\fIstring strupr(string s)\fP
+.br 
+Returns an upper-case duplicate of \fIs\fP\&.
+.IP o 
+\fIint substr(string text, int offset, int count)\fP
+.br 
+Returns a substring of \fItext\fP, starting at \fIoffset\fP, consisting of
+\fIcount\fP characters\&. If \fIoffset\fP exceeds (or equals) the string\&'s
+size or if \fIcount <= 0\fP, then an empty string is returned\&. If
+\fIoffset\fP is less thann 0 then 0 is used\&.
+
+.PP 
+System calls:
+.IP o 
+\fIint system(string command)\fP
+.br 
+Executes \fIcommand\fP\&. The return value indicates the executed
+command\&'s exit value\&. The string \fIcommand\fP may contain redirection
+and/or piping characters\&.
+.IP o 
+\fIint system(int checking, string command)\fP
+.br 
+Same functionality as the previous function, but by specifying
+\fIchecking\fP as \fIP_NOCHECK\fP the function won\&'t terminate the
+script\&. Rather, it will return the called command\&'s exit status, or
+\fI0x7f00\fP if the command wasn\&'t found\&.
+)
+.PP 
+.SH "FILES"
+
+.PP 
+The mentioned paths are sugestive only and may be installation dependent:
+.IP o 
+\fB/usr/bin/icmake\fP: the main \fBicmake\fP program;
+.IP o 
+\fB/usr/bin/icmun\fP: the \fBicmake\fP unassembler;
+.IP o 
+\fB/usr/lib/icm-pp\fP: the preprocessor called by \fBicmake\fP;
+.IP o 
+\fB/usr/lib/icm-comp\fP: the compiler called by \fBicmake\fP;
+.IP o 
+\fB/usr/lib/icm-exec\fP: the byte-code interpreter called by \fBicmake\fP;
+
+.PP 
+.SH "SEE ALSO"
+\fBmake\fP(1)
+.PP 
+.SH "LICENSE"
+This  is free software, distributed under the terms of the `GNU General
+Public License\&'\&. Copyright remains with the author\&.
+.PP 
+.SH "ORGANIZATION"
+Computing Center, University of Groningen\&.
+.PP 
+.SH "BUGS"
+
+.PP 
+Please report bugs to the author:
+.PP 
+.SH "AUTHOR"
+
+.PP 
+Frank B\&. Brokken (f\&.b\&.brokken@rug\&.nl)\&.

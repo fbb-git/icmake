@@ -1,0 +1,315 @@
+#!/usr/bin/icmake -qt/tmp/icmbuild
+
+#include "icmconf"
+
+//                      NO CONFIGURABLE PARTS BELOW THIS LINE
+
+string g_sources;       // Pattern for the sources to use
+string g_libpath;       // the extra library paths
+string g_libs;          // the extra libraries
+list   g_classes;       // all class-directories
+int    g_nClasses;      // number of class-directories
+string g_binary;        // binary program to build
+
+                        // std call of the compiler when compiling
+string g_compiler = COMPILER " " COMPILER_OPTIONS " -c -o ";
+string g_cwd = chdir("");   // initial working directory
+
+void md(string dir)
+{
+    if (!exists(dir))
+        system("mkdir -p " + dir);
+}
+
+string cd(string next)
+{
+    if (USE_ECHO && next != ".")
+        printf("chdir " + next + "\n");
+
+    return chdir(next);
+}
+
+void parser()
+{
+    cd(PARSER_DIR);
+    
+    if (PARSSPEC younger PARSOUT)       // need new parser
+        system(PARSGEN " " PARSFLAGS " " PARSSPEC);
+
+    cd("..");
+}
+
+void scanner()
+{
+    cd(SCANNER_DIR);
+
+    if 
+    (
+        SCANSPEC  younger SCANOUT       // need new scanner
+        ||
+            PARSER_DIR != ""
+            &&
+            "../"PARSER_DIR"/"PARSOUT  younger SCANOUT
+    )
+        system(SCANGEN " " SCANFLAGS " " SCANSPEC);
+
+    cd("..");
+}
+
+void setClasses()
+{
+    string dir;
+    list class;
+
+                                        // make sure that scanner/parser
+                                        // directories come first, so they
+                                        // don't get reordered
+    if (SCANNER_DIR != "")              
+        g_classes = (list)SCANNER_DIR;  // add the scanner-dir
+
+    if (PARSER_DIR != "")
+        g_classes += (list)PARSER_DIR;
+
+    while (sizeof(class = fgets("CLASSES", (int)element(1, class))))
+    {
+        dir = element(0, strtok(element(0, class), " \t\n"));
+        if 
+        (
+            strlen(dir)                 // no empty dirs
+            &&
+            dir != SCANNER_DIR          // SCANNER_DIR is already there
+            && 
+            dir != PARSER_DIR           // PARSER_DIR is already there
+            &&
+            strfind(dir, "#") != 0      // omit lines starting in #
+            &&
+            strfind(dir, "//") != 0     // omit lines starting in //
+        )
+            g_classes += (list)dir;     // all passed? then add this dir.
+    }
+
+    g_nClasses = sizeof(g_classes);
+}
+
+list inspect(int ignoreMain, int prefix, list srcList, string library)
+{
+    int idx;
+    string ofile;
+    string oprefix;
+    string file;
+
+    oprefix = g_cwd + TMP_DIR "/o/" + (string)prefix;
+
+    if (ignoreMain)
+        srcList -= (list)MAIN;
+
+    for (idx = sizeof(srcList); idx--; )
+    {
+        file  = element(idx, srcList);   
+        ofile   = oprefix + change_ext(file, "o");    // make o-filename
+
+        // A file s must be recompiled if it's newer than its object
+        // file o or newer than its target library l, or if neither o nor l
+        // exist. 
+        // Since `a newer b' is true if a is newer than b, or if a exists and
+        // b doesn't exist s must be compiled if s newer o and s newer l.
+        // So, it doesn't have to be compiled if s older o or s older l.
+
+                                            // redo if file has changed
+         if (file older ofile || file older library)
+            srcList -= (list)file;
+    }
+    return srcList;
+}
+
+void c_compile(int prefix, string srcDir, list cfiles)
+{
+    int idx;
+    string compiler;
+    string file;
+
+    cd(g_cwd + TMP_DIR + "/o");
+
+    if (srcDir != "")
+        srcDir += "/";
+
+    compiler = g_compiler + (string)prefix;
+
+    for (idx = sizeof(cfiles); idx--; )
+    {
+        file = element(idx, cfiles);
+        
+        system(compiler + change_ext(file, OBJ_EXT) + 
+                            " ../../" + srcDir + file);
+    }
+
+    chdir("");
+}
+
+void std_cpp(int ignoreMain, int prefix, string srcDir, string library)
+{
+    list files;
+
+    cd(srcDir);
+                                                      // make list of all files
+    files = inspect(ignoreMain, prefix, makelist(g_sources), library);  
+    chdir("");
+
+    if (sizeof(files))
+        c_compile(prefix, srcDir, files);             // compile files
+}
+
+void static_library()
+{
+    cd(TMP_DIR "/o");
+
+    if (sizeof(makelist("*" OBJ_EXT)))
+    {
+        system("ar cru ../lib" LIBRARY + ".a *" OBJ_EXT);
+        system("ranlib ../lib" LIBRARY + ".a");
+        system("rm *" OBJ_EXT);
+    }
+}
+
+void build_static_library()
+{
+    int idx;
+    string class;
+    string fullLibname;
+
+    setClasses();
+
+    md( TMP_DIR "/o");
+
+    fullLibname = g_cwd + TMP_DIR "/lib" LIBRARY ".a";
+
+    g_sources = SOURCES;
+
+    if (PARSER_DIR != "")
+        parser();
+
+    if (SCANNER_DIR != "")
+        scanner();
+                                            // compile all files in subdirs
+    for (idx = g_nClasses; idx--; )
+        std_cpp(0, idx + 1, element(idx, g_classes), fullLibname);
+        
+                                            // compile all files in g_cwd
+    std_cpp(1, 0, "", fullLibname);  
+ 
+    static_library();                       // make the library
+
+    chdir("");
+}
+
+void setLibs()
+{
+    int n;
+    int index;
+    list cut;
+        
+    cut = strtok(ADD_LIBRARIES, " ");        // cut op libraries
+    n = sizeof(cut);
+    for (index = 0; index < n; index++)
+        g_libs += " -l" + element(index, cut);
+
+    cut = strtok(ADD_LIBRARY_PATHS, " ");     // cut up the paths
+    n = sizeof(cut);
+    for (index = 0; index < n; index++)
+        g_libpath += " -L" + element(index, cut);
+}
+
+
+void link(string maino)
+{
+    setLibs();
+
+    cd(TMP_DIR);
+    if 
+    (
+        maino younger "bin/" BINARY 
+        || 
+        "lib" LIBRARY ".a" younger "bin/" BINARY
+    )
+    {
+        system(COMPILER " -o bin/" BINARY " " + maino + 
+                        " -l" + LIBRARY + " " + g_libs +
+                        " -L. " + g_libpath + " " LINKER_OPTIONS);
+    }
+    chdir("");
+}
+
+
+void program()
+{
+    string maino = change_ext(MAIN, OBJ_EXT);
+
+    md(TMP_DIR "/bin");
+
+    build_static_library();
+
+    if (MAIN younger TMP_DIR "/" + maino)
+        system(g_compiler + TMP_DIR "/" + maino + " " MAIN);
+
+    link(maino);
+
+    exit(0);
+}
+
+void clean()
+{
+    chdir("");
+    system("rm -rf " TMP_DIR);
+
+    exit(0);
+}
+
+void install(string base)
+{
+    md(base + BIN_INSTALL);
+
+    system("cp " TMP_DIR "/bin/" BINARY " " + 
+            base + BIN_INSTALL "/" + BINARY);
+
+    exit(0);
+}
+
+void main(int argc, list argv, list envp)
+{
+    string prog;
+    string option;
+
+    echo(USE_ECHO);
+
+    option = element(1, argv);
+
+    if (option == "clean")
+        clean();
+
+    if (option == "install")
+        install(element(2, argv));
+
+     if (option == "program")
+         program();
+
+     if (option == "library")
+     {
+         build_static_library();      
+         exit(0);
+     }
+
+    prog = change_ext(change_path(element(0, argv), ""), "");
+
+    printf("Usage: ", prog, " mode\n"
+        "Where `mode' is one of:\n"
+        "   clean           - clean up remnants of previous activities\n"
+        "   library         - build the static library " TMP_DIR "/lib"
+                                                            LIBRARY  ".a\n"
+        "   program         - build " TMP_DIR "/" BINARY "\n"
+        "   install <base>  - to install the software in the locations\n"
+        "                     defined in the icmconf file, optionally\n"
+        "                     below <base>\n"
+    );
+
+    exit(1);
+}

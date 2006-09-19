@@ -758,8 +758,15 @@ manpagefiles()
     it() bf(/usr/lib/icm-exec): the byte-code interpreter called by icm();
     )
 
+manpagesection(EXAMPLES)
+    
+    The distribution (usually in tt(/usr/share/doc/icmake) contains a
+directory tt(examples) containing various examples of icm() script. Note in
+particular the tt(examples/icmbuild) subdirectory containing a general script
+for bf(C++) and bf(C) program maintenance.
+
 manpageseealso()
-    bf(make)(1)
+    bf(icmbuild)(1), bf(make)(1)
 
 manpagesection(LICENSE)
        This  is free software, distributed under the terms of the `GNU General

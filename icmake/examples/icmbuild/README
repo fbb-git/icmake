@@ -1,0 +1,59 @@
+The `icmbuild' script is a generic script that can be used to do program
+maintenance using icmake. 
+
+The script expects two files to be available in the directory where program
+maintenance is required, and the icmbuild script should be available in your
+path or it should be started as, e.g., ./icmbuild
+
+The script assumes that your sources (currently C++ sources, but see the file
+`icmconfig') exist in the directory in which icmconfig and the file CLASSES
+live, and that the file CLASSES contains the names of all subdirectories in
+which class-specific sources are kept. 
+
+The script compiles all sources in each of these subdirectories, and then all
+sources in the current working directory (except for the source containing
+main())
+
+The compiled sources result in object modules which are then stored in a
+library, against which the main-source is linked. 
+
+Additional libraries can be added to this linking process as well.
+
+Once a library is constructed it is kept up to date by the script. Changing a
+source will result in replacing its former module by its new module in the
+library. 
+
+
+To use icmbuild the following is suggested:
+
+    1. Install icmbuild in your path
+
+    2. copy icmconf and CLASSES to your project's base directory (i.e., the
+       directory in which and where below the project's sources are found)
+
+    3. Modify the #defines in the file icmconf to taste
+
+    4. Mention the subdirectories containing sources in the file CLASSES
+
+       Note that the order of the classes mentioned in classes *is* relevant.
+       It's no problem when classes are added, but reordering should be 
+       prevented. If reordering is required, recompile the library as the 
+       final object files contain class order-numbers.
+       These class-order numbers prevent file-name collisions and thus
+       prevent replacing file x.o from class A by file x.o from class B.
+
+    5. now simply run 
+
+            icmbuild 
+
+       from the project's base directory and let the help-info tell you
+       what your options are. You should see something like:
+
+        Usage: icmbuild mode
+        Where `mode' is one of:
+           clean           - clean up remnants of previous activities
+           library         - build the static library tmp/libmodules.a
+           program         - build tmp/binary
+           install <base>  - to install the software in the locations
+                             defined in the icmconf file, optionally
+                             below <base>

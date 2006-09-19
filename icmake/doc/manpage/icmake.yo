@@ -28,7 +28,7 @@ manpage(icmake)(1)(_CurYrs_)(icmake._CurVers_.tar.gz)
         (A program maintenance utility)
 
 COMMENT( man-request, larger title )
-manpagename(icmake)(An program maintenance (em(make)) utility using a
+manpagename(icmake)(A program maintenance (em(make)) utility using a
                     bf(C)-like grammar)
 
 COMMENT( all other: add after () )

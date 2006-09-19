@@ -1,0 +1,244 @@
+SUBST(_CurYrs_)(2006)
+SUBST(_CurVers_)(7.00)
+
+htmlbodyopt(text)(#27408B)
+htmlbodyopt(bgcolor)(#FFFAF0)
+whenhtml(mailto(Frank B. Brokken: f.b.brokken@rug.nl))
+
+DEFINEMACRO(sop)(3)(\
+    it() bf(-ARG1) ARG2 nl()ARG3\
+)
+
+DEFINEMACRO(itt)(1)(\
+    it()tt(ARG1)\
+)
+
+DEFINEMACRO(itb)(1)(\
+    it()bf(ARG1)\
+)
+
+DEFINEMACRO(icm)(0)(bf(icmbuild))
+DEFINEMACRO(Icm)(0)(bf(Icmbuild))
+
+DELETEMACRO(tt)
+DEFINEMACRO(tt)(1)(em(ARG1))
+
+COMMENT( man-request, section, date, distribution file, general name)
+manpage(icmbuild)(1)(_CurYrs_)(icmake._CurVers_.tar.gz)
+        (A generic program maintenance script)
+
+COMMENT( man-request, larger title )
+manpagename(icmbuild)(A generic, easy configurable, program maintenance script)
+
+COMMENT( all other: add after () )
+manpagesynopsis()
+       icm() tt(mode)
+
+manpagedescription()
+
+The icm() script is a generic script that can be used to do program
+maintenance using bf(icmake)(1). 
+
+The script expects two files to be available in the directory where program
+maintenance is required, and the icm() script should be available in your
+path or it should be started as, e.g., tt(./icmbuild)
+
+Icm() assumes that your sources exist in and below a directory in which the
+files tt(icmconf) and tt(CLASSES) live. The file tt(CLASSES)
+contains the names of all subdirectories in which class-specific sources are
+kept. The file tt(examples/icmbuild) in bf(icmake)(1)'s distribution
+offers an example of the configuration parameters. In this latter file 
+it is assumed that  bf(C++) sources are maintained, but the icm() script is
+not restricted to do maintenance for bf(C++)  programs.
+
+Icm() compiles all sources in each of the subdirectories named in the file
+tt(CLASSES), and then compiles all sources in the current working directory
+(except for the source containing tt(main()))
+
+The compiled sources result in object modules which are then kept in a
+library, against which the main-object module is linked. It is also possible
+to specify additional libraries against which the program must be linked.
+
+Once a library is constructed it is kept up to date by the script. Changing a
+source will result in replacing its former module by its new module in the
+library. 
+
+manpagesection(KICK-STARTING ICMBUILD)
+
+Normally, icm() is installed and used as follows:
+    itemization(
+    it()  Install icm() in your path
+    it() copy tt(icmconf) and tt(CLASSES) to your project's base directory
+       (i.e., the directory in which and where below the project's sources are
+       found)
+    it() Modify the tt(#defines) in the file tt(icmconf) to taste
+    it() List the subdirectories containing sources in the file tt(CLASSES)
+
+       Note that the order of the classes mentioned in classes em(is) relevant
+       here.  It's no problem to add new class (subdirectory) names, but
+       reordering should be prevented. If reordering is required, recompile
+       the library, as the final object files contain class order-numbers.
+       These class-order numbers prevent file-name collisions and thus prevent
+       replacing file tt(x.o) from class tt(A) by file tt(x.o) from class
+       tt(B).
+    it() Now simply run 
+        verb(
+            icmbuild 
+        )
+       from the project's base directory and let the help-info tell you
+       what your options are. See the next section for the modes of operation
+    )
+
+manpageoptions()
+
+    Icm() may be called with the following operational modes:
+    itemization(
+    itt(clean)nl()
+        clean up remnants of previous activities
+    itt(library)nl()
+        build the static library
+    itt(program)nl()
+        build the binary program
+    itt(install <base>)
+        install the software in the locations defined in the tt(icmconf)
+         file, optionally below the directory tt(<base>)
+    )
+
+manpagefiles()
+
+    The mentioned paths are sugestive only and may be installation dependent:
+    itemization(
+    it() bf(/usr/share/doc/icmake/examples/icmbuild/icmconf)
+        Example of a icm() configuration file;
+    it() bf(/usr/share/doc/icmake/examples/icmbuild/CLASSES)
+        Example of a icm() tt(CLASSES) file.
+    )
+
+manpagesection(EXAMPLES)
+    
+    Here is an example of the configuration file tt(icmconf) for a concrete
+       program, using the library tt(libbobcat1) as an additional library:
+
+    verb(
+    // Inspect the following #defines. Change them to taste. If you don't
+    // need a particular option, change its value into an empty string
+
+    // should commands be echoed (ON) or not (OFF) ?
+#define USE_ECHO              ON
+
+
+    // The final program and source containing main():
+    // ===============================================
+
+    // define the name of the program to create:
+#define BINARY              "brackets"
+
+    // define the name of the source containing main():
+#define MAIN                "brackets.cc"
+
+    // #defines used for compilation and linking:
+    // ==========================================
+
+    // define the compiler to use:
+#define COMPILER            "g++"
+
+    // define the compiler options to use:
+#define COMPILER_OPTIONS    "-g -Wall -O2"
+
+    // define the pattern to locate sources in a directory:
+#define SOURCES             "*.cc"
+
+    // define the options used for linking:
+#define LINKER_OPTIONS      "-s"
+
+    // define any additional libraries BINARY may need:
+#define ADD_LIBRARIES       "bobcat"
+
+    // define any additional paths (other than the standard paths) the
+    // additional libraries are located in:
+#define ADD_LIBRARY_PATHS  ""
+
+    // #defines used for the final product:
+    // ====================================
+
+#define BIN_INSTALL         "/usr/bin"
+
+
+
+    // Some advanced #defines (to create parsers and lexical scanners)
+    // ===============================================================
+
+
+    // Lexical Scanner section
+    // =======================
+
+    // Should a lexical scanner be constructed? If so, define the 
+    // subdirectory containing the scanner's specification file. 
+#define SCANNER_DIR         ""  
+
+    // What is the program generating the lexical scanner?
+#define SCANGEN             "flex"
+
+    // Flags to provide SCANGEN with:
+#define SCANFLAGS           "-I"
+
+    // Name of the lexical scanner specification file
+#define SCANSPEC            "lexer"
+
+    // Name of the file generated by the lexical scanner
+#define SCANOUT             "yylex.cc"
+
+
+    // Parser section
+    // ==============
+
+    // Should a parser be constructed? If so, define the subdirectory
+    // containing the parser's specification file
+#define PARSER_DIR          ""
+
+    // What it the program generating a parser?
+#define PARSGEN             "bisonc++"
+
+    // What it the grammar specificication file?
+#define PARSSPEC            "grammar"
+
+    // Flags to provide PARSGEN with:
+#define PARSFLAGS           "-V -l"
+
+    // Name of the file generated by the parser generator containing the 
+    // parser function
+#define PARSOUT             "parse.cc"
+
+
+
+    // Additional defines, which should normally not be modified
+    // =========================================================
+
+    // Directory below this directory to contain temporary results
+#define TMP_DIR             "tmp"
+
+    // Local program library to use (comment out if you want to use
+    // the object modules themselves, rather than a library)
+#define LIBRARY             "modules"
+
+    //  The extension of object modules:
+#define OBJ_EXT             ".o"
+        )
+
+manpageseealso()
+    bf(icmake)(1)
+
+manpagesection(LICENSE)
+       This  is free software, distributed under the terms of the `GNU General
+       Public License'. Copyright remains with the author.
+
+manpagesection(ORGANIZATION)
+       Computing Center, University of Groningen.
+
+manpagebugs()
+
+    Please report bugs to the author:
+    
+manpageauthor()
+
+Frank B. Brokken (f.b.brokken@rug.nl).

@@ -1,3 +1,54 @@
+icmake (7.00)
+
+  * Defines (#define) may use other #defined variables to determine their
+    value. 
+
+    icmake's sources may use hexadecimal constants (0xdead)
+
+    global and local variables may be immediately initialized by constants
+    and/or available functions. Variables cannot be used for the
+    initialization. 
+
+    execute() function repaired: it never succeeded due to invalid return
+    value
+
+    initial source may or may not have .im extension, as suggested in the 
+    general usage info provided by icmake itself. If the specified initial
+    source does not exist, an .im extension is attempted.
+
+    The IM environment variable may contain several, `:'-delimited paths
+
+    chdir("") now returns initial working directory
+
+    getenv() implemented: returns list: [0]: ok (or not), [1]: value of the
+    environment variable
+
+    strlen/strupr/strlwr now defined as rss-functions, no longer as macros
+
+    strstr renamed to strfind. 
+
+    substr() added, returning a substring from an existing string.
+
+    (f)printf() now have int-return values (instead of undefined)
+
+    icmake manual page rewritten
+
+    icmbuild script for general program maintenance added
+    icmbuild manual page added
+
+    the `unix' script will regenerate the parser and the lexical scanner if
+    their specification files have changed.
+
+    Debian patches up to 6.22-7 processed; more in general: the sources now
+    compile completely free of warnings
+
+    The distinction between program and version distribution has been
+    discontinued. Now there's only a distribution version, shown by all
+    icmake-programs.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 19 Sep 2006 21:39:43 +0200
+
+
 NOTE:   The version referred to here is the version of the distribution,
         not of the icmake programs.
     ----------------------------------------------------------------

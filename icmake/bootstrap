@@ -4,12 +4,16 @@ echo "
     the function glob() is available in the gcc-runtime library.
     If that's not the case, remove the -DHAVE_GLOB define from the 
     gcc flags.
+
+    Furthermore, it assumes that the parser files parser.c and parser.h have
+    already been generated from the file parser and that the file lexer.c has
+    already been generated from the file lexer.
 "                                     
 
 echo    Building the runtime-library in ./rss
 cd rss
 gcc -c -O2 -g -Wall -DHAVE_GLOB *.c
-ar rsv libicrss.a *.o
+ar rs libicrss.a *.o
 rm *.o
 cd ..
 

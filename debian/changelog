@@ -1,3 +1,9 @@
+icmake (7.00-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 19 Sep 2006 18:00:03 +0200
+
 icmake (6.22-7) unstable; urgency=low
 
   * New patch: negate.c.dpatch

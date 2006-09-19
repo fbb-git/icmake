@@ -47,7 +47,7 @@ binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs CHANGES
-	dh_installdocs icmake.doc doc/icmake.ps debian/mail.frank
+	dh_installdocs icmake.doc doc/icmake.ps examples debian/mail.frank
 	dh_installexamples
 #   dh_installmenu
 #   dh_installdebconf
@@ -59,7 +59,7 @@ binary-arch: build install
 #   dh_installcron
 #   dh_installinfo
 #   dh_undocumented
-	dh_installman doc/icmake.1
+	dh_installman doc/icmake.1 doc/icmbuild.1
 	dh_link usr/share/man/man1/icmake.1 usr/share/man/man1/icmun.1
 	dh_strip
 	dh_compress
@@ -71,6 +71,46 @@ binary-arch: build install
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
+
+
+# The following is for internal development usage only
+# Update that sum when new _upstream_ releases occur, this
+# catches silent file content forges at the upstream server side
+
+MD5TRUSTED := 26c97555029f52308911af1b40573d8b
+
+DEBVERSION:=$(shell head -n 1 debian/changelog | sed -e 's/^[^(]*(\([^)]*\)).*/\1/')
+UPVERSION:=$(shell echo $(DEBVERSION) | sed -e 's/^.*://' -e 's/-[0-9.]*$$//' -e 's/.dfsg$$//')
+UPNAME := icmake
+UPFILE := $(UPNAME)_$(UPVERSION).orig.tar.gz
+DEFILE := $(UPNAME)_$(UPVERSION).orig.tar.gz
+URL	   := ftp://ftp.icce.rug.nl/pub/frank/debian/icmake
+MD5CURRENT := `md5sum ../tarballs/$(DEFILE) | sed -e 's/ .*//'`
+
+get-orig-source:
+	@@dh_testdir
+	@@[ -d ../tarballs/. ]||mkdir -p ../tarballs
+
+	-@if [ ! -f ../tarballs/$(DEFILE) ] ; then \
+		echo "Downloading $(URL)/$(UPFILE) from $(URL)/$(UPFILE) ..." ; \
+		wget -N -nv -T10 -t3 -O ../tarballs/$(DEFILE) $(URL)/$(UPFILE) ; \
+	else \
+		echo "Upstream source tarball has already been downloaded" ; \
+	fi
+
+	-@if [ "$(MD5CURRENT)" != "$(MD5TRUSTED)" ] ; then \
+		echo "Expecting upstream filename md5sum $(MD5TRUSTED), but $(MD5CURRENT) found" ; \
+		echo "Upstream filename md5sum is NOT trusted! Possible upstream filename forge!" ; \
+		false ; \
+	else \
+		echo "Upstream filename md5sum is trusted!" ; \
+	fi
+
+
+print-version:
+		@@echo "Debian version:			 $(DEBVERSION)"
+		@@echo "Upstream version:		 $(UPVERSION)"
+
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install patch unpatch myclean

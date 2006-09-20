@@ -47,7 +47,7 @@ binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs CHANGES
-	dh_installdocs icmake.doc doc/icmake.ps examples debian/mail.frank
+	dh_installdocs icmake.doc doc/icmake.ps examples debian/mail.frank debian/NEWS.Debian
 	dh_installexamples
 #   dh_installmenu
 #   dh_installdebconf

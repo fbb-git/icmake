@@ -31,11 +31,12 @@ extern char
     version[],
     release[],
     cant_read[],
-    *dest_name,
     r[],
-    rb[],
-    *source_name,
-    *temporary;
+    rb[];
+
+extern char *temporary;
+extern char *source_name;
+extern char *dest_name;
 
 extern FILE
     *fdest;

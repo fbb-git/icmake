@@ -61,13 +61,13 @@ BIN_HEADER_ *readheader (FILE *f, unsigned v)
 
     if (! fread (&header, sizeof (BIN_HEADER_), 1, f) )
         error ("cannot read header from binary file, corrupted?");
-    if (header.version[0] < v)
-        error ("The binary file was created with an older version of icmake.\n"
-               "Remake the binary file.");
-    if (header.version[0] > v)
-        error ("This program does not support the version which is indicated"
-               " by the binary\n"
-               "file. Upgrade to a newer program.");
+//    if (header.version[0] < v)
+//        error ("The binary file was created with an older version of icmake.\n"
+//               "Remake the binary file.");
+//    if (header.version[0] > v)
+//        error ("This program does not support the version which is indicated"
+//               " by the binary\n"
+//               "file. Upgrade to a newer program.");
 
     return (&header);
 }

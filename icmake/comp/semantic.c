@@ -23,5 +23,5 @@ void semantic (char *s, ...)
         putchar('\n');
         sem_err++;
     }
-    yynerr++;
+    yynerrs++;
 }

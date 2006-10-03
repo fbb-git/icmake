@@ -28,10 +28,7 @@
 
 #include "icrssdef.h"
 
-int older(lval, rval)
-    char
-        *lval,
-        *rval;
+int older(char const *lval, char const *rval)
 {
     struct stat
         lbuf,

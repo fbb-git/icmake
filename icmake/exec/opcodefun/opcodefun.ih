@@ -1,0 +1,86 @@
+#include "opcodefun.h"
+
+#ifdef MSDOS
+#   include <icce.h>
+#   include <conio.h>
+#   include <process.h>
+#   include <direct.h>
+#   include <io.h>
+#   include <dos.h>
+#else
+#   include <unistd.h>
+#endif
+
+#include <stdlib.h>
+
+#include "../../icm.h"
+#include "../../rss/icrss.h"
+
+#include "../global.h"
+
+#include "../var/var.h"
+#include "../stack/stack.h"
+#include "../virtual/virtual.h"
+#include "../int/int.h"
+#include "../list/list.h"
+#include "../string/string.h"
+#include "../builtin/builtin.h"
+
+
+extern void       (*procfun[])(void);
+
+VAR_   *getdest(void);
+int     istrue(void);
+
+void fun_call(void);
+void fun_exit(void);
+void fun_ret(void);
+void fun_pop_reg(void);
+void fun_push_imm(void);
+void fun_call_rss(void);
+void fun_push_strconst(void);
+void fun_push_var(void);
+void fun_pop_var(void);
+void fun_frame(void);
+void fun_asp(void);
+void fun_add(void);
+void fun_shl(void);
+void fun_shr(void);
+void fun_empty(void);
+void fun_jmp(void);
+void fun_jmp_true(void);
+void fun_push_reg(void);
+void fun_older(void);
+void fun_younger(void);
+
+void fun_atoi(void);
+void fun_atol(void);
+void fun_band (void);
+void fun_bnot(void);
+void fun_bor(void);
+void fun_dec(void);
+void fun_div(void);
+void fun_eq(void);
+void fun_gr(void);
+void fun_greq(void);
+void fun_inc(void);
+void fun_itoa(void);
+void fun_jmp_false(void);
+void fun_mod(void);
+void fun_mul(void);
+void fun_neq(void);
+
+
+void fun_push_0(void);
+void fun_push_1_jmp_end(void);
+
+void fun_sm(void);
+void fun_smeq(void);
+void fun_sub(void);
+void fun_umin(void);
+void fun_xor(void);
+void fun_copy_var(void);
+
+
+
+

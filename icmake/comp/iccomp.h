@@ -161,9 +161,9 @@ extern FILE
 extern int
     yy_init,                                /* yylex() initializer: 1 to init. */
     yyleng,                                 /* strlen(yytext) */
-    yynerr;                                 /* number of parse errors so far */
+    yynerrs;                                 /* number of parse errors so far */
 
-extern unsigned
+extern int
     yylineno;                               /* yylex() line counter */
 
 extern char
@@ -256,9 +256,7 @@ extern unsigned
     n_params,
     n_strings,
     sem_err,
-    stringsize,
-    yylineno;
-
+    stringsize;
 
 int conflict (ESTRUC_ *, ESTRUC_ *,     /* conflicting binary types */
                   OPCODE_);

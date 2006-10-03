@@ -350,4 +350,4 @@ SUBST(@COPYRIGHT)(
     Public License.
 )
 COMMENT(Do not modify from here)
-INCLUDEFILE(/usr/local/manpages/executables.1/pagedef.yo)
+INCLUDEFILE(/usr/local/share/makemanpage/executables.1/pagedef.yo)

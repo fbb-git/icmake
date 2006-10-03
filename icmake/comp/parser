@@ -167,9 +167,6 @@ comma_expr:
         zeroframe
     ;
 
-comma_or_closepar:
-            { parse_error = err_comma_or_closepar_expected; }   ',' ;
-
 compound:
         '{'                                 /* } (for matching) */
         statements

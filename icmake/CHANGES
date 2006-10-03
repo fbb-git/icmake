@@ -1,6 +1,44 @@
+icmake (6.30)
+    
+    Debian patches up to 6.22-7 processed; more in general: the sources now
+    compile free of warnings
+
+    chdir("") now returns initial working directory
+
+    Execution error on the powerpc repaired. Caused by strcmp() sometimes
+    returning a non-zero value having its lowest 16 bits equal to zero. Since 
+    icmake internally uses 16-bits int values, this results in a zero value
+    following an int to int16 assignment. See, e.g.,  exec/string/compare.c
+
+    During the process of repairing the above error, Icm-exec was completely
+    rewritten. 
+
+    Lintian warning about an error in the icmake.1 manual page repaired
+    Lindian warning about the inappropriate executable mode of 
+    examples/defines.im repaired.
+
+    Newer versions of icmake programs operate fine on existing (older) binary
+    scripts as long as icmake's major version isn't upgraded. Newer versions
+    of binary icmake files remain to be inexecutable with older icmake
+    versions. 
+    
+    PRE-ANNOUNCING VERSION 7.00:
+
+    A major upgrade (to version 7.00) will be released soon. As a prelude: it
+    will define new built-in functions: getenv() and substr() will be
+    completely new, and strstr() will be replaced by the new function
+    strfind(). Existing scripts defining getenv(), substr() and/or strfind()
+    should rename these functions to, e.g., my_getenv() (and comparable) or
+    (possibly) remove these definitions and use the new built-in functions.
+
+    The distiction between distribution version and program version (see
+    below) is removed. All programs will have the same version as the
+    distribution. 
+
+    ----------------------------------------------------------------
+
 NOTE:   The version referred to here is the version of the distribution,
         not of the icmake programs.
-    ----------------------------------------------------------------
 
 6.22    Compiler warnings and the use of gets() removed from the sources
         All programs now use the same version, which is defined in 

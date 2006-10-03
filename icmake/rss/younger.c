@@ -29,10 +29,7 @@
 
 #include "icrssdef.h"
 
-int younger(lval, rval)
-    char
-        *lval,
-        *rval;
+int younger(char const *lval, char const *rval)
 {
     struct stat
         lbuf,

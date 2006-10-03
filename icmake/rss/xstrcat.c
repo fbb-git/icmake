@@ -20,8 +20,7 @@
 
 #include "icrssdef.h"
 
-char *xstrcat (s1, s2)
-char *s1, *s2;
+char *xstrcat (char *s1, char const *s2)
 {
     register unsigned
         s1len;

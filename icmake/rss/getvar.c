@@ -62,7 +62,7 @@ Example:
 
 UNS16 getvar (FILE *f, BIN_HEADER_ *headerp, VAR_ **var)
 {
-    register
+    register UNS16
         nvar = 0;
     INT32
         curoffs;

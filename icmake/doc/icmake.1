@@ -1,69 +1,69 @@
-.TH "icmake" "1" "Nov\&. 1999" "icmake" "icmake-X\&.YY\&.tar\&.gz" 
-.SH "NAME" 
+.TH "icmake" "1" "Nov\&. 1999" "icmake" "icmake-X\&.YY\&.tar\&.gz"
+.SH "NAME"
 icmake \- an alternative to \fImake\fP
-.SH "SYNOPSIS" 
-.PP 
+.SH "SYNOPSIS"
+.PP
 icmake [flags] source[\&.im] [dest[\&.bim]] [-- [args]]
-.PP 
-.SH "OPTIONS" 
-.PP 
-.IP o 
+.PP
+.SH "OPTIONS"
+.PP
+.IP o
 flags:  optional flags:
-.IP o 
+.IP o
 \fI-a\fP: information about ICMAKE
-.IP o 
+.IP o
 \fI-b\fP: blunt execution of the destinationfile
-.IP o 
+.IP o
 \fI-c\fP: the destination file is compiled
-.IP o 
+.IP o
 \fI-i file\fP: \'file\': name of source, end of icmake arguments
-.IP o 
+.IP o
 \fI-o file\fP: all icmake output is redirected to `file\' (Not
-implemented on unix platforms)   
-.IP o 
+implemented on unix platforms)
+.IP o
 \fI-p\fP: only the preprocessor is activated
-.IP o 
+.IP o
 \fI-q\fP: quiet mode: copyright banner not displayed
-.IP o 
+.IP o
 \fI-t file\fP: \'file\' is used as a temporary bim-file, to be
 removed on exit\&. Argument processing stops\&.
-.IP o 
+.IP o
 \fIsource\fP: make description source file (default extension: \&.im)
-.IP o 
+.IP o
 \fIdest\fP:   binary make file             (default:    source\&.bim)
-.IP o 
+.IP o
 \fI--\fP:   optional icmake-file arguments separator
-.IP o 
+.IP o
 \fIargs\fP:  optional arguments following -- received by
 the icmake file in its argv-list
 With \fIicmun\fP:
-.br 
+.br
 em (icmun bimfile)
-.IP o 
+.IP o
 bimfile: file to unassemble
-.PP 
-.SH "DESCRIPTION" 
-.PP 
+.PP
+.SH "DESCRIPTION"
+.PP
 \fIicmake\fP is a program that can be used as an alternative to
 \fImake\fP\&. \fIIcmake\fP is a shell program, normally calling the following
 programs:
-.IP o 
-\fIicm-pp\fP    to preprocess the icmake file 
-.IP o 
+.IP o
+\fIicm-pp\fP    to preprocess the icmake file
+.IP o
 \fIicm-comp\fP   to compile the icmake file to byte-code
-.IP o 
+.IP o
 \fIicm-exec\fP   to interpret the byte-code file
-The program \fIicmun\fP may be used to disassemble the compiled 
+The program \fIicmun\fP may be used to disassemble the compiled
 byte-code file\&.
-.PP 
-.IP o 
+.PP
+.IP o
 \fISyntax elements of the icmake file\fP:
-.IP 
-.IP o 
+.IP
+.IP o
 Preprocessor directives:
-    
-.nf 
- 
+
+.nf
+
 
     // comment              : comment until end-of-line
     /* comment */           : comment between /* and */
@@ -72,28 +72,28 @@ Preprocessor directives:
                               pointed to by IM variable
     #define ident redef     : defines ident to expand to redef
     #! \&.\&.\&.                  : ignored line
-    
-.fi 
- 
 
-Note: 
-.IP 
-.IP o 
+.fi
+
+
+Note:
+.IP
+.IP o
 Any character on a line beyond an \fI#include \&.\&.\&.\fP directive
 is ignored\&.
-.IP o 
-Comment in a \fI#define\fP is removed, but must given be on 
+.IP o
+Comment in a \fI#define\fP is removed, but must given be on
 one line\&.
-.IP o 
+.IP o
 \fI#!\fP may be used on unix platforms to use icmake-shell
 scripts, in combination with the -i or -t flags\&.
-.IP 
+.IP
 E\&.g\&., if the first line of an (executable) icmakefile \'icm\'
 (without extension) contains
 centt(#! /usr/bin/icmake -qi)
 then \'icm\' may be given as a command, thus executing
 centt(/usr/bin/icmake -qi icm \&.\&.\&.)
-Alternatively, 
+Alternatively,
 centt(#! /usr/bin/icmake -qt /tmp/icm)
 can be used, executing
 centt(#! /usr/bin/icmake -qt /tmp/icm icm \&.\&.\&.)
@@ -102,81 +102,80 @@ temporary file \fI/tmp/icm\&.PID\fP
 is used and removed on exit\&. The
 PID extension being the process-id of the icmake program
 executing icm\&.
-.IP 
-.IP o 
+.IP
+.IP o
 Types and variables:
-    
-.nf 
- 
+
+.nf
+
 
 int             (-0x8000\&.\&.0x7fff or \'x\', x: ASCII character)
 string          (a piece of text)
 list            (a number of strings)
 void            (may be used for user-defined functions)
-    
-.fi 
- 
+
+.fi
+
 
 Global and local variables are supported, as well as arguments
 to user-defined functions\&.
-.IP o 
+.IP o
 Escape sequences in strings:
-    
-.nf 
- 
+
+.nf
+
 
 \ea \eb \ef \en \er \et
-    
-.fi 
- 
 
-Other escape-sequences \fI\x\fP is interpreted as a literal \fIx\fP 
-(e\&.g\&., use \fI\\\fP for \fI\\fP)\&. 
-.IP o 
+.fi
+
+Other escape-sequences \fI\ex\fP is interpreted as a literal \fIx\fP
+(e\&.g\&., use \fI\e\e\fP for \fI\e\fP)\&.
+.IP o
 Flow control statements:
-    
-.nf 
- 
+
+.nf
+
 
     if (condition) statement
     if (condition) statement else statement
-    for (init; condition; increment) statement 
+    for (init; condition; increment) statement
     return (expression) - no (expression) with void functions
     break
     exit (expression)
-    
-.fi 
- 
-    
+
+.fi
+
+
 With the \fIfor\fP statement, init, condition and increment are optional\&.
 With \fIvoid\fP functions, the \fIreturn\fP statement must not have a trailing
 expression\&. In those cases use \fIreturn;\fP
-.IP o 
+.IP o
 The user-defined function main():
-.IP 
+.IP
 Arguments may be (int argc, list argv, list envp)
 or a subset of those, similar to C\&.
-.IP 
+.IP
 Argc is the number of elements in argv\&.
-.IP 
+.IP
 Argv holds the arguments, with element 0 the \&.bim filename,
 element 1 the first argument etc\&.
-.IP 
+.IP
 Envp holds the environment, element 0 is the first variable,
 element 1 its value, element 2 the second variable,
 element 3 its value, etc\&.
-.IP o 
+.IP o
 Operators:
-.IP 
+.IP
 The ternary C-operator  ?:  is not supported\&.
-.IP 
+.IP
 All other arithmetic operators of C are supported, operating
 on int-operands\&.
-.IP 
+.IP
 Operators available for string-operands:
-        
-.nf 
- 
+
+.nf
+
 
 a + b           concatenates b to a
 +=              concatenation and assignment
@@ -185,40 +184,40 @@ a + b           concatenates b to a
 a younger b     true if file a is more recent
 a older b       true if file b is more recent
 a newer b       synonym for younger
-        
-.fi 
- 
+
+.fi
+
 
 Note: Equality testing is also alphabetically, using the
 ordering of the ASCII-set\&. Internally \fIstrcmp()\fP
 is
 used to compare strings\&.
-.IP 
+.IP
 Operators available for list-operands:
-        
-.nf 
- 
+
+.nf
+
 
 a + b           merging of lists
 a - b           opposite
 += -=           merging/subtraction and assignment
 == !=           equality testing
 !a              empty list test
-        
-.fi 
- 
 
-.IP 
+.fi
+
+
+.IP
 Typecasts:
-.IP 
-Strings may be cast to ints and vice versa\&. 
+.IP
+Strings may be cast to ints and vice versa\&.
 Strings may be cast to lists\&.
-.IP 
-.IP o 
+.IP
+.IP o
 Predefined symbols:
-    
-.nf 
- 
+
+.nf
+
 
 --------------------------------------------------------------
 symbol          1 when defined on the platform \&.\&.\&. otherwise 0
@@ -231,15 +230,15 @@ Microsoft C)
 _POSIX_SOURCE   Unix with Posix complient compiler
 __hpux          HP-UX, with the native HP compiler
 --------------------------------------------------------------
-    
-.fi 
- 
 
-.IP o 
-Predefined constants:    
-    
-.nf 
- 
+.fi
+
+
+.IP o
+Predefined constants:
+
+.nf
+
 
 Used with makelist():
 ---------------------
@@ -258,19 +257,19 @@ Used with stat():
 -----------------
 S_IFCHR     1           S_IFDIR     2           S_IFREG     4
 S_IREAD     8           S_IWRITE   16           S_IEXEC    32
-    
-.fi 
- 
 
-.IP o 
+.fi
+
+
+.IP o
 Predefined functions:
 Note: In parameterlists below, the notation [type = value,] indicates
 a default function argument of the indicated type and value\&.
 An argument of the indicated type may be prvided to overrule the
 default\&.
-    
-.nf 
- 
+
+.nf
+
 
 arghead (string h)
         defines argument head, to be used with execute ()
@@ -296,7 +295,7 @@ cmdhead (string h)
 cmdtail (string t)
         defines command tail, to be used with execute ()
 echo (int opt)
-        sets re-echoing of called programs, OFF for no echo 
+        sets re-echoing of called programs, OFF for no echo
         (default: ON)
 string element (int index, list lst)
         returns index-th string from list
@@ -304,12 +303,12 @@ string element (int index, string str)
         returns index-th character from string as a mini-string
 exec ([int = P_CHECK,] string cmd, \&.\&.\&.)
         runs command with arguments\&.
-execute ([int = P_CHECK,] string cmd, string cmdhd, 
+execute ([int = P_CHECK,] string cmd, string cmdhd,
             string arghd, \&.\&.\&., string argtl, string cmdtl)
         same as exec(), except for command head/tail and argument
         head/tail\&. The actual executed program will start with the
         cmd, followed by the cmdhd\&. Next is a series of arguments,
-        all enclosed by arghd and argtl\&. The command terminates 
+        all enclosed by arghd and argtl\&. The command terminates
         with cmdtl\&.
 int exists (string file)
         returns non-zero if file exists
@@ -340,16 +339,16 @@ list makelist ([int = O_FILE,] string mask)
             O_DIR     to obtain a list of (sub)directories,
             O_FILE    (default) to obtain a list of only files,
             O_SUBDIR  to obtain a list of only subdirectories\&.
-list makelist ([int = O_FILE,] string mask, newer, 
+list makelist ([int = O_FILE,] string mask, newer,
                 string comparefile)
         returns list of all files matching mask which are newer
         than the comparefile\&. Operator younger is synonymous to
         newer\&.
-list makelist ([int = O_FILE,] string mask, older, 
+list makelist ([int = O_FILE,] string mask, older,
                 string comparefile)
-        see above; returns list of files older than the 
+        see above; returns list of files older than the
         comparefile\&.
-list makelist ([int = O_FILE,] string mask, newer, 
+list makelist ([int = O_FILE,] string mask, newer,
                 string comparefile)
     returns list of all files matching mask which are newer than
     the comparefile\&. Operator younger is synonymous to newer\&.
@@ -364,7 +363,7 @@ putenv (string)
 int sizeof (list l), int sizeoflist (list l)
         returns number of strings in list
 list stat ([int = P_CHECK,] string entry)
-        returns \'stat\' information of directory entry \'entry\' as 
+        returns \'stat\' information of directory entry \'entry\' as
         a list\&. The following list-elements are defined:
             Element             Definition
             --------------------------------------
@@ -378,7 +377,7 @@ list stat ([int = P_CHECK,] string entry)
             S_IREAD     8       S_IWRITE   16       S_IEXEC    32
             -----------------------------------------------------
 int strlen (string s)
-        returns number of characters in s 
+        returns number of characters in s
         (as C\'s strlen() function)
 string strlwr (string s)
         returns lower-case duplicate of s
@@ -387,30 +386,30 @@ string strupr (string s)
 list strtok (string str, string separators)
         returns list holding substrings of cut-up string
 int substr (string big, string small)
-        returns index in big where small occurs, or -1 if small 
+        returns index in big where small occurs, or -1 if small
         does not occur in big
 int system ([int = P_CHECK,] string command)
         runs command\&. Return value indicates exit status\&.
-    
-.fi 
- 
 
-.IP 
-.SH "FILES" 
+.fi
+
+
+.IP
+.SH "FILES"
 -
-.SH "SEE ALSO" 
+.SH "SEE ALSO"
 \fBmake(1)\fP
-.SH "DIAGNOSTICS" 
+.SH "DIAGNOSTICS"
 -
-.SH "BUGS" 
+.SH "BUGS"
 No Documented Bugs\&.
-.SH "ORGANIZATION" 
+.SH "ORGANIZATION"
 ICCE, University of Groningen\&.
-.SH "COPYRIGHT" 
-.IP 
+.SH "COPYRIGHT"
+.IP
 This is free software, distributed under the terms of the GNU General
 Public License\&.
-.IP 
-.SH "AUTHOR" 
+.IP
+.SH "AUTHOR"
 Frank B\&. Brokken (\fBfrank@icce\&.rug\&.nl\fP)\&.
-.IP 
+.IP

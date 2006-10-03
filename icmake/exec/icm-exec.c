@@ -34,35 +34,26 @@
 
 #include "icm-exec.h"
 
-void main (argc, argv, envp)
-int argc;
-char **argv;
-char **envp;
+int main (int argc, char **argv)
 {
-    register char
-        *progname;
-    register int
-        i;
-    VAR_
-        tmp;
+    register char *progname;
 
     atexit (cleanup);
-
     signal (SIGINT, (void (*)(int))abnormal);
     getcwd (orgdir, _MAX_PATH - 1);
 
-   
+
     if (argc == 1)
     {
-        copyright ("ICMAKE Binary Makefile Executor", version, release, 1);
-        progname = program_name (argv [0]);
+        copyright("ICMAKE Binary Makefile Executor", version, release, 1);
+        progname = program_name(argv[0]);
         printf ("This program is run as a child process of icmake.\n"
                 "Usage: %s [-t] bimfile\n"
                 "where: -t      - option indicating that 'bimfile' must be\n"
                 "                 removed on exit.\n"
                 "       bimfile - binary makefile to execute.\n\n"
             , progname);
-        exit (1);
+        return 1;
     }
 
     if (!strcmp(argv[1], "-t"))           /* -t option found */
@@ -73,27 +64,42 @@ char **envp;
         bimname = argv[1];              /* define temporary name */
     }
 
-    if (! (infile = fopen (argv [1], READBINARY)) )
-        error ("cannot open bimfile '%s' to read", argv [1]);
+    if (!(infile = fopen (argv [1], READBINARY)))
+        error("cannot open bimfile '%s' to read", argv[1]);
 
-    headerp = readheader (infile, version [0]);
-    if ( (INT16)(nvar = getvar (infile, headerp, &var)) == -1 )
-        error ("invalid macro file, cannot read variable section");
+    headerp = readheader(infile, version [0]);
 
-    fseek (infile, headerp->offset[3], SEEK_SET);
+                                        /* return array of global vars */
+    if ((INT16)(nvar = getvar(infile, headerp, &var)) == -1)
+        error("invalid macro file, cannot read variable section");
 
-    push (envp2list (envp));
+    fseek(infile, headerp->offset[3], SEEK_SET);
 
-    tmp = newvar (e_list);
-    for (i = 1; i < argc; i++)
-        tmp = addtolist (tmp, argv [i]);
-    push (tmp);
+    {
+        LISTVAR_ env = listConstructor();
 
-    tmp.type = e_int;
-    tmp.vu.intval = argc - 1;
-    push (tmp);
+        environ2list(&env);
+        push(&env);             /* envp: 3rd arg of main() */
+        listDestructor(&env);
+    }
 
-    process ();
+    {
+        LISTVAR_ args = listConstructor_s_cPP(argc, argv);
+        push(&args);            /* argv: 2nd arg of main() */
+        listDestructor(&args);
+    }
 
-    exit (retval);
+
+    {
+        INTVAR_ nArgs = intConstructor_i(argc - 1);
+        push(&nArgs);           /* argc: 1st arg of main() */
+    }
+
+    process();
+
+    return retval;
 }
+
+
+
+

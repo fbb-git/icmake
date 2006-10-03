@@ -14,7 +14,7 @@ static char
     fname [_MAX_PATH],
     ext [_MAX_PATH];
 
-static void split (char *n)
+static void split (char const *n)
 {
     _splitpath (n, drive, dir, fname, ext);
 }
@@ -24,27 +24,27 @@ static void join ()
     _makepath (name, drive, dir, fname, ext);
 }
 
-char *change_ext (char *n, char *e)
+char const *change_ext (char const *n, char const *e)
 {
     split (n);
     *ext = 0;
     if (e)
         strcpy (ext, e);
     join ();
-    return (xstrdup (name));
+    return name;
 }
 
-char *change_base (char *n, char *b)
+char const *change_base (char const *n, char const *b)
 {
     split (n);
     *fname = 0;
     if (b)
         strcpy (fname, b);
     join ();
-    return (xstrdup (name));
+    return name;
 }
 
-char *change_path (char *n, char *p)
+char const *change_path (char const *n, char const *p)
 {
     register char
         *cp;
@@ -65,24 +65,24 @@ char *change_path (char *n, char *p)
 
     join ();
 
-    return (xstrdup (name));
+    return name;
 }
 
-char *get_ext (char *n)
+char const *get_ext (char const *n)
 {
     split (n);
     if (*ext == '.')
         return (xstrdup (ext + 1));
-    return (xstrdup (ext));
+    return ext;
 }
 
-char *get_base (char *n)
+char const *get_base (char const *n)
 {
     split (n);
-    return (xstrdup (fname));
+    return fname;
 }
 
-char *get_path (char *n)
+char const *get_path (char const *n)
 {
     register int
         last;
@@ -96,5 +96,5 @@ char *get_path (char *n)
         drive[last + 1] = (char)0;
     }
 
-    return (xstrdup (drive));
+    return drive;
 }

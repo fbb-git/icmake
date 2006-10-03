@@ -4,8 +4,10 @@
 
 #include "iccomp.h"
 
+#ifdef MSDOS
 #pragma comment(lib, "icmcomp")
 #pragma comment(lib, "../rss/icrss")
+#endif
 
 int main (argc, argv)            /* icm-comp source(txt) dest(bin) */
     int
@@ -43,10 +45,10 @@ int main (argc, argv)            /* icm-comp source(txt) dest(bin) */
 
     yyparse();                              /* parse the source */
 
-    if (!yynerr)                            /* backend if no errors */
+    if (!yynerrs)                            /* backend if no errors */
         backend();
     else                                    /* informative message */
         printf("\n%d error(s) detected\n", errcount);
 
-    return(yynerr != 0);                    /* returnvalue */
+    return(yynerrs != 0);                    /* returnvalue */
 }

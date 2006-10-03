@@ -1,10 +1,10 @@
-#!/usr/local/bin/icmake -qt /tmp/unix
+#!/usr/bin/icmake -qt /tmp/unix
 
 /*
 
     If you want to use this file, it is assumed that you have icmake (at
-    least version 6.20) installed in /usr/local/bin. If it's somewhere else,
-    please adapt the path /usr/local/bin in the line above.
+    least version 6.20) installed in /usr/bin. If it's somewhere else,
+    please adapt the path /usr/bin in the line above.
     
     Also, check the file destinations.im for proper path settings !
 
@@ -19,7 +19,7 @@
     you know what you're doing
 */
 
-#define VERSION     "6.22"
+#define VERSION     "6.30"
 
 #define LIB_ICRSS   "libicrss.a"
 #define LIB_ICMAKE  "libicmake.a"
@@ -95,7 +95,7 @@ void makelib (string dir, string lib)
     if (ofiles)
     {
         exec (AR, ARFLAGS, lib, "*.o");
-    exec (RM, "*.o");
+        exec (RM, "*.o");
     }
     
     chdir ("..");
@@ -116,7 +116,9 @@ void makelibs ()
     makelib ("comp", LIB_ICMCOMP);
     
     printf ("\nMaking lib for executor icm-exec\n");
-    makelib ("exec", LIB_ICMEXEC);
+    chdir("exec");
+    system("./build lib");
+    chdir("..");
     
     printf ("\nMaking lib for unassembler icmun\n");
     makelib ("un", LIB_ICMUN);
@@ -139,7 +141,7 @@ void makeprog (string dir, string lib, string prog)
     {
         exec (CC, "-o ../bin/" + prog, lib, rsslib);
         exec (STRIP, "../bin/" + prog);
-    printf("Stripped version of ", prog, " in icmake/bin\n");
+        printf("Stripped version of ", prog, " in icmake/bin\n");
     }           
         
     chdir ("..");
@@ -162,7 +164,9 @@ void makeprogs ()
     makeprog ("comp", LIB_ICMCOMP, "icm-comp");
     
     printf ("\nMaking executor program icm-exec\n");
-    makeprog ("exec", LIB_ICMEXEC, "icm-exec");
+    chdir("exec");
+    system("build program ../bin/icm-exec");
+    chdir("..");
 }
 
 void inst (string prog)
@@ -213,7 +217,7 @@ void clean (string dir)
 {
     printf ("---- Directory: ", dir, " ----\n");
     chdir (dir);
-    exec (RM, "-f", "*.o");
+    exec (RM, "-f", "*.o", "*/*.o");
     chdir ("..");
 }
 
@@ -231,7 +235,7 @@ void realclean (string dir, string lib)
 {
     printf ("---- Directory: ", dir, " ----\n");
     chdir (dir);
-    exec (RM, "-f", lib,  "*.o");
+    exec (RM, "-f", lib,  "*.o", "*/*.o");
     chdir ("..");
 }
 
@@ -241,7 +245,10 @@ void realcleanup ()
     realclean ("make", LIB_ICMAKE);
     realclean ("pp", LIB_ICMPP);
     realclean ("comp", LIB_ICMCOMP);
+
     realclean ("exec", LIB_ICMEXEC);
+    system("rm -rf exec/tmp");
+
     realclean ("un", LIB_ICMUN);
 }
 

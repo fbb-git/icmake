@@ -1,0 +1,22 @@
+#include "stack.ih"
+
+#include "../int/int.h"
+#include "../string/string.h"
+
+static  unsigned stackSize;
+
+VAR_   *stack;
+
+size_t  sp;
+size_t  bp;
+
+
+void push(VAR_ const *var)
+{
+    if (sp >= stackSize)
+    {
+        stackSize += 50;
+        stack = xrealloc(stack, stackSize * sizeof(VAR_));
+    }
+    stack[sp++] = copyCons(var);
+}

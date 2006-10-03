@@ -9,6 +9,14 @@
 #undef  YY_INPUT
 #define YY_INPUT(buf,result,max_size) result = yylex_input(buf, max_size);
 
+#ifdef unput
+    /* If this stops working, have a look at lexer2.c to see what was   */
+    /* changed in the flex-implementation                               */
+
+    static void yyunput (int c,char *buf_ptr  );
+    void *unusedUnput = &yyunput;
+#endif
+
 %}
 
 %x str

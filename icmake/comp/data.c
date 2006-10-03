@@ -344,5 +344,4 @@ unsigned
     n_strings,
     n_symbols,
     sem_err,
-    stringsize,
-    yylineno = 1;
+    stringsize;

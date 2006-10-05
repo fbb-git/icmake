@@ -1,0 +1,88 @@
+#include "builtin.h"
+
+#include <unistd.h>
+ 
+#include <string.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+ 
+#include "../../rss/icrss.h"
+
+#include "../global.h"
+
+#include "../stack/stack.h"
+#include "../list/list.h"
+#include "../string/string.h"
+#include "../virtual/virtual.h"
+#include "../int/int.h"
+
+extern int echo;
+
+extern void (*builtinfun[])(void);
+
+char *setstring(char *);
+
+
+/*
+    From fun_push_reg():
+  
+        This function is called when the return register is to be pushed. The
+        return register is used to return information from built-in functions.
+  
+        {\bf Note that} the {\em count} field of the return register is {\bf
+        not} incremented when the register is pushed. The associated memory is
+        assigned by internal functions and may be freed by subsequent {\em
+        pop}-instructions.
+  
+        Therefore, also the builtin functions do not have to free the reg's
+        memory when assigning a value to reg.
+*/
+
+int getcmdlen(char **);
+
+char *getarg(int, int *);
+char **addcmd(char **, char *);
+char **execmd(char **, int);
+char *getexecarg(int, int *);
+
+char *getLine(FILE *file);
+
+void fun_empty(void);
+void fun_arg_head(void);
+void fun_arg_tail(void);
+void fun_ascii_int(void);
+void fun_ascii_str(void);
+void fun_backtick(void);
+void fun_stat(void);
+void fun_putenv(void);
+void fun_chdir(void);
+void fun_getenv(void);
+void fun_cmd_tail(void);
+void fun_c_base(void);
+void fun_c_ext(void);
+void fun_c_path(void);
+void fun_fields(void);
+void fun_fgets(void);
+void fun_fprintf(void);
+void fun_g_base(void);
+void fun_getch(void);
+void fun_getpid (void);
+void fun_gets(void);
+void fun_g_ext(void);
+void fun_g_path(void);
+void fun_echo(void);
+void fun_element(void);
+void fun_exec(void);
+void fun_exists(void);
+void fun_makelist(void);
+void fun_printf(void);
+void fun_sizeoflist(void);
+void fun_str_el(void);
+void fun_strfind(void);
+void fun_strlen(void);
+void fun_strlwr(void);
+void fun_strupr(void);
+void fun_substr(void);
+void fun_system(void);
+void fun_cmd_head(void);

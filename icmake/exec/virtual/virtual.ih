@@ -1,0 +1,47 @@
+#include "virtual.h"
+
+#include "../var/var.h"
+
+#include <stdlib.h>
+
+VAR_ intConstructor(void);
+VAR_ stringConstructor(void);
+VAR_ listConstructor(void);
+
+void intAssign(VAR_ *lhs, VAR_ const *rhs);
+void stringAssign(VAR_ *lhs, VAR_ const *rhs);
+void listAssign(VAR_ *lhs, VAR_ const *rhs);
+
+void intAdd(VAR_ *lhs, VAR_ const *rhs);
+void stringAdd(VAR_ *lhs, VAR_ const *rhs);
+void listAdd_L(VAR_ *lhs, VAR_ const *rhs);
+
+void intSub(VAR_ *lhs, VAR_ const *rhs);
+void stringSub(VAR_ *lhs, VAR_ const *rhs);
+void listSub(VAR_ *lhs, VAR_ const *rhs);
+
+/* intCompare(void) is intSub() */
+void stringCompare(VAR_ *lhs, VAR_ const *rhs);
+void listCompare(VAR_ *lhs, VAR_ const *rhs);
+
+void intDestructor(VAR_ *var);
+void stringDestructor(VAR_ *var);
+void listDestructor(VAR_ *var);
+
+int intLogical(VAR_ const *var);
+int stringLogical(VAR_ const *var);
+int listLogical(VAR_ const *var);
+
+VAR_ intCopyCons(VAR_ const *var);
+VAR_ stringCopyCons(VAR_ const *var);
+VAR_ listCopyCons(VAR_ const *var);
+
+
+extern void (*p_assign[])(VAR_ *lhs, VAR_ const *rhs);
+extern void (*p_add[])(VAR_ *lhs, VAR_ const *rhs);
+extern void (*p_sub[])(VAR_ *lhs, VAR_ const *rhs);
+extern void (*p_compare[])(VAR_ *lhs, VAR_ const *rhs);
+extern VAR_ (*p_constructor[])(void);
+extern VAR_ (*p_copycons[])(VAR_ const *lhs);
+extern void (*p_destructor[])(VAR_ *var);
+extern int  (*p_logical[])(VAR_ const *var);

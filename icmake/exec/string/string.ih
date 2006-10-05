@@ -1,0 +1,12 @@
+#include "string.h"
+
+#include <stdlib.h>
+#include <string.h>
+
+#include "../var/var.h"
+#include "../virtual/virtual.h"
+#include "../int/int.h"
+
+INTER_ *newstring(char *cp);    /* cp must be free-able */
+
+#define str(pstring)    ((pstring)->vu.i->ls.str)

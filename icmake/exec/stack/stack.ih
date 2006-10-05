@@ -1,0 +1,14 @@
+#include "stack.h"
+
+#include "../var/var.h"
+#include "../virtual/virtual.h"
+#include "../int/int.h"
+
+#include "../global.h"
+
+void stacktestunderflow(void);
+
+extern VAR_ *stack;
+extern size_t sp;
+extern size_t bp;
+

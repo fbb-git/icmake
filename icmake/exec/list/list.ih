@@ -1,0 +1,22 @@
+#include "list.h"
+
+#include <stdlib.h>
+#include <string.h>
+
+#include "../var/var.h"
+#include "../virtual/virtual.h"
+#include "../int/int.h"
+
+INTER_ *newlist(void);
+
+void    incsize(LISTVAR_ *list);
+void    addtxt(LISTVAR_ *list, char *txt);
+
+size_t  listremove(LISTVAR_ *list, char const *txt);
+void    listcleanup(LISTVAR_ *list, unsigned toRemove);
+
+#define list(plist)     ((plist)->vu.i->ls.list)
+#define size(plist)     (list(plist).size)
+#define element(plist)  (list(plist).element)
+
+

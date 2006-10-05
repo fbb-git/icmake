@@ -16,11 +16,9 @@
 
 #include "icrssdef.h"
 
-int exists(name)
-    char *name;
+int exists(char const *name)
 {
-    struct stat
-        buf;
+    struct stat buf;
 
     return(!stat(name, &buf));
 }

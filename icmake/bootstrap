@@ -32,12 +32,13 @@ echo Creating icm-comp
 cd ../comp
 gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icm-comp *.c ../rss/libicrss.a
 
-echo Creating icm-exec
+echo Creating icm-exec from exec/bootstrap
 cd ../exec
-gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icm-exec *.c ../rss/libicrss.a
-cd ../un
+sh bootstrap
+mv tmp/bin/icm-exec ../bin
 
 echo Creating icmun
+cd ../un
 gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icmun *.c ../rss/libicrss.a
 cd ..  
 

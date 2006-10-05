@@ -1,3 +1,6 @@
+#ifndef _INCLUDED_ICRSS_H_
+#define _INCLUDED_ICRSS_H_
+
 /*
                               I C R S S . H
 
@@ -274,6 +277,8 @@ typedef enum                                /* names of rss-functions */
     f_substr,
     f_getenv,
 
+    f_backtick,                             /* 4 left until f_hlt */
+
     f_hlt = f_system + 10,                  /* dummy marker for non-existing */
 } FUNNR_;
 
@@ -410,7 +415,7 @@ extern char
 void        _makepath(char *, const char *, const char *,
                       const char *, const char *);
 void        _splitpath(const char *, char *, char *, char *, char *);
-unsigned    _dos_findfirst(char *, unsigned, struct _find_t *);
+unsigned    _dos_findfirst(char const *, unsigned, struct _find_t *);
 unsigned    _dos_findnext(struct _find_t *);
 
 int         _spawnlp(int, const char *, const char *, ...);           /* ok */
@@ -426,42 +431,47 @@ unsigned    redirect_end(unsigned, unsigned);
 
 #endif  /*  not MSDOS   */
 
-char     *change_ext (char const *, char const *);  /* fname.c */
-char     *change_base (char const *, char const *);
-char     *change_path (char const *, char const *);
+char const *change_ext (char const *, char const *);
+char const *change_base (char const *, char const *);
+char const *change_path (char const *, char const *);
 
 int      chesc(char *, int *);
 void     copyright(char *, char *, char *, int);/* copyright message */
 char     *filefound();                          /* test attrib/pattern  */
-char     *findfirst(char *, unsigned);          /* first entry matching pattern */
+char     *findfirst(char const *, unsigned);    /* first entry matching pattern */
 char     *findnext();                           /* remaining matching entries   */
 char     *fgetz (char *, unsigned, FILE *);
-char     *get_ext (char*);
-char     *get_base (char*);
+
+char const *get_ext(char const *);
+char const *get_base(char const *);
+char const *get_path (char const *);
+
 int      ic_getoptindex(void);                  /*  ICCE getopt functions   */
 int      ic_getopt(int *, char **);
 char     *ic_getoptval(int *, char **);
+
 #define  getoptindex ic_getoptindex             /*  and their mappings      */
 #define  getopt      ic_getopt
 #define  getoptval   ic_getoptval
-char     *get_path (char*);
+
 char     *getstring (FILE *, INT32, UNS16);
 char     *hexstring (UNS16, UNS16);
 char     *program_name(char *);                 /* make programname from argv[0] */
 unsigned redirect_start(unsigned, unsigned);    /* ASM function for DOS */
 char     *stresc(char *);
+
 char     *try_source(char const *);         /* return allocated source[.im] */
 char     *xstrdup(char const *);
-char     *xstrcat (char *, char *);
+char     *xstrcat (char *, char const *);
 
 void     error (char *, ...);
 void     spawn_err (char *);
 
 void     *xrealloc (void *, int);
 
-int      exists  (char *);
-int      older   (char *, char *);
-int      younger (char *, char *);
+int      exists  (char const *);
+int      older   (char const *, char const *);
+int      younger (char const *, char const *);
 
 INT16    getint16 (FILE *);
 
@@ -470,3 +480,5 @@ OPCODE_  getopcode (FILE *);
 UNS16    getvar (FILE *, BIN_HEADER_ *, VAR_ **);
 
 VAR_     initvar (VAR_);
+
+#endif

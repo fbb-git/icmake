@@ -105,7 +105,7 @@ int main(int argc, char **argv)
         "       inputfile   - makefile in text format\n"
                 "       outputfile  - result of preprocessing\n\n"
             , progname);
-        exit (1);
+        return 1;
     }
 
     if (! (imdir = getenv ("IM")) )

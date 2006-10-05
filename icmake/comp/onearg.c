@@ -36,6 +36,7 @@ ESTRUC_ *onearg(type, arg)
 
         default:
         /*
+            case f_backtick:
             case f_getenv:
             case f_putenv:
             case f_exists:

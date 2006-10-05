@@ -52,6 +52,7 @@ char
 
         "substr",
         "getenv",
+        "backtick",
     };
 
 FILE

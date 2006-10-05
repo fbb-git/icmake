@@ -92,7 +92,7 @@ static int globerr (const char *path, int errnr)
 #endif
                                                 /* dos_findfirst emulator */
                                                 /* ignores attribute! */
-unsigned _dos_findfirst(char * fspec, unsigned attrib,
+unsigned _dos_findfirst(char const * fspec, unsigned attrib,
     struct _find_t * fileinfo)
 {
 #ifdef HAVE_GLOB

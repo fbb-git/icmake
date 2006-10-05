@@ -145,6 +145,7 @@ casttype:
         STRINGTYPE
     ;
 
+backtick:   {parse_error = err_backtick_expected; }     '`' ;
 closebrace: {parse_error = err_closebrace_expected; }   '}' ;
 closepar:   {parse_error = err_closepar_expected; }     ')' ;
 comma:      {parse_error = err_comma_expected; }        ',' ;
@@ -512,6 +513,13 @@ expression:
         }
     |
         func_or_var
+    |
+        '`'
+        expression
+        backtick
+        {
+            $$ = *onearg(f_backtick, &$2);
+        }
     ;
 
 expr_code:
@@ -646,13 +654,6 @@ function:
         }
     |
         makelist
-//    |
-//        strupr_lwr
-//        openpar
-//        err_expression
-//        {
-//            $$ = *strupr_lwr($1.type, &$3);  /* string conversion */
-//        }
     ;
 
 funid:

@@ -2,9 +2,8 @@
 
 void fun_frame ()
 {
-    int
-        i,
-        nlocals;
+    int i;
+    char nlocals;
 
     nlocals = (char) getopcode (infile);
     dumpchar (nlocals);

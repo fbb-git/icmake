@@ -37,7 +37,7 @@ int options (char **argv, int *argc)
                 flags |= f_icmake;          /* flag icmake taken literally  */
                 if (!(source_name = getoptval(argc, argv)))
                     error("-i requires source-filename");
-                return (getoptindex());     /* and return the index of args */
+                return getoptindex();       /* and return the index of args */
                                             /* to icm-exec */
 #ifdef MSDOS                                           
             case 'o':
@@ -69,23 +69,24 @@ int options (char **argv, int *argc)
                                             /* build pid-string */
                 sprintf(pid_string, "%d", getpid());
                                             /* destination with pid-extension */
-                dest_name = change_ext(cp, pid_string);
+                dest_name = xstrdup(change_ext(cp, pid_string));
                                             
                 strcat(pid_string, "a");    /* temp. pim-file extension */
-                temporary = change_ext(cp, pid_string);
+                temporary = xstrdup(change_ext(cp, pid_string));
 
                 source_name = argv[1];
-            return (getoptindex() + 1);     /* index of remaining args */
+            return getoptindex() + 1;       /* index of remaining args */
                                             /* + 1 for the extra arg on the */
                                             /* #!/...-x... line */
 #endif
 
             case '-':
-                return (getoptindex());     /* return index of args to icm-exec
+                return getoptindex();       /* return index of args to icm-exec
                                             */
         }
     }
-    return (*argc);                         /* return index of args to icm-exec
+    return *argc;
+                                            /* return index of args to icm-exec
                                             */
 }
 

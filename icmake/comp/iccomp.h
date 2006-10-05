@@ -190,6 +190,8 @@ typedef enum
     err_comma_or_closepar_expected,
     err_number_expected,
     err_older_younger,
+    err_backtick_expected,
+
 } PARSE_ERR_;
 
 extern char
@@ -251,7 +253,6 @@ extern unsigned
     stringsize;
 
 extern ESTRUC_ global_init;             /* code for initializing globals */
-
 
 int conflict (ESTRUC_ *, ESTRUC_ *,     /* conflicting binary types */
                   OPCODE_);

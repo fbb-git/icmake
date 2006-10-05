@@ -17,6 +17,7 @@ static char *err_msg[] =
         ",' or ')'",                    /* err_comma_or_closepar_expected, */
         "number",                       /* err_number_expected, */
         "older', 'younger' or 'newer'", /* err_older_younger, */
+        "` (backtick)",                 /* err_backtick_expected, */
     };
 
 

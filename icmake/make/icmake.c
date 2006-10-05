@@ -16,11 +16,9 @@ static char
     icm_pp[]    = ICMPP,
     pim[]       = "pim";
 
-int main (argc, argv)              /* icmake source(txt) dest(bin) */
-    int
-        argc;
-    char
-        **argv;
+int main (                         /* icmake source(txt) dest(bin) */
+    int argc,
+    char **argv)
 {
     register int
         argc2,
@@ -32,6 +30,7 @@ int main (argc, argv)              /* icmake source(txt) dest(bin) */
                                             /* argc2 is index of args to
                                                icm-exec
                                             */
+
     if (!(flags & f_quiet))
         copyright("Make Utility", version, release, 1);
 
@@ -86,20 +85,15 @@ int main (argc, argv)              /* icmake source(txt) dest(bin) */
     if (!(flags & f_icmake))                /* do not take source literally */
     {
         source_name = try_source(argv[1]);  /* determine source */
-//          change_ext(argv[1], "im");      /* update the extension    */
 
         if (!(flags & f_tmpbim))            /* unless it's a temp. bimfile */
-            dest_name =
-                argc2 >= 3 ?
-                    argv[2]
-                :
-                    argv[1];
+            dest_name = argc2 >= 3 ? argv[2] : argv[1];
     }
     else if (!(flags & f_tmpbim))           /* unless it's a temp. bimfile */
         dest_name = source_name;
 
     if (!(flags & f_tmpbim))                /* adapt extension of destination */
-        dest_name = change_ext(dest_name, bim); /* if not tmp. bimfile */
+        dest_name = xstrdup(change_ext(dest_name, bim)); /* if not tmp. bimfile */
 
     if
     (
@@ -110,7 +104,7 @@ int main (argc, argv)              /* icmake source(txt) dest(bin) */
     {
                                             /* preprocessor filename */
         if (!(flags & f_tmpbim))            /* use .pim unless -t given */
-            temporary = change_ext(source_name, pim);
+            temporary = xstrdup(change_ext(source_name, pim));
 
         signal(SIGINT, abnormal_exit);      /* abnormal exits process */
                                             /* do the preprocessing */
@@ -146,12 +140,12 @@ int main (argc, argv)              /* icmake source(txt) dest(bin) */
     {
         argc2 -= 3;                             /* set index to start of args */
         argv[argc2 + 1] = "-t";                 /* signal temporary */
-        argv[argc2 + 2] = dest_name;            /* store dest-name */
+        argv[argc2 + 2] = (char *)dest_name;    /* store dest-name */
     }
     else
     {
         argc2 -= 2;                             /* set index to start of args */
-        argv[argc2 + 1] = dest_name;            /* store dest-name */
+        argv[argc2 + 1] = (char *)dest_name;    /* store dest-name */
     }
     argv[argc2] = icm_exec;                     /* store executor's name */
 

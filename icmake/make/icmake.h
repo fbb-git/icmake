@@ -5,10 +5,14 @@
 #   define ICMCOMP          "icm-comp.exe"
 #   define ICMEXEC          "icm-exec.exe"
 #   define ICMPP            "icm-pp.exe"
-#else
+#elif 1
 #   define ICMEXEC          "/usr/lib/icmake/icm-exec"
 #   define ICMCOMP          "/usr/lib/icmake/icm-comp"
 #   define ICMPP            "/usr/lib/icmake/icm-pp"
+#else
+#   define ICMEXEC          "bin/icm-exec"
+#   define ICMCOMP          "bin/icm-comp"
+#   define ICMPP            "bin/icm-pp"
 #endif
 
 #ifdef SUN
@@ -31,11 +35,12 @@ extern char
     version[],
     release[],
     cant_read[],
-    *dest_name,
     r[],
-    rb[],
-    *source_name,
-    *temporary;
+    rb[];
+
+extern char *temporary;
+extern char *source_name;
+extern char *dest_name;
 
 extern FILE
     *fdest;

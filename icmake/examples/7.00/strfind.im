@@ -1,0 +1,14 @@
+void main(int argc, list argv)
+{
+    if (argc < 3)
+    {
+        printf("Argc = ", argc, 
+                ": provide needle (arg1) and haystack (arg2)\n");
+        exit(1);
+    }
+
+    printf(element(1, argv), ": `", element(2, argv), "' at ", 
+            strfind(element(1, argv), element(2, argv)), "\n");
+
+    exit(0);
+}

@@ -18,6 +18,6 @@ void close_fun(e)
     if (!dead[dead_sp])
         outbin(&opret, sizeof(INT8));
     else
-        dead[dead_sp] = 0;  // leaving a function: code generation ok,
-                            // e.g. to define global variables
+        dead[dead_sp] = 0;  /* leaving a function: code generation ok,  */
+                            /* e.g. to define global variables          */
 }

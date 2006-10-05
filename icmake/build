@@ -1,0 +1,22 @@
+#!/usr/bin/icmake -qt /tmp/icmake
+
+void main()
+{
+    string  progs;
+    list    progdirs;
+    int     idx;
+
+    progs = "make pp comp exec";
+    progdirs = strtok(progs, " ");
+
+    chdir("rss");
+    system("./build lib");
+    
+    for (idx = sizeof(progdirs); idx--; )
+    {
+        chdir("../" + element(idx, progdirs));
+        system("./build prog");
+    }
+    exit(0);
+}
+

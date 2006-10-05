@@ -54,20 +54,25 @@
 #include "icrssdef.h"
 #include "../icm.h"
 
+static BIN_HEADER_ header;
+
 BIN_HEADER_ *readheader (FILE *f, unsigned v)
 {
-    static BIN_HEADER_
-        header;
-
     if (! fread (&header, sizeof (BIN_HEADER_), 1, f) )
         error ("cannot read header from binary file, corrupted?");
-    if (header.version[0] < v)
+
+    if (header.version[0] % 100 < v % 100)
         error ("The binary file was created with an older version of icmake.\n"
                "Remake the binary file.");
-    if (header.version[0] > v)
+    else if (header.version[0] < v )
+        fprintf(stderr, "The binary file was created with an older version "
+                "of icmake.\n"
+                "It is advised to recompile the original script.\n");
+    else if (header.version[0] > v)
         error ("This program does not support the version which is indicated"
                " by the binary\n"
-               "file. Upgrade to a newer program.");
+               "file. Upgrade to a newer `icmake' version.");
 
-    return (&header);
+    return &header;
 }
+

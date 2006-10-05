@@ -1,0 +1,9 @@
+#define SUBST "substituted"
+#define LINE "This is " ${SUBST} " as one line\n"
+
+void main(int argc, list argv)
+{
+    printf(LINE);
+
+    exit(0);
+}

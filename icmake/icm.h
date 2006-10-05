@@ -1,3 +1,6 @@
+#ifndef _INCLUDED_ICM_H_
+#define _INCLUDED_ICM_H_
+
 /*
                                      I C M . H
 
@@ -20,6 +23,7 @@
 #else
 #    define MAXCMDLEN   500
 #endif
+
 #define ARG(x)      x
 #define MARG        , ...
 #define VOIDP       void*
@@ -133,3 +137,5 @@
 #define INT8  signed char
 #define INT16 signed short
 #define UNS16 unsigned short
+
+#endif

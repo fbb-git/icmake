@@ -1,0 +1,7 @@
+void main(int argc, list argv)
+{
+    list term = getenv("TERM");
+
+    printf(element(0, term), ": ", element(1, term), "\n");
+    exit(0);
+}

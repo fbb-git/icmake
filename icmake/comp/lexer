@@ -45,6 +45,7 @@
                             sprintf(string, "%d%c", yytext[1], 0);
                             return(NUMBER);
                         }
+
 arghead                 {
                             yylval.type = f_arg_head;
                             return(ARG_HEAD);
@@ -343,4 +344,4 @@ S_IEXEC                 {
                             strcpy(string, yytext);
                             return(IDENTIFIER);
                         }
-.                       return(yytext[0]);
+.                       return yytext[0];

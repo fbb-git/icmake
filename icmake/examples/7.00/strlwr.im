@@ -1,0 +1,16 @@
+void main(int argc, list argv)
+{
+    string line;
+
+    if (argc == 1)
+    {
+        printf("provide string to be changed to lowercase\n");
+        exit(1);
+    }
+
+    line = element(1, argv);
+
+    printf(line, ": ", strlwr(line), "\n");
+
+    exit(0);
+}

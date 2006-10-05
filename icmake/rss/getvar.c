@@ -62,10 +62,8 @@ Example:
 
 UNS16 getvar (FILE *f, BIN_HEADER_ *headerp, VAR_ **var)
 {
-    register int
-        nvar = 0;
-    INT32
-        curoffs;
+    register int nvar = 0;
+    INT32 curoffs;
 
     if (headerp->offset[1] == headerp->offset[2])
         return (0);

@@ -1,0 +1,25 @@
+//#define X
+#define Y
+
+void main(int argc, list argv)
+{
+#ifdef X
+    printf("X, ");
+    #ifdef Y
+        printf("Y");
+    #else
+        printf("NON-Y");
+    #endif
+#else
+    printf("NON-X, ");
+    #ifdef Y
+        printf("Y");
+    #else
+        printf("NON-Y");
+    #endif
+#endif
+
+    printf("\n");
+
+    exit(0);
+}

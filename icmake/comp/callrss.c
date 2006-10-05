@@ -41,6 +41,7 @@ void callrss(ESTRUC_ *e, FUNNR_ funnr, ...)
         break;
 
         case f_getenv:                      /* 1 arg, returning list */
+        case f_backtick:
             type = e_list | e_reg;
         break;
                                             /* 2 arguments, returning int */

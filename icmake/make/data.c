@@ -6,11 +6,12 @@
 
 char
     cant_read[] = "Can't read %s",
-    *dest_name,
     r[]  = "r",
-    rb[] = "rb",
-    *source_name,
-    *temporary;
+    rb[] = "rb";
+
+char *temporary;
+char *source_name;
+char *dest_name;
 
 FILE
     *fdest;

@@ -22,7 +22,7 @@
     you know what you're doing
 */
 
-#define VERSION     "6.22"
+#define VERSION     "6.30"
 
 #define LIB_ICRSS   "libicrss.a"
 #define LIB_ICMAKE  "libicmake.a"
@@ -111,7 +111,7 @@ void makelib (string dir, string lib)
     if (ofiles)
     {
         exec (AR, ARFLAGS, lib, "*.o");
-    exec (RM, "*.o");
+        exec (RM, "*.o");
     }
     
     chdir ("..");
@@ -141,8 +141,8 @@ void makelibs ()
 
     if ("parser" younger "parser.c")
         system("bison -d -o parser.c parser");
-    if ("lexer" younger "lexer2.c" || "parser" younger "lexer2.c")
-        system("flex -o lexer2.c lexer");
+    if ("lexer" younger "lexer.c" || "parser" younger "lexer.c")
+        system("flex -o lexer.c lexer");
 
     chdir("..");
 
@@ -150,8 +150,9 @@ void makelibs ()
     
 #ifdef VERBOSE
     printf ("\nMaking lib for executor icm-exec\n");
-#endif
-    makelib ("exec", LIB_ICMEXEC);
+    chdir("exec");
+    system("./build lib");
+    chdir("..");
     
 #ifdef VERBOSE
     printf ("\nMaking lib for unassembler icmun\n");
@@ -185,8 +186,7 @@ void makeprog (string dir, string lib, string prog)
                 "-o ../bin/" + prog, lib, rsslib);
 
         exec (STRIP, "../bin/" + prog);
-#ifdef VERBOSE
-    printf("Stripped version of ", prog, " in icmake/bin\n");
+        printf("Stripped version of ", prog, " in icmake/bin\n");
 #endif
     }           
         
@@ -219,8 +219,10 @@ void makeprogs ()
     
 #ifdef VERBOSE
     printf ("\nMaking executor program icm-exec\n");
-#endif
-    makeprog ("exec", LIB_ICMEXEC, "icm-exec");
+
+    chdir("exec");
+    system("build program ../bin/icm-exec");
+    chdir("..");
 }
 
 void inst (string prog)
@@ -285,7 +287,7 @@ void clean (string dir)
     printf ("---- Directory: ", dir, " ----\n");
 #endif
     chdir (dir);
-    exec (RM, "-f", "*.o");
+    exec (RM, "-f", "*.o", "*/*.o");
     chdir ("..");
 }
 
@@ -305,7 +307,7 @@ void realclean (string dir, string lib)
     printf ("---- Directory: ", dir, " ----\n");
 #endif
     chdir (dir);
-    exec (RM, "-f", lib,  "*.o");
+    exec (RM, "-f", lib,  "*.o", "*/*.o");
     chdir ("..");
 }
 
@@ -317,10 +319,12 @@ void realcleanup ()
     realclean ("comp", LIB_ICMCOMP);
 
     chdir("comp");
-    system("rm -f parser.c lexer2.c");
+    system("rm -f parser.c lexer.c");
     chdir("..");
 
     realclean ("exec", LIB_ICMEXEC);
+    system("rm -rf exec/tmp");
+
     realclean ("un", LIB_ICMUN);
 }
 

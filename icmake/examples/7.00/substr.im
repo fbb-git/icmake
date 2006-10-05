@@ -1,0 +1,16 @@
+void main(int argc, list argv)
+{
+    if (argc < 4)
+    {
+        printf("Argc = ", argc, 
+                ": provide string (arg1), offset (arg2) and count (arg3)\n");
+        exit(1);
+    }
+
+    printf(element(1, argv), ": from ", element(2, argv), " over ", 
+            element(3, argv), " chars: ", 
+            substr(element(1, argv), (int)element(2, argv), 
+                                     (int)element(3, argv)), "\n");
+
+    exit(0);
+}

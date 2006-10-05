@@ -27,7 +27,7 @@ char **argv;
         return 2;
     }
 
-    infname = change_ext (argv [1], bimext);
+    infname = xstrdup(change_ext (argv [1], bimext));
 
     if (! (infile = fopen (infname, READBINARY)) )
         error ("cannot open %s for reading", infname);

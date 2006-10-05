@@ -14,7 +14,7 @@
 ICMAKE_FIND_
     ifs;                                    /* icmake find-struct */
 
-char *findfirst(char *fspec, unsigned attrib)
+char *findfirst(char const *fspec, unsigned attrib)
 {
     char
         *cp;                                /* pointer to matched filename */

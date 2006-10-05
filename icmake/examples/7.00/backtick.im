@@ -1,0 +1,6 @@
+void main(int argc, list argv)
+{
+    string cmd = "ls";
+    printf(`cmd`);
+    exit(0);
+}

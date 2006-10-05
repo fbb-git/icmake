@@ -303,6 +303,7 @@ ESTRUC_ *if_stmnt (ESTRUC_ *, ESTRUC_ *,    /* if code */
                                ESTRUC_ *);
 ESTRUC_ *incdec (PREPOST_, OPCODE_,         /* E.g., c++ */
                                ESTRUC_ *);
+ESTRUC_ *indexOp  (ESTRUC_ *, ESTRUC_ *);     /*  [] operator */
 ESTRUC_ *insertarg (ESTRUC_ *, ESTRUC_ *);/* arg1, before arg2, ... */
 ESTRUC_ *lcast (ESTRUC_ *);                /* cast to list */
 ESTRUC_ *makelist (ESTRUC_ *, E_TYPE_);         /* makelist() */

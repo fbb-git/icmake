@@ -5,7 +5,7 @@
 #   define ICMCOMP          "icm-comp.exe"
 #   define ICMEXEC          "icm-exec.exe"
 #   define ICMPP            "icm-pp.exe"
-#elif 1
+#elif 0
 #   define ICMEXEC          "/usr/lib/icmake/icm-exec"
 #   define ICMCOMP          "/usr/lib/icmake/icm-comp"
 #   define ICMPP            "/usr/lib/icmake/icm-pp"

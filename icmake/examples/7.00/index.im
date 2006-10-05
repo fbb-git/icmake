@@ -1,0 +1,10 @@
+void main(int argc, list argv)
+{
+    list lst = strtok("aap noot mies", " ");
+    int idx;
+
+    for (idx = sizeof(lst); idx--; )
+        printf(lst[idx][idx], "\n");
+
+    exit(0);
+}

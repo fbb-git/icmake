@@ -96,6 +96,8 @@
 
 %right '!' INC DEC '~'
 
+%left '['
+
 %expect 1
 
        /* Grammar Rules */
@@ -227,6 +229,14 @@ expression:
         expression
         {
             $$ = *assign(&$1, &$3);
+        }
+    |
+        expression
+        '['
+        expression
+        ']'
+        {
+            $$ = *indexOp(&$1, &$3);
         }
     |
         expression

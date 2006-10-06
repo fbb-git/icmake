@@ -48,12 +48,23 @@ separated from each other by colons (\fI:\fP)\&.
 \fI#ifdef\fP, \fI#ifndef\fP, \fI#else\fP and \fI#endif\fP directives can be
 nested\&. 
 .IP o 
-The function \fIstring getenv(string envvar)\fP is predefined\&.
+The `backtick\&' operator is defined, executing a program in a shell
+and collecting its standard output in a list (see below)\&.
+.IP o 
+The index operator (\fI[]\fP) is defined as an alternative to the
+pre-defined function \fIelement()\fP, and can be used on lists and
+strings\&. 
+.IP o 
+The function \fIstring getenv(string envvar)\fP is predefined\&. If
+existing scripts already define a \fIgetenv()\fP function of their own,
+it it suggested to remove this function and use the new \fIgetenv()\fP
+function instead\&. Alternatively, rename the script-defined function
+\fIgetenv()\fP and calls of this function to, e\&.g\&. \fImy_getenv()\fP\&.
 .IP o 
 The function \fIint strstr(string haystack, string needle)\fP is 
 renamed to \fIint strfind(string haystack, string needle)\fP\&. 
 .IP 
-\fBNOTE: this is the only modification in version 7\&.00 that could
+\fBNOTE: this modification in version 7\&.00 could very well
 affect your earlier (6\&.xx) icmake scripts\&. Changing `strstr\&'
 into `strfind\&' should bring your older scripts up-to-date again\&.\fP
 
@@ -387,6 +398,22 @@ predefined function (see below, section \fBPREDEFINED FUNCTIONS\fP)\&.
 \fI"libprog\&.a" older "source\&.o"\fP\&. If \fIa\fP doesn\&'t exist, 1 is returned; if
 \fIb\fP doesn\&'t exist 0 is returned; if neither \fIa\fP nor \fIb\fP exists, 0 is
 returned; if they are of the same age, 0 is returned\&.
+.IP o 
+\fI[]\fP: the index operator is defined as an alternative to the built-in
+function \fIelement\fP\&. It can only be applied (as holds true for \fIelement()\fP
+as well) as so-called \fIrvalue\fP\&. Therefore, constructions like:
+.nf 
+
+        // assume str1 and str2 are strings
+    str1 = str2[3]
+        
+.fi 
+will be accepted, but the following construction will not be accepted:
+.nf 
+
+    str2[3] = str; // won\&'t compile
+        
+.fi 
 
 .PP 
 For \fIlist\fP type variables and/or values the following
@@ -413,6 +440,22 @@ the result of \fI==\fP\&.
 .IP o 
 \fI!a\fP: the boolean \fI!\fP operator returns 1 if the \fIlist a\fP is
 empty, otherwise 0 is returned\&.
+.IP o 
+\fI[]\fP: the index operator is defined as an alternative to the built-in
+function \fIelement\fP\&. It can only be applied (as holds true for \fIelement()\fP
+as well) as so-called \fIrvalue\fP\&. Therefore, constructions like:
+.nf 
+
+        // assume lst is a list, str is a string
+    str = lst[3]
+        
+.fi 
+will be accepted, but the following construction will not be accepted:
+.nf 
+
+    lst[3] = str; // won\&'t compile
+        
+.fi 
 
 .PP 
 Typecasts may be performed using the standard \fBC\fP cast-operator to cast:
@@ -469,83 +512,6 @@ To terminate the \fBicmake\fP-script\&. The \fIexpression\fP must evaluate to an
 \fIint\fP value, which becomes the script\&'s exit value\&.
 
 .PP 
-.SH "USER DEFINED FUNCTIONS"
-
-.PP 
-\fBIcmake\fP scripts may define functions, and a function \fImain()\fP \fImust\fP be
-defined\&. Functions must have the following elements:
-.IP o 
-The function\&'s return type\&. One of the available types must be
-used explicitly, e\&.g\&., \fIvoid\fP\&. There is no default type\&. 
-.IP o 
-The function\&'s name, e\&.g\&., \fIcompile\fP\&.
-.IP o 
-A parameter list, defining zero or more comma-separated
-parameters\&. The parameters themselves consist of a type name followed by the
-parameter\&'s identifier\&. E\&.g\&., \fI(string outfile, string source)\fP\&.
-.IP o 
-A \fIbody\fP surrounded by a pair of curly braces (\fI{\fP and \fI}\fP)\&.
-.IP 
-Function bodies may contain (optionally initialized) variable
-definitions\&. Variable definitions start with a type name, followed by one or
-more comma separated (optionally initialized) variable identifiers\&.  If a
-variable is not explicitly initialized it is initialized by default\&. An
-\fIint\fP variable is initialized to 0, a \fIstring\fP is initialized to empty
-text (\fI""\fP) and a \fIlist\fP is initialized to a list of zero elements\&.
-.IP 
-Following variable definitions, bodies may contain zero or more statements
-(see below at section \fBFLOW CONTROL\fP for the various flow-control
-statements)\&. Note that all local variables must be defined at the very
-beginning of function bodies\&.
-
-.PP 
-User defined functions must be defined before they can be used, although they
-may be called recursively\&. Therefore, indirect recursion is not supported by
-\fBicmake\fP\&.
-.PP 
-The user-defined function \fImain()\fP has three optional arguments, which may
-be omitted from the last one (\fIenvp\fP) to the first (\fIargc\fP), as in
-\fBC\fP\&. Its full prototype is (note: \fBvoid\fP return type):
-.nf 
-
-    void main(int argc, list argv, list envp)
-        
-.fi 
-In \fImain()\fP,
-.IP o 
-\fIargc\fP represents the number of elements in \fIargv\fP;
-.IP o 
-\fIargv\fP contains the arguments, with element 0 the compiled \fBicmake\fP script
-(the `\fI\&.bim\fP\&' file);
-.IP o 
-\fIenvp\fP containts the `environment\&' variables\&. The function \fIsizeof()\fP
-(see below) may be used to determine its elements\&. Elements in \fIenvp\fP have
-the form \fIvariable=value\fP\&. Alternatively, the functino \fIgetenv()\fP (see
-below) can be used to retrieve a specific environment variable immediately\&.
-Example:
-.nf 
-
-    void main(int argc, list argv)
-    {
-        list toCompile;
-        int idx;
-
-        if (argc == 1)
-            usage(element(0, argv));
-
-        if (toCompile = altered("*\&.cc"))
-        {
-            for (idx = sizeof(toCompile); idx--; )
-                compile(element(idx, toCompile));
-
-            linking(element(2, argv));
-        }
-        exit (0);
-    }    
-        
-.fi 
-
-.PP 
 .SH "PREDEFINED FUNCTIONS"
 
 .PP 
@@ -578,6 +544,27 @@ Returns the first character of \fIs\fP as an int; e\&.g\&.,
 .br 
 Returns \fIi\fP as a string, e\&.g\&., \fIascii(65)\fP returns the string
 \fI"A"\fP;
+
+.PP 
+System calls:
+.IP o 
+The `backtick` operator (\fI`\fP)
+.br 
+A string placed between two backticks is executed by the \fIpopen\fP(3)
+function\&. The standard output gererated by the command that is stored
+in the string argument is returned as a list\&. An empty list indicates
+that the command could not be executed\&. A command that could be
+executed but did not produce any output returns a list containing one
+empty element\&. The command\&'s standard error stream output is not
+automatically collected\&. Standard shell redirection could be used to
+collect the standard error stream\&'s output as well\&. Example:
+.nf 
+
+        string s = "ls";
+        printf(`s`);        // prints the elements in the current
+                            // directory
+            
+.fi 
 
 .PP 
 Filename modifiers:
@@ -647,12 +634,14 @@ Functions returning elements of aggregates:
 \fIstring element(int index, list lst)\fP
 .br 
 Returns string \fIindex\fP (0-based) from \fIlst\fP\&. An empty string is
-returned if an unavailable index value is provided\&.
+returned if an unavailable index value is provided\&. See also the
+\fI[]\fP operator in the section \fBOPERATORS\fP\&.
 .IP o 
 \fIstring element(int index, string str)\fP
 .br 
 Returns character \fIindex\fP (0-based) from \fIstr\fP\&. An empty string is
-returned if an unavailable index value is provided\&.
+returned if an unavailable index value is provided\&. See also the
+\fI[]\fP operator in the section \fBOPERATORS\fP\&.
 
 .PP 
 System calls:
@@ -981,6 +970,83 @@ Same functionality as the previous function, but by specifying
 script\&. Rather, it will return the called command\&'s exit status, or
 \fI0x7f00\fP if the command wasn\&'t found\&.
 )
+.PP 
+.SH "USER DEFINED FUNCTIONS"
+
+.PP 
+\fBIcmake\fP scripts may define functions, and a function \fImain()\fP \fImust\fP be
+defined\&. Functions must have the following elements:
+.IP o 
+The function\&'s return type\&. One of the available types must be
+used explicitly, e\&.g\&., \fIvoid\fP\&. There is no default type\&. 
+.IP o 
+The function\&'s name, e\&.g\&., \fIcompile\fP\&.
+.IP o 
+A parameter list, defining zero or more comma-separated
+parameters\&. The parameters themselves consist of a type name followed by the
+parameter\&'s identifier\&. E\&.g\&., \fI(string outfile, string source)\fP\&.
+.IP o 
+A \fIbody\fP surrounded by a pair of curly braces (\fI{\fP and \fI}\fP)\&.
+.IP 
+Function bodies may contain (optionally initialized) variable
+definitions\&. Variable definitions start with a type name, followed by one or
+more comma separated (optionally initialized) variable identifiers\&.  If a
+variable is not explicitly initialized it is initialized by default\&. An
+\fIint\fP variable is initialized to 0, a \fIstring\fP is initialized to empty
+text (\fI""\fP) and a \fIlist\fP is initialized to a list of zero elements\&.
+.IP 
+Following variable definitions, bodies may contain zero or more statements
+(see below at section \fBFLOW CONTROL\fP for the various flow-control
+statements)\&. Note that all local variables must be defined at the very
+beginning of function bodies\&.
+
+.PP 
+User defined functions must be defined before they can be used, although they
+may be called recursively\&. Therefore, indirect recursion is not supported by
+\fBicmake\fP\&.
+.PP 
+The user-defined function \fImain()\fP has three optional arguments, which may
+be omitted from the last one (\fIenvp\fP) to the first (\fIargc\fP), as in
+\fBC\fP\&. Its full prototype is (note: \fBvoid\fP return type):
+.nf 
+
+    void main(int argc, list argv, list envp)
+        
+.fi 
+In \fImain()\fP,
+.IP o 
+\fIargc\fP represents the number of elements in \fIargv\fP;
+.IP o 
+\fIargv\fP contains the arguments, with element 0 the compiled \fBicmake\fP script
+(the `\fI\&.bim\fP\&' file);
+.IP o 
+\fIenvp\fP containts the `environment\&' variables\&. The function \fIsizeof()\fP
+(see below) may be used to determine its elements\&. Elements in \fIenvp\fP have
+the form \fIvariable=value\fP\&. Alternatively, the functino \fIgetenv()\fP (see
+below) can be used to retrieve a specific environment variable immediately\&.
+Example:
+.nf 
+
+    void main(int argc, list argv)
+    {
+        list toCompile;
+        int idx;
+
+        if (argc == 1)
+            usage(element(0, argv));
+
+        if (toCompile = altered("*\&.cc"))
+        {
+            for (idx = sizeof(toCompile); idx--; )
+                compile(element(idx, toCompile));
+
+            linking(element(2, argv));
+        }
+        exit (0);
+    }    
+        
+.fi 
+
 .PP 
 .SH "FILES"
 

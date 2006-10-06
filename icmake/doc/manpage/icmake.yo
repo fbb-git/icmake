@@ -67,11 +67,20 @@ manpagesection(NEW IN VERSION 7.00)
         tt(${identifier}) format.
     itt(#ifdef), tt(#ifndef), tt(#else) and tt(#endif) directives can be
         nested. 
-    it() The function tt(string getenv(string envvar)) is predefined.
+    it() The `backtick' operator is defined, executing a program in a shell
+        and collecting its standard output in a list (see below).
+    it() The index operator (tt([])) is defined as an alternative to the
+        pre-defined function tt(element()), and can be used on lists and
+        strings. 
+    it() The function tt(string getenv(string envvar)) is predefined. If
+        existing scripts already define a tt(getenv()) function of their own,
+        it it suggested to remove this function and use the new tt(getenv())
+        function instead. Alternatively, rename the script-defined function
+        tt(getenv()) and calls of this function to, e.g. tt(my_getenv()).
     it() The function tt(int strstr(string haystack, string needle)) is 
         renamed to tt(int strfind(string haystack, string needle)). 
 
-        bf(NOTE: this is the only modification in version 7.00 that could
+        bf(NOTE: this modification in version 7.00 could very well
         affect your earlier (6.xx) icmake scripts. Changing `strstr'
         into `strfind' should bring your older scripts up-to-date again.)
     )
@@ -278,6 +287,17 @@ predefined function (see below, section bf(PREDEFINED FUNCTIONS)).
 tt("libprog.a" older "source.o"). If tt(a) doesn't exist, 1 is returned; if
 tt(b) doesn't exist 0 is returned; if neither tt(a) nor tt(b) exists, 0 is
 returned; if they are of the same age, 0 is returned.
+    itt([]): the index operator is defined as an alternative to the built-in
+function tt(element). It can only be applied (as holds true for tt(element())
+as well) as so-called em(rvalue). Therefore, constructions like:
+        verb(
+        // assume str1 and str2 are strings
+    str1 = str2[3]
+        )
+    will be accepted, but the following construction will not be accepted:
+        verb(
+    str2[3] = str; // won't compile
+        )
     )
 
     For tt(list) type variables and/or values the following
@@ -299,6 +319,17 @@ element-by-element identical elements, 0 otherwise. Operator tt(!=) reverses
 the result of tt(==).
     itt(!a): the boolean tt(!) operator returns 1 if the tt(list a) is
 empty, otherwise 0 is returned.
+    itt([]): the index operator is defined as an alternative to the built-in
+function tt(element). It can only be applied (as holds true for tt(element())
+as well) as so-called em(rvalue). Therefore, constructions like:
+        verb(
+        // assume lst is a list, str is a string
+    str = lst[3]
+        )
+    will be accepted, but the following construction will not be accepted:
+        verb(
+    lst[3] = str; // won't compile
+        )
     )
 
     Typecasts may be performed using the standard bf(C) cast-operator to cast:
@@ -339,73 +370,6 @@ used as in the bf(C) programming language.
         tt(int) value, which becomes the script's exit value.
     )    
 
-manpagesection(USER DEFINED FUNCTIONS)
-
-    Icm() scripts may define functions, and a function tt(main()) em(must) be
-defined. Functions must have the following elements:
-    itemization(
-    it() The function's return type. One of the available types must be
-used explicitly, e.g., tt(void). There is no default type. 
-    it() The function's name, e.g., tt(compile).
-    it() A parameter list, defining zero or more comma-separated
-parameters. The parameters themselves consist of a type name followed by the
-parameter's identifier. E.g., tt((string outfile, string source)).
-    it() A em(body) surrounded by a pair of curly braces (tt({) and tt(})).
-
-        Function bodies may contain (optionally initialized) variable
-definitions. Variable definitions start with a type name, followed by one or
-more comma separated (optionally initialized) variable identifiers.  If a
-variable is not explicitly initialized it is initialized by default. An
-tt(int) variable is initialized to 0, a tt(string) is initialized to empty
-text (tt("")) and a tt(list) is initialized to a list of zero elements.
-
-    Following variable definitions, bodies may contain zero or more statements
-(see below at section bf(FLOW CONTROL) for the various flow-control
-statements). Note that all local variables must be defined at the very
-beginning of function bodies.
-    )
-
-User defined functions must be defined before they can be used, although they
-may be called recursively. Therefore, indirect recursion is not supported by
-icm().
-
-The user-defined function tt(main()) has three optional arguments, which may
-be omitted from the last one (tt(envp)) to the first (tt(argc)), as in
-bf(C). Its full prototype is (note: bf(void) return type):
-        verb(
-    void main(int argc, list argv, list envp)
-        )
-    In tt(main()),
-    itemization(
-    itt(argc) represents the number of elements in tt(argv);
-    itt(argv) contains the arguments, with element 0 the compiled icm() script
-(the `tt(.bim)' file);
-    itt(envp) containts the `environment' variables. The function tt(sizeof())
-(see below) may be used to determine its elements. Elements in tt(envp) have
-the form tt(variable=value). Alternatively, the functino tt(getenv()) (see
-below) can be used to retrieve a specific environment variable immediately.
-    )
-    Example:
-        verb(
-    void main(int argc, list argv)
-    {
-        list toCompile;
-        int idx;
-
-        if (argc == 1)
-            usage(element(0, argv));
-
-        if (toCompile = altered("*.cc"))
-        {
-            for (idx = sizeof(toCompile); idx--; )
-                compile(element(idx, toCompile));
-
-            linking(element(2, argv));
-        }
-        exit (0);
-    }    
-        )
-
 manpagesection(PREDEFINED FUNCTIONS)
 
     Icm() offers the following predefined functions, which can be used
@@ -431,6 +395,24 @@ provided:
     itt(string ascii(int i))nl()
         Returns tt(i) as a string, e.g., tt(ascii(65)) returns the string
         tt("A");
+    )
+
+    System calls:
+    itemization(
+    it() The `backtick` operator (tt(`))nl()
+        A string placed between two backticks is executed by the tt(popen)(3)
+        function. The standard output gererated by the command that is stored
+        in the string argument is returned as a list. An empty list indicates
+        that the command could not be executed. A command that could be
+        executed but did not produce any output returns a list containing one
+        empty element. The command's standard error stream output is not
+        automatically collected. Standard shell redirection could be used to
+        collect the standard error stream's output as well. Example:
+            verb(
+        string s = "ls";
+        printf(`s`);        // prints the elements in the current
+                            // directory
+            )
     )
 
     Filename modifiers:
@@ -487,10 +469,12 @@ provided:
     itemization(
     itt(string element(int index, list lst))nl()
         Returns string tt(index) (0-based) from tt(lst). An empty string is
-        returned if an unavailable index value is provided.
+        returned if an unavailable index value is provided. See also the
+        tt([]) operator in the section bf(OPERATORS).
     itt(string element(int index, string str))nl()
         Returns character tt(index) (0-based) from tt(str). An empty string is
-        returned if an unavailable index value is provided.
+        returned if an unavailable index value is provided. See also the
+        tt([]) operator in the section bf(OPERATORS).
     )
 
     System calls:
@@ -746,6 +730,73 @@ provided:
         tt(0x7f00) if the command wasn't found.
     )
 
+
+manpagesection(USER DEFINED FUNCTIONS)
+
+    Icm() scripts may define functions, and a function tt(main()) em(must) be
+defined. Functions must have the following elements:
+    itemization(
+    it() The function's return type. One of the available types must be
+used explicitly, e.g., tt(void). There is no default type. 
+    it() The function's name, e.g., tt(compile).
+    it() A parameter list, defining zero or more comma-separated
+parameters. The parameters themselves consist of a type name followed by the
+parameter's identifier. E.g., tt((string outfile, string source)).
+    it() A em(body) surrounded by a pair of curly braces (tt({) and tt(})).
+
+        Function bodies may contain (optionally initialized) variable
+definitions. Variable definitions start with a type name, followed by one or
+more comma separated (optionally initialized) variable identifiers.  If a
+variable is not explicitly initialized it is initialized by default. An
+tt(int) variable is initialized to 0, a tt(string) is initialized to empty
+text (tt("")) and a tt(list) is initialized to a list of zero elements.
+
+    Following variable definitions, bodies may contain zero or more statements
+(see below at section bf(FLOW CONTROL) for the various flow-control
+statements). Note that all local variables must be defined at the very
+beginning of function bodies.
+    )
+
+User defined functions must be defined before they can be used, although they
+may be called recursively. Therefore, indirect recursion is not supported by
+icm().
+
+The user-defined function tt(main()) has three optional arguments, which may
+be omitted from the last one (tt(envp)) to the first (tt(argc)), as in
+bf(C). Its full prototype is (note: bf(void) return type):
+        verb(
+    void main(int argc, list argv, list envp)
+        )
+    In tt(main()),
+    itemization(
+    itt(argc) represents the number of elements in tt(argv);
+    itt(argv) contains the arguments, with element 0 the compiled icm() script
+(the `tt(.bim)' file);
+    itt(envp) containts the `environment' variables. The function tt(sizeof())
+(see below) may be used to determine its elements. Elements in tt(envp) have
+the form tt(variable=value). Alternatively, the functino tt(getenv()) (see
+below) can be used to retrieve a specific environment variable immediately.
+    )
+    Example:
+        verb(
+    void main(int argc, list argv)
+    {
+        list toCompile;
+        int idx;
+
+        if (argc == 1)
+            usage(element(0, argv));
+
+        if (toCompile = altered("*.cc"))
+        {
+            for (idx = sizeof(toCompile); idx--; )
+                compile(element(idx, toCompile));
+
+            linking(element(2, argv));
+        }
+        exit (0);
+    }    
+        )
 
 manpagefiles()
 

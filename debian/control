@@ -2,8 +2,7 @@ Source: icmake
 Section: devel
 Priority: optional
 Maintainer: Francesco Paolo Lovergine <frankie@debian.org>
-Uploaders: Frank B. Brokken <f.b.brokken@rug.nl>
-Build-Depends: debhelper (>= 5.0.37.3)
+Build-Depends: debhelper (>= 2), dpatch 
 Standards-Version: 3.7.2
 
 Package: icmake

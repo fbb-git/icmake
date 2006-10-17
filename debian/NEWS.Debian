@@ -1,6 +1,0 @@
-As of version 7.00 there is one (and the only) changes that might
-affect the old icmake scripts:
-
-strstr() is now (better) called strfind(), and that's cleary mentioned 
-in both the new man-page and the changelog. A simple find/replace 
-operation should upgrade all existing icmake scripts.

@@ -1,0 +1,62 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# This file is public domain software, originally written by Joey Hess. 
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+include /usr/share/dpatch/dpatch.make
+
+build: build-stamp
+build-stamp: patch-stamp
+	dh_testdir
+
+	# Add here commands to compile the package.
+	sh bootstrap
+
+	touch build-stamp
+
+clean: myclean unpatch
+myclean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+
+	# Add here commands to clean up after the build process.
+	rm -f bin/* */*.[ao]
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	# Add here commands to install the package into debian/<packagename>
+	dh_install
+
+# Build architecture-independent files here.
+binary-indep: build install
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs CHANGES
+	dh_installdocs icmake.doc doc/icmake.ps debian/mail.frank
+	dh_installexamples
+	dh_installman doc/icmake.1
+	dh_link usr/share/man/man1/icmake.1 usr/share/man/man1/icmun.1
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install patch unpatch myclean

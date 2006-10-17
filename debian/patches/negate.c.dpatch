@@ -1,0 +1,19 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## negate.c.dpatch by Francesco Paolo Lovergine <frankie@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad icmake-6.22/comp/negate.c /tmp/dpep.ClAvYp/icmake-6.22/comp/negate.c
+--- icmake-6.22/comp/negate.c	1994-03-14 14:46:46.000000000 +0100
++++ /tmp/dpep.ClAvYp/icmake-6.22/comp/negate.c	2004-12-21 22:32:15.000000000 +0100
+@@ -13,7 +13,7 @@
+     }
+ 
+     if (e->type & e_const)                  /* immediate value */
+-        (int)e->evalue = -(int)e->evalue;
++        e->evalue = -(int)e->evalue;
+     else
+     {
+         etoc(e);                            /* convert to code */

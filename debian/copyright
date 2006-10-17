@@ -1,0 +1,52 @@
+This package was debianized by Michael Meskes <meskes@topsystem.de>.
+Current maintainer is Adrian Bunk <bunk@fs.tum.de>.
+
+It was downloaded from ftp://ftp.rug.nl/contrib/frank/software/linux/icmake/
+
+Copyright:
+
+
+            Copyright (c) Frank B. Brokken and Karel Kubat
+                 frank@icce.rug.nl, karel@icce.rug.nl
+
+           ICCE, State University of Groningen, Netherlands
+
+[...]
+           
+Some Legal Stuff
+----------------
+
+        You don't have to pay us for Icmake. This means that no fee is
+charged for it by us.  As with everything that's free, there's no pay but
+also *absolutely no warranty*.  Furthermore, you are allowed (and
+encouraged) to distribute Icmake, provided that you include this information
+with each distribution.  It is strongly suggested that you do *not* charge
+money for the distribution of Icmake (possibly not even the $5 for
+shipping).
+
+        The source files and the documentation for Icmake are copyrighted by
+us.  The reason for this is (a) that we'd like to have always the last
+version of Icmake, and (b) that we'd like to have the last word in all
+modifications.  If you have requests (or even better, "working code" to
+include in Icmake) please mail us and we'll gladly oblige when we find the
+time.
+
+The author also told me:
+
+but in our website www.icce.rug.nl/docs/software.html, we explicitly state
+that ALL software that we make publicly available is distributed according to
+the GPL, whatever the docs (still) tell you. So don't worry. It's ony a bit
+inconvenient that the copyright-information that is distributed with (some) of
+our software is still a bit incongruent with the GPL. But again: ignore that,
+and consider all our software free.
+
+If you have a patch and want it to be part of icmake of whatever software we
+distribute, go ahead!
+
+Which doesn't mean that we're not interested in receiving information about
+that patch :-)
+
+But I guess that goes without saying.
+
+
+You can find a copy of the GPL in /usr/share/common-licenses/GPL.

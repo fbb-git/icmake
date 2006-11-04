@@ -8,7 +8,7 @@
 include /usr/share/dpatch/dpatch.make
 
 build: build-stamp
-build-stamp: patch-stamp
+build-stamp: # FBB: Removed it. I have no patches: patch-stamp
 	dh_testdir
 
 	# Add here commands to compile the package.

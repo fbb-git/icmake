@@ -23,7 +23,7 @@
 void fun_call ()
 {
     UNS16 offs = (UNS16)getint16(infile);
-    VAR_ ra = intConstructor_i((unsigned)ftell(infile));
+    VAR_ ra = intConstructor_i((size_t)ftell(infile));
 
     push(&ra);
     pushBP();

@@ -1,8 +1,8 @@
 #include "icrssdef.h"
 
-char *fgetz (char *buf, unsigned maxlen, FILE *f)
+char *fgetz (char *buf, size_t maxlen, FILE *f)
 {
-    register unsigned
+    register size_t
         i;
 
     if (! maxlen)

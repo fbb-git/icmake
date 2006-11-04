@@ -6,7 +6,7 @@
 
 void make_frame()
 {
-    register unsigned
+    register size_t
         fun_index,
         index;
     ESTRUC_
@@ -19,7 +19,7 @@ void make_frame()
 
                                             /* set offset of 1st byte */
     funtab.symbol[fun_index].var.vu.i->count =
-                                        (unsigned)ftell(s_bin);
+                                        (size_t)ftell(s_bin);
 
                                             /* room for type-bytes */
     funtab.symbol[fun_index].var.vu.i->ls.list.element =

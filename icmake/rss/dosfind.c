@@ -92,7 +92,7 @@ static int globerr (const char *path, int errnr)
 #endif
                                                 /* dos_findfirst emulator */
                                                 /* ignores attribute! */
-unsigned _dos_findfirst(char const * fspec, unsigned attrib,
+size_t _dos_findfirst(char const * fspec, size_t attrib,
     struct _find_t * fileinfo)
 {
 #ifdef HAVE_GLOB
@@ -131,7 +131,7 @@ unsigned _dos_findfirst(char const * fspec, unsigned attrib,
 #endif
 }
 
-unsigned _dos_findnext(struct _find_t * fileinfo)
+size_t _dos_findnext(struct _find_t * fileinfo)
 {
 #ifdef HAVE_GLOB
     if (nextglob >= gdata.gl_pathc)             /* done with list ? */

@@ -383,21 +383,21 @@ struct _find_t                               /* abbreviated variant */
 {
     char
         name[_MAX_PATH];
-    unsigned
+    size_t
         attrib;                             /* returned attribute */
 };
 #endif
 
 typedef struct
 {
-    unsigned
+    size_t
         attrib;                             /* requested attribute */
     struct _find_t
         find;                               /* _dos_find...()'s struct  */
 } ICMAKE_FIND_;
 
 
-BIN_HEADER_ *readheader (FILE *, unsigned);
+BIN_HEADER_ *readheader (FILE *, size_t);
 
 extern ICMAKE_FIND_
     ifs;                                    /* in: ./rss/findnext.c */
@@ -415,8 +415,8 @@ extern char
 void        _makepath(char *, const char *, const char *,
                       const char *, const char *);
 void        _splitpath(const char *, char *, char *, char *, char *);
-unsigned    _dos_findfirst(char const *, unsigned, struct _find_t *);
-unsigned    _dos_findnext(struct _find_t *);
+size_t    _dos_findfirst(char const *, size_t, struct _find_t *);
+size_t    _dos_findnext(struct _find_t *);
 
 int         _spawnlp(int, const char *, const char *, ...);           /* ok */
 int         _spawnvp(int, const char *, const char **);               /* ok */
@@ -427,7 +427,7 @@ char        *_strupr(char *);
 
 #else
 
-unsigned    redirect_end(unsigned, unsigned);
+size_t    redirect_end(size_t, size_t);
 
 #endif  /*  not MSDOS   */
 
@@ -438,9 +438,9 @@ char const *change_path (char const *, char const *);
 int      chesc(char *, int *);
 void     copyright(char *, char *, char *, int);/* copyright message */
 char     *filefound();                          /* test attrib/pattern  */
-char     *findfirst(char const *, unsigned);    /* first entry matching pattern */
+char     *findfirst(char const *, size_t);    /* first entry matching pattern */
 char     *findnext();                           /* remaining matching entries   */
-char     *fgetz (char *, unsigned, FILE *);
+char     *fgetz (char *, size_t, FILE *);
 
 char const *get_ext(char const *);
 char const *get_base(char const *);
@@ -457,7 +457,7 @@ char     *ic_getoptval(int *, char **);
 char     *getstring (FILE *, INT32, UNS16);
 char     *hexstring (UNS16, UNS16);
 char     *program_name(char *);                 /* make programname from argv[0] */
-unsigned redirect_start(unsigned, unsigned);    /* ASM function for DOS */
+size_t redirect_start(size_t, size_t);    /* ASM function for DOS */
 char     *stresc(char *);
 
 char     *try_source(char const *);         /* return allocated source[.im] */

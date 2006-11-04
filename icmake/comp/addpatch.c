@@ -4,9 +4,9 @@
 
 #include "iccomp.h"
 
-void addpatch (unsigned *list, unsigned len, register unsigned value)
+void addpatch (size_t *list, size_t len, register size_t value)
 {
-    register unsigned
+    register size_t
         index;
 
     for (index = 0; index < len; index++)

@@ -51,7 +51,7 @@ extern FLAGS_
 extern int
     errors;
 
-extern unsigned
+extern size_t
     redirect_nr;
 
 int     compile_test ARG((void));           /* test if compilation is needed */

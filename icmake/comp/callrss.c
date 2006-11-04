@@ -8,7 +8,7 @@ void callrss(ESTRUC_ *e, FUNNR_ funnr, ...)
 {
     register E_TYPE_
         type = e_reg | e_int;               /* default return type: intreg */
-    register unsigned
+    register size_t
         args = 1;                           /* most f()s having 1 argument */
     va_list
         marker;
@@ -79,7 +79,7 @@ void callrss(ESTRUC_ *e, FUNNR_ funnr, ...)
         case f_exec:
         case f_fprintf:
         case f_printf:
-            args = va_arg(marker, unsigned);
+            args = va_arg(marker, size_t);
         break;
 
         default:

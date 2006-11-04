@@ -9,7 +9,7 @@
 
 static void remove_name(register SYMTAB_ *tab)
 {
-    register unsigned
+    register size_t
         index;
 
     if ((index = looksym(tab)) < tab->n_defined)

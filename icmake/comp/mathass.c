@@ -14,7 +14,7 @@ ESTRUC_ *math_ass(lval, rval, fun, opstr)
 {
     register E_TYPE_
         ltype;
-    register unsigned
+    register size_t
         evalue;
 
     ltype = lval->type;

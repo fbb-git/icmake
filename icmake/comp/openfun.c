@@ -6,7 +6,7 @@
 
 void open_fun()
 {
-    register unsigned
+    register size_t
         index,
         last;
 

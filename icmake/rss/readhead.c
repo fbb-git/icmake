@@ -56,7 +56,7 @@
 
 static BIN_HEADER_ header;
 
-BIN_HEADER_ *readheader (FILE *f, unsigned v)
+BIN_HEADER_ *readheader (FILE *f, size_t v)
 {
     if (! fread (&header, sizeof (BIN_HEADER_), 1, f) )
         error ("cannot read header from binary file, corrupted?");

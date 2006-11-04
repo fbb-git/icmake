@@ -4,9 +4,9 @@
 
 #include "iccomp.h"
 
-unsigned fetchfun()
+size_t fetchfun()
 {
-    register unsigned
+    register size_t
         index;
 
                                             /* test function defined */

@@ -9,7 +9,7 @@ void patchfalse(e)
         *e;
 {
     e->falselist = xrealloc(e->falselist,   /* expand the falselist */
-                            (e->falselen + 1) * sizeof(unsigned));
+                            (e->falselen + 1) * sizeof(size_t));
 
                                             /* room for the jump-backpatch */
     e->code = xrealloc(e->code, e->codelen += sizeof(INT16));

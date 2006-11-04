@@ -17,7 +17,7 @@ ESTRUC_ *execute(arr)
     ESTRUC_
         *arr;
 {
-    register unsigned
+    register size_t
         count;
     ESTRUC_
         tmp,

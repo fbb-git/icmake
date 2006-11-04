@@ -4,11 +4,11 @@
 
 #include "iccomp.h"
 
-unsigned looksym(tab)
+size_t looksym(tab)
     SYMTAB_
         *tab;
 {
-    register unsigned
+    register size_t
         index;
 
     for (index = 0; index < tab->n_defined; index++)

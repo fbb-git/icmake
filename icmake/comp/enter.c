@@ -6,7 +6,7 @@
 
 void enter()
 {
-    register unsigned
+    register size_t
         n_defined;
     register SYMBOL_
         *sym;

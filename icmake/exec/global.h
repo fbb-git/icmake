@@ -3,7 +3,7 @@
 
 #include "../rss/icrss.h"
 
-extern unsigned     curoffs;
+extern size_t     curoffs;
 extern char         orgdir[];
 extern FILE        *infile;
 extern VAR_        *var;

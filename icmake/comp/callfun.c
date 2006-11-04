@@ -5,24 +5,24 @@
 #include "iccomp.h"
 
 ESTRUC_ *callfun(x, e)
-    unsigned
+    size_t
         x;
     ESTRUC_
         *e;
 {
     ESTRUC_
         *a;
-    register unsigned
+    register size_t
         index,
         n_pars;
-    unsigned
+    size_t
         err,
         old_sem;
 
     if (x != funtab.n_defined)              /* function name found ? */
     {                                       /* then check correct # of args */
         n_pars = funtab.symbol[x].var.vu.i->ls.list.size;
-        if ((unsigned)e->type != n_pars)
+        if ((size_t)e->type != n_pars)
         {
             err = 1;
             semantic("Function '%s()' requires %u arguments",

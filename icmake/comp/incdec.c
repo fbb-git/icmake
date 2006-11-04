@@ -12,7 +12,7 @@ ESTRUC_ *incdec (pp, opcode, e)
     ESTRUC_
         *e;
 {
-    register unsigned
+    register size_t
         varnr;
 
     if (test_operand(e, opcode))

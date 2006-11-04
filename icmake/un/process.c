@@ -4,7 +4,7 @@ void process ()
 {
     register
         OPCODE_ op;
-    register unsigned
+    register size_t
         i;
     INT32
         oldoffs;

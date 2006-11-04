@@ -239,7 +239,7 @@ HIDDEN_FUNCTION_
         },
     };
 
-unsigned
+size_t
     break_ok,
     *dead,
     dead_sp,

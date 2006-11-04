@@ -9,10 +9,10 @@ static char
 
 static int near atox (char *string, int *n)
 {
-    register unsigned
+    register size_t
         i,
         ch;
-    unsigned
+    size_t
         retval;
 
     if (*string == 'x')

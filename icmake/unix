@@ -219,6 +219,7 @@ void makeprogs ()
     
 #ifdef VERBOSE
     printf ("\nMaking executor program icm-exec\n");
+#endif
 
     chdir("exec");
     system("build program ../bin/icm-exec");
@@ -233,6 +234,7 @@ void inst (string prog)
 #ifdef VERBOSE
     printf ("---- Directory: icmake/bin ----\n");
 #endif
+
     chdir ("bin");
     dest = BINDIR + "/" + prog;
     
@@ -241,11 +243,11 @@ void inst (string prog)
         if (prog == "icm-exec")
         printf("Since icm-exec itself is running, you have to copy\n"
             "icm-exec by hand.\n"
-        "Give the command\n"
+            "Give the command\n"
             "\t", CP, " bin/icm-exec ", BINDIR, "\n"
-        "on completion of 'icmake unix -- install'\n");
-    else
-        exec (CP, prog, BINDIR);
+            "on completion of 'icmake unix -- install'\n");
+        else
+            exec (CP, prog, BINDIR);
     }
     
     chdir ("..");

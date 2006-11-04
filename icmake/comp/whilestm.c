@@ -9,7 +9,7 @@ ESTRUC_ *while_stmnt(e, s)
         *e,
         *s;
 {
-    register unsigned
+    register size_t
         len,
         *list;
 

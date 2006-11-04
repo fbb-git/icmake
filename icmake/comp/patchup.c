@@ -4,10 +4,10 @@
 
 #include "iccomp.h"
 
-void patchup(INT8 *code, unsigned len, unsigned *list, unsigned listlen,
+void patchup(INT8 *code, size_t len, size_t *list, size_t listlen,
              int pos)
 {                                           /* list, listlen: list of */
-    register unsigned                       /* offsets to patchup     */
+    register size_t                       /* offsets to patchup     */
         index,
         beyond_jump;
     char

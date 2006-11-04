@@ -29,7 +29,7 @@ void process ()
 
     do
     {
-        curoffs = (unsigned)ftell(infile);
+        curoffs = (size_t)ftell(infile);
         op = getopcode(infile);
 
         if (op >= op_hlt || op == -1)

@@ -13,7 +13,7 @@ ESTRUC_ *assignment(lval, rval, opstr)      /* opstr is '=', or "/=", etc. */
 {
     ESTRUC_
         *tmp;
-    unsigned
+    size_t
         type,
         value;
 

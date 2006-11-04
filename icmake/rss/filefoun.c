@@ -17,7 +17,7 @@
 
 char *filefound()
 {
-    register unsigned
+    register size_t
         request,
         received;
 

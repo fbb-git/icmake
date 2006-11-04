@@ -7,7 +7,7 @@
 void outbin(source, size)
     void
         *source;
-    unsigned
+    size_t
         size;
 {
     if

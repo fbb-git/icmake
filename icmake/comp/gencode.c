@@ -6,12 +6,12 @@
 
 void gencode(ESTRUC_ *e, OPCODE_ opcode, ...)
 {
-    register unsigned
+    register size_t
         index,
         last;
     int
         marker_value;
-    unsigned
+    size_t
         count;
     va_list
         marker;

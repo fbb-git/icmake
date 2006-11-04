@@ -9,7 +9,7 @@ ESTRUC_ *insertarg(insert, mult)
         *insert,
         *mult;
 {
-    register unsigned
+    register size_t
         count;
 
     count = ++mult->type;                   /* get/increase # of args */

@@ -21,7 +21,7 @@ static INT8
 
 void backend()
 {
-    register unsigned
+    register size_t
         index;
     BIN_HEADER_
         hdr;

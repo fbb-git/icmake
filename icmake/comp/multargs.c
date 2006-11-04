@@ -9,7 +9,7 @@ ESTRUC_ *multargs(left, right)
         *left,
         *right;
 {
-    register unsigned
+    register size_t
         count;
 
     count = ++left->type;                   /* get/increase # of args */

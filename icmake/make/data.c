@@ -22,5 +22,5 @@ FLAGS_
 int
     errors;
 
-unsigned
-    redirect_nr = (unsigned)~0;
+size_t
+    redirect_nr = (size_t)~0;

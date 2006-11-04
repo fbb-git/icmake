@@ -34,7 +34,7 @@ char *getarg (int n, int *flag)
 {
     char
         convbuf [50];
-    static unsigned
+    static size_t
         listindex;
     register char
         *ret;

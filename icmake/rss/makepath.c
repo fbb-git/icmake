@@ -37,8 +37,7 @@ void _makepath(char * path,
 
         if (dir[strlen(dir) - 1] != DIRSEP)
         {
-            unsigned short
-                l;
+            size_t l;
 
             path[l = strlen(path)] = DIRSEP;
             path[++l] = '\x0';              /*  make it an asciiz   */

@@ -6,13 +6,13 @@
 
 #include "iccomp.h"
 
-static unsigned
+static size_t
     n_allocated;
 
-unsigned lookstring(s)
+size_t lookstring(s)
     char *s;
 {
-    register unsigned
+    register size_t
         index;
 
     for (index = 0; index < n_strings; index++)

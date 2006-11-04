@@ -3,7 +3,7 @@
 #include "../int/int.h"
 #include "../string/string.h"
 
-static  unsigned stackSize;
+static  size_t stackSize;
 
 VAR_   *stack;
 

@@ -14,5 +14,5 @@ void fun_call_rss ()
                "attempt to call function %x, %x are defined",
             funnr, f_hlt);
 
-    printf ("callrss %u (%s)\n", (unsigned) funnr, funname [ (int) funnr]);
+    printf ("callrss %u (%s)\n", (size_t) funnr, funname [ (int) funnr]);
 }

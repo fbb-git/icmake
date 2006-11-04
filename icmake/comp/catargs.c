@@ -8,7 +8,7 @@ void catargs (arr)
     ESTRUC_
         *arr;
 {
-    register unsigned
+    register size_t
         count;
     ESTRUC_
         *ep,

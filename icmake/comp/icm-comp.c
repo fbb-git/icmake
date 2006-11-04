@@ -38,7 +38,7 @@ int main (argc, argv)            /* icm-comp source(txt) dest(bin) */
         error("%s Can't read/write file(s)");
 
                                             /* malloc the dead-stack */
-    dead = xrealloc(NULL, sizeof(unsigned));
+    dead = xrealloc(NULL, sizeof(size_t));
 
     stringbuf = xstrdup(nullstring);        /* malloc initial stringbuf */
 

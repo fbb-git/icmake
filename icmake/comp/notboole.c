@@ -8,7 +8,7 @@ ESTRUC_ *not_boolean(e)
     ESTRUC_
         *e;
 {
-    unsigned
+    size_t
         len,
         *list;
 

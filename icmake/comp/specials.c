@@ -10,7 +10,7 @@ ESTRUC_ *specials(type, marg)
     ESTRUC_
         *marg;                              /* array of arguments */
 {
-    register unsigned
+    register size_t
         count;
 
     if (type == f_execute)

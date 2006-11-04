@@ -4,20 +4,20 @@
 
 #include "iccomp.h"
 
-static void patchadd ARG((register unsigned,
-                                   unsigned **, unsigned *,
-                                   unsigned *, unsigned));
+static void patchadd ARG((register size_t,
+                                   size_t **, size_t *,
+                                   size_t *, size_t));
 
 static void patchadd(value, dest, dlen, source, slen)
-    register unsigned
+    register size_t
         value;
-    unsigned
+    size_t
         *source,
         **dest,
         slen,
         *dlen;
 {
-    register unsigned
+    register size_t
         index;
 
     if (!*dlen)
@@ -39,7 +39,7 @@ ESTRUC_ *catcode(lval, rval)
         *lval,
         *rval;
 {
-    register unsigned
+    register size_t
         l,
         r;
 

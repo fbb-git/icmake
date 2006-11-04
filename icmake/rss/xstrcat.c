@@ -22,7 +22,7 @@
 
 char *xstrcat (char *s1, char const *s2)
 {
-    register unsigned
+    register size_t
         s1len;
 
     if (! s1 || ! *s1)

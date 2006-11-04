@@ -4,9 +4,9 @@
 
 #include "iccomp.h"
 
-void outcode(ESTRUC_ *ep, int value, register unsigned size)
+void outcode(ESTRUC_ *ep, int value, register size_t size)
 {
-    register unsigned
+    register size_t
         codelen;
     char
         buffer[2];

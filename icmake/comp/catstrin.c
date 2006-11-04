@@ -11,7 +11,7 @@ void catstrings(lval, rval)
 {
     char
         *cp;
-    register unsigned
+    register size_t
         l_len,
         r_len;
 

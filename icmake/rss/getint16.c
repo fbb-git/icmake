@@ -12,7 +12,7 @@
         file, supplied as argument. It may be used, e.g., to read an argument
         of a {\em op\_asp} opcode.
 
-        The returned result may be cast to {\em unsigned} by the caller.
+        The returned result may be cast to {\em size_t} by the caller.
     }
 */
 
@@ -29,7 +29,7 @@ FILE *infile;
     offs = ftell (infile);
 
     if (! fread (&tmp, sizeof (INT16), 1, infile) )
-        error ("argument read error at offset %u", (unsigned) offs);
+        error ("argument read error at offset %u", (size_t) offs);
 
     return (tmp);
 }

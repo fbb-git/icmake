@@ -39,6 +39,11 @@ icmake (7.00)
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 19 Sep 2006 21:39:43 +0200
 
+    The type `unsigend' was changed to `size_t' where appropriate
+    Fixed some flaws in the `unix' script, and (??) added icm-exec.c to
+    my local icmake svn repository
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 04 Nov 2006 17:41:32 +0100
 
 icmake (6.30)
     

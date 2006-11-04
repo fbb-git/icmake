@@ -20,7 +20,7 @@
 
 ESTRUC_ fetchvar()
 {
-    register unsigned
+    register size_t
         index;
     E_TYPE_
         type = 0;

@@ -84,7 +84,7 @@ typedef enum
 
 typedef struct
 {
-    unsigned
+    size_t
         index;                              /* index in stringsection */
     char
         *string;                            /* string itself */
@@ -100,7 +100,7 @@ typedef struct                              /* symtab used with the compiler */
 
 typedef struct
 {
-    unsigned
+    size_t
         n_allocated,                        /* available memory */
         n_defined;                          /* defined variables */
     SYMBOL_
@@ -111,7 +111,7 @@ typedef struct
 {
     E_TYPE_
         type;                               /* type of the expression */
-    unsigned
+    size_t
         truelen,
         falselen,
         codelen,                            /* length of the code */
@@ -127,7 +127,7 @@ typedef struct
     char
         *name,                              /* name of the hidden fun */
         *source;                            /* source of the hidden function */
-    unsigned
+    size_t
         type,                               /* returntype */
         this,                               /* set to 1 if called */
         nargs;                              /* # of arguments */
@@ -240,7 +240,7 @@ extern SYMTAB_
 extern HIDDEN_FUNCTION_
     hidden[he_];
 
-extern unsigned
+extern size_t
     break_ok,
     *dead,
     dead_sp,
@@ -262,11 +262,11 @@ int test_operand (ESTRUC_ *, OPCODE_); /* test legality of operand */
 int yylex_file(char *, int);                /* read yylex input from yyin */
 int yylex_hidden(char *, int);              /* read yylex input from buffer */
 
-unsigned fetchfun (void);              /* fetch index of function */
-unsigned lookstring (char *);          /* look for string in stringtab */
-unsigned looksym (SYMTAB_ *);          /* look for symbol in symboltab */
-unsigned rm_jmp_zero (unsigned,         /* remove jmp 0 from || && lists */
-                 unsigned *, unsigned);
+size_t fetchfun (void);              /* fetch index of function */
+size_t lookstring (char *);          /* look for string in stringtab */
+size_t looksym (SYMTAB_ *);          /* look for symbol in symboltab */
+size_t rm_jmp_zero (size_t,         /* remove jmp 0 from || && lists */
+                 size_t *, size_t);
 
 ESTRUC_ *addition (ESTRUC_ *, ESTRUC_ *);  /* + code */
 ESTRUC_ *and_boolean (ESTRUC_ *, ESTRUC_ *);/* && code */
@@ -278,7 +278,7 @@ ESTRUC_ *band (ESTRUC_ *, ESTRUC_ *);           /* & (binary) code */
 ESTRUC_ *bnot (ESTRUC_ *);                      /* ~ code */
 ESTRUC_ *bor  (ESTRUC_ *, ESTRUC_ *);           /* | (binary) code */
 ESTRUC_ *break_stmnt (void);           /* process break stmnt */
-ESTRUC_ *callfun (unsigned, ESTRUC_ *);  /* call function */
+ESTRUC_ *callfun (size_t, ESTRUC_ *);  /* call function */
 ESTRUC_ *cast (E_TYPE_, ESTRUC_ *);      /* perform cast */
 ESTRUC_ *catcode (ESTRUC_ *,              /* write info rval behind lval */
                              ESTRUC_ *);
@@ -343,8 +343,8 @@ ESTRUC_ *young (ESTRUC_ *, ESTRUC_ *);     /* younger code */
 ESTRUC_ *xor  (ESTRUC_ *, ESTRUC_ *);           /* ^ (binary) code */
 ESTRUC_ *zeroargs (E_TYPE_);               /* fun()  code */
 
-void    addpatch (unsigned *, unsigned,     /* add value to patch-list */
-                               unsigned);
+void    addpatch (size_t *, size_t,     /* add value to patch-list */
+                               size_t);
 void    backend (void);                /* finish s_bin construction */
 void    btoi (ESTRUC_ *);              /* boolean to int */
 void    callrss (ESTRUC_ *, FUNNR_      /* call rss function */
@@ -373,13 +373,13 @@ void    make_frame (void);             /* generate op_frame */
 void    gencode (ESTRUC_ *, OPCODE_     /* append new code */
                                    MARG);
 void    open_fun (void);               /* open a function */
-void    outbin (void *, unsigned);     /* write INT8s to s_bin */
+void    outbin (void *, size_t);     /* write INT8s to s_bin */
 void    outcode (ESTRUC_ *, int,        /* append code to e->code */
-                        unsigned);
+                        size_t);
 void    patchfalse (ESTRUC_ *);        /* jmp_false target */
 void    patchtrue (ESTRUC_ *);         /* jmp_true target */
-void    patchup (INT8 *, unsigned,      /* patchup t/f list */
-                     unsigned *, unsigned, int);
+void    patchup (INT8 *, size_t,      /* patchup t/f list */
+                     size_t *, size_t, int);
 void    patchup_true (ESTRUC_ *, int); /* batchpatch truelist */
 void    patchup_false (ESTRUC_ *, int);/* batchpatch truelist */
 void    pop_dead(void);                     /* restore dead-level */

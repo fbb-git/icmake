@@ -13,7 +13,7 @@ void    incsize(LISTVAR_ *list);
 void    addtxt(LISTVAR_ *list, char *txt);
 
 size_t  listremove(LISTVAR_ *list, char const *txt);
-void    listcleanup(LISTVAR_ *list, unsigned toRemove);
+void    listcleanup(LISTVAR_ *list, size_t toRemove);
 
 #define list(plist)     ((plist)->vu.i->ls.list)
 #define size(plist)     (list(plist).size)

@@ -4,6 +4,13 @@ icmake (7.00-1) unstable; urgency=low
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 04 Nov 2006 17:41:32 +0100
 
+icmake (6.30-3) unstable; urgency=low
+
+  * Updated debhelper build-dep to >= 5.0.0
+    (closes: #393667)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 25 Oct 2006 21:50:21 +0200
+
 icmake (6.30-2) unstable; urgency=medium
 
   * Added patch size_t.dpatch. Thanks Andreas Jochens.
@@ -34,7 +41,7 @@ icmake (6.22-7) unstable; urgency=low
 icmake (6.22-6) unstable; urgency=low
 
   * Added patch:
-    missing_break.dpatch
+  	missing_break.dpatch
     (closes: #266703)
 
  -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 19 Aug 2004 14:56:09 +0200

@@ -1,6 +1,9 @@
 icmake (7.00-1) unstable; urgency=low
 
   * New upstream version.
+  
+  * Added Frank B. Brokken <f.b.brokken@rug.nl> and 
+    George Danchev <danchev@spnet.net> to Uploaders
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 04 Nov 2006 17:41:32 +0100
 

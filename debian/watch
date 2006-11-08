@@ -1,0 +1,3 @@
+version=3
+ftp://ftp.rug.nl/contrib/frank/software/linux/icmake/icmake-([\d\.]+)\.tgz \
+debian  uupdate

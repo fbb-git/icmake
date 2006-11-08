@@ -5,6 +5,7 @@ icmake (7.00-1) unstable; urgency=low
   [ George Danchev ]
   * Added Frank B. Brokken <f.b.brokken@rug.nl> and 
     George Danchev <danchev@spnet.net> to Uploaders
+  * Added debian/watch file
 
   [ Frank B. Brokken ]
   * Removed patch-stamp from build-stamp target

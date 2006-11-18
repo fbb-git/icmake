@@ -2,7 +2,7 @@
 
     // Change this into the location of the directory containing icmbuild's 
     // CLASSES and icmconf files:
-#define BASE    "/usr/share/doc/icmake/examples/icmbuild"
+#define BASE    "/usr/share/doc/icmake/icmbuild"
 
 //                      NO CONFIGURABLE PARTS BELOW THIS LINE
 
@@ -62,10 +62,21 @@ void main(int argc, list argv)
         fprintf("CLASSES", argv[idx], "\n");
     }
 
+//    if (!exists("frames"))
+//        exit(0);
+//
+//    frames = `cat frames`;
+//
+//    for (idx = sizeof(frames); idx--; )
+//        installFrame(frames[idx]);
+
     if (strlen(main) == 0)
         exit(0);
 
     header = get_base(main) + ".ih";
+
+    
+    list frames = `cat frames`;
 
     if (exists(main))
         printf("Not writing already existing file `", main, "'\n");

@@ -210,7 +210,7 @@ extern char
     only_on_ints[],
     *opstring[],
     *source_name,
-    string[],
+    *lexstring,
     *stringbuf,
     type_conflict[],
     version[];

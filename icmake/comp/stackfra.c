@@ -14,7 +14,7 @@ ESTRUC_ stackframe(E_TYPE_ type)
     switch (type)
     {
         case e_int | e_const:
-            frame.evalue = atoi(string);
+            frame.evalue = atoi(lexstring);
         break;
 
         case e_str | e_const:

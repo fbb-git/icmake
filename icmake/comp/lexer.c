@@ -927,8 +927,8 @@ case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
 #line 27 "lexer"
-{
-                            strcat(string, yytext);
+{  
+                            lexstring = xstrcat(lexstring, yytext);
                         }
 	YY_BREAK
 case 3:
@@ -936,7 +936,7 @@ YY_RULE_SETUP
 #line 30 "lexer"
 {
                             BEGIN 0;
-                            if (!stresc(string))
+                            if (!stresc(lexstring))
                                 semantic("illegal escape sequence in string");
                             return(STRING);
                         }
@@ -963,14 +963,14 @@ case 7:
 YY_RULE_SETUP
 #line 41 "lexer"
 {
-                            string[0] = 0; BEGIN str;
+                            lexstring[0] = 0; BEGIN str;
                         }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 44 "lexer"
 {
-                            sprintf(string, "%d%c", yytext[1], 0);
+                            sprintf(lexstring, "%d%c", yytext[1], 0);
                             return(NUMBER);
                         }
 	YY_BREAK
@@ -1503,7 +1503,7 @@ YY_RULE_SETUP
 {
                             int value;
                             sscanf(yytext + 2, "%x", &value);
-                            sprintf(string, "%d", value);
+                            sprintf(lexstring, "%d", value);
                             return(NUMBER);
                         }
 	YY_BREAK
@@ -1511,7 +1511,7 @@ case 80:
 YY_RULE_SETUP
 #line 304 "lexer"
 {
-                            strcpy(string, yytext);
+                            lexstring = xstrdup(yytext);
                             return(NUMBER);
                         }
 	YY_BREAK
@@ -1521,7 +1521,7 @@ case 82:
 YY_RULE_SETUP
 #line 309 "lexer"
 {                   /* P_CHECK: value in icm.h */
-                            strcpy(string, "0");
+                            lexstring = xstrdup("0");
                             return(NUMBER);
                         }
 	YY_BREAK
@@ -1533,7 +1533,7 @@ case 85:
 YY_RULE_SETUP
 #line 315 "lexer"
 {
-                            strcpy(string, "1");
+                            lexstring = xstrdup("1");
                             return(NUMBER);
                         }
 	YY_BREAK
@@ -1545,7 +1545,7 @@ case 88:
 YY_RULE_SETUP
 #line 321 "lexer"
 {                   /* O_DIR: value in icm.h */
-                            strcpy(string, "2");
+                            lexstring = xstrdup("2");
                             return(NUMBER);
                         }
 	YY_BREAK
@@ -1555,7 +1555,7 @@ case 90:
 YY_RULE_SETUP
 #line 326 "lexer"
 {                   /* O_SUBDIR: value in icm.h */
-                            strcpy(string, "4");
+                            lexstring = xstrdup("4");
                             return(NUMBER);
                         }
 	YY_BREAK
@@ -1565,7 +1565,7 @@ case 92:
 YY_RULE_SETUP
 #line 331 "lexer"
 {                   /* O_ALL: value in icm.h */
-                            strcpy(string, "8");
+                            lexstring = xstrdup("8");
                             return(NUMBER);
                         }
 	YY_BREAK
@@ -1573,7 +1573,7 @@ case 93:
 YY_RULE_SETUP
 #line 335 "lexer"
 {
-                            strcpy(string, "16");
+                            lexstring = xstrdup("16");
                             return(NUMBER);
                         }
 	YY_BREAK
@@ -1581,7 +1581,7 @@ case 94:
 YY_RULE_SETUP
 #line 339 "lexer"
 {
-                            strcpy(string, "32");
+                            lexstring = xstrdup("32");
                             return(NUMBER);
                         }
 	YY_BREAK
@@ -1589,7 +1589,7 @@ case 95:
 YY_RULE_SETUP
 #line 343 "lexer"
 {
-                            strcpy(string, yytext);
+                            lexstring = xstrdup(yytext);
                             return(IDENTIFIER);
                         }
 	YY_BREAK

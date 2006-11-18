@@ -15,7 +15,7 @@ void enter()
 
     if (looksym(entertab) != n_defined)     /* look for symbol in active tab. */
     {                                       /* message if multiply defined */
-        semantic("%s multiply defined", string);
+        semantic("%s multiply defined", lexstring);
         return;
     }
 
@@ -26,7 +26,7 @@ void enter()
 
     sym = entertab->symbol + n_defined;
 
-    sym->name = xstrdup(string);            /* set the name of the var */
+    sym->name = xstrdup(lexstring);         /* set the name of the var */
     sym->var.type = vartype;                /* set the type of the var */
 
     if (entertab == &global)                /* clear new global entry */

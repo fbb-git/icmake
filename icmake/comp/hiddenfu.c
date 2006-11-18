@@ -109,7 +109,7 @@ void hidden_functions()
             if (fun >= 0)                   /* hidden function */
             {                               /* reset to patchup */
                 fseek(s_bin, -(long)sizeof(INT16), SEEK_CUR);
-                strcpy(string, hidden[fun].name);
+                lexstring = xstrdup(hidden[fun].name);
                                             /* update the function's address */
                 outbin(&(funtab.symbol[fetchfun()].var.vu.i->count),
                          sizeof(INT16));

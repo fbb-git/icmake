@@ -37,7 +37,13 @@ icmake (7.00)
     the `unix' script will regenerate the parser and the lexical scanner if
     their specification files have changed.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 19 Sep 2006 21:39:43 +0200
+        [Above changes: Tue, 19 Sep 2006 21:39:43 +0200]
+
+    icmcomp uses a resizing rather than a fixed sized buffer to store strings
+    found in an icmake script (used to be a fixed-sized buffer of 100 chars,
+    causing icmcomp to segfault with, e.g., long option lists)
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 18 Nov 2006 10:34:13 +0100
 
     The type `unsigend' was changed to `size_t' where appropriate
     Fixed some flaws in the `unix' script, and (??) added icm-exec.c to

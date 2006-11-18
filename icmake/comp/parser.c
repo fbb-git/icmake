@@ -2649,7 +2649,7 @@ yyreduce:
   case 180:
 #line 1071 "parser"
     {
-        stringbuf = xstrcat(stringbuf, string);/* catenate the new string */
+        stringbuf = xstrcat(stringbuf, lexstring);/* catenate the new string */
     ;}
     break;
 
@@ -2657,7 +2657,7 @@ yyreduce:
 #line 1076 "parser"
     {
         free(stringbuf);                    /* free former string */
-        stringbuf = xstrdup(string);        /* duplicate initial string */
+        stringbuf = xstrdup(lexstring);     /* duplicate initial string */
     ;}
     break;
 

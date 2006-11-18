@@ -27,7 +27,7 @@ void clear_hidden()
 
     for (index = 0; index < sizeof(hidden) / sizeof(HIDDEN_FUNCTION_); index++)
     {
-        strcpy(string, hidden[index].name); /* prepare the lookup-name     */
+        lexstring = xstrdup(hidden[index].name); /* prepare the lookup-name     */
         remove_name(&funtab);               /* remove the name from funtab */
         remove_name(&global);               /* remove also from global     */
     }

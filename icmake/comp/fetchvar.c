@@ -40,7 +40,7 @@ ESTRUC_ fetchvar()
         if ((index = looksym(&global)) == global.n_defined)
         {
             index = 0xffff;
-            semantic("%s undefined", string);
+            semantic("%s undefined", lexstring);
         }
         else
             type = global.symbol[index].var.type;

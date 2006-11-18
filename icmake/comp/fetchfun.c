@@ -11,7 +11,7 @@ size_t fetchfun()
 
                                             /* test function defined */
     if ((index = looksym(&funtab)) == funtab.n_defined)
-        semantic ("Function '%s()' not defined", string);
+        semantic ("Function '%s()' not defined", lexstring);
 
     return (index);
 }

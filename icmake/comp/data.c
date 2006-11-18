@@ -103,7 +103,7 @@ char
         ">>",                               /* op_shr */
     },
     *source_name,
-    string[100],                         /* fixed STRING buffer */
+    *lexstring,                          /* resizing STRING buffer */
     *stringbuf,                          /* final STRING */
     type_conflict[] = "conflicting operand types for %s";
 

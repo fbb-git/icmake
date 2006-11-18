@@ -12,7 +12,7 @@ size_t looksym(tab)
         index;
 
     for (index = 0; index < tab->n_defined; index++)
-        if (!strcmp(tab->symbol[index].name, string))   /* string found ? */
+        if (!strcmp(tab->symbol[index].name, lexstring))/* string found ? */
             break;                                      /* done */
 
     return (index);                 /* return string index */

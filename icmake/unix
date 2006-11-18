@@ -150,6 +150,7 @@ void makelibs ()
     
 #ifdef VERBOSE
     printf ("\nMaking lib for executor icm-exec\n");
+#endif
     chdir("exec");
     system("./build lib");
     chdir("..");
@@ -187,7 +188,6 @@ void makeprog (string dir, string lib, string prog)
 
         exec (STRIP, "../bin/" + prog);
         printf("Stripped version of ", prog, " in icmake/bin\n");
-#endif
     }           
         
     chdir ("..");
@@ -328,6 +328,8 @@ void realcleanup ()
     system("rm -rf exec/tmp");
 
     realclean ("un", LIB_ICMUN);
+
+    system(P_NOCHECK, "rm -rf */o */*/o bin/*");
 }
 
 void zip ()

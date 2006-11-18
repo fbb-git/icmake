@@ -6,7 +6,7 @@ void main()
     list    progdirs;
     int     idx;
 
-    progs = "make pp comp exec";
+    progs = "make pp comp exec un";
     progdirs = strtok(progs, " ");
 
     chdir("rss");

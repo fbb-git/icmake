@@ -26,7 +26,7 @@ void backend()
     BIN_HEADER_
         hdr;
 
-    strcpy(string, "main");
+    lexstring = xstrdup("main");
     if ((index = looksym(&funtab)) == funtab.n_defined)
     {
         semantic("function 'main()' not defined");

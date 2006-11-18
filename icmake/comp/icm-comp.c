@@ -41,6 +41,7 @@ int main (argc, argv)            /* icm-comp source(txt) dest(bin) */
     dead = xrealloc(NULL, sizeof(size_t));
 
     stringbuf = xstrdup(nullstring);        /* malloc initial stringbuf */
+    lexstring = xstrdup(nullstring);        /* initial lexstring */
 
                                             /* go to first codebyte pos */
     fseek(s_bin, sizeof(BIN_HEADER_), SEEK_SET);

@@ -95,8 +95,8 @@
     // Directory below this directory to contain temporary results
 #define TMP_DIR             "tmp"
 
-    // Local program library to use (comment out if you want to use
-    // the object modules themselves, rather than a library)
+    // Local program library to use (change to an empty string if you want to
+    // use the object modules themselves, rather than a library)
 #define LIBRARY             "modules"
 
     //  The extension of object modules:

@@ -313,16 +313,19 @@ void realclean (string dir, string lib)
     chdir ("..");
 }
 
-void realcleanup ()
+void realcleanup (int all)
 {
     realclean ("rss",  LIB_ICRSS); 
     realclean ("make", LIB_ICMAKE);
     realclean ("pp", LIB_ICMPP);
     realclean ("comp", LIB_ICMCOMP);
 
-    chdir("comp");
-    system("rm -f parser.c lexer.c");
-    chdir("..");
+    if (all)
+    {
+        chdir("comp");
+        system("rm -f parser.c parser.h lexer.c");
+        chdir("..");
+    }
 
     realclean ("exec", LIB_ICMEXEC);
     system("rm -rf exec/tmp");
@@ -420,7 +423,9 @@ void main (int argc, list argv)
     else if (av1 == "clean")
         cleanup ();
     else if (av1 == "realclean")
-        realcleanup ();
+        realcleanup (0);
+    else if (av1 == "REALCLEAN")
+        realcleanup (1);
     else if (av1 == "doc2man")
         doc2man ();
     else if (av1 == "zip")
@@ -436,6 +441,7 @@ void main (int argc, list argv)
                                 BINDIR, "\n"
         "    \"unix clean\" to remove old mush (libs are kept)\n"
         "    \"unix realclean\" to remove old mush (including libs)\n"
+        "    \"unix REALCLEAN\" realclean + remove lexer.c parser.[ch]\n"
         "    \"unix doc2man\" to install crude docs to cat\n"
         "\n"
         "    \"unix zip\" to clean up (keeping libs) and zip it up\n"

@@ -163,7 +163,7 @@ void static_library()
 {
     cd(TMP_DIR "/o");
 
-    if (sizeof(makelist("*" OBJ_EXT)))
+    if (strlen(LIBRARY) && sizeof(makelist(OBJ_EXT)))
     {
         system("ar cru ../lib" LIBRARY + ".a *" OBJ_EXT);
         system("ranlib ../lib" LIBRARY + ".a");
@@ -222,20 +222,28 @@ void setLibs()
 
 void link(string maino)
 {
+    string compiler;
+
+    compiler = COMPILER " -o bin/" BINARY " " + maino;
+
+    if (exists("lib" LIBRARY ".a"))
+        compiler += " -l" LIBRARY " -L.";
+
     setLibs();
 
     cd(TMP_DIR);
+
+    if (strlen(g_libs))
+        compiler += g_libs + g_libpath;
+
     if 
     (
-        maino younger "bin/" BINARY 
+        maino younger "bin/" BINARY
         || 
         "lib" LIBRARY ".a" younger "bin/" BINARY
     )
-    {
-        system(COMPILER " -o bin/" BINARY " " + maino + 
-                        " -l" + LIBRARY + " " + g_libs +
-                        " -L. " + g_libpath + " " LINKER_OPTIONS);
-    }
+        system(compiler + " " LINKER_OPTIONS);
+
     chdir("");
 }
 

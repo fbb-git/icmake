@@ -7,4 +7,4 @@ VAR_           *var;
 char            orgdir[_MAX_PATH];
 char           *bimname;
 int             retval;
-size_t        curoffs;
+size_t          curoffs;

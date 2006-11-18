@@ -33,9 +33,11 @@
 #endif
 
 #include "icm-exec.h"
+#include "var/var.h"
 
 int main (int argc, char **argv)
 {
+    int idx;
     register char *progname;
 
     atexit (cleanup);
@@ -72,6 +74,14 @@ int main (int argc, char **argv)
                                         /* return array of global vars */
     if ((INT16)(nvar = getvar(infile, headerp, &var)) == -1)
         error("invalid macro file, cannot read variable section");
+
+        /* global strings haven't been initialized by the compiler yet, */
+        /* so that's icm-exec's job                                     */
+    for (idx = 0; idx < nvar; ++idx)
+    {
+        if (typeValue(var + idx) == e_str)
+            var[idx] = stringConstructor();
+    }
 
     fseek(infile, headerp->offset[3], SEEK_SET);
 

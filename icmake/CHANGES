@@ -49,6 +49,10 @@ icmake (7.00)
     Fixed some flaws in the `unix' script, and (??) added icm-exec.c to
     my local icmake svn repository
 
+    Added icmstart script to start an icmake project in some subdir
+    
+    Global strings weren't initialized to empty strings. Now they are.
+
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 04 Nov 2006 17:41:32 +0100
 
 icmake (6.30)

@@ -1,0 +1,10 @@
+# This file contains lines mentioning frame files to install by icmstart
+# empty lines and lines starting with # are ignored.
+# files may be given a (relative) path-prefix. These are only installed if the 
+# path exists. E.g., scanner/scanner.h is only installed if the directory
+# scanner is a subdirectory below the directory containing icmbuild's CLASSES
+# file.
+
+main.cc     
+main.ih     
+     

@@ -2,41 +2,64 @@
 
     // Change this into the location of the directory containing icmbuild's 
     // CLASSES and icmconf files:
-#define BASE    "/usr/share/doc/icmake/icmbuild"
+#define BASE    "/usr/lib/icmake"
+
+    // Location of the frame files.
+#define CONFIG  "/etc/icmake"
 
 //                      NO CONFIGURABLE PARTS BELOW THIS LINE
 
 void usage(string progname)
 {
-    printf("Usage: ", get_base(progname), " [-m[main]] dir+\n"
+    printf("Usage: ", get_base(progname), " [-f] dir+\n"
         "Where:\n"
-        "    -m[main.cc]: if provided, a main.cc and main.ih header file\n"
-        "          will be created. The default name may be altered by\n"
-        "          specifying an alternate name. An alternate name should\n"
-        "           not be separated by blanks from the -m option.\n"
+        "      -f: do NOT install the frame files, if any.\n"
+        "          Normally the frame files are located in /etc/icmake\n"
         "    dir+: one or more directory names. The first name will be the\n"
         "          directory containing icmbuild's CLASSES and icmconf files\n"
         "          as well as all remaining arguments as subdirectories.\n"
         "          The additional subdirectories are already added to "
                                                                 "CLASSES\n"
         "\n");
+
     exit(1);
+}
+
+void installFrame(string frameFile)
+{
+    string file;
+    string path;
+    list fields;
+
+    fields = strtok(frameFile, " \t\n");
+    if (sizeof(fields) == 0)
+        return;
+
+    file = fields[0];
+    if (file[0] == "#")
+        return;
+
+    path = get_path(file);
+
+    if (!strlen(path))
+        path = ".";
+    else if (!exists(path))
+        return;
+
+    if (exists(file))
+        printf("Not installing already existing file `", file, "'\n");
+    else
+        system("cp " CONFIG "/" + file + " " + path);
 }
 
 void main(int argc, list argv)
 {
-    string main;
-    string header;
     int idx;
+    list frames;
     int firstdir = 1;
 
-    if (argc > 1 && substr(argv[1], 0, 2) == "-m")
-    {
+    if (argc > 1 && argv[1] == "-f")
         ++firstdir;
-        main = substr(argv[1], 2, 999);
-        if (main == "")
-            main = "main.cc";
-    }
 
     if (argc == firstdir)
         usage(argv[0]);
@@ -62,51 +85,10 @@ void main(int argc, list argv)
         fprintf("CLASSES", argv[idx], "\n");
     }
 
-//    if (!exists("frames"))
-//        exit(0);
-//
-//    frames = `cat frames`;
-//
-//    for (idx = sizeof(frames); idx--; )
-//        installFrame(frames[idx]);
+    frames = `"cat " CONFIG "/frames"`;
 
-    if (strlen(main) == 0)
-        exit(0);
-
-    header = get_base(main) + ".ih";
-
-    
-    list frames = `cat frames`;
-
-    if (exists(main))
-        printf("Not writing already existing file `", main, "'\n");
-    else
-        fprintf(main,
-            "#include \"", header, "\"\n"
-			"\n"
-			"int main(int argc, char **argv)\n"
-			"try\n"
-			"{\n"
-			"\n"
-			"    return 0;\n"
-			"}\n"
-			"catch(...)\n"
-			"{\n"
-			"    return 1;\n"
-			"}\n"
-        );
-
-    if (exists(header))
-        printf("Not writing already existing file `", header, "'\n");
-    else
-        fprintf(header,
-			"#include <iostream>\n"
-			"#include <string>\n"
-			"\n"
-			"using namespace std;\n"
-        );
+    for (idx = sizeof(frames); idx--; )
+        installFrame(frames[idx]);
 
     exit(0);
 }
-
-        

@@ -1,2 +1,3 @@
-bin/icmake bin/icmun usr/bin
-bin/icm-comp bin/icm-exec bin/icm-pp usr/lib/icmake
+bin/icmake bin/icmun scripts/icmbuild scripts/icmstart usr/bin
+icmbuild bin/icm-comp bin/icm-exec bin/icm-pp usr/lib/icmake
+etc/icmake /etc

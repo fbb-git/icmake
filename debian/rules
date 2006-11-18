@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 # Sample debian/rules that uses debhelper.
-# This file is public domain software, originally written by Joey Hess. 
+# This file is public domain software, originally written by Joey Hess.
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
@@ -47,7 +47,7 @@ binary-arch: build install
 	dh_installchangelogs CHANGES
 	dh_installdocs icmake.doc doc/icmake.ps debian/mail.frank
 	dh_installexamples
-	dh_installman doc/icmake.1 doc/icmbuild.1
+	dh_installman doc/icmake.1 doc/icmbuild.1 doc/icmstart.1
 	dh_link usr/share/man/man1/icmake.1 usr/share/man/man1/icmun.1
 	dh_strip
 	dh_compress

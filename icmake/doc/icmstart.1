@@ -1,95 +1,52 @@
-.TH "icmbuild" "1" "2006" "icmake\&.7\&.00\&.tar\&.gz" "A generic program maintenance script"
+.TH "icmstart" "1" "2006" "icmake\&.7\&.00\&.tar\&.gz" "starts icmbuild program maintenance"
 
 .PP 
 .SH "NAME"
-icmbuild \- A generic, easy configurable, program maintenance script
+icmstart \- A startup script for icmbuild program maintenance
 .PP 
 .SH "SYNOPSIS"
-\fBicmbuild\fP \fImode\fP
+\fBicmstart\fP \fI[Options]\fP top-dir [opt-subdirs]
 .PP 
 .SH "DESCRIPTION"
 
 .PP 
-The \fBicmbuild\fP script is a generic script that can be used to do program
-maintenance using \fBicmake\fP(1)\&. 
+The \fBicmstart\fP script is a generic script that can be used to start program
+maintenance using \fBicmake\fP(1) and \fBicmbuild\fP(1)\&. \fBIcmstart\fP will create an
+initial directory, install the files \fICLASSES\fP and \fIicmconf\fP and
+optionally subdirectories below the initial directory\&. Additional directories
+may be specified following \fItop-dir\fP as \fIopt-subdirs\fP\&. These additional
+directories are created as sub-directories of the \fItop-level\fP directory and
+are assumed to be (class) subdirectories\&. Their names are added to the file
+\fICLASSES\fP\&. Furthermore, skeleton files for the main directory and
+subdirectories, by default listed in the file \fI/etc/icmake/skel\fP, may be
+installed in the created directories\&.
 .PP 
-The script expects two files to be available in the directory where program
-maintenance is required, and the \fBicmbuild\fP script should be available in your
-path or it should be started as, e\&.g\&., \fI\&./icmbuild\fP
-.PP 
-\fBIcmbuild\fP assumes that your sources exist in and below a directory in which the
-files \fIicmconf\fP and \fICLASSES\fP live\&. The file \fICLASSES\fP
-contains the names of all subdirectories in which class-specific sources are
-kept\&. The file \fIexamples/icmbuild\fP in \fBicmake\fP(1)\&'s distribution
-offers an example of the configuration parameters\&. In this latter file 
-it is assumed that  \fBC++\fP sources are maintained, but the \fBicmbuild\fP script is
-not restricted to do maintenance for \fBC++\fP  programs\&.
-.PP 
-\fBIcmbuild\fP compiles all sources in each of the subdirectories named in the file
-\fICLASSES\fP, and then compiles all sources in the current working directory
-(except for the source containing \fImain()\fP)
-.PP 
-The compiled sources result in object modules which are then kept in a
-library, against which the main-object module is linked\&. It is also possible
-to specify additional libraries against which the program must be linked\&.
-.PP 
-Once a library is constructed it is kept up to date by the script\&. Changing a
-source will result in replacing its former module by its new module in the
-library\&. 
-.PP 
-.SH "KICK-STARTING ICMBUILD"
-
-.PP 
-Normally, \fBicmbuild\fP is installed and used as follows:
-.IP o 
-Install \fBicmbuild\fP in your path
-.IP o 
-copy \fIicmconf\fP and \fICLASSES\fP to your project\&'s base directory
-(i\&.e\&., the directory in which and where below the project\&'s sources are
-found)
-.IP o 
-Modify the \fI#defines\fP in the file \fIicmconf\fP to taste
-.IP o 
-List the subdirectories containing sources in the file \fICLASSES\fP
-.IP 
-Note that the order of the classes mentioned in classes \fIis\fP relevant
-here\&.  It\&'s no problem to add new class (subdirectory) names, but
-reordering should be prevented\&. If reordering is required, recompile
-the library, as the final object files contain class order-numbers\&.
-These class-order numbers prevent file-name collisions and thus prevent
-replacing file \fIx\&.o\fP from class \fIA\fP by file \fIx\&.o\fP from class
-\fIB\fP\&.
-.IP o 
-Now simply run 
-.nf 
-
-            icmbuild 
-        
-.fi 
-from the project\&'s base directory and let the help-info tell you
-what your options are\&. See the next section for the modes of operation
-
+After Changing to the top-level directory as created by \fBicmstart\fP the \fBicmbuild\fP
+script can be called for program maintenance\&.
 .PP 
 .SH "OPTIONS"
 
 .PP 
-\fBIcmbuild\fP may be called with the following operational modes:
+\fBIcmstart\fP may be called with the following options, which (f specified) must
+be the first arguments to \fBicmstart\fP:
 .IP o 
-\fIclean\fP
+\fI-f\fP
 .br 
-clean up remnants of previous activities
+do not install skeleton files\&. By default skeleton files are installed
+from either the default skeleton directory or an alternative directory
+specified with the \fI-s\fP option (see below)\&.
 .IP o 
-\fIlibrary\fP
+\fI-s path\fP
 .br 
-build the static library
-.IP o 
-\fIprogram\fP
-.br 
-build the binary program
-.IP o 
-\fIinstall <base>\fP
-install the software in the locations defined in the \fIicmconf\fP
-file, optionally below the directory \fI<base>\fP
+path to the directory containing skeleton files\&.  By
+default this is \fI/etc/icmake\fP\&. The skeleton directory must contain a
+file \fIskel\fP that may consist of comment (empty lines and lines
+beginning with the hash-mark (\fI#\fP)), and should otherwise contain
+relative path names of skeleton files to be installed\&. A skeleton file
+is only installed if \fBicmstart\fP has created its path below the top-level
+directory\&. E\&.g\&., if a skeleton name \fIscanner/scanner\&.h\fP is
+available, and the top-level directory is named \fIdemo\fP then
+\fIscanner/scanner\&.h\fP is installed only if \fIdemo/scanner\fP exists\&.
 
 .PP 
 .SH "FILES"
@@ -97,130 +54,18 @@ file, optionally below the directory \fI<base>\fP
 .PP 
 The mentioned paths are sugestive only and may be installation dependent:
 .IP o 
-\fB/usr/share/doc/icmake/examples/icmbuild/icmconf\fP
-Example of a \fBicmbuild\fP configuration file;
+\fB/usr/lib/icmake/icmconf\fP
+Example of a \fBicmstart\fP configuration file;
 .IP o 
-\fB/usr/share/doc/icmake/examples/icmbuild/CLASSES\fP
-Example of a \fBicmbuild\fP \fICLASSES\fP file\&.
-
-.PP 
-.SH "EXAMPLES"
-
-.PP 
-Here is an example of the configuration file \fIicmconf\fP for a concrete
-program, using the library \fIlibbobcat1\fP as an additional library:
-.PP 
-.nf 
-
-    // Inspect the following #defines\&. Change them to taste\&. If you don\&'t
-    // need a particular option, change its value into an empty string
-
-    // should commands be echoed (ON) or not (OFF) ?
-#define USE_ECHO              ON
-
-
-    // The final program and source containing main():
-    // ===============================================
-
-    // define the name of the program to create:
-#define BINARY              "brackets"
-
-    // define the name of the source containing main():
-#define MAIN                "brackets\&.cc"
-
-    // #defines used for compilation and linking:
-    // ==========================================
-
-    // define the compiler to use:
-#define COMPILER            "g++"
-
-    // define the compiler options to use:
-#define COMPILER_OPTIONS    "-g -Wall -O2"
-
-    // define the pattern to locate sources in a directory:
-#define SOURCES             "*\&.cc"
-
-    // define the options used for linking:
-#define LINKER_OPTIONS      "-s"
-
-    // define any additional libraries BINARY may need:
-#define ADD_LIBRARIES       "bobcat"
-
-    // define any additional paths (other than the standard paths) the
-    // additional libraries are located in:
-#define ADD_LIBRARY_PATHS  ""
-
-    // #defines used for the final product:
-    // ====================================
-
-#define BIN_INSTALL         "/usr/bin"
-
-
-
-    // Some advanced #defines (to create parsers and lexical scanners)
-    // ===============================================================
-
-
-    // Lexical Scanner section
-    // =======================
-
-    // Should a lexical scanner be constructed? If so, define the 
-    // subdirectory containing the scanner\&'s specification file\&. 
-#define SCANNER_DIR         ""  
-
-    // What is the program generating the lexical scanner?
-#define SCANGEN             "flex"
-
-    // Flags to provide SCANGEN with:
-#define SCANFLAGS           "-I"
-
-    // Name of the lexical scanner specification file
-#define SCANSPEC            "lexer"
-
-    // Name of the file generated by the lexical scanner
-#define SCANOUT             "yylex\&.cc"
-
-
-    // Parser section
-    // ==============
-
-    // Should a parser be constructed? If so, define the subdirectory
-    // containing the parser\&'s specification file
-#define PARSER_DIR          ""
-
-    // What it the program generating a parser?
-#define PARSGEN             "bisonc++"
-
-    // What it the grammar specificication file?
-#define PARSSPEC            "grammar"
-
-    // Flags to provide PARSGEN with:
-#define PARSFLAGS           "-V -l"
-
-    // Name of the file generated by the parser generator containing the 
-    // parser function
-#define PARSOUT             "parse\&.cc"
-
-
-
-    // Additional defines, which should normally not be modified
-    // =========================================================
-
-    // Directory below this directory to contain temporary results
-#define TMP_DIR             "tmp"
-
-    // Local program library to use (comment out if you want to use
-    // the object modules themselves, rather than a library)
-#define LIBRARY             "modules"
-
-    //  The extension of object modules:
-#define OBJ_EXT             "\&.o"
-        
-.fi 
+\fB/usr/lib/icmake/CLASSES\fP
+Example of a \fBicmstart\fP \fICLASSES\fP file\&.
+.IP o 
+\fB/etc/icmake/skel\fP
+Frame file specifying skeleton files that may be installed\&.
 
 .PP 
 .SH "SEE ALSO"
-\fBicmake\fP(1)
+\fBicmake\fP(1), \fBicmbuild\fP(1)
 .PP 
 .SH "LICENSE"
 This  is free software, distributed under the terms of the `GNU General

@@ -31,13 +31,17 @@ icmake (7.00)
 
     icmake manual page rewritten
 
-    icmbuild script for general program maintenance added
-    icmbuild manual page added
+    added icmbuild script for general program maintenance
+    added icmbuild manual page
+
+    added icmstart script to start an icmake maintenance project using
+    icmbuild 
+    added icmstart manual page
 
     the `unix' script will regenerate the parser and the lexical scanner if
     their specification files have changed.
 
-        [Above changes: Tue, 19 Sep 2006 21:39:43 +0200]
+        [Above changes: Tue, 21 Sep 2006 14:31:43 +0200]
 
     icmcomp uses a resizing rather than a fixed sized buffer to store strings
     found in an icmake script (used to be a fixed-sized buffer of 100 chars,

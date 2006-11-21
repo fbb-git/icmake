@@ -10,6 +10,7 @@ string g_libs;          // the extra libraries
 list   g_classes;       // all class-directories
 int    g_nClasses;      // number of class-directories
 string g_binary;        // binary program to build
+int    g_compiled;      // any source compiled (but main)?
 
                         // std call of the compiler when compiling
 string g_compiler = COMPILER " " COMPILER_OPTIONS " -c -o ";
@@ -141,6 +142,8 @@ void c_compile(int prefix, string srcDir, list cfiles)
         
         system(compiler + change_ext(file, OBJ_EXT) + 
                             " ../../" + srcDir + file);
+
+        g_compiled = 1;
     }
 
     chdir("");
@@ -163,7 +166,7 @@ void static_library()
 {
     cd(TMP_DIR "/o");
 
-    if (strlen(LIBRARY) && sizeof(makelist(OBJ_EXT)))
+    if (strlen(LIBRARY) && sizeof(makelist("*" OBJ_EXT)))
     {
         system("ar cru ../lib" LIBRARY + ".a *" OBJ_EXT);
         system("ranlib ../lib" LIBRARY + ".a");
@@ -184,6 +187,7 @@ void build_static_library()
     fullLibname = g_cwd + TMP_DIR "/lib" LIBRARY ".a";
 
     g_sources = SOURCES;
+    g_compiled = 0;
 
     if (PARSER_DIR != "")
         parser();
@@ -224,14 +228,16 @@ void link(string maino)
 {
     string compiler;
 
+    cd(TMP_DIR);
+
     compiler = COMPILER " -o bin/" BINARY " " + maino;
 
     if (exists("lib" LIBRARY ".a"))
         compiler += " -l" LIBRARY " -L.";
+    else
+        compiler += " *" OBJ_EXT;
 
     setLibs();
-
-    cd(TMP_DIR);
 
     if (strlen(g_libs))
         compiler += g_libs + g_libpath;
@@ -241,6 +247,8 @@ void link(string maino)
         maino younger "bin/" BINARY
         || 
         "lib" LIBRARY ".a" younger "bin/" BINARY
+        ||
+        g_compiled
     )
         system(compiler + " " LINKER_OPTIONS);
 
@@ -290,6 +298,9 @@ void main(int argc, list argv, list envp)
     echo(USE_ECHO);
 
     option = element(1, argv);
+
+    if (option == "")
+        option = getenv("icmbuild")[1];
 
     if (option == "clean")
         clean();

@@ -95,6 +95,8 @@ manpageoptions()
     itemization(
     itt(clean)nl()
         clean up remnants of previous activities
+    itt(help)nl()
+        provide help and exit (default when called without arguments)
     itt(library)nl()
         build the static library
     itt(program)nl()
@@ -103,6 +105,9 @@ manpageoptions()
         install the software in the locations defined in the tt(icmconf)
          file, optionally below the directory tt(<base>)
     )
+    Alternatively, the environment variable tt(icmbuild) may be set to one of
+the above modes of operation, in which case bf(icmbuild) will use that mode
+when called without arguments.
 
 manpagefiles()
 
@@ -131,10 +136,10 @@ manpagesection(EXAMPLES)
     // ===============================================
 
     // define the name of the program to create:
-#define BINARY              "brackets"
+#define BINARY              "binary"
 
     // define the name of the source containing main():
-#define MAIN                "brackets.cc"
+#define MAIN                "main.cc"
 
     // #defines used for compilation and linking:
     // ==========================================
@@ -152,7 +157,7 @@ manpagesection(EXAMPLES)
 #define LINKER_OPTIONS      "-s"
 
     // define any additional libraries BINARY may need:
-#define ADD_LIBRARIES       "bobcat"
+#define ADD_LIBRARIES       ""
 
     // define any additional paths (other than the standard paths) the
     // additional libraries are located in:
@@ -161,19 +166,19 @@ manpagesection(EXAMPLES)
     // #defines used for the final product:
     // ====================================
 
-#define BIN_INSTALL         "/usr/bin"
+#define BIN_INSTALL         "/usr/local/bin"
 
 
 
-    // Some advanced #defines (to create parsers and lexical scanners)
-    // ===============================================================
+    // Some advanced #defines, used to create parsers and lexical scanners 
+    // ===================================================================
 
 
     // Lexical Scanner section
     // =======================
 
-    // Should a lexical scanner be constructed? If so, define the 
-    // subdirectory containing the scanner's specification file. 
+    // Should a lexical scanner be constructed? If so, define the subdirectory 
+    // containing the scanner's specification file. 
 #define SCANNER_DIR         ""  
 
     // What is the program generating the lexical scanner?
@@ -217,8 +222,8 @@ manpagesection(EXAMPLES)
     // Directory below this directory to contain temporary results
 #define TMP_DIR             "tmp"
 
-    // Local program library to use (comment out if you want to use
-    // the object modules themselves, rather than a library)
+    // Local program library to use (change to an empty string if you want to
+    // use the object modules themselves, rather than a library)
 #define LIBRARY             "modules"
 
     //  The extension of object modules:
@@ -226,7 +231,7 @@ manpagesection(EXAMPLES)
         )
 
 manpageseealso()
-    bf(icmake)(1)
+    bf(icmake)(1), bf(icmstart)(1)
 
 manpagesection(LICENSE)
        This  is free software, distributed under the terms of the `GNU General

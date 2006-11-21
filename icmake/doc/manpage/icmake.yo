@@ -714,7 +714,7 @@ provided:
         Returns a substring of tt(text), starting at tt(offset), consisting of
         tt(count) characters. If tt(offset) exceeds (or equals) the string's
         size or if tt(count <= 0), then an empty string is returned. If
-        tt(offset) is less thann 0 then 0 is used.
+        tt(offset) is less than 0 then 0 is used.
     )
 
     System calls:
@@ -774,7 +774,7 @@ bf(C). Its full prototype is (note: bf(void) return type):
 (the `tt(.bim)' file);
     itt(envp) containts the `environment' variables. The function tt(sizeof())
 (see below) may be used to determine its elements. Elements in tt(envp) have
-the form tt(variable=value). Alternatively, the functino tt(getenv()) (see
+the form tt(variable=value). Alternatively, the function tt(getenv()) (see
 below) can be used to retrieve a specific environment variable immediately.
     )
     Example:
@@ -792,7 +792,8 @@ below) can be used to retrieve a specific environment variable immediately.
             for (idx = sizeof(toCompile); idx--; )
                 compile(element(idx, toCompile));
 
-            linking(element(2, argv));
+            if (getenv("dryrun")[0] == "0")
+                linking(element(2, argv));
         }
         exit (0);
     }    
@@ -817,7 +818,7 @@ particular the tt(examples/icmbuild) subdirectory containing a general script
 for bf(C++) and bf(C) program maintenance.
 
 manpageseealso()
-    bf(icmbuild)(1), bf(make)(1)
+    bf(icmbuild)(1), bf(icmstart)(1), bf(make)(1)
 
 manpagesection(LICENSE)
        This  is free software, distributed under the terms of the `GNU General

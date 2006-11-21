@@ -79,6 +79,10 @@ what your options are\&. See the next section for the modes of operation
 .br 
 clean up remnants of previous activities
 .IP o 
+\fIhelp\fP
+.br 
+provide help and exit (default when called without arguments)
+.IP o 
 \fIlibrary\fP
 .br 
 build the static library
@@ -90,7 +94,9 @@ build the binary program
 \fIinstall <base>\fP
 install the software in the locations defined in the \fIicmconf\fP
 file, optionally below the directory \fI<base>\fP
-
+Alternatively, the environment variable \fIicmbuild\fP may be set to one of
+the above modes of operation, in which case \fBicmbuild\fP will use that mode
+when called without arguments\&.
 .PP 
 .SH "FILES"
 
@@ -123,10 +129,10 @@ program, using the library \fIlibbobcat1\fP as an additional library:
     // ===============================================
 
     // define the name of the program to create:
-#define BINARY              "brackets"
+#define BINARY              "binary"
 
     // define the name of the source containing main():
-#define MAIN                "brackets\&.cc"
+#define MAIN                "main\&.cc"
 
     // #defines used for compilation and linking:
     // ==========================================
@@ -144,7 +150,7 @@ program, using the library \fIlibbobcat1\fP as an additional library:
 #define LINKER_OPTIONS      "-s"
 
     // define any additional libraries BINARY may need:
-#define ADD_LIBRARIES       "bobcat"
+#define ADD_LIBRARIES       ""
 
     // define any additional paths (other than the standard paths) the
     // additional libraries are located in:
@@ -153,19 +159,19 @@ program, using the library \fIlibbobcat1\fP as an additional library:
     // #defines used for the final product:
     // ====================================
 
-#define BIN_INSTALL         "/usr/bin"
+#define BIN_INSTALL         "/usr/local/bin"
 
 
 
-    // Some advanced #defines (to create parsers and lexical scanners)
-    // ===============================================================
+    // Some advanced #defines, used to create parsers and lexical scanners 
+    // ===================================================================
 
 
     // Lexical Scanner section
     // =======================
 
-    // Should a lexical scanner be constructed? If so, define the 
-    // subdirectory containing the scanner\&'s specification file\&. 
+    // Should a lexical scanner be constructed? If so, define the subdirectory 
+    // containing the scanner\&'s specification file\&. 
 #define SCANNER_DIR         ""  
 
     // What is the program generating the lexical scanner?
@@ -209,8 +215,8 @@ program, using the library \fIlibbobcat1\fP as an additional library:
     // Directory below this directory to contain temporary results
 #define TMP_DIR             "tmp"
 
-    // Local program library to use (comment out if you want to use
-    // the object modules themselves, rather than a library)
+    // Local program library to use (change to an empty string if you want to
+    // use the object modules themselves, rather than a library)
 #define LIBRARY             "modules"
 
     //  The extension of object modules:
@@ -220,7 +226,7 @@ program, using the library \fIlibbobcat1\fP as an additional library:
 
 .PP 
 .SH "SEE ALSO"
-\fBicmake\fP(1)
+\fBicmake\fP(1), \fBicmstart\fP(1)
 .PP 
 .SH "LICENSE"
 This  is free software, distributed under the terms of the `GNU General

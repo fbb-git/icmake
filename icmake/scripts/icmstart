@@ -2,26 +2,39 @@
 
     // Change this into the location of the directory containing icmbuild's 
     // CLASSES and icmconf files:
-#define BASE    "/usr/lib/icmake"
+#define CONFIG    "/usr/lib/icmake"
 
     // Location of the frame files.
-#define CONFIG  "/etc/icmake"
+#define SKEL  "/etc/icmake"
 
 //                      NO CONFIGURABLE PARTS BELOW THIS LINE
 
-void usage(string progname)
-{
-    printf("Usage: ", get_base(progname), " [-f] dir+\n"
-        "Where:\n"
-        "      -f: do NOT install the frame files, if any.\n"
-        "          Normally the frame files are located in /etc/icmake\n"
-        "    dir+: one or more directory names. The first name will be the\n"
-        "          directory containing icmbuild's CLASSES and icmconf files\n"
-        "          as well as all remaining arguments as subdirectories.\n"
-        "          The additional subdirectories are already added to "
-                                                                "CLASSES\n"
-        "\n");
+string g_skel;
+string g_program;
 
+void usage()
+{
+    printf("Usage: ", g_program, " [-f] [-s skeldir]  dir+\n"
+      "Where:\n"
+      "         -f: do NOT install the skeleton files, if any.\n"
+      " -s skeldir: Read the skeleton information from the directory "
+                                                             "`skeldir'\n"
+      "             (by default the skeleton files are located in "
+                                                             "/etc/icmake)\n"
+      "       dir+: one or more directory names. The first name will be the\n"
+      "             directory containing icmbuild's CLASSES and icmconf\n"
+      "             files as well as all remaining arguments and "
+                                                             "subdirectories\n"
+      "             The additional subdirectories are already added to "
+                                                              "CLASSES\n"
+      "\n");
+
+    exit(1);
+}
+
+void die(string s)
+{
+    printf(g_program, ": ", s, "\n");
     exit(1);
 }
 
@@ -49,31 +62,54 @@ void installFrame(string frameFile)
     if (exists(file))
         printf("Not installing already existing file `", file, "'\n");
     else
-        system("cp " CONFIG "/" + file + " " + path);
+        system("cp ../" + g_skel + "/" + file + " " + path);
 }
 
 void main(int argc, list argv)
 {
+    string arg;
     int idx;
-    list frames;
+    int frames = 1;
     int firstdir = 1;
+    list skeletons;
 
-    if (argc > 1 && argv[1] == "-f")
+    g_program = get_base(argv[0]);
+
+    if (argc == 1)
+        usage();
+
+    g_skel = SKEL;
+    while (firstdir < argc)
+    {
+        arg = argv[firstdir];
+
+        if (arg[0] != "-")
+            break;
+
+        if (arg[1] == "f")
+            frames = 0;
+        else if (arg[1] == "s")
+        {
+            g_skel = substr(arg, 2, 999);
+
+            if (g_skel == "")
+            {
+                if (firstdir == argc)
+                    die("-s lacks skeleton dir specification");
+
+                g_skel = argv[++firstdir];
+            }
+        }
         ++firstdir;
-
-    if (argc == firstdir)
-        usage(argv[0]);
+    }
 
     if (exists(argv[firstdir]))
-    {
-        printf("`", argv[firstdir], "' is in the way. Remove it first\n");
-        exit(1);
-    }
+        die("`" + argv[firstdir] + "' is in the way. Remove it first");
     
     system("mkdir " + argv[firstdir]);
     chdir(argv[firstdir]);
 
-    system("cp "  BASE  "/CLASSES "  BASE  "/icmconf .");
+    system("cp "  CONFIG  "/CLASSES "  CONFIG  "/icmconf .");
     for (idx = firstdir + 1; idx < argc; ++idx)
     {
         if (system(P_NOCHECK, "mkdir " + argv[idx]) != 0)
@@ -85,10 +121,16 @@ void main(int argc, list argv)
         fprintf("CLASSES", argv[idx], "\n");
     }
 
-    frames = `"cat " CONFIG "/frames"`;
+    if (!frames)
+        exit(0);
 
-    for (idx = sizeof(frames); idx--; )
-        installFrame(frames[idx]);
+    if (!exists("../" + g_skel + "/skel"))
+        die("Missing skeleton specification file `" + g_skel + "/skel'");
+                
+    skeletons = `"cat ../" + g_skel + "/skel"`;
+
+    for (idx = sizeof(skeletons); idx--; )
+        installFrame(skeletons[idx]);
 
     exit(0);
 }

@@ -952,7 +952,7 @@ Returns an upper-case duplicate of \fIs\fP\&.
 Returns a substring of \fItext\fP, starting at \fIoffset\fP, consisting of
 \fIcount\fP characters\&. If \fIoffset\fP exceeds (or equals) the string\&'s
 size or if \fIcount <= 0\fP, then an empty string is returned\&. If
-\fIoffset\fP is less thann 0 then 0 is used\&.
+\fIoffset\fP is less than 0 then 0 is used\&.
 
 .PP 
 System calls:
@@ -1022,7 +1022,7 @@ In \fImain()\fP,
 .IP o 
 \fIenvp\fP containts the `environment\&' variables\&. The function \fIsizeof()\fP
 (see below) may be used to determine its elements\&. Elements in \fIenvp\fP have
-the form \fIvariable=value\fP\&. Alternatively, the functino \fIgetenv()\fP (see
+the form \fIvariable=value\fP\&. Alternatively, the function \fIgetenv()\fP (see
 below) can be used to retrieve a specific environment variable immediately\&.
 Example:
 .nf 
@@ -1040,7 +1040,8 @@ Example:
             for (idx = sizeof(toCompile); idx--; )
                 compile(element(idx, toCompile));
 
-            linking(element(2, argv));
+            if (getenv("dryrun")[0] == "0")
+                linking(element(2, argv));
         }
         exit (0);
     }    
@@ -1073,7 +1074,7 @@ particular the \fIexamples/icmbuild\fP subdirectory containing a general script
 for \fBC++\fP and \fBC\fP program maintenance\&.
 .PP 
 .SH "SEE ALSO"
-\fBicmbuild\fP(1), \fBmake\fP(1)
+\fBicmbuild\fP(1), \fBicmstart\fP(1), \fBmake\fP(1)
 .PP 
 .SH "LICENSE"
 This  is free software, distributed under the terms of the `GNU General

@@ -299,8 +299,10 @@ void main(int argc, list argv, list envp)
 
     option = element(1, argv);
 
+#ifdef DEFCOM
     if (option == "")
-        option = getenv("icmbuild")[1];
+        option = DEFCOM;
+#endif
 
     if (option == "clean")
         clean();

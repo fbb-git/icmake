@@ -14,20 +14,19 @@ string g_program;
 
 void usage()
 {
-    printf("Usage: ", g_program, " [-f] [-s skeldir]  dir+\n"
-      "Where:\n"
-      "         -f: do NOT install the skeleton files, if any.\n"
-      " -s skeldir: Read the skeleton information from the directory "
+    printf("Usage: ", g_program, " [-f] [-s skeldir]  dir [program|library]\n"
+        "Where:\n"
+        "         -f: do NOT install the skeleton files, if any.\n"
+        " -s skeldir: Read the skeleton information from the directory "
                                                              "`skeldir'\n"
-      "             (by default the skeleton files are located in "
+        "             (by default the skeleton files are located in "
                                                              "/etc/icmake)\n"
-      "       dir+: one or more directory names. The first name will be the\n"
-      "             directory containing icmbuild's CLASSES and icmconf\n"
-      "             files as well as all remaining arguments and "
-                                                             "subdirectories\n"
-      "             The additional subdirectories are already added to "
-                                                              "CLASSES\n"
-      "\n");
+        "        dir: the directory to contain icmbuild's CLASSES and icmconf "
+                                                                    "files\n"
+        "    program:\n"
+        "    library: [optional] default command passed to the icmbuild "
+                                                                    "script\n"
+        "\n");
 
     exit(1);
 }
@@ -68,9 +67,10 @@ void installFrame(string frameFile)
 void main(int argc, list argv)
 {
     string arg;
+    string cmd;
     int idx;
     int frames = 1;
-    int firstdir = 1;
+    int cmdidx = 1;
     list skeletons;
 
     g_program = get_base(argv[0]);
@@ -79,9 +79,9 @@ void main(int argc, list argv)
         usage();
 
     g_skel = SKEL;
-    while (firstdir < argc)
+    while (cmdidx < argc)
     {
-        arg = argv[firstdir];
+        arg = argv[cmdidx];
 
         if (arg[0] != "-")
             break;
@@ -94,31 +94,30 @@ void main(int argc, list argv)
 
             if (g_skel == "")
             {
-                if (firstdir == argc)
+                if (cmdidx == argc)
                     die("-s lacks skeleton dir specification");
 
-                g_skel = argv[++firstdir];
+                g_skel = argv[++cmdidx];
             }
         }
-        ++firstdir;
+        ++cmdidx;
     }
 
-    if (exists(argv[firstdir]))
-        die("`" + argv[firstdir] + "' is in the way. Remove it first");
+    if (exists(argv[cmdidx]))
+        die("`" + argv[cmdidx] + "' is in the way. Remove it first");
     
-    system("mkdir " + argv[firstdir]);
-    chdir(argv[firstdir]);
+    system("mkdir " + argv[cmdidx]);
+    chdir(argv[cmdidx]);
 
     system("cp "  CONFIG  "/CLASSES "  CONFIG  "/icmconf .");
-    for (idx = firstdir + 1; idx < argc; ++idx)
+
+    if (cmdidx < argc)
     {
-        if (system(P_NOCHECK, "mkdir " + argv[idx]) != 0)
-        {
-            printf("Can't create `", argv[idx], 
-                    "': commented out in CLASSES\n");
-            fprintf("CLASSES", "# ");
-        }
-        fprintf("CLASSES", argv[idx], "\n");
+        cmd = argv[cmdidx];
+        if (cmd ==  "program" || cmd == "library")
+            fprintf(icmconf, "#define DEFCOM \"", cmd, "\"\n");
+        else
+            printf("Ignored initial command `", cmd, "' for icmbuild\n");
     }
 
     if (!frames)

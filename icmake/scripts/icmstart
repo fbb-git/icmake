@@ -23,8 +23,8 @@ void usage()
                                                              "/etc/icmake)\n"
         "        dir: the directory to contain icmbuild's CLASSES and icmconf "
                                                                     "files\n"
-        "    program:\n"
-        "    library: [optional] default command passed to the icmbuild "
+        "    program | library:\n"
+        "             [optional] default command passed to the icmbuild "
                                                                     "script\n"
         "\n");
 
@@ -111,11 +111,11 @@ void main(int argc, list argv)
 
     system("cp "  CONFIG  "/CLASSES "  CONFIG  "/icmconf .");
 
-    if (cmdidx < argc)
+    if (++cmdidx < argc)
     {
         cmd = argv[cmdidx];
         if (cmd ==  "program" || cmd == "library")
-            fprintf(icmconf, "#define DEFCOM \"", cmd, "\"\n");
+            fprintf("icmconf", "#define DEFCOM \"", cmd, "\"\n");
         else
             printf("Ignored initial command `", cmd, "' for icmbuild\n");
     }
@@ -124,7 +124,8 @@ void main(int argc, list argv)
         exit(0);
 
     if (!exists("../" + g_skel + "/skel"))
-        die("Missing skeleton specification file `" + g_skel + "/skel'");
+        die("[Warning] Missing skeleton specification file `" + 
+                                                        g_skel + "/skel'");
                 
     skeletons = `"cat ../" + g_skel + "/skel"`;
 

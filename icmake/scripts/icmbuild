@@ -234,8 +234,8 @@ void link(string maino)
 
     if (exists("lib" LIBRARY ".a"))
         compiler += " -l" LIBRARY " -L.";
-    else
-        compiler += " *" OBJ_EXT;
+    else if (sizeof(makelist("o/*" OBJ_EXT)))
+        compiler += " o/*" OBJ_EXT;
 
     setLibs();
 

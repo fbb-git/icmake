@@ -14,7 +14,7 @@ string g_program;
 
 void usage()
 {
-    printf("Usage: ", g_program, " [-f] [-s skeldir]  dir [program|library]\n"
+    printf("Usage: ", g_program, " [-f] [-s skelpath]  dir [program|library]\n"
         "Where:\n"
         "         -f: do NOT install the skeleton files, if any.\n"
         " -s skeldir: Read the skeleton information from the directory "

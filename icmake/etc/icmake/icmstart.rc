@@ -1,0 +1,13 @@
+# This file contains lines mentioning frame files to install by icmstart
+# empty lines and lines starting with # are ignored.
+# files may be given a (relative) path-prefix. Files are installed by tar, see
+# icmstart(1)'s man-page
+
+main.cc     
+main.ih     
+usage.cc
+version.cc
+
+#scanner
+#parser
+

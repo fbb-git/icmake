@@ -32,23 +32,20 @@ manpagename(icmstart)(A startup script for icmbuild program maintenance)
 
 COMMENT( all other: add after () )
 manpagesynopsis()
-       icm() tt([Options]) top-dir [opt-subdirs]
+       icm() tt([Options]) top-dir [program|library]
 
 manpagedescription()
 
 The icm() script is a generic script that can be used to start program
 maintenance using bf(icmake)(1) and bf(icmbuild)(1). Icm() will create an
-initial directory, install the files tt(CLASSES) and tt(icmconf) and
-optionally subdirectories below the initial directory. Additional directories
-may be specified following tt(top-dir) as tt(opt-subdirs). These additional
-directories are created as sub-directories of the tt(top-level) directory and
-are assumed to be (class) subdirectories. Their names are added to the file
-tt(CLASSES). Furthermore, skeleton files for the main directory and
-subdirectories, by default listed in the file tt(/etc/icmake/skel), may be
-installed in the created directories.
+initial directory tt(top-dir) and will install the files tt(CLASSES) and
+tt(icmconf) below tt(top-dir). If provided, tt(program) or tt(library) may be
+specificied, to become the default mode of operation of the bf(icmbuild)(1)
+script. Skeleton files for the main directory and subdirectories, listed in
+the file tt(/etc/icmake/icmstart.rc), may be installed as well.
 
-After Changing to the top-level directory as created by icm() the bf(icmbuild)
-script can be called for program maintenance.
+After changing to the top-level directory as created by icm() the bf(icmbuild)
+script may then be called for program maintenance.
 
 manpageoptions()
 
@@ -59,15 +56,19 @@ manpageoptions()
         do not install skeleton files. By default skeleton files are installed
         from either the default skeleton directory or an alternative directory
         specified with the tt(-s) option (see below).
-    itt(-s path)nl() path to the directory containing skeleton files.  By
-        default this is tt(/etc/icmake). The skeleton directory must contain a
-        file tt(skel) that may consist of comment (empty lines and lines
-        beginning with the hash-mark (tt(#))), and should otherwise contain
-        relative path names of skeleton files to be installed. A skeleton file
-        is only installed if icm() has created its path below the top-level
-        directory. E.g., if a skeleton name tt(scanner/scanner.h) is
-        available, and the top-level directory is named tt(demo) then
-        tt(scanner/scanner.h) is installed only if tt(demo/scanner) exists.
+    itt(-s skelpath)nl() full path to the `skeleton resource file' listing the
+        skeleton files.  By default this is tt(/etc/icmake/icmstart.rc). The
+        skeleton resource file may contain comment (empty lines and lines
+        beginning with the hash-mark (tt(#))) which is ignored, and should
+        otherwise contain absolute or relative (with respect to the directory
+        containing the skeleton resource file) file- or directory names. These
+        entries are copied to the top-level directory using bf(tar)(1). During
+        this process bf(tar)(1) will remove leading tt(/) and tt(../)
+        specifications from specified file- and directory names.  E.g., if a
+        skeleton name tt(/tmp/scanner/scanner.h) is listed, and the top-level
+        directory is named tt(demo) then tt(demo/scanner/scanner.h) is
+        installed. Likewise, a skeleton tt(/home/user/../../tmp/parser/) will
+        be installed in tt(demo/tmp/parser).
     )
 
 manpagefiles()
@@ -78,12 +79,12 @@ manpagefiles()
         Example of a icm() configuration file;
     it() bf(/usr/lib/icmake/CLASSES)
         Example of a icm() tt(CLASSES) file.
-    it() bf(/etc/icmake/skel)
-        Frame file specifying skeleton files that may be installed.
+    it() bf(/etc/icmake/icmstart.rc)
+        Default skeleton resource file.
     )
 
 manpageseealso()
-    bf(icmake)(1), bf(icmbuild)(1)
+    bf(icmake)(1), bf(icmbuild)(1), bf(tar)(1)
 
 manpagesection(LICENSE)
        This  is free software, distributed under the terms of the `GNU General

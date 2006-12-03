@@ -1,4 +1,11 @@
 #include <iostream>
 #include <string>
 
+namespace Icmbuild
+{
+    extern char version[];
+    extern char year[];
+    extern char author[];
+};
+
 using namespace std;

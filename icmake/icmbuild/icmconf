@@ -74,6 +74,11 @@
     // containing the parser's specification file
 #define PARSER_DIR          ""
 
+    // Should the script parser/gramspec/grambuild be used (provided in the
+    // skeleton file /etc/icmake/parser/gramspec/grambuild)? If so, uncomment
+    // the following #define directive:
+//#define GRAMBUILD "parser/gramspec/grambuild"
+
     // What it the program generating a parser?
 #define PARSGEN             "bisonc++"
 

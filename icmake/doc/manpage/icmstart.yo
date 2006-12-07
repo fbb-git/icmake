@@ -40,7 +40,7 @@ The icm() script is a generic script that can be used to start program
 maintenance using bf(icmake)(1) and bf(icmbuild)(1). Icm() will create an
 initial directory tt(top-dir) and will install the files tt(CLASSES) and
 tt(icmconf) below tt(top-dir). If provided, tt(program) or tt(library) may be
-specificied, to become the default mode of operation of the bf(icmbuild)(1)
+specified, to become the default mode of operation of the bf(icmbuild)(1)
 script. Skeleton files for the main directory and subdirectories, listed in
 the file tt(/etc/icmake/icmstart.rc), may be installed as well.
 
@@ -56,6 +56,10 @@ manpageoptions()
         do not install skeleton files. By default skeleton files are installed
         from either the default skeleton directory or an alternative directory
         specified with the tt(-s) option (see below).
+    itt(-i)nl()
+        interactively determine which skeleton files or directory to
+        install. With this option each skeleton entry is show, and the file or
+        directory is only installed if tt(y) is entered.
     itt(-s skelpath)nl() full path to the `skeleton resource file' listing the
         skeleton files.  By default this is tt(/etc/icmake/icmstart.rc). The
         skeleton resource file may contain comment (empty lines and lines
@@ -70,6 +74,8 @@ manpageoptions()
         installed. Likewise, a skeleton tt(/home/user/../../tmp/parser/) will
         be installed in tt(demo/tmp/parser).
     )
+    Since icm() uses tt(tar) to install files, tt(tar) must be available when
+icm() should install skeleton files.
 
 manpagefiles()
 

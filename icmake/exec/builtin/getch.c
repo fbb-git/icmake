@@ -32,8 +32,6 @@ void fun_getch()
 #endif
 
     reg = stringConstructor_cP(buf);
-
-    printf("    BUF: `%s', REG: `%s'\n", buf, stringStr(&reg));
 }
 
 

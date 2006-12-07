@@ -11,21 +11,26 @@
 
 string g_skel;
 string g_program;
+int g_interactive;
+int g_replace;
 
 void usage()
 {
-    printf("Usage: ", g_program, " [-f] [-s skelpath]  dir [program|library]\n"
+    printf("Usage: ", g_program, " [-f] [-i] [-r] [-s skelpath] dir "
+                                                        "[program|library]\n"
         "Where:\n"
         "         -f: do NOT install the skeleton files, if any.\n"
+        "         -i: interactively determine which skeleton files to "
+                                                            "install\n"
+        "         -r: replace already existing files/directories\n"
         " -s skeldir: Read the skeleton information from the directory "
-                                                             "`skeldir'\n"
+                                                            "`skeldir'\n"
         "             (by default the skeleton files are located in "
-                                                             "/etc/icmake)\n"
+                                                            "/etc/icmake)\n"
         "        dir: the directory to contain icmbuild's CLASSES and icmconf "
                                                                     "files\n"
-        "    program | library:\n"
-        "             [optional] default command passed to the icmbuild "
-                                                                    "script\n"
+        "program | library: [optional] default command passed to the\n"
+        "           icmbuild script\n"
         "\n");
 
     exit(1);
@@ -59,9 +64,45 @@ void installFrame(string frameFile)
         return;
 
     if (exists(file))
-        printf("Not installing already existing file `", file, "'\n");
+        printf("Not installing already existing `", file, "'\n");
     else
         system("cp ../" + g_skel + "/" + file + " " + path);
+}
+
+int replace(string target)
+{
+    printf("`", target, "' exists. Replace [yN] ? ");
+    return getch() == "y";
+}
+
+int available(string target)
+{
+    if (!exists(target))
+        return 0;
+
+    if (!g_replace)
+        die("`" + target + "' is in the way. Remove it first");
+
+    return replace(target) == 0;// if replace: return 0, meaning: not avail.
+}
+        
+void tarinstall(string srcdir, string file, string dstdir)
+{
+    int idx;
+    list files;
+
+    echo(OFF);
+    files = `"(cd " + srcdir + "; tar cf - " + file + ")| tar tf -"`;
+
+    for (idx = sizeof(files); idx--; )
+    {
+        file = strtok(dstdir + "/" + files[idx], "\n")[0];
+
+        if (!available(file))
+            system("(cd " + srcdir + "; tar cf - " + file + ")|"
+                   "(cd " + dstdir + "; tar xf -)");
+    }
+    echo(ON);
 }
 
 void main(int argc, list argv)
@@ -69,9 +110,8 @@ void main(int argc, list argv)
     string arg;
     string cmd;
     int idx;
-    int frames = 1;
+    int skeletons = 1;
     int cmdidx = 1;
-    list skeletons;
 
     g_program = get_base(argv[0]);
 
@@ -87,7 +127,11 @@ void main(int argc, list argv)
             break;
 
         if (arg[1] == "f")
-            frames = 0;
+            skeletons = 0;
+        else if (arg[1] == "i")
+            g_interactive = 1;
+        else if (arg[1] == "r")
+            g_replace = 1;
         else if (arg[1] == "s")
         {
             g_skel = substr(arg, 2, 999);
@@ -100,16 +144,18 @@ void main(int argc, list argv)
                 g_skel = argv[++cmdidx];
             }
         }
+        else
+            printf("ignoring unkown option ", arg, "\n");
+
         ++cmdidx;
     }
 
-    if (exists(argv[cmdidx]))
-        die("`" + argv[cmdidx] + "' is in the way. Remove it first");
-    
-    system("mkdir " + argv[cmdidx]);
+    if (!available(argv[cmdidx]))
+        system("mkdir -p " + argv[cmdidx]);
+
     chdir(argv[cmdidx]);
 
-    system("cp "  CONFIG  "/CLASSES "  CONFIG  "/icmconf .");
+    tarinstall(CONFIG, "CLASSES icmconf", ".");
 
     if (++cmdidx < argc)
     {
@@ -120,17 +166,27 @@ void main(int argc, list argv)
             printf("Ignored initial command `", cmd, "' for icmbuild\n");
     }
 
-    if (!frames)
+    if (!skeletons)
         exit(0);
-
-    if (!exists("../" + g_skel + "/skel"))
-        die("[Warning] Missing skeleton specification file `" + 
-                                                        g_skel + "/skel'");
-                
-    skeletons = `"cat ../" + g_skel + "/skel"`;
-
-    for (idx = sizeof(skeletons); idx--; )
-        installFrame(skeletons[idx]);
+//
+//    if (!exists("../" + g_skel + "/skel"))
+//        die("[Warning] Missing skeleton specification file `" + 
+//                                                        g_skel + "/skel'");
+//                
+//    skeletons = `"cat ../" + g_skel + "/skel"`;
+//
+//    for (idx = sizeof(skeletons); idx--; )
+//        installFrame(skeletons[idx]);
 
     exit(0);
 }
+
+
+
+
+
+
+
+
+
+

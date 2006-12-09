@@ -36,6 +36,16 @@ void usage()
     exit(1);
 }
 
+int isDir(string s)
+{
+    return stat(s)[0] & S_IFDIR;
+}
+
+int isFile(string s)
+{
+    return stat(s)[0] & S_IFREG;
+}
+
 void die(string s)
 {
     printf(g_program, ": ", s, "\n");
@@ -171,10 +181,11 @@ void main(int argc, list argv)
     if (!skeletons)
         exit(0);
 
-//    if (!exists("../" + g_skel + "/skel"))
-//        die("[Warning] Missing skeleton specification file `" + 
-//                                                        g_skel + "/skel'");
-//                
+    if (!isFile(g_skel))
+        die("[Warning] Missing skeleton specification file `" + g_skel + "'");
+
+    exit(0);
+
 //    skeletons = `"cat ../" + g_skel + "/skel"`;
 //
 //    for (idx = sizeof(skeletons); idx--; )

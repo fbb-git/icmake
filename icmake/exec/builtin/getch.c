@@ -20,17 +20,13 @@ static char buf[2];
 
 void fun_getch()
 {
-#ifdef MSDOS
-    buf[0] = (char) getch ();
+#ifdef unix
+    buf[0] = termch();
+#elif defined (MSDOS)
+    buf[0] = getch();
 #else
-    buf[0] = getchar();
-    if (buf[0] != '\n')
-    {
-        while (getchar() != '\n')
-            ;
-    }
+    buf[0] = enterch();
 #endif
-
     reg = stringConstructor_cP(buf);
 }
 

@@ -5,7 +5,7 @@
 #define CONFIG    "/usr/lib/icmake"
 
     // Location of the frame files.
-#define SKEL  "/etc/icmake"
+#define SKEL  "/etc/icmake/icmstart.rc"
 
 //                      NO CONFIGURABLE PARTS BELOW THIS LINE
 
@@ -143,6 +143,8 @@ void main(int argc, list argv)
 
                 g_skel = argv[++cmdidx];
             }
+            if (isDir(g_skel))
+                g_skel += "/icmstart.rc";
         }
         else
             printf("ignoring unkown option ", arg, "\n");
@@ -168,7 +170,7 @@ void main(int argc, list argv)
 
     if (!skeletons)
         exit(0);
-//
+
 //    if (!exists("../" + g_skel + "/skel"))
 //        die("[Warning] Missing skeleton specification file `" + 
 //                                                        g_skel + "/skel'");

@@ -585,7 +585,8 @@ provided:
     Input interface:
     itemization(    
     itt(string getch())nl()
-        Returns the next pressed key (no `Enter' required) as a string.
+        Returns the next pressed key as a string (no `Enter' required for
+        ms-dos and unix (incl. linux) systems).
     )
 
 

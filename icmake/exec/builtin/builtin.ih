@@ -40,6 +40,7 @@ char *setstring(char *);
 */
 
 int getcmdlen(char **);
+int enterch(void);
 
 char *getarg(int, int *);
 char **addcmd(char **, char *);
@@ -86,3 +87,5 @@ void fun_strupr(void);
 void fun_substr(void);
 void fun_system(void);
 void fun_cmd_head(void);
+
+int termch(void);

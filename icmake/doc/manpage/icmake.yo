@@ -533,10 +533,10 @@ provided:
         list line;
         while (1)
         {
-            line = fgets("filename", element(1, line));
+            line = fgets("filename", (int)line[1]);
             if (!line)
                 break;
-            process(element(0, line));
+            process(line[0]);
         }
             )
     )

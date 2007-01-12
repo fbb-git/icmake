@@ -33,7 +33,13 @@ string cd(string next)
 void parser()
 {
     cd(PARSER_DIR);
-    
+
+    #ifdef GRAMBUILD
+        cd("gramspec");
+        system("./grambuild");
+        cd("..");
+    #endif
+
     if (PARSSPEC younger PARSOUT)       // need new parser
         system(PARSGEN " " PARSFLAGS " " PARSSPEC);
 

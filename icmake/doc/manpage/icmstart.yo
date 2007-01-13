@@ -42,7 +42,7 @@ initial directory tt(top-dir) and will install the files tt(CLASSES) and
 tt(icmconf) below tt(top-dir). If provided, tt(program) or tt(library) may be
 specified, to become the default mode of operation of the bf(icmbuild)(1)
 script. Skeleton files for the main directory and subdirectories, by default
-listed in the file tt(/usr/share/icmake/icmstart.rc), may be installed as well
+listed in the file tt(/etc/icmake/icmstart.rc), may be installed as well
 (see below at bf(SKELETON FILES)).
 
 After changing to the top-level directory created by icm() the bf(icmbuild)
@@ -65,7 +65,7 @@ manpageoptions()
         full directory and its subdirectories will be replaced.
     itt(-s skeleton-path) nl() 
        By default skeleton files are listed in the skeleton resource file
-        tt(/usr/share/icmake/icmstart.rc). Alternatively, the skeleton
+        tt(/etc/icmake/icmstart.rc). Alternatively, the skeleton
         resource file may be specified by the tt(ICM) environment variable,
         which -in turn- may be overruled by the path specified with the tt(-s)
         option. The skeleton path may be specified as a full file-path or as a
@@ -119,11 +119,11 @@ manpagefiles()
 
     The mentioned paths are sugestive only and may be installation dependent:
     itemization(
-    it() bf(/usr/share/icmake/icmconf)
+    it() bf(/etc/icmake/icmconf)
         Example of a icm() configuration file;
-    it() bf(/usr/share/icmake/CLASSES)
+    it() bf(/etc/icmake/CLASSES)
         Example of a icm() tt(CLASSES) file.
-    it() bf(/usr/share/icmake/icmstart.rc)
+    it() bf(/etc/icmake/icmstart.rc)
         Default skeleton resource file.
     )
 

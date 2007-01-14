@@ -12,6 +12,7 @@ int g_confirminstall = 0;
 int g_skeletons = 1;
 int g_replace = 0;
 int g_debug = 0;
+int g_askreplace = 1;
 
 void usage()
 {
@@ -81,7 +82,10 @@ void arguments(int argc, list argv)
         else if (arg[1] == "I")         // -I: no skeletons
             g_skeletons = 0;
         else if (arg[1] == "r")         // -r: replace existing file(s)
+        {
+            g_askreplace = 0;
             g_replace = 1;
+        }
         else if (arg[1] == "s")         // -s: re-assign g_skelpath
         {
             arg = substr(arg, 2, 999);  // get all beyond -s
@@ -134,35 +138,62 @@ void arguments(int argc, list argv)
 
 int replace(string target)
 {
-    printf("`", target, "' exists.\n"
-           "Replace [yN] ? ");
-    return getch() == "y";
+    string ret;
+
+    while (g_askreplace)
+    {
+        printf("`", target, "' exists.\n"
+               "Replace [?akNy] ? ");
+        ret = getch();
+
+        if (ret == "a")
+        {
+            g_replace = 1;
+            g_askreplace = 0;
+            break;
+        }
+
+        if (ret == "k")
+        {
+            g_askreplace = 0;
+            break;
+        }
+
+        if (ret == "y")
+            return 1;
+
+        if (ret == "n" || ret == "\n")
+            return 0;
+
+        printf("Press `a' to replace all,\n"
+               "      `k' to keep all current versions\n"
+               "      `n' to keep current version (default)\n"
+               "      `?' shows this help\n");
+    }
+    return g_replace;
 }
 
 int install(string target)
 {
-    if (!exists(target) || g_replace)
-        return 1;
-
-    return replace(target);
+    return (int)(!exists(target) || replace(target));
 }
 
 int install_file(string source)
 {
-    string target;
+    string skeleton;
 
     if (source[0] == "/")
-        target = source;
+        skeleton = source;
     else
-        target = g_skelpath + source;
+        skeleton = g_skelpath + source;
 
-    if (!exists(target))
+    if (!exists(skeleton))
     {
-        printf("[Warning] Can't find `" + target + "'\n");
+        printf("[Warning] Can't find `" + skeleton + "'\n");
         return 0;
     }
     
-    if (install(g_destdir + target))
+    if (install(g_destdir + source))
     {
         syscall("tar cf - -C " + g_skelpath + " " + source + " | "
                "tar xf - -C " + g_destdir);
@@ -207,6 +238,9 @@ void installLine(string line)
     for (idx = g_confirminstall; idx < sizeof(fields); ++idx)
     {
         entry = fields[idx];
+
+        if (!g_replace && !g_askreplace && exists(g_destdir + entry))
+            return;
 
         if (!confirminstall(entry))
             return;

@@ -9,11 +9,12 @@ icmake (7.00-1) unstable; urgency=low
 
   [ Frank B. Brokken ]
   * Removed patch-stamp from build-stamp target
-  * Added doc/icmbuild.1 to dh_installman
-  * Modified install/rules to install: icmbuild and icmstart to /usr/bin
-  * Added conffiles
+  * Added doc/icmbuild.1 and doc/icmstart.1 to dh_installman
+  * Added doc/README.icmbuild and doc/icmake.doc to dh_installdocs
+  * Added skeleton files (in etc/icmake) to `install'
+  * Removed superfluous `conffiles'
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 04 Nov 2006 17:41:32 +0100
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 14 Jan 2007 16:33:53 +0100
 
 icmake (6.30-3) unstable; urgency=low
 

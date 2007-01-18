@@ -5,24 +5,22 @@
 icmstart \- A startup script for icmbuild program maintenance
 .PP 
 .SH "SYNOPSIS"
-\fBicmstart\fP \fI[Options]\fP top-dir [opt-subdirs]
+\fBicmstart\fP \fI[Options]\fP top-dir [program|library]
 .PP 
 .SH "DESCRIPTION"
 
 .PP 
 The \fBicmstart\fP script is a generic script that can be used to start program
 maintenance using \fBicmake\fP(1) and \fBicmbuild\fP(1)\&. \fBIcmstart\fP will create an
-initial directory, install the files \fICLASSES\fP and \fIicmconf\fP and
-optionally subdirectories below the initial directory\&. Additional directories
-may be specified following \fItop-dir\fP as \fIopt-subdirs\fP\&. These additional
-directories are created as sub-directories of the \fItop-level\fP directory and
-are assumed to be (class) subdirectories\&. Their names are added to the file
-\fICLASSES\fP\&. Furthermore, skeleton files for the main directory and
-subdirectories, by default listed in the file \fI/etc/icmake/skel\fP, may be
-installed in the created directories\&.
+initial directory \fItop-dir\fP and will install the files \fICLASSES\fP and
+\fIicmconf\fP below \fItop-dir\fP\&. If provided, \fIprogram\fP or \fIlibrary\fP may be
+specified, to become the default mode of operation of the \fBicmbuild\fP(1)
+script\&. Skeleton files for the main directory and subdirectories, by default
+listed in the file \fI/usr/share/icmake/icmstart\&.rc\fP, may be installed as well
+(see below at \fBSKELETON FILES\fP)\&.
 .PP 
-After Changing to the top-level directory as created by \fBicmstart\fP the \fBicmbuild\fP
-script can be called for program maintenance\&.
+After changing to the top-level directory created by \fBicmstart\fP the \fBicmbuild\fP
+script may be called for program maintenance\&.
 .PP 
 .SH "OPTIONS"
 
@@ -30,42 +28,92 @@ script can be called for program maintenance\&.
 \fBIcmstart\fP may be called with the following options, which (f specified) must
 be the first arguments to \fBicmstart\fP:
 .IP o 
-\fI-f\fP
+\fI-d\fP
 .br 
-do not install skeleton files\&. By default skeleton files are installed
-from either the default skeleton directory or an alternative directory
-specified with the \fI-s\fP option (see below)\&.
+Do not execute any commands, but show the commands that would have been
+executed on the standard output\&.
 .IP o 
-\fI-s path\fP
+\fI-I\fP
 .br 
-path to the directory containing skeleton files\&.  By
-default this is \fI/etc/icmake\fP\&. The skeleton directory must contain a
-file \fIskel\fP that may consist of comment (empty lines and lines
-beginning with the hash-mark (\fI#\fP)), and should otherwise contain
-relative path names of skeleton files to be installed\&. A skeleton file
-is only installed if \fBicmstart\fP has created its path below the top-level
-directory\&. E\&.g\&., if a skeleton name \fIscanner/scanner\&.h\fP is
-available, and the top-level directory is named \fIdemo\fP then
-\fIscanner/scanner\&.h\fP is installed only if \fIdemo/scanner\fP exists\&.
+Do not install skeleton files\&. 
+.IP o 
+\fI-r\fP 
+Unconditionally replace existing (skeleton) files\&. If \fI-r\fP is not
+provided \fBicmstart\fP will ask the user to confirm that an existing file must
+be overwritten\&. If a skeleton specification refers to a directory, the
+full directory and its subdirectories will be replaced\&.
+.IP o 
+\fI-s skeleton-path\fP 
+.br 
+By default skeleton files are listed in the skeleton resource file
+\fI/usr/share/icmake/icmstart\&.rc\fP\&. Alternatively, the skeleton
+resource file may be specified by the \fIICM\fP environment variable,
+which -in turn- may be overruled by the path specified with the \fI-s\fP
+option\&. The skeleton path may be specified as a full file-path or as a
+directory, in which case the skeleton resource file is assumed to be
+\fIicmstart\&.rc\fP (see below at \fBSKELETON FILES\fP)\&.
+Since \fBicmstart\fP uses \fItar\fP to install files, \fItar\fP must be available when
+\fBicmstart\fP should install skeleton files\&.
+.PP 
+.SH "SKELETON FILES"
 
+.PP 
+Skeleton resource files may contain comment (empty lines and lines beginning
+with the hash-mark (\fI#\fP)) which is ignored, and should otherwise contain
+absolute or relative (with respect to the directory containing the skeleton
+resource file) file- or directory names\&. 
+.PP 
+These entries are copied to the top-level directory using \fBtar\fP(1)\&. During
+this process \fBtar\fP(1) will remove leading \fI/\fP and \fI\&.\&./\fP specifications
+from specified file- and directory names\&.  E\&.g\&., if a skeleton name
+\fI/tmp/scanner/scanner\&.h\fP is listed, and the top-level directory is named
+\fIdemo\fP then \fIdemo/tmp/scanner/scanner\&.h\fP is installed\&.
+.PP 
+Skeleton specifications may be specified on separate lines, or lines may
+contain  multiple specifications\&. The first entry on a line may be a question
+mark, in which case the user is asked to confirm that the skeletons specified
+on that line must be installed\&. Confirmation is requested for each subsequent
+element on a line\&. Once installation is not confirmed all remaining entries on
+that line are skipped\&.
+.PP 
+For example, the default \fIicmstart\&.rc\fP may contain the following lines:
+.nf 
+
+main\&.cc
+main\&.ih
+usage\&.cc
+version\&.cc
+? scanner parser
+    
+.fi 
+In this case, \fImain\&.cc, main\&.ih, usage\&.cc\fP and \fIversion\&.cc\fP will be
+installed, but confirmation is requested for the \fIscanner\fP directory\&. If
+installation is confirmed, the \fIscanner\fP directory and its contents are
+installed into the top-level directory\&. Next, confirmation is requested to
+install \fIparser\fP\&. If installation of \fIscanner\fP is not confirmed,
+installation of \fIparser\fP is skipped\&.
+.PP 
+Installation of a directory does not imply that the file \fICLASSES\fP will
+contain that directory as one of its entries\&. It is the user\&'s responsibility
+to update \fICLASSES\fP, if necessary\&.
 .PP 
 .SH "FILES"
 
 .PP 
 The mentioned paths are sugestive only and may be installation dependent:
 .IP o 
-\fB/usr/lib/icmake/icmconf\fP
+\fB/usr/share/icmake/icmconf\fP
 Example of a \fBicmstart\fP configuration file;
 .IP o 
-\fB/usr/lib/icmake/CLASSES\fP
+\fB/usr/share/icmake/CLASSES\fP
 Example of a \fBicmstart\fP \fICLASSES\fP file\&.
 .IP o 
-\fB/etc/icmake/skel\fP
-Frame file specifying skeleton files that may be installed\&.
+\fB/usr/share/icmake/icmstart\&.rc\fP
+Default skeleton resource file\&.
 
 .PP 
 .SH "SEE ALSO"
-\fBicmake\fP(1), \fBicmbuild\fP(1)
+\fBicmake\fP(1), \fBicmbuild\fP(1), \fBtar\fP(1)
 .PP 
 .SH "LICENSE"
 This  is free software, distributed under the terms of the `GNU General

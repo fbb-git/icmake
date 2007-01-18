@@ -1,6 +1,6 @@
 #!/usr/bin/icmake -qt /tmp/icmstart
 
-#define SKEL  "/etc/icmake"
+#define SKEL  "/usr/share/icmake"
 
 string g_skelpath = SKEL;
 string g_skelfile = "icmstart.rc";

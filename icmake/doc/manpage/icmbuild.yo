@@ -116,9 +116,9 @@ manpagefiles()
 
     The mentioned paths are sugestive only and may be installation dependent:
     itemization(
-    it() bf(/etc/icmake/icmconf)
+    it() bf(/usr/share/icmake/icmconf)
         Example of a icm() configuration file;
-    it() bf(/etc/icmake/CLASSES)
+    it() bf(/usr/share/icmake/CLASSES)
         Example of a icm() tt(CLASSES) file.
     )
 

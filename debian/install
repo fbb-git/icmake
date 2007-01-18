@@ -1,15 +1,15 @@
 bin/icmake bin/icmun scripts/icmbuild scripts/icmstart  usr/bin
 bin/icm-comp bin/icm-exec bin/icm-pp                    usr/lib/icmake
-etc/icmake/CLASSES
-etc/icmake/icmconf
-etc/icmake/icmstart.rc
-etc/icmake/main.cc
-etc/icmake/main.ih
-etc/icmake/parser/gramspec/grambuild
-etc/icmake/parser/gramspec/header.gr0
-etc/icmake/parser/gramspec/startrule.gr0
-etc/icmake/scanner/lexer
-etc/icmake/scanner/scanner.h
-etc/icmake/scanner/scanner.ih
-etc/icmake/usage.cc
-etc/icmake/version.cc
+usr/share/icmake/CLASSES
+usr/share/icmake/icmconf
+usr/share/icmake/icmstart.rc
+usr/share/icmake/main.cc
+usr/share/icmake/main.ih
+usr/share/icmake/parser/gramspec/grambuild
+usr/share/icmake/parser/gramspec/header.gr0
+usr/share/icmake/parser/gramspec/startrule.gr0
+usr/share/icmake/scanner/lexer
+usr/share/icmake/scanner/scanner.h
+usr/share/icmake/scanner/scanner.ih
+usr/share/icmake/usage.cc
+usr/share/icmake/version.cc

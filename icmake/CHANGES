@@ -1,6 +1,10 @@
 icmake (7.00)
 
-  * Defines (#define) may use other #defined variables to determine their
+  * The subdirectory examples is renamed to templates
+
+        [Above change: Mon, 05 Feb 2007 16:09:46 +0100]
+
+    Defines (#define) may use other #defined variables to determine their
     value. 
 
     icmake's sources may use hexadecimal constants (0xdead)
@@ -49,7 +53,7 @@ icmake (7.00)
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 18 Nov 2006 10:34:13 +0100
 
-    The type `unsigend' was changed to `size_t' where appropriate
+    The type `unsigned' was changed to `size_t' where appropriate
     Fixed some flaws in the `unix' script, and (??) added icm-exec.c to
     my local icmake svn repository
 

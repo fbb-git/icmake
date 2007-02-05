@@ -46,7 +46,7 @@ binary-arch: build install
 	dh_testroot
 	dh_installchangelogs CHANGES
 	dh_installdocs doc/README.icmbuild doc/icmake.doc doc/icmake.ps \
-                   debian/mail.frank
+				   debian/mail.frank templates
 	dh_installexamples
 	dh_installman doc/icmake.1 doc/icmbuild.1 doc/icmstart.1
 	dh_link usr/share/man/man1/icmake.1 usr/share/man/man1/icmun.1

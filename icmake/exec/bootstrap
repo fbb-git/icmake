@@ -16,7 +16,6 @@ do
     cd ..
 done
 
-gcc -o tmp/bin/icm-exec *.o */*.o ../rss/libicrss.a -s
-# gcc -o ../bin/icm-exec *.o */*.o ../rss/libicrss.a
+gcc -o tmp/bin/icm-exec *.o */*.o ../rss/libicrss.a
 
 rm *.o */*.o

@@ -3,10 +3,9 @@
 /*
 
     If you want to use this file, it is assumed that you have icmake (at
-    least version 6.20) installed in /usr/bin. If it's somewhere else,
-    please adapt the path /usr/bin in the line above.
-    
-    Also, check the file destinations.im for proper path settings !
+    least version 6.20) installed (in the locations defined in
+    def/destinations) . If icmake is stored elsewhere, then
+    please adapt the path /usr/bin in the line above accordingly.
 
         FBB
 */
@@ -15,14 +14,14 @@
 // #define USE_DEBUG
 
 #include "def/programs"
-#include "def/destinations"
 
 /*      
         The remainder of this script should not be altered, unless
     you know what you're doing
 */
 
-#define VERSION     "6.30"
+#include "def/destinations"
+#include "VERSION"
 
 #define LIB_ICRSS   "libicrss.a"
 #define LIB_ICMAKE  "libicmake.a"
@@ -30,7 +29,6 @@
 #define LIB_ICMCOMP "libicmcomp.a"
 #define LIB_ICMEXEC "libicmexec.a"
 #define LIB_ICMUN   "libicmun.a"
-#define ZIP     "icmake.zip"
 
 list
         examples;
@@ -141,6 +139,7 @@ void makelibs ()
 
     if ("parser" younger "parser.c")
         system("bison -d -o parser.c parser");
+
     if ("lexer" younger "lexer.c" || "parser" younger "lexer.c")
         system("flex -o lexer.c lexer");
 
@@ -328,82 +327,37 @@ void realcleanup (int all)
     }
 
     realclean ("exec", LIB_ICMEXEC);
-    system("rm -rf exec/tmp");
+    system("rm -rf exec/tmp bin/*");
 
     realclean ("un", LIB_ICMUN);
 
     system(P_NOCHECK, "rm -rf */o */*/o bin/*");
 }
 
-void zip ()
+void manpage(string manpage)
 {
-    cleanup ();
+    string src,
+           dest;
+        
+    src   = "doc"   + "/" + manpage;
+    dest  = MANDIR  + "/" + manpage;
     
-    exec (RM, "-f", "bin/*", "../icmake.zip");
-    chdir ("..");
-    exec ("zip", "-r", ZIP, "icmake/*");
+    exec (CP, src, MANDIR);
+    exec (GZIP, "-9", dest);
 }
 
-void makedist ()
+void man ()
 {
-    string
-        tar,
-        example;
-    int
-        i;
-        
-    printf ("Have you updated the version number (if things have changed)?\n"
-            "Also, check distribution numbers in doc/icmake.1, icmake.doc,\n"
-            "CHANGES, INSTALL*, upload*\n"
-        "\n"
-            "The version used now is: ", VERSION, ".\n"
-        "Do you want to continue [y/n] ");
-    if (getch () != "y")
-        return;
-
-#ifdef VERBOSE
-    printf ("\nOk..\n");
-#endif
-    
-    chdir ("examples");
-    for (i = 0; i < sizeof (examples); i++)
-    {
-        example = element (i, examples);
-        if ("/home/karel/bin/" + example younger example)
-            exec (CP, "/home/karel/bin/" + example, example);
-        else if ("/usr/local/bin/" + example younger example)
-            exec (CP, "/usr/local/bin/" + example, example);
-    }
-
-    chdir ("../..");
-
-    tar = "icmake-" + VERSION + ".tgz";
-    exec (RM, "-f", tar);
-    exec ("tar", "-c -z -v --exclude-from icmake/distrib.no -f", 
-                        tar, "icmake");
-            
-    tar = "icmake-" + VERSION + ".bin.tgz";
-    exec (RM, "-f", tar);
-    exec ("tar", "-c -z -v --files-from icmake/bindist.yes -f", 
-                        tar, "icmake");
+    system("mkdir -p " MANDIR);
+    manpage("icmake.1");
+    manpage("icmbuild.1");
+    manpage("icmstart.1");
 }
 
-void doc2man ()
+void skel()
 {
-    string
-        src,
-    dest,
-    zdest;
-        
-    src   = "doc"   + "/" + "icmake.1";
-    dest  = CATDIR  + "/" + "icmake.1";
-    zdest = CATDIR  + "/" + "icmake.1.Z";
-    
-    if (zdest older src)
-    {
-        exec (CP, src, CATDIR);
-    exec (COMPRESS, "-f", dest);
-    }
+    system("mkdir -p " SKELDIR);
+    system("cp -r usr/share/icmake/* " SKELDIR);
 }
 
 void main (int argc, list argv)
@@ -418,33 +372,30 @@ void main (int argc, list argv)
         makelibs ();
     else if (av1 == "progs")
         makeprogs ();
-    else if (av1 == "install")
-        install ();
     else if (av1 == "clean")
         cleanup ();
     else if (av1 == "realclean")
         realcleanup (0);
     else if (av1 == "REALCLEAN")
         realcleanup (1);
-    else if (av1 == "doc2man")
-        doc2man ();
-    else if (av1 == "zip")
-        zip ();
-    else if (av1 == "dist")
-    makedist ();
+    else if (av1 == "man")
+        man ();
+    else if (av1 == "skel")
+        skel();
     else
         printf ("\n"
-            "Select one of the following:\n"
-            "    \"unix libs\" to make libraries\n"
-            "    \"unix progs\" to make programs\n"
-            "    \"unix install\" to install programs to ",
-                                BINDIR, "\n"
+        "Select one of the following:\n"
         "    \"unix clean\" to remove old mush (libs are kept)\n"
+        "    \"unix libs\" to make libraries\n"
+        "    \"unix man\" to install man pages\n"
+        "    \"unix progs\" to make programs\n"
         "    \"unix realclean\" to remove old mush (including libs)\n"
-        "    \"unix REALCLEAN\" realclean + remove lexer.c parser.[ch]\n"
-        "    \"unix doc2man\" to install crude docs to cat\n"
+        "    \"unix skel\" to install the skeleton files\n"
         "\n"
-        "    \"unix zip\" to clean up (keeping libs) and zip it up\n"
-        "    \"unix dist\" to make distribution\n"
+        "    \"unix REALCLEAN\" realclean + remove lexer.c parser.[ch]\n"
+        "       DO NOT USE THIS UNLESS YOU KNOW WHAT YOU'RE DOING\n"
             "\n");
 }
+
+
+

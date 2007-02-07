@@ -3,7 +3,8 @@
 */
 
 #include "../rss/icrss.h"
+#include "../VERSION"
 
 char
-    version[] = "7.00",
-    release[] = "1992-2006";
+    version[] = VERSION,
+    release[] = RELEASE;

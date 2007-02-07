@@ -12,7 +12,7 @@ static int near atox (char *string, int *n)
     register size_t
         i,
         ch;
-    size_t
+    int
         retval;
 
     if (*string == 'x')
@@ -27,8 +27,8 @@ static int near atox (char *string, int *n)
     }
     else if (sscanf(string, "%3o", &retval))/* octal value ? */
     {
-        if (retval >= 0x100)                /* Octal yields too big a value ? */
-            return (-2);                    /* Return it */
+        if ((size_t)retval >= 0x100)        /* Octal yields too big a value ? */
+            return -2;                      /* Return it */
 
         ch = 8;                             /* Radix setting */
     }
@@ -54,7 +54,7 @@ static int near atox (char *string, int *n)
 
     hexnumbers[8] = '8';                    /* restore the hex-string */
 
-    return (retval);                        /* Returnvalue */
+    return retval;                          /* Returnvalue */
 }
 
 int chesc(char *string, int *n)

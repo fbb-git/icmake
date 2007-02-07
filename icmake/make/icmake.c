@@ -11,9 +11,9 @@
 
 static char
     bim[]       = "bim",
-    icm_comp[]  = ICMCOMP,
-    icm_exec[]  = ICMEXEC,
-    icm_pp[]    = ICMPP,
+    icm_comp[]  = LIBDIR "/icm-comp",
+    icm_exec[]  = LIBDIR "/icm-exec",
+    icm_pp[]    = LIBDIR "/icm-pp",
     pim[]       = "pim";
 
 int main (                         /* icmake source(txt) dest(bin) */

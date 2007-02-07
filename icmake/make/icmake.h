@@ -1,19 +1,6 @@
 #include "../rss/icrssdef.h"
 
-#ifdef MSDOS
-#   define __STDC__
-#   define ICMCOMP          "icm-comp.exe"
-#   define ICMEXEC          "icm-exec.exe"
-#   define ICMPP            "icm-pp.exe"
-#elif 1
-#   define ICMEXEC          "/usr/lib/icmake/icm-exec"
-#   define ICMCOMP          "/usr/lib/icmake/icm-comp"
-#   define ICMPP            "/usr/lib/icmake/icm-pp"
-#else
-#   define ICMEXEC          "bin/icm-exec"
-#   define ICMCOMP          "bin/icm-comp"
-#   define ICMPP            "bin/icm-pp"
-#endif
+#include "../def/destinations"
 
 #ifdef SUN
 #include <memory.h>

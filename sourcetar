@@ -2,8 +2,8 @@
 
 PROJECT=icmake
 
-VERSION=`grep version icmake/rss/version.c | 
-    sed 's/[[:space:]]\+version\[\][[:space:]]\+=[[:space:]]\+"\(.*\)".*/\1/'`
+VERSION=`grep VERSION icmake/VERSION | 
+  sed 's/[[:space:]]*#define[[:space:]]\+VERSION[[:space:]]\+"\(.*\)".*/\1/'`
 
 DISTRIBUTION=${PROJECT}-${VERSION}      # define the distribution's dir name
 

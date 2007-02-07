@@ -1,71 +1,106 @@
 INSTALLING ICMAKE
 =================
 
-                            Version 6.22
+                            Version 7.00
 
-        ----------------------------------------------------------
-                        NOTE for UNIX platforms:
-                    ========================
-        
-        We do our best to catch ^M's in the source files. However,
-    sometimes they slip through the net. If a file contains ^M
-    characters the compiler may choke. If so, please remove the
-    ^M's and recompile.
-        ----------------------------------------------------------
-    
+1. Unpack the archive:
+======================
 
-        The installation files for Icmake come as an archive, e.g.,
-"icmake.zip" or "icmake-6.20.tgz". These archives unpack to several
-directories and files.
+The installation files for Icmake comes as an archive, e.g.,
+"icmake_7.00.tar.gz". These archives unpack to several directories and files.
 
-Please note that, starting with distribution icmake-6.17.tgz, the archive
-unpacks to directories icmake/xxx below the current directory. So, if you
-unpack icmake-6.17.tgz (or later versions) in the directory
-/usr/local/src/icmake, a directory /usr/local/src/icmake/icmake is created,
-and other subdirectories below /usr/local/src/icmake/icmake.
+Starting with distribution icmake_7.00.tar.gz, the archive unpacks to a
+directory icmake-7.00 below the current directory. The version number in this
+directory may change to newer release versions.
 
-        To unpack the archives, create an appropriate directory (e.g.,
-"/usr/local/src/icmake" for Unix platforms, or "c:\c\icmake" for DOS) and
-change-dir to that directory. Use an appropriate archiver to unpack. Some
-possibilities are described below:
+So, if you unpack icmake_7.00.tar.gz (or later versions) in the directory
+/usr/local/src, a directory /usr/local/src/icmake/icmake-7.00 is created, as
+well as other subdirectories below /usr/local/src/icmake/icmake-7.00
 
-(a) Archives in the form ".tgz" can be unpacked using
-        "gzip -c -d icmake-6.17.tgz | tar xvf -".
-If you have GNU tar version 1.11.2 or higher, you can use
-        "tar xvzf icmake-6.17.tgz".
+To unpack the archives, create an appropriate directory (e.g.,
+`/usr/local/src/icmake' E.g,
 
-(b) The archives with the extension ".zip" can be unpacked using
-"unzip icmake.zip" or "pkunzip -d icmake.zip".
+                         tar xvzf icmake_7.00.tar.gz
 
-        The extraction of files from the archive should yield a lot of C
-source files in a number of directories. The default distribution of Icmake
-does not contain makefiles for the Unix-utility "make" anymore.
+The extraction of files from the archive should yield a lot of C source files
+in a number of directories. Icmake's default distribution does not contain
+makefiles for the Unix-utility `make' anymore.
 
-For Linux-unix platforms, the icmake-executables are found in the subdirectory
-binlinux. For Ms-DOS platforms, the icmake-executables are found in the
-subdirectory bindos. Depending on what platform you use, install either, both,
-or none of these executables.
 
-For other UNIX-platforms the programs can be created by compiling all files "by
-hand". Even here, we made it easy for you to bootstrap icmake, by providing the
-shellscript bootstrap. Simply say
+2. Compile the programs
+=======================
 
-                           'sh bootstrap'
+Change to the directory into which the sources were unpacked. E.g., do
 
-and the full icmake compilation is performed. This will put the executables in
-the bin subdirectory below the icmake subdirectory created by the untarring of
-icmake-X.YY.tgz. Also, it will leave a lot of compiler residues behind, such
-as .o files. However, after 'sh bootstrap' the unix-script can be used (see
-below, you have to put the icmake files in /usr/local/bin or adapt the
-'unix' script and 'def/destinations.im' to suit your system). After putting
-the icmake programs in their proper directories, say
+                                cd icmake-7.00
 
-                            'unix clean'
-                
-to clean up the garbage.                
+This directory should contain this file (i.e., INSTALL). Icmake uses several
+support programs, which do not have to be stored in the PATH
+diretories. Before starting the compilation, make sure their locations are
+in accordance with your local requirements:
 
-Finally, you can do it all by yourself. Then compile all files as indicated
-in the following steps:
+    - Inspect (and optionally modify) the path-settings in
+./def/destinations. In particular check:
+
+#define BINDIR  "/usr/bin"
+
+#define ICMEXEC "/usr/lib/icmake/icm-exec"
+#define ICMCOMP "/usr/lib/icmake/icm-comp"
+#define ICMPP   "/usr/lib/icmake/icm-pp"
+
+    - Inspect (and optionally modify) the availability of the program
+mentioned in ./def/programs (they should be available on any Unix(alike)
+system. 
+
+
+    - Next run the shell-script `bootstrap' as follows:
+
+                               sh bootstrap.sh
+
+This performs a full icmake compilation: it will put all executables in
+the ./bin subdirectory.
+
+3. Install the binaries
+=======================
+
+    You probabaly must do this as `root':
+
+                                sh install.sh
+
+4. Clean up the garbage
+=======================
+
+    Following `sh install' the ./unix script can be used to complete the
+    installation using icmake itself. To clean up the remnants of the above 
+    compilation process, run:
+
+                            ./unix realclean
+
+
+5. Install the skeletons for icmbuild/icmstart
+==============================================
+
+    You probabaly must do this as `root':
+
+                            ./unix skel
+
+
+6. Install the manual pages
+===========================
+
+    You probabaly must do this as `root':
+
+                            ./unix man
+
+Additional documents that you may store in a location of your own choice are
+found in the `doc' subdirectory.
+
+
+Hand-compiling icmake
+=====================
+
+Alternatively, you can compile icmake yourself. If you prefer doing this, you
+could act as follows:
 
 (a) Note that even though grammar definition and lexical scanner definition
     files (parser and lexer) are found at several subdirectories, the bison and
@@ -90,43 +125,43 @@ in the following steps:
 
     Compile all files, using the appropriate compiler flags which cause your
     compiler to compile-only.
-    If your compiler supports memory models, choose the "small" model.
-    E.g., these compiler flags are:
+    On segmented architectures (e.g. MS-DOS computers), choose the "small"
+    model. 
 
-    for GNU's gcc:                  gcc -c -DHAVE_GLOB
-    for Microsoft C 7.00:           cl -c -AS
+    E.g., the compiler flags for Gnu's gcc compiler are:
 
+                              gcc -c -DHAVE_GLOB
 
     NOTE:
     =====
-    This note is only relevant for the compilation of icmake under MS-DOS,
-    and can be ignored in all other cases.
-    
-    Below the ICMAKE\RSS subdirectory the subdirectory ASM is found. In this
-    directory the files REDIRECT.ASM and REDIRECT.OBJ are stored.
-
-    The REDIRECT.OBJ file is included in the ICRSS.LIB library by the DOS-MSC
-    icmake-script, and is not removed thereafter.
-
-    The file REDIRECT.ASM is included for reference purposes only.
-    REDIRECT.ASM could be assembled 'by hand' using the ML-assembler, using
-    the following commands:
-
-        set ml=-c -Cp -DMM='S'
-        ml redirect.asm
-
-    The file icmake\rss\asm\redirect.obj must be added to the icrss.lib
-    library in icmake\rss. E.g., in the directory icmake\rss the following
-    command could be given:
-
-        lib icrss -+asm\redirect ;
+    = This note is only relevant for the compilation of icmake under MS-DOS,
+    = and can be ignored in all other cases.
+    = 
+    = Below the ICMAKE\RSS subdirectory the subdirectory ASM is found. In this
+    = directory the files REDIRECT.ASM and REDIRECT.OBJ are stored.
+    = 
+    = The REDIRECT.OBJ file is included in the ICRSS.LIB library by the
+    = DOS-MSC icmake-script, and is not removed thereafter.
+    = 
+    = The file REDIRECT.ASM is included for reference purposes only.
+    = REDIRECT.ASM could be assembled 'by hand' using the ML-assembler, using
+    = the following commands:
+    = 
+    =     set ml=-c -Cp -DMM='S'
+    =     ml redirect.asm
+    = 
+    = The file icmake\rss\asm\redirect.obj must be added to the icrss.lib
+    = library in icmake\rss. E.g., in the directory icmake\rss the following
+    = command could be given:
+    = 
+    =     lib icrss -+asm\redirect ;
     
     NOTE:
     =====
     The flag -DHAVE_GLOB causes the function glob() to be included in the
     code, which expands a filename with wildcards to a list of names. The flag
-    is not needed for MSDOS compilations. If you do not have this function,
-    leave out the -DHAVE_GLOB specification. This is further discussed below.
+    is not needed for MSDOS compilations. If you do NOT have this function,
+    OMIT the -DHAVE_GLOB specification. This is further discussed below.
 
     While compiling, you may need other special definition flags to produce
     workable code for other systems. Please check the section below to see
@@ -137,9 +172,10 @@ in the following steps:
     documentation of your library manager ("ar" or "lib") for the required
     command line.
 
-    For Unix systems try:
-                              ar rsv libicrss.a *.o
-    in the directory "rss".
+
+    Next, for Unix systems run:
+
+                            ar rsv libicrss.a *.o
 
 
 (d) The following directories were also created from the archive:
@@ -155,67 +191,34 @@ in the following steps:
     These program names are on Unix-based systems without extension; supply
     ".exe" for DOS.
 
-    Change-dir to each of these directories, and compile and link all .c files
-    into the appropriate program. E.g., for a Unix system you might type:
+    Change-dir to each of these directories in turn and compile and link all
+    .c files into the appropriate program. E.g., for a Unix system you might
+    type: 
+
             cd make
-            gcc -DHAVE_GLOB -o icmake *.c ../rss/libicrss.a
+            gcc -DHAVE_GLOB -o bin/icmake *.c ../rss/libicrss.a
+
             cd ../pp
-            gcc -DHAVE_GLOB -o icm-pp *.c ../rss/libicrss.a
+            gcc -DHAVE_GLOB -o bin/icm-pp *.c ../rss/libicrss.a
+
             cd ../comp
-            gcc -DHAVE_GLOB -o icm-comp *.c ../rss/libicrss.a
+            gcc -DHAVE_GLOB -o bin/icm-comp *.c ../rss/libicrss.a
+
             cd ../exec
-            gcc -DHAVE_GLOB -o icm-exec *.c ../rss/libicrss.a
+            gcc -DHAVE_GLOB -o bin/icm-exec *.c ../rss/libicrss.a
+
             cd ../un
-            gcc -DHAVE_GLOB -o icmun *.c ../rss/libicrss.a
+            gcc -DHAVE_GLOB -o bin/icmun *.c ../rss/libicrss.a
+
             cd ..
 
-    For a DOS platform with the Microsoft compiler, you might type:
 
-            cd make
-            cl -AS -J -Feicmake.exe *.c ..\rss\icrss.lib
-            cd ..\pp
-            cl -AS -J -Feicm-pp.exe *.c ..\rss\icrss.lib
-            cd ..\comp
-            cl -AS -J -Feicm-comp.exe *.c ..\rss\icrss.lib
-            cd ..\exec
-            cl -AS -J -Feicm-exec.exe *.c ..\rss\icrss.lib
-            cd ..\un
-            cl -AS -J -Feicmun.exe *.c ..\rss\icrss.lib
-            cd ..
+    Next continue with the installation at point 3 (sh install) above.
 
-    Whichever platform you use, please name the resulting program by the
-    appropriate name (one of "icmake", "icm-pp", "icm-comp", "icm-exec",
-    "icmun", optionally followed by an extension ".exe" for DOS systems). The
-    reason for this is the fact that the top-level program "icmake" must be
-    able to call all subsequent programs, of which the names therefore must be
-    known. Furthermore, you may need special compilation flags for rare systems
-    (see the section below).
 
-(e) If all goes well, you've now created all necessary programs. Move the
-    executable files to a system directory; e.g., "/usr/local/bin" for Unix
-    systems, "c:\sys\bin" for DOS systems, etc.
-
-(f) For all subsequent releases of Icmake which you may wish to install, you
-    can use your old programs of the Icmake family and the included
-    icmake-files. E.g., the installation includes a file "unix" to create
-    Icmake for Unix platforms.
-
-    Prior to using the unix script, you may wish to
-    edit the following files:
-
-        def/programs:           to (re)define and check the programs used
-                                by the unix-script,
-        def/destinations:       to (re)define your system directory, etc.
-
-    Even when you successfully create Icmake by hand, it may be a good
-    idea to re-make it with the makefile to check its workings. Just type
-    "unix", or "icmake dos-msc" or whatever is appropriate; then follow
-    the instructions which are printed by the makefile.
 
 Special flags while compiling
 -----------------------------
-
-        This section is also found in INSTALL.
 
         A large part of the source code of Icmake should compile on any
 platform. The exceptions we have encountered so far are the following:
@@ -272,9 +275,3 @@ Currently the following symbols are built in Icmake:
 
 If you want to modify something here which hasn't been done before, please
 email us about it, and we'll include it in the standard distribution.
-
-
-
-
-
-

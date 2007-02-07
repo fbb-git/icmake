@@ -1,3 +1,12 @@
+icmake (7.01)
+
+  * The INSTALL file was updated. So were the scripts bootstrap (now named
+    bootstrap.sh) and unix. Compilation warnings appearing on Mac OS-X were as
+    good as possible removed, some old files and directories 
+    were removed or placed in a directory of their own.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 07 Feb 2007 15:50:33 +0100
+
 icmake (7.00)
 
   * The subdirectory examples is renamed to templates

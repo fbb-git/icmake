@@ -1,12 +1,21 @@
-// unix doc2man will install icmake.1.Z in the following subdirectory:
-#define CATDIR 		"/usr/local/man/cat1"
+//   The locations of the binaries, the man pages and the documentation
+//   ==================================================================
+//
+//   Note: when changing the location to another location, make sure the
+//   icmake-path definitions in the top lines of all executable icmake 
+//   scripts (e.g., the `./unix' script) are changed accordingly.
+//
+//   `unix doc2man' will install manpages in the CATDIR directory
+//   `unix install' will install the binaries in the BINDIR directory
+//
+//   Note that BINDIR is also used in the first line of the unix-script.
+//
+//   If you don't use /usr/bin, make sure you adapt the first line
+//   in the 'unix' script *AND* the BINDIR define 
+//
+//   The settings in this file are according to the Debian File Standard
 
-// unix install will install the executables in the following subdirectory:
-#define BINDIR  "/usr/local/bin"
-
-/*
-        Note that BINDIR is also used in the first line of the unix-script.
-
-	If you don't use /usr/local/bin, make sure you adapt the first line
-	in the 'unix' script *AND* the BINDIR define above.
-*/
+#define BINDIR      "/usr/bin"
+#define SKELDIR     "/usr/share/icmake"
+#define MANDIR      "/usr/share/man/man1"
+#define LIBDIR      "/usr/lib/icmake"

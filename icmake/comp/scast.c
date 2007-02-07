@@ -8,8 +8,7 @@ ESTRUC_ *scast(e)
     ESTRUC_
         *e;
 {
-    char
-        buffer[10];
+    char buffer[10];
 
     if (test_type(e, e_list))               /* (string)list not ok */
     {
@@ -21,7 +20,7 @@ ESTRUC_ *scast(e)
     {
         if (test_type(e, e_const))
         {
-            sprintf(buffer, "%d", e->evalue);     /* convert to string */
+            sprintf(buffer, "%u", e->evalue);     /* convert to string */
             e->evalue = lookstring(buffer);
             set_type(e, e_const | e_str);
         }
@@ -32,5 +31,5 @@ ESTRUC_ *scast(e)
             set_type(e, e_code | e_str);
         }
     }
-    return (e);
+    return e;
 }

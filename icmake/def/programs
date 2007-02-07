@@ -32,7 +32,7 @@
 
 // The icmake.1 compressor. This results in plain compression of icmake.1
 // into icmake.1.Z
-#define COMPRESS        "compress"
+#define GZIP            "gzip"
 
 // The program to install the final icm* executables 
 // ('cp' does nicely, 'install' should be ok too)

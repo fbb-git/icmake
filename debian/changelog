@@ -1,3 +1,9 @@
+icmake (7.01-1) unstable; urgency=low
+
+  * New upstream version requiring slight modification of `rules'
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 07 Feb 2007 16:22:56 +0100
+
 icmake (7.00-1) unstable; urgency=low
 
   * New upstream version.

@@ -1,3 +1,10 @@
+icmake (7.02)
+
+  * Repaired a misconfiguration in the bootstrap.sh and install.sh scripts due
+    to which the icmstart and icmbuild scripts weren't properly installed.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 21 Feb 2007 14:49:23 +0100
+
 icmake (7.01)
 
   * The INSTALL file was updated. So were the scripts bootstrap (now named

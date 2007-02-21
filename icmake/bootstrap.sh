@@ -10,6 +10,21 @@ echo "
     already been generated from the file lexer.
 "                                     
 
+pickup()
+{
+    grep "define $1" def/destinations | sed 's,[^"]*\"\([^"]*\).*,\1,'
+}
+
+instscript()
+{
+    sed '
+s,!/usr/bin,!'$2',
+s,"/usr/share/icmake","'$3'",
+' scripts/$1 > $4/$1
+    chmod +x $4/$1
+}
+
+
 echo    Building the runtime-library in ./rss
 cd rss
 gcc -c -O2 -g -Wall -DHAVE_GLOB *.c
@@ -41,6 +56,15 @@ echo Creating icmun
 cd ../un
 gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icmun *.c ../rss/libicrss.a
 cd ..  
+
+SKELDIR=`pickup SKELDIR`
+BINDIR=`pickup BINDIR`
+
+echo Creating icmbuild from skeleton
+instscript icmbuild $BINDIR  $SKELDIR bin
+
+echo Creating icmstart from skeleton
+instscript icmstart $BINDIR  $SKELDIR bin
 
 echo "
     Done.

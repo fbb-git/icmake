@@ -10,30 +10,24 @@ inst()
     mkdir -p $2
     echo cp bin/$1 $2
     cp bin/$1 $2 
+}
+
+inststrip()
+{
+    inst $1 $2
     strip $2/$1
 }
 
-instscript()
-{
-    sed '
-s,!/usr/bin,!'$2',
-s,"/usr/share/icmake","'$3'",
-' scripts/$1 > $2/$1
-}
-
-
 BINDIR=`pickup BINDIR`
 
-inst icmake $BINDIR
-inst icmun  $BINDIR
+inststrip icmake $BINDIR
+inststrip icmun  $BINDIR
 
 LIBDIR=`pickup LIBDIR`
 
-inst icm-pp   $LIBDIR
-inst icm-comp $LIBDIR
-inst icm-exec $LIBDIR
+inststrip icm-pp   $LIBDIR
+inststrip icm-comp $LIBDIR
+inststrip icm-exec $LIBDIR
 
-SKELDIR=`pickup SKELDIR`
-
-instscript icmbuild $BINDIR $SKELDIR
-instscript icmstart $BINDIR $SKELDIR
+inst icmbuild $BINDIR
+inst icmstart $BINDIR

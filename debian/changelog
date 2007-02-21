@@ -1,3 +1,11 @@
+icmake (7.02-1) unstable; urgency=low
+
+  * Due to an oversight in the upstream version the icmbuild and icmstart
+    scripts weren't installed. Repaired in this release, which also required a
+    minor debian/rules file modification.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 21 Feb 2007 15:01:24 +0100
+
 icmake (7.01-1) unstable; urgency=low
 
   * New upstream version requiring slight modification of `rules'

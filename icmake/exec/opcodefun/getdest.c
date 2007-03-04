@@ -19,8 +19,7 @@
 
 VAR_ *getdest()
 {
-    INT16 index = getint16 (infile);
+    int index = getint16 (infile);
     return index >= 0 ? var + index : local(index);
-/*    return (UNS16)index < (UNS16)0x8000 ? var + index : local(index); */
 }
 

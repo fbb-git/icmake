@@ -7,7 +7,7 @@
 /*
         process: execute(mode, cmd, chead, ahead, ..., atail,     ctail)
         argnr:            1     2    3     4           count - 1, count
-        argindex:         0     1    2     3      4    count - 2, count - 1
+        argidx:         0     1    2     3      4    count - 2, count - 1
                                                   ...
                                                   count-3
         at least required: 6 arguments
@@ -55,7 +55,7 @@ ESTRUC_ *execute(arr)
     free(stringbuf);                        /* make sure empty string */
     stringbuf = xstrdup(nullstring);        /* is pushed */
 
-    tmp = stackframe(e_str | e_const);      /* empty string argument */
+    tmp = *stackframe(e_str | e_const);     /* empty string argument */
 
     etoc(&tmp);
     catcode(&e, &tmp);                      /* empty string on the stack */

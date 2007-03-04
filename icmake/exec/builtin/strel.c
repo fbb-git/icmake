@@ -25,10 +25,10 @@ static char buf[2];
 
 void fun_str_el ()
 {
-    size_t index = intValue(top());
+    size_t idx = intValue(top());
     char const *str = stringStr(top() - 1);
 
-    buf[0] = index >= strlen(str) ? 0 : str[index];
+    buf[0] = idx >= strlen(str) ? 0 : str[idx];
 
-    reg = stringConstructor_cP(buf);;
+    reg = *stringConstructor_cP(buf);;
 }

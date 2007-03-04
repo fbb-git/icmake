@@ -10,6 +10,6 @@ void    pop(void);
 void    popBP(void);
 VAR_   *top(void);
 
-VAR_   *local(INT16 index);
+VAR_   *local(int index);
 
 #endif

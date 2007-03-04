@@ -12,15 +12,6 @@ char
 char *temporary;
 char *source_name;
 char *dest_name;
-
-FILE
-    *fdest;
-
-FLAGS_
-    flags;
-
-int
-    errors;
-
-size_t
-    redirect_nr = (size_t)~0;
+FILE *fdest;
+FLAGS_ flags;
+int errors;

@@ -12,7 +12,7 @@ ESTRUC_ *bnot (ESTRUC_ *e)                   /* expression so far */
         return (e);
     }
 
-    if ((e->type & ~ALLTYPES) == e_const)   /* immediate value */
+    if ((e->type & (size_t)~ALLTYPES) == e_const)   /* immediate value */
         e->evalue = ~e->evalue;
     else
     {

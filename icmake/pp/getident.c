@@ -1,5 +1,5 @@
 /*
-\funcref{getident}{void getident (\params)}
+\funcref{getident}{void getident(\params)}
     {
         {char} {*buf} {buffer to store identifier}
     }
@@ -9,12 +9,12 @@
     {getident.c}
     {
         {\em getident()} is called from {\em lexer()} when an underscore
-        character or a {\em [a-zA-Z]} character is read. {\em lexer()} pushes
+        character or a {\em[a-zA-Z]} character is read. {\em lexer()} pushes
         the character back onto the input file and calls {\em getident()} to
         read an identifier.
 
-        Identifiers are defined as starting with {\em [\_a-zA-Z]} followed by
-        zero or more {\em [\_a-zA-Z0-9]}.
+        Identifiers are defined as starting with {\em[\_a-zA-Z]} followed by
+        zero or more {\em[\_a-zA-Z0-9]}.
 
         {\em getident()} performs no checking of the identifier length. The
         buffer where the identifier is stored is assumed to be large enough to
@@ -24,24 +24,14 @@
 
 #include "icm-pp.h"
 
-void getident (char *buf)
+void getident(STRING_ *str)
 {
-    register int
-        ch,
-        index = 0;
+    register int ch;
 
-    if ( (ch = fgetc (filestack [filesp].f)) != '_' &&
-         ! isalpha (ch)
-       )
-        error ("%s: %d: identifier expected", filestack [filesp].n,
-               filestack [filesp].l);
-
-    buf [index++] = ch;
-    while ( (ch = fgetc (filestack [filesp].f)) == '_' ||
-            isalnum (ch)
-          )
-            buf [index++] = ch;
-
-    ungetc (ch, filestack [filesp].f);
-    buf [index] = '\0';
+    skipblanks();
+    str->len = 0;
+    while ((ch = nextchar()) == '_' || isalpha(ch))
+        string_append(str, ch);
+    pushback(ch);
+    string_append(str, 0);
 }

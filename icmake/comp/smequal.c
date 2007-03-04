@@ -15,7 +15,7 @@ ESTRUC_ *sm_equal (lval, rval)
     if (conflict(lval, rval, op_smeq))      /* test type conflict */
         return(lval);
 
-    if ((lval->type & rval->type & ~ALLTYPES) == e_const)
+    if ((lval->type & rval->type & (size_t)~ALLTYPES) == e_const)
     {
         if (test_type(lval, e_int))
             lval->evalue = (lval->evalue <= rval->evalue);

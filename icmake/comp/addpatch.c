@@ -4,11 +4,10 @@
 
 #include "iccomp.h"
 
-void addpatch (size_t *list, size_t len, register size_t value)
+void addpatch (unsigned *list, size_t len, register size_t value)
 {
-    register size_t
-        index;
+    register size_t idx;
 
-    for (index = 0; index < len; index++)
-        list[index] += value;
+    for (idx = 0; idx < len; idx++)
+        list[idx] += value;
 }

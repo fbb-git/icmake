@@ -4,12 +4,11 @@
 
 #include "iccomp.h"
 
-static ESTRUC_
-    e;
+static ESTRUC_ e;
 
 ESTRUC_ *break_stmnt()
 {
-    e = stackframe(0);
+    e = *stackframe(0);
 
     if (!break_ok)
         semantic("'break' only in 'while' or 'for' statements");

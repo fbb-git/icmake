@@ -108,7 +108,7 @@ manpageoptions()
     The bf(icmconf) file may contain a line defining tt(DEFCOM) containing the
 default operational mode to use when none is specified. E.g.,
         verb(
-    #define DEFCOM program
+    #define DEFCOM "program"
         )
     will construct the program when the command `tt(icmbuild)' is entered.
 

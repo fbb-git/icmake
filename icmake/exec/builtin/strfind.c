@@ -18,5 +18,5 @@ void fun_strfind()
     char const *haystack = stringStr(top());
     char const *ret = strstr(haystack, stringStr(top() - 1));
     
-    reg = intConstructor_i(ret ? ret - haystack : -1);
+    reg = *intConstructor_i(ret ? ret - haystack : -1);
 }

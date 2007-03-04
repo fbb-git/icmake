@@ -2,24 +2,20 @@
 
 void process ()
 {
-    register
-        OPCODE_ op;
-    register size_t
-        i;
-    INT32
-        oldoffs;
-    static char
-        buf [200];
+    register OPCODE_ op;
+    register size_t i;
+    INT32 oldoffs;
+    static char buf [200];
 
     printf ("Binary file statistics:\n"
             "\tstrings           at offset\t%s\n" ,
-                hexstring ( (UNS16) headerp->offset[0], 4 ));
+                hexstring((size_t)headerp->offset[0], 4 ));
     printf ("\tvariables         at offset\t%s\n",
-                hexstring ( (UNS16) headerp->offset[1], 4 ));
+                hexstring((size_t)headerp->offset[1], 4 ));
     printf ("\tfilenames         at offset\t%s\n",
-                hexstring ( (UNS16) headerp->offset[2], 4 ));
+                hexstring((size_t)headerp->offset[2], 4 ));
     printf ("\tfirst instruction at offset\t%s\n\n",
-                hexstring ( (UNS16) headerp->offset[3], 4 ));
+                hexstring((size_t)headerp->offset[3], 4 ));
 
     if (nvar)
     {
@@ -48,20 +44,20 @@ void process ()
     }
 
     puts ("Disassembled code:");
-    while ( (curoffs = (UNS16) ftell (infile)) < (UNS16) headerp->offset[0] )
+    while ( (curoffs = (size_t)ftell (infile)) < (size_t)headerp->offset[0] )
     {
         if ( (op = getopcode (infile)) < op_hlt &&
-             op != -1
+             op != (OPCODE_)-1
            )
         {
-            printf ("\t[%s] ", hexstring (curoffs, 4));
-            printf ("%s ", hexstring (op, 2));
+            printf ("\t[%s] ", hexstring(curoffs, 4));
+            printf ("%s ", hexstring ((size_t)op, 2));
             procfun [op] ();
         }
         else
         {
-            fprintf (stderr, "bad opcode at %s", hexstring (curoffs, 4));
-            error ("(opcode %s)", hexstring (op, 2));
+            fprintf (stderr, "bad opcode at %s", hexstring(curoffs, 4));
+            error ("(opcode %s)", hexstring((size_t)op, 2));
         }
     }
     putchar ('\n');

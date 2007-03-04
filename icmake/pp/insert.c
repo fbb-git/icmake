@@ -1,5 +1,5 @@
 /*
-\funcref{insert}{void insert (\params)}
+\funcref{insert}{void insert(\params)}
     {
         {char} {*idname} {identifier to insert in symbols table}
     }
@@ -35,40 +35,37 @@ static char *replace_defines(char *txt)
     size_t const max_replacements = 100;
     size_t replacement = 0;
 
-    while ((ptr1 = strstr(ptr1, "${")))     /* find the opening characters */
+    while ((ptr1 = strstr(ptr1, "${"))) /* find the opening characters */
     {
-        int  index;                         /* index in the #define database */
-        char *ptr2 = strchr(ptr1, '}');     /* and the closing character */
+        int  idx;                     /* index in the #define database */
+        char *ptr2 = strchr(ptr1, '}'); /* and the closing character */
         char *newContents;
         
-        if (!ptr2)                          /* none found, then done */
+        if (!ptr2)                      /* none found, then done */
             break;
 
-        *ptr2 = 0;                          /* terminate the presumed ${IDENT}  */
-                                            /* at final brace                   */
+        *ptr2 = 0;                      /* terminate the presumed ${IDENT}  */
+                                        /* at final brace                   */
 
-        index = finddef(ptr1 + 2);          /* lookup the identifier            */
+        idx = finddef(ptr1 + 2);      /* lookup the identifier            */
 
-        if (index == -1)                    /* unknown identifier: keep ${...}  */
+        if (idx == -1)                /* unknown identifier: keep ${...}  */
         {
-            *ptr2 = '}';                    /* restore the closing brace        */
-            ptr1 = ptr2 + 1;                /* continue beyond this ${...}      */
+            *ptr2 = '}';                /* restore the closing brace        */
+            ptr1 = ptr2 + 1;            /* continue beyond this ${...}      */
             continue;
         }
             
         if (++replacement > max_replacements)
-        {
-            error ("%s: %d: too many replacements in #define definition",
-               filestack [filesp].n, filestack [filesp].l);
-            break;                      /* bail out                         */
-        }
+            error("%s: %d: too many replacements in #define definition",
+               filestack[filesp].n, filestack[filesp].l);
         
         newContents = 
                 malloc(
                       1 +               /* ascii-Z                          */
                       ptr1 - txt +      /* plus length of initial txt       */
                                         /* plus length of replacement text  */
-                      strlen(defined[index].redef) +
+                      strlen(defined[idx].redef) +
                       strlen(ptr2 + 1)  /* plus text beyond ${IDENT}        */
                 );
 
@@ -76,11 +73,10 @@ static char *replace_defines(char *txt)
 
         strcpy(newContents, txt);       /* write initial text               */
                                         /* add replacement                  */
-        strcat(newContents, defined[index].redef);
+        strcat(newContents, defined[idx].redef);
         strcat(newContents, ptr2 + 1);  /* add the tail                     */
-
                                         /* ptr1 points into the new text    */
-        ptr1 = newContents + (ptr1 - txt);
+        ptr1 = newContents +(ptr1 - txt);
 
         free(txt);
         txt = newContents;
@@ -90,13 +86,17 @@ static char *replace_defines(char *txt)
 }    
         
 
-void insert (char *idname)
+void insert(char *idname)
 {
-    defined = xrealloc (defined, (ndefined + 1) * sizeof (DEFINED_));
-    defined [ndefined].ident = xstrdup (idname);
+    defined = xrealloc(defined, (ndefined + 1) * sizeof(DEFINED_));
+    defined[ndefined].ident = xstrdup(idname);
 
-    
-    defined [ndefined].redef = replace_defines(xstrdup(lexbuf));
+    defined[ndefined].redef = replace_defines(xstrdup(lexbuf.data));
+/*
+fprintf(stderr, "Inserted `%s' with definition `%s'\n",
+        defined[ndefined].ident, 
+        defined[ndefined].redef);
+*/
 
     ndefined++;
 }

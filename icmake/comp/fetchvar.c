@@ -18,46 +18,46 @@
 
 #include "iccomp.h"
 
-ESTRUC_ fetchvar()
+static ESTRUC_ ret;
+
+ESTRUC_ *fetchvar()
 {
     register size_t
-        index;
+        idx;
     E_TYPE_
         type = 0;
-    ESTRUC_
-        ret;
 
-    ret = stackframe(0);
+    ret = *stackframe(0);
 
     if (initialization)
     {
         semantic(init_expr_not_const);
-        return ret;
+        return &ret;
     }
                                             /* not a local variable ? */
-    if ((index = looksym(&local)) == local.n_defined)
+    if ((idx = looksym(&local)) == local.n_defined)
     {                                       /* not a global variable ? */
-        if ((index = looksym(&global)) == global.n_defined)
+        if ((idx = looksym(&global)) == global.n_defined)
         {
-            index = 0xffff;
+            idx = 0xffff;
             semantic("%s undefined", lexstring);
         }
         else
-            type = global.symbol[index].var.type;
+            type = global.symbol[idx].var.type;
     }
     else
     {
-        type = local.symbol[index].var.type;
-        if (index < n_params)               /* Parameters: */
-            index += 0xc002;
+        type = local.symbol[idx].var.type;
+        if (idx < n_params)               /* Parameters: */
+            idx += 0xc002;
         else                                /* Locals: */
-            index = 0xbfff - (index - n_params);
+            idx = 0xbfff - (idx - n_params);
     }
 
-    if (index != 0xffff)
+    if (idx != 0xffff)
     {
-        ret.evalue = index;                /* set index and type */
+        ret.evalue = idx;                /* set idx and type */
         ret.type =  type;
     }
-    return (ret);                           /* return the frame */
+    return &ret;                         /* return the frame */
 }

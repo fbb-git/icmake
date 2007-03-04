@@ -1,6 +1,6 @@
 #include "icmun.h"
 
-void dumpchar (char val)
+void dumpchar(int val)
 {
-    printf ("%s      ", hexstring (val & 0xff, 2));
+    printf ("%s      ", hexstring ((size_t)(val & 0xff), 2));
 }

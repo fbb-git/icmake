@@ -2,19 +2,18 @@
 
 void fun_copy_var ()
 {
-    INT16
-        index;
+    INT16 idx;
 
-    index = getint16 (infile);
-    dumpint (index);
+    idx = getint16 (infile);
+    dumpint (idx);
 
-    if ((UNS16)index < 0x8000)
-        printf ("copy global %s %s\n", varname (var [index].type),
-                                    printvar (index));
-    else if (index < (INT16) 0xc000)
+    if ((UNS16)idx < 0x8000)
+        printf ("copy global %s %s\n", varname (var [idx].type),
+                                    printvar (idx));
+    else if (idx < (INT16) 0xc000)
         printf ("copy local %s %s\n",
-                   varname (local_types[ (INT16) 0xc000 - (INT16) 1 - index]),
-                   printvar (index));
+                   varname (local_types[ (INT16) 0xc000 - (INT16) 1 - idx]),
+                   printvar (idx));
     else
-        printf ("copy arg %s\n", printvar (index));
+        printf ("copy arg %s\n", printvar (idx));
 }

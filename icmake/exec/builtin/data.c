@@ -9,7 +9,7 @@ char           *argtail;
 char           *cmdhead;
 char           *cmdtail;
 
-void (*builtinfun[]) ARG ((void)) =
+void (*builtinfun[])(void) =
      {
          fun_arg_head,
          fun_arg_tail,

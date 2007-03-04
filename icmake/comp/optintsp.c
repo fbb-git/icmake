@@ -21,9 +21,9 @@ ESTRUC_ *optint_special(type, larg, rarg)
     {                                       /* prefix the first argument */
         rarg = insertarg(larg, rarg);
                                             /* make 0-argument */
-        tmp = stackframe(e_int | e_const);
+        tmp = *stackframe(e_int | e_const);
         larg = &tmp;                        /* larg points to inserted arg */
     }
 
-    return (specials(type, insertarg(larg, rarg)));
+    return specials(type, insertarg(larg, rarg));
 }

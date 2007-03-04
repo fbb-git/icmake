@@ -3,7 +3,7 @@
 
 void pushBP()
 {
-    VAR_ idx = intConstructor_i(bp);
+    VAR_ idx = *intConstructor_i((int)bp);
 
     bp = sp;
     push(&idx);

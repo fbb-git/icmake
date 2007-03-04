@@ -22,12 +22,10 @@ void fun_getch()
 {
 #ifdef unix
     buf[0] = termch();
-#elif defined (MSDOS)
-    buf[0] = getch();
 #else
     buf[0] = enterch();
 #endif
-    reg = stringConstructor_cP(buf);
+    reg = *stringConstructor_cP(buf);
 }
 
 

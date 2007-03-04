@@ -20,7 +20,7 @@
 
 void fun_push_imm ()
 {
-    INTVAR_ tmp = intConstructor_i(getint16(infile));
+    INTVAR_ tmp = *intConstructor_i(getint16(infile));
 
     push(&tmp);
     intDestructor(&tmp);

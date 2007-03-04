@@ -19,7 +19,7 @@
 
 void fun_c_path ()
 {
-    reg = stringConstructor_cP(
+    reg = *stringConstructor_cP(
             change_path(stringStr(top()), stringStr(top() - 1))
                             );
 }

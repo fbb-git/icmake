@@ -73,7 +73,7 @@ void fun_exec ()
 
     size_t i = 3;
     size_t nargs = intValue(top());
-    size_t mode = intValue(top() - 1);
+    int mode = intValue(top() - 1);
 
     while (i <= nargs)
     {

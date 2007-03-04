@@ -1,19 +1,21 @@
-//   The locations of the binaries, the man pages and the documentation
-//   ==================================================================
-//
-//   Note: when changing the location to another location, make sure the
-//   icmake-path definitions in the top lines of all executable icmake 
-//   scripts (e.g., the `./unix' script) are changed accordingly.
-//
-//   `unix doc2man' will install manpages in the CATDIR directory
-//   `unix install' will install the binaries in the BINDIR directory
-//
-//   Note that BINDIR is also used in the first line of the unix-script.
-//
-//   If you don't use /usr/bin, make sure you adapt the first line
-//   in the 'unix' script *AND* the BINDIR define 
-//
-//   The settings in this file are according to the Debian File Standard
+/*
+    The locations of the binaries, the man pages and the documentation
+    ==================================================================
+ 
+    Note: when changing the location to another location, make sure the
+    icmake-path definitions in the top lines of all executable icmake 
+    scripts (e.g., the `./unix' script) are changed accordingly.
+ 
+    `unix doc2man' will install manpages in the CATDIR directory
+    `unix install' will install the binaries in the BINDIR directory
+ 
+    Note that BINDIR is also used in the first line of the unix-script.
+ 
+    If you don't use /usr/bin, make sure you adapt the first line
+    in the 'unix' script *AND* the BINDIR define 
+ 
+    The settings in this file are according to the Debian File Standard
+*/
 
 #define BINDIR      "/usr/bin"
 #define SKELDIR     "/usr/share/icmake"

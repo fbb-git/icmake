@@ -22,12 +22,12 @@ static INT8
 void backend()
 {
     register size_t
-        index;
+        idx;
     BIN_HEADER_
         hdr;
 
     lexstring = xstrdup("main");
-    if ((index = looksym(&funtab)) == funtab.n_defined)
+    if ((idx = looksym(&funtab)) == funtab.n_defined)
     {
         semantic("function 'main()' not defined");
         exit(1);
@@ -45,7 +45,7 @@ void backend()
     outbin(global_init.code, global_init.codelen);
 
     outbin(&opcall, sizeof(INT8));          /* call main() at its offset */
-    outbin(&funtab.symbol[index].var.vu.i->count, sizeof(INT16));
+    outbin(&funtab.symbol[idx].var.vu.i->count, sizeof(INT16));
 
     outbin(&opexit, sizeof(INT8));          /* generate op_ret at the end */
 
@@ -54,15 +54,15 @@ void backend()
     hdr.offset[0] = ftell(s_bin);           /* here the strings start */
 
                                             /* generate the strings */
-    for (index = 0; index < n_strings; index++)
-        fprintf(s_bin, "%s%c", stringtab[index].string, 0);
+    for (idx = 0; idx < n_strings; idx++)
+        fprintf(s_bin, "%s%c", stringtab[idx].string, 0);
 
     hdr.offset[1] = ftell(s_bin);           /* here the vars start */
 
-    for (index = 0; index < global.n_defined; index++)
+    for (idx = 0; idx < global.n_defined; idx++)
     {
-        global.symbol[index].var.type &= ~e_var; /* remove 'var' indicator */
-        fwrite(&global.symbol[index].var, 1, sizeof(VAR_), s_bin);
+        global.symbol[idx].var.type &= ~e_var; /* remove 'var' indicator */
+        fwrite(&global.symbol[idx].var, 1, sizeof(VAR_), s_bin);
     }
 
     hdr.offset[2] = ftell(s_bin);           /* here the filenames start */

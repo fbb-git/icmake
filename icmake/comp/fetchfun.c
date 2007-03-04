@@ -7,11 +7,11 @@
 size_t fetchfun()
 {
     register size_t
-        index;
+        idx;
 
                                             /* test function defined */
-    if ((index = looksym(&funtab)) == funtab.n_defined)
+    if ((idx = looksym(&funtab)) == funtab.n_defined)
         semantic ("Function '%s()' not defined", lexstring);
 
-    return (index);
+    return (idx);
 }

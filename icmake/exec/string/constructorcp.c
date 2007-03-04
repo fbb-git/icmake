@@ -1,10 +1,10 @@
 #include "string.ih"
 
-STRINGVAR_ stringConstructor_cP(char const *str)
+STRINGVAR_ *stringConstructor_cP(char const *str)
 {
-    STRINGVAR_ ret = {e_str};
+    static STRINGVAR_ ret = {e_str, {0}};
 
     ret.vu.i = newstring(xstrdup(str));
-    return ret;
+    return &ret;
 }
 

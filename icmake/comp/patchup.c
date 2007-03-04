@@ -4,11 +4,11 @@
 
 #include "iccomp.h"
 
-void patchup(INT8 *code, size_t len, size_t *list, size_t listlen,
+void patchup(INT8 *code, size_t len, unsigned *list, size_t listlen,
              int pos)
 {                                           /* list, listlen: list of */
     register size_t                       /* offsets to patchup     */
-        index,
+        idx,
         beyond_jump;
     char
         *cp,                                /* codepointer */
@@ -20,9 +20,9 @@ void patchup(INT8 *code, size_t len, size_t *list, size_t listlen,
     if (pos)
         pos = len;
                                             /* walk all elements to patchup */
-    for (index = 0; index < listlen; index++)
+    for (idx = 0; idx < listlen; idx++)
     {
-        beyond_jump = list[index];
+        beyond_jump = list[idx];
             /*
                 beyond-jump is the offset immediately beyond the jump to
                 the end of the code. This is the position where the jump

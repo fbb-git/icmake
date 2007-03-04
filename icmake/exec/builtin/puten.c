@@ -24,7 +24,7 @@
 
 void fun_putenv ()
 {
-    reg = intConstructor_i
+    reg = *intConstructor_i
             (
                 putenv
                 (

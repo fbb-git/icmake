@@ -216,7 +216,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 4 "parser"
+#line 3 "parser"
 
 
 #include "iccomp.h"
@@ -621,27 +621,27 @@ static const yytype_int16 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   108,   108,   111,   116,   123,   130,   136,   143,   145,
-     147,   150,   150,   151,   151,   152,   152,   153,   153,   156,
-     162,   166,   172,   176,   185,   188,   193,   199,   203,   210,
-     217,   217,   227,   234,   242,   249,   256,   263,   270,   277,
-     284,   291,   298,   305,   312,   319,   326,   333,   340,   347,
-     354,   361,   368,   375,   382,   389,   396,   403,   410,   417,
-     424,   431,   438,   445,   452,   458,   464,   470,   476,   482,
-     488,   494,   500,   508,   513,   518,   525,   527,   536,   543,
-     550,   554,   559,   576,   586,   589,   596,   602,   609,   618,
-     629,   637,   645,   652,   659,   666,   670,   677,   684,   699,
-     702,   712,   717,   732,   741,   743,   747,   755,   761,   766,
-     781,   796,   818,   843,   852,   859,   866,   873,   873,   881,
-     883,   887,   889,   891,   893,   895,   897,   899,   901,   903,
-     905,   907,   909,   911,   913,   915,   917,   920,   920,   921,
-     921,   924,   926,   930,   932,   939,   941,   945,   947,   951,
-     953,   955,   959,   961,   965,   966,   970,   972,   978,   982,
-     986,   994,  1000,  1008,  1016,  1018,  1021,  1021,  1024,  1031,
-    1037,  1041,  1043,  1049,  1052,  1054,  1056,  1058,  1061,  1064,
-    1069,  1075,  1084,  1086,  1088,  1090,  1092,  1094,  1096,  1100,
-    1104,  1113,  1121,  1129,  1131,  1140,  1145,  1149,  1151,  1153,
-    1157,  1164,  1169,  1185,  1187,  1189,  1193
+       0,   107,   107,   110,   115,   122,   129,   135,   142,   144,
+     146,   149,   149,   150,   150,   151,   151,   152,   152,   155,
+     161,   165,   171,   175,   184,   187,   192,   198,   202,   209,
+     216,   216,   226,   233,   241,   248,   255,   262,   269,   276,
+     283,   290,   297,   304,   311,   318,   325,   332,   339,   346,
+     353,   360,   367,   374,   381,   388,   395,   402,   409,   416,
+     423,   430,   437,   444,   451,   457,   463,   469,   475,   481,
+     487,   493,   499,   507,   512,   517,   524,   526,   535,   542,
+     549,   553,   558,   575,   585,   588,   595,   601,   608,   617,
+     628,   636,   644,   651,   658,   665,   669,   676,   683,   698,
+     701,   711,   716,   731,   740,   742,   746,   754,   760,   765,
+     780,   795,   817,   842,   851,   858,   865,   872,   872,   880,
+     882,   886,   888,   890,   892,   894,   896,   898,   900,   902,
+     904,   906,   908,   910,   912,   914,   916,   919,   919,   920,
+     920,   923,   925,   929,   931,   938,   940,   944,   946,   950,
+     952,   954,   958,   960,   964,   965,   969,   971,   977,   981,
+     985,   993,   999,  1007,  1015,  1017,  1020,  1020,  1023,  1030,
+    1036,  1040,  1042,  1048,  1051,  1053,  1055,  1057,  1060,  1063,
+    1068,  1074,  1083,  1085,  1087,  1089,  1091,  1093,  1095,  1099,
+    1103,  1112,  1120,  1128,  1130,  1139,  1144,  1148,  1150,  1152,
+    1156,  1163,  1168,  1184,  1186,  1188,  1192
 };
 #endif
 
@@ -1884,538 +1884,538 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 119 "parser"
+#line 118 "parser"
     {
             (yyval) = *multargs(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 5:
-#line 124 "parser"
+#line 123 "parser"
     {
             (yyval) = *firstarg(&(yyvsp[(1) - (1)]));
         ;}
     break;
 
   case 6:
-#line 130 "parser"
+#line 129 "parser"
     {
             break_ok++;
         ;}
     break;
 
   case 7:
-#line 137 "parser"
+#line 136 "parser"
     {
             (yyval) = *break_stmnt();
         ;}
     break;
 
   case 11:
-#line 150 "parser"
+#line 149 "parser"
     {parse_error = err_backtick_expected; ;}
     break;
 
   case 13:
-#line 151 "parser"
+#line 150 "parser"
     {parse_error = err_closebrace_expected; ;}
     break;
 
   case 15:
-#line 152 "parser"
+#line 151 "parser"
     {parse_error = err_closepar_expected; ;}
     break;
 
   case 17:
-#line 153 "parser"
+#line 152 "parser"
     {parse_error = err_comma_expected; ;}
     break;
 
   case 19:
-#line 158 "parser"
+#line 157 "parser"
     {
             (yyval) = (yyvsp[(2) - (2)]);
         ;}
     break;
 
   case 21:
-#line 168 "parser"
+#line 167 "parser"
     {
             (yyval) = (yyvsp[(2) - (2)]);
         ;}
     break;
 
   case 23:
-#line 179 "parser"
+#line 178 "parser"
     {
             (yyval) = (yyvsp[(2) - (3)]);
         ;}
     break;
 
   case 26:
-#line 195 "parser"
+#line 194 "parser"
     {
             (yyval) = (yyvsp[(2) - (2)]);
         ;}
     break;
 
   case 28:
-#line 204 "parser"
+#line 203 "parser"
     {
             entervar();
         ;}
     break;
 
   case 29:
-#line 211 "parser"
+#line 210 "parser"
     {
-        (yyval) = fetchvar();
+        (yyval) = *fetchvar();
     ;}
     break;
 
   case 30:
-#line 217 "parser"
+#line 216 "parser"
     {
             parse_error = err_in_expression;
         ;}
     break;
 
   case 31:
-#line 221 "parser"
+#line 220 "parser"
     {
             (yyval) = (yyvsp[(2) - (2)]);
         ;}
     break;
 
   case 32:
-#line 230 "parser"
+#line 229 "parser"
     {
             (yyval) = *assign(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 33:
-#line 238 "parser"
+#line 237 "parser"
     {
             (yyval) = *indexOp(&(yyvsp[(1) - (4)]), &(yyvsp[(3) - (4)]));
         ;}
     break;
 
   case 34:
-#line 245 "parser"
+#line 244 "parser"
     {
             (yyval) = *math_ass(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]), multiply, "*=");
         ;}
     break;
 
   case 35:
-#line 252 "parser"
+#line 251 "parser"
     {
             (yyval) = *math_ass(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]), divide, "/=");
         ;}
     break;
 
   case 36:
-#line 259 "parser"
+#line 258 "parser"
     {
             (yyval) = *math_ass(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]), modulo, "%=");
         ;}
     break;
 
   case 37:
-#line 266 "parser"
+#line 265 "parser"
     {
             (yyval) = *math_ass(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]), addition, "+=");
         ;}
     break;
 
   case 38:
-#line 273 "parser"
+#line 272 "parser"
     {
             (yyval) = *math_ass(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]), subtract, "-=");
         ;}
     break;
 
   case 39:
-#line 280 "parser"
+#line 279 "parser"
     {
             (yyval) = *math_ass(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]), band, "&=");
         ;}
     break;
 
   case 40:
-#line 287 "parser"
+#line 286 "parser"
     {
             (yyval) = *math_ass(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]), bor, "|=");
         ;}
     break;
 
   case 41:
-#line 294 "parser"
+#line 293 "parser"
     {
             (yyval) = *math_ass(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]), xor, "^=");
         ;}
     break;
 
   case 42:
-#line 301 "parser"
+#line 300 "parser"
     {
             (yyval) = *math_ass(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]), shl, "<<=");
         ;}
     break;
 
   case 43:
-#line 308 "parser"
+#line 307 "parser"
     {
             (yyval) = *math_ass(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]), shr, ">>=");
         ;}
     break;
 
   case 44:
-#line 315 "parser"
+#line 314 "parser"
     {
             (yyval) = *or_boolean(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 45:
-#line 322 "parser"
+#line 321 "parser"
     {
             (yyval) = *and_boolean(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 46:
-#line 329 "parser"
+#line 328 "parser"
     {
             (yyval) = *equal(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 47:
-#line 336 "parser"
+#line 335 "parser"
     {
             (yyval) = *unequal(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 48:
-#line 343 "parser"
+#line 342 "parser"
     {
             (yyval) = *smaller(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 49:
-#line 350 "parser"
+#line 349 "parser"
     {
             (yyval) = *greater(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 50:
-#line 357 "parser"
+#line 356 "parser"
     {
             (yyval) = *sm_equal(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 51:
-#line 364 "parser"
+#line 363 "parser"
     {
             (yyval) = *gr_equal(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 52:
-#line 371 "parser"
+#line 370 "parser"
     {
             (yyval) = *addition(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 53:
-#line 378 "parser"
+#line 377 "parser"
     {
             (yyval) = *band(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 54:
-#line 385 "parser"
+#line 384 "parser"
     {
             (yyval) = *bor(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 55:
-#line 392 "parser"
+#line 391 "parser"
     {
             (yyval) = *xor(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 56:
-#line 399 "parser"
+#line 398 "parser"
     {
             (yyval) = *shl(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 57:
-#line 406 "parser"
+#line 405 "parser"
     {
             (yyval) = *shr(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 58:
-#line 413 "parser"
+#line 412 "parser"
     {
             (yyval) = *subtract(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 59:
-#line 420 "parser"
+#line 419 "parser"
     {
             (yyval) = *multiply(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 60:
-#line 427 "parser"
+#line 426 "parser"
     {
             (yyval) = *young(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 61:
-#line 434 "parser"
+#line 433 "parser"
     {
             (yyval) = *old(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 62:
-#line 441 "parser"
+#line 440 "parser"
     {
             (yyval) = *divide(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 63:
-#line 448 "parser"
+#line 447 "parser"
     {
             (yyval) = *modulo(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 64:
-#line 454 "parser"
+#line 453 "parser"
     {
             (yyval) = *negate(&(yyvsp[(2) - (2)]));
         ;}
     break;
 
   case 65:
-#line 460 "parser"
+#line 459 "parser"
     {
             (yyval) = *incdec(pre_op, op_inc, &(yyvsp[(2) - (2)]));
         ;}
     break;
 
   case 66:
-#line 466 "parser"
+#line 465 "parser"
     {
             (yyval) = *incdec(post_op, op_inc, &(yyvsp[(1) - (2)]));
         ;}
     break;
 
   case 67:
-#line 472 "parser"
+#line 471 "parser"
     {
             (yyval) = *incdec(pre_op, op_dec, &(yyvsp[(2) - (2)]));
         ;}
     break;
 
   case 68:
-#line 478 "parser"
+#line 477 "parser"
     {
             (yyval) = *incdec(post_op, op_dec, &(yyvsp[(1) - (2)]));
         ;}
     break;
 
   case 69:
-#line 484 "parser"
+#line 483 "parser"
     {
             (yyval) = (yyvsp[(2) - (2)]);
         ;}
     break;
 
   case 70:
-#line 490 "parser"
+#line 489 "parser"
     {
             (yyval) = *bnot(&(yyvsp[(2) - (2)]));
         ;}
     break;
 
   case 71:
-#line 496 "parser"
+#line 495 "parser"
     {
             (yyval) = *not_boolean(&(yyvsp[(2) - (2)]));
         ;}
     break;
 
   case 72:
-#line 504 "parser"
+#line 503 "parser"
     {
             (yyval) = *cast((yyvsp[(2) - (4)]).type, &(yyvsp[(4) - (4)]));
         ;}
     break;
 
   case 73:
-#line 509 "parser"
+#line 508 "parser"
     {
-            (yyval) = stackframe(e_str | e_const);
+            (yyval) = *stackframe(e_str | e_const);
         ;}
     break;
 
   case 74:
-#line 514 "parser"
+#line 513 "parser"
     {
-            (yyval) = stackframe(e_int | e_const);
+            (yyval) = *stackframe(e_int | e_const);
         ;}
     break;
 
   case 75:
-#line 521 "parser"
+#line 520 "parser"
     {
             (yyval) = (yyvsp[(2) - (3)]);
         ;}
     break;
 
   case 77:
-#line 530 "parser"
+#line 529 "parser"
     {
             (yyval) = *onearg(f_backtick, &(yyvsp[(2) - (3)]));
         ;}
     break;
 
   case 78:
-#line 537 "parser"
+#line 536 "parser"
     {
             (yyval) = *expr_stmnt(&(yyvsp[(1) - (1)]));
         ;}
     break;
 
   case 79:
-#line 546 "parser"
+#line 545 "parser"
     {
             (yyval) = *catcode(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 82:
-#line 570 "parser"
+#line 569 "parser"
     {
             (yyval) = *for_stmnt(&(yyvsp[(3) - (11)]), &(yyvsp[(5) - (11)]), &(yyvsp[(7) - (11)]), &(yyvsp[(10) - (11)]));
         ;}
     break;
 
   case 83:
-#line 580 "parser"
+#line 579 "parser"
     {
             close_fun(&(yyvsp[(3) - (4)]));
         ;}
     break;
 
   case 85:
-#line 590 "parser"
+#line 589 "parser"
     {
-            (yyval) = fetchvar();
+            (yyval) = *fetchvar();
         ;}
     break;
 
   case 86:
-#line 598 "parser"
+#line 597 "parser"
     {
             (yyval) = *zeroargs((yyvsp[(1) - (2)]).type);
         ;}
     break;
 
   case 87:
-#line 605 "parser"
+#line 604 "parser"
     {
             (yyval) = *onearg((yyvsp[(1) - (3)]).type, &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 88:
-#line 614 "parser"
+#line 613 "parser"
     {
             (yyval) = *twoargs((yyvsp[(1) - (5)]).type, &(yyvsp[(3) - (5)]), &(yyvsp[(5) - (5)]));
         ;}
     break;
 
   case 89:
-#line 625 "parser"
+#line 624 "parser"
     {
             (yyval) = *threeargs((yyvsp[(1) - (7)]).type, &(yyvsp[(3) - (7)]), &(yyvsp[(5) - (7)]), &(yyvsp[(7) - (7)]));
         ;}
     break;
 
   case 90:
-#line 633 "parser"
+#line 632 "parser"
     {
             (yyval) = *optint_string((yyvsp[(1) - (4)]).type, &(yyvsp[(3) - (4)]), &(yyvsp[(4) - (4)]));
         ;}
     break;
 
   case 91:
-#line 641 "parser"
+#line 640 "parser"
     {
             (yyval) = *optint_special((yyvsp[(1) - (4)]).type, &(yyvsp[(3) - (4)]), &(yyvsp[(4) - (4)]));
         ;}
     break;
 
   case 92:
-#line 648 "parser"
+#line 647 "parser"
     {
             (yyval) = *specials(f_printf, &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 93:
-#line 655 "parser"
+#line 654 "parser"
     {
             (yyval) = *exec_fprintf((yyvsp[(1) - (3)]).type, &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 94:
-#line 662 "parser"
+#line 661 "parser"
     {
             (yyval) = *callfun((yyvsp[(1) - (3)]).evalue, &(yyvsp[(3) - (3)]));
         ;}
     break;
 
   case 96:
-#line 671 "parser"
+#line 670 "parser"
     {
             open_fun();
         ;}
     break;
 
   case 97:
-#line 678 "parser"
+#line 677 "parser"
     {
             (yyval).evalue = fetchfun();
         ;}
     break;
 
   case 98:
-#line 689 "parser"
+#line 688 "parser"
     {
             make_frame();
             outbin((yyvsp[(5) - (5)]).code, (yyvsp[(5) - (5)]).codelen);
@@ -2423,7 +2423,7 @@ yyreduce:
     break;
 
   case 100:
-#line 705 "parser"
+#line 704 "parser"
     {
         initialization = 0;
         (yyval) = *expr_stmnt(assign(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)])));    /* explicit initialization */
@@ -2431,35 +2431,35 @@ yyreduce:
     break;
 
   case 102:
-#line 726 "parser"
+#line 725 "parser"
     {
             (yyval) = *if_stmnt(&(yyvsp[(3) - (9)]), &(yyvsp[(5) - (9)]), &(yyvsp[(8) - (9)]));
         ;}
     break;
 
   case 103:
-#line 733 "parser"
+#line 732 "parser"
     {
         initialization = 1;
     ;}
     break;
 
   case 106:
-#line 749 "parser"
+#line 748 "parser"
     {
             (yyval) = (yyvsp[(2) - (2)]);
         ;}
     break;
 
   case 107:
-#line 757 "parser"
+#line 756 "parser"
     {
         (yyval) = *catcode(&(yyvsp[(1) - (2)]), &(yyvsp[(2) - (2)]));        /* cat initialization code */
     ;}
     break;
 
   case 109:
-#line 768 "parser"
+#line 767 "parser"
     {
             (yyval) = *makelist
                  (
@@ -2474,7 +2474,7 @@ yyreduce:
     break;
 
   case 110:
-#line 784 "parser"
+#line 783 "parser"
     {
             (yyval) = *makelist
                  (
@@ -2489,7 +2489,7 @@ yyreduce:
     break;
 
   case 111:
-#line 802 "parser"
+#line 801 "parser"
     {
             (yyval) = *makelist
                  (
@@ -2508,7 +2508,7 @@ yyreduce:
     break;
 
   case 112:
-#line 825 "parser"
+#line 824 "parser"
     {
             (yyval) = *makelist
                  (
@@ -2527,134 +2527,134 @@ yyreduce:
     break;
 
   case 113:
-#line 846 "parser"
+#line 845 "parser"
     {
             (yyval) = (yyvsp[(3) - (3)]);
         ;}
     break;
 
   case 114:
-#line 852 "parser"
+#line 851 "parser"
     {
-            (yyval) = stackframe(e_int | e_const);
+            (yyval) = *stackframe(e_int | e_const);
             (yyval).evalue = O_FILE;
         ;}
     break;
 
   case 115:
-#line 860 "parser"
+#line 859 "parser"
     {
             nestlevel++;
         ;}
     break;
 
   case 116:
-#line 867 "parser"
+#line 866 "parser"
     {
             yyerrok;
         ;}
     break;
 
   case 117:
-#line 873 "parser"
+#line 872 "parser"
     {parse_error = err_older_younger; ;}
     break;
 
   case 118:
-#line 875 "parser"
+#line 874 "parser"
     {
             (yyval) = (yyvsp[(2) - (2)]);
         ;}
     break;
 
   case 137:
-#line 920 "parser"
+#line 919 "parser"
     {parse_error = err_openpar_expected; ;}
     break;
 
   case 139:
-#line 921 "parser"
+#line 920 "parser"
     {parse_error = err_openbrace_expected; ;}
     break;
 
   case 144:
-#line 932 "parser"
+#line 931 "parser"
     {
-            (yyval) = stackframe(e_int | e_const);
+            (yyval) = *stackframe(e_int | e_const);
             (yyval).evalue = 1;
         ;}
     break;
 
   case 157:
-#line 972 "parser"
+#line 971 "parser"
     {
             vartype = e_int;
         ;}
     break;
 
   case 160:
-#line 988 "parser"
+#line 987 "parser"
     {
             n_params++;
         ;}
     break;
 
   case 161:
-#line 994 "parser"
+#line 993 "parser"
     {
             pop_dead();
         ;}
     break;
 
   case 162:
-#line 1000 "parser"
+#line 999 "parser"
     {
             push_dead();                    /* set new dead-level */
         ;}
     break;
 
   case 163:
-#line 1010 "parser"
+#line 1009 "parser"
     {
             (yyval) = *return_stmnt((yyvsp[(1) - (2)]).type, &(yyvsp[(2) - (2)]));
         ;}
     break;
 
   case 166:
-#line 1021 "parser"
+#line 1020 "parser"
     {parse_error = err_semicol_expected; ;}
     break;
 
   case 168:
-#line 1025 "parser"
+#line 1024 "parser"
     {
             sem_err = 0;
         ;}
     break;
 
   case 169:
-#line 1033 "parser"
+#line 1032 "parser"
     {
             (yyval) = *cat_stmnt(&(yyvsp[(1) - (2)]), &(yyvsp[(2) - (2)]));
         ;}
     break;
 
   case 172:
-#line 1045 "parser"
+#line 1044 "parser"
     {
             (yyval) = (yyvsp[(1) - (2)]);
         ;}
     break;
 
   case 180:
-#line 1071 "parser"
+#line 1070 "parser"
     {
         stringbuf = xstrcat(stringbuf, lexstring);/* catenate the new string */
     ;}
     break;
 
   case 181:
-#line 1076 "parser"
+#line 1075 "parser"
     {
         free(stringbuf);                    /* free former string */
         stringbuf = xstrdup(lexstring);     /* duplicate initial string */
@@ -2662,7 +2662,7 @@ yyreduce:
     break;
 
   case 190:
-#line 1105 "parser"
+#line 1104 "parser"
     {
             parse_error = err_identifier_expected;
             vartype = (yyvsp[(1) - (1)]).type;
@@ -2670,14 +2670,14 @@ yyreduce:
     break;
 
   case 191:
-#line 1115 "parser"
+#line 1114 "parser"
     {
         (yyval) = (yyvsp[(1) - (2)]);                    /* initialization code */
     ;}
     break;
 
   case 192:
-#line 1124 "parser"
+#line 1123 "parser"
     {
             (yyval) = *catcode(&(yyvsp[(1) - (3)]), &(yyvsp[(3) - (3)]));    /* catenate variable    */
                                         /* initialization code  */
@@ -2685,37 +2685,37 @@ yyreduce:
     break;
 
   case 194:
-#line 1134 "parser"
+#line 1133 "parser"
     {
             (yyval) = (yyvsp[(3) - (3)]);
         ;}
     break;
 
   case 195:
-#line 1141 "parser"
+#line 1140 "parser"
     {
             global_init = *catcode(&global_init, &(yyvsp[(1) - (1)]));
         ;}
     break;
 
   case 200:
-#line 1158 "parser"
+#line 1157 "parser"
     {
             vartype = 0;
         ;}
     break;
 
   case 202:
-#line 1176 "parser"
+#line 1175 "parser"
     {
             (yyval) = *while_stmnt(&(yyvsp[(3) - (7)]), &(yyvsp[(6) - (7)]));
         ;}
     break;
 
   case 206:
-#line 1193 "parser"
+#line 1192 "parser"
     {
-            (yyval) = stackframe(0);
+            (yyval) = *stackframe(0);
         ;}
     break;
 
@@ -2935,11 +2935,11 @@ yyreturn:
 }
 
 
-#line 1197 "parser"
+#line 1196 "parser"
 
 
-int yywrap()
+int yywrap(void)
 {
-    return (1);
+    return 1;
 }
 

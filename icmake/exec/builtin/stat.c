@@ -27,13 +27,13 @@
 
 void fun_stat ()
 {
-    int fileatt = 0;;                           /* file attributes */
     struct stat statbuf;                        /* file stat buffer */
+    int fileatt = 0;                            /* file attributes */
 
     int mode = intValue(top());                 /* get mode arg */
     char const *fname = stringStr(top() - 1);   /* get file name */
 
-    reg = listConstructor();                    /* return result as list */
+    reg = *listConstructor();                    /* return result as list */
 
     if (stat (fname, &statbuf))                 /* do stat call */
     {                                           /* failure to stat? */

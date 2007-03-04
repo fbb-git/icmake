@@ -27,7 +27,7 @@ void fun_call_rss ()
     size_t funnr = (size_t)getopcode (infile);
 
     if (funnr >= f_hlt)
-        error ("unexisting rss function call at %s", hexstring (curoffs, 4));
+        error ("unexisting rss function call at %s", hexstring(curoffs, 4));
 
     builtin(funnr);
 }

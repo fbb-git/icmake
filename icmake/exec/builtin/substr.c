@@ -13,12 +13,12 @@ void fun_substr()
     if (offset < 0)
         offset = 0;
 
-    if (offset >= str_len || count <= 0)
-        reg = stringConstructor();
+    if ((size_t)offset >= str_len || count <= 0)
+        reg = *stringConstructor();
     else
     {
-        reg = stringConstructor_cP(str + offset);
-        if (count < str_len - offset)
+        reg = *stringConstructor_cP(str + offset);
+        if (count < (int)(str_len - (size_t)offset))
             ((char *)stringStr(&reg))[count] = 0;
     }    
 }

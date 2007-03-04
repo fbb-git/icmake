@@ -27,7 +27,7 @@ void fun_fields ()
     char const *str = stringStr(top());
     char const *sep = stringStr(top() - 1);
 
-    reg = listConstructor();
+    reg = *listConstructor();
 
     if (*str)
     {

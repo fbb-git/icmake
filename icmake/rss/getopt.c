@@ -66,12 +66,12 @@ void main(int argc, char **argv)
 #include "icrssdef.h"
 
 char
-    *near icce_beyond_optchar,              /* no character beyond optchar yet */
-    *near icce_optchar = "-",
-    *near icce_optval;
+    *icce_beyond_optchar,              /* no character beyond optchar yet */
+    *icce_optchar = "-",
+    *icce_optval;
 
 int
-    near icce_next_option = 0;
+    icce_next_option = 0;
 
 
 int ic_getopt(int *p_argc, char **argv)

@@ -13,7 +13,7 @@ int yylex_file(char *buf, int max_size)
         result;
 
                                             /* try to read from file */
-    if ( (result = read( fileno(yyin), buf, max_size )) > 0 )
+    if ( (result = read( fileno(yyin), buf, (size_t)max_size )) > 0 )
         return (result);                    /* return # bytes read if any */
 
     if (result == 0)                        /* if none, switch to other fun */
@@ -25,5 +25,5 @@ int yylex_file(char *buf, int max_size)
     }
 
     error("read() in flex scanner failed"); /* error when read() fails */
-    return (0);				    /* dummy to avoid warning */
+    return (0);                 /* dummy to avoid warning */
 }

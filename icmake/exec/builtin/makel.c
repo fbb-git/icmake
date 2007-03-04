@@ -27,7 +27,7 @@ void fun_makelist()
 {
     char  const *name = stringStr(top() - 1);   /* filemask string */
 
-    reg = listConstructor();
+    reg = *listConstructor();
 
     if (*name)                          /* if valid name.. */
     {
@@ -38,7 +38,7 @@ void fun_makelist()
             ext[_MAX_EXT],
             newname[_MAX_PATH];
 
-        int attrib = intValue(top());   /* attribute to scan for */
+        size_t attrib = intValue(top());   /* attribute to scan for */
 
                                         /* find a first name */
         char *namefound = findfirst (name, attrib);

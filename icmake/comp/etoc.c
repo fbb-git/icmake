@@ -6,12 +6,9 @@
 
 #include "iccomp.h"
 
-void etoc(e)
-    ESTRUC_
-        *e;
+void etoc(ESTRUC_ *e)
 {
-    ESTRUC_
-        pre;
+    ESTRUC_ pre;
 
     switch
     (
@@ -50,7 +47,7 @@ void etoc(e)
         break;
 
         case e_post_inc_dec:
-            pre = stackframe(0);
+            pre = *stackframe(0);
             gencode(&pre, op_push_var, e->evalue);
             *e = *catcode(&pre, e);         /* prefix push before var++, var-- */
         break;

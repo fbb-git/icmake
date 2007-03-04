@@ -4,11 +4,6 @@
 
 #include "icmake.h"
 
-#ifdef MSDOS
-#   pragma comment(lib, "icmake")
-#   pragma comment(lib, "..\\rss\\icrss")
-#endif
-
 static char
     bim[]       = "bim",
     icm_comp[]  = LIBDIR "/icm-comp",
@@ -39,48 +34,34 @@ int main (                         /* icmake source(txt) dest(bin) */
     if (!(flags & f_icmake) && argc2 == 1)  /* argv[1]: already for icm-exec */
         error
         (
+            "%s%s%s%s%s",
+
             "Icmake by Frank B. Brokken and Karel Kubat.\n"
             "\n"
-            "Usage: %s [flags] source[.im] [dest[.bim]] [-- [args]]\n"
+            "Usage: ",
+                prog,
+            " [flags] source[.im] [dest[.bim]] [-- [args]]\n"
             "where:\n"
             "\tflags:  optional flags:\n"
-            "\t\t-a     : information about %s\n"
+            "\t\t-a     : information about ",
+                prog,
+            "\n"
             "\t\t-b     : blunt execution of the destinationfile\n"
             "\t\t-c     : the destination file is compiled\n"
             "\t\t-i file: 'file': name of source, argument processing stops\n"
-#ifdef MSDOS
-            "\t\t-o file: all icmake output is redirected to `file'\n"
-#endif
             "\t\t-p     : only the preprocessor is activated\n"
             "\t\t-q     : quiet mode: copyright banner not displayed\n"
-#ifndef MSDOS
-            "\t\t-t file: 'file' is used as a temporary bim-file, to be removed\n"
+            "\t\t-t file: 'file' is used as a temporary bim-file, to be "
+                                                                "removed\n",
+
             "\t\t         on exit. Argument processing stops.\n"
-#endif
             "\tsource: make description source file (default extension: .im)\n"
             "\tdest:   binary make file             (default:    source.bim)\n"
             "\t        (not used with the -t option)\n"
             "\t-- :   optional icmake-file arguments separator\n"
             "\targs:  optional arguments following -- received by\n"
             "\t       the icmake file in its argv-list"
-            , prog
-            , prog
         );
-
-#ifdef MSDOS
-    if (redirect_nr != ~0)
-    {
-        if
-        (
-            !redirect_start(fileno(stderr), redirect_nr)
-            ||
-            !redirect_start(fileno(stdout), redirect_nr)
-        )
-            error("Output redirection to file fails");
-
-        copyright("Make Utility", version, release, 1);
-    }
-#endif
 
     if (!(flags & f_icmake))                /* do not take source literally */
     {
@@ -148,10 +129,6 @@ int main (                         /* icmake source(txt) dest(bin) */
         argv[argc2 + 1] = (char *)dest_name;    /* store dest-name */
     }
     argv[argc2] = icm_exec;                     /* store executor's name */
-
-#ifdef MSDOS
-    quote_blanks(&argv[argc2]);             /* quote arguments with blanks */
-#endif
 
                                             /* do the making of the file */
     errors = _execvp(icm_exec, &argv[argc2]);

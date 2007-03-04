@@ -26,14 +26,13 @@
 
 #include "icrssdef.h"
 
-char *hexstring (UNS16 val, UNS16 len)
+char *hexstring (size_t val, size_t len)
 {
-    static char
-        retbuf [10];
-    char
-        buf [10];
+    register int dlen = len;    /* until %zd format is generally available */
+    static char retbuf[10];
+    char buf[10];
 
-    sprintf (buf, "%%%d.%dx", len, len);
-    sprintf (retbuf, buf, val);
-    return (retbuf);
+    sprintf (buf, "%%%d.%dx", dlen, dlen);
+    sprintf (retbuf, buf, (UNS16)val);
+    return retbuf;
 }

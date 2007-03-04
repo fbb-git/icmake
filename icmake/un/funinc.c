@@ -2,18 +2,17 @@
 
 void fun_inc ()
 {
-    INT16
-        index;
+    INT16 idx;
 
-    index = getint16 (infile);
-    dumpint (index);
-    if ((UNS16)index < 0x8000)
-        printf ("inc global %s %s\n", varname (var [index].type),
-                                    printvar (index));
-    else if (index < (INT16) 0xc000)
+    idx = getint16 (infile);
+    dumpint (idx);
+    if ((UNS16)idx < 0x8000)
+        printf ("inc global %s %s\n", varname (var [idx].type),
+                                    printvar (idx));
+    else if (idx < (INT16) 0xc000)
         printf ("inc local %s %s\n",
-                   varname (local_types[ (INT16) 0xc000 - (INT16) 1 - index]),
-                   printvar (index));
+                   varname (local_types[ (INT16) 0xc000 - (INT16) 1 - idx]),
+                   printvar (idx));
     else
-        printf ("inc arg %s\n", printvar (index));
+        printf ("inc arg %s\n", printvar (idx));
 }

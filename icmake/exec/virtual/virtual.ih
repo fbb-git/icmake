@@ -4,9 +4,9 @@
 
 #include <stdlib.h>
 
-VAR_ intConstructor(void);
-VAR_ stringConstructor(void);
-VAR_ listConstructor(void);
+VAR_ *intConstructor(void);
+VAR_ *stringConstructor(void);
+VAR_ *listConstructor(void);
 
 void intAssign(VAR_ *lhs, VAR_ const *rhs);
 void stringAssign(VAR_ *lhs, VAR_ const *rhs);
@@ -32,16 +32,16 @@ int intLogical(VAR_ const *var);
 int stringLogical(VAR_ const *var);
 int listLogical(VAR_ const *var);
 
-VAR_ intCopyCons(VAR_ const *var);
-VAR_ stringCopyCons(VAR_ const *var);
-VAR_ listCopyCons(VAR_ const *var);
+VAR_ *intCopyCons(VAR_ const *var);
+VAR_ *stringCopyCons(VAR_ const *var);
+VAR_ *listCopyCons(VAR_ const *var);
 
 
 extern void (*p_assign[])(VAR_ *lhs, VAR_ const *rhs);
 extern void (*p_add[])(VAR_ *lhs, VAR_ const *rhs);
 extern void (*p_sub[])(VAR_ *lhs, VAR_ const *rhs);
 extern void (*p_compare[])(VAR_ *lhs, VAR_ const *rhs);
-extern VAR_ (*p_constructor[])(void);
-extern VAR_ (*p_copycons[])(VAR_ const *lhs);
+extern VAR_ *(*p_constructor[])(void);
+extern VAR_ *(*p_copycons[])(VAR_ const *lhs);
 extern void (*p_destructor[])(VAR_ *var);
 extern int  (*p_logical[])(VAR_ const *var);

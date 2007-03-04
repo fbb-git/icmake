@@ -56,5 +56,5 @@ void fun_chdir ()
     if (newdir[strlen(newdir) - 1] != DIRSEP)       /* cwd */
         strcat (newdir, dirsep);
 
-    reg = stringConstructor_cP(newdir);
+    reg = *stringConstructor_cP(newdir);
 }

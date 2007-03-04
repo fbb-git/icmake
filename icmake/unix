@@ -60,7 +60,6 @@ void initialize()
 
     check("bin");
     check("binlinux");
-    check("bindos");
 }           
             
 void makelib (string dir, string lib)

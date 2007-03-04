@@ -10,24 +10,24 @@
 static void remove_name(register SYMTAB_ *tab)
 {
     register size_t
-        index;
+        idx;
 
-    if ((index = looksym(tab)) < tab->n_defined)
+    if ((idx = looksym(tab)) < tab->n_defined)
     {
-        free(tab->symbol[index].name);      /* free the name-memory */
-        tab->symbol[index].name =           /* set a dummy name     */
+        free(tab->symbol[idx].name);      /* free the name-memory */
+        tab->symbol[idx].name =           /* set a dummy name     */
                            xstrdup(nullstring);
     }
 }
 
 void clear_hidden()
 {
-    register int
-        index;
+    register size_t
+        idx;
 
-    for (index = 0; index < sizeof(hidden) / sizeof(HIDDEN_FUNCTION_); index++)
+    for (idx = 0; idx < sizeof(hidden) / sizeof(HIDDEN_FUNCTION_); idx++)
     {
-        lexstring = xstrdup(hidden[index].name); /* prepare the lookup-name     */
+        lexstring = xstrdup(hidden[idx].name); /* prepare the lookup-name     */
         remove_name(&funtab);               /* remove the name from funtab */
         remove_name(&global);               /* remove also from global     */
     }

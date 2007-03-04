@@ -1,10 +1,11 @@
 #include "string.ih"
 
-STRINGVAR_ stringConstructor()
+STRINGVAR_ *stringConstructor()
 {
-    STRINGVAR_ ret = {e_str};
+    static STRINGVAR_ ret = {e_str, {0}};
+
     ret.vu.i = newstring(xstrdup(""));
 
-    return ret;
+    return &ret;
 }
 

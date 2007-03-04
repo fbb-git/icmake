@@ -20,7 +20,8 @@ ESTRUC_ *scast(e)
     {
         if (test_type(e, e_const))
         {
-            sprintf(buffer, "%u", e->evalue);     /* convert to string */
+            sprintf(buffer, "%u", 
+                  (unsigned)e->evalue);     /* convert to string */
             e->evalue = lookstring(buffer);
             set_type(e, e_const | e_str);
         }

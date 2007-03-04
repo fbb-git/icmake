@@ -44,7 +44,7 @@ void main(int argc, char **argv)
 #include "icrssdef.h"
 
 extern int
-    near icce_next_option;
+    icce_next_option;
 
 int ic_getoptindex()
 {

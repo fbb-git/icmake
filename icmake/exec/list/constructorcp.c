@@ -1,11 +1,11 @@
 #include "list.ih"
 
-LISTVAR_ listConstructor_cP(char const *arg)
+LISTVAR_ *listConstructor_cP(char const *arg)
 {
-    LISTVAR_ ret = {e_list};
+    static LISTVAR_ ret = {e_list, {0}};
 
     ret.vu.i = newlist();
     listAdd_cP(&ret, arg);
     
-    return ret;
+    return &ret;
 }

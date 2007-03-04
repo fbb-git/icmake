@@ -1,6 +1,6 @@
 #include "../rss/icrssdef.h"
 
-BIN_HEADER_
+extern BIN_HEADER_
     *headerp;
 
 extern char
@@ -18,7 +18,7 @@ extern FILE
 extern INT8
     *local_types;
 
-extern UNS16
+extern size_t
     curoffs,
     nvar;
 
@@ -27,11 +27,11 @@ extern VAR_
 
 extern char
     *varname (E_TYPE_),
-    *printvar (INT16);
+    *printvar (int);
 
 extern void
-    dumpchar (char),
-    dumpint (UNS16),
+    dumpchar(int),
+    dumpint (int),
     dumpstring (char *),
     fun_jmp (void),
     fun_jmp_false (void),

@@ -22,12 +22,12 @@
 
 void fun_element ()
 {
-    size_t index = intValue(top());
+    size_t idx = intValue(top());
 
-    reg = stringConstructor_cP
+    reg = *stringConstructor_cP
             (
-                index < listSize(top() - 1) ? 
-                    listAt(top() - 1, index)
+                idx < listSize(top() - 1) ? 
+                    listAt(top() - 1, idx)
                 : 
                     ""
             );

@@ -1,14 +1,6 @@
-
-#ifdef MSDOS
-#pragma comment (lib, "icmun")
-#pragma comment (lib, "../rss/icrss")
-#endif
-
 #include "icmun.h"
 
-int main (argc, argv)
-int argc;
-char **argv;
+int main (int argc, char **argv)
 {
     register char
         *progname,
@@ -32,7 +24,7 @@ char **argv;
     if (! (infile = fopen (infname, READBINARY)) )
         error ("cannot open %s for reading", infname);
 
-    headerp = readheader (infile, version [0]);
+    headerp = readheader(infile, (size_t)version [0]);
 
     if ((INT16)(nvar = getvar (infile, headerp, &var)) == -1 )
         error ("invalid macro file, cannot read variable section");

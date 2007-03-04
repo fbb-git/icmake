@@ -1,4 +1,3 @@
-
         /* C Declarations */
 
 %{
@@ -209,7 +208,7 @@ enterid:
 entervarid:
     enterid
     {
-        $$ = fetchvar();
+        $$ = *fetchvar();
     }
 ;
 
@@ -507,12 +506,12 @@ expression:
     |
         string
         {
-            $$ = stackframe(e_str | e_const);
+            $$ = *stackframe(e_str | e_const);
         }
     |
         NUMBER
         {
-            $$ = stackframe(e_int | e_const);
+            $$ = *stackframe(e_int | e_const);
         }
     |
         '('
@@ -588,7 +587,7 @@ func_or_var:
     |
         IDENTIFIER
         {
-            $$ = fetchvar();
+            $$ = *fetchvar();
         }
     ;
 
@@ -850,7 +849,7 @@ makelist_expr:
 
 makelist_normal:
         {
-            $$ = stackframe(e_int | e_const);
+            $$ = *stackframe(e_int | e_const);
             $$.evalue = O_FILE;
         }
     ;
@@ -930,7 +929,7 @@ opt_expression:
         err_expression
     |
         {
-            $$ = stackframe(e_int | e_const);
+            $$ = *stackframe(e_int | e_const);
             $$.evalue = 1;
         }
     ;
@@ -1191,12 +1190,12 @@ zero_arg_funs:
 
 zeroframe:
         {
-            $$ = stackframe(0);
+            $$ = *stackframe(0);
         }
     ;
 %%
 
-int yywrap()
+int yywrap(void)
 {
-    return (1);
+    return 1;
 }

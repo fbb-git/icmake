@@ -15,7 +15,7 @@ static struct
 }
     stack[N_FILES];
 
-static int
+static size_t
     filenames_len,
     sp = N_FILES;
 

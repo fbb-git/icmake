@@ -9,9 +9,8 @@ ESTRUC_ *while_stmnt(e, s)
         *e,
         *s;
 {
-    register size_t
-        len,
-        *list;
+    register size_t len;
+    unsigned *list;
 
     nestlevel--;                            /* reduce nesting level */
     break_ok--;                             /* reduce break ok */

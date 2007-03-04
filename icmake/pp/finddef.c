@@ -1,5 +1,5 @@
 /*
-\funcref{finddef}{int finddef (\params)}
+\funcref{finddef}{int finddef(\params)}
     {
         {char} {*s} {identifier to search for}
     }
@@ -12,8 +12,8 @@
 
         Function {\em finndef()} attempts to find an identifier {\em s} in the
         array of defined identifiers. The {\em defined} array consists of
-        structs, holding the redefined identifier (field {\em ident}) and the
-        redefinition string (field {\em redef}).
+        structs, holding the redefined identifier(field {\em ident}) and the
+        redefinition string(field {\em redef}).
 
         An index into {\em defined} is returned; at {\em defined[ret].redef}
         the redefinition string can be found. If the identifier is not found in
@@ -24,15 +24,15 @@
 
 #include "icm-pp.h"
 
-int finddef (s)
-char *s;
+int finddef(char *s)
 {
-    register int
-        i;
+    register int i;
 
     for (i = 0; i < ndefined; i++)
-        if (! strcmp (defined [i].ident, s))
-            return (i);
+    {
+        if (!strcmp(defined[i].ident, s))
+            return i;
+    }
 
-    return (-1);
+    return -1;
 }

@@ -5,9 +5,10 @@
 
 typedef VAR_    INTVAR_;
 
-INTVAR_     intConstructor(void);
-INTVAR_     intConstructor_i(int value);
-INTVAR_     intCopyCons(INTVAR_ const *other);
+INTVAR_     *intConstructor(void);
+INTVAR_     *intConstructor_i(int value);
+INTVAR_     *intCopyCons(INTVAR_ const *other);
+
 void        intDestructor(VAR_ *lhs);
 void        intAssign(VAR_ *lhs, VAR_ const *rhs);
 

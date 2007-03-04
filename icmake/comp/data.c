@@ -188,7 +188,7 @@ HIDDEN_FUNCTION_
             "list h_older(int attrib, string mask, string file)"
             "{"
             "   int"
-            "       index;"
+            "       idx;"
             "   list"
             "       source,"
             "       dest;"
@@ -196,9 +196,9 @@ HIDDEN_FUNCTION_
             "       s;"
             ""
             "   source = makelist(attrib, mask);"
-            "   for (index = sizeof(source); index--; )"
+            "   for (idx = sizeof(source); idx--; )"
             "   {"
-            "       s = element(index, source);"
+            "       s = element(idx, source);"
             "       if (s older file)"
             "           dest += (list)s;"
             "   }"
@@ -216,7 +216,7 @@ HIDDEN_FUNCTION_
             "list h_younger(int attrib, string mask, string file)"
             "{"
             "   int"
-            "       index;"
+            "       idx;"
             "   list"
             "       source,"
             "       dest;"
@@ -224,9 +224,9 @@ HIDDEN_FUNCTION_
             "       s;"
             ""
             "   source = makelist(attrib, mask);"
-            "   for (index = sizeof(source); index--; )"
+            "   for (idx = sizeof(source); idx--; )"
             "   {"
-            "       s = element(index, source);"
+            "       s = element(idx, source);"
             "       if (s younger file)"
             "           dest += (list)s;"
             "   }"
@@ -241,7 +241,6 @@ HIDDEN_FUNCTION_
 
 size_t
     break_ok,
-    *dead,
     dead_sp,
     errcount,
     hidden_called,
@@ -251,5 +250,7 @@ size_t
     n_symbols,
     sem_err,
     stringsize;
+
+unsigned *dead;
 
 ESTRUC_ global_init;             /* code for initializing globals */

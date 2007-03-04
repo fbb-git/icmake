@@ -2,18 +2,16 @@
 
 void fun_dec ()
 {
-    INT16
-        index;
+    INT16 idx = getint16 (infile);
 
-    index = getint16 (infile);
-    dumpint (index);
-    if ((UNS16)index < 0x8000)
-        printf ("dec global %s %s\n", varname (var [index].type),
-                                    printvar (index));
-    else if (index < (INT16) 0xc000)
+    dumpint (idx);
+    if ((UNS16)idx < 0x8000)
+        printf ("dec global %s %s\n", varname (var [idx].type),
+                                    printvar (idx));
+    else if (idx < (INT16) 0xc000)
         printf ("dec local %s %s\n",
-                   varname (local_types[ (INT16) 0xc000 - (INT16) 1 - index]),
-                   printvar (index));
+                   varname (local_types[ (INT16) 0xc000 - (INT16) 1 - idx]),
+                   printvar (idx));
     else
-        printf ("dec arg %s\n", printvar (index));
+        printf ("dec arg %s\n", printvar (idx));
 }

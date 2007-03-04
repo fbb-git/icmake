@@ -19,7 +19,7 @@
 
 static int compelement (void const *s1, void const *s2)
 {
-    return (strcmp (*(char **)s1, *(char **)s2));
+    return (strcmp (*(char const * const *)s1, *(char const * const *)s2));
 }
 
 void listSort(LISTVAR_ *list)

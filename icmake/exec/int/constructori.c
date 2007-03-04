@@ -1,8 +1,9 @@
 #include "int.h"
 
-INTVAR_ intConstructor_i(int value)
+INTVAR_ *intConstructor_i(int value)
 {
-    INTVAR_ ret = {e_int, {value}};
+    static INTVAR_ ret = {e_int, {0}};
 
-    return ret;
+    ret.vu.intval = value;
+    return &ret;
 }

@@ -17,5 +17,5 @@
 
 void fun_g_base ()
 {
-    reg = stringConstructor_cP(get_base(stringStr(top())));
+    reg = *stringConstructor_cP(get_base(stringStr(top())));
 }

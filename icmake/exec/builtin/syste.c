@@ -26,10 +26,6 @@ void fun_system ()
 
     fflush (stdout);
 
-#ifdef MSDOS
-    _heapmin ();                            /* max memory under DOS */
-#endif
-
     {
         int ret;                            /* system() return */
     
@@ -38,6 +34,6 @@ void fun_system ()
         if (ret && P_CHECKMODE(mode))       /* terminate upon failure? */
             error ("system - failure of system call (status %d)", ret);
 
-        reg = intConstructor_i(ret);        
+        reg = *intConstructor_i(ret);        
     }
 }

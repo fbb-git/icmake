@@ -25,5 +25,5 @@ static char buf[2];
 void fun_ascii_str ()
 {
     buf[0] = intValue(top());
-    reg = stringConstructor_cP(buf);
+    reg = *stringConstructor_cP(buf);
 }

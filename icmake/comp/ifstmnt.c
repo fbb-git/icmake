@@ -12,7 +12,7 @@ ESTRUC_ *if_stmnt(e, s, s2)
 {
     register size_t
         len;
-    size_t
+    unsigned
         *list;
 
     nestlevel--;                            /* reduce nesting level */

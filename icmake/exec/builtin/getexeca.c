@@ -23,9 +23,7 @@
 
 #include "builtin.ih"
 
-char *getexecarg (n, flag)
-int n;
-int *flag;
+char *getexecarg (size_t n, int *flag)
 {
     register char
         *arg,

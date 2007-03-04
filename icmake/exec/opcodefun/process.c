@@ -32,7 +32,7 @@ void process ()
         curoffs = (size_t)ftell(infile);
         op = getopcode(infile);
 
-        if (op >= op_hlt || op == -1)
+        if (op >= op_hlt || op == (OPCODE_)-1)
         {
             fprintf(stderr, "bad opcode at %s ", hexstring(curoffs, 4));
             error("(opcode %s)", hexstring(op, 2));

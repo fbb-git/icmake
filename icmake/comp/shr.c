@@ -18,7 +18,7 @@ ESTRUC_ *shr (lval, rval)
     if (conflict(lval, rval, op_shr))       /* test type conflict */
         return(lval);
 
-    if ((lval->type & rval->type & ~ALLTYPES) == e_const)
+    if ((lval->type & rval->type & (size_t)~ALLTYPES) == e_const)
         lval->evalue >>= rval->evalue;
     else
         defcode(lval, rval, op_shr);

@@ -29,13 +29,13 @@ ESTRUC_ *assignment(lval, rval, opstr)      /* opstr is '=', or "/=", etc. */
                                             /* same types */
     if (lval->type & rval->type & (e_int | e_str | e_list))
     {
-        type = lval->type;                  /* save type/index for return */
+        type = lval->type;                  /* save type/idx for return */
         value = lval->evalue;
 
         gencode(lval, op_copy_var, lval->evalue);
         tmp = catcode(rval, lval);          /* catenate assignment code */
 
-        tmp->evalue = value;                /* set lvalue type and index */
+        tmp->evalue = value;                /* set lvalue type and idx */
         tmp->type = type;
 
         return tmp;

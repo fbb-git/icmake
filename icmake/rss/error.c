@@ -21,15 +21,9 @@
 
 #include "icrssdef.h"
 
-int
-    error_occurred = 0;
+int error_occurred = 0;
 
-#ifdef _PROTOTYPES
 void error (char *fmt, ...)
-#else
-void error (fmt MARG)
-char *fmt;
-#endif
 {
     va_list
         args;

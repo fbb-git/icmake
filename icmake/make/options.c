@@ -10,10 +10,6 @@ int options (char **argv, int *argc)
         c;
     char
         *cp;
-#ifdef MSDOS        
-    FILE
-        *new;
-#endif
     char
         pid_string[30];                     /* used with -x */
 
@@ -39,15 +35,6 @@ int options (char **argv, int *argc)
                     error("-i requires source-filename");
                 return getoptindex();       /* and return the index of args */
                                             /* to icm-exec */
-#ifdef MSDOS                                           
-            case 'o':
-                if (!(cp = getoptval(argc, argv)))
-                    error("-o requires output-filename");
-                if (!(new = fopen(cp, "w")))
-                    error("Can't open redirection file `%s'", cp);
-                redirect_nr = fileno(new);
-            break;
-#endif
             case 'p':
                 flags |= f_preprocessor;
             break;
@@ -56,7 +43,6 @@ int options (char **argv, int *argc)
                 flags |= f_quiet;           /* no banner */
             break;
 
-#ifndef MSDOS
             case 't':
                 flags |= f_tmpbim | f_icmake; /* flag use temporary bimfile  */
 
@@ -78,7 +64,6 @@ int options (char **argv, int *argc)
             return getoptindex() + 1;       /* index of remaining args */
                                             /* + 1 for the extra arg on the */
                                             /* #!/...-x... line */
-#endif
 
             case '-':
                 return getoptindex();       /* return index of args to icm-exec

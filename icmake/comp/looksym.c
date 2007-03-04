@@ -9,11 +9,11 @@ size_t looksym(tab)
         *tab;
 {
     register size_t
-        index;
+        idx;
 
-    for (index = 0; index < tab->n_defined; index++)
-        if (!strcmp(tab->symbol[index].name, lexstring))/* string found ? */
+    for (idx = 0; idx < tab->n_defined; idx++)
+        if (!strcmp(tab->symbol[idx].name, lexstring))/* string found ? */
             break;                                      /* done */
 
-    return (index);                 /* return string index */
+    return (idx);                 /* return string idx */
 }

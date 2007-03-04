@@ -3,18 +3,18 @@
 void fun_push_var ()
 {
     INT16
-        index;
+        idx;
 
-    index = getint16 (infile);
-    dumpint (index);
+    idx = getint16 (infile);
+    dumpint (idx);
 
-    if ((UNS16)index < 0x8000)
-        printf ("push global %s %s\n", varname (var [index].type),
-                                    printvar (index));
-    else if (index < (INT16) 0xc000)
+    if ((UNS16)idx < 0x8000)
+        printf ("push global %s %s\n", varname (var [idx].type),
+                                    printvar (idx));
+    else if (idx < (INT16) 0xc000)
         printf ("push local %s %s\n",
-                   varname (local_types[ (INT16) 0xc000 - (INT16) 1 - index]),
-                   printvar (index));
+                   varname (local_types[ (INT16) 0xc000 - (INT16) 1 - idx]),
+                   printvar (idx));
     else
-        printf ("push arg %s\n", printvar (index));
+        printf ("push arg %s\n", printvar (idx));
 }

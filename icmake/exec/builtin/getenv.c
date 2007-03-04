@@ -7,7 +7,7 @@ void fun_getenv()
 {
     char *env = getenv(stringStr(top()));
 
-    reg = listConstructor();
+    reg = *listConstructor();
     
     if (!env)
     {

@@ -1,7 +1,3 @@
-#ifndef MSDOS
-
-#include <ctype.h>
-#include <stdio.h>
 #include "icrssdef.h"
 
 char *_strlwr (char *s)
@@ -12,6 +8,5 @@ char *_strlwr (char *s)
     for (cp = s; *cp; ++cp)
         *cp = tolower(*cp);
 
-    return (s);
+    return s;
 }
-#endif

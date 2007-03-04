@@ -21,12 +21,12 @@
 void fun_older ()
 {
     int ret;
-    VAR_ rval = copyCons(top());
+    VAR_ rval = *copyCons(top());
 
     pop();
 
     ret = older(stringStr(top()), stringStr(&rval));
     stringDestructor(top());
 
-    *top() = intConstructor_i(ret);
+    *top() = *intConstructor_i(ret);
 }

@@ -28,7 +28,7 @@ void fun_fgets()
     size_t offset = intValue(top() - 1);
     FILE *inf;
 
-    reg = listConstructor();
+    reg = *listConstructor();
 
     if 
     ( 

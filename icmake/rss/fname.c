@@ -1,10 +1,3 @@
-/*
-    #include <stdlib.h>
-    #include <stdio.h>
-    #include <string.h>
-    #include "../icm.h"
-*/
-
 #include "icrssdef.h"
 
 static char
@@ -19,7 +12,7 @@ static void split (char const *n)
     _splitpath (n, drive, dir, fname, ext);
 }
 
-static void join ()
+static void join (void)
 {
     _makepath (name, drive, dir, fname, ext);
 }

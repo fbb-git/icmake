@@ -10,10 +10,10 @@
     structure of the binary file:
 
         version                             e.g., "1.00", without ascii-z
-        offset of the string constant-area  (long)
-        offset of the variable area         (long)
-        offset of the filenames area        (long) (end of BIN_HEADER_)
-        offset of first instr. to execute   (long)
+        offset of the string constant-area  (INT32)
+        offset of the variable area         (INT32)
+        offset of the filenames area        (INT32) (end of BIN_HEADER_)
+        offset of first instr. to execute   (INT32)
 
         code                                (first byte is first instruction)
         ascii-z string constant area
@@ -224,7 +224,7 @@ typedef enum
     e_code          = (1 << 7),             /* code */
 
     e_pre_inc_dec   = (1 << 8),             /* pre-inc or pre-dec        */
-    e_post_inc_dec  = (1 << 9),             /* post-inc or post-dec      */
+    e_post_inc_dec  = (1 << 9)              /* post-inc or post-dec      */
 } E_TYPE_;
 
 typedef enum                                /* names of rss-functions */
@@ -279,7 +279,7 @@ typedef enum                                /* names of rss-functions */
 
     f_backtick,                             /* 4 left until f_hlt */
 
-    f_hlt = f_system + 10,                  /* dummy marker for non-existing */
+    f_hlt = f_system + 10                   /* dummy marker for non-existing */
 } FUNNR_;
 
 typedef enum
@@ -378,19 +378,17 @@ typedef struct                              /* defined variable */
         vu;                                 /* value of the element */
 } VAR_;
 
-#ifndef MSDOS
 struct _find_t                               /* abbreviated variant */
 {
     char
         name[_MAX_PATH];
-    size_t
+    unsigned
         attrib;                             /* returned attribute */
 };
-#endif
 
 typedef struct
 {
-    size_t
+    unsigned
         attrib;                             /* requested attribute */
     struct _find_t
         find;                               /* _dos_find...()'s struct  */
@@ -406,11 +404,6 @@ extern char
     version[],
     release[];
 
-/*
-            replacement functions for non-dos systems
-*/
-
-#ifndef MSDOS
 
 void        _makepath(char *, const char *, const char *,
                       const char *, const char *);
@@ -423,23 +416,15 @@ int         _spawnvp(int, const char *, const char **);               /* ok */
 char        *_strlwr(char *);                                         /* ok */
 char        *_strupr(char *);
 
-#define     _heapmin()
-
-#else
-
-size_t    redirect_end(size_t, size_t);
-
-#endif  /*  not MSDOS   */
-
 char const *change_ext (char const *, char const *);
 char const *change_base (char const *, char const *);
 char const *change_path (char const *, char const *);
 
 int      chesc(char *, int *);
 void     copyright(char *, char *, char *, int);/* copyright message */
-char     *filefound();                          /* test attrib/pattern  */
+char     *filefound(void);                      /* test attrib/pattern  */
 char     *findfirst(char const *, size_t);    /* first entry matching pattern */
-char     *findnext();                           /* remaining matching entries   */
+char     *findnext(void);                       /* remaining matching entries   */
 char     *fgetz (char *, size_t, FILE *);
 
 char const *get_ext(char const *);
@@ -454,10 +439,12 @@ char     *ic_getoptval(int *, char **);
 #define  getopt      ic_getopt
 #define  getoptval   ic_getoptval
 
-char     *getstring (FILE *, INT32, UNS16);
-char     *hexstring (UNS16, UNS16);
+char     *getstring (FILE *, INT32, size_t);
+
+char     *hexstring (size_t, size_t);
+
 char     *program_name(char *);                 /* make programname from argv[0] */
-size_t redirect_start(size_t, size_t);    /* ASM function for DOS */
+
 char     *stresc(char *);
 
 char     *try_source(char const *);         /* return allocated source[.im] */
@@ -467,7 +454,7 @@ char     *xstrcat (char *, char const *);
 void     error (char *, ...);
 void     spawn_err (char *);
 
-void     *xrealloc (void *, int);
+void     *xrealloc (void *, size_t);
 
 int      exists  (char const *);
 int      older   (char const *, char const *);
@@ -477,8 +464,8 @@ INT16    getint16 (FILE *);
 
 OPCODE_  getopcode (FILE *);
 
-UNS16    getvar (FILE *, BIN_HEADER_ *, VAR_ **);
+UNS16    getvar(FILE *, BIN_HEADER_ *, VAR_ **);
 
-VAR_     initvar (VAR_);
+void     initvar(VAR_ *);
 
 #endif

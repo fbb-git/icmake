@@ -7,7 +7,7 @@
 void gencode(ESTRUC_ *e, OPCODE_ opcode, ...)
 {
     register size_t
-        index,
+        idx,
         last;
     int
         marker_value;
@@ -22,7 +22,7 @@ void gencode(ESTRUC_ *e, OPCODE_ opcode, ...)
     va_start(marker, opcode);
 
     lastop = opcode;                        /* remember last opcode */
-    outcode(e, opcode, sizeof(char));
+    outcode(e, (int)opcode, sizeof(char));
 
     switch (opcode)
     {
@@ -51,17 +51,18 @@ void gencode(ESTRUC_ *e, OPCODE_ opcode, ...)
             patchtrue(e);
         break;
 
-        case op_push_strconst:              /* write index of the const */
-            outcode(e, stringtab[va_arg(marker, int)].index, sizeof(INT16));
+        case op_push_strconst:              /* write idx of the const */
+            outcode(e, 
+                (int)stringtab[va_arg(marker, int)].index, sizeof(INT16));
         break;
 
         case op_frame:
             count = last = local.n_defined - n_params;
-            outcode(e, count, sizeof(char));
-            for (index = 0; index < last; index++)
+            outcode(e, (int)count, sizeof(char));
+            for (idx = 0; idx < last; idx++)
             {
-                count = local.symbol[n_params + index].var.type & ALLTYPES;
-                outcode(e, count, sizeof(char));
+                count = local.symbol[n_params + idx].var.type & ALLTYPES;
+                outcode(e, (int)count, sizeof(char));
             }
         break;
 

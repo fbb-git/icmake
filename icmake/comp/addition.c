@@ -4,13 +4,9 @@
 
 #include "iccomp.h"
 
-ESTRUC_ *addition (lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+ESTRUC_ *addition (ESTRUC_ *lval, ESTRUC_ *rval)
 {
-    register E_TYPE_
-        type;
+    register E_TYPE_ type;
 
     if (test_binop(op_add, lval, rval))
         return (lval);                      /* test for correct types */
@@ -23,7 +19,7 @@ ESTRUC_ *addition (lval, rval)
 
     type = lval->type;                      /* keep type for later */
 
-    if ((type & rval->type & ~ALLTYPES) == e_const)
+    if ((type & rval->type & (size_t)~ALLTYPES) == e_const)
     {
         if (test_type(lval, e_int))
             lval->evalue += rval->evalue;

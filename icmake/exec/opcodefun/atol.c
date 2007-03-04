@@ -19,7 +19,7 @@
 
 void fun_atol()
 {
-    VAR_ tmp = listConstructor_cP(stringStr(top()));
+    VAR_ tmp = *listConstructor_cP(stringStr(top()));
     assign(top(), &tmp);
     listDestructor(&tmp);
 }

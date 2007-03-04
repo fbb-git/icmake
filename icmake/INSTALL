@@ -42,11 +42,10 @@ in accordance with your local requirements:
     - Inspect (and optionally modify) the path-settings in
 ./def/destinations. In particular check:
 
-#define BINDIR  "/usr/bin"
-
-#define ICMEXEC "/usr/lib/icmake/icm-exec"
-#define ICMCOMP "/usr/lib/icmake/icm-comp"
-#define ICMPP   "/usr/lib/icmake/icm-pp"
+#define BINDIR      "/usr/bin"
+#define SKELDIR     "/usr/share/icmake"
+#define MANDIR      "/usr/share/man/man1"
+#define LIBDIR      "/usr/lib/icmake"
 
     - Inspect (and optionally modify) the availability of the program
 mentioned in ./def/programs (they should be available on any Unix(alike)
@@ -66,6 +65,10 @@ the ./bin subdirectory.
     You probabaly must do this as `root':
 
                                 sh install.sh
+
+    This will install the binaries and scripts in BINDIR. Furthermore,
+all toplines of the icmake scripts used in the source directories will be
+set to use the BINDIR path to the icmake program
 
 4. Clean up the garbage
 =======================

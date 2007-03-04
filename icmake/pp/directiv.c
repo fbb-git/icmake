@@ -1,5 +1,5 @@
 /*
-\funcref{directive}{void directive ()}
+\funcref{directive}{void directive()}
     {}
     {}
     {error(), pushfile(), insert()}
@@ -12,15 +12,15 @@
 
         \begin{itemize}
 
-            \item {\bf \#} {\em [spaces]} {\bf include} {\em [spaces]} {\bf
+            \item {\bf \#} {\em[spaces]} {\bf include} {\em[spaces]} {\bf
             "}{\em filename}{\bf "}. When this directive is read, {\em
             pushfile()} is called to start processing the included file.
 
             Analogous to {\bf C}, an {\bf \#include} $<$...$>$ form is
             supported.
 
-            \item {\bf \#} {\em [spaces]} {\bf define} {\em [spaces]} {\em name}
-            {\em [spaces]} {\em [redefinition]}. When this directive is read,
+            \item {\bf \#} {\em[spaces]} {\bf define} {\em[spaces]} {\em name}
+            {\em[spaces]} {\em[redefinition]}. When this directive is read,
             {\em insert()} is called to insert the definition in the symbol
             table. The defined {\em name} is passed to {\em insert()} as
             argument; the redefinition is stored in the lexical buffer {\em
@@ -41,85 +41,82 @@
 
 #include "icm-pp.h"
 
-static int isdefd (char *id)
+static int isdefd(STRING_ *str)
 {
-    register int
-    i;
+    register int i;
+    register char *id = str->data;
 
-    if ( (i = finddef (id)) < 0 ||
-     (!strcmp (defined [i].redef, "0"))
-       )
-    return (0);
-    return (1);
+    return (i = finddef(id)) >= 0 && strcmp(defined[i].redef, "0");
 }
 
-static void skipline()
+static int skipline(void)
 {
-    register int ch;
+    register int ch = 0;
+    while (1)
+    {
+        register int previous = ch;
 
-    while ((ch = fgetc (filestack [filesp].f)) != '\n' && ch != EOF)
-        ;
-    ungetc(ch, filestack[filesp].f);  /* push back that char */
+        ch = nextchar();
+        if (ch == '\n')
+        {
+            if (previous == '\\')
+                continue;
+            pushback('\n');             /* push back the last char */
+            return '\n';
+        }
+        if (ch == EOF)
+            return EOF;
+    }
 }
 
-static void skipblanks()
-{
-    register int ch;
-
-    while ((ch = fgetc (filestack [filesp].f)) == ' ' || ch == '\t')
-        ;
-
-    ungetc(ch, filestack[filesp].f);      /* push back next char, not ' ' */
-}
 
 static void terminate_line(char const *what)
 {
-    register int ch;
-
-    while ( (ch = fgetc (filestack [filesp].f)) != '\n' )
-        if (ch == EOF)
-            error ("%s: #%s at end-of-file", filestack[filesp].n, what);
-
-    ungetc (ch, filestack [filesp].f);      /* and push-back non-blank */
+    if (skipline() == EOF)
+        error("%s: #%s at end-of-file", filestack[filesp].n, what);
 }
 
-static void fill_line()
+static void fill_line(void)
 {
-    register int index = 0;
     register int ch;
                                     /* read the line-remainder */
-    while ((ch = fgetc (filestack [filesp].f)) != '\n' && ch != EOF)
-        lexbuf[index++] = ch;
+    lexbuf.len = 0;
+    while (1)
+    {
+        while ((ch = nextchar()) != '\n' && ch != EOF)
+            string_append(&lexbuf, ch);
 
-    lexbuf [index] = 0;             /* terminate the line */
+        if (!string_continue(&lexbuf))
+            break;
+    }
 
-    ungetc (ch, filestack [filesp].f);
+    string_append(&lexbuf, 0);
+    pushback(ch);
 }
 
-void include_directive()
+void include_directive(void)
 {
     register int ch;
-    register int index;
     register int imdir_used = 0;    /* assume include "..." form */
 
     skipblanks();
 
-    ch = fgetc(filestack [filesp].f);
+    ch = nextchar();
     if (ch != '\"' && ch != '<')
-        error ("%s: %d: \" or < expected after #include directive",
-               filestack [filesp].n, filestack [filesp].l);
+        error("%s: %d: \" or < expected after #include directive",
+               filestack[filesp].n, filestack[filesp].l);
 
     if (ch == '<')                  /* include <...> form? */
         imdir_used++;
 
-    index = 0;
-    while ( (ch = fgetc (filestack [filesp].f)) != '\"' && ch != '>')
+    lexbuf.len = 0;
+    while ( (ch = nextchar()) != '\"' && ch != '>')
         if (ch == '\n' || ch == EOF)
-            error ("%s: %d: unterminated name after #include directive",
-                   filestack [filesp].n, filestack [filesp].l);
+            error("%s: %d: unterminated name after #include directive",
+                   filestack[filesp].n, filestack[filesp].l);
         else
-            lexbuf [index++] = (char) ch;
-    lexbuf [index] = '\0';
+            string_append(&lexbuf, ch);
+    string_append(&lexbuf, 0);
 
     skipline();
 
@@ -128,19 +125,19 @@ void include_directive()
         if (imdir_used)
         {
             static char dirsep[2] = { DIRSEP, '\0' };
-            char filename [_MAX_PATH];
+            char filename[_MAX_PATH];
 
             char *im = xstrdup(imdir);
             char *path = strtok(im, ":");   /* get the first path element */
             while (path)
             {
-                strcpy (filename, path);
-                strcat (filename, dirsep);
-                strcat (filename, lexbuf);
+                strcpy(filename, path);
+                strcat(filename, dirsep);
+                strcat(filename, lexbuf.data);
 
                 if (access(filename, R_OK) == 0)
                 {
-                    pushfile (filename);
+                    pushfile(filename);
                     break;
                 }
                 path = strtok(0, ":");
@@ -148,89 +145,82 @@ void include_directive()
             free(im);
 
             if (!path)
-                error ("cannot find `%s' in `%s'", lexbuf, imdir);
+                error("cannot find `%s' in `%s'", lexbuf, imdir);
         }
         else
-            pushfile (lexbuf);
+            pushfile(lexbuf.data);
     }
 }
 
-static char idname [200];
+static STRING_ idname = {0, 0, NULL};
 
-static void define_directive()
+static void define_directive(void)
 {
-    skipblanks();
-    getident (idname);                      /* get the name of the define */
+    getident(&idname);                      /* get the name of the define */
     skipblanks();                           /* skip blanks again */
     fill_line();
     no_comment();                           /* remove comment from lexbuf */
 
     if (output_active)
-        insert (idname);
+        insert(idname.data);
 }
 
-static void ifndef_directive()
+static void ifndef_directive(void)
 {
-    skipblanks();
-    getident (idname);                      /* get the name of the define */
+    getident(&idname);                      /* get the name of the define */
     terminate_line("ifndef");
-    output_active = push_active(!isdefd(idname));
+    output_active = push_active(!isdefd(&idname));
 }
 
-static void ifdef_directive()
+static void ifdef_directive(void)
 {
-    skipblanks();
-    getident (idname);                      /* get the name of the define */
+    getident(&idname);                      /* get the name of the define */
     terminate_line("ifdef");
 
-    output_active = push_active(isdefd(idname));
+    output_active = push_active(isdefd(&idname));
 }
 
-static void else_directive()
+static void else_directive(void)
 {
     terminate_line("else");
     output_active = negate_active();
 }
 
-static void endif_directive()
+static void endif_directive(void)
 {
     terminate_line("endif");
     output_active = pop_active();
 }
 
-void directive ()
+void directive(void)
 {
     register int ch;
-                                            /* directive is #! */
-    if ((ch = fgetc (filestack [filesp].f)) == '!')
-    {                                       /* skip while not \n and not EOF */
+                                    /* directive is #! */
+    if ((ch = nextchar()) == '!')
+    {                               /* skip while not \n and not EOF */
         skipline();
-        return;                             /* all done here */
+        return;                     /* all done here */
     }
 
-    ungetc(ch, filestack[filesp].f);        /* push back the first char which may */
-                                            /* be a blank or the first char of a  */
-                                            /* directive                          */
-                                            
-    skipblanks();                           /* eat blanks between # and directive */
+    pushback(ch);                   /* push back the first char which may */
+                                    /* be a blank or the first char of a  */
+                                    /* directive                          */
+                                       
+    getident(&lexbuf);
 
-    if (! fscanf (filestack [filesp].f, "%s", lexbuf))
-        error ("%s: %d: bad preprocessor directive `%s'",
-               filestack [filesp].n, filestack [filesp].l, lexbuf);
-
-    if (! strncmp (lexbuf, "include", 7))
+    if (!strncmp(lexbuf.data, "include", 7))
         include_directive();
-    else if (!strncmp(lexbuf, "define", 6))
+    else if (!strncmp(lexbuf.data, "define", 6))
         define_directive();
-    else if (! strncmp (lexbuf, "ifndef", 6))
+    else if (!strncmp(lexbuf.data, "ifndef", 6))
         ifndef_directive();
-    else if (! strncmp (lexbuf, "ifdef", 5))
+    else if (!strncmp(lexbuf.data, "ifdef", 5))
         ifdef_directive();
-    else if (! strncmp (lexbuf, "else", 4))
+    else if (!strncmp(lexbuf.data, "else", 4))
         else_directive();
-    else if (! strncmp (lexbuf, "endif", 5))
+    else if (!strncmp(lexbuf.data, "endif", 5))
         endif_directive();
     else
-        error ("%s: %d: bad preprocessor directive `%s'",
-               filestack [filesp].n, filestack [filesp].l, lexbuf);
+        error("%s: %d: bad preprocessor directive `%s'",
+               filestack[filesp].n, filestack[filesp].l, &lexbuf.data);
 }

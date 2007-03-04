@@ -28,12 +28,12 @@ typedef struct
 static int sp = 0;
 static ACTIVESTACK_ *stack = NULL;
 
-static int active()
+static int active(void)
 {
     return stack[sp].d_active = stack[sp - 1].d_active && stack[sp].d_request;
 }
 
-void construct_active()
+void construct_active(void)
 {
     stack = malloc(sizeof(ACTIVESTACK_));
     stack->d_active = 1;
@@ -50,7 +50,7 @@ int pop_active()                /* returns previous output_active value */
 {
     if (!sp--)
         error("%s: %d: too many lone #endif directives",
-                filestack [filesp].n, filestack [filesp].l);
+                filestack[filesp].n, filestack[filesp].l);
 
     return stack[sp].d_active;
 }
@@ -59,7 +59,7 @@ int push_active(int request)    /* actual activity request */
 {
     ++sp;
 
-    stack = xrealloc (stack, (sp + 1) * sizeof (ACTIVESTACK_));
+    stack = xrealloc(stack, (sp + 1) * sizeof(ACTIVESTACK_));
     stack[sp].d_request = request;
     return active();
 }

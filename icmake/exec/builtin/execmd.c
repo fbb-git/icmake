@@ -64,6 +64,6 @@ int mode;
     if (ret && P_CHECKMODE (mode))      /* if checking requested.. */
         error ("execute - program indicates failure (status %d)", ret);
 
-    reg = intConstructor_i(ret);     /* return exit status */
+    reg = *intConstructor_i(ret);     /* return exit status */
     return (cmd);
 }

@@ -7,6 +7,6 @@
 ESTRUC_ *nullframe(ESTRUC_ *e)
 {
     discard(e);
-    *e = stackframe(0);
+    *e = *stackframe(0);
     return e;
 }

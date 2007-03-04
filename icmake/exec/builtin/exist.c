@@ -18,5 +18,5 @@
 
 void fun_exists()
 {
-    reg = intConstructor_i(exists(stringStr(top())));
+    reg = *intConstructor_i(exists(stringStr(top())));
 }

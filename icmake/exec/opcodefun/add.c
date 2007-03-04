@@ -23,7 +23,7 @@
 
 void fun_add()
 {
-    VAR_ rval = copyCons(top());    /* make a copy              */
+    VAR_ rval = *copyCons(top());   /* make a copy              */
     pop();                          /* remove the r-operand     */
 
     add(top(), &rval);              /* add the rval to the top  */

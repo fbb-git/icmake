@@ -1,3 +1,23 @@
+icmake (7.10)
+
+  * Removed Superfluous #defines from icm.h
+
+    #define values may extend over multiple lines, using the \ character as
+    the last character on the line to indicate line-continuation. 
+    
+    Applied size_t where applicable, using unsigned otherwise to prevent
+    problematic behavior on some 64 bit architectures. 
+
+    Changed many old-style classic C parameter lists into ANSI C style
+    parameter lists 
+
+    Minor textual repairs to the manual pages.
+
+    Added the option to compile with extensive compiler flags in the top-level
+    build script.
+
+    MSDOS is no longer suported by specific code. 
+
 icmake (7.02)
 
   * Repaired a misconfiguration in the bootstrap.sh and install.sh scripts due

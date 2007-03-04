@@ -8,5 +8,5 @@ void fun_jmp_false ()
     offs = getint16 (infile);
     dumpint ( (UNS16) offs);
     printf ("jmp false [%s]\n",
-            hexstring ((int) (ftell (infile) + offs), 4));
+            hexstring ((size_t) (ftell (infile) + offs), 4));
 }

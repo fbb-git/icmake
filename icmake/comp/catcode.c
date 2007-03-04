@@ -4,40 +4,27 @@
 
 #include "iccomp.h"
 
-static void patchadd ARG((register size_t,
-                                   size_t **, size_t *,
-                                   size_t *, size_t));
-
-static void patchadd(value, dest, dlen, source, slen)
-    register size_t
-        value;
-    size_t
-        *source,
-        **dest,
-        slen,
-        *dlen;
+static void patchadd(register size_t value, unsigned **dest, 
+                     size_t *dlen, unsigned *source, size_t slen)
 {
     register size_t
-        index;
+        idx;
 
     if (!*dlen)
         *dest = NULL;                       /* no memory for dest as yet */
 
-    for (index = 0; index < slen; index++)  /* all elements of source list: */
-        source[index] += value;             /* icrement addresses of targets */
+    for (idx = 0; idx < slen; idx++)  /* all elements of source list: */
+        source[idx] += value;             /* icrement addresses of targets */
 
                                             /* expand the dest area */
-    *dest = xrealloc(*dest, (*dlen + slen) * sizeof(int));
+    *dest = xrealloc(*dest, (*dlen + slen) * sizeof(unsigned));
 
                                             /* append source list */
-    memcpy(*dest + *dlen, source, slen * sizeof(int));
+    memcpy(*dest + *dlen, source, slen * sizeof(unsigned));
     *dlen += slen;                          /* increment # element */
 }
 
-ESTRUC_ *catcode(lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+ESTRUC_ *catcode(ESTRUC_ *lval, ESTRUC_ *rval)
 {
     register size_t
         l,

@@ -8,33 +8,10 @@
 */
 
 /*************************************************************************
-    define _PROTOTYPES unconditionally
     define MAXCMDLEN:  the max command line length
-
-    VOIDP, MARG, ARG macros: now superfluous, but kept for economy reasons
-    (it's better to be lazy than tired)
-
-    Undefine any unwanted _NO_PROTOTYPES or _NOPROTOTYPES
 */
 
-#define _PROTOTYPES
-#ifdef MSDOS
-#    define MAXCMDLEN   100
-#else
-#    define MAXCMDLEN   500
-#endif
-
-#define ARG(x)      x
-#define MARG        , ...
-#define VOIDP       void*
-
-#ifdef _NO_PROTOTYPES
-#   undef _NO_PROTOTYPES
-#endif
-
-#ifdef _NOPROTOTYPES
-#   undef _NOPROTOTYPES
-#endif
+#define MAXCMDLEN   500
 
 /*************************************************************************
     P_CHECK value for implied function argument of system, chdir, etc
@@ -104,35 +81,25 @@
 #endif
 
 /**************************************************************************
-    MSDOS/UNIX specific macros
+    UNIX specific macros
 */
 
 #ifndef P_WAIT
 #define P_WAIT                      0
 #endif
 
-#ifdef MSDOS
-#    define DIRSEP                  '\\'
-#    define DRIVESEP                ':'
-#    define INT32                   signed long
-#    define UNS32                   unsigned long
-#    define READBINARY              "rb"
-#    define WRITEBINARY             "wb"
-#else
-#    define near
-#    define _MAX_PATH               260
-#    define _MAX_DRIVE              2
-#    define _MAX_DIR                _MAX_PATH
-#    define _MAX_FNAME              _MAX_PATH
-#    define _MAX_EXT                _MAX_PATH
-#    define DIRSEP                  '/'
-#    define DRIVESEP                0
-#    define INT32                   signed int
-#    define UNS32                   unsigned int
-#    define READBINARY              "r"
-#    define WRITEBINARY             "w"
-#    define _execvp                 execvp
-#endif
+#define _MAX_PATH               260
+#define _MAX_DRIVE              2
+#define _MAX_DIR                _MAX_PATH
+#define _MAX_FNAME              _MAX_PATH
+#define _MAX_EXT                _MAX_PATH
+#define DIRSEP                  '/'
+#define DRIVESEP                0
+#define INT32                   signed int
+#define UNS32                   unsigned int
+#define READBINARY              "r"
+#define WRITEBINARY             "w"
+#define _execvp                 execvp
 
 #define INT8  signed char
 #define INT16 signed short

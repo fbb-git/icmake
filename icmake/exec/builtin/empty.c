@@ -1,3 +1,2 @@
-void fun_empty ()
-{
-}
+void fun_empty (void)
+{}

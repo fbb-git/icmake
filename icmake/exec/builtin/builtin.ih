@@ -42,10 +42,10 @@ char *setstring(char *);
 int getcmdlen(char **);
 int enterch(void);
 
-char *getarg(int, int *);
+char *getarg(size_t, int *);
 char **addcmd(char **, char *);
 char **execmd(char **, int);
-char *getexecarg(int, int *);
+char *getexecarg(size_t, int *);
 
 char *getLine(FILE *file);
 

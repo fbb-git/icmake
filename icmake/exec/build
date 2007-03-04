@@ -371,15 +371,29 @@ void setlibs()
 
 void main(int argc, list argv)
 {
+    int extensive;
+
     if (argc == 1)
     {
         printf("Usage:\n"
-               "   build prog [program=tmp/bin/icm-exec]\n"
-               "   build lib\n");
+               "   build prog [program=tmp/bin/icm-exec] [-e]\n"
+               "   build lib [-e]\n");
         exit (1);
     }
 
+    if (extensive = (element(argc - 1, argv) == "-e"))
+        --argc;
+
     initialize();
+
+    if (extensive)
+        copt = 
+        "-O0 -g3 -ansi -pedantic -fno-common -pipe -W -Wall -Wcast-align"
+        " -Wcast-qual -Wconversion -Wformat=2 -Winline -Wnested-externs"
+        " -Wpointer-arith -Wshadow -Wstrict-prototypes -Wundef"
+        " -Wno-unused-parameter -Waggregate-return -Wnested-externs"
+        " -DHAVE_GLOB";
+
     setlibs();
 
     if (element(1, argv) == "lib")

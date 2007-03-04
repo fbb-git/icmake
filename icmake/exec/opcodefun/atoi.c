@@ -20,7 +20,7 @@
 
 void fun_atoi()
 {
-    INTVAR_ value = intConstructor_i(atoi(stringStr(top())));
+    INTVAR_ value = *intConstructor_i(atoi(stringStr(top())));
 
     assign(top(), &value);
     intDestructor(&value);

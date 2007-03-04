@@ -24,7 +24,7 @@ void fun_fprintf()
 {
     size_t i;
     int newelement;
-    size_t nargs = intValue(top());
+    size_t nargs = (size_t)intValue(top());
     char const *filename = stringStr(top() - 1);
     FILE *outf;
 

@@ -14,5 +14,5 @@
 
 void fun_strlen()
 {
-    reg = intConstructor_i(strlen(stringStr(top())));
+    reg = *intConstructor_i((int)strlen(stringStr(top())));
 }

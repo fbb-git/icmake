@@ -42,7 +42,7 @@ Example:
 #include "icrssdef.h"
 #include "../icm.h"
 
-char *getstring (FILE *f, INT32 stringsec, UNS16 stringofs)
+char *getstring (FILE *f, INT32 stringsec, size_t stringofs)
 {
     INT32
         curoffs;
@@ -55,7 +55,7 @@ char *getstring (FILE *f, INT32 stringsec, UNS16 stringofs)
 
     curoffs = ftell (f);
 
-    if (fseek (f, stringsec + stringofs, SEEK_SET))
+    if (fseek (f, stringsec + (INT32)stringofs, SEEK_SET))
         return ( (char *) -1 );
 
     while (! done)

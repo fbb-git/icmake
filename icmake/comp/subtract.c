@@ -23,7 +23,7 @@ ESTRUC_ *subtract (lval, rval)
 
     type = lval->type;                      /* remember the type */
 
-    if ((lval->type & rval->type & ~ALLTYPES) == e_const)
+    if ((lval->type & rval->type & (size_t)~ALLTYPES) == e_const)
         lval->evalue -= rval->evalue;
     else
     {

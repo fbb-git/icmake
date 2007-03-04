@@ -31,8 +31,8 @@ void fun_frame()
 
     for (idx = 0; idx < nlocals; ++idx)
     {
-        VAR_ var = constructor((E_TYPE_)getopcode(infile));
-        push(&var);
-        destructor(&var);
+        VAR_ varFrame = *constructor((E_TYPE_)getopcode(infile));
+        push(&varFrame);
+        destructor(&varFrame);
     }
 }

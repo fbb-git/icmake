@@ -7,12 +7,10 @@
 static ESTRUC_
     e;
 
-ESTRUC_ *zeroargs(type)
-    E_TYPE_
-        type;
+ESTRUC_ *zeroargs(E_TYPE_ type)
 {
-    e = stackframe(0);                      /* reinitialize e */
+    e = *stackframe(0);                     /* reinitialize e */
     callrss(&e, type);
 
-    return (&e);
+    return &e;
 }

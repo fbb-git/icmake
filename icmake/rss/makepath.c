@@ -16,8 +16,6 @@
 
 */
 
-#ifndef MSDOS
-
 #include <stdio.h>
 #include <string.h>
 #include "../icm.h"
@@ -55,4 +53,3 @@ void _makepath(char * path,
         strcat(path, ext);
     }
 }
-#endif  /*  MSDOS  */

@@ -31,10 +31,7 @@ the basename of the function.
     This is not checked.
 }
 */
-#ifndef MSDOS
 
-#include <stdio.h>
-#include <string.h>
 #include "icrssdef.h"
 
 char *program_name(char *argv)
@@ -47,14 +44,3 @@ char *program_name(char *argv)
     return (argv);
 }
 
-#else
-
-#include <string.h>
-
-char *program_name(char *argv)
-{
-    *strrchr(argv, '.') = 0;                /* clear the extension */
-    return (1 + strrchr(argv, '\\'));       /* return the program name */
-}
-
-#endif

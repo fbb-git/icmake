@@ -4,12 +4,8 @@
 
 #include "iccomp.h"
 
-size_t rm_jmp_zero(codelen, list, listlen)
-    register size_t
-        codelen,
-        listlen;
-    size_t
-        *list;
+size_t rm_jmp_zero(register size_t codelen, unsigned *list, 
+                   register size_t listlen)
 {
     return
     (

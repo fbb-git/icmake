@@ -77,14 +77,14 @@ void main(int argc, char **argv)
 #include "icrssdef.h"
 
 extern char
-    *near icce_beyond_optchar,
-    *near icce_optchar,
-    *near icce_optval;
+    *icce_beyond_optchar,
+    *icce_optchar,
+    *icce_optval;
 extern int
-    near icce_next_option;
+    icce_next_option;
 
 static char
-    *near optval;
+    *optval;
 
 char *ic_getoptval(int *p_argc, char **argv)
 {

@@ -6,10 +6,8 @@
 
 int compile_test()
 {
-    char
-        buffer[100];
-    BIN_HEADER_
-        hdr;
+    char buffer[100];
+    BIN_HEADER_ hdr;
 
     if
     (
@@ -25,7 +23,7 @@ int compile_test()
     if (younger(source_name, dest_name))
         return(1);
 
-    hdr = *readheader(fdest, version[0]);
+    hdr = *readheader(fdest, (size_t)version[0]);
 
     fseek(fdest, hdr.offset[2], SEEK_SET);  /* go to filenames area */
 

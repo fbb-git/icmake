@@ -13,11 +13,11 @@ size_t lookstring(s)
     char *s;
 {
     register size_t
-        index;
+        idx;
 
-    for (index = 0; index < n_strings; index++)
-        if (!strcmp(stringtab[index].string, s)) /* string found ? */
-            return (index);                      /* return string index */
+    for (idx = 0; idx < n_strings; idx++)
+        if (!strcmp(stringtab[idx].string, s)) /* string found ? */
+            return (idx);                      /* return string idx */
 
     if (n_allocated == n_strings)           /* full table */
         stringtab = xrealloc(stringtab,
@@ -30,5 +30,5 @@ size_t lookstring(s)
     stringsize += strlen(s) + 1;
 
     n_strings++;                            /* next free */
-    return (index);                         /* return string index */
+    return (idx);                         /* return string idx */
 }

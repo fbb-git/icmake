@@ -62,7 +62,7 @@ Example:
 
 UNS16 getvar (FILE *f, BIN_HEADER_ *headerp, VAR_ **var)
 {
-    register int nvar = 0;
+    register size_t nvar = 0;
     INT32 curoffs;
 
     if (headerp->offset[1] == headerp->offset[2])
@@ -79,7 +79,7 @@ UNS16 getvar (FILE *f, BIN_HEADER_ *headerp, VAR_ **var)
             error ("cannot read in variables");
         if ((*var) [nvar].type > e_list)
             error ("bad variable type (var #%d)\n", nvar + 1);
-        (*var)[nvar] = initvar ((*var)[nvar]);
+        initvar (&(*var)[nvar]);
         nvar++;
     }
 

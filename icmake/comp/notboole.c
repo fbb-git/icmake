@@ -8,9 +8,8 @@ ESTRUC_ *not_boolean(e)
     ESTRUC_
         *e;
 {
-    size_t
-        len,
-        *list;
+    size_t len;
+    unsigned *list;
 
     if (test_type(e, e_const))                  /* immediate value */
     {

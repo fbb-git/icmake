@@ -4,13 +4,9 @@
 
 #include "iccomp.h"
 
-ESTRUC_ *math_ass(lval, rval, fun, opstr)
-    ESTRUC_
-        *lval,
-        *rval,
-        *(*fun) ARG((ESTRUC_ *, ESTRUC_ *));
-    char
-        *opstr;
+ESTRUC_ *math_ass(ESTRUC_ *lval, ESTRUC_ *rval, 
+                    ESTRUC_ *(*fun)(ESTRUC_ *, ESTRUC_ *),
+                    char *opstr)
 {
     register E_TYPE_
         ltype;
@@ -27,5 +23,5 @@ ESTRUC_ *math_ass(lval, rval, fun, opstr)
     rval->codelen = 0;
     rval->code = NULL;
 
-    return (assignment(rval, lval, opstr)); /* perform assignment */
+    return assignment(rval, lval, opstr); /* perform assignment */
 }

@@ -42,35 +42,28 @@
 
 #include "../rss/icrssdef.h"
 
-#ifdef MSDOS
-#define __STDC__
-#endif
-
-
-#ifndef MSDOS
 #include <memory.h>
 #define bcopy(s,d,l)    memcpy((d),(s),(l))
-#endif
 
 typedef enum                                /* order of elements must follow */
 {                                           /* definition of hidden[] in     */
     he_older = 0,                           /* data.c                        */
     he_younger = 1,                         /* reserved values 0 and 1 */
 
-    he_,                                    /* must be last ! */
+    he_                                     /* must be last ! */
 } HIDDEN_ENUM_;
 
 typedef enum
 {
     pre_op,
-    post_op,
+    post_op
 } PREPOST_;
 
 typedef enum
 {
     j_uncond,                               /* unconditional jump */
     j_truelist,                             /* jump batchpatch for truelist */
-    j_falselist,                            /* jump backbatch for falselist */
+    j_falselist                             /* jump backbatch for falselist */
 } JMP_COND_;
 
 #define down_type(e,v)          ((e)->type &= ~(v))
@@ -84,7 +77,7 @@ typedef enum
 
 typedef struct
 {
-    size_t
+    unsigned
         index;                              /* index in stringsection */
     char
         *string;                            /* string itself */
@@ -100,7 +93,7 @@ typedef struct                              /* symtab used with the compiler */
 
 typedef struct
 {
-    size_t
+    unsigned
         n_allocated,                        /* available memory */
         n_defined;                          /* defined variables */
     SYMBOL_
@@ -115,7 +108,8 @@ typedef struct
         truelen,
         falselen,
         codelen,                            /* length of the code */
-        evalue,                             /* index or value of the expression */
+        evalue;                             /* index or value of the expression */
+    unsigned
         *truelist,
         *falselist;
     INT8
@@ -127,7 +121,7 @@ typedef struct
     char
         *name,                              /* name of the hidden fun */
         *source;                            /* source of the hidden function */
-    size_t
+    unsigned
         type,                               /* returntype */
         this,                               /* set to 1 if called */
         nargs;                              /* # of arguments */
@@ -190,8 +184,7 @@ typedef enum
     err_comma_or_closepar_expected,
     err_number_expected,
     err_older_younger,
-    err_backtick_expected,
-
+    err_backtick_expected
 } PARSE_ERR_;
 
 extern char
@@ -242,7 +235,6 @@ extern HIDDEN_FUNCTION_
 
 extern size_t
     break_ok,
-    *dead,
     dead_sp,
     errcount,
     hidden_called,
@@ -252,21 +244,23 @@ extern size_t
     sem_err,
     stringsize;
 
+unsigned *dead;
+
 extern ESTRUC_ global_init;             /* code for initializing globals */
 
 int conflict (ESTRUC_ *, ESTRUC_ *,     /* conflicting binary types */
                   OPCODE_);
 int test_binop (OPCODE_, ESTRUC_ *,     /* test binop legality */
                       ESTRUC_ *);
-int test_operand (ESTRUC_ *, OPCODE_); /* test legality of operand */
-int yylex_file(char *, int);                /* read yylex input from yyin */
-int yylex_hidden(char *, int);              /* read yylex input from buffer */
+int test_operand (ESTRUC_ *, OPCODE_);  /* test legality of operand */
+int yylex_file(char *, int);            /* read yylex input from yyin */
+int yylex_hidden(char *, int);          /* read yylex input from buffer */
 
 size_t fetchfun (void);              /* fetch index of function */
 size_t lookstring (char *);          /* look for string in stringtab */
 size_t looksym (SYMTAB_ *);          /* look for symbol in symboltab */
 size_t rm_jmp_zero (size_t,         /* remove jmp 0 from || && lists */
-                 size_t *, size_t);
+                 unsigned *, size_t);
 
 ESTRUC_ *addition (ESTRUC_ *, ESTRUC_ *);  /* + code */
 ESTRUC_ *and_boolean (ESTRUC_ *, ESTRUC_ *);/* && code */
@@ -291,7 +285,7 @@ ESTRUC_ *equal (ESTRUC_ *, ESTRUC_ *);     /* == code */
 ESTRUC_ *exec_fprintf (E_TYPE_, ESTRUC_ *);/* exec() and fprintf() */
 ESTRUC_ *execute (ESTRUC_ *);              /* execute() (full arglist) */
 ESTRUC_ *expr_stmnt (ESTRUC_ *);           /* expr ; code */
-ESTRUC_ fetchvar (void);                   /* fetch variable */
+ESTRUC_ *fetchvar (void);                  /* fetch variable */
 ESTRUC_ *firstarg (ESTRUC_ *);             /* (arg   code */
 ESTRUC_ *first_stmnt (ESTRUC_ *);          /* catenate/write stmnts */
 ESTRUC_ *for_stmnt (ESTRUC_ *, ESTRUC_ *,   /* for statement */
@@ -330,7 +324,7 @@ ESTRUC_ *shl (ESTRUC_ *, ESTRUC_ *);            /* << (binary) code */
 ESTRUC_ *shr (ESTRUC_ *, ESTRUC_ *);            /* >> (binary) code */
 ESTRUC_ *smaller (ESTRUC_ *, ESTRUC_ *);   /* < code */
 ESTRUC_ *sm_equal (ESTRUC_ *, ESTRUC_ *);  /* <= code */
-ESTRUC_ stackframe (E_TYPE_);              /* initialize a stack-element */
+ESTRUC_ *stackframe (E_TYPE_);              /* initialize a stack-element */
 ESTRUC_ *subtract (ESTRUC_ *, ESTRUC_ *);  /* - (binary) code */
 ESTRUC_ *strupr_lwr (E_TYPE_, ESTRUC_ *);       /* strupr<->strlwr */
 ESTRUC_ *threeargs (E_TYPE_, ESTRUC_ *,         /* fun(x, y, z)  code */
@@ -343,12 +337,12 @@ ESTRUC_ *young (ESTRUC_ *, ESTRUC_ *);     /* younger code */
 ESTRUC_ *xor  (ESTRUC_ *, ESTRUC_ *);           /* ^ (binary) code */
 ESTRUC_ *zeroargs (E_TYPE_);               /* fun()  code */
 
-void    addpatch (size_t *, size_t,     /* add value to patch-list */
+void    addpatch (unsigned *, size_t,     /* add value to patch-list */
                                size_t);
 void    backend (void);                /* finish s_bin construction */
 void    btoi (ESTRUC_ *);              /* boolean to int */
-void    callrss (ESTRUC_ *, FUNNR_      /* call rss function */
-                                MARG);     /* and add asp, xxx instruction */
+void    callrss (ESTRUC_ *, FUNNR_,     /* call rss function */
+                                ...);   /* and add asp, xxx instruction */
 void    callhidden(int, ESTRUC_ *);         /* call hidden function */
 void    catargs (ESTRUC_ *);           /* arguments to code */
 void    catstrings (ESTRUC_ *,          /* catenate string consts */
@@ -370,8 +364,8 @@ void    fetob (ESTRUC_ *);             /* forced e conversion to boolean */
 void    hidden_functions (void);            /* patchup/generate hidden funs */
 void    last_stmnt (ESTRUC_ *);        /* write last stmnt */
 void    make_frame (void);             /* generate op_frame */
-void    gencode (ESTRUC_ *, OPCODE_     /* append new code */
-                                   MARG);
+void    gencode (ESTRUC_ *, OPCODE_,    /* append new code */
+                                   ...);
 void    open_fun (void);               /* open a function */
 void    outbin (void *, size_t);     /* write INT8s to s_bin */
 void    outcode (ESTRUC_ *, int,        /* append code to e->code */
@@ -379,9 +373,10 @@ void    outcode (ESTRUC_ *, int,        /* append code to e->code */
 void    patchfalse (ESTRUC_ *);        /* jmp_false target */
 void    patchtrue (ESTRUC_ *);         /* jmp_true target */
 void    patchup (INT8 *, size_t,      /* patchup t/f list */
-                     size_t *, size_t, int);
+                     unsigned *, size_t, int);
 void    patchup_true (ESTRUC_ *, int); /* batchpatch truelist */
 void    patchup_false (ESTRUC_ *, int);/* batchpatch truelist */
-void    pop_dead(void);                     /* restore dead-level */
-void    push_dead(void);                    /* new dead-level */
-void    semantic (char * MARG);        /* give semantic error */
+void    pop_dead(void);                 /* restore dead-level */
+void    push_dead(void);                /* new dead-level */
+void    semantic (char *, ...);         /* give semantic error */
+

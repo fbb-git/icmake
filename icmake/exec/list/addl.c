@@ -7,7 +7,7 @@ void listAdd_L(LISTVAR_ *dest, LISTVAR_ const *rhs)
 
     if (nRhs)                      /* something to add   */
     {
-        LISTVAR_ copy = listCopyCons(dest);
+        LISTVAR_ copy = *listCopyCons(dest);
 
         for (idx = 0; idx < nRhs; ++idx)
         {

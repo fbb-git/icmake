@@ -16,10 +16,7 @@
         ext:    the extension, if any, including the
                 leading period
 */
-#ifndef MSDOS
 
-#include <stdio.h>
-#include <string.h>
 #include "icrssdef.h"
 
 void _splitpath(const char * path,
@@ -58,4 +55,4 @@ void _splitpath(const char * path,
         ext[0] = '\x0';
     }
 }
-#endif
+

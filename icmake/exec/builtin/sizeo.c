@@ -16,5 +16,5 @@
 
 void fun_sizeoflist ()
 {
-    reg = intConstructor_i(listSize(top()));
+    reg = *intConstructor_i((int)listSize(top()));
 }

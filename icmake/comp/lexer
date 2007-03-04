@@ -6,6 +6,10 @@
 #include "iccomp.h"
 #include "parser.h"
 
+#ifndef fileno
+int fileno(FILE *stream);
+#endif
+
 #undef  YY_INPUT
 #define YY_INPUT(buf,result,max_size) result = yylex_input(buf, max_size);
 
@@ -14,7 +18,7 @@
     /* changed in the flex-implementation                               */
 
     static void yyunput (int c,char *buf_ptr  );
-    void *unusedUnput = &yyunput;
+    void (*unusedUnput)(int c,char *buf_ptr) = &yyunput;
 #endif
 
 %}
@@ -296,9 +300,9 @@ younger                 {
                             return(SHL);
                         }
 0x[0-9]+                {
-                            int value;
+                            unsigned value;
                             sscanf(yytext + 2, "%x", &value);
-                            sprintf(lexstring, "%d", value);
+                            sprintf(lexstring, "%d", (int)value);
                             return(NUMBER);
                         }
 [0-9]+                  {

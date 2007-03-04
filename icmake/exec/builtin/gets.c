@@ -21,11 +21,11 @@ void fun_gets ()
 
     if (!dest)
     {
-        reg = listConstructor();
+        reg = *listConstructor();
         return;
     }
     
-    reg = stringConstructor_cP(dest);
+    reg = *stringConstructor_cP(dest);
     free(dest);
 }
 

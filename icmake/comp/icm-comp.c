@@ -4,18 +4,9 @@
 
 #include "iccomp.h"
 
-#ifdef MSDOS
-#pragma comment(lib, "icmcomp")
-#pragma comment(lib, "../rss/icrss")
-#endif
-
 extern int yydebug;
 
-int main (argc, argv)            /* icm-comp source(txt) dest(bin) */
-    int
-        argc;
-    char
-        **argv;
+int main (int argc, char **argv)            /* icm-comp source(txt) dest(bin) */
 {
     if (argc != 3)
     {
@@ -38,7 +29,7 @@ int main (argc, argv)            /* icm-comp source(txt) dest(bin) */
         error("%s Can't read/write file(s)");
 
                                             /* malloc the dead-stack */
-    dead = xrealloc(NULL, sizeof(size_t));
+    dead = xrealloc(NULL, sizeof(unsigned));
 
     stringbuf = xstrdup(nullstring);        /* malloc initial stringbuf */
     lexstring = xstrdup(nullstring);        /* initial lexstring */
@@ -55,7 +46,7 @@ int main (argc, argv)            /* icm-comp source(txt) dest(bin) */
     if (!yynerrs)                            /* backend if no errors */
         backend();
     else                                    /* informative message */
-        printf("\n%d error(s) detected\n", errcount);
+        printf("\n%u error(s) detected\n", (unsigned)errcount);
 
     return(yynerrs != 0);                    /* returnvalue */
 }

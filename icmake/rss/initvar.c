@@ -37,17 +37,19 @@
 
 #include "icrssdef.h"
 
-VAR_ initvar (v)
-VAR_ v;
+void initvar (VAR_ *v)
 {
-    if ( (v.type & (e_str | e_list)) && ! v.vu.i )
+    if ( (v->type & (e_str | e_list)) && ! v->vu.i )
     {
-        v.vu.i = xrealloc (NULL, sizeof (INTER_));
-        v.vu.i->count = 1;
-        v.vu.i->ls.list.size = 0;
-        v.vu.i->ls.list.element = NULL;
-        v.vu.i->ls.str = NULL;
+        v->vu.i = xrealloc (NULL, sizeof (INTER_));
+        v->vu.i->count = 1;
+        v->vu.i->ls.list.size = 0;
+        v->vu.i->ls.list.element = NULL;
+        v->vu.i->ls.str = NULL;
     }
-
-    return (v);
 }
+
+
+
+
+

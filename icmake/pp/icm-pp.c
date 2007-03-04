@@ -22,16 +22,11 @@
 
         To process the input, function {\em lexer()} is called and its return
         value is passed to {\em process()}. This is repeated until the
-        filestack pointer {\em filesp} (increased by {\em pushfile()},
+        filestack pointer {\em filesp}(increased by {\em pushfile()},
         decreased by {\em popfile()}) indicates that the file stack is empty.
     }
 */
 
-
-#ifdef MSDOS
-#    pragma comment (lib, "icmpp")
-#    pragma comment (lib, "../rss/icrss")
-#endif
 
 #include "icm-pp.h"
 
@@ -44,32 +39,32 @@ int main(int argc, char **argv)
     dump_symbols = 0,
     load_symbols = 1;
 
-    progname = program_name (argv [0]);
+    progname = program_name(argv[0]);
     
-    while (argc > 1 && *argv [1] == '-')
+    while (argc > 1 && *argv[1] == '-')
     {
-        if (! strcmp (argv [1], "-nocomment"))
+        if (! strcmp(argv[1], "-nocomment"))
             nocomment++;
-        else if (! strcmp (argv [1], "-define"))
+        else if (! strcmp(argv[1], "-define"))
         {
             if (argc < 3)
-            error ("missing symbol after \"-define\"");
-            preload (argv [2], "1");
+            error("missing symbol after \"-define\"");
+            preload(argv[2], "1");
             argv++;
             argc--;
         }
-        else if (! strcmp (argv [1], "-nostrings"))
+        else if (! strcmp(argv[1], "-nostrings"))
             nostrings++;
-        else if (! strcmp (argv [1], "-nostdsymbols"))
+        else if (! strcmp(argv[1], "-nostdsymbols"))
             load_symbols = 0;
-        else if (! strcmp (argv [1], "-strictdirectives"))
+        else if (! strcmp(argv[1], "-strictdirectives"))
             strict_directives++;
-        else if (! strcmp (argv [1], "-nofileinfo"))
+        else if (! strcmp(argv[1], "-nofileinfo"))
             nofileinfo++;
-        else if (! strcmp (argv [1], "-dumpsymbols"))
+        else if (! strcmp(argv[1], "-dumpsymbols"))
             dump_symbols++;
         else 
-            error ("no such flag \"%s\" recognized", argv [1]);
+            error("no such flag \"%s\" recognized", argv[1]);
     
         argv++;
         argc--;
@@ -80,39 +75,44 @@ int main(int argc, char **argv)
 
     if (dump_symbols)
     {
-        printf ("%s: loaded symbols:\n", progname);
+        printf("%s: loaded symbols:\n", progname);
         for (i = 0; i < ndefined; i++)
-            printf ("    %s [%s]\n", defined [i].ident, defined [i].redef);
+            printf("    %s[%s]\n", defined[i].ident, defined[i].redef);
     }
     
     if (argc != 3)
     {
-        copyright ("ICMAKE Preprocessor", version, release, 1);
-        printf ("This program is run as a child process of icmake.\n"
-                "Usage: %s [flags] inputfile outputfile\n"
-                "where:\n"
-        "       flags       - optional flags, which may be:\n"
-        "           -define SYM      : defines SYM as \"1\"\n"
-        "           -nocomment       : suppresses comment deletion\n"
-        "           -nofileinfo      : suppresses generation of "
-                            "filename info\n"
-        "           -nostdsymbols    : don't load predefined symbols "
-                            "(UNIX etc.)\n"
-        "           -nostrings       : suppresses string parsing\n"
-        "           -strictdirectives: #-directives must start "
-                            "at column 1\n"
-        "           -dumpsymbols     : show loaded symbols\n"
-        "       inputfile   - makefile in text format\n"
-                "       outputfile  - result of preprocessing\n\n"
-            , progname);
+        copyright("ICMAKE Preprocessor", version, release, 1);
+
+        printf("%s%s%s%s",
+            "This program is run as a child process of icmake.\n"
+            "Usage: ",
+                progname,
+            "[flags] inputfile outputfile\n"
+            "where:\n"
+            "       flags       - optional flags, which may be:\n"
+            "           -define SYM      : defines SYM having value \"1\"\n"
+            "           -nocomment       : suppresses comment deletion\n"
+            "           -nofileinfo      : suppresses generation of "
+                                "filename info\n"
+            "           -nostdsymbols    : don't load predefined symbols "
+                                "(UNIX etc.)\n",
+    
+            "           -nostrings       : suppresses string parsing\n"
+            "           -strictdirectives: #-directives must start "
+                                "at column 1\n"
+            "           -dumpsymbols     : show loaded symbols\n"
+            "       inputfile   - makefile in text format\n"
+                    "       outputfile  - result of preprocessing\n"
+            "\n");
         return 1;
     }
 
-    if (! (imdir = getenv ("IM")) )
+    if (!(imdir = getenv("IM")) )
         imdir = ".";
 
-    if (! (outfile = fopen (argv [2], "w")) )
-        error ("cannot open input file %s", argv [2]);
+    if (!(outfile = fopen(argv[2], "w")) )
+        error("cannot open input file %s", argv[2]);
 
     pushfile(argv[1]);
     construct_active();

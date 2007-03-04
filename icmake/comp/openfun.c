@@ -7,7 +7,7 @@
 void open_fun()
 {
     register size_t
-        index,
+        idx,
         last;
 
     entertab = &funtab;                     /* store a function */
@@ -20,12 +20,12 @@ void open_fun()
 
     for                                     /* free former local names */
     (
-        index = 0,
+        idx = 0,
         last = local.n_defined;
-            index < last;
-                index++
+            idx < last;
+                idx++
     )
-        free(local.symbol[index].name);
+        free(local.symbol[idx].name);
 
     local.n_defined = 0;                    /* no symbols defined as yet */
     entertab = &local;                      /* next table to enter: local */

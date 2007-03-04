@@ -3,8 +3,8 @@
 
 #include "../../rss/icrss.h"
 
-VAR_    constructor(E_TYPE_ type);          /* default cons. sets count */
-VAR_    copyCons(VAR_ const *var);          /* increments count */    
+VAR_    *constructor(E_TYPE_ type);          /* default cons. sets count */
+VAR_    *copyCons(VAR_ const *var);          /* increments count */    
 void    destructor(VAR_ *var);              /* decrements count */
 
 void    assign(VAR_ *lhs, VAR_ const *rhs); /* increments count */

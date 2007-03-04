@@ -8,6 +8,6 @@
 void fun_strupr()
 {
     char *cp = _strupr(xstrdup(stringStr(top())));
-    reg = stringConstructor_cP(cp);
+    reg = *stringConstructor_cP(cp);
     free(cp);
 }

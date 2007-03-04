@@ -30,7 +30,7 @@
 
 #include "builtin.ih"
 
-char *getarg (int n, int *flag)
+char *getarg (size_t n, int *flag)
 {
     char
         convbuf [50];

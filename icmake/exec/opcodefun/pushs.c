@@ -23,14 +23,14 @@
 void fun_push_strconst()
 {
     register char *str = getstring(infile, headerp->offset[0], 
-                                           (UNS16)getint16(infile));
+                                           (size_t)getint16(infile));
     
     if (str == (char *)-1)
         error ("cannot get string, opcode at %s", hexstring (curoffs, 4));
 
     {
                                         /* str is allocated by getstring() */
-        STRINGVAR_ tmp = stringConstructor_cP(str);
+        STRINGVAR_ tmp = *stringConstructor_cP(str);
         push(&tmp);
         stringDestructor(&tmp);
         free(str);

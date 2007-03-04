@@ -18,7 +18,7 @@ int termch(void)
         return enterch();
     }
     
-    tcgetattr(STDIN_FILENO, &tattr);    // can't assign saved to tattr    
+    tcgetattr(STDIN_FILENO, &tattr);    /* can't assign saved to tattr */
 
     tattr.c_lflag &= ~(ICANON | ECHO);
     tattr.c_cc[VMIN] = 1;

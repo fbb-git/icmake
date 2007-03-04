@@ -21,26 +21,22 @@
 void fun_backtick()
 {
     char const *cmd = stringStr(top());     /* get cmd string */
-    FILE *pipe = popen(cmd, "r");           /* and open a pipe */
+    FILE *fpipe = popen(cmd, "r");           /* and open a pipe */
 
     if (echo)                               /* re-echo if requested */
         printf("`%s`\n", cmd);
 
-#ifdef MSDOS
-    _heapmin ();                            /* max memory under DOS */
-#endif
+    reg = *listConstructor();
 
-    reg = listConstructor();
-
-    if (!pipe)                          /* command failed */
+    if (!fpipe)                          /* command failed */
         return;                         /* then empty list return */
 
     {
         char *line;
 
-        while ((line = getLine(pipe)))
+        while ((line = getLine(fpipe)))
             listAdd_swallow_cP(&reg, line);
     }
 
-    pclose(pipe);
+    pclose(fpipe);
 }

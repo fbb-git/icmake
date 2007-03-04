@@ -19,7 +19,7 @@
 
 void fun_ascii_int ()
 {
-    reg = intConstructor_i(*stringStr(top()));
+    reg = *intConstructor_i(*stringStr(top()));
 }
 
 

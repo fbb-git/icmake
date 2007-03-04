@@ -18,13 +18,6 @@
     are read.
 */
 
-#ifndef MSDOS
-#include <stdio.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <ctype.h>
-
 #ifdef HAVE_GLOB
 #   include <glob.h>
 #endif
@@ -34,7 +27,7 @@
 #ifdef HAVE_GLOB
 static glob_t
     gdata;                                      /* globbing struct */
-static int
+static size_t
     nextglob;                                   /* next name in list */
 #else
 static FILE
@@ -66,11 +59,11 @@ static int make_attrib (char *fname)            /* make DOS attribs */
     if (stat (fname, &statbuf) == -1)           /* if not stat-able .. */
         return (0xdead);                        /* dead flag return */
 
-    if (statbuf.st_mode & S_IFDIR)              /* directory entry */
+    if (S_ISDIR(statbuf.st_mode))               /* directory entry */
         ret |= A_SUBDIR;
 
-    if (!(statbuf.st_mode & S_IWRITE))          /* non-writable entry */
-        ret |= A_RDONLY;
+    if (!(statbuf.st_mode & S_IWUSR))           /* S_IWRITE: not POSIX */
+        ret |= A_RDONLY;                        /* non-writable entry */
 
     if (*fname == '.' &&                        /* .file */
         strcmp (fname, ".") &&
@@ -101,12 +94,13 @@ size_t _dos_findfirst(char const * fspec, size_t attrib,
     glob (fspec, GLOB_NOCHECK, globerr, &gdata);
 
     if (! gdata.gl_pathc)                       /* no files: -1 return */
-        return (-1);
+        return (size_t)-1;
 
     strcpy (fileinfo->name, filename (gdata.gl_pathv[0]));
                                                 /* synthetise attribute */
     if ( (fileinfo->attrib = make_attrib (gdata.gl_pathv[0])) == 0xdead )
-        return (-1);
+        return (size_t)-1;
+
     return (0);
 #else
     char
@@ -137,7 +131,7 @@ size_t _dos_findnext(struct _find_t * fileinfo)
     if (nextglob >= gdata.gl_pathc)             /* done with list ? */
     {
         globfree (&gdata);                      /* yes.. free data */
-        return (-1);
+        return (size_t)-1;
     }
 
     strcpy (fileinfo->name,                     /* make next name available */
@@ -164,4 +158,3 @@ size_t _dos_findnext(struct _find_t * fileinfo)
 #endif
 }
 
-#endif

@@ -2,11 +2,8 @@
 
 void fun_call ()
 {
-    UNS16
-        offs;
+    int offs = getint16 (infile);
+    dumpint(offs);
 
-    offs = (UNS16) getint16 (infile);
-    dumpint (offs);
-
-    printf ("call [%s]\n", hexstring (offs, 4));
+    printf ("call [%s]\n", hexstring((size_t)offs, 4));
 }

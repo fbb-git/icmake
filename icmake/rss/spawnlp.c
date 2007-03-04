@@ -1,19 +1,13 @@
-#ifndef MSDOS
-
-#include <stdarg.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include "icrssdef.h"
 
 int _spawnlp (int mode, const char *prog, const char *av0, ...)
 {
     va_list
-    	marker;
+        marker;
     register char
-   	*nextarg;
+    *nextarg;
     char
-    	buf [_MAX_PATH * 4];
+        buf [_MAX_PATH * 4];
 
     strcpy (buf, prog);
 
@@ -22,9 +16,9 @@ int _spawnlp (int mode, const char *prog, const char *av0, ...)
 
     while (nextarg)
     {
-    	strcat (buf, " ");
-    	strcat (buf, nextarg);
-    	nextarg = va_arg (marker, char*);
+        strcat (buf, " ");
+        strcat (buf, nextarg);
+        nextarg = va_arg (marker, char*);
     }
 
     return (system (buf));
@@ -39,4 +33,3 @@ int main ()
 }
 #endif
 
-#endif

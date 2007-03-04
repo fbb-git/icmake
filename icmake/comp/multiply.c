@@ -4,10 +4,7 @@
 
 #include "iccomp.h"
 
-ESTRUC_ *multiply (lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+ESTRUC_ *multiply (ESTRUC_ *lval, ESTRUC_ *rval)
 {
     if (test_binop(op_mul, lval, rval))
         return (lval);                      /* test for correct types */
@@ -18,7 +15,7 @@ ESTRUC_ *multiply (lval, rval)
     if (conflict(lval, rval, op_mul))       /* test type conflict */
         return(lval);
 
-    if ((lval->type & rval->type & ~ALLTYPES) == e_const)
+    if ((lval->type & rval->type & (size_t)~ALLTYPES) == e_const)
         lval->evalue *= rval->evalue;
     else
         defcode(lval, rval, op_mul);

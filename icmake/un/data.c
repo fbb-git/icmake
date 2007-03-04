@@ -61,7 +61,7 @@ FILE
 INT8
     *local_types;
 
-UNS16
+size_t
     curoffs,
     nvar;
 
@@ -69,7 +69,7 @@ VAR_
     *var;
 
 void
-    (*procfun[]) ARG ((void)) =
+    (*procfun[])(void) =
     {
         fun_jmp,
         fun_jmp_false,

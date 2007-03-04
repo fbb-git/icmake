@@ -12,8 +12,11 @@ void delete_std_comment(char *cp)
         *eoc;                               /* end of comment */
 
     if (!(eoc = strstr(cp, "*/")))          /* can't find it ? */
-        error ("%s: %d: unterminated std-comment in #define",
-                filestack [filesp].n, filestack [filesp].l);
+        error("%s: %d: unterminated std-comment in #define",
+                filestack[filesp].n, filestack[filesp].l);
     else                                    /* copy the trailer to cp */
+    {
         strcpy(cp, eoc + 2);                /* thus killing the std-comment */
+        lexbuf.len = strlen(lexbuf.data) + 1;
+    }
 }

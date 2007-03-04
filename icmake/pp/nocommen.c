@@ -11,16 +11,16 @@
 
 void no_comment()
 {
-    char
-        *cp;                                /* look for / */
-
-    cp = lexbuf;                            /* get first char-address */
+    char                                    /* look for / */
+        *cp = lexbuf.data;                  /* get first char-address */
 
     while ((cp = strchr(cp, '/')))          /* any slash ? */
     {
         if (*(cp + 1) == '/')               /* next one is a slash too: */
         {
             *cp = 0;                        /* so we have eoln-comment   */
+            lexbuf.len = cp - lexbuf.data;
+
             return;                         /* and the define stops here */
         }
 

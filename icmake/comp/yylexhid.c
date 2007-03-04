@@ -10,7 +10,7 @@
 #include "iccomp.h"
 
 static int
-    hidden_index = -1;                      /* hidden function index */
+    hidden_idx = -1;                      /* hidden function idx */
 
 static char
     *cp = nullstring;
@@ -24,21 +24,21 @@ int yylex_hidden(char *buf, register int max_size)
     {
         if (!*cp)                           /* test available source */
         {
-            if                              /* test if next index will point */
+            if                              /* test if next idx will point */
             (                               /* to another hidden function */
-                hidden_index
+                hidden_idx
                 ==
                 sizeof(hidden) / sizeof(HIDDEN_FUNCTION_) - 1
             )
                 break;                      /* if not: done, return 'result' */
 
-            hidden_index++;                 /* next index and next source */
+            hidden_idx++;                 /* next idx and next source */
 
 
-            if (!hidden[hidden_index].this)
+            if (!hidden[hidden_idx].this)
                 continue;                   /* if not called, no code */
 
-            cp = hidden[hidden_index].source;
+            cp = hidden[hidden_idx].source;
         }
 
         result++;                           /* count a char for the return */

@@ -27,11 +27,6 @@
     }
 */
 
-#ifdef MSDOS
-#pragma comment (lib, "icmexec")
-#pragma comment (lib, "../rss/icrss")
-#endif
-
 #include "icm-exec.h"
 #include "var/var.h"
 
@@ -69,7 +64,7 @@ int main (int argc, char **argv)
     if (!(infile = fopen (argv [1], READBINARY)))
         error("cannot open bimfile '%s' to read", argv[1]);
 
-    headerp = readheader(infile, version [0]);
+    headerp = readheader(infile, (size_t)version[0]);
 
                                         /* return array of global vars */
     if ((INT16)(nvar = getvar(infile, headerp, &var)) == -1)
@@ -80,13 +75,13 @@ int main (int argc, char **argv)
     for (idx = 0; idx < nvar; ++idx)
     {
         if (typeValue(var + idx) == e_str)
-            var[idx] = stringConstructor();
+            var[idx] = *stringConstructor();
     }
 
     fseek(infile, headerp->offset[3], SEEK_SET);
 
     {
-        LISTVAR_ env = listConstructor();
+        LISTVAR_ env = *listConstructor();
 
         environ2list(&env);
         push(&env);             /* envp: 3rd arg of main() */
@@ -94,14 +89,13 @@ int main (int argc, char **argv)
     }
 
     {
-        LISTVAR_ args = listConstructor_s_cPP(argc, argv);
+        LISTVAR_ args = *listConstructor_s_cPP((size_t)argc, argv);
         push(&args);            /* argv: 2nd arg of main() */
         listDestructor(&args);
     }
 
-
     {
-        INTVAR_ nArgs = intConstructor_i(argc - 1);
+        INTVAR_ nArgs = *intConstructor_i(argc - 1);
         push(&nArgs);           /* argc: 1st arg of main() */
     }
 
@@ -109,6 +103,9 @@ int main (int argc, char **argv)
 
     return retval;
 }
+
+
+
 
 
 

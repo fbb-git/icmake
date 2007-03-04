@@ -3,16 +3,16 @@
 static char
     buffer [10] = "[";
 
-char *printvar (INT16 index)
+char *printvar (int idx)
 {
     register INT16       
-    	i;
+        i;
 
-    if ((UNS16)index < 0x8000 )            /* pure variable number */
-        strcpy(buffer + 1, hexstring (index, 4));
+    if ((UNS16)idx < 0x8000 )            /* pure variable number */
+        strcpy(buffer + 1, hexstring ((size_t)idx, 4));
     else
     {
-        i = index - 0xc000;		    /* correct for BP pos */
+        i = idx - 0xc000;           /* correct for BP pos */
 
         strcpy (buffer + 1, "bp");
         if (i < 0)
@@ -22,7 +22,7 @@ char *printvar (INT16 index)
         }
         else
             strcat (buffer, "+");
-        strcat (buffer, hexstring (i, 4));
+        strcat (buffer, hexstring ((size_t)i, 4));
     }
     strcat (buffer, "]");
     return (buffer);

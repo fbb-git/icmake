@@ -18,6 +18,15 @@ inststrip()
     strip $2/$1
 }
 
+instscript()
+{
+    sed '
+s,!BINDIR,!'${BINDIR}',
+' scripts/$2/$1 > $2/$1
+    chmod +x $2/$1
+}
+
+
 BINDIR=`pickup BINDIR`
 
 inststrip icmake $BINDIR
@@ -31,3 +40,13 @@ inststrip icm-exec $LIBDIR
 
 inst icmbuild $BINDIR
 inst icmstart $BINDIR
+
+instscript unix .
+for x in . comp exec make pp rss un
+do
+    instscript build $x
+done
+
+
+
+

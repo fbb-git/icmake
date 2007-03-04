@@ -5,7 +5,7 @@
 
 #include "iccomp.h"
 
-static int next_call()
+static int next_call(void)
 {
     register int
         opcode;
@@ -66,7 +66,7 @@ static int next_call()
         return (1);                         /* cigar! check this argument */
 
         case op_frame:                  /* next byte: # bytes to skip */
-            fseek(s_bin, getopcode(s_bin), SEEK_CUR);
+            fseek(s_bin, (int)getopcode(s_bin), SEEK_CUR);
         return (0);                         /* close, but no cigar */
 
         default:

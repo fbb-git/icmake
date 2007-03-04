@@ -5,7 +5,7 @@ void listcleanup(LISTVAR_ *list, size_t toRemove)
     if (size(list) == toRemove) /* remove all ? */
     {
         listDestructor(list);   /* then wipe out the list */
-        *list = listConstructor();  /* and return a new, empty one */
+        *list = *listConstructor();  /* and return a new, empty one */
         return;
     }
 
@@ -15,10 +15,11 @@ void listcleanup(LISTVAR_ *list, size_t toRemove)
         char **end = empty + size(list);
         for ( ; empty != end; ++empty)   
         {
+            char **used;
             if (*empty)                     /* next element if non-empty    */
                 continue;
     
-            char **used = empty + 1;        /* beyond the empty one: find used */
+            used = empty + 1;           /* beyond the empty one: find used */
     
             for (; used != end && *used == 0; ++used)
                 ;                           /* find the next one in use */

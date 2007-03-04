@@ -13,7 +13,7 @@ ESTRUC_ *callfun(x, e)
     ESTRUC_
         *a;
     register size_t
-        index,
+        idx,
         n_pars;
     size_t
         err,
@@ -34,9 +34,9 @@ ESTRUC_ *callfun(x, e)
             (
                 err = 0,
                 a = (ESTRUC_ *)e->code,
-                index = 0;
-                    index < n_pars;
-                        index++,
+                idx = 0;
+                    idx < n_pars;
+                        idx++,
                         a++
             )
             {
@@ -45,7 +45,7 @@ ESTRUC_ *callfun(x, e)
                     !
                     (
                         ((char *)
-                           funtab.symbol[x].var.vu.i->ls.list.element)[index]
+                           funtab.symbol[x].var.vu.i->ls.list.element)[idx]
                         & a->type & ALLTYPES
                     )
                 )
@@ -53,7 +53,7 @@ ESTRUC_ *callfun(x, e)
                     old_sem = sem_err;
                     err = 1;
                     semantic("Incorrect type of argument %u of function '%s()'",
-                        index + 1, funtab.symbol[x].name);
+                        idx + 1, funtab.symbol[x].name);
                     sem_err = old_sem;
                 }
             }

@@ -24,11 +24,11 @@
 
 #include "icm-pp.h"
 
-void popfile ()
+void popfile()
 {
-    fclose (filestack [filesp].f);
+    fclose(filestack[filesp].f);
     filesp--;
 
     if (! nofileinfo && filesp != -1)
-        fprintf (outfile, "\n#\n");
+        fprintf(outfile, "\n#\n");
 }

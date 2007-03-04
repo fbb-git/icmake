@@ -20,40 +20,9 @@
 */
 
 
-#include <malloc.h>
 #include "icrssdef.h"
 
-#ifdef MSDOS
-
-void *xrealloc (void *ptr, int size)
-{
-    register void
-        *newptr;
-
-    if (! size)
-    {
-        if (ptr)
-            free (ptr);
-        return (NULL);
-    }
-
-    newptr = malloc (size);
-
-    if (! newptr)
-        error ("out of memory");
-
-    if (ptr)
-    {
-        memcpy (newptr, ptr, size);
-        free (ptr);
-    }
-
-    return (newptr);
-}
-
-#else
-
-void *xrealloc (void *ptr, int size)
+void *xrealloc (void *ptr, size_t size)
 {
     register void
         *newptr;
@@ -75,5 +44,3 @@ void *xrealloc (void *ptr, int size)
 
     return (newptr);
 }
-
-#endif

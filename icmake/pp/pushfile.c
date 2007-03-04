@@ -44,17 +44,17 @@
 
 #include "icm-pp.h"
 
-void pushfile (name)
+void pushfile(name)
 char *name;
 {
     filesp++;
 
-    filestack = xrealloc (filestack, (filesp + 1) * sizeof (FILESTACK_));
-    filestack [filesp].n = xstrdup (name);
-    if (! (filestack [filesp].f = fopen (name, "r")) )
-        error ("cannot open input file %s", name);
-    filestack [filesp].l = 1;
+    filestack = xrealloc(filestack, (filesp + 1) * sizeof(FILESTACK_));
+    filestack[filesp].n = xstrdup(name);
+    if (! (filestack[filesp].f = fopen(name, "r")) )
+        error("cannot open input file %s", name);
+    filestack[filesp].l = 1;
 
     if (! nofileinfo)
-    fprintf (outfile, "#%s\n", name);
+    fprintf(outfile, "#%s\n", name);
 }

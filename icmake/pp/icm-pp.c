@@ -82,7 +82,7 @@ int main(int argc, char **argv)
     
     if (argc != 3)
     {
-        copyright("ICMAKE Preprocessor", version, release, 1);
+        copyright("ICMAKE Preprocessor", version, release);
 
         printf("%s%s%s%s",
             "This program is run as a child process of icmake.\n"

@@ -27,7 +27,7 @@ int main (                         /* icmake source(txt) dest(bin) */
                                             */
 
     if (!(flags & f_quiet))
-        copyright("Make Utility", version, release, 1);
+        copyright("Make Utility", version, release);
 
     prog = program_name(argv[0]);
 

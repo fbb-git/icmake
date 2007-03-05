@@ -10,7 +10,7 @@ int main (int argc, char **argv)            /* icm-comp source(txt) dest(bin) */
 {
     if (argc != 3)
     {
-        copyright("Make Optimizing Compiler", version, release, 1);
+        copyright("Make Optimizing Compiler", version, release);
         error("Usage: %s source dest\n"
               "where:\n"
               "\tsource: source file to compile\n"

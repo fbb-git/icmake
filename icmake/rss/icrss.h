@@ -421,7 +421,7 @@ char const *change_base (char const *, char const *);
 char const *change_path (char const *, char const *);
 
 int      chesc(char *, int *);
-void     copyright(char *, char *, char *, int);/* copyright message */
+void     copyright(char *, char *, char *);     /* copyright message */
 char     *filefound(void);                      /* test attrib/pattern  */
 char     *findfirst(char const *, size_t);    /* first entry matching pattern */
 char     *findnext(void);                       /* remaining matching entries   */

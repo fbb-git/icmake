@@ -42,7 +42,7 @@ int main (int argc, char **argv)
 
     if (argc == 1)
     {
-        copyright("ICMAKE Binary Makefile Executor", version, release, 1);
+        copyright("ICMAKE Binary Makefile Executor", version, release);
         progname = program_name(argv[0]);
         printf ("This program is run as a child process of icmake.\n"
                 "Usage: %s [-t] bimfile\n"

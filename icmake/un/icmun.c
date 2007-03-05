@@ -8,7 +8,7 @@ int main (int argc, char **argv)
     static char
         bimext [] = ".bim";
 
-    copyright ("ICMAKE Binary Make File Unassembler", version, release, 1);
+    copyright ("ICMAKE Binary Make File Unassembler", version, release);
 
     if (argc != 2)
     {

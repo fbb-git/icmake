@@ -6,7 +6,7 @@
 
 void about()
 {
-    copyright("Make Utility", version, release, 1);
+    copyright("Make Utility", version, release);
 
     error("%s%s",
 

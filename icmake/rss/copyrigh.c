@@ -31,15 +31,11 @@ the {\em All rights reserved\,} string is used.
 
 #include "icrssdef.h"
 
-void copyright(char *function, char *versionStr, char *years, int distribution)
+void copyright(char *function, char *versionStr, char *years)
 {
     printf("\n"
-           "ICCE %s  Version %s\n"
-           "Copyright (c) ICCE %s. %s.\n"
+           "%s  Version %s\n"
+           "Copyright (c) GPL %s. NO WARRANTY.\n"
            "\n",
-           function, versionStr, years,
-           distribution ?
-                "All rights reserved"
-            :
-                "Internal use only");
+           function, versionStr, years);
 }

@@ -36,7 +36,7 @@ int main (                         /* icmake source(txt) dest(bin) */
         (
             "%s%s%s%s%s",
 
-            "Icmake by Frank B. Brokken and Karel Kubat.\n"
+            "Icmake by Frank B. Brokken (and Karel Kubat until V 6.30).\n"
             "\n"
             "Usage: ",
                 prog,

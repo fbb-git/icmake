@@ -1,3 +1,9 @@
+icmake (7.10-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 05 Mar 2007 18:34:16 +0100
+
 icmake (7.02-1) unstable; urgency=low
 
   * Due to an oversight in the upstream version the icmbuild and icmstart

@@ -1,3 +1,7 @@
+icmake (7.11)
+
+  * Initialized dead[0] in comp/icm-comp.c
+
 icmake (7.10)
 
   * Removed Superfluous #defines from icm.h

@@ -30,6 +30,7 @@ int main (int argc, char **argv)            /* icm-comp source(txt) dest(bin) */
 
                                             /* malloc the dead-stack */
     dead = xrealloc(NULL, sizeof(unsigned));
+    dead[0] = 0;                            /* and initialize its element */
 
     stringbuf = xstrdup(nullstring);        /* malloc initial stringbuf */
     lexstring = xstrdup(nullstring);        /* initial lexstring */

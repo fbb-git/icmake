@@ -59,7 +59,6 @@ void initialize()
     (list)"tolower";
 
     check("bin");
-    check("binlinux");
 }           
             
 void makelib (string dir, string lib)

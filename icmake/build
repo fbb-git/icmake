@@ -2,7 +2,7 @@
 
 // Undefine the following to compile with an extensive set of flags, for 
 // testing purposes only. Leave commented out in normal cases.
-// #define EXTENSIVE
+#define EXTENSIVE
 
 void main()
 {
@@ -10,6 +10,10 @@ void main()
     list    progdirs;
     int     idx;
     string  extensive;
+
+    printf("This is the extensive build script.\n"
+            "Normally call `unix' [press enter or ^C] ");
+    getch();
 
 #ifdef EXTENSIVE
     extensive = " -e";

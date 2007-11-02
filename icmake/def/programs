@@ -28,7 +28,7 @@
         // supports the glob() function. See also the icmake.doc file
         // for further details. The function is normally part of the
         // gcc library.
-#define CFLAGS          "-c -Wall -O -DHAVE_GLOB"
+#define CFLAGS          "-c -Wall -O2 -DHAVE_GLOB"
 
 // The icmake.1 compressor. This results in plain compression of icmake.1
 // into icmake.1.Z

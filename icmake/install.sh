@@ -28,25 +28,23 @@ s,!BINDIR,!'${BINDIR}',
 
 
 BINDIR=`pickup BINDIR`
+EXT=`pickup EXTENSION`
 
-inststrip icmake $BINDIR
-inststrip icmun  $BINDIR
+inststrip icmake${EXT} $BINDIR
+inststrip icmun${EXT}  $BINDIR
 
 LIBDIR=`pickup LIBDIR`
 
-inststrip icm-pp   $LIBDIR
-inststrip icm-comp $LIBDIR
-inststrip icm-exec $LIBDIR
+inststrip icm-pp${EXT}   $LIBDIR
+inststrip icm-comp${EXT} $LIBDIR
+inststrip icm-exec${EXT} $LIBDIR
 
 inst icmbuild $BINDIR
 inst icmstart $BINDIR
 
 instscript unix .
+
 for x in . comp exec make pp rss un
 do
     instscript build $x
 done
-
-
-
-

@@ -8,7 +8,7 @@
  
     `unix doc2man' will install manpages in the CATDIR directory
     `unix install' will install the binaries in the BINDIR directory
- 
+
     Note that BINDIR is also used in the first line of the unix-script.
  
     If you don't use /usr/bin, make sure you adapt the first line
@@ -17,7 +17,13 @@
     The settings in this file are according to the Debian File Standard
 */
 
+
+// Define EXTENSION as ".exe" when compiling for CYGWIN
+// #define EXTENSION   ".exe"
+#define EXTENSION   ""
+
 #define BINDIR      "/usr/bin"
 #define SKELDIR     "/usr/share/icmake"
 #define MANDIR      "/usr/share/man/man1"
 #define LIBDIR      "/usr/lib/icmake"
+

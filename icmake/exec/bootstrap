@@ -5,17 +5,14 @@ gcc -O2 -g -Wall -DHAVE_GLOB -c *.c
 mkdir -p tmp/bin
 
 NR=0
-for x in aux var virtual int list string stack opcodefun builtin
+for x in auks var virtual int list string stack opcodefun builtin
 do
     cd $x
     gcc -O2 -g -Wall -DHAVE_GLOB -c *.c || exit 1
-#    for o in *.o
-#    do
-#        mv $o ${NR}$o
-#    done
+
     cd ..
 done
 
-gcc -o tmp/bin/icm-exec *.o */*.o ../rss/libicrss.a
+gcc -o tmp/bin/icm-exec$1 *.o */*.o ../rss/libicrss.a
 
 rm *.o */*.o

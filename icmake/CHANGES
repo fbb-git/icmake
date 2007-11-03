@@ -2,6 +2,9 @@ icmake (7.11)
 
   * Initialized dead[0] in comp/icm-comp.c
 
+    Added #define EXTENSION to def/destinations to allow easy compilation in
+    cygwin environments
+
 icmake (7.10)
 
   * Removed Superfluous #defines from icm.h

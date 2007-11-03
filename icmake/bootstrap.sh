@@ -25,36 +25,38 @@ s,"/usr/share/icmake","'$3'",
 }
 
 
-echo    Building the runtime-library in ./rss
-cd rss
-gcc -c -O2 -g -Wall -DHAVE_GLOB *.c
-ar rs libicrss.a *.o
-rm *.o
-cd ..
+EXT=`pickup EXTENSION`
 
-echo Creating the target directory ./bin
-mkdir -p bin
+cho    Building the runtime-library in ./rss
+d rss
+cc -c -O2 -g -Wall -DHAVE_GLOB *.c
+r rs libicrss.a *.o
+m *.o
+d ..
+
+cho Creating the target directory ./bin
+kdir -p bin
 
 echo Creating icmake
 cd make
-gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icmake *.c ../rss/libicrss.a
+gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icmake${EXT} *.c ../rss/libicrss.a
 
 echo Creating icm-pp
 cd ../pp
-gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icm-pp *.c ../rss/libicrss.a
+gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icm-pp${EXT} *.c ../rss/libicrss.a
 
 echo Creating icm-comp
 cd ../comp
-gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icm-comp *.c ../rss/libicrss.a
+gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icm-comp${EXT} *.c ../rss/libicrss.a
 
 echo Creating icm-exec from exec/bootstrap
 cd ../exec
-sh bootstrap
-mv tmp/bin/icm-exec ../bin
+sh bootstrap ${EXT}
+mv tmp/bin/icm-exec${EXT} ../bin
 
 echo Creating icmun
 cd ../un
-gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icmun *.c ../rss/libicrss.a
+gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icmun${EXT} *.c ../rss/libicrss.a
 cd ..  
 
 SKELDIR=`pickup SKELDIR`

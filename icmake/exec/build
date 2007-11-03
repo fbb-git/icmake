@@ -22,7 +22,7 @@ void setClasses()
 //  ADD ADDITIONAL DIRECTORIES CONTAINING SOURCES OF CLASSES HERE
 //  Use the construction `CLASSES += "classname1 classname2";' etc.
 
-    CLASSES += "auks var virtual int list string stack opcodefun builtin ";
+    CLASSES += "aux var virtual int list string stack opcodefun builtin ";
 }
 
 #define BUILD_LIBRARY

@@ -1,26 +1,26 @@
 INSTALLING ICMAKE
 =================
 
-                            Version 7.00
+                          Version 7.11 (and beyond)
 
 1. Unpack the archive:
 ======================
 
 The installation files for Icmake comes as an archive, e.g.,
-"icmake_7.00.tar.gz". These archives unpack to several directories and files.
+"icmake_7.11.tar.gz". These archives unpack to several directories and files.
 
-Starting with distribution icmake_7.00.tar.gz, the archive unpacks to a
-directory icmake-7.00 below the current directory. The version number in this
+Starting with distribution icmake_7.11.tar.gz, the archive unpacks to a
+directory icmake-7.11 below the current directory. The version number in this
 directory may change to newer release versions.
 
-So, if you unpack icmake_7.00.tar.gz (or later versions) in the directory
-/usr/local/src, a directory /usr/local/src/icmake/icmake-7.00 is created, as
-well as other subdirectories below /usr/local/src/icmake/icmake-7.00
+So, if you unpack icmake_7.11.tar.gz (or later versions) in the directory
+/usr/local/src, a directory /usr/local/src/icmake/icmake-7.11 is created, as
+well as other subdirectories below /usr/local/src/icmake/icmake-7.11
 
 To unpack the archives, create an appropriate directory (e.g.,
 `/usr/local/src/icmake' E.g,
 
-                         tar xvzf icmake_7.00.tar.gz
+                         tar xvzf icmake_7.11.tar.gz
 
 The extraction of files from the archive should yield a lot of C source files
 in a number of directories. Icmake's default distribution does not contain
@@ -32,7 +32,7 @@ makefiles for the Unix-utility `make' anymore.
 
 Change to the directory into which the sources were unpacked. E.g., do
 
-                                cd icmake-7.00
+                                cd icmake-7.11
 
 This directory should contain this file (i.e., INSTALL). Icmake uses several
 support programs, which do not have to be stored in the PATH
@@ -46,6 +46,16 @@ in accordance with your local requirements:
 #define SKELDIR     "/usr/share/icmake"
 #define MANDIR      "/usr/share/man/man1"
 #define LIBDIR      "/usr/lib/icmake"
+
+    If you're compiling for a CYGWIN environment, the executables must have
+the extension .exe: in that case uncomment the appropriate #define EXTENSION
+line. I.e.:
+
+By default:
+    #define EXTENSION   ""
+For CYGWIN:
+    #define EXTENSION   ".exe"
+
 
     - Inspect (and optionally modify) the availability of the program
 mentioned in ./def/programs (they should be available on any Unix(alike)

@@ -11,10 +11,6 @@ void main()
     int     idx;
     string  extensive;
 
-    printf("This is the extensive build script.\n"
-            "Normally call `unix' [press enter or ^C] ");
-    getch();
-
 #ifdef EXTENSIVE
     extensive = " -e";
 #endif

@@ -27,15 +27,15 @@ s,"/usr/share/icmake","'$3'",
 
 EXT=`pickup EXTENSION`
 
-cho    Building the runtime-library in ./rss
-d rss
-cc -c -O2 -g -Wall -DHAVE_GLOB *.c
-r rs libicrss.a *.o
-m *.o
-d ..
+echo    Building the runtime-library in ./rss
+cd rss
+gcc -c -O2 -g -Wall -DHAVE_GLOB *.c
+ar rs libicrss.a *.o
+rm *.o
+cd ..
 
-cho Creating the target directory ./bin
-kdir -p bin
+echo Creating the target directory ./bin
+mkdir -p bin
 
 echo Creating icmake
 cd make

@@ -284,5 +284,9 @@ int main(int argc, list argv)
 
     install_std();              // install CLASSES and icmconf
     install_rc();               // install .rc file elements
+
+    printf("Done. Don't forget to inspect the #defines in\n"
+            "'", g_destdir, "icmconf'\n");
+
     return 0;
 }

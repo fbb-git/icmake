@@ -62,11 +62,7 @@ cd ..
 SKELDIR=`pickup SKELDIR`
 BINDIR=`pickup BINDIR`
 
-echo Creating icmbuild from skeleton
-instscript icmbuild $BINDIR  $SKELDIR bin
-
-echo Creating icmstart from skeleton
-instscript icmstart $BINDIR  $SKELDIR bin
+bash icmscripts.sh
 
 echo "
     Done.

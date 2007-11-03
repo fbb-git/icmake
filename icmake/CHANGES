@@ -5,6 +5,12 @@ icmake (7.11)
     Added #define EXTENSION to def/destinations to allow easy compilation in
     cygwin environments
 
+    The icmstart and icmbuild scripts are now bisonc++ >= 2.0.0 aware, and
+    grambuild is now effectively superfluous (but still available)
+
+    The script icmscripts.sh can be used to recreate the icm-scripts in the
+    bin/ subdirectory. Primarily useful for maintenance.
+
 icmake (7.10)
 
   * Removed Superfluous #defines from icm.h

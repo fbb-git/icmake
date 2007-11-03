@@ -11,6 +11,7 @@ list   g_classes;       // all class-directories
 int    g_nClasses;      // number of class-directories
 string g_binary;        // binary program to build
 int    g_compiled;      // any source compiled (but main)?
+int    g_keepGramspec;  // keep the gramspec directory
 
                         // std call of the compiler when compiling
 string g_compiler = COMPILER " " COMPILER_OPTIONS " -c -o ";
@@ -32,12 +33,35 @@ string cd(string next)
 
 void parser()
 {
+    #ifdef PARSFILES
+        list gramfiles;
+        int idx;
+    #endif
+
     cd(PARSER_DIR);
 
-    #ifdef GRAMBUILD
-        cd("gramspec");
-        system("./grambuild");
-        cd("..");
+    #ifdef PARSFILES
+        gramfiles = makelist(PARSFILES);
+
+        for (idx = sizeof(gramfiles); idx--; )
+        {
+            if (element(idx, gramfiles) younger PARSOUT)    // need new parser
+            {
+                if (USE_ECHO)
+                    printf("New parser due to changes in ",
+                           element(idx, gramfiles), "\n");
+
+                system(PARSGEN " " PARSFLAGS " " PARSSPEC);
+                cd("..");
+                return;
+            }
+        }
+    #else
+        #ifdef GRAMBUILD
+            cd("gramspec");
+            system("./grambuild");
+            cd("..");
+        #endif
     #endif
 
     if (PARSSPEC younger PARSOUT)       // need new parser
@@ -309,6 +333,25 @@ void main(int argc, list argv, list envp)
     if (option == "")
         option = DEFCOM;
 #endif
+
+#ifdef KEEPGRAMSPEC
+    g_keepGramspec = 1;
+#endif
+    
+#ifdef PARSFILES
+    if (exists(PARSER_DIR "/gramspec") && !g_keepGramspec)
+    {
+        printf("Remove superfluous directory `" PARSER_DIR 
+                                            "/gramspec' [yN] ? ");
+        if (getch() == "y")
+            system("rm -rf " PARSER_DIR "/gramspec");
+        else
+            fprintf("icmconf", "\n"
+                        "\n"
+                        "    // Do not remove\n"
+                        "#define KEEPGRAMSPEC\n");
+    }
+#endif                
 
     if (option == "clean")
         clean();

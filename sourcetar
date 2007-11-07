@@ -13,8 +13,6 @@ tgz()
 
     tar czvf $1 --exclude-from=excluded  ${DISTRIBUTION}/*
 
-    echo $1
-
     rm ${DISTRIBUTION}                      # rm the link
 }
 

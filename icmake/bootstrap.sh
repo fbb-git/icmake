@@ -12,7 +12,8 @@ echo "
 
 pickup()
 {
-    grep "define $1" def/destinations | sed 's,[^"]*\"\([^"]*\).*,\1,'
+    grep -v '^[[:space:]]*//' def/destinations | grep "define $1" |
+                                    sed 's,[^"]*\"\([^"]*\).*,\1,'
 }
 
 instscript()
@@ -37,24 +38,24 @@ cd ..
 echo Creating the target directory ./bin
 mkdir -p bin
 
-echo Creating icmake
+echo Creating icmake${EXT}
 cd make
 gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icmake${EXT} *.c ../rss/libicrss.a
 
-echo Creating icm-pp
+echo Creating icm-pp${EXT}
 cd ../pp
 gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icm-pp${EXT} *.c ../rss/libicrss.a
 
-echo Creating icm-comp
+echo Creating icm-comp${EXT}
 cd ../comp
 gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icm-comp${EXT} *.c ../rss/libicrss.a
 
-echo Creating icm-exec from exec/bootstrap
+echo Creating icm-exec${EXT} from exec/bootstrap
 cd ../exec
 sh bootstrap ${EXT}
 mv tmp/bin/icm-exec${EXT} ../bin
 
-echo Creating icmun
+echo Creating icmun${EXT}
 cd ../un
 gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icmun${EXT} *.c ../rss/libicrss.a
 cd ..  

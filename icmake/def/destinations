@@ -15,11 +15,14 @@
     in the 'unix' script *AND* the BINDIR define 
  
     The settings in this file are according to the Debian File Standard
+
+    Alternate definitions may be kept in this file, on lines starting 
+    with  //
 */
 
 
 // Define EXTENSION as ".exe" when compiling for CYGWIN
-// #define EXTENSION   ".exe"
+//#define EXTENSION   ".exe"
 #define EXTENSION   ""
 
 #define BINDIR      "/usr/bin"

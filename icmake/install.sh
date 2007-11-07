@@ -2,7 +2,8 @@
 
 pickup()
 {
-    grep "define $1" def/destinations | sed 's,[^"]*\"\([^"]*\).*,\1,'
+    grep -v '^[[:space:]]*//' def/destinations | grep "define $1" |
+                                    sed 's,[^"]*\"\([^"]*\).*,\1,'
 }
 
 inst()

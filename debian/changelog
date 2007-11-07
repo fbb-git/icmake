@@ -1,8 +1,14 @@
+icmake (7.11-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 07 Nov 2007 09:43:33 +0100
+
 icmake (7.10-1) unstable; urgency=low
 
   * New upstream version
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 05 Mar 2007 18:34:16 +0100
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 12 Mar 2007 19:51:15 +0100
 
 icmake (7.02-1) unstable; urgency=low
 

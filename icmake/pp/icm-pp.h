@@ -76,3 +76,4 @@ void process (LEXER_);
 void pushback(int ch);
 void pushfile (char *);
 void skipblanks(void);
+char *skip_until(char *cp);

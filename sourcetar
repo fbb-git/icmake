@@ -26,8 +26,7 @@ case "$1" in
 
         if [ "$1" == "u" ]
         then
-            scp ${PROJECT}_${VERSION}.tar.gz \
-                                        oosix:ftp/debian/tarballs/${PROJECT}
+            scp ${PROJECT}_${VERSION}.tar.gz oosix:ftp/debian/${PROJECT}
             md5sum ${PROJECT}_${VERSION}.tar.gz
         fi
     ;;
@@ -44,4 +43,3 @@ Provide arg:
     ;;
 
 esac
-

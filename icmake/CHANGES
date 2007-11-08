@@ -1,12 +1,17 @@
 icmake (7.11)
 
-  * Initialized dead[0] in comp/icm-comp.c
+  * Fixed missing dead[0] initialization in comp/icm-comp.c
 
-    Added #define EXTENSION to def/destinations to allow easy compilation in
-    cygwin environments
+    Fixed handling of C and C++ comment in strings in icm-pp: The preprocessor
+    now keeps C/C++ comment in string/character constants in #defines allowing
+    for constructions like #define PAT "dir/*" which in earlier versions
+    resulted in an unterminated C comment error.
 
     The icmstart and icmbuild scripts are now bisonc++ >= 2.0.0 aware, and
     grambuild is now effectively superfluous (but still available)
+
+    Added #define EXTENSION to def/destinations to allow easy compilation in
+    cygwin environments
 
     The script icmscripts.sh can be used to recreate the icm-scripts in the
     bin/ subdirectory. Primarily useful for maintenance.

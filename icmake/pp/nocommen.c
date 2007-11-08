@@ -4,6 +4,8 @@
     The function no_comment() removes comment found on a #define-line
     before entering the define-definition.
 
+    Comment found in string constants are kept.
+
     The define-line is stored in lexbuf[]
 */
 
@@ -14,19 +16,30 @@ void no_comment()
     char                                    /* look for / */
         *cp = lexbuf.data;                  /* get first char-address */
 
-    while ((cp = strchr(cp, '/')))          /* any slash ? */
+    while (*cp)                             /* inspect all characters */
     {
-        if (*(cp + 1) == '/')               /* next one is a slash too: */
+        switch (*cp)
         {
-            *cp = 0;                        /* so we have eoln-comment   */
-            lexbuf.len = cp - lexbuf.data;
+            case '/':                       /* slash found */
+                if (*(cp + 1) == '/')       /* next one is a slash too: */
+                {
+                    *cp = 0;                /* so we have eoln-comment   */
+                    lexbuf.len = cp - lexbuf.data;
+        
+                    return;                 /* and the define stops here */
+                }
+        
+                if (*(cp + 1) == '*')       /* we have std comment    */
+                    delete_std_comment(cp); /* delete the std comment */
+            break;
 
-            return;                         /* and the define stops here */
+            case '"':                       /* keep strings in the #define */
+            case '\'':                      /* keep quoted constants */
+                cp = skip_until(cp);
+            break;
+
+            default:
+                ++cp;                       /* next char */
         }
-
-        if (*(cp + 1) == '*')               /* we have std comment    */
-            delete_std_comment(cp);         /* delete the std comment */
-        else
-            cp++;                           /* else skip the /  */        
     }
 }

@@ -1,6 +1,7 @@
 icmake (7.11-1) unstable; urgency=low
 
   * New upstream version
+    (Closes: #414604, #450502, #437189)
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 08 Nov 2007 20:29:35 +0100
 

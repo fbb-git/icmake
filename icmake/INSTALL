@@ -74,11 +74,13 @@ the ./bin subdirectory.
 
     You probabaly must do this as `root':
 
-                                sh install.sh
+                                sh install.sh [strip]
 
-    This will install the binaries and scripts in BINDIR. Furthermore,
-all toplines of the icmake scripts used in the source directories will be
-set to use the BINDIR path to the icmake program
+    This will install the [stripped] binaries and scripts in
+BINDIR. Furthermore, all toplines of the icmake scripts used in the source
+directories will be set to use the BINDIR path to the icmake program. Note
+that the binaries will be installed without being stripped unless install.sh
+is provided with an argument (e.g., strip)
 
 4. Clean up the garbage
 =======================

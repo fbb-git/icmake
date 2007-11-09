@@ -16,6 +16,10 @@ icmake (7.11)
     The script icmscripts.sh can be used to recreate the icm-scripts in the
     bin/ subdirectory. Primarily useful for maintenance.
 
+    The 'unix' script no longer by default constructs stripped versions of the
+    binary programs, the install.sh by default installs unstripped
+    binaries. The argument 'strip' may be provided to strip the binaries.
+
 icmake (7.10)
 
   * Removed Superfluous #defines from icm.h

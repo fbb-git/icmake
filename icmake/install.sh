@@ -1,5 +1,7 @@
 #/bin/bash
 
+STRIP=$#
+
 pickup()
 {
     grep -v '^[[:space:]]*//' def/destinations | grep "define $1" |
@@ -15,8 +17,11 @@ inst()
 
 inststrip()
 {
+    if [ ${STRIP} -ne 0 ] 
+    then
+        strip bin/$1
+    fi
     inst $1 $2
-    strip $2/$1
 }
 
 instscript()
@@ -27,14 +32,12 @@ s,!BINDIR,!'${BINDIR}',
     chmod +x $2/$1
 }
 
-
 BINDIR=`pickup BINDIR`
+LIBDIR=`pickup LIBDIR`
 EXT=`pickup EXTENSION`
 
 inststrip icmake${EXT} $BINDIR
 inststrip icmun${EXT}  $BINDIR
-
-LIBDIR=`pickup LIBDIR`
 
 inststrip icm-pp${EXT}   $LIBDIR
 inststrip icm-comp${EXT} $LIBDIR

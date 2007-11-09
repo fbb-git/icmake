@@ -1,4 +1,4 @@
-#!/usr/bin/icmake -qt /tmp/icmake
+#!tmp/icmake -qt /tmp/icmake
 
 // Undefine the following to compile with an extensive set of flags, for 
 // testing purposes only. Leave commented out in normal cases.

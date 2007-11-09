@@ -1,4 +1,4 @@
-#!/usr/bin/icmake -qt/tmp/pp
+#!tmp/icmake -qt/tmp/pp
 
 /*
 Configurable defines:

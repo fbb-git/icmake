@@ -4,9 +4,9 @@ Priority: optional
 Maintainer: Francesco Paolo Lovergine <frankie@debian.org>
 Uploaders: George Danchev <danchev@spnet.net>, 
            Frank B. Brokken <f.b.brokken@rug.nl>,
-           tony mancill <tmancill@debian.org>
+           Tony Mancill <tmancill@debian.org>
 Build-Depends: debhelper (>= 5.0.0), dpatch 
-Standards-Version: 3.7.2
+Standards-Version: 3.8.0
 
 Package: icmake
 Architecture: any

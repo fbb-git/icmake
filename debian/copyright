@@ -1,16 +1,15 @@
 This package was debianized by Michael Meskes <meskes@topsystem.de>.
-Current maintainer is Adrian Bunk <bunk@fs.tum.de>.
+Previously maintained by Adrian Bunk <bunk@fs.tum.de>.
+Current maintainer is Frank B. Brokken <f.b.brokken@rug.nl>
 
 It was downloaded from ftp://ftp.rug.nl/contrib/frank/software/linux/icmake/
 
 Copyright:
 
-
-            Copyright (c) Frank B. Brokken and Karel Kubat
-                 frank@icce.rug.nl, karel@icce.rug.nl
-
-           ICCE, State University of Groningen, Netherlands
-
+            Copyright (c) 1992-NOW by
+                Frank B. Brokken (f.b.brokken@rug.nl) and 
+                Karel Kubat (karel@e-tunity.com)
+                
 [...]
            
 Some Legal Stuff

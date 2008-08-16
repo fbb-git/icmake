@@ -82,7 +82,7 @@ get-orig-source:
 
 	-@if [ ! -f ../tarballs/$(DEFILE) ] ; then \
 		echo "Downloading $(URL)/$(UPFILE) from $(URL)/$(UPFILE) ..." ; \
-		wget --no-check-certificate --quiet -N -nv -T10 -t3 -O \
+		wget --no-check-certificate --quiet -N -nv -T20 -t3 -O \
              ../tarballs/$(DEFILE) $(URL)/$(UPFILE) ; \
 	else \
 		echo "Upstream source tarball have been already downloaded" ; \

@@ -1,3 +1,10 @@
+icmake (7.11-2) unstable; urgency=low
+
+  * Updated to standards 3.8.0, repaired incorrectly formatted copyright 
+    notice and message about missing size_t.dptach message
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 16 Aug 2008 09:15:29 +0200
+
 icmake (7.11-1) unstable; urgency=low
 
   * New upstream version

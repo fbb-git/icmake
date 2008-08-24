@@ -1,3 +1,12 @@
+icmake (7.11.1)
+
+  * Introduced a three-digit version number: major, minor and subreleases.
+
+  * Updated icmbuild sources to 2008.
+
+  * The Gnu g++ flags for the upcoming c++0x standard are now mentioned in
+    icmconf. 
+
 icmake (7.11)
 
   * Fixed missing dead[0] initialization in comp/icm-comp.c

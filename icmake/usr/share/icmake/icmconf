@@ -20,7 +20,11 @@
     // define the compiler to use:
 #define COMPILER            "g++"
 
-    // define the compiler options to use:
+    // define the compiler options to use. 
+    // For the upcoming c++0x standard with the Gnu g++ compiler add the
+    // -std=c++0x flag 
+    // To enable GNU extensions in addition to C++0x extensions, add the
+    // -std=gnu++0x flag
 #define COMPILER_OPTIONS    "-g -Wall -O2"
 
     // define the pattern to locate sources in a directory:

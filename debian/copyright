@@ -1,51 +1,21 @@
-This package was debianized by Michael Meskes <meskes@topsystem.de>.
-Previously maintained by Adrian Bunk <bunk@fs.tum.de>.
-Current maintainer is Frank B. Brokken <f.b.brokken@rug.nl>
-
-It was downloaded from ftp://ftp.rug.nl/contrib/frank/software/linux/icmake/
-
-Copyright:
-
-            Copyright (c) 1992-NOW by
-                Frank B. Brokken (f.b.brokken@rug.nl) and 
-                Karel Kubat (karel@e-tunity.com)
-                
-[...]
-           
-Some Legal Stuff
-----------------
-
-        You don't have to pay us for Icmake. This means that no fee is
-charged for it by us.  As with everything that's free, there's no pay but
-also *absolutely no warranty*.  Furthermore, you are allowed (and
-encouraged) to distribute Icmake, provided that you include this information
-with each distribution.  It is strongly suggested that you do *not* charge
-money for the distribution of Icmake (possibly not even the $5 for
-shipping).
-
-        The source files and the documentation for Icmake are copyrighted by
-us.  The reason for this is (a) that we'd like to have always the last
-version of Icmake, and (b) that we'd like to have the last word in all
-modifications.  If you have requests (or even better, "working code" to
-include in Icmake) please mail us and we'll gladly oblige when we find the
-time.
-
-The author also told me:
-
-but in our website www.icce.rug.nl/docs/software.html, we explicitly state
-that ALL software that we make publicly available is distributed according to
-the GPL, whatever the docs (still) tell you. So don't worry. It's ony a bit
-inconvenient that the copyright-information that is distributed with (some) of
-our software is still a bit incongruent with the GPL. But again: ignore that,
-and consider all our software free.
-
-If you have a patch and want it to be part of icmake of whatever software we
-distribute, go ahead!
-
-Which doesn't mean that we're not interested in receiving information about
-that patch :-)
-
-But I guess that goes without saying.
-
-
-You can find a copy of the GPL in /usr/share/common-licenses/GPL.
+Format-Specification: http://wiki.debian.org/Proposals/CopyrightFormat?action=recall&rev=143
+Upstream-Name: icmake
+Upstream-Source: ftp://ftp.rug.nl/contrib/frank/software/linux/icmake/
+    
+Files: *
+ Copyright, Copyright 1992-NOW, Frank B. Brokken (f.b.brokken@rug.nl) and 
+ Copyright, Copyright           Karel Kubat (karel@e-tunity.com)
+ License: GPL-2+
+ On Debian systems the full text of the GNU General Public License can be found
+ in the /usr/share/common-licenses/GPL' file.
+ 
+Files: debian/*
+ Copyright: Copyright 2000, Michael Meskes <meskes@topsystem.de>.
+ Copyright: Copyright 2003, Adrian Bunk <bunk@fs.tum.de>.
+ Copyright: Copyright 2004, Frank B. Brokken <f.b.brokken@rug.nl>
+ Copyright: Copyright 2005, Francesco Lovergine <frankie@debian.org>
+ Copyright: Copyright 2005, George Danchev <danchev@debian.org>
+ Copyright: Copyright 2005, Tony Mancill <tmancill@debian.org>
+ License: GPL-2+
+ On Debian systems the full text of the GNU General Public License can be found
+ in the /usr/share/common-licenses/GPL' file.

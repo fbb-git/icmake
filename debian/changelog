@@ -1,10 +1,12 @@
 icmake (7.11.1-1) unstable; urgency=low
 
+  [ Frank B. Brokken ]
   * New upstream release
 
   [ George Danchev ]
-  * Drop all patches, they have been applied upstream
+  * Drop all patches, as they have been applied upstream
   * Drop dpatch from build-dependencies
+  * Convert to machine-interpretable copyright format
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 24 Aug 2008 21:04:33 +0200
 

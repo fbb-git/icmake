@@ -5,7 +5,7 @@ Maintainer: Francesco Paolo Lovergine <frankie@debian.org>
 Uploaders: George Danchev <danchev@spnet.net>, 
            Frank B. Brokken <f.b.brokken@rug.nl>,
            Tony Mancill <tmancill@debian.org>
-Build-Depends: debhelper (>= 5.0.0), dpatch 
+Build-Depends: debhelper (>= 5.0.0)
 Standards-Version: 3.8.0
 
 Package: icmake

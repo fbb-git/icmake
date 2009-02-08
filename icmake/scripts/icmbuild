@@ -1,6 +1,7 @@
 #!/usr/bin/icmake -qt/tmp/icmbuild
 
 #include "icmconf"
+#include "VERSION"
 
 //                      NO CONFIGURABLE PARTS BELOW THIS LINE
 
@@ -12,6 +13,8 @@ int    g_nClasses;      // number of class-directories
 string g_binary;        // binary program to build
 int    g_compiled;      // any source compiled (but main)?
 int    g_keepGramspec;  // keep the gramspec directory
+
+string g_version = VERSION;       // version from VERSION
 
                         // std call of the compiler when compiling
 string g_compiler = COMPILER " " COMPILER_OPTIONS " -c -o ";
@@ -52,7 +55,7 @@ void parser()
                            element(idx, gramfiles), "\n");
 
                 system(PARSGEN " " PARSFLAGS " " PARSSPEC);
-                cd("..");
+                chdir("..");
                 return;
             }
         }
@@ -60,14 +63,14 @@ void parser()
         #ifdef GRAMBUILD
             cd("gramspec");
             system("./grambuild");
-            cd("..");
+            chdir("..");
         #endif
     #endif
 
     if (PARSSPEC younger PARSOUT)       // need new parser
         system(PARSGEN " " PARSFLAGS " " PARSSPEC);
 
-    cd("..");
+    chdir("..");
 }
 
 void scanner()
@@ -84,7 +87,7 @@ void scanner()
     )
         system(SCANGEN " " SCANFLAGS " " SCANSPEC);
 
-    cd("..");
+    chdir("..");
 }
 
 void setClasses()
@@ -122,17 +125,15 @@ void setClasses()
     g_nClasses = sizeof(g_classes);
 }
 
-list inspect(int ignoreMain, int prefix, list srcList, string library)
+list inspect(string destDir, 
+             int prefix, string srcDir, list srcList, string library)
 {
     int idx;
     string ofile;
     string oprefix;
     string file;
 
-    oprefix = g_cwd + TMP_DIR "/o/" + (string)prefix;
-
-    if (ignoreMain)
-        srcList -= (list)MAIN;
+    oprefix = destDir + "/" + (string)prefix;
 
     for (idx = sizeof(srcList); idx--; )
     {
@@ -153,48 +154,47 @@ list inspect(int ignoreMain, int prefix, list srcList, string library)
     return srcList;
 }
 
-void c_compile(int prefix, string srcDir, list cfiles)
+void c_compile(int prefix, string destDir, string srcDir, list cfiles)
 {
     int idx;
     string compiler;
     string file;
 
-    cd(g_cwd + TMP_DIR + "/o");
-
     if (srcDir != "")
         srcDir += "/";
 
-    compiler = g_compiler + (string)prefix;
+    compiler = g_compiler + destDir + "/" + (string)prefix;
 
     for (idx = sizeof(cfiles); idx--; )
     {
         file = element(idx, cfiles);
-        
-        system(compiler + change_ext(file, OBJ_EXT) + 
-                            " ../../" + srcDir + file);
-
+        system(compiler + change_ext(file, OBJ_EXT) + " " + srcDir + file);
         g_compiled = 1;
     }
-
-    chdir("");
 }
 
-void std_cpp(int ignoreMain, int prefix, string srcDir, string library)
+void std_cpp(int ignoreMain, string destDir, 
+            int prefix, string srcDir, string library)
 {
     list files;
 
-    cd(srcDir);
-                                                      // make list of all files
-    files = inspect(ignoreMain, prefix, makelist(g_sources), library);  
     chdir("");
+                                                    // make list of all files
+    md(destDir);
+    cd(srcDir);
+    files = makelist(g_sources);
+    if (ignoreMain)
+        files -= (list)MAIN;
+    chdir("");
+    files = inspect(destDir, prefix, srcDir, files, library);  
 
     if (sizeof(files))
-        c_compile(prefix, srcDir, files);             // compile files
+        c_compile(prefix, destDir, srcDir, files);  // compile files
 }
 
 void static_library()
 {
-    cd(TMP_DIR "/o");
+    cd(TMP_DIR "/oa");
 
     if (strlen(LIBRARY) && sizeof(makelist("*" OBJ_EXT)))
     {
@@ -202,36 +202,79 @@ void static_library()
         system("ranlib ../lib" LIBRARY + ".a");
         system("rm *" OBJ_EXT);
     }
+    chdir("");
 }
 
-void build_static_library()
+void shared_library(string libso, string libsoshared)
+{
+    string libsomajor;
+
+    if (sizeof(makelist("*/os/*.o")))
+    {
+        libsomajor  = libso + "." + element(0, strtok(g_version, "."));
+
+        system("gcc -shared -Wl,-z,def,-soname," + libsomajor +
+            " -o " + TMP_DIR + libsoshared + " */os/*.o");
+    
+        chdir(TMP_DIR);
+    
+        system("ln -sf " + libsoshared + " " + libsomajor);
+        system("ln -sf " + libsomajor  + " " + libso);
+    
+        chdir("");
+    }
+}
+
+void build_libraries()
 {
     int idx;
     string class;
-    string fullLibname;
+
+    string libso;
+    string libsoshared;
+    string staticLib;
 
     setClasses();
 
-    md( TMP_DIR "/o");
+    md(TMP_DIR);
 
-    fullLibname = g_cwd + TMP_DIR "/lib" LIBRARY ".a";
-
-    g_sources = SOURCES;
-    g_compiled = 0;
+    staticLib = g_cwd + TMP_DIR "/lib" LIBRARY ".a";
 
     if (PARSER_DIR != "")
         parser();
 
     if (SCANNER_DIR != "")
         scanner();
+
+    g_sources = SOURCES;
+    g_compiled = 0;
+
+    if ("VERSION" younger "version.cc")
+        system("touch version.cc");
+
                                             // compile all files in subdirs
     for (idx = g_nClasses; idx--; )
-        std_cpp(0, idx + 1, element(idx, g_classes), fullLibname);
+        std_cpp(0, TMP_DIR "/oa", idx + 1, element(idx, g_classes), staticLib);
         
                                             // compile all files in g_cwd
-    std_cpp(1, 0, "", fullLibname);  
- 
+    std_cpp(1, TMP_DIR "/oa", 0, "", staticLib);  
+
     static_library();                       // make the library
+
+    #ifdef SHARED
+        libso = "lib" LIBRARY ".so";
+        libsoshared = libso + "." + g_version;
+                                            // add option for shared lib
+        g_compiler = COMPILER " " COMPILER_OPTIONS " -fPIC -c -o "; 
+        for (idx = g_nClasses; idx--; )
+            std_cpp(0, TMP_DIR "/os", idx + 1, element(idx, g_classes), 
+                                            libsoshared);
+        
+                                            // compile all files in g_cwd
+        std_cpp(1, TMP_DIR "/os", 0, "", libsoshared);  
+
+        shared_library(libso, libsoshared);// make a shared library
+    #endif
 
     chdir("");
 }
@@ -285,6 +328,20 @@ void link(string maino)
     chdir("");
 }
 
+void strip_shared()
+{
+    string libsoshared;
+
+    libsoshared = "lib" LIBRARY ".so." + g_version;
+
+    chdir(TMP_DIR);
+
+    if (exists(libsoshared))
+        system("strip --strip-unneeded " + libsoshared);
+    else
+        printf("Can't find " TMP_DIR "/" + libsoshared + "\n");
+}
+
 
 void program()
 {
@@ -292,7 +349,7 @@ void program()
 
     md(TMP_DIR "/bin");
 
-    build_static_library();
+    build_libraries();
 
     if (MAIN younger TMP_DIR "/" + maino)
         system(g_compiler + TMP_DIR "/" + maino + " " MAIN);
@@ -364,7 +421,13 @@ void main(int argc, list argv, list envp)
 
      if (option == "library")
      {
-         build_static_library();      
+         build_libraries();      
+         exit(0);
+     }
+
+     if (option == "strip-shared")
+     {
+         strip_shared();      
          exit(0);
      }
 
@@ -375,6 +438,9 @@ void main(int argc, list argv, list envp)
         "   clean           - clean up remnants of previous activities\n"
         "   library         - build the static library " TMP_DIR "/lib"
                                                             LIBRARY  ".a\n"
+        "                     optionally (SHARED in icmconf) build a shared\n"
+        "                     library as well\n"
+        "   strip-shared    - strip a shared library\n"
         "   program         - build " TMP_DIR "/" BINARY "\n"
         "   install <base>  - to install the software in the locations\n"
         "                     defined in the icmconf file, optionally\n"

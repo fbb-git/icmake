@@ -206,6 +206,7 @@ int install_file(string source)
 void install_std()
 {
     install_file("CLASSES");
+    install_file("VERSION");
     if (install_file("icmconf") && g_defaultcommand != "")
         fprintf("icmconf", g_defaultcommand);
 }
@@ -282,7 +283,7 @@ int main(int argc, list argv)
 
     arguments(argc, argv);
 
-    install_std();              // install CLASSES and icmconf
+    install_std();              // install CLASSES VERSION and icmconf
     install_rc();               // install .rc file elements
 
     printf("Done. Don't forget to inspect the #defines in\n"

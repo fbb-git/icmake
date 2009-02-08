@@ -1,3 +1,18 @@
+icmake (7.12.1)
+
+  * Updated icmbuild sources to 2009.
+
+  * main()-frame now contains commented-out code to use Bobcat's Arg class to
+    handle command line arguments
+
+  * library construction now contains code to create a shared library as a
+    new option that can be specified in icmconf
+
+  * added `where-is-what' giving an overview of what the various top-level
+    files and directories are for.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 08 Feb 2009 13:08:42 +0100
+
 icmake (7.11.1)
 
   * Introduced a three-digit version number: major, minor and subreleases.

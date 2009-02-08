@@ -8,11 +8,18 @@
     // The final program and source containing main():
     // ===============================================
 
-    // define the name of the program to create:
-#define BINARY              "binary"
-
     // define the name of the source containing main():
 #define MAIN                "main.cc"
+
+    // define the name of the program to create (don't use a path here, but
+    // define the installation path at `BIN_INSTALL' below):
+#define BINARY              "binary"
+
+    // #define used for the final product:
+    // ===================================
+
+#define BIN_INSTALL         "/usr/local/bin"
+
 
     // #defines used for compilation and linking:
     // ==========================================
@@ -39,13 +46,6 @@
     // define any additional paths (other than the standard paths) the
     // additional libraries are located in:
 #define ADD_LIBRARY_PATHS  ""
-
-    // #defines used for the final product:
-    // ====================================
-
-#define BIN_INSTALL         "/usr/local/bin"
-
-
 
     // Some advanced #defines, used to create parsers and lexical scanners 
     // ===================================================================
@@ -116,6 +116,9 @@
     // Local program library to use (change to an empty string if you want to
     // use the object modules themselves, rather than a library)
 #define LIBRARY             "modules"
+
+    // To construct a shared library uncomment the following define
+//#define SHARED
 
     //  The extension of object modules:
 #define OBJ_EXT             ".o"

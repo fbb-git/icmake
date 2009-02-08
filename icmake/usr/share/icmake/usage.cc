@@ -2,11 +2,11 @@
 
 #include "main.ih"
 
-void usage(std::string  const  &progname)
+void usage(std::string const &progname)
 {
     cout << "\n" <<
     progname << " by " << Icmbuild::author << "\n" <<
-    progname << " V" << Icmbuild::version << " " << Icmbuild::year << "\n"
+    progname << " V" << Icmbuild::version << " " << Icmbuild::years << "\n"
     "\n"
     "Usage: " << progname << " [options] args\n"
     "Where:\n"

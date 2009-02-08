@@ -1,0 +1,24 @@
+CHANGES     	overview of changes at new releases    
+INSTALL     	description of the installation process    
+VERSION     	latest version and year #defines
+bin/            destination directory when compiling icmake
+bootstrap.sh	bootstrap script (for systems without icmake)
+build       	build script used by icmscripts.sh, install.sh and unix
+comp/       	sources of the icm-comp icmake compiler    
+def/            defines programs used when constructing icmake
+doc/        	documentation and man-pages (including Yodl manpage sources)
+dos-msc.im  	legacy script to install icmake under MS under DOS    
+exec/       	sources of the icm-exec interpreter
+icm.h       	various #defines used during the compilation proces
+icmscripts.sh   script creating icmstart and icmbuild
+install.sh  	installation script     
+lsm.org/    	legacy files used when Linux used the `linux software map'
+make/       	sources of the icmake shell program
+pp/             sources of the icm-pp preprocessor
+rss/        	sources of functions shared by the icmake programs
+scripts/    	scripts used when creating icmake
+templates/  	various examples of icmake scripts    
+un/         	sources of the icmun unassembler
+unix            compilation and installation script for icmake updates
+usr/        	share/icmake/ constains scripts used by `icmstart'
+where-is-what   this file

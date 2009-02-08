@@ -1,11 +1,12 @@
 //                     version.cc
 
 #include "main.ih"
+#include "VERSION"
 
 namespace Icmbuild
 {
-    char version[]  = "0.00";
-    char year[]     = "2008";
+    char version[]  = VERSION;
+    char years[]     = YEARS;
     
-    char author[] = "Frank B. Brokken (f.b.brokken@rug.nl)";
+    char author[] = AUTHOR;
 }

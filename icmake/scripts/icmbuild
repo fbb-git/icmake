@@ -151,8 +151,6 @@ list inspect(string destDir,
         // b doesn't exist s must be compiled if s newer o and s newer l.
         // So, it doesn't have to be compiled if s older o or s older l.
 
-printf("COMPARING ", file, " TO ", ofile, "\n");
-
                                             // redo if file has changed
          if (source older ofile || source older library)
             srcList -= (list)file;

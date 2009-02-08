@@ -132,12 +132,16 @@ list inspect(string destDir,
     string ofile;
     string oprefix;
     string file;
+    string source;
 
     oprefix = destDir + "/" + (string)prefix;
+    srcDir += "/";
 
     for (idx = sizeof(srcList); idx--; )
     {
         file  = element(idx, srcList);   
+        source = srcDir + file;
+
         ofile   = oprefix + change_ext(file, "o");    // make o-filename
 
         // A file s must be recompiled if it's newer than its object
@@ -147,8 +151,10 @@ list inspect(string destDir,
         // b doesn't exist s must be compiled if s newer o and s newer l.
         // So, it doesn't have to be compiled if s older o or s older l.
 
+printf("COMPARING ", file, " TO ", ofile, "\n");
+
                                             // redo if file has changed
-         if (file older ofile || file older library)
+         if (source older ofile || source older library)
             srcList -= (list)file;
     }
     return srcList;
@@ -257,7 +263,7 @@ void build_libraries()
         std_cpp(0, TMP_DIR "/oa", idx + 1, element(idx, g_classes), staticLib);
         
                                             // compile all files in g_cwd
-    std_cpp(1, TMP_DIR "/oa", 0, "", staticLib);  
+    std_cpp(1, TMP_DIR "/oa", 0, ".", staticLib);  
 
     static_library();                       // make the library
 
@@ -271,7 +277,7 @@ void build_libraries()
                                             libsoshared);
         
                                             // compile all files in g_cwd
-        std_cpp(1, TMP_DIR "/os", 0, "", libsoshared);  
+        std_cpp(1, TMP_DIR "/os", 0, ".", libsoshared);  
 
         shared_library(libso, libsoshared);// make a shared library
     #endif

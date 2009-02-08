@@ -1,7 +1,12 @@
 #!/usr/bin/icmake -qt/tmp/icmbuild
 
 #include "icmconf"
+
+#ifdef USE_VERSION
 #include "VERSION"
+#else
+#define VERSION "0.00.0"
+#endif
 
 //                      NO CONFIGURABLE PARTS BELOW THIS LINE
 

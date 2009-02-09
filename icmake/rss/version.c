@@ -3,8 +3,8 @@
 */
 
 #include "../rss/icrss.h"
-#include "../VERSION"
+#include "../version.h"
 
 char
     version[] = VERSION,
-    release[] = RELEASE;
+    release[] = YEARS;

@@ -1,0 +1,31 @@
+#!/usr/bin/icmake -qt /tmp/icmake-man
+
+void main(int argc, list argv)
+{
+    string g_version;
+    string versionFile;
+    list line;
+    list cut;
+    string key;
+    string release = "doc/manpage/release.yo";
+    
+
+    chdir("../..");
+    versionFile = "VERSION";
+
+    system("rm -f " + release);
+
+    while (sizeof(line = fgets(versionFile, (int)element(1, line))))
+    {
+        cut = strtok(element(0, line), "= \t\n");
+        key = element(0, cut);
+
+        if (key == "VERSION")
+        {
+            g_version = element(1, cut);
+            fprintf("release.yo", "SUBST(_CurVers_)(", g_version, ")\n");
+        }
+        else if (key == "YEARS")
+            fprintf("release.yo", "SUBST(_CurYrs_)(", element(1, cut), ")\n");
+    }
+}

@@ -1,4 +1,4 @@
-#!tmp/icmake -qt /tmp/unix
+#!bin/icmake -qt /tmp/unix
 
 /*
 
@@ -21,7 +21,6 @@
 */
 
 #include "def/destinations"
-#include "VERSION"
 
 #define LIB_ICRSS   "libicrss.a"
 #define LIB_ICMAKE  "libicmake.a"
@@ -30,9 +29,7 @@
 #define LIB_ICMEXEC "libicmexec.a"
 #define LIB_ICMUN   "libicmun.a"
 
-list
-        examples;
-
+list examples;
     
 void check(string subdir)
 {
@@ -59,6 +56,8 @@ void initialize()
     (list)"tolower";
 
     check("bin");
+
+
 }           
             
 void makelib (string dir, string lib)
@@ -347,6 +346,7 @@ void manpage(string manpage)
 void man ()
 {
     system("mkdir -p " MANDIR);
+
     manpage("icmake.1");
     manpage("icmbuild.1");
     manpage("icmstart.1");
@@ -360,9 +360,35 @@ void skel()
 
 void main (int argc, list argv)
 {
-    string
-        av1;
-    
+    string av1;
+    string value;
+    list line;
+    list cut;
+    string key;
+    string release = "doc/manpage/release.yo";
+    string versionFile = "VERSION";
+    string versionH = "version.h";
+
+    system("rm -f " + release + " " + versionH);
+
+    while (sizeof(line = fgets(versionFile, (int)element(1, line))))
+    {
+        cut = strtok(element(0, line), "= \t\n");
+        key = element(0, cut);
+        value = element(1, cut);
+
+        if (key == "VERSION")
+        {
+            fprintf(release, "SUBST(_CurVers_)(", value, ")\n");
+            fprintf(versionH, "#define VERSION \"", value, "\"\n");
+        }
+        else if (key == "YEARS")
+        {
+            fprintf(release, "SUBST(_CurYrs_)(", value, ")\n");
+            fprintf(versionH, "#define YEARS \"", value, "\"\n");
+        }
+    }
+
     initialize();   
         
     av1 = element (1, argv);

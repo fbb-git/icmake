@@ -28,6 +28,10 @@ s,"/usr/share/icmake","'$3'",
 
 EXT=`pickup EXTENSION`
 
+echo    Writing the support file version.h
+echo "#define VERSION \"`grep VERSION VERSION | tr -d [A-Z=]`\"" > version.h
+echo "#define YEARS \"`grep YEARS VERSION | tr -d [A-Z=]`\"" >> version.h
+
 echo    Building the runtime-library in ./rss
 cd rss
 gcc -c -O2 -g -Wall -DHAVE_GLOB *.c
@@ -63,7 +67,7 @@ cd ..
 SKELDIR=`pickup SKELDIR`
 BINDIR=`pickup BINDIR`
 
-bash icmscripts.sh
+# bash icmscripts.sh
 
 echo "
     Done.

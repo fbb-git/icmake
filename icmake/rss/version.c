@@ -3,7 +3,7 @@
 */
 
 #include "../rss/icrss.h"
-#include "../version.h"
+#include "../tmp/version.h"
 
 char
     version[] = VERSION,

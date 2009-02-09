@@ -1,54 +1,28 @@
 #/bin/bash
 
-STRIP=$#
-
 pickup()
 {
     grep -v '^[[:space:]]*//' def/destinations | grep "define $1" |
                                     sed 's,[^"]*\"\([^"]*\).*,\1,'
 }
 
-inst()
-{
-    mkdir -p $2
-    echo cp bin/$1 $2
-    cp bin/$1 $2 
-}
+if [ $1 == strip ] 
+then
+    shift
+    CWD=`pwd`
+    BIN=`pickup BINDIR`
+    cd tmp/$BIN
+    strip icmake icmun
+    cd $CWD
+    LIB=`pickup LIBDIR`
+    cd $LIB
+    strip *
+    cd $CWD
+fi
 
-inststrip()
-{
-    if [ ${STRIP} -ne 0 ] 
-    then
-        strip bin/$1
-    fi
-    inst $1 $2
-}
+if [ $1 == "" ] ; then
+    echo Usage: $0 [strip] destination-directory
+    exit 1
+fi
 
-instscript()
-{
-    sed '
-s,!BINDIR,!'${BINDIR}',
-' scripts/$2/$1 > $2/$1
-    chmod +x $2/$1
-}
-
-BINDIR=`pickup BINDIR`
-LIBDIR=`pickup LIBDIR`
-EXT=`pickup EXTENSION`
-
-inststrip icmake${EXT} $BINDIR
-inststrip icmun${EXT}  $BINDIR
-
-inststrip icm-pp${EXT}   $LIBDIR
-inststrip icm-comp${EXT} $LIBDIR
-inststrip icm-exec${EXT} $LIBDIR
-
-inst icmbuild $BINDIR
-inst icmstart $BINDIR
-
-instscript unix .
-
-for x in . comp exec make pp rss un
-do
-    instscript build $x
-done
+(cd tmp; tar cf - *) | (cd $1; tar xf -)

@@ -21,54 +21,93 @@ instscript()
     sed '
 s,!/usr/bin,!'$2',
 s,"/usr/share/icmake","'$3'",
-' scripts/$1 > $4/$1
-    chmod +x $4/$1
+s,//,/,
+' scripts/$1 > tmp/$2/$1
+    chmod +x tmp/$2/$1
+
+    echo installed tmp/$2/$1
 }
 
+try()
+{
+    $* || exit 1
+}
 
 EXT=`pickup EXTENSION`
+BIN=`pickup BINDIR`
+LIB=`pickup LIBDIR`
+SKEL=`pickup SKELDIR`
+MAN=`pickup MANDIR`
 
-echo    Writing the support file version.h
-echo "#define VERSION \"`grep VERSION VERSION | tr -d [A-Z=]`\"" > version.h
-echo "#define YEARS \"`grep YEARS VERSION | tr -d [A-Z=]`\"" >> version.h
+echo Creating the intermediate destination directory ./tmp
+rm -rf tmp
+mkdir -p tmp/${BIN} tmp/${LIB}  tmp/${SKEL} tmp/${MAN}
 
-echo    Building the runtime-library in ./rss
+echo    Writing the support file tmp/version.h
+echo "#define VERSION \"`grep VERSION VERSION | tr -d [A-Z=]`\"" > tmp/version.h
+echo "#define YEARS \"`grep YEARS VERSION | tr -d [A-Z=]`\"" >> tmp/version.h
+
+echo Creating tmp/libicrss.a
 cd rss
-gcc -c -O2 -g -Wall -DHAVE_GLOB *.c
-ar rs libicrss.a *.o
+echo gcc -c -O2 -g -Wall -DHAVE_GLOB '*.c'
+try gcc -c -O2 -g -Wall -DHAVE_GLOB *.c
+ar rs ../tmp/libicrss.a *.o
 rm *.o
 cd ..
 
-echo Creating the target directory ./bin
-mkdir -p bin
-
-echo Creating icmake${EXT}
+echo Creating tmp/${BIN}/icmake${EXT}
 cd make
-gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icmake${EXT} *.c ../rss/libicrss.a
+try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BIN}/icmake${EXT} *.c ../tmp/libicrss.a
+try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BIN}/icmake${EXT} *.c ../tmp/libicrss.a
+cd ..
 
-echo Creating icm-pp${EXT}
-cd ../pp
-gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icm-pp${EXT} *.c ../rss/libicrss.a
-
-echo Creating icm-comp${EXT}
-cd ../comp
-gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icm-comp${EXT} *.c ../rss/libicrss.a
-
-echo Creating icm-exec${EXT} from exec/bootstrap
-cd ../exec
-sh bootstrap ${EXT}
-mv tmp/bin/icm-exec${EXT} ../bin
-
-echo Creating icmun${EXT}
-cd ../un
-gcc -O2 -g -Wall -DHAVE_GLOB -o ../bin/icmun${EXT} *.c ../rss/libicrss.a
+echo Creating tmp/${BIN}/icmun${EXT}
+cd un
+echo gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BIN}/icmun${EXT} '*.c' ../tmp/libicrss.a
+gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BIN}/icmun${EXT} *.c ../tmp/libicrss.a
 cd ..  
 
-SKELDIR=`pickup SKELDIR`
-BINDIR=`pickup BINDIR`
+echo Creating tmp/${LIB}/icm-pp${EXT}
+cd pp
+echo gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIB}/icm-pp${EXT} '*.c' ../tmp/libicrss.a
+try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIB}/icm-pp${EXT} *.c ../tmp/libicrss.a
+cd ..
 
-# bash icmscripts.sh
+echo Creating tmp/${LIB}/icm-comp${EXT}
+cd comp
+echo gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIB}/icm-comp${EXT} '*.c' ../tmp/libicrss.a
+try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIB}/icm-comp${EXT} *.c ../tmp/libicrss.a
+cd ..
 
-echo "
-    Done.
-"
+echo Creating tmp/${LIB}/icm-exec${EXT}
+cd exec
+echo 'gcc -O2 -g -Wall -DHAVE_GLOB -c *.c'
+try gcc -O2 -g -Wall -DHAVE_GLOB -c *.c 
+for x in auks var virtual int list string stack opcodefun builtin
+do
+    echo cd $x
+    cd $x
+    echo 'gcc -O2 -g -Wall -DHAVE_GLOB -c *.c'
+    try gcc -O2 -g -Wall -DHAVE_GLOB -c *.c
+    cd ..
+done
+echo gcc -o ../tmp/${LIB}/icm-exec$1 '*.o */*.o' ../tmp/libicrss.a
+gcc -o ../tmp/${LIB}/icm-exec$1 *.o */*.o ../tmp/libicrss.a
+rm *.o */*.o
+cd ..
+
+echo Creating icmbuild from scripts/icmbuild
+instscript icmbuild $BIN  $SKEL
+
+echo Creating icmstart from scripts/icmstart
+instscript icmstart $BIN  $SKEL
+
+echo Copying the skeleton files in usr/share/icmake/
+cp -r usr/share/icmake/* tmp/${SKEL}
+
+echo Copying the man-pages in doc/
+cp doc/*.1 tmp/${MAN}
+
+rm -f tmp/lib* tmp/version.h
+
+echo Done.

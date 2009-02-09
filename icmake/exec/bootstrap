@@ -9,7 +9,6 @@ for x in auks var virtual int list string stack opcodefun builtin
 do
     cd $x
     gcc -O2 -g -Wall -DHAVE_GLOB -c *.c || exit 1
-
     cd ..
 done
 

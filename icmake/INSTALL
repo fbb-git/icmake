@@ -59,56 +59,35 @@ For CYGWIN:
 
     - Inspect (and optionally modify) the availability of the program
 mentioned in ./def/programs (they should be available on any Unix(alike)
-system. 
+systems). 
 
 
     - Next run the shell-script `bootstrap' as follows:
 
                                sh bootstrap.sh
 
-This performs a full icmake compilation: it will put all executables in
-the ./bin subdirectory.
+This performs a full icmake construction: it puts all icmake related files in
+tmp/$BINDIR, tmp/$SKELDIR, tmp/$MANDIR and tmp/$LIBDIR
 
-3. Install the binaries
-=======================
+
+3. Install the files
+====================
 
     You probabaly must do this as `root':
 
-                                sh install.sh [strip]
+                            sh install.sh [strip]
 
-    This will install the [stripped] binaries and scripts in
-BINDIR. Furthermore, all toplines of the icmake scripts used in the source
-directories will be set to use the BINDIR path to the icmake program. Note
-that the binaries will be installed without being stripped unless install.sh
-is provided with an argument (e.g., strip)
+    This will install all files under ./tmp to / When providing the strip
+arguments binaries will be stripped. 
+
+    Note that the binaries will be installed without being stripped unless
+install.sh is provided with an argument (e.g., strip)
 
 4. Clean up the garbage
 =======================
 
-    Following `sh install' the ./unix script can be used to complete the
-    installation using icmake itself. To clean up the remnants of the above 
-    compilation process, run:
+                            rm -rf tmp
 
-                            ./unix realclean
-
-
-5. Install the skeletons for icmbuild/icmstart
-==============================================
-
-    You probabaly must do this as `root':
-
-                            ./unix skel
-
-
-6. Install the manual pages
-===========================
-
-    You probabaly must do this as `root':
-
-                            ./unix man
-
-Additional documents that you may store in a location of your own choice are
-found in the `doc' subdirectory.
 
 
 Hand-compiling icmake

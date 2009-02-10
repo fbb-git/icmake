@@ -21,8 +21,8 @@ instscript()
     sed '
 s,!/usr/bin,!'$2',
 s,"/usr/share/icmake","'$3'",
-s,//,/,
-' scripts/$1 > tmp/$2/$1
+s,\([^[:space:]]\)//\([^[:space:]]\),\1/\2,
+' usr/bin/$1 > tmp/$2/$1
     chmod +x tmp/$2/$1
 
     echo installed tmp/$2/$1
@@ -96,10 +96,10 @@ gcc -o ../tmp/${LIB}/icm-exec$1 *.o */*.o ../tmp/libicrss.a
 rm *.o */*.o
 cd ..
 
-echo Creating icmbuild from scripts/icmbuild
+echo Creating icmbuild from ./usr/bin/icmbuild
 instscript icmbuild $BIN  $SKEL
 
-echo Creating icmstart from scripts/icmstart
+echo Creating icmstart from ./usr/bin/icmstart
 instscript icmstart $BIN  $SKEL
 
 echo Copying the skeleton files in usr/share/icmake/

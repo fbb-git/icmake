@@ -1,4 +1,4 @@
-#!tmp/icmake -qt/tmp/pp
+#!/usr/bin/icmake -qt/tmp/pp
 
 /*
 Configurable defines:
@@ -24,15 +24,15 @@ void setClasses()
 }
 
 #define BUILD_LIBRARY
-#define BUILD_PROGRAM      "../bin/icm-pp"
+#define BUILD_PROGRAM      "../tmp/usr/lib/icmake/icm-pp"
 
 #define COMPILER           "gcc"
 #define COPT               "-Wall -O2 -DHAVE_GLOB -g"
 
 #define ECHO_REQUEST       1
 
-#define LIBS               "icrss"
-#define LIBPATH            "../rss"
+#define LIBS               "rss"
+#define LIBPATH            "../tmp"
 
 //                      NO CONFIGURABLE PARTS BELOW THIS LINE
 
@@ -374,8 +374,7 @@ void main(int argc, list argv)
     if (argc == 1)
     {
         printf("Usage:\n"
-               "   build prog [program=tmp/bin/icm-exec] [-e]\n"
-               "   build lib [-e]\n");
+               "   build prog [-e]\n");
         exit (1);
     }
 
@@ -394,32 +393,17 @@ void main(int argc, list argv)
 
     setlibs();
 
-    if (element(1, argv) == "lib")
-    {
-        program = 0;
-        cpp_make
-        (
-            "",
-            "icmpp"  // static- or so-library
-        );
-    }
-    else
-    {
-        program = 1;
+    programname = BUILD_PROGRAM;
 
-        if (argc == 3)
-            programname = element(2, argv);
-        else
-            programname = BUILD_PROGRAM;
+    system("mkdir -p " + get_path(programname));
 
-        system("mkdir -p " + get_path(programname));
+    cpp_make
+    (
+        "icm-pp.c",   // program source
+        "icmpp"       // static program library
+    );
 
-        cpp_make
-        (
-            "icm-pp.c",   // program source
-            "icmpp"       // static program library
-        );
-    }
+    system("rm -rf o lib*.a");
 
     exit (0);
 }

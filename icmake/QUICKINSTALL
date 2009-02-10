@@ -21,4 +21,4 @@
 
 4. Garbage removal:
 
-                    rm -r tmp
+                    rm -rf tmp

@@ -18,7 +18,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "../icm.h"
+#include "icm.h"
 #include "icrssdef.h"
 
 static char

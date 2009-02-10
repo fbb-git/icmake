@@ -19,7 +19,7 @@
 */
 
 #include "icrssdef.h"
-#include "../icm.h"
+#include "icm.h"
 #include <errno.h>
 
 void spawn_err (progname)

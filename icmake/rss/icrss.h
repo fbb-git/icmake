@@ -1,6 +1,10 @@
 #ifndef _INCLUDED_ICRSS_H_
 #define _INCLUDED_ICRSS_H_
 
+#include <stdio.h>
+#include <unistd.h>
+#include "icm.h"
+
 /*
                               I C R S S . H
 
@@ -199,10 +203,6 @@
     to that of the functions printf and fprintf.
 
 */
-
-#include "../icm.h"
-#include <stdio.h>
-#include <unistd.h>
 
 /*
                     The compiler uses E_TYPE 0 to indicate

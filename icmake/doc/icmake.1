@@ -1,4 +1,6 @@
-.TH "icmake" "1" "1999-2006" "icmake\&.7\&.00\&.tar\&.gz" "A program maintenance utility"
+include(release\&.yo)
+.PP 
+.TH "icmake" "1" "_CurYrs_" "icmake\&._CurVers_\&.tar\&.gz" "A program maintenance utility"
 
 .PP 
 .SH "NAME"
@@ -714,10 +716,10 @@ may be read and processed as follows:
         list line;
         while (1)
         {
-            line = fgets("filename", element(1, line));
+            line = fgets("filename", (int)line[1]);
             if (!line)
                 break;
-            process(element(0, line));
+            process(line[0]);
         }
             
 .fi 
@@ -774,7 +776,8 @@ Input interface:
 .IP o 
 \fIstring getch()\fP
 .br 
-Returns the next pressed key (no `Enter\&' required) as a string\&.
+Returns the next pressed key as a string (no `Enter\&' required for
+ms-dos and unix (incl\&. linux) systems)\&.
 
 .PP 
 Filename modifier:

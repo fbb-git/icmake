@@ -13,7 +13,7 @@
 
 #include <stdlib.h>
 
-#include "../../icm.h"
+#include "../../rss/icm.h"
 #include "../../rss/icrss.h"
 
 #include "../global.h"

@@ -52,7 +52,7 @@
 */
 
 #include "icrssdef.h"
-#include "../icm.h"
+#include "icm.h"
 
 static BIN_HEADER_ header;
 

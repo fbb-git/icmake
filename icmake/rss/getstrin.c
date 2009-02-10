@@ -40,7 +40,7 @@ Example:
 
 
 #include "icrssdef.h"
-#include "../icm.h"
+#include "icm.h"
 
 char *getstring (FILE *f, INT32 stringsec, size_t stringofs)
 {

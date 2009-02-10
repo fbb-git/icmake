@@ -1,6 +1,6 @@
 #include <ctype.h>
 #include "../rss/icrssdef.h"
-#include "../icm.h"
+#include "../rss/icm.h"
 
 typedef enum
 {

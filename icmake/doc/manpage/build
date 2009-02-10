@@ -1,31 +1,38 @@
 #!/usr/bin/icmake -qt /tmp/icmake-man
 
+void yodl(string dest, string src)
+{
+    system("yodl2man --no-warnings -o " + dest + " " + src);
+}
+
 void main(int argc, list argv)
 {
-    string g_version;
+    string version;
     string versionFile;
     list line;
     list cut;
     string key;
-    string release = "doc/manpage/release.yo";
-    
+    string value;
+    string release = "release.yo";
+    versionFile = "../../VERSION";
 
-    chdir("../..");
-    versionFile = "VERSION";
-
+    echo(OFF);
     system("rm -f " + release);
+    echo(ON);
 
-    while (sizeof(line = fgets(versionFile, (int)element(1, line))))
+    while (sizeof(line = fgets(versionFile, (int)line[1])))
     {
-        cut = strtok(element(0, line), "= \t\n");
-        key = element(0, cut);
+        cut = strtok(line[0], "= \t\n");
+        key = cut[0];
+        value = cut[1];
 
         if (key == "VERSION")
-        {
-            g_version = element(1, cut);
-            fprintf("release.yo", "SUBST(_CurVers_)(", g_version, ")\n");
-        }
+            fprintf("release.yo", "SUBST(_CurVers_)(", value, ")\n");
         else if (key == "YEARS")
-            fprintf("release.yo", "SUBST(_CurYrs_)(", element(1, cut), ")\n");
+            fprintf("release.yo", "SUBST(_CurYrs_)(", value, ")\n");
     }
+
+    yodl("../icmake.1", "icmake.yo");
+    yodl("../icmstart.1", "icmstart.yo");
+    yodl("../icmbuild.1", "icmbuild.yo");
 }

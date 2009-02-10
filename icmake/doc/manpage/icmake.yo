@@ -1,5 +1,4 @@
-SUBST(_CurYrs_)(1999-2006)
-SUBST(_CurVers_)(7.00)
+include(release.yo)
 
 htmlbodyopt(text)(#27408B)
 htmlbodyopt(bgcolor)(#FFFAF0)

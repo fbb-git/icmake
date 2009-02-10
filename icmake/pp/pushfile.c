@@ -52,7 +52,7 @@ char *name;
     filestack = xrealloc(filestack, (filesp + 1) * sizeof(FILESTACK_));
     filestack[filesp].n = xstrdup(name);
     if (! (filestack[filesp].f = fopen(name, "r")) )
-        error("cannot open input file %s", name);
+        error("cannot open #include file %s", name);
     filestack[filesp].l = 1;
 
     if (! nofileinfo)

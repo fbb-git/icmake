@@ -1,6 +1,6 @@
-icmake (7.12.1)
+icmake (7.12.1) (TODO)
 
-  * Updated icmbuild sources to 2009.
+  * updated icmake's release year to 1992-2009.
 
   * main()-frame now contains commented-out code to use Bobcat's Arg class to
     handle command line arguments
@@ -8,10 +8,16 @@ icmake (7.12.1)
   * library construction now contains code to create a shared library as a
     new option that can be specified in icmconf
 
+  * the top-level directory has been organized. See INSTALL and QUICKINSTALL
+    for details. Full construction using bootstrap.sh is now based on the
+    assumption that icmake hasn't been installed. To install parts given an
+    icmake installation the various subdirectories have build-scripts assuming
+    an icmake installation under /usr/bin and /usr/lib/icmake/
+
   * added `where-is-what' giving an overview of what the various top-level
     files and directories are for.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 08 Feb 2009 13:08:42 +0100
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 10 Feb 2009 16:49:10 +0100
 
 icmake (7.11.1)
 

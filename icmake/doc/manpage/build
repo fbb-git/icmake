@@ -5,6 +5,15 @@ void yodl(string dest, string src)
     system("yodl2man --no-warnings -o " + dest + " " + src);
 }
 
+string release = "release.yo";
+
+void rmrelease()
+{
+    echo(OFF);
+    system("rm -f " + release);
+    echo(ON);
+}
+
 void main(int argc, list argv)
 {
     string version;
@@ -13,12 +22,9 @@ void main(int argc, list argv)
     list cut;
     string key;
     string value;
-    string release = "release.yo";
     versionFile = "../../VERSION";
 
-    echo(OFF);
-    system("rm -f " + release);
-    echo(ON);
+    rmrelease();
 
     while (sizeof(line = fgets(versionFile, (int)line[1])))
     {
@@ -35,4 +41,6 @@ void main(int argc, list argv)
     yodl("../icmake.1", "icmake.yo");
     yodl("../icmstart.1", "icmstart.yo");
     yodl("../icmbuild.1", "icmbuild.yo");
+
+    rmrelease();
 }

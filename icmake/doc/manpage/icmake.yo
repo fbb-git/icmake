@@ -1,4 +1,4 @@
-include(release.yo)
+includefile(release.yo)
 
 htmlbodyopt(text)(#27408B)
 htmlbodyopt(bgcolor)(#FFFAF0)
@@ -812,7 +812,7 @@ manpagefiles()
 
 manpagesection(EXAMPLES)
     
-    The distribution (usually in tt(/usr/share/doc/icmake) contains a
+    The distribution (usually in tt(/usr/share/doc/icmake)) contains a
 directory tt(examples) containing various examples of icm() script. Note in
 particular the tt(examples/icmbuild) subdirectory containing a general script
 for bf(C++) and bf(C) program maintenance.
@@ -820,17 +820,7 @@ for bf(C++) and bf(C) program maintenance.
 manpageseealso()
     bf(icmbuild)(1), bf(icmstart)(1), bf(make)(1)
 
-manpagesection(LICENSE)
-       This  is free software, distributed under the terms of the `GNU General
-       Public License'. Copyright remains with the author.
-
-manpagesection(ORGANIZATION)
-       Computing Center, University of Groningen.
-
 manpagebugs()
+    None reported
 
-    Please report bugs to the author:
-    
-manpageauthor()
-
-Frank B. Brokken (f.b.brokken@rug.nl).
+includefile(trailer.inc)

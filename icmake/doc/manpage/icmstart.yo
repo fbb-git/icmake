@@ -1,4 +1,4 @@
-include(release.yo)
+includefile(release.yo)
 
 htmlbodyopt(text)(#27408B)
 htmlbodyopt(bgcolor)(#FFFAF0)
@@ -16,9 +16,6 @@ DEFINEMACRO(itb)(1)(\
     it()bf(ARG1)\
 )
 
-DEFINEMACRO(icm)(0)(bf(icmstart))
-DEFINEMACRO(Icm)(0)(bf(Icmstart))
-
 DELETEMACRO(tt)
 DEFINEMACRO(tt)(1)(em(ARG1))
 
@@ -31,26 +28,27 @@ manpagename(icmstart)(A startup script for icmbuild program maintenance)
 
 COMMENT( all other: add after () )
 manpagesynopsis()
-       icm() tt([Options]) top-dir [program|library]
+       bf(icmstart) tt([Options]) top-dir [program|library]
 
 manpagedescription()
 
-The icm() script is a generic script that can be used to start program
-maintenance using bf(icmake)(1) and bf(icmbuild)(1). Icm() will create an
-initial directory tt(top-dir) and will install the files tt(CLASSES) and
-tt(icmconf) below tt(top-dir). If provided, tt(program) or tt(library) may be
-specified, to become the default mode of operation of the bf(icmbuild)(1)
-script. Skeleton files for the main directory and subdirectories, by default
-listed in the file tt(/usr/share/icmake/icmstart.rc), may be installed as well
-(see below at bf(SKELETON FILES)).
+The bf(icmstart) script is a generic script that can be used to start program
+maintenance using bf(icmake)(1) and bf(icmbuild)(1). bf(Icmstart) will create
+an initial directory tt(top-dir) and will install the files tt(CLASSES,
+VERSION) and tt(icmconf) below tt(top-dir). If provided, tt(program) or
+tt(library) may be specified as the default mode of operation of the
+bf(icmbuild)(1) script. Skeleton files for the main directory and
+subdirectories, by default listed in the file
+tt(/usr/share/icmake/icmstart.rc), may be installed as well (see below at
+bf(SKELETON FILES)).
 
-After changing to the top-level directory created by icm() the bf(icmbuild)
-script may be called for program maintenance.
+After changing to the top-level directory created by bf(icmstart) the
+bf(icmbuild) script may be called for program maintenance.
 
 manpageoptions()
 
-    Icm() may be called with the following options, which (f specified) must
-        be the first arguments to icm():
+    bf(Icmstart) may be called with the following options, which (if specified)
+    must be the first arguments to bf(icmstart):
     itemization(
     itt(-d)nl()
        Do not execute any commands, but show the commands that would have been
@@ -59,7 +57,8 @@ manpageoptions()
        Do not install skeleton files. 
     itt(-r) 
        Unconditionally replace existing (skeleton) files. If tt(-r) is not
-        provided icm() will ask the user to confirm that an existing file must
+        provided bf(icmstart) will ask the user to confirm that an existing
+        file must
         be overwritten. If a skeleton specification refers to a directory, the
         full directory and its subdirectories will be replaced.
     itt(-s skeleton-path) nl() 
@@ -71,11 +70,10 @@ manpageoptions()
         directory, in which case the skeleton resource file is assumed to be
         tt(icmstart.rc) (see below at bf(SKELETON FILES)).
     )
-    Since icm() uses tt(tar) to install files, tt(tar) must be available when
-icm() should install skeleton files.
+    Since bf(icmstart) uses tt(tar) to install files, tt(tar) must be
+available when bf(icmstart) should install skeleton files.
 
 manpagesection(SKELETON FILES)
-
 
 Skeleton resource files may contain comment (empty lines and lines beginning
 with the hash-mark (tt(#))) which is ignored, and should otherwise contain
@@ -114,14 +112,19 @@ installation of tt(parser) is skipped.
 contain that directory as one of its entries. It is the user's responsibility
 to update tt(CLASSES), if necessary.
 
-manpagefiles()
+    The file tt(VERSION) is used to make available the program's version
+number, release-years and author name(s). The tt(VERSION) file contains lines
+comparable to
+        verbinclude(../../usr/share/icmake/VERSION)
+and the values defined here will be used in the tt(version.cc) skeleton file.
 
+manpagefiles()
     The mentioned paths are sugestive only and may be installation dependent:
     itemization(
     it() bf(/usr/share/icmake/icmconf)
-        Example of a icm() configuration file;
+        Example of a bf(icmstart) configuration file;
     it() bf(/usr/share/icmake/CLASSES)
-        Example of a icm() tt(CLASSES) file.
+        Example of a bf(icmstart) tt(CLASSES) file.
     it() bf(/usr/share/icmake/icmstart.rc)
         Default skeleton resource file.
     )
@@ -129,17 +132,7 @@ manpagefiles()
 manpageseealso()
     bf(icmake)(1), bf(icmbuild)(1), bf(tar)(1)
 
-manpagesection(LICENSE)
-       This  is free software, distributed under the terms of the `GNU General
-       Public License'. Copyright remains with the author.
-
-manpagesection(ORGANIZATION)
-       Computing Center, University of Groningen.
-
 manpagebugs()
+    None reported
 
-    Please report bugs to the author:
-    
-manpageauthor()
-
-Frank B. Brokken (f.b.brokken@rug.nl).
+includefile(trailer.inc)

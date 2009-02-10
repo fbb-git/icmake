@@ -11,17 +11,15 @@ build-stamp:
 
 	# Add here commands to compile the package.
 	sh bootstrap.sh
-
 	touch build-stamp
 
-clean: myclean
-myclean:
+clean: 
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
 
 	# Add here commands to clean up after the build process.
-	rm -f bin/* */*.[ao]
+	rm -rf tmp
 
 	dh_clean
 
@@ -32,8 +30,7 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/<packagename>
-	dh_install bin/icmbuild bin/icmstart    /usr/bin
-	dh_install usr/share/icmake             /usr/share
+	sh install.sh debian/icmake
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -45,9 +42,8 @@ binary-arch: build install
 	dh_testroot
 	dh_installchangelogs CHANGES
 	dh_installdocs doc/README.icmbuild doc/icmake.doc doc/icmake.ps \
-				   debian/mail.frank templates
+				   debian/mail.frank templates legacy
 	dh_installexamples
-	dh_installman doc/icmake.1 doc/icmbuild.1 doc/icmstart.1
 	dh_link usr/share/man/man1/icmake.1 usr/share/man/man1/icmun.1
 	dh_strip
 	dh_compress
@@ -83,7 +79,7 @@ get-orig-source:
 		wget --no-check-certificate --quiet -N -nv -T20 -t3 -O \
              ../tarballs/$(DEFILE) $(URL)/$(UPFILE) ; \
 	else \
-		echo "Upstream source tarball have been already downloaded" ; \
+		echo "Upstream source tarball has been already downloaded" ; \
 	fi
 
 	-@if [ "$(MD5CURRENT)" != "$(MD5TRUSTED)" ] ; then \

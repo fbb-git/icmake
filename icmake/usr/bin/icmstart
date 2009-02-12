@@ -134,7 +134,7 @@ void arguments(int argc, list argv)
 
     syscall("mkdir -p " + argv[cmdidx]);     // install the target dir
 
-    g_destpath = argv[cmdidx];
+    g_destpath = argv[cmdidx] + "/";
     if (!g_debug)
         g_destpath = chdir(g_destpath);
 
@@ -190,26 +190,34 @@ int install(string target)
     return (int)(!exists(target) || replace(target));
 }
 
-    // a line in the conffile may be organized as follows (name is either
-    //  a file or a directory; directories are copied completely):
-    //  name        - name is located in skelpath and installed at destpath
-    //  name  dest  - name is located in skelpath and installed at destpath/dest
-    //                if name is a directory then the destination will be
-    //                destpath/dest/name. dest may also be /dest
-    //  path/name   - relative or absolute path's name will be installed at
-    //                destpath. Relative is relative to the startup directory
-    //  path/name dest - relative or absolute path's name will be installed
-    //                at destpath/dest. dest may also be /dest
+    // a line in the conffile may be organized as follows (except for empty
+    // lines and comment lines starting at # in column 0)
+    // name is either a file or a directory; directories are copied
+    // completely. 
+    //  name                - skelpath/name is installed as destpath/name
+    //  ./path/name         - $cwd/path/name is installed as destpath/name
+    //  /path/name          - /path/name is installed as destpath/name
+    // a second entry may be dest (path OK): destpath/dest will be the
+    // destination. E.g.:
+    //  name  one/two       - skelpath/name is installed as destpath/one/two
+    // A first argument ? on the line indicates that installation is optional
 int install_file(string source, string dest)
 {
     int idx;
 
-    idx = strfind(source, "/");
+    printf("INIT: ", g_destpath, "\n");
 
-    if (idx == -1)
-        source = g_skelpath + source;
-    else if (idx > 0)
+    if (source[0] == ".")
         source = g_cwd + source;
+    else
+    {
+        idx = strfind(source, "/");
+
+        if (idx == -1)
+            source = g_skelpath + source;
+        else if (idx > 0)
+            source = g_cwd + source;
+    }
         
     if (!exists(source))
     {
@@ -222,11 +230,21 @@ int install_file(string source, string dest)
     else    
         dest = g_destpath + dest;
 
+    printf("CHECK: ", source, " AND ", dest, "\n");
+
+    idx = strlen(dest) - 1;
+
+    printf("PRE: ", g_destpath, "\n");
+
+    if (dest[idx] == "/")
+        dest = substr(dest, 0, idx);
+
+    printf("POST: ", g_destpath, "\n");
+
     if (install(dest))
     {
-        printf("Install `", source, "'\nas `", dest, "'\n");
-////        syscall("tar cf - -C " + g_skelpath + " " + source + " | "
-////               "tar xf - -C " + g_destpath);
+        syscall("mkdir -p " + get_path(dest));
+        syscall("cp -rd " + source + " " + dest);
         return 1;
     }
 

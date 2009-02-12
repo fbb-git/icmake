@@ -710,7 +710,7 @@ provided:
         the three strings tt("hello"), tt("icmake's"), and tt("world").
     itt(string strupr(string s))nl()
         Returns an upper-case duplicate of tt(s).
-    itt(int substr(string text, int offset, int count))nl()
+    itt(string substr(string text, int offset, int count))nl()
         Returns a substring of tt(text), starting at tt(offset), consisting of
         tt(count) characters. If tt(offset) exceeds (or equals) the string's
         size or if tt(count <= 0), then an empty string is returned. If

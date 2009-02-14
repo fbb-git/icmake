@@ -2,6 +2,7 @@
 
 #include "main.ih"
 #include "VERSION"
+#include "AUTHOR"
 
 namespace Icmbuild
 {

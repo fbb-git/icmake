@@ -1,0 +1,5 @@
+    // Uncomment and modify to make the AUTHOR #define accessible to 
+    // the icmstart script. Alternatively, an empty AUTHOR string will
+    // be used in, e.g., the skeleton's usage.cc file
+
+//#define AUTHOR  "Frank B. Brokken (f.b.brokken@rug.nl)";

@@ -1,13 +1,16 @@
 #!/usr/bin/icmake -qt /tmp/icmstart
 
 #define SKEL  "/usr/share/icmake/"
+#define CONF  "/etc/icmake/"
 
-string g_confpath = "/etc/icmake/icmstart.rc";
+string g_confpath = CONF;
+string g_conffile;
 string g_skelpath = SKEL;
 string g_program;
 string g_defaultcommand = "";
 string g_destpath;
 string g_cwd;
+list   g_mkdir;
 
 int g_confirminstall = 0;
 int g_skeletons = 1;
@@ -20,20 +23,17 @@ void usage()
     printf("Usage: ", g_program, " [Options] dir [program|library]\n"
         "Where:\n"
         "   Options:\n"
+        "     -c confpath: Use the configuration files (icmstart.rc, "
+                                                                "VERSION\n"
+        "                  and AUTHOR in `confpath' rather than " CONF "\n"
         "     -d: debug: do not execute any commands, but show commands\n"
         "         that would have been executed\n"
-        "     -I: do NOT install the skeleton files, if any.\n"
-        "     -r: replace already existing files/directories\n"
-        "     -c confpath: Use the configuration file `confpath' instead of\n"
-        "        /etc/icmake/icmstart.rc\n"
+        "     -I: do NOT install any files.\n"
+        "     -r: replace existing files/directories\n"
         "     -s skelpath: Read the skeleton information from the directory\n"
-        "        or file `skelpath'.\n"
-        "        By default the skeleton files are located in " SKEL "\n"
-        "\n"
-        "   dir: the directory to contain CLASSES, icmconf and the "
-                                                        "skeleton files\n"
-        "   program |\n"
-        "   library: [optional] default command passed to the icmbuild "
+        "                  `skelpath' rather than " SKEL "\n"
+        "   dir: the directory to install the files into\n"
+        "   program, library: command passed by default to the icmbuild "
                                                                     "script\n"
         "\n");
 
@@ -57,6 +57,27 @@ void syscall(string command)
         printf(command, "\n");
     else
         system(command);
+}
+
+void md(string dir)
+{
+    int idx;
+    for (idx = 0; idx < sizeof(g_mkdir); ++idx)
+    {
+        if (g_mkdir[idx] == dir)
+            return;
+    }
+    syscall("mkdir -p " + dir);    
+    g_mkdir += (list)dir;
+}
+
+string absPath(string arg)
+{
+    if (arg[0] != "/")
+        arg = g_cwd + arg;
+    if (arg[strlen(arg) - 1] != "/")
+        arg += "/";
+    return arg;
 }
 
 void arguments(int argc, list argv)
@@ -89,12 +110,9 @@ void arguments(int argc, list argv)
 
                 arg = argv[++cmdidx];
             }
-            g_confpath = arg;           // reassign confpath
-            if (g_confpath[0] != "/")
-                g_confpath = g_cwd + g_confpath;
-
+            g_confpath = absPath(arg);  // reassign confpath
         }
-        else if (arg[1] == "d")              // -d: debug
+        else if (arg[1] == "d")         // -d: debug
             g_debug = 1;
         else if (arg[1] == "I")         // -I: no skeletons
             g_skeletons = 0;
@@ -114,12 +132,7 @@ void arguments(int argc, list argv)
 
                 arg = argv[++cmdidx];
             }
-            g_skelpath = arg;             // reassign skelpath
-
-            if (g_skelpath[0] != "/")
-                g_skelpath = g_cwd + g_skelpath;
-            if (g_skelpath[strlen(g_skelpath) - 1] != "/")
-                g_skelpath += "/";
+            g_skelpath = absPath(arg);  // reassign skelpath
         }
         else
             printf("[Warning] ignoring unkown option ", arg, "\n");
@@ -127,14 +140,16 @@ void arguments(int argc, list argv)
         ++cmdidx;
     }
 
-    printf(g_confpath, "\n");
+    g_conffile = g_confpath + "icmstart.rc";
 
-    if (!isFile(g_confpath))
-        die("Can't find configuration file `" + g_confpath + "'");
+    if (!isFile(g_conffile))
+        die("Can't find configuration file `" + g_conffile);
 
-    syscall("mkdir -p " + argv[cmdidx]);     // install the target dir
+    g_destpath = argv[cmdidx];
+    if (g_destpath[strlen(g_destpath) - 1] != "/")
+        g_destpath += "/";
+    md(g_destpath);                       // install the target dir
 
-    g_destpath = argv[cmdidx] + "/";
     if (!g_debug)
         g_destpath = chdir(g_destpath);
 
@@ -204,9 +219,8 @@ int install(string target)
 int install_file(string source, string dest)
 {
     int idx;
-
-    printf("INIT: ", g_destpath, "\n");
-
+    string rawDest;
+    
     if (source[0] == ".")
         source = g_cwd + source;
     else
@@ -230,20 +244,14 @@ int install_file(string source, string dest)
     else    
         dest = g_destpath + dest;
 
-    printf("CHECK: ", source, " AND ", dest, "\n");
-
     idx = strlen(dest) - 1;
-
-    printf("PRE: ", g_destpath, "\n");
 
     if (dest[idx] == "/")
         dest = substr(dest, 0, idx);
 
-    printf("POST: ", g_destpath, "\n");
-
     if (install(dest))
     {
-        syscall("mkdir -p " + get_path(dest));
+        md(get_path(dest));
         syscall("cp -rd " + source + " " + dest);
         return 1;
     }
@@ -253,8 +261,8 @@ int install_file(string source, string dest)
 
 void install_std()
 {
-    install_file("CLASSES", "");
-    install_file("VERSION", "");
+    install_file(g_confpath + "VERSION", "");
+    install_file(g_confpath + "AUTHOR", "");
                                         // install a default command if 
                                         // provided as last arg.
     if (install_file("icmconf", "") && g_defaultcommand != "")
@@ -327,7 +335,7 @@ void install_rc()
 
     while (1)
     {
-        line = fgets(g_confpath, (int)line[1]);
+        line = fgets(g_conffile, (int)line[1]);
         if (!line)
             break;
         installLine(line[0]);

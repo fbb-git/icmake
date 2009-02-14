@@ -4,9 +4,11 @@
 # Files and directories are installed by tar, see icmstart(1)'s man-page
 # Confirmation to install is required for entries on lines starting with ?
 
+CLASSES
 main.cc     
 main.ih     
 usage.cc
 version.cc
 
-? scanner parser
+? scanner
+? parser

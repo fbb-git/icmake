@@ -1,10 +1,6 @@
     // Inspect the following #defines. Change them to taste. If you don't
     // need a particular option, change its value into an empty string
 
-    // should commands be echoed (ON) or not (OFF) ?
-#define USE_ECHO              ON
-
-
     // The final program and source containing main():
     // ===============================================
 
@@ -12,13 +8,29 @@
 #define MAIN                "main.cc"
 
     // define the name of the program to create (don't use a path here, but
-    // define the installation path at `BIN_INSTALL' below):
+    // define the installation path at `BIN_INSTALL' below) and use
+    // `icmbuild install' to install the binary.
 #define BINARY              "binary"
 
-    // #define used for the final product:
-    // ===================================
+    // Uncomment to install the binary in the provided path using 
+    // `icmbuild install'
+//#define BIN_INSTALL         "/usr/local/bin"
 
-#define BIN_INSTALL         "/usr/local/bin"
+    // Defines related to the local libraries to create:
+    // =================================================
+
+    // Uncomment to create a local library rather (when a binary program is 
+    // built it will be linked against the library rather than the individual
+    // object modules). Change the lib's name at you own digression (don't use
+    // lib or an extension like .a)
+//#define LIBRARY             "modules"
+
+    // Uncomment to construct a shared library 
+//#define SHARED
+
+    // Uncomment to install the libraries in the provided path using 
+    // `icmbuild install'
+//#define LIB_INSTALL         "/usr/local/lib"
 
 
     // #defines used for compilation and linking:
@@ -106,24 +118,19 @@
 #define PARSOUT             "parse.cc"
 
 
+    // Additional defines, which normally require no modification
+    // ==========================================================
 
-    // Additional defines, which should normally not be modified
-    // =========================================================
+    // should commands be echoed (ON) or not (OFF) ?
+#define USE_ECHO              ON
 
     // Directory below this directory to contain temporary results
 #define TMP_DIR             "tmp"
 
-    // Local program library to use (change to an empty string if you want to
-    // use the object modules themselves, rather than a library)
-#define LIBRARY             "modules"
-
-    // To construct a shared library uncomment the following define
-//#define SHARED
-
     //  The extension of object modules:
 #define OBJ_EXT             ".o"
 
-    //  Use the file VERSION
+    //  Use the VERSION and AUTHOR files defined in /etc/icmake
 #define USE_VERSION
 
     // below #define DEFCOM "program" or "library" may be added by icmstart

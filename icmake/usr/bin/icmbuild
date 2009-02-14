@@ -8,6 +8,14 @@
 #define VERSION "0.00.0"
 #endif
 
+#ifndef LIBRARY
+#define LIBRARY ""
+#endif
+
+#ifndef BIN_INSTALL
+#define BIN_INSTALL "."
+#endif
+
 //                      NO CONFIGURABLE PARTS BELOW THIS LINE
 
 string g_sources;       // Pattern for the sources to use
@@ -297,14 +305,13 @@ void setLibs()
     cut = strtok(ADD_LIBRARIES, " ");        // cut op libraries
     n = sizeof(cut);
     for (index = 0; index < n; index++)
-        g_libs += " -l" + cut[index]);
+        g_libs += " -l" + cut[index];
 
     cut = strtok(ADD_LIBRARY_PATHS, " ");     // cut up the paths
     n = sizeof(cut);
     for (index = 0; index < n; index++)
         g_libpath += " -L" + cut[index];
 }
-
 
 void link(string maino)
 {

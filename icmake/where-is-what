@@ -14,5 +14,6 @@ pp/             sources of the icm-pp preprocessor
 rss/        	sources of functions shared by the icmake programs
 templates/  	various examples of icmake scripts    
 un/         	sources of the icmun unassembler
-usr/        	bin/icmstart, bin/icmbuild, support scripts in share/icmake
+usr/        	bin/icmstart, bin/icmbuild, skeletons in share/icmake
+etc/            icmake/ contains icmstart.rc, VERSION and AUTHOR config. files
 where-is-what   this file

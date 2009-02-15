@@ -2,8 +2,12 @@ icmake (7.12.1) (TODO)
 
   * updated icmake's release year to 1992-2009.
 
-  * main()-frame now contains commented-out code to use Bobcat's Arg class to
-    handle command line arguments
+  * Skeleton files are only those files that are related to the standard
+    construction of a C++ program using icmbuild. In addition to those,
+    configuration files were defined in etc/icmake. The configuration files
+    allow for easy distribution of a new initial year and a default author
+    specification that may easily be adapted to icmake installations on a per
+    host base.
 
   * library construction now contains code to create a shared library as a
     new option that can be specified in icmconf

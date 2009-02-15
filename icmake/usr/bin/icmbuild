@@ -211,6 +211,13 @@ void std_cpp(int ignoreMain, string destDir,
 
 void static_library()
 {
+    if (exists(TMP_DIR "/o") && ((int)stat(TMP_DIR "/o")[0] & S_IFDIR))
+        printf(
+"[Warning] Since icmake 7.12.0 the directory " TMP_DIR "/oa is used to hold\n"
+"          object modules of source files rather than " TMP_DIR "/o.\n"
+"          To remove this warning rename " TMP_DIR "/o to " TMP_DIR "/oa\n"
+"          or remove the directory" TMP_DIR "/o.\n");
+
     cd(TMP_DIR "/oa");
 
     if (strlen(LIBRARY) && sizeof(makelist("*" OBJ_EXT)))
@@ -266,7 +273,7 @@ void build_libraries()
     g_sources = SOURCES;
     g_compiled = 0;
 
-    if ("VERSION" younger "version.cc")
+    if ("VERSION" younger "version.cc" || "AUTHOR" younger "version.cc")
         system("touch version.cc");
 
                                             // compile all files in subdirs
@@ -323,8 +330,8 @@ void link(string maino)
 
     if (exists("lib" LIBRARY ".a"))
         compiler += " -l" LIBRARY " -L.";
-    else if (sizeof(makelist("o/*" OBJ_EXT)))
-        compiler += " o/*" OBJ_EXT;
+    else if (sizeof(makelist("oa/*" OBJ_EXT)))
+        compiler += " oa/*" OBJ_EXT;
 
     setLibs();
 

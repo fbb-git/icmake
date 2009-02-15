@@ -38,10 +38,11 @@ BIN=`pickup BINDIR`
 LIB=`pickup LIBDIR`
 SKEL=`pickup SKELDIR`
 MAN=`pickup MANDIR`
+ETC=`pickup ETCDIR`
 
 echo Creating the intermediate destination directory ./tmp
 rm -rf tmp
-mkdir -p tmp/${BIN} tmp/${LIB}  tmp/${SKEL} tmp/${MAN}
+mkdir -p tmp/${BIN} tmp/${LIB}  tmp/${SKEL} tmp/${MAN} tmp/${ETC}
 
 echo    Writing the support file tmp/version.h
 echo "#define VERSION \"`grep VERSION VERSION | tr -d [A-Z=]`\"" > tmp/version.h
@@ -104,6 +105,9 @@ instscript icmstart $BIN  $SKEL
 
 echo Copying the skeleton files in usr/share/icmake/
 cp -r usr/share/icmake/* tmp/${SKEL}
+
+echo Copying the configuration files in etc/icmake/
+cp -r etc/icmake/* tmp/${ETC}
 
 echo Copying the man-pages in doc/
 cp doc/*.1 tmp/${MAN}

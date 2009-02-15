@@ -29,4 +29,5 @@
 #define SKELDIR     "/usr/share/icmake"
 #define MANDIR      "/usr/share/man/man1"
 #define LIBDIR      "/usr/lib/icmake"
+#define ETCDIR      "/etc/icmake"
 

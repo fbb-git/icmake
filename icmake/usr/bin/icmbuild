@@ -226,18 +226,20 @@ void shared_library(string libso, string libsoshared)
 {
     string libsomajor;
 
-    if (sizeof(makelist("*/os/*.o")))
+    if (sizeof(makelist("*/o/*.o")))
     {
         libsomajor  = libso + "." + element(0, strtok(g_version, "."));
 
         system("gcc -shared -Wl,-z,def,-soname," + libsomajor +
-            " -o " + TMP_DIR + libsoshared + " */os/*.o");
+            " -o " + TMP_DIR + "/" + libsoshared + " */o/*.o");
     
         chdir(TMP_DIR);
     
         system("ln -sf " + libsoshared + " " + libsomajor);
         system("ln -sf " + libsomajor  + " " + libso);
     
+        system("rm o/*.o");
+
         chdir("");
     }
 }
@@ -284,13 +286,13 @@ void build_libraries()
                                             // add option for shared lib
         g_compiler = COMPILER " " COMPILER_OPTIONS " -fPIC -c -o "; 
         for (idx = g_nClasses; idx--; )
-            std_cpp(0, TMP_DIR "/os", idx + 1, g_classes[idx], 
+            std_cpp(0, TMP_DIR "/o", idx + 1, g_classes[idx], 
                                             libsoshared);
         
                                             // compile all files in g_cwd
-        std_cpp(1, TMP_DIR "/os", 0, ".", libsoshared);  
+        std_cpp(1, TMP_DIR "/o", 0, ".", libsoshared);  
 
-        shared_library(libso, libsoshared);/ make a shared library
+        shared_library(libso, libsoshared);// make a shared library
     #endif
 
     chdir("");
@@ -315,6 +317,7 @@ void setLibs()
 
 void link(string maino)
 {
+#ifdef BINARY
     string compiler;
 
     cd(TMP_DIR);
@@ -342,6 +345,7 @@ void link(string maino)
         system(compiler + " " LINKER_OPTIONS);
 
     chdir("");
+#endif
 }
 
 void strip_shared()
@@ -385,11 +389,21 @@ void clean()
 
 void install(string base)
 {
+#ifdef BINARY
+#ifdef BIN_INSTALL
     md(base + BIN_INSTALL);
 
     system("cp " TMP_DIR "/bin/" BINARY " " + 
             base + BIN_INSTALL "/" + BINARY);
 
+#endif
+#endif
+#ifdef LIBRARY
+#ifdef LIB_INSTALL
+    md(base + LIB_INSTALL);
+    system("cp -d " TMP_DIR "/lib/* " + base + LIB_INSTALL);
+#endif
+#endif
     exit(0);
 }
 
@@ -457,7 +471,9 @@ void main(int argc, list argv, list envp)
         "                     optionally (SHARED in icmconf) build a shared\n"
         "                     library as well\n"
         "   strip-shared    - strip a shared library\n"
+#ifdef BINARY
         "   program         - build " TMP_DIR "/" BINARY "\n"
+#endif
         "   install <base>  - to install the software in the locations\n"
         "                     defined in the icmconf file, optionally\n"
         "                     below <base>\n"

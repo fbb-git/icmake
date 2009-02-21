@@ -35,11 +35,11 @@ manpagedescription()
 The bf(icmstart) script is a generic script that can be used to start program
 maintenance using bf(icmake)(1) and bf(icmbuild)(1). bf(Icmstart) will create
 an initial directory tt(top-dir) and will install the files tt(CLASSES,
-VERSION) and tt(icmconf) below tt(top-dir). If provided, tt(program) or
-tt(library) may be specified as the default mode of operation of the
+AUTHOR, VERSION) and tt(icmconf) below tt(top-dir). If provided, tt(program)
+or tt(library) may be specified as the default mode of operation of the
 bf(icmbuild)(1) script. Skeleton files for the main directory and
 subdirectories, by default listed in the file
-tt(/usr/share/icmake/icmstart.rc), may be installed as well (see below at
+tt(/etc/icmake/icmstart.rc), may be installed as well (see below at
 bf(SKELETON FILES)).
 
 After changing to the top-level directory created by bf(icmstart) the
@@ -50,6 +50,9 @@ manpageoptions()
     bf(Icmstart) may be called with the following options, which (if specified)
     must be the first arguments to bf(icmstart):
     itemization(
+    itt(-c confpath)nl()
+        Use the configuration files (tt(icmstart.rc, AUTHOR) and tt(VERSION)
+        found in `confpath' rather than /etc/icmake/
     itt(-d)nl()
        Do not execute any commands, but show the commands that would have been
         executed on the standard output.
@@ -70,53 +73,43 @@ manpageoptions()
         directory, in which case the skeleton resource file is assumed to be
         tt(icmstart.rc) (see below at bf(SKELETON FILES)).
     )
-    Since bf(icmstart) uses tt(tar) to install files, tt(tar) must be
+    Since bf(icmstart) uses tt(cp) to install files, tt(cp) must be
 available when bf(icmstart) should install skeleton files.
 
 manpagesection(SKELETON FILES)
 
 Skeleton resource files may contain comment (empty lines and lines beginning
 with the hash-mark (tt(#))) which is ignored, and should otherwise contain
-absolute or relative (with respect to the directory containing the skeleton
-resource file) file- or directory names. 
+specifications of resource file(s) to install.
 
-These entries are copied to the top-level directory using bf(tar)(1). During
-this process bf(tar)(1) will remove leading tt(/) and tt(../) specifications
-from specified file- and directory names.  E.g., if a skeleton name
-tt(/tmp/scanner/scanner.h) is listed, and the top-level directory is named
-tt(demo) then tt(demo/tmp/scanner/scanner.h) is installed.
+The default resource file is tt(/etc/icmake/icmstart.rc), containing
+file specifications like:
 
-Skeleton specifications may be specified on separate lines, or lines may
-contain  multiple specifications. The first entry on a line may be a question
-mark, in which case the user is asked to confirm that the skeletons specified
-on that line must be installed. Confirmation is requested for each subsequent
-element on a line. Once installation is not confirmed all remaining entries on
-that line are skipped.
+        verb(
+    CLASSES
+    main.cc     
+    main.ih     
+    usage.cc
+    version.cc
+    ? scanner
+    ? parser
+        )
+Specifications may also contain path-names. If the path names are relative
+then the path is interpreted as relative to the current working
+directory. Each line specifies a skeleton source file or directory. If a
+directory is specified then all files in and below the directory will be
+installed. The skeleton specification may be followed by a destination. The
+destination may also be a path, which is always interpreted relative to the
+installation directory that was specified when tt(icmstart) was called. If the
+destination is a directory then the skeleton will be installed in the
+specified directory. If the destination is omitted, the skeleton file or path
+with be installed in the specified destination directory. 
 
-For example, the default tt(icmstart.rc) may contain the following lines:
-    verb(
-main.cc
-main.ih
-usage.cc
-version.cc
-? scanner parser
-    )
-    In this case, tt(main.cc, main.ih, usage.cc) and tt(version.cc) will be
-installed, but confirmation is requested for the tt(scanner) directory. If
-installation is confirmed, the tt(scanner) directory and its contents are
-installed into the top-level directory. Next, confirmation is requested to
-install tt(parser). If installation of tt(scanner) is not confirmed,
-installation of tt(parser) is skipped.
-
-    Installation of a directory does not imply that the file tt(CLASSES) will
-contain that directory as one of its entries. It is the user's responsibility
-to update tt(CLASSES), if necessary.
-
-    The file tt(VERSION) is used to make available the program's version
-number, release-years and author name(s). The tt(VERSION) file contains lines
-comparable to
-        verbinclude(../../usr/share/icmake/VERSION)
-and the values defined here will be used in the tt(version.cc) skeleton file.
+The first entry on a line may be a question mark, in which case the user is
+asked to confirm that the skeleton specified on that line must be
+installed. Confirmation is requested for each subsequent element on a
+line. Once installation is not confirmed all remaining entries on that line
+are skipped.
 
 manpagefiles()
     The mentioned paths are sugestive only and may be installation dependent:

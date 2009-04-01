@@ -4,6 +4,7 @@ CONFIG=INSTALL.im
 
 EXTENSION=`grep '^#' $CONFIG | grep "#define[[:space:]]\+EXTENSION" | \
             sed 's,.*EXTENSION[[:space:]]\+\"\([^"]*\)".*,\1,'`
+
 BINDIR=`grep "#define[[:space:]]\+BINDIR" $CONFIG | \
             sed 's,.*BINDIR[[:space:]]\+\"\([^"]\+\)".*,\1,'`
 SKELDIR=`grep "#define[[:space:]]\+SKELDIR" $CONFIG | \
@@ -14,6 +15,10 @@ LIBDIR=`grep "#define[[:space:]]\+LIBDIR" $CONFIG | \
             sed 's,.*LIBDIR[[:space:]]\+\"\([^"]\+\)".*,\1,'`
 CONFDIR=`grep "#define[[:space:]]\+CONFDIR" $CONFIG | \
             sed 's,.*CONFDIR[[:space:]]\+\"\([^"]\+\)".*,\1,'`
+DOCDIR=`grep "#define[[:space:]]\+DOCDIR" $CONFIG | \
+            sed 's,.*DOCDIR[[:space:]]\+\"\([^"]\+\)".*,\1,'`
+DOCDOCDIR=`grep "#define[[:space:]]\+DOCDOCDIR" $CONFIG | \
+            sed 's,.*DOCDOCDIR[[:space:]]\+\"\([^"]\+\)".*,\1,'`
 
 # VERSION=`grep "#define[[:space:]]\+VERSION" $VCONFIG | \
 #             sed 's,.*VERSION[[:space:]]\+\"\([^"]\+\)".*,\1,'`

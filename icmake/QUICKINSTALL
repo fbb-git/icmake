@@ -1,24 +1,13 @@
 0. After unpacking the icmake_X.YY.tar.gzicmake archive, make your current
    working directory equal to the directory in which you found this file.
 
-1. Inspect the intended locations in ./def/destinations. In particular check:
+1. Inspect and modify if necessary the current locations in INSTALL.im.
 
-        #define BINDIR      "/usr/bin"
-        #define SKELDIR     "/usr/share/icmake"
-        #define MANDIR      "/usr/share/man/man1"
-        #define LIBDIR      "/usr/lib/icmake"
-        
-        #define EXTENSION   "" 
-            For CYGWIN use: #define EXTENSION   ".exe"
+2. Create the icmake installation files:
+                    ./bootstrap
 
-
-2. Create the icmake related files in tmp/$BINDIR, tmp/$SKELDIR tmp/$MANDIR
-    and tmp/$LIBDIR
-                    sh bootstrap.sh
-
-3. As root do:
-                    sh install.sh [strip]
-
-4. Garbage removal:
-
+3. To install, do as root:
+                    ./install strip all /
+                    
+4. Intermediate construction area removal:
                     rm -rf tmp

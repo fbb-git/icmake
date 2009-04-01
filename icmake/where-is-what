@@ -1,19 +1,27 @@
-CHANGES     	overview of changes at new releases    
-INSTALL     	description of the installation process    
+changelog       overview of changes at new releases    
+
+INSTALL         description of the installation process    
 QUICKINSTALL    short description of required steps to install icmake
-VERSION     	latest version and year #defines
-bootstrap.sh	bootstrap script (for systems without icmake)
-comp/       	sources of the icm-comp icmake compiler    
+VERSION         latest version and year #defines
+VERSION.im      configuration parameters for directories
+
+bootstrap       bootstrap script to prepare icmake installation
+install         installation script     
+
+comp/           sources of the icm-comp icmake compiler    
 def/            defines programs used when constructing icmake
-doc/        	documentation and man-pages (including Yodl manpage sources)
-exec/       	sources of the icm-exec interpreter
-install.sh  	installation script     
-legacy/         legacy files
-make/       	sources of the icmake shell program
+doc/            documentation and man-pages (including Yodl manpage sources)
+exec/           sources of the icm-exec interpreter
+make/           sources of the icmake shell program
 pp/             sources of the icm-pp preprocessor
-rss/        	sources of functions shared by the icmake programs
-templates/  	various examples of icmake scripts    
-un/         	sources of the icmun unassembler
-usr/        	bin/icmstart, bin/icmbuild, skeletons in share/icmake
+rss/            sources of functions shared by the icmake programs
+un/             sources of the icmun unassembler
+
+legacy/         legacy files
+templates/      various examples of icmake scripts
+
+usr/            bin/icmstart, bin/icmbuild, skeletons in share/icmake
 etc/            icmake/ contains icmstart.rc, VERSION and AUTHOR config. files
+
 where-is-what   this file
+

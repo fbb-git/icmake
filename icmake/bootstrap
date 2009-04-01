@@ -1,0 +1,95 @@
+
+echo "
+    This script assumes that the GCC compiler is available, and that
+    the function glob() is available in the gcc-runtime library.
+    If that's not the case, remove the -DHAVE_GLOB define from the 
+    gcc flags.
+
+    Furthermore, it assumes that the parser files parser.c and parser.h have
+    already been generated from the file parser and that the file lexer.c has
+    already been generated from the file lexer.
+"                                     
+
+. scripts/conversions
+
+try()
+{
+    echo $*
+    $* || exit 1
+}
+
+echo Creating the intermediate destination directory ./tmp
+try rm -rf tmp
+try  mkdir -p tmp/${BINDIR}  tmp/${LIBDIR}      tmp/${SKELDIR}       \
+           tmp/${CONFDIR} tmp/${MANDIR}/man1 tmp/${MANDIR}/man7   \
+           tmp/${DOCDIR}  tmp/${DOCDOC}
+  
+  echo    Writing the support file tmp/version.h
+  echo "#define VERSION \"${VERSION}\"" > tmp/version.h
+  echo "#define YEARS \"${YEARS}\"" >> tmp/version.h
+
+echo Creating tmp/libicrss.a
+try cd rss
+try gcc -c -O2 -g -Wall -DHAVE_GLOB *.c
+try ar rs ../tmp/libicrss.a *.o
+rm *.o
+cd ..
+
+
+echo Creating tmp/${BINDIR}/icmake${EXTENSION}
+try cd make
+try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BINDIR}/icmake${EXTENSION} *.c ../tmp/libicrss.a
+cd ..
+
+echo Creating tmp/${BINDIR}/icmun${EXTENSION}
+try cd un
+try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BINDIR}/icmun${EXTENSION} *.c ../tmp/libicrss.a
+cd ..  
+
+echo Creating tmp/${LIBDIR}/icm-pp${EXTENSION}
+try cd pp
+try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIBDIR}/icm-pp${EXTENSION} *.c ../tmp/libicrss.a
+cd ..
+
+echo Creating tmp/${LIBDIR}/icm-comp${EXTENSION}
+try cd comp
+try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIBDIR}/icm-comp${EXTENSION} *.c ../tmp/libicrss.a
+cd ..
+
+echo Creating tmp/${LIBDIR}/icm-exec${EXTENSION}
+try cd exec
+try gcc -O2 -g -Wall -DHAVE_GLOB -c *.c 
+for x in auks var virtual int list string stack opcodefun builtin
+do
+    try cd $x
+    try gcc -O2 -g -Wall -DHAVE_GLOB -c *.c
+    try cd ..
+done
+try gcc -o ../tmp/${LIBDIR}/icm-exec$1 *.o */*.o ../tmp/libicrss.a
+rm *.o */*.o
+cd ..
+
+echo Creating icmbuild from usr/bin/icmbuild
+try scripts/convert usr/bin/icmbuild tmp/$BINDIR icmbuild
+
+echo Creating icmstart from usr/bin/icmstart
+try scripts/convert usr/bin/icmstart tmp/$BINDIR icmstart
+
+try chmod +x tmp/$BINDIR/*
+
+echo Copying the skeleton files in usr/share/icmake/
+try cp -r usr/share/icmake/* tmp/${SKELDIR}
+
+echo Copying the configuration files in etc/icmake/
+try cp -r etc/icmake/* tmp/${CONFDIR}
+
+echo Copying the man-pages from doc/
+try cp doc/*.1 tmp/${MANDIR}/man1
+
+echo Copying additional documentation to doc/
+try cp doc/icmake.doc changelog tmp/${DOCDIR}
+
+echo Copying additional documentation to doc-doc/
+try cp -r templates  tmp/${DOCDOCDIR}
+
+echo Done.

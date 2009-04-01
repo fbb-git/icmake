@@ -1,29 +1,29 @@
 INSTALLING ICMAKE
 =================
 
-                          Version 7.11 (and beyond)
+                          Version 7.12 (and beyond)
 
 1. Unpack the archive:
 ======================
 
 The installation files for Icmake comes as an archive, e.g.,
-"icmake_7.11.tar.gz". These archives unpack to several directories and files.
+"icmake_7.12.tar.gz". These archives unpack to several directories and files.
 
-Starting with distribution icmake_7.11.tar.gz, the archive unpacks to a
-directory icmake-7.11 below the current directory. The version number in this
+Starting with distribution icmake_7.12.tar.gz, the archive unpacks to a
+directory icmake-7.12 below the current directory. The version number in this
 directory may change to newer release versions.
 
-So, if you unpack icmake_7.11.tar.gz (or later versions) in the directory
-/usr/local/src, a directory /usr/local/src/icmake/icmake-7.11 is created, as
-well as other subdirectories below /usr/local/src/icmake/icmake-7.11
+So, if you unpack icmake_7.12.tar.gz (or later versions) in the directory
+/usr/local/src, a directory /usr/local/src/icmake/icmake-7.12 is created, as
+well as other subdirectories below /usr/local/src/icmake/icmake-7.12
 
 To unpack the archives, create an appropriate directory (e.g.,
 `/usr/local/src/icmake' E.g,
 
-                         tar xvzf icmake_7.11.tar.gz
+                         tar xvzf icmake_7.12.tar.gz
 
 The extraction of files from the archive should yield a lot of C source files
-in a number of directories. Icmake's default distribution does not contain
+in various directories. Icmake's default distribution does not contain
 makefiles for the Unix-utility `make' anymore.
 
 
@@ -32,62 +32,83 @@ makefiles for the Unix-utility `make' anymore.
 
 Change to the directory into which the sources were unpacked. E.g., do
 
-                                cd icmake-7.11
+                                cd icmake-7.12
 
 This directory should contain this file (i.e., INSTALL). Icmake uses several
 support programs, which do not have to be stored in the PATH
 diretories. Before starting the compilation, make sure their locations are
 in accordance with your local requirements:
 
-    - Inspect (and optionally modify) the path-settings in
-./def/destinations. In particular check:
+    - Inspect (and optionally modify) the path-settings in INSTALL.im.
+In particular check:
 
-#define BINDIR      "/usr/bin"
-#define SKELDIR     "/usr/share/icmake"
-#define MANDIR      "/usr/share/man/man1"
-#define LIBDIR      "/usr/lib/icmake"
+    #define BINDIR      "usr/bin"
+    #define SKELDIR     "usr/share/icmake"
+    #define MANDIR      "usr/share/man"
+    #define LIBDIR      "usr/lib/icmake"
+    #define CONFDIR     "etc/icmake"
+    #define DOCDIR      "usr/share/doc/icmake"
+    #define DOCDOCDIR   "usr/share/doc/icmake-doc"
+
+    These locations are all are relative to a specifiable base-directory.
+    Meaning:
+
+        BINDIR      the binary programs and scripts
+        SKELDIR     the icmstart-script skeleton files
+        MANDIR      the base directory of man-pages (under MANDIR/man1 and
+                    MANDIR/man2) 
+        LIBDIR      icmake's support programs
+        CONFDIR     the system-wide configuration files (AUTHOR, VERSION, 
+                    icmstart.rc)
+        DOCDIR      various doc-files (e.g., changelog)
+        DOCDOCDIR   more extensive documentation (icmake.ps, examples)
 
     If you're compiling for a CYGWIN environment, the executables must have
 the extension .exe: in that case uncomment the appropriate #define EXTENSION
 line. I.e.:
 
-By default:
-    #define EXTENSION   ""
-For CYGWIN:
-    #define EXTENSION   ".exe"
+    For CYGWIN:
+        #define EXTENSION   ".exe"
 
 
     - Inspect (and optionally modify) the availability of the program
-mentioned in ./def/programs (they should be available on any Unix(alike)
+mentioned in ./def/programs (they should be available on any Unix(like)
 systems). 
 
 
     - Next run the shell-script `bootstrap' as follows:
 
-                               sh bootstrap.sh
+                            ./bootstrap
 
-This performs a full icmake construction: it puts all icmake related files in
-tmp/$BINDIR, tmp/$SKELDIR, tmp/$MANDIR and tmp/$LIBDIR
+This constructs the icmake distribution under the ./tmp directory. It puts all
+icmake related files in 
+    tmp/$BINDIR, tmp/$SKELDIR, tmp/$MANDIR, tmp/$LIBDIR, tmp/$CONFDIR,
+    tmp/$DOCDIR, tmp/$DOCDOCDIR
 
 
 3. Install the files
 ====================
 
-    You probabaly must do this as `root':
+    You probably must do this as `root':
 
-                            sh install.sh [strip]
+                            ./install [strip] all /
 
-    This will install all files under ./tmp to / When providing the strip
+    This will install all files under / When providing the strip
 arguments binaries will be stripped. 
 
-    Note that the binaries will be installed without being stripped unless
-install.sh is provided with an argument (e.g., strip)
+    Note that by default the binaries will be installed without being
+stripped.
+    
+    Separate parts may be installed as well. E.g.,
+           ./install [strip] progs      -   installs all executables
+           ./install man                -   installs the man-pages
+           ./install skel               -   installs the skeletons
+           ./install doc                -   installs the docs
+           ./install docdoc             -   installs the extended docs
 
 4. Clean up the garbage
 =======================
-
-                            rm -rf tmp
-
+                        rm -rf tmp
 
 
 Hand-compiling icmake

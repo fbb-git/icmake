@@ -1,0 +1,66 @@
+. scripts/conversions
+
+if [ "$1" == "strip" ] ; then
+    STRIP=strip
+    shift
+fi
+
+DEST=$2
+
+try()
+{
+    echo $*
+    $* || exit 1
+}
+
+progs()
+{
+    if [ "$STRIP" == "strip" ] ; then
+        try strip tmp/${BINDIR}/icmake tmp/${BINDIR}/icmun \
+                  tmp/${LIBDIR}/icm*
+    fi
+    try mkdir -p ${DEST}/${BINDIR} ${DEST}/${LIBDIR}
+    try cp -r tmp/${BINDIR}/* ${DEST}/${BINDIR}
+    try cp -r tmp/${LIBDIR}/* ${DEST}/${LIBDIR}
+}
+
+into()
+{
+    try mkdir -p ${DEST}/${MANDIR}
+    try cp -r tmp/${MANDIR}/* ${DEST}/${MANDIR}
+}
+
+case $1 in
+    (all)
+        progs
+        into ${MANDIR}
+        into ${SKELDIR}
+        into ${DOCDIR}
+        into ${DOCDOCDIR}
+    ;;
+
+    (progs)
+        progs
+    ;;
+
+    (man)
+        into ${MANDIR}
+    ;;
+
+    (skel)
+        into ${SKELDIR}
+    ;;
+
+    (doc)
+        into ${DOCDIR}
+    ;;
+
+    (docdoc)
+        into ${DOCDOCDIR}
+    ;;
+
+    (*)
+        echo Usage: $0 [strip] all|progs|man|skel|doc|docdoc  destination-dir
+        exit 1
+    ;;
+esac

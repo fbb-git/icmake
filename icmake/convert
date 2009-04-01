@@ -1,0 +1,10 @@
+#!/bin/sh
+
+. conversions
+
+mkdir -p $2 
+
+sed '
+s,@SKELDIR@,"'$SKELDIR'",g
+s,@CONFDIR@,"'$CONFDIR'",g
+' $1 > $2/$3

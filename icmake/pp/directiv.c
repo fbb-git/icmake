@@ -165,6 +165,15 @@ static void define_directive(void)
         insert(idname.data);
 }
 
+static void undef_directive(void)
+{
+    getident(&idname);                      /* symbol to undef */
+    terminate_line("undef");
+
+    if (output_active)
+        undef(idname.data);
+}
+
 static void ifndef_directive(void)
 {
     getident(&idname);                      /* get the name of the define */
@@ -212,6 +221,8 @@ void directive(void)
         include_directive();
     else if (!strncmp(lexbuf.data, "define", 6))
         define_directive();
+    else if (!strncmp(lexbuf.data, "undef", 5))
+        undef_directive();
     else if (!strncmp(lexbuf.data, "ifndef", 6))
         ifndef_directive();
     else if (!strncmp(lexbuf.data, "ifdef", 5))

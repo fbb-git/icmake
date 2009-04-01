@@ -2,17 +2,22 @@
 
 PROJECT=icmake
 
-. icmake/VERSION
+if [ -e /usr/share/common-licenses/GPL ] ; then
+    cp /usr/share/common-licenses/GPL ${PROJECT}/LICENSE
+fi
+
+# VERSION=`grep VERSION icmake/VERSION | 
+#   sed 's/[[:space:]]*#define[[:space:]]\+VERSION[[:space:]]\+"\(.*\)".*/\1/'`
+
+. ${PROJECT}/VERSION                    # load the version
 
 DISTRIBUTION=${PROJECT}-${VERSION}      # define the distribution's dir name
 
 tgz()
 {
     ln -s ${PROJECT} ${DISTRIBUTION}        # distribution's dir name
-
     tar czvf $1 --exclude-from=excluded  ${DISTRIBUTION}/*
-
-    rm ${DISTRIBUTION}                      # rm the link
+    rm ${DISTRIBUTION}  ${PROJECT}/LICENSE  # rm the link/license file
 }
 
 case "$1" in 
@@ -27,13 +32,14 @@ case "$1" in
         then
             scp ${PROJECT}_${VERSION}.tar.gz oosix:ftp/debian/${PROJECT}
             md5sum ${PROJECT}_${VERSION}.tar.gz
+            rm ${PROJECT}_${VERSION}.tar.gz
         fi
     ;;
 
     (*)
         echo "
 Provide arg:
-    d (debian)  to create a local .orig.tar.gz archive in 
+    d (debian)  to create a .orig.tar.gz archive in 
                 ../debian/${PROJECT}/tarballs
     l (local)   to create ${PROJECT}_${VERSION}.tar.gz in this directory
     u (upload)  same as 'l', but upload to oosix and show MD5 hash

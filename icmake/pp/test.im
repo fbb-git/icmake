@@ -1,4 +1,6 @@
 #define A
+#undef A
+#define A
 #define B
 #define C
 #ifdef A

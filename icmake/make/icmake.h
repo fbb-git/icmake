@@ -1,6 +1,6 @@
 #include "../rss/icrssdef.h"
 
-#include "../def/destinations"
+#include "../INSTALL.im"
 
 #ifdef SUN
 #include <memory.h>

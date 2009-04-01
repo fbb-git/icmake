@@ -10,11 +10,7 @@ echo "
     already been generated from the file lexer.
 "                                     
 
-pickup()
-{
-    grep -v '^[[:space:]]*//' def/destinations | grep "define $1" |
-                                    sed 's,[^"]*\"\([^"]*\).*,\1,'
-}
+. conversions
 
 instscript()
 {
@@ -33,20 +29,14 @@ try()
     $* || exit 1
 }
 
-EXT=`pickup EXTENSION`
-BIN=`pickup BINDIR`
-LIB=`pickup LIBDIR`
-SKEL=`pickup SKELDIR`
-MAN=`pickup MANDIR`
-ETC=`pickup ETCDIR`
-
 echo Creating the intermediate destination directory ./tmp
 rm -rf tmp
-mkdir -p tmp/${BIN} tmp/${LIB}  tmp/${SKEL} tmp/${MAN} tmp/${ETC}
+mkdir -p tmp/${BINDIR}  tmp/${LIBDIR}      tmp/${SKELDIR} \
+         tmp/${CONFDIR} tmp/${MANDIR}/man1 tmp/${MANDIR}/man7
 
 echo    Writing the support file tmp/version.h
-echo "#define VERSION \"`grep VERSION VERSION | tr -d [A-Z=]`\"" > tmp/version.h
-echo "#define YEARS \"`grep YEARS VERSION | tr -d [A-Z=]`\"" >> tmp/version.h
+echo "#define VERSION \"${VERSION}\"" > tmp/version.h
+echo "#define YEARS \"${YEARS}\"" >> tmp/version.h
 
 echo Creating tmp/libicrss.a
 cd rss
@@ -56,31 +46,32 @@ ar rs ../tmp/libicrss.a *.o
 rm *.o
 cd ..
 
-echo Creating tmp/${BIN}/icmake${EXT}
+
+echo Creating tmp/${BINDIR}/icmake${EXTENSION}
 cd make
-try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BIN}/icmake${EXT} *.c ../tmp/libicrss.a
-try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BIN}/icmake${EXT} *.c ../tmp/libicrss.a
+try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BINDIR}/icmake${EXTENSION} *.c ../tmp/libicrss.a
+try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BINDIR}/icmake${EXTENSION} *.c ../tmp/libicrss.a
 cd ..
 
-echo Creating tmp/${BIN}/icmun${EXT}
+echo Creating tmp/${BINDIR}/icmun${EXTENSION}
 cd un
-echo gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BIN}/icmun${EXT} '*.c' ../tmp/libicrss.a
-gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BIN}/icmun${EXT} *.c ../tmp/libicrss.a
+echo gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BINDIR}/icmun${EXTENSION} '*.c' ../tmp/libicrss.a
+gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BINDIR}/icmun${EXTENSION} *.c ../tmp/libicrss.a
 cd ..  
 
-echo Creating tmp/${LIB}/icm-pp${EXT}
+echo Creating tmp/${LIBDIR}/icm-pp${EXTENSION}
 cd pp
-echo gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIB}/icm-pp${EXT} '*.c' ../tmp/libicrss.a
-try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIB}/icm-pp${EXT} *.c ../tmp/libicrss.a
+echo gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIBDIR}/icm-pp${EXTENSION} '*.c' ../tmp/libicrss.a
+try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIBDIR}/icm-pp${EXTENSION} *.c ../tmp/libicrss.a
 cd ..
 
-echo Creating tmp/${LIB}/icm-comp${EXT}
+echo Creating tmp/${LIBDIR}/icm-comp${EXTENSION}
 cd comp
-echo gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIB}/icm-comp${EXT} '*.c' ../tmp/libicrss.a
-try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIB}/icm-comp${EXT} *.c ../tmp/libicrss.a
+echo gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIBDIR}/icm-comp${EXTENSION} '*.c' ../tmp/libicrss.a
+try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIBDIR}/icm-comp${EXTENSION} *.c ../tmp/libicrss.a
 cd ..
 
-echo Creating tmp/${LIB}/icm-exec${EXT}
+echo Creating tmp/${LIBDIR}/icm-exec${EXTENSION}
 cd exec
 echo 'gcc -O2 -g -Wall -DHAVE_GLOB -c *.c'
 try gcc -O2 -g -Wall -DHAVE_GLOB -c *.c 
@@ -92,25 +83,25 @@ do
     try gcc -O2 -g -Wall -DHAVE_GLOB -c *.c
     cd ..
 done
-echo gcc -o ../tmp/${LIB}/icm-exec$1 '*.o */*.o' ../tmp/libicrss.a
-gcc -o ../tmp/${LIB}/icm-exec$1 *.o */*.o ../tmp/libicrss.a
+echo gcc -o ../tmp/${LIBDIR}/icm-exec$1 '*.o */*.o' ../tmp/libicrss.a
+gcc -o ../tmp/${LIBDIR}/icm-exec$1 *.o */*.o ../tmp/libicrss.a
 rm *.o */*.o
 cd ..
 
 echo Creating icmbuild from ./usr/bin/icmbuild
-instscript icmbuild $BIN  $SKEL
+./convert usr/bin/icmbuild tmp/$BINDIR icmbuild
 
 echo Creating icmstart from ./usr/bin/icmstart
-instscript icmstart $BIN  $SKEL
+./convert usr/bin/icmstart tmp/$BINDIR icmstart
 
 echo Copying the skeleton files in usr/share/icmake/
-cp -r usr/share/icmake/* tmp/${SKEL}
+cp -r usr/share/icmake/* tmp/${SKELDIR}
 
 echo Copying the configuration files in etc/icmake/
-cp -r etc/icmake/* tmp/${ETC}
+cp -r etc/icmake/* tmp/${CONFIGDIR}
 
 echo Copying the man-pages in doc/
-cp doc/*.1 tmp/${MAN}
+cp doc/*.1 tmp/${MANDIR}/man1
 
 rm -f tmp/lib* tmp/version.h
 

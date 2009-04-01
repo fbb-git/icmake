@@ -1,11 +1,8 @@
 #!/usr/bin/icmake -qt /tmp/icmstart
 
-#define SKEL  "/usr/share/icmake/"
-#define CONF  "/etc/icmake/"
-
-string g_confpath = CONF;
-string g_conffile;
-string g_skelpath = SKEL;
+string g_confpath;
+string g_home;
+string g_skelpath = @SKELDIR@;
 string g_program;
 string g_defaultcommand = "";
 string g_destpath;
@@ -24,14 +21,15 @@ void usage()
         "Where:\n"
         "   Options:\n"
         "     -c confpath: Use the configuration files (icmstart.rc, "
-                                                                "VERSION\n"
-        "                  and AUTHOR in `confpath' rather than " CONF "\n"
+                                                            "VERSION\n"
+        "                  and AUTHOR if found in `confpath' rather than\n"
+        "                  if found in $HOME/.icmake or " @CONFDIR@ "\n"
         "     -d: debug: do not execute any commands, but show commands\n"
         "         that would have been executed\n"
         "     -I: do NOT install any files.\n"
         "     -r: replace existing files/directories\n"
         "     -s skelpath: Read the skeleton information from the directory\n"
-        "                  `skelpath' rather than " SKEL "\n"
+        "                  `skelpath' rather than " @SKELDIR@ "\n"
         "   dir: the directory to install the files into\n"
         "   program, library: command passed by default to the icmbuild "
                                                                     "script\n"
@@ -140,11 +138,6 @@ void arguments(int argc, list argv)
         ++cmdidx;
     }
 
-    g_conffile = g_confpath + "icmstart.rc";
-
-    if (!isFile(g_conffile))
-        die("Can't find configuration file `" + g_conffile);
-
     g_destpath = argv[cmdidx];
     if (g_destpath[strlen(g_destpath) - 1] != "/")
         g_destpath += "/";
@@ -205,6 +198,32 @@ int install(string target)
     return (int)(!exists(target) || replace(target));
 }
 
+int install_dest(string source, string dest)
+{
+    int idx;
+
+    if (!isFile(source))
+        die("Can't find `" + source + "'\n");
+
+    if (dest == "")
+        dest = change_path(source, g_destpath);
+    else    
+        dest = g_destpath + dest;
+
+    idx = strlen(dest) - 1;
+
+    if (dest[idx] == "/")
+        dest = substr(dest, 0, idx);
+
+    if (install(dest))
+    {
+        md(get_path(dest));
+        syscall("cp -rd " + source + " " + dest);
+        return 1;
+    }
+    return 0;
+}
+
     // a line in the conffile may be organized as follows (except for empty
     // lines and comment lines starting at # in column 0)
     // name is either a file or a directory; directories are copied
@@ -232,40 +251,53 @@ int install_file(string source, string dest)
         else if (idx > 0)
             source = g_cwd + source;
     }
-        
-    if (!exists(source))
-    {
-        printf("[Warning] Can't find `" + source + "'\n");
-        return 0;
-    }
-
-    if (dest == "")
-        dest = change_path(source, g_destpath);
-    else    
-        dest = g_destpath + dest;
-
-    idx = strlen(dest) - 1;
-
-    if (dest[idx] == "/")
-        dest = substr(dest, 0, idx);
-
-    if (install(dest))
-    {
-        md(get_path(dest));
-        syscall("cp -rd " + source + " " + dest);
-        return 1;
-    }
-
-    return 0;
+    return install_dest(source, dest);
 }
+
+string find(string path, string file)
+{
+    string ret;
+
+    ret = path + "/" + file;
+    if (exists(ret))
+        return ret;
+
+    return "";
+}
+
+string findFile(string file)
+{
+    string ret;
+
+    if (g_confpath != "")                   // locate file in -c path
+        ret = find(g_confpath, file);
+
+    if (ret == "")                          // not found, locate in $HOME
+        ret = find(g_home, file);
+
+    if (ret == "")                          // not found, locate in CONFDIR
+        ret = find(@CONFDIR@, file);
+
+    if (ret == "")
+        die("Can't find `" + file + "'\n");
+
+    return ret;
+}
+
+void install_conf(string file)
+{
+    install_dest(findFile(file), "");   // install in destination
+}    
+
 
 void install_std()
 {
-    install_file(g_confpath + "VERSION", "");
-    install_file(g_confpath + "AUTHOR", "");
+    install_conf("VERSION");
+    install_conf("YEARS");
+    install_conf("AUTHOR");
                                         // install a default command if 
                                         // provided as last arg.
-    if (install_file("icmconf", "") && g_defaultcommand != "")
+    if (install_conf("icmconf") && g_defaultcommand != "")
         fprintf(g_destpath + "icmconf", g_defaultcommand);
 }
 
@@ -332,10 +364,16 @@ void installLine(string confline)
 void install_rc()
 {
     list line;
+    string conffile;
 
+    conffile = findFile("icmstart.rc");
+
+    if (!isFile(conffile))
+        die("Can't find configuration file `icmstart.rc'");
+    
     while (1)
     {
-        line = fgets(g_conffile, (int)line[1]);
+        line = fgets(conffile, (int)line[1]);
         if (!line)
             break;
         installLine(line[0]);
@@ -347,6 +385,7 @@ int main(int argc, list argv)
     echo(OFF);
 
     g_program = get_base(argv[0]);
+    g_home = getenv("HOME")[1] + "/.icmake";
 
     if (argc == 1)
         usage();

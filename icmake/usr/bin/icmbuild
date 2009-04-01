@@ -47,31 +47,30 @@ string cd(string next)
     return chdir(next);
 }
 
+list patternList(string pattern)
+{
+    list in;
+    list ret;
+    int idx;
+
+    in = strtok(pattern, " \t");
+    for (idx = sizeof(in); idx--; )
+        ret += makelist(in[idx]);
+
+    return ret;
+}
+
 void parser()
 {
-    #ifdef PARSFILES
-        list gramfiles;
-        int idx;
-    #endif
+    list gramfiles;
+    int idx;
 
     cd(PARSER_DIR);
 
+    gramfiles = makelist(PARSSPEC);
+
     #ifdef PARSFILES
-        gramfiles = makelist(PARSFILES);
-
-        for (idx = sizeof(gramfiles); idx--; )
-        {
-            if (gramfiles[idx] younger PARSOUT)    // need new parser
-            {
-                if (USE_ECHO)
-                    printf("New parser due to changes in ",
-                           gramfiles[idx], "\n");
-
-                system(PARSGEN " " PARSFLAGS " " PARSSPEC);
-                chdir("..");
-                return;
-            }
-        }
+        gramfiles += makelist(PARSFILES);
     #else
         #ifdef GRAMBUILD
             cd("gramspec");
@@ -80,24 +79,49 @@ void parser()
         #endif
     #endif
 
-    if (PARSSPEC younger PARSOUT)       // need new parser
-        system(PARSGEN " " PARSFLAGS " " PARSSPEC);
+    for (idx = sizeof(gramfiles); idx--; )
+    {
+        if (gramfiles[idx] younger PARSOUT)    // need new parser
+        {
+            if (USE_ECHO)
+                printf("New parser: `", gramfiles[idx], "' changed\n");
+            system(PARSGEN " " PARSFLAGS " " PARSSPEC);
+            break;
+        }
+    }
 
     chdir("..");
 }
 
 void scanner()
 {
+    list scanfiles;
+    int idx;
+    int rerun;
+
     cd(SCANNER_DIR);
 
-    if 
-    (
-        SCANSPEC  younger SCANOUT       // need new scanner
-        ||
-            PARSER_DIR != ""
-            &&
-            "../"PARSER_DIR"/"PARSOUT  younger SCANOUT
-    )
+    rerun = PARSER_DIR != "" && "../"PARSER_DIR"/"PARSOUT  younger SCANOUT;
+
+    if (!rerun)
+    {
+        scanfiles = makelist(PARSSPEC);
+    
+        #ifdef SCANFILES
+            scanfiles += makelist(SCANFILES);
+        #endif
+    
+        for (idx = sizeof(scanfiles); idx--; )
+        {
+            if (scanfiles[idx]  younger SCANOUT)
+            {
+                rerun = 1;
+                break;
+            }
+        }
+    }
+
+    if (rerun)
         system(SCANGEN " " SCANFLAGS " " SCANSPEC);
 
     chdir("..");
@@ -107,7 +131,6 @@ void setClasses()
 {
     string dir;
     list class;
-
                                         // make sure that scanner/parser
                                         // directories come first, so they
                                         // don't get reordered

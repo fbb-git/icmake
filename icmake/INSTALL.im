@@ -23,11 +23,11 @@
 
 // Define EXTENSION as ".exe" when compiling for CYGWIN
 //#define EXTENSION   ".exe"
-#define EXTENSION   ""
 
 #define BINDIR      "/usr/bin"
 #define SKELDIR     "/usr/share/icmake"
-#define MANDIR      "/usr/share/man/man1"
+#define MANDIR      "/usr/share/man"
 #define LIBDIR      "/usr/lib/icmake"
-#define ETCDIR      "/etc/icmake"
+#define CONFDIR     "/etc/icmake"
+
 

@@ -1,15 +1,22 @@
 //                     version.cc
 
 #include "main.ih"
+#include "icmconf"
+
+#ifdef USE_VERSION
 #include "VERSION"
-#include "AUTHOR"
+#endif
 
 #ifndef AUTHOR
 #define AUTHOR ""
 #endif
 
 #ifndef VERSION
-#define VERSION "0.00.0"
+#define VERSION "0.00.00"
+#endif
+
+#ifndef YEARS
+#define YEARS "20xx"
 #endif
 
 namespace Icmbuild

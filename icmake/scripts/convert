@@ -1,10 +1,18 @@
 #!/bin/sh
 
+SCRIPTNAME=$1
+DESTDIR=$2
+
 . scripts/conversions
 
-mkdir -p $2 
+mkdir -p tmp/${DESTDIR}
 
 sed '
-s,@SKELDIR@,"'$SKELDIR'",g
-s,@CONFDIR@,"'$CONFDIR'",g
-' $1 > $2/$3
+s,@BINDIR@,'${BINDIR}',g
+s,@SKELDIR@,'${SKELDIR}',g
+s,@MANDIR@,'${MANDIR}',g
+s,@LIBDIR@,'${LIBDIR}',g
+s,@CONFDIR@,'${CONFDIR}',g
+s,@DOCDIR@,'${DOCDIR}',g
+s,@DOCDOCDIR@,'${DOCDOCDIR}',g
+' tmp/${SCRIPTNAME}.in > ${DESTDIR}/${SCRIPTNAME}

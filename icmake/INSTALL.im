@@ -8,17 +8,16 @@
 
     All locations are relative to a specifiable base-directory.
 
-		BINDIR      the binary programs and scripts
-		SKELDIR     the icmstart-script skeleton files
-		MANDIR      the base directory of man-pages (under MANDIR/man1 and
+        BINDIR      the binary programs and scripts
+        SKELDIR     the icmstart-script skeleton files
+        MANDIR      the base directory of man-pages (under MANDIR/man1 and
                     MANDIR/man2) 
-		LIBDIR      icmake's support programs
-		CONFDIR     the system-wide configuration files (AUTHOR, VERSION, 
+        LIBDIR      icmake's support programs
+        CONFDIR     the system-wide configuration files (AUTHOR, VERSION, 
                     icmstart.rc)
-		DOCDIR      various doc-files (e.g., changelog)
-		DOCDOCDIR   more extensive documentation (icmake.ps, examples)
+        DOCDIR      various doc-files (e.g., changelog)
+        DOCDOCDIR   more extensive documentation (icmake.ps, examples)
 */
-
 
 // Define EXTENSION as ".exe" when compiling for CYGWIN
 //#define EXTENSION   ".exe"

@@ -1,8 +1,8 @@
-#!/usr/bin/icmake -qt /tmp/icmstart
+#!@BINDIR@/icmake -qt /tmp/icmstart
 
 string g_confpath;
 string g_home;
-string g_skelpath = @SKELDIR@;
+string g_skelpath = "@SKELDIR@";
 string g_program;
 string g_defaultcommand = "";
 string g_destpath;
@@ -21,15 +21,15 @@ void usage()
         "Where:\n"
         "   Options:\n"
         "     -c confpath: Use the configuration files (icmstart.rc, "
-                                                            "VERSION\n"
-        "                  and AUTHOR if found in `confpath' rather than\n"
-        "                  if found in $HOME/.icmake or " @CONFDIR@ "\n"
+                                                                "AUTHOR,\n"
+        "                  VERSION, YEARS found in `confpath' rather than\n"
+        "                  if found in $HOME/.icmake or @CONFDIR@\n"
         "     -d: debug: do not execute any commands, but show commands\n"
         "         that would have been executed\n"
         "     -I: do NOT install any files.\n"
         "     -r: replace existing files/directories\n"
         "     -s skelpath: Read the skeleton information from the directory\n"
-        "                  `skelpath' rather than " @SKELDIR@ "\n"
+        "                  `skelpath' rather than @SKELDIR@\n"
         "   dir: the directory to install the files into\n"
         "   program, library: command passed by default to the icmbuild "
                                                                     "script\n"
@@ -130,7 +130,7 @@ void arguments(int argc, list argv)
 
                 arg = argv[++cmdidx];
             }
-            g_skelpath = absPath(arg);  // reassign skelpath
+            g_skelpath = arg;           // reassign skelpath
         }
         else
             printf("[Warning] ignoring unkown option ", arg, "\n");
@@ -138,6 +138,7 @@ void arguments(int argc, list argv)
         ++cmdidx;
     }
 
+    g_skelpath = absPath(g_skelpath);
     g_destpath = argv[cmdidx];
     if (g_destpath[strlen(g_destpath) - 1] != "/")
         g_destpath += "/";
@@ -269,6 +270,8 @@ string findFile(string file)
 {
     string ret;
 
+    printf("CONFPATH = ", g_confpath, "\n");
+
     if (g_confpath != "")                   // locate file in -c path
         ret = find(g_confpath, file);
 
@@ -276,7 +279,7 @@ string findFile(string file)
         ret = find(g_home, file);
 
     if (ret == "")                          // not found, locate in CONFDIR
-        ret = find(@CONFDIR@, file);
+        ret = find("@CONFDIR@", file);
 
     if (ret == "")
         die("Can't find `" + file + "'\n");
@@ -286,18 +289,32 @@ string findFile(string file)
 
 void install_conf(string file)
 {
-    install_dest(findFile(file), "");   // install in destination
+    string ret;
+    ret = findFile(file);
+    if (g_skeletons)
+        system("cat " + ret + " >> " + g_destpath + "VERSION");
 }    
 
+void install_version()
+{
+    string version;
+    version = g_destpath + "VERSION";
+
+    if (install(version))
+    {
+        system(P_NOCHECK, "rm -f " + g_destpath + "VERSION");
+        install_conf("AUTHOR");
+        install_conf("VERSION");
+        install_conf("YEARS");
+    }
+}
 
 void install_std()
 {
-    install_conf("VERSION");
-    install_conf("YEARS");
-    install_conf("AUTHOR");
+    install_version();
                                         // install a default command if 
                                         // provided as last arg.
-    if (install_conf("icmconf") && g_defaultcommand != "")
+    if (install_file("icmconf", "") && g_defaultcommand != "")
         fprintf(g_destpath + "icmconf", g_defaultcommand);
 }
 

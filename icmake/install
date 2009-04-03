@@ -1,11 +1,13 @@
+#!/bin/sh
+
 . scripts/conversions
+
+echo ROOT DIRECTORY: ${ROOT}
 
 if [ "$1" == "strip" ] ; then
     STRIP=strip
     shift
 fi
-
-DEST=$2
 
 try()
 {
@@ -17,30 +19,47 @@ progs()
 {
     if [ "$STRIP" == "strip" ] ; then
         try strip tmp/${BINDIR}/icmake tmp/${BINDIR}/icmun \
-                  tmp/${LIBDIR}/icm*
+                  tmp/${LIBDIR}/*
     fi
-    try mkdir -p ${DEST}/${BINDIR} ${DEST}/${LIBDIR}
-    try cp -r tmp/${BINDIR}/* ${DEST}/${BINDIR}
-    try cp -r tmp/${LIBDIR}/* ${DEST}/${LIBDIR}
+    try mkdir -p ${BINDIR} ${LIBDIR}
+
+    try cp -r tmp/${BINDIR}/icmake tmp/${BINDIR}/icmun ${BINDIR}
+    try cp -r tmp/${LIBDIR}/* ${LIBDIR}
+}
+
+scripts()
+{
+    try mkdir -p ${BINDIR}
+
+      #                 script   install-dest. 
+    try scripts/convert icmbuild $BINDIR
+    try scripts/convert icmstart $BINDIR
+    try chmod +x $BINDIR/icmbuild $BINDIR/icmstart
 }
 
 into()
 {
-    try mkdir -p ${DEST}/${MANDIR}
-    try cp -r tmp/${MANDIR}/* ${DEST}/${MANDIR}
+    try mkdir -p $1
+    try cp -r tmp/$1/* $1
 }
 
 case $1 in
     (all)
         progs
+        scripts
         into ${MANDIR}
         into ${SKELDIR}
         into ${DOCDIR}
         into ${DOCDOCDIR}
+        into etc/icmake
     ;;
 
     (progs)
         progs
+    ;;
+
+    (scripts)
+        scripts
     ;;
 
     (man)
@@ -60,7 +79,7 @@ case $1 in
     ;;
 
     (*)
-        echo Usage: $0 [strip] all|progs|man|skel|doc|docdoc  destination-dir
+        echo "Usage: $0 [strip] all|progs|scripts|man|skel|doc|docdoc"
         exit 1
     ;;
 esac

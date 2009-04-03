@@ -1,5 +1,12 @@
+#!/bin/sh
 
+if [ "$#" == "0" ] ; then
 echo "
+    Usage: bootstrap root-directory
+
+    root-directory: directory under which all icmake files will be
+    installed. For a normal system-installation use, e.g., /
+
     This script assumes that the GCC compiler is available, and that
     the function glob() is available in the gcc-runtime library.
     If that's not the case, remove the -DHAVE_GLOB define from the 
@@ -9,8 +16,8 @@ echo "
     already been generated from the file parser and that the file lexer.c has
     already been generated from the file lexer.
 "                                     
-
-. scripts/conversions
+    exit 1
+fi
 
 try()
 {
@@ -20,14 +27,32 @@ try()
 
 echo Creating the intermediate destination directory ./tmp
 try rm -rf tmp
-try  mkdir -p tmp/${BINDIR}  tmp/${LIBDIR}      tmp/${SKELDIR}       \
-           tmp/${CONFDIR} tmp/${MANDIR}/man1 tmp/${MANDIR}/man7   \
+try mkdir -p tmp
+
+echo    Writing tmp/ROOT
+echo "ROOT=$1/" > tmp/ROOT
+ 
+. scripts/conversions
+
+echo "
+#define BINDIR      \"${BINDIR}\"
+#define SKELDIR     \"${SKELDIR}\"
+#define MANDIR      \"${MANDIR}\"
+#define LIBDIR      \"${LIBDIR}\"
+#define CONFDIR     \"${CONFDIR}\"
+#define DOCDIR      \"${DOCDIR}\"
+#define DOCDOCDIR   \"${DOCDOCDIR}\"
+#define VERSION     \"${VERSION}\"
+#define YEARS       \"${YEARS}\"
+" > tmp/INSTALL.im
+
+cat tmp/INSTALL.im
+
+echo Creating remaining intermediate destination directories
+try  mkdir -p tmp/${BINDIR}  tmp/${LIBDIR}      tmp/${SKELDIR}  \
+           tmp/${CONFDIR} tmp/${MANDIR}/man1 tmp/${MANDIR}/man7 \
            tmp/${DOCDIR}  tmp/${DOCDOC}
   
-  echo    Writing the support file tmp/version.h
-  echo "#define VERSION \"${VERSION}\"" > tmp/version.h
-  echo "#define YEARS \"${YEARS}\"" >> tmp/version.h
-
 echo Creating tmp/libicrss.a
 try cd rss
 try gcc -c -O2 -g -Wall -DHAVE_GLOB *.c
@@ -65,17 +90,12 @@ do
     try gcc -O2 -g -Wall -DHAVE_GLOB -c *.c
     try cd ..
 done
-try gcc -o ../tmp/${LIBDIR}/icm-exec$1 *.o */*.o ../tmp/libicrss.a
+try gcc -o ../tmp/${LIBDIR}/icm-exec${EXTENSION} *.o */*.o ../tmp/libicrss.a
 rm *.o */*.o
 cd ..
 
-echo Creating icmbuild from usr/bin/icmbuild
-try scripts/convert usr/bin/icmbuild tmp/$BINDIR icmbuild
-
-echo Creating icmstart from usr/bin/icmstart
-try scripts/convert usr/bin/icmstart tmp/$BINDIR icmstart
-
-try chmod +x tmp/$BINDIR/*
+echo Copying icmbuild/icmstart from scripts to tmp
+cp scripts/icmbuild.in scripts/icmstart.in tmp/
 
 echo Copying the skeleton files in usr/share/icmake/
 try cp -r usr/share/icmake/* tmp/${SKELDIR}
@@ -91,5 +111,8 @@ try cp doc/icmake.doc changelog tmp/${DOCDIR}
 
 echo Copying additional documentation to doc-doc/
 try cp -r templates  tmp/${DOCDOCDIR}
+
+echo Copying etc files to etc/
+try cp -r etc  tmp/etc
 
 echo Done.

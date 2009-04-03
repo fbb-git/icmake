@@ -1,11 +1,11 @@
-#!/usr/bin/icmake -qt/tmp/icmbuild
+#!@BINDIR@/icmake -qt/tmp/icmbuild
 
 #include "icmconf"
 
 #ifdef USE_VERSION
 #include "VERSION"
 #else
-#define VERSION "0.00.0"
+#define VERSION "0.00.00"
 #endif
 
 #ifndef LIBRARY
@@ -27,7 +27,7 @@ string g_binary;        // binary program to build
 int    g_compiled;      // any source compiled (but main)?
 int    g_keepGramspec;  // keep the gramspec directory
 
-string g_version = VERSION;       // version from VERSION
+string g_version = VERSION;
 
                         // std call of the compiler when compiling
 string g_compiler = COMPILER " " COMPILER_OPTIONS " -c -o ";
@@ -291,7 +291,14 @@ void build_libraries()
     g_sources = SOURCES;
     g_compiled = 0;
 
-    if ("VERSION" younger "version.cc" || "AUTHOR" younger "version.cc")
+    if 
+    (
+        "VERSION" younger "version.cc" 
+        || 
+        "YEARS" younger "version.cc"
+        || 
+        "AUTHOR" younger "version.cc"
+    )
         system("touch version.cc");
 
                                             // compile all files in subdirs

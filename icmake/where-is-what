@@ -2,8 +2,7 @@ changelog       overview of changes at new releases
 
 INSTALL         description of the installation process    
 QUICKINSTALL    short description of required steps to install icmake
-VERSION         latest version and year #defines
-VERSION.im      configuration parameters for directories
+VERSION         latest icmake version and year
 
 bootstrap       bootstrap script to prepare icmake installation
 install         installation script     
@@ -17,11 +16,12 @@ pp/             sources of the icm-pp preprocessor
 rss/            sources of functions shared by the icmake programs
 un/             sources of the icmun unassembler
 
+scripts/        scripts used to build icmake, source texts of icm* scripts
 legacy/         legacy files
-templates/      various examples of icmake scripts
+examples/       various examples of icmake scripts
 
-usr/            bin/icmstart, bin/icmbuild, skeletons in share/icmake
-etc/            icmake/ contains icmstart.rc, VERSION and AUTHOR config. files
+usr/            default skeletons in share/icmake
+etc/            icmake/ contains default icmstart.rc, VERSION, AUTHOR, YEARS
 
 where-is-what   this file
 

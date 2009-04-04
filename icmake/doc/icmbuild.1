@@ -20,7 +20,7 @@ path or it should be started as, e\&.g\&., \fI\&./icmbuild\fP
 \fBIcmbuild\fP assumes that your sources exist in and below a directory in which the
 files \fIicmconf\fP and \fICLASSES\fP live\&. The file \fICLASSES\fP
 contains the names of all subdirectories in which class-specific sources are
-kept\&. The file \fIexamples/icmbuild\fP in \fBicmake\fP(1)\&'s distribution
+kept\&. The file \fIexamples/icmbuild\fP in \fBicmake\fP(1)\(cq\&s distribution
 offers an example of the configuration parameters\&. In this latter file 
 it is assumed that  \fBC++\fP sources are maintained, but the \fBicmbuild\fP script is
 not restricted to do maintenance for \fBC++\fP  programs\&.
@@ -44,8 +44,8 @@ Normally, \fBicmbuild\fP is installed and used as follows:
 .IP o 
 Install \fBicmbuild\fP in your path;
 .IP o 
-copy \fIicmconf\fP and \fICLASSES\fP to your project\&'s base directory
-(i\&.e\&., the directory in which and where below the project\&'s sources are
+copy \fIicmconf\fP and \fICLASSES\fP to your project\(cq\&s base directory
+(i\&.e\&., the directory in which and where below the project\(cq\&s sources are
 found);
 .IP o 
 Modify the \fI#defines\fP in the file \fIicmconf\fP to taste;
@@ -53,7 +53,7 @@ Modify the \fI#defines\fP in the file \fIicmconf\fP to taste;
 List the subdirectories containing sources in the file \fICLASSES\fP
 .IP 
 Note that the order of the classes mentioned in classes \fIis\fP relevant
-here\&.  It\&'s no problem to add new class (subdirectory) names, but
+here\&.  It\(cq\&s no problem to add new class (subdirectory) names, but
 reordering should be prevented\&. If reordering is required, recompile
 the library, as the final object files contain class order-numbers\&.
 These class-order numbers prevent file-name collisions and thus prevent
@@ -66,7 +66,7 @@ Now simply run
             icmbuild 
         
 .fi 
-from the project\&'s base directory and let the help-info tell you
+from the project\(cq\&s base directory and let the help-info tell you
 what your options are\&. See the next section for the modes of operation\&.
 
 .PP 
@@ -98,10 +98,10 @@ The \fBicmconf\fP file may contain a line defining \fIDEFCOM\fP containing the
 default operational mode to use when none is specified\&. E\&.g\&.,
 .nf 
 
-    #define DEFCOM "program"
+    #define DEFCOM \(dq\&program\(dq\&
         
 .fi 
-will construct the program when the command `\fIicmbuild\fP\&' is entered\&.
+will construct the program when the command `\fIicmbuild\fP\(cq\& is entered\&.
 .PP 
 .SH "FILES"
 
@@ -122,115 +122,147 @@ Here is an example of the configuration file \fIicmconf\fP for a concrete
 program, using the library \fIlibbobcat1\fP as an additional library:
 .PP 
 .nf 
-
-    // Inspect the following #defines\&. Change them to taste\&. If you don\&'t
+    // Inspect the following #defines\&. Change them to taste\&. If you don\(cq\&t
     // need a particular option, change its value into an empty string
-
-    // should commands be echoed (ON) or not (OFF) ?
-#define USE_ECHO              ON
-
 
     // The final program and source containing main():
     // ===============================================
 
-    // define the name of the program to create:
-#define BINARY              "binary"
-
     // define the name of the source containing main():
-#define MAIN                "main\&.cc"
+#define MAIN                \(dq\&main\&.cc\(dq\&
+
+    // define the name of the program to create (don\(cq\&t use a path here, but
+    // define the installation path at `BIN_INSTALL\(cq\& below) and use
+    // `icmbuild install\(cq\& to install the binary\&.
+#define BINARY              \(dq\&binary\(dq\&
+
+    // Uncomment to install the binary in the provided path using 
+    // `icmbuild install\(cq\&
+//#define BIN_INSTALL         \(dq\&/usr/local/bin\(dq\&
+
+    // Defines related to the local libraries to create:
+    // =================================================
+
+    // Uncomment to create a local library rather (when a binary program is 
+    // built it will be linked against the library rather than the individual
+    // object modules)\&. Change the lib\(cq\&s name at you own digression (don\(cq\&t use
+    // lib or an extension like \&.a)
+//#define LIBRARY             \(dq\&modules\(dq\&
+
+    // Uncomment to construct a shared library 
+//#define SHARED
+
+    // Uncomment to install the libraries in the provided path using 
+    // `icmbuild install\(cq\&
+//#define LIB_INSTALL         \(dq\&/usr/local/lib\(dq\&
+
 
     // #defines used for compilation and linking:
     // ==========================================
 
     // define the compiler to use:
-#define COMPILER            "g++"
+#define COMPILER            \(dq\&g++\(dq\&
 
-    // define the compiler options to use:
-#define COMPILER_OPTIONS    "-g -Wall -O2"
+    // define the compiler options to use\&. 
+    // For the upcoming c++0x standard with the Gnu g++ compiler add the
+    // -std=c++0x flag 
+    // To enable GNU extensions in addition to C++0x extensions, add the
+    // -std=gnu++0x flag
+#define COMPILER_OPTIONS    \(dq\&-g -Wall -O2\(dq\&
 
     // define the pattern to locate sources in a directory:
-#define SOURCES             "*\&.cc"
+#define SOURCES             \(dq\&*\&.cc\(dq\&
 
     // define the options used for linking:
-#define LINKER_OPTIONS      "-s"
+#define LINKER_OPTIONS      \(dq\&-s\(dq\&
 
     // define any additional libraries BINARY may need:
-#define ADD_LIBRARIES       "bobcat"
+#define ADD_LIBRARIES       \(dq\&\(dq\&
 
     // define any additional paths (other than the standard paths) the
     // additional libraries are located in:
-#define ADD_LIBRARY_PATHS  ""
-
-    // #defines used for the final product:
-    // ====================================
-
-#define BIN_INSTALL         "/usr/local/bin"
+#define ADD_LIBRARY_PATHS  \(dq\&\(dq\&
 
     // Some advanced #defines, used to create parsers and lexical scanners 
     // ===================================================================
+
 
     // Lexical Scanner section
     // =======================
 
     // Should a lexical scanner be constructed? If so, define the subdirectory 
-    // containing the scanner\&'s specification file\&. 
-#define SCANNER_DIR         ""  
+    // containing the scanner\(cq\&s specification file\&. 
+#define SCANNER_DIR         \(dq\&\(dq\&  
 
     // What is the program generating the lexical scanner?
-#define SCANGEN             "flex"
+#define SCANGEN             \(dq\&flex\(dq\&
 
     // Flags to provide SCANGEN with:
-#define SCANFLAGS           "-I"
+#define SCANFLAGS           \(dq\&-I\(dq\&
 
     // Name of the lexical scanner specification file
-#define SCANSPEC            "lexer"
+#define SCANSPEC            \(dq\&lexer\(dq\&
 
+    // Specify additional lexer specification files using patterns
+    // these files are (in)directly included by SCANSPEC
+//#define SCANFILES            \(dq\&\(dq\&
+    
     // Name of the file generated by the lexical scanner
-#define SCANOUT             "yylex\&.cc"
+#define SCANOUT             \(dq\&yylex\&.cc\(dq\&
+
 
     // Parser section
     // ==============
 
     // Should a parser be constructed? If so, define the subdirectory
-    // containing the parser\&'s specification file
-#define PARSER_DIR          ""
+    // containing the parser\(cq\&s specification file
+#define PARSER_DIR          \(dq\&\(dq\&
 
     // What it the program generating a parser?
-#define PARSGEN             "bisonc++"
-
-    // What it the grammar specificication file?
-#define PARSSPEC            "grammar"
+#define PARSGEN             \(dq\&bisonc++\(dq\&
 
     // Flags to provide PARSGEN with:
-#define PARSFLAGS           "-V -l"
+#define PARSFLAGS           \(dq\&-V -l\(dq\&
+
+    // What it the grammar specification file?
+#define PARSSPEC            \(dq\&grammar\(dq\&
+
+    // Specify additional grammar specification files using patterns
+    // these files are (in)directly included by PARSSPEC\&. 
+//#define PARSFILES           \(dq\&\(dq\&
+
+    // Since bisonc++ 2\&.0\&.0 the GRAMBUILD directive is obsolete\&.
+    // If GRAMBUILD is still used, uncomment the following directive\&.
+    // Note that \(cq\&PARSEFILES\(cq\& overrules \(cq\&GRAMBUILD\(cq\&
+//#define GRAMBUILD
 
     // Name of the file generated by the parser generator containing the 
     // parser function
-#define PARSOUT             "parse\&.cc"
+#define PARSOUT             \(dq\&parse\&.cc\(dq\&
 
 
+    // Additional defines, which normally require no modification
+    // ==========================================================
 
-    // Additional defines, which should normally not be modified
-    // =========================================================
+    // should commands be echoed (ON) or not (OFF) ?
+#define USE_ECHO              ON
 
     // Directory below this directory to contain temporary results
-#define TMP_DIR             "tmp"
-
-    // Local program library to use (change to an empty string if you want to
-    // use the object modules themselves, rather than a library)
-#define LIBRARY             "modules"
+#define TMP_DIR             \(dq\&tmp\(dq\&
 
     //  The extension of object modules:
-#define OBJ_EXT             "\&.o"
+#define OBJ_EXT             \(dq\&\&.o\(dq\&
 
-    // below #define DEFCOM "program" or "library" may be added by icmstart
-#define DEFCOM  "program"
-        
+    //  Use the VERSION file
+#define USE_VERSION
+
+    // below #define DEFCOM \(dq\&program\(dq\& or \(dq\&library\(dq\& may be added by icmstart
+
 .fi 
 
 .PP 
 .SH "SEE ALSO"
-\fBicmake\fP(1), \fBicmstart\fP(1)
+\fBicmake\fP(1), \fBicmstart\fP(1), \fBicmstart\&.rc\fP(7)
 .PP 
 .SH "BUGS"
 None reported

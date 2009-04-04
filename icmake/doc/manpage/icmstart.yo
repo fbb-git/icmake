@@ -35,31 +35,34 @@ manpagedescription()
 The bf(icmstart) script is a generic script that can be used to start program
 maintenance using bf(icmake)(1) and bf(icmbuild)(1). bf(Icmstart) will create
 an initial directory tt(top-dir) and will install the files tt(CLASSES,
-AUTHOR, VERSION) and tt(icmconf) below tt(top-dir). If provided, tt(program)
-or tt(library) may be specified as the default mode of operation of the
-bf(icmbuild)(1) script. Skeleton files for the main directory and
-subdirectories, by default listed in the file
-tt(/etc/icmake/icmstart.rc), may be installed as well (see below at
-bf(SKELETON FILES)).
+VERSION) and tt(icmconf) below tt(top-dir). A second argument  `tt(program)'
+or `tt(library)' may be specified as the default mode of operation of the
+bf(icmbuild)(1) script. 
 
-After changing to the top-level directory created by bf(icmstart) the
-bf(icmbuild) script may be called for program maintenance.
+Skeleton files for the main directory and subdirectories, by default listed in
+the file tt(/etc/icmake/icmstart.rc), may be installed as well
+(cf. bf(icmstart.rc)(7)).
+
+After changing to the directory created by bf(icmstart) the bf(icmbuild)(1)
+script may be used for program maintenance.
 
 manpageoptions()
 
-    bf(Icmstart) may be called with the following options, which (if specified)
-    must be the first arguments to bf(icmstart):
+    tt(Icmstart) may be called with the following options, which (if specified)
+    must be the first arguments of tt(icmstart):
     itemization(
-    itt(-c confpath)nl()
-        Use the configuration files (tt(icmstart.rc, AUTHOR) and tt(VERSION)
-        found in `confpath' rather than /etc/icmake/
+    itt(-c confpath)nl() Use the configuration files (tt(icmstart.rc, AUTHOR,
+        YEARS) and tt(VERSION)) if found in `confpath' rather than in
+        tt(~/.icmake) and/or tt(/etc/icmake/). Once a file is found it is used
+        allowing partial overrides of the default files provided by
+        bf(icmake)(1).
     itt(-d)nl()
        Do not execute any commands, but show the commands that would have been
         executed on the standard output.
     itt(-I)nl()
-       Do not install skeleton files. 
+       Do not install files. 
     itt(-r) 
-       Unconditionally replace existing (skeleton) files. If tt(-r) is not
+       Unconditionally replace existing files. If tt(-r) is not
         provided bf(icmstart) will ask the user to confirm that an existing
         file must
         be overwritten. If a skeleton specification refers to a directory, the
@@ -82,9 +85,7 @@ Skeleton resource files may contain comment (empty lines and lines beginning
 with the hash-mark (tt(#))) which is ignored, and should otherwise contain
 specifications of resource file(s) to install.
 
-The default resource file is tt(/etc/icmake/icmstart.rc), containing
-file specifications like:
-
+The default resource file is tt(/etc/icmake/icmstart.rc), contains
         verb(
     CLASSES
     main.cc     
@@ -94,22 +95,8 @@ file specifications like:
     ? scanner
     ? parser
         )
-Specifications may also contain path-names. If the path names are relative
-then the path is interpreted as relative to the current working
-directory. Each line specifies a skeleton source file or directory. If a
-directory is specified then all files in and below the directory will be
-installed. The skeleton specification may be followed by a destination. The
-destination may also be a path, which is always interpreted relative to the
-installation directory that was specified when tt(icmstart) was called. If the
-destination is a directory then the skeleton will be installed in the
-specified directory. If the destination is omitted, the skeleton file or path
-with be installed in the specified destination directory. 
-
-The first entry on a line may be a question mark, in which case the user is
-asked to confirm that the skeleton specified on that line must be
-installed. Confirmation is requested for each subsequent element on a
-line. Once installation is not confirmed all remaining entries on that line
-are skipped.
+    This file is overruled by tt(~/.icmake/icmstart.rc). See
+bf(icmstart.rc)(7) for details about the format of the tt(icmstart.rc) file.
 
 manpagefiles()
     The mentioned paths are sugestive only and may be installation dependent:
@@ -123,7 +110,7 @@ manpagefiles()
     )
 
 manpageseealso()
-    bf(icmake)(1), bf(icmbuild)(1), bf(tar)(1)
+    bf(icmake)(1), bf(icmbuild)(1), bf(icmstart)(7).
 
 manpagebugs()
     None reported

@@ -41,6 +41,7 @@ void main(int argc, list argv)
     yodl("../icmake.1", "icmake.yo");
     yodl("../icmstart.1", "icmstart.yo");
     yodl("../icmbuild.1", "icmbuild.yo");
+    yodl("../icmstart.rc.7", "icmstart.rc.yo");
 
     rmrelease();
 }

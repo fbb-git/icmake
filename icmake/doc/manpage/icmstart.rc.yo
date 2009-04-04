@@ -1,0 +1,135 @@
+includefile(release.yo)
+
+htmlbodyopt(text)(#27408B)
+htmlbodyopt(bgcolor)(#FFFAF0)
+whenhtml(mailto(Frank B. Brokken: f.b.brokken@rug.nl))
+
+DEFINEMACRO(sop)(3)(\
+    it() bf(-ARG1) ARG2 nl()ARG3\
+)
+
+DEFINEMACRO(itt)(1)(\
+    it()tt(ARG1)\
+)
+
+DEFINEMACRO(itb)(1)(\
+    it()bf(ARG1)\
+)
+
+DELETEMACRO(tt)
+DEFINEMACRO(tt)(1)(em(ARG1))
+
+COMMENT( man-request, section, date, distribution file, general name)
+manpage(icmstart.rc)(7)(_CurYrs_)(icmake._CurVers_.tar.gz)
+        (icmstart resource file)
+
+COMMENT( man-request, larger title )
+manpagename(icmstart.rc)(The icmstart(1) resource file)
+
+manpagedescription()
+
+The bf(icmstart.rc) file defines the initial files of a program that are
+installed by bf(icmstart)(1). 
+
+By default bf(icmstart.rc) is found in tt(/etc/icmake/icmstart.rc), but if a
+file tt($HOME/.icmake/icmstart.rc) is found then the latter file is used by
+bf(icmstart)(1). tt($HOME/.icmake/icmstart.rc) in turn is overruled by
+specifying a tt(-c) option when invoking bf(icmstart)(1).
+
+The default resource file contains the following specifications, preparing for
+the construction of a bf(C++) program using bf(icmbuild)(1):
+        verb(
+    CLASSES
+    main.cc     
+    main.ih     
+    usage.cc
+    version.cc
+    ? scanner
+    ? parser
+        )
+The tt(icmstart.rc) file may contain:
+    itemization(
+    it() empty lines are ignored;
+    it() lines beginning with the hash-character (tt(#)) are ignored;
+    it() Source path names. Relative path names are interpreted relative to
+the current working directory. Environment variables are not expanded, the
+initial tilde character is interpreset as the user's home directory.
+    it() Source path names followed by a destination (relative to the
+directory initialized by bf(icmstart)(1)).
+    )
+    A source path may be either a file or a directory. If a directory is
+specified then all files in and below that directory will be installed.
+
+When specifying a destination a path may be specified as well. However, the
+destination path is always interpreted relative to the installation directory
+specified when calling bf(icmstart)(1).
+
+If a destination is omitted, the source is installed as specified below
+bf(icmstart)(1)'s destination directory.
+
+The first character of a line may be a question mark (followed by white
+space, a source path and optionally a destination path. In this case the user
+is 
+asked to confirm that the source path should indeed be installed. 
+
+manpagesection(EXAMPLES)
+
+    The following entries can be used in an tt(icmstart.rc) file:
+    itemization(
+    it() tt(source)nl()
+        `Source' must be in the skeleton directory visited by bf(icmstart(1))
+and is installed as tt(source) in the destination directory specified when
+calling bf(icmstart)(1).
+    it() tt(source dest)nl()
+        `Source' must be in the skeleton directory visited by bf(icmstart(1))
+and is installed as tt(dest) in the destination directory specified when
+calling bf(icmstart)(1).
+    it() tt(~/path)nl()
+        `~/path' is installed as tt(~/path) in the destination directory
+specified when calling bf(icmstart)(1). The tt(~)-character is expanded to the
+user's home directory.
+    it() tt(~/path dest)nl()
+        `~/path' is installed as tt(dest) in the destination directory
+specified when calling bf(icmstart)(1). The tt(~)-characteris expanded to the
+user's home directory.
+    it() tt(/path)nl()
+        `/path' is installed as tt(./path) in the destination directory
+specified when calling bf(icmstart)(1).
+    it() tt(/path dest)nl()
+        `/path' is installed as tt(dest) in the destination directory
+    it() tt(? source)nl()
+        The user must confirm the installation of tt(source).
+    it() tt(? source dest)nl()
+        The user must confirm the installation of tt(source) as tt(dest) in
+the destination directory specified when calling bf(icmstart)(1).
+    it() tt(# text)nl()
+        Interpreted as comment and ignored. The tt(#)-character must be the
+first character on the line.
+    it() an empty line+nl()
+        Empty lines are skipped.
+    )
+
+
+manpagefiles()
+    The mentioned paths are sugestive only and may be installation dependent:
+    itemization(
+    it() bf(/usr/share/icmake/icmconf)
+        Example of a bf(icmstart.rc) configuration file;
+    it() bf(/usr/share/icmake/CLASSES)
+        Example of a bf(icmstart.rc) tt(CLASSES) file.
+    it() bf(/usr/share/icmake/icmstart.rc)
+        Default skeleton resource file.
+    )
+
+manpageseealso()
+    bf(icmake)(1), bf(icmbuild)(1), bf(icmstart)(1)
+
+manpagebugs()
+    None reported
+
+includefile(trailer.inc)
+
+
+
+
+

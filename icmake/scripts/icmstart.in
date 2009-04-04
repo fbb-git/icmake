@@ -2,6 +2,7 @@
 
 string g_confpath;
 string g_home;
+string g_userHome;
 string g_skelpath = "@SKELDIR@";
 string g_program;
 string g_defaultcommand = "";
@@ -270,8 +271,6 @@ string findFile(string file)
 {
     string ret;
 
-    printf("CONFPATH = ", g_confpath, "\n");
-
     if (g_confpath != "")                   // locate file in -c path
         ret = find(g_confpath, file);
 
@@ -332,6 +331,14 @@ int confirminstall(string source, string dest)
     return 1;
 }
 
+string check_home(string source)
+{
+    if (source[0] != "~")
+        return source;
+
+    return g_userHome + substr(source, 1, strlen(source));
+}
+
     // a line in the conffile may be organized as follows (name is either
     //  a file or a directory; directories are copied completely):
     //  name        - name is located in skelpath and installed at destpath
@@ -342,7 +349,7 @@ int confirminstall(string source, string dest)
     //                destpath. Relative is relative to the startup directory
     //  path/name dest - relative or absolute path's name will be installed
     //                at destpath/dest. dest may also be /dest
-void installLine(string confline)
+void install_line(string confline)
 {
     int idx;
     list fields;
@@ -369,6 +376,9 @@ void installLine(string confline)
     else
         dest = source;
 
+    source = check_home(source);
+    dest   = check_home(dest);
+
     if (!g_replace && !g_askreplace && exists(g_destpath + dest))
         return;
 
@@ -393,7 +403,7 @@ void install_rc()
         line = fgets(conffile, (int)line[1]);
         if (!line)
             break;
-        installLine(line[0]);
+        install_line(line[0]);
     }
 }
 
@@ -402,7 +412,8 @@ int main(int argc, list argv)
     echo(OFF);
 
     g_program = get_base(argv[0]);
-    g_home = getenv("HOME")[1] + "/.icmake";
+    g_userHome = getenv("HOME")[1];
+    g_home = g_userHome + "/.icmake";
 
     if (argc == 1)
         usage();

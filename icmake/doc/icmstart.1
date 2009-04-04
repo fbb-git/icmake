@@ -13,21 +13,30 @@ icmstart \- A startup script for icmbuild program maintenance
 The \fBicmstart\fP script is a generic script that can be used to start program
 maintenance using \fBicmake\fP(1) and \fBicmbuild\fP(1)\&. \fBIcmstart\fP will create
 an initial directory \fItop-dir\fP and will install the files \fICLASSES,
-VERSION\fP and \fIicmconf\fP below \fItop-dir\fP\&. If provided, \fIprogram\fP or
-\fIlibrary\fP may be specified as the default mode of operation of the
-\fBicmbuild\fP(1) script\&. Skeleton files for the main directory and
-subdirectories, by default listed in the file
-\fI/usr/share/icmake/icmstart\&.rc\fP, may be installed as well (see below at
-\fBSKELETON FILES\fP)\&.
+VERSION\fP and \fIicmconf\fP below \fItop-dir\fP\&. A second argument  `\fIprogram\fP\(cq\&
+or `\fIlibrary\fP\(cq\& may be specified as the default mode of operation of the
+\fBicmbuild\fP(1) script\&. 
 .PP 
-After changing to the top-level directory created by \fBicmstart\fP the
-\fBicmbuild\fP script may be called for program maintenance\&.
+Skeleton files for the main directory and subdirectories, by default listed in
+the file \fI/etc/icmake/icmstart\&.rc\fP, may be installed as well
+(cf\&. \fBicmstart\&.rc\fP(7))\&.
+.PP 
+After changing to the directory created by \fBicmstart\fP the \fBicmbuild\fP(1)
+script may be used for program maintenance\&.
 .PP 
 .SH "OPTIONS"
 
 .PP 
-\fBIcmstart\fP may be called with the following options, which (if specified)
-must be the first arguments to \fBicmstart\fP:
+\fIIcmstart\fP may be called with the following options, which (if specified)
+must be the first arguments of \fIicmstart\fP:
+.IP o 
+\fI-c confpath\fP
+.br 
+Use the configuration files (\fIicmstart\&.rc, AUTHOR,
+YEARS\fP and \fIVERSION\fP) if found in `confpath\(cq\& rather than in
+\fI~/\&.icmake\fP and/or \fI/etc/icmake/\fP\&. Once a file is found it is used
+allowing partial overrides of the default files provided by
+\fBicmake\fP(1)\&.
 .IP o 
 \fI-d\fP
 .br 
@@ -36,10 +45,10 @@ executed on the standard output\&.
 .IP o 
 \fI-I\fP
 .br 
-Do not install skeleton files\&. 
+Do not install files\&. 
 .IP o 
 \fI-r\fP 
-Unconditionally replace existing (skeleton) files\&. If \fI-r\fP is not
+Unconditionally replace existing files\&. If \fI-r\fP is not
 provided \fBicmstart\fP will ask the user to confirm that an existing
 file must
 be overwritten\&. If a skeleton specification refers to a directory, the
@@ -54,7 +63,7 @@ which -in turn- may be overruled by the path specified with the \fI-s\fP
 option\&. The skeleton path may be specified as a full file-path or as a
 directory, in which case the skeleton resource file is assumed to be
 \fIicmstart\&.rc\fP (see below at \fBSKELETON FILES\fP)\&.
-Since \fBicmstart\fP uses \fItar\fP to install files, \fItar\fP must be
+Since \fBicmstart\fP uses \fIcp\fP to install files, \fIcp\fP must be
 available when \fBicmstart\fP should install skeleton files\&.
 .PP 
 .SH "SKELETON FILES"
@@ -62,56 +71,22 @@ available when \fBicmstart\fP should install skeleton files\&.
 .PP 
 Skeleton resource files may contain comment (empty lines and lines beginning
 with the hash-mark (\fI#\fP)) which is ignored, and should otherwise contain
-absolute or relative (with respect to the directory containing the skeleton
-resource file) file- or directory names\&. 
+specifications of resource \fBs\fP to install\&.
 .PP 
-These entries are copied to the top-level directory using \fBtar\fP(1)\&. During
-this process \fBtar\fP(1) will remove leading \fI/\fP and \fI\&.\&./\fP specifications
-from specified file- and directory names\&.  E\&.g\&., if a skeleton name
-\fI/tmp/scanner/scanner\&.h\fP is listed, and the top-level directory is named
-\fIdemo\fP then \fIdemo/tmp/scanner/scanner\&.h\fP is installed\&.
-.PP 
-Skeleton specifications may be specified on separate lines, or lines may
-contain  multiple specifications\&. The first entry on a line may be a question
-mark, in which case the user is asked to confirm that the skeletons specified
-on that line must be installed\&. Confirmation is requested for each subsequent
-element on a line\&. Once installation is not confirmed all remaining entries on
-that line are skipped\&.
-.PP 
-For example, the default \fIicmstart\&.rc\fP may contain the following lines:
+The default resource file is \fI/etc/icmake/icmstart\&.rc\fP, contains
 .nf 
 
-main\&.cc
-main\&.ih
-usage\&.cc
-version\&.cc
-? scanner parser
-    
+    CLASSES
+    main\&.cc     
+    main\&.ih     
+    usage\&.cc
+    version\&.cc
+    ? scanner
+    ? parser
+        
 .fi 
-In this case, \fImain\&.cc, main\&.ih, usage\&.cc\fP and \fIversion\&.cc\fP will be
-installed, but confirmation is requested for the \fIscanner\fP directory\&. If
-installation is confirmed, the \fIscanner\fP directory and its contents are
-installed into the top-level directory\&. Next, confirmation is requested to
-install \fIparser\fP\&. If installation of \fIscanner\fP is not confirmed,
-installation of \fIparser\fP is skipped\&.
-.PP 
-Installation of a directory does not imply that the file \fICLASSES\fP will
-contain that directory as one of its entries\&. It is the user\&'s responsibility
-to update \fICLASSES\fP, if necessary\&.
-.PP 
-The file \fIVERSION\fP is used to make available the program\&'s version
-number, release-years and author name(s)\&. The \fIVERSION\fP file contains lines
-comparable to
-.nf 
-    // Change the following #defines at your own digression
-
-#define VERSION "0\&.00\&.0"
-#define YEARS   "2009"
-#define AUTHOR  "Frank B\&. Brokken (f\&.b\&.brokken@rug\&.nl)";
-
-.fi 
-
-and the values defined here will be used in the \fIversion\&.cc\fP skeleton file\&.
+This file is overruled by \fI~/\&.icmake/icmstart\&.rc\fP\&. See
+\fBicmstart\&.rc\fP(7) for details about the format of the \fIicmstart\&.rc\fP file\&.
 .PP 
 .SH "FILES"
 The mentioned paths are sugestive only and may be installation dependent:
@@ -127,7 +102,7 @@ Default skeleton resource file\&.
 
 .PP 
 .SH "SEE ALSO"
-\fBicmake\fP(1), \fBicmbuild\fP(1), \fBtar\fP(1)
+\fBicmake\fP(1), \fBicmbuild\fP(1), \fBicmstart\fP(7)\&.
 .PP 
 .SH "BUGS"
 None reported

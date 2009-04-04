@@ -176,6 +176,10 @@ The following preprocessor directives are available:
     itt(#endif)nl()
         Terminates the preprocessor block starting at the matching 
         tt(#ifdef), tt(#ifndef) or tt(#else) directive.
+    itt(#undef identifier) nl()
+        Remove tt(identifier) from the set of defined symbols. This will not
+        affect the specification of any previously defined symbols in which
+        tt(identifier) was used.
     )
 
 manpagesection(DATA TYPES)
@@ -818,7 +822,7 @@ particular the tt(examples/icmbuild) subdirectory containing a general script
 for bf(C++) and bf(C) program maintenance.
 
 manpageseealso()
-    bf(icmbuild)(1), bf(icmstart)(1), bf(make)(1)
+    bf(icmbuild)(1), bf(icmstart)(1), bf(icmstart.rc)(7), bf(make)(1)
 
 manpagebugs()
     None reported

@@ -105,12 +105,13 @@ try cp -r etc/icmake/* tmp/${CONFDIR}
 
 echo Copying the man-pages from doc/
 try cp doc/*.1 tmp/${MANDIR}/man1
+try cp doc/*.7 tmp/${MANDIR}/man7
 
 echo Copying additional documentation to doc/
 try cp doc/icmake.doc changelog tmp/${DOCDIR}
 
 echo Copying additional documentation to doc-doc/
-try cp -r templates  tmp/${DOCDOCDIR}
+try cp -r examples  tmp/${DOCDOCDIR}
 
 echo Copying etc files to etc/
 try cp -r etc  tmp/etc

@@ -1,8 +1,11 @@
 icmake (7.12.1-1) unstable; urgency=low
 
   * New upstream release
+  * Split-off a supplementary documention package icmake-doc
+  * Application package icmake now suggests icmake-doc
+  * Added binary-indep, install-indep for icmake-doc construction
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 10 Feb 2009 18:38:47 +0100
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 08 Apr 2009 12:59:58 +0200
 
 icmake (7.11.1-1) unstable; urgency=low
 

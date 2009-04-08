@@ -10,10 +10,10 @@ build-stamp:
 	dh_testdir
 
 	# Add here commands to compile the package.
-	sh bootstrap.sh
+	./icm_bootstrap /
 	touch build-stamp
 
-clean: 
+clean:
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
@@ -29,20 +29,38 @@ install: build
 	dh_clean -k
 	dh_installdirs
 
-	# Add here commands to install the package into debian/<packagename>
-	sh install.sh debian/icmake
+	# Add here commands to install the package into debian/icmake
+	./icm_install strip progs debian/icmake
+	./icm_install scripts debian/icmake
+	./icm_install skel debian/icmake
+	./icm_install man debian/icmake
+	./icm_install doc debian/icmake
+	./icm_install etc debian/icmake
+
+install-indep:
+	./icm_install docdoc  debian/icmake-doc
 
 # Build architecture-independent files here.
-binary-indep: build install
-# We have nothing to do by default.
+binary-indep: install-indep
+	dh_testdir -i
+	dh_testroot -i
+	dh_installdocs -i
+	dh_installinfo -i
+	dh_installchangelogs -i
+	dh_link -i
+	dh_compress -i
+	dh_fixperms -i
+	dh_installdeb -i
+	dh_gencontrol -i
+	dh_md5sums -i
+	dh_builddeb -i
 
 # Build architecture-dependent files here.
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installchangelogs CHANGES
-	dh_installdocs doc/README.icmbuild doc/icmake.doc doc/icmake.ps \
-				   debian/mail.frank templates legacy
+	dh_installchangelogs
+	dh_installdocs debian/mail.frank
 	dh_installexamples
 	dh_link usr/share/man/man1/icmake.1 usr/share/man/man1/icmun.1
 	dh_strip
@@ -52,13 +70,13 @@ binary-arch: build install
 	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
-	dh_builddeb
+	dh_builddeb -picmake
 
 # The following is for internal development usage only
 # Update that sum when new _upstream_ releases occur, this
 # catches silent file content forges at the upstream server side
 # Archive downloaded from https://www.icce.rug.nl/debian/icmake
-#	file: icmake_x.y.z.tar.gz
+#   file: icmake_x.y.z.tar.gz
 MD5TRUSTED := aa19b8d0747b01589bdba01b21df8c44
 
 DEBVERSION:=$(shell head -n 1 debian/changelog | sed -e 's/^[^(]*(\([^)]*\)).*/\1/')
@@ -66,7 +84,7 @@ UPVERSION:=$(shell echo $(DEBVERSION) | sed -e 's/^.*://' -e 's/-[0-9.]*$$//' -e
 UPNAME := icmake
 UPFILE := $(UPNAME)_$(UPVERSION).tar.gz
 DEFILE := $(UPNAME)_$(UPVERSION).orig.tar.gz
-URL    := https://www.icce.rug.nl/debian/icmake
+URL	   := https://www.icce.rug.nl/debian/icmake
 MD5CURRENT := `md5sum ../tarballs/$(DEFILE) | sed -e 's/ .*//'`
 SVNTRUNK   := https://svn.sourceforge.net/svnroot/bisoncpp/trunk/icmake
 
@@ -77,7 +95,7 @@ get-orig-source:
 	-@if [ ! -f ../tarballs/$(DEFILE) ] ; then \
 		echo "Downloading $(URL)/$(UPFILE) from $(URL)/$(UPFILE) ..." ; \
 		wget --no-check-certificate --quiet -N -nv -T20 -t3 -O \
-             ../tarballs/$(DEFILE) $(URL)/$(UPFILE) ; \
+			 ../tarballs/$(DEFILE) $(URL)/$(UPFILE) ; \
 	else \
 		echo "Upstream source tarball has been already downloaded" ; \
 	fi
@@ -103,8 +121,8 @@ get-svn-trunk:
 
 
 print-version:
-	@@echo "Debian version:          $(DEBVERSION)"
-	@@echo "Upstream version:        $(UPVERSION)"
+	@@echo "Debian version:			 $(DEBVERSION)"
+	@@echo "Upstream version:		 $(UPVERSION)"
 
-binary: binary-indep binary-arch
+binary: binary-arch binary-indep
 .PHONY: build clean binary-indep binary-arch binary install myclean

@@ -51,7 +51,7 @@ cat tmp/INSTALL.im
 echo Creating remaining intermediate destination directories
 try  mkdir -p tmp/${BINDIR}  tmp/${LIBDIR}      tmp/${SKELDIR}  \
            tmp/${CONFDIR} tmp/${MANDIR}/man1 tmp/${MANDIR}/man7 \
-           tmp/${DOCDIR}  tmp/${DOCDOC}
+           tmp/${DOCDIR}  tmp/${DOCDOCDIR}
   
 echo Creating tmp/libicrss.a
 try cd rss
@@ -108,12 +108,13 @@ try cp doc/*.1 tmp/${MANDIR}/man1
 try cp doc/*.7 tmp/${MANDIR}/man7
 
 echo Copying additional documentation to doc/
-try cp doc/icmake.doc changelog tmp/${DOCDIR}
+try mkdir -p tmp/${DOCDIR}/doc
+try cp changelog tmp/${DOCDIR}
 
 echo Copying additional documentation to doc-doc/
-try cp -r examples  tmp/${DOCDOCDIR}
+try cp -r examples doc/icmake.doc doc/icmake.ps doc/README.icmbuild tmp/${DOCDOCDIR}
 
 echo Copying etc files to etc/
-try cp -r etc  tmp/etc
+try cp -r etc  tmp/
 
 echo Done.

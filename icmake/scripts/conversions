@@ -3,7 +3,7 @@ CONFIG=INSTALL.im
 . VERSION
 . tmp/ROOT
 
-ROOT=`echo ${ROOT}/ | sed 's,//,/,g'`
+ROOT=`echo ${ROOT}/ | sed 's,//,/,g' | sed 's,//,/,g'`
 
 EXTENSION=`grep '^#' $CONFIG | grep "#define[[:space:]]\+EXTENSION" | \
             sed 's,.*EXTENSION[[:space:]]\+\"\([^"]*\)".*,'${ROOT}'\1,'`

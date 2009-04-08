@@ -1,5 +1,15 @@
 #!/bin/sh
 
+usage()
+{
+    echo "\
+Usage: $0 [strip] all|progs|scripts|man|skel|doc|etc|docdoc [installdir]
+"
+    exit 1
+}
+
+[ -e tmp/ROOT ] || usage
+
 . scripts/conversions
 
 echo ROOT DIRECTORY: ${ROOT}
@@ -7,6 +17,12 @@ echo ROOT DIRECTORY: ${ROOT}
 if [ "$1" == "strip" ] ; then
     STRIP=strip
     shift
+fi
+
+if [ "$2" != "" ] ; then
+    INSTALLDIR=$2
+else
+    INSTALLDIR=${ROOT}
 fi
 
 try()
@@ -21,26 +37,26 @@ progs()
         try strip tmp/${BINDIR}/icmake tmp/${BINDIR}/icmun \
                   tmp/${LIBDIR}/*
     fi
-    try mkdir -p ${BINDIR} ${LIBDIR}
+    try mkdir -p $INSTALLDIR/${BINDIR} $INSTALLDIR/${LIBDIR}
 
-    try cp -r tmp/${BINDIR}/icmake tmp/${BINDIR}/icmun ${BINDIR}
-    try cp -r tmp/${LIBDIR}/* ${LIBDIR}
+    try cp -r tmp/${BINDIR}/icmake tmp/${BINDIR}/icmun $INSTALLDIR/${BINDIR}
+    try cp -r tmp/${LIBDIR}/* $INSTALLDIR/${LIBDIR}
 }
 
 scripts()
 {
-    try mkdir -p ${BINDIR}
+    try mkdir -p $INSTALLDIR/${BINDIR}
 
       #                 script   install-dest. 
-    try scripts/convert icmbuild $BINDIR
-    try scripts/convert icmstart $BINDIR
-    try chmod +x $BINDIR/icmbuild $BINDIR/icmstart
+    try scripts/convert icmbuild $INSTALLDIR/$BINDIR
+    try scripts/convert icmstart $INSTALLDIR/$BINDIR
+    try chmod +x $INSTALLDIR/$BINDIR/icmbuild $INSTALLDIR/$BINDIR/icmstart
 }
 
 into()
 {
-    try mkdir -p $1
-    try cp -r tmp/$1/* $1
+    try mkdir -p $INSTALLDIR/$1
+    try cp -r tmp/$1/* $INSTALLDIR/$1
 }
 
 case $1 in
@@ -74,12 +90,15 @@ case $1 in
         into ${DOCDIR}
     ;;
 
+    (etc)
+        into etc/icmake
+    ;;
+
     (docdoc)
         into ${DOCDOCDIR}
     ;;
 
     (*)
-        echo "Usage: $0 [strip] all|progs|scripts|man|skel|doc|docdoc"
-        exit 1
+        usage
     ;;
 esac

@@ -4,10 +4,10 @@
 1. Inspect and modify if necessary the current locations in INSTALL.im.
 
 2. Create the icmake installation files:
-                    ./bootstrap
+                   ./icm_bootstrap /
 
 3. To install, do as root:
-                    ./install strip all /
+                    ./icm_install strip all /
                     
-4. Intermediate construction area removal:
+4. Remove intermediate construction area:
                     rm -rf tmp

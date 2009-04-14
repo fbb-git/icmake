@@ -110,7 +110,7 @@ manpagefiles()
     )
 
 manpageseealso()
-    bf(icmake)(1), bf(icmbuild)(1), bf(icmstart)(7).
+    bf(icmake)(1), bf(icmbuild)(1), bf(icmstart.rc)(7).
 
 manpagebugs()
     None reported

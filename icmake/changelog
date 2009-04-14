@@ -8,28 +8,29 @@ icmake (7.12.1)
     new option that can be specified in icmconf
 
   * the top-level directory has been reorganized. See INSTALL and QUICKINSTALL
-    for details. Icmake's initial construction uses `bootstrap' and prepares
-    an icmake installation under ./tmp/
+    for details. Icmake's initial construction uses `icm_bootstrap' and
+    prepares an icmake installation under ./tmp/
 
-  * Installation of (parts of) icmake constructed by `bootstrap' is done using
-    `install'.
+  * installation of (parts of) icmake constructed by `icm_bootstrap' is done
+    using `icm_install'.
 
   * added `where-is-what' giving an overview of what the various top-level
     files and directories are for.
 
- * Configuration parameters for icmstart are 
+ * configuration files for icmstart are found in the following locations (in
+   order, accepting the first file(s) found:
         (1) determined by -c 
         (2) in $HOME/.icmake 
         (3) found in /etc/default/icmake. 
 
-  * The previously used `def/destinations' file is not used anymore.
+  * the previously used `def/destinations' file is not used anymore.
 
-  * The file `icmconf' has been modified (see icmbuild(1)), allowing, e.g.,
+  * the file `icmconf' has been modified (see icmbuild(1)), allowing, e.g.,
     multiple lexical scanner specification files.
 
-  * Documentation adapted.
+  * documentation adapted.
 
-  * New man-page: icmstart.rc(7).
+  * new man-page: icmstart.rc(7).
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 04 Apr 2009 15:10:19 +0200
 

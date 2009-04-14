@@ -78,10 +78,11 @@ systems).
 
     - Next run the shell-script `bootstrap' as follows:
 
-                            ./bootstrap
+                            ./icm_bootstrap /
 
-This constructs the icmake distribution under the ./tmp directory. It puts all
-icmake related files in 
+This constructs the icmake distribution under the ./tmp directory, preparing
+for an installation from the root directory. It puts all icmake related files
+in
     tmp/$BINDIR, tmp/$SKELDIR, tmp/$MANDIR, tmp/$LIBDIR, tmp/$CONFDIR,
     tmp/$DOCDIR, tmp/$DOCDOCDIR
 
@@ -91,25 +92,76 @@ icmake related files in
 
     You probably must do this as `root':
 
-                            ./install [strip] all /
+                            ./icm_install [strip] all
 
-    This will install all files under / When providing the strip
-arguments binaries will be stripped. 
+    This will install all files under the root directory (initially specied
+when calling icm_bootstrap) When providing the strip arguments binaries will
+be stripped.
 
-    Note that by default the binaries will be installed without being
-stripped.
+    Note that by default unstripped binaries will be installed.
     
     Separate parts may be installed as well. E.g.,
            ./install [strip] progs      -   installs all executables
+           ./install scriupts           -   installs the icmstart/icmbuild
+                                                     scripts 
            ./install man                -   installs the man-pages
            ./install skel               -   installs the skeletons
+           ./install etc                -   installs the default icmstart.rc
+                                                     related files
            ./install doc                -   installs the docs
-           ./install docdoc             -   installs the extended docs
+           ./install docdoc             -   installs the extended docs and
+                                                     examples 
 
 4. Clean up the garbage
 =======================
                         rm -rf tmp
 
+
+5. Predefined symbols
+=====================
+
+        Icmake does not require special modifications. However, you may wish to
+take a look at the file pp/loadsym.c. In this file the function 'loadsym()'
+of the preprocessor icm-pp is found. The preloaded symbols of Icmake are 
+defined in this function. E.g., MSDOS is defined as 1 when an MSDOS platform 
+is used, linux is defined as 1 when Icmake is compiled for Linux, etc.. 
+If you plan to use these predefined symbols in your Icmake scripts, make sure 
+that the conditional code in the file pp/loadsym.c recognizes your platform.
+
+        If you are unsure whether this code recognizes your compiler, build
+Icmake as distributed and try out the sample icmake file examples/defines.im
+(i.e., say: "icmake examples/defines"). If the output of the makefile is
+not satisfatory, modify pp/loadsym.c. E.g., if your MegaC compiler defines the
+symbol MEGA_C, you might want to add the following lines to pp/loadsym.c:
+
+                        #ifdef MEGA_C
+                            preload("MEGA_C", "1");
+                        #else
+                            preload("MEGA_C", "0");
+                        #endif
+
+
+Currently the following symbols are predefined:
+
+        --------------------------------------------------------------
+        symbol          1 when defined on the platform ... otherwise 0
+        --------------------------------------------------------------
+        MSDOS           MS-DOS platform (with MSC 7.00 compiler)
+        unix            Unix, usually with GNU's gcc compiler
+        linux           '386 or '486 running Linux (usually with gcc)
+        M_SYSV, M_UNIX  '386 or '486 running SCO/Unix (usually with
+                        Microsoft C)
+        _POSIX_SOURCE   Unix with Posix complient compiler
+        __hpux          HP-UX, with the native HP compiler
+        --------------------------------------------------------------
+
+If you want to modify something here which hasn't been done before, please
+email us about it, and we'll include it in the standard distribution.
+
+
+
+The following section is not actively maintained anymore. It is kept for
+reasons of backward compatibility.
 
 Hand-compiling icmake
 =====================
@@ -251,42 +303,3 @@ compiler command line) when this function is available.
 When Icmake is compiled without this flag, wildcards are expanded using a
 `poor mans solution' (PMS). See the file rss/dosfind.c for further details.
 
-Modifying Icmake: the preloaded symbols
----------------------------------------
-
-        Icmake does not require special modifications. However, you may wish to
-take a look at the file pp/loadsym.c. In this file the function 'loadsym()'
-of the preprocessor icm-pp is found. The preloaded symbols of Icmake are 
-defined in this function. E.g., MSDOS is defined as 1 when an MSDOS platform 
-is used, linux is defined as 1 when Icmake is compiled for Linux, etc.. 
-If you plan to use these predefined symbols in your Icmake scripts, make sure 
-that the conditional code in the file pp/loadsym.c recognizes your platform.
-
-        If you are unsure whether this code recognizes your compiler, build
-Icmake as distributed and try out the sample icmake file examples/defines.im
-(i.e., say: "icmake examples/defines"). If the output of the makefile is
-not satisfatory, modify pp/loadsym.c. E.g., if your MegaC compiler defines the
-symbol MEGA_C, you might want to add the following lines to pp/loadsym.c:
-
-                        #ifdef MEGA_C
-                            preload("MEGA_C", "1");
-                        #else
-                            preload("MEGA_C", "0");
-                        #endif
-
-Currently the following symbols are built in Icmake:
-
-        --------------------------------------------------------------
-        symbol          1 when defined on the platform ... otherwise 0
-        --------------------------------------------------------------
-        MSDOS           MS-DOS platform (with MSC 7.00 compiler)
-        unix            Unix, usually with GNU's gcc compiler
-        linux           '386 or '486 running Linux (usually with gcc)
-        M_SYSV, M_UNIX  '386 or '486 running SCO/Unix (usually with
-                        Microsoft C)
-        _POSIX_SOURCE   Unix with Posix complient compiler
-        __hpux          HP-UX, with the native HP compiler
-        --------------------------------------------------------------
-
-If you want to modify something here which hasn't been done before, please
-email us about it, and we'll include it in the standard distribution.

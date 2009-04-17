@@ -4,8 +4,9 @@ icmake (7.12.1-1) unstable; urgency=low
   * Split-off a supplementary documention package icmake-doc
   * Application package icmake now suggests icmake-doc
   * Added binary-indep, install-indep for icmake-doc construction
+  * Added Homepage and Vcs-Svn tags to `control'
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 14 Apr 2009 13:02:59 +0200
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 17 Apr 2009 08:39:01 +0200
 
 icmake (7.11.1-1) unstable; urgency=low
 

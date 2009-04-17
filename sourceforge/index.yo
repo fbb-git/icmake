@@ -1,0 +1,53 @@
+htmlbodyopt(text)(#27408B)
+htmlbodyopt(bgcolor)(#FFFAF0)
+
+includefile(release.yo)
+
+COMMENT(Fill in the name of the program/package in these SUBSTs
+        And add the project info to the ../../PROJECTS.yo file)
+
+SUBST(_pakx_)(icmake)
+SUBST(_Pakx_)(Icmake)
+
+mailto(fbbrokken@users.sourceforge.net)
+
+affiliation(Center for Information Technology, University of Groningen)
+
+notableofcontents()
+
+report(_Pakx_ _CurVers_)
+      (Frank B. Brokken (f.b.brokken@rug.nl)nl())
+      (_CurYrs_)
+
+center(htmlcommand(<img src="icmake.jpg">))
+
+This is the (very preliminary) main page of the bf(_pakx_) project as hosted
+on Sourceforge.net.
+
+The project itself can be reached at 
+lurl(http://sourceforge.net/projects/_pakx_/)
+
+htmlcommand(
+<a href="http://sourceforge.net/projects/icmake"><img
+src="http://sflogo.sourceforge.net/sflogo.php?group_id=259636&amp;type=8"
+width="80" height="15" alt="Get icmake at SourceForge.net. Fast, secure and
+Free Open Source software downloads" /></a>
+    )
+
+COMMENT(
+    itemization(
+    it() Here is the url(html-version of the _pakx_ main index man-page)
+                (_pakx_.7.html).
+    )
+END)
+
+Enjoy _pakx_ !
+
+includefile(/home/frank/svn/PROJECTS.yo)
+
+Contact the author through url(his sourceforge e-mail address)
+                              (mailto:fbbrokken@users.sourceforge.net)
+
+
+
+

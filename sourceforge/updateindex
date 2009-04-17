@@ -1,0 +1,9 @@
+#!/bin/sh
+
+rm -f release.yo
+buildrelease || exit 1
+
+yodl2html index || exit 1
+
+scp index.html fbb,icmake@web.sourceforge.net:htdocs/
+rm -f release.yo

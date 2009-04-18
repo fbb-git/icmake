@@ -5,7 +5,7 @@ Upstream-Source: ftp://ftp.rug.nl/contrib/frank/software/linux/icmake/
 Files: *
  Copyright, Copyright 1992-NOW, Frank B. Brokken (f.b.brokken@rug.nl) and 
  Copyright, Copyright           Karel Kubat (karel@e-tunity.com)
- License: GPL-2+
+ License: GPL-3
  On Debian systems the full text of the GNU General Public License can be found
  in the /usr/share/common-licenses/GPL' file.
  

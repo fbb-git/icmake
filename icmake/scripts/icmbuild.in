@@ -293,11 +293,15 @@ void build_libraries()
 
     if 
     (
-        "VERSION" younger "version.cc" 
-        || 
-        "YEARS" younger "version.cc"
-        || 
-        "AUTHOR" younger "version.cc"
+        exists("version.cc")
+        &&
+        (
+            "VERSION" younger "version.cc" 
+            || 
+            "YEARS" younger "version.cc"
+            || 
+            "AUTHOR" younger "version.cc"
+        )
     )
         system("touch version.cc");
 

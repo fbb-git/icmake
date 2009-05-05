@@ -1,3 +1,7 @@
+icmake (7.12.2) ISN
+
+  * icmbuild will touch 'version.cc' only if it exists.
+
 icmake (7.12.1)
 
   * icm-pp supports the #undef directive

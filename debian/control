@@ -6,7 +6,7 @@ Uploaders: George Danchev <danchev@spnet.net>,
            Frank B. Brokken <f.b.brokken@rug.nl>,
            Tony Mancill <tmancill@debian.org>
 Build-Depends: debhelper (>= 6.0.5)
-Standards-Version: 3.8.1
+Standards-Version: 3.8.2
 Homepage: http://icmake.sourceforge.net/
 Vcs-Svn: https://svn.openfmi.net/debian-addons-bg/icmake/trunk
 

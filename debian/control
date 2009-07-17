@@ -24,7 +24,7 @@ Package: icmake-doc
 Architecture: all
 Section: doc
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description:  Documenation files for icmake.
+Description:  Documenation files for icmake
  Icmake is a hybrid between a 'make' utility and a 'shell script'
  language.  Originally, it was written to provide a useful tool for
  automatic program maintenance and system administrative tasks on MS-DOS

@@ -60,7 +60,6 @@ try ar rs ../tmp/libicrss.a *.o
 rm *.o
 cd ..
 
-
 echo Creating tmp/${BINDIR}/icmake${EXTENSION}
 try cd make
 try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BINDIR}/icmake${EXTENSION} *.c ../tmp/libicrss.a

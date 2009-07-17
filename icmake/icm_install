@@ -2,7 +2,7 @@
 
 usage()
 {
-    echo "\
+    echo "
 Usage: $0 [strip] all|progs|scripts|man|skel|doc|etc|docdoc [installdir]
 "
     exit 1

@@ -17,14 +17,18 @@
 
 void fun_gets ()
 {
+    int last;
     char *dest = getLine(stdin);
-
     if (!dest)
     {
         reg = *listConstructor();
         return;
     }
-    
+
+    last = strlen(dest) - 1;            /* cut off final \n as per man-page */
+    if (dest[last] == '\n')
+        dest[last] = 0;
+
     reg = *stringConstructor_cP(dest);
     free(dest);
 }

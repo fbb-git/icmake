@@ -1,8 +1,8 @@
 #!/bin/sh
 
 CWD=`pwd`
-cd ../bobcat
-    build man || exit 1
+cd ../icmake/doc/manpage
+    build || exit 1
 cd $CWD
 
 yodl2html index || exit 1

@@ -1,4 +1,4 @@
-.TH "icmbuild" "1" "1992-2009" "icmake\&.7\&.12\&.1\&.tar\&.gz" "A generic program maintenance script"
+.TH "icmbuild" "1" "1992\-2009" "icmake\&.7\&.12\&.3\&.tar\&.gz" "A generic program maintenance script"
 
 .PP 
 .SH "NAME"
@@ -19,7 +19,7 @@ path or it should be started as, e\&.g\&., \fI\&./icmbuild\fP
 .PP 
 \fBIcmbuild\fP assumes that your sources exist in and below a directory in which the
 files \fIicmconf\fP and \fICLASSES\fP live\&. The file \fICLASSES\fP
-contains the names of all subdirectories in which class-specific sources are
+contains the names of all subdirectories in which class\-specific sources are
 kept\&. The file \fIexamples/icmbuild\fP in \fBicmake\fP(1)\(cq\&s distribution
 offers an example of the configuration parameters\&. In this latter file 
 it is assumed that  \fBC++\fP sources are maintained, but the \fBicmbuild\fP script is
@@ -30,14 +30,14 @@ not restricted to do maintenance for \fBC++\fP  programs\&.
 (except for the source containing \fImain()\fP)\&.
 .PP 
 The compiled sources result in object modules which are then kept in a
-library, against which the main-object module is linked\&. It is also possible
+library, against which the main\-object module is linked\&. It is also possible
 to specify additional libraries against which the program must be linked\&.
 .PP 
 Once a library is constructed it is kept up to date by the script\&. Changing a
 source will result in replacing its former module by its new module in the
 library\&. 
 .PP 
-.SH "KICK-STARTING ICMBUILD"
+.SH "KICK\-STARTING ICMBUILD"
 
 .PP 
 Normally, \fBicmbuild\fP is installed and used as follows:
@@ -55,8 +55,8 @@ List the subdirectories containing sources in the file \fICLASSES\fP
 Note that the order of the classes mentioned in classes \fIis\fP relevant
 here\&.  It\(cq\&s no problem to add new class (subdirectory) names, but
 reordering should be prevented\&. If reordering is required, recompile
-the library, as the final object files contain class order-numbers\&.
-These class-order numbers prevent file-name collisions and thus prevent
+the library, as the final object files contain class order\-numbers\&.
+These class\-order numbers prevent file\-name collisions and thus prevent
 replacing file \fIx\&.o\fP from class \fIA\fP by file \fIx\&.o\fP from class
 \fIB\fP;
 .IP o 
@@ -66,7 +66,7 @@ Now simply run
             icmbuild 
         
 .fi 
-from the project\(cq\&s base directory and let the help-info tell you
+from the project\(cq\&s base directory and let the help\-info tell you
 what your options are\&. See the next section for the modes of operation\&.
 
 .PP 
@@ -165,16 +165,16 @@ program, using the library \fIlibbobcat1\fP as an additional library:
 
     // define the compiler options to use\&. 
     // For the upcoming c++0x standard with the Gnu g++ compiler add the
-    // -std=c++0x flag 
+    // \-std=c++0x flag 
     // To enable GNU extensions in addition to C++0x extensions, add the
-    // -std=gnu++0x flag
-#define COMPILER_OPTIONS    \(dq\&-g -Wall -O2\(dq\&
+    // \-std=gnu++0x flag
+#define COMPILER_OPTIONS    \(dq\&\-g \-Wall \-O2\(dq\&
 
     // define the pattern to locate sources in a directory:
 #define SOURCES             \(dq\&*\&.cc\(dq\&
 
     // define the options used for linking:
-#define LINKER_OPTIONS      \(dq\&-s\(dq\&
+#define LINKER_OPTIONS      \(dq\&\-s\(dq\&
 
     // define any additional libraries BINARY may need:
 #define ADD_LIBRARIES       \(dq\&\(dq\&
@@ -198,7 +198,7 @@ program, using the library \fIlibbobcat1\fP as an additional library:
 #define SCANGEN             \(dq\&flex\(dq\&
 
     // Flags to provide SCANGEN with:
-#define SCANFLAGS           \(dq\&-I\(dq\&
+#define SCANFLAGS           \(dq\&\-I\(dq\&
 
     // Name of the lexical scanner specification file
 #define SCANSPEC            \(dq\&lexer\(dq\&
@@ -222,7 +222,7 @@ program, using the library \fIlibbobcat1\fP as an additional library:
 #define PARSGEN             \(dq\&bisonc++\(dq\&
 
     // Flags to provide PARSGEN with:
-#define PARSFLAGS           \(dq\&-V -l\(dq\&
+#define PARSFLAGS           \(dq\&\-V \-l\(dq\&
 
     // What it the grammar specification file?
 #define PARSSPEC            \(dq\&grammar\(dq\&

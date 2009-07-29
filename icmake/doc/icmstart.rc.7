@@ -1,4 +1,4 @@
-.TH "icmstart\&.rc" "7" "1992-2009" "icmake\&.7\&.12\&.1\&.tar\&.gz" "icmstart resource file"
+.TH "icmstart\&.rc" "7" "1992\-2009" "icmake\&.7\&.12\&.3\&.tar\&.gz" "icmstart resource file"
 
 .PP 
 .SH "NAME"
@@ -13,7 +13,7 @@ installed by \fBicmstart\fP(1)\&.
 By default \fBicmstart\&.rc\fP is found in \fI/etc/icmake/icmstart\&.rc\fP, but if a
 file \fI$HOME/\&.icmake/icmstart\&.rc\fP is found then the latter file is used by
 \fBicmstart\fP(1)\&. \fI$HOME/\&.icmake/icmstart\&.rc\fP in turn is overruled by
-specifying a \fI-c\fP option when invoking \fBicmstart\fP(1)\&.
+specifying a \fI\-c\fP option when invoking \fBicmstart\fP(1)\&.
 .PP 
 The default resource file contains the following specifications, preparing for
 the construction of a \fBC++\fP program using \fBicmbuild\fP(1):
@@ -32,7 +32,7 @@ The \fIicmstart\&.rc\fP file may contain:
 .IP o 
 empty lines are ignored;
 .IP o 
-lines beginning with the hash-character (\fI#\fP) are ignored;
+lines beginning with the hash\-character (\fI#\fP) are ignored;
 .IP o 
 Source path names\&. Relative path names are interpreted relative to
 the current working directory\&. Environment variables are not expanded, the
@@ -75,13 +75,13 @@ calling \fBicmstart\fP(1)\&.
 \fI~/path\fP
 .br 
 `~/path\(cq\& is installed as \fI~/path\fP in the destination directory
-specified when calling \fBicmstart\fP(1)\&. The \fI~\fP-character is expanded to the
+specified when calling \fBicmstart\fP(1)\&. The \fI~\fP\-character is expanded to the
 user\(cq\&s home directory\&.
 .IP o 
 \fI~/path dest\fP
 .br 
 `~/path\(cq\& is installed as \fIdest\fP in the destination directory
-specified when calling \fBicmstart\fP(1)\&. The \fI~\fP-characteris expanded to the
+specified when calling \fBicmstart\fP(1)\&. The \fI~\fP\-characteris expanded to the
 user\(cq\&s home directory\&.
 .IP o 
 \fI/path\fP
@@ -104,7 +104,7 @@ the destination directory specified when calling \fBicmstart\fP(1)\&.
 .IP o 
 \fI# text\fP
 .br 
-Interpreted as comment and ignored\&. The \fI#\fP-character must be the
+Interpreted as comment and ignored\&. The \fI#\fP\-character must be the
 first character on the line\&.
 .IP o 
 an empty line

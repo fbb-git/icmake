@@ -1,19 +1,19 @@
-.TH "icmstart" "1" "1992-2009" "icmake\&.7\&.12\&.1\&.tar\&.gz" "starts icmbuild program maintenance"
+.TH "icmstart" "1" "1992\-2009" "icmake\&.7\&.12\&.3\&.tar\&.gz" "starts icmbuild program maintenance"
 
 .PP 
 .SH "NAME"
 icmstart \- A startup script for icmbuild program maintenance
 .PP 
 .SH "SYNOPSIS"
-\fBicmstart\fP \fI[Options]\fP top-dir [program|library]
+\fBicmstart\fP \fI[Options]\fP top\-dir [program|library]
 .PP 
 .SH "DESCRIPTION"
 
 .PP 
 The \fBicmstart\fP script is a generic script that can be used to start program
 maintenance using \fBicmake\fP(1) and \fBicmbuild\fP(1)\&. \fBIcmstart\fP will create
-an initial directory \fItop-dir\fP and will install the files \fICLASSES,
-VERSION\fP and \fIicmconf\fP below \fItop-dir\fP\&. A second argument  `\fIprogram\fP\(cq\&
+an initial directory \fItop\-dir\fP and will install the files \fICLASSES,
+VERSION\fP and \fIicmconf\fP below \fItop\-dir\fP\&. A second argument  `\fIprogram\fP\(cq\&
 or `\fIlibrary\fP\(cq\& may be specified as the default mode of operation of the
 \fBicmbuild\fP(1) script\&. 
 .PP 
@@ -30,7 +30,7 @@ script may be used for program maintenance\&.
 \fIIcmstart\fP may be called with the following options, which (if specified)
 must be the first arguments of \fIicmstart\fP:
 .IP o 
-\fI-c confpath\fP
+\fI\-c confpath\fP
 .br 
 Use the configuration files (\fIicmstart\&.rc, AUTHOR,
 YEARS\fP and \fIVERSION\fP) if found in `confpath\(cq\& rather than in
@@ -38,29 +38,29 @@ YEARS\fP and \fIVERSION\fP) if found in `confpath\(cq\& rather than in
 allowing partial overrides of the default files provided by
 \fBicmake\fP(1)\&.
 .IP o 
-\fI-d\fP
+\fI\-d\fP
 .br 
 Do not execute any commands, but show the commands that would have been
 executed on the standard output\&.
 .IP o 
-\fI-I\fP
+\fI\-I\fP
 .br 
 Do not install files\&. 
 .IP o 
-\fI-r\fP 
-Unconditionally replace existing files\&. If \fI-r\fP is not
+\fI\-r\fP 
+Unconditionally replace existing files\&. If \fI\-r\fP is not
 provided \fBicmstart\fP will ask the user to confirm that an existing
 file must
 be overwritten\&. If a skeleton specification refers to a directory, the
 full directory and its subdirectories will be replaced\&.
 .IP o 
-\fI-s skeleton-path\fP 
+\fI\-s skeleton\-path\fP 
 .br 
 By default skeleton files are listed in the skeleton resource file
 \fI/usr/share/icmake/icmstart\&.rc\fP\&. Alternatively, the skeleton
 resource file may be specified by the \fIICM\fP environment variable,
-which -in turn- may be overruled by the path specified with the \fI-s\fP
-option\&. The skeleton path may be specified as a full file-path or as a
+which \-in turn\- may be overruled by the path specified with the \fI\-s\fP
+option\&. The skeleton path may be specified as a full file\-path or as a
 directory, in which case the skeleton resource file is assumed to be
 \fIicmstart\&.rc\fP (see below at \fBSKELETON FILES\fP)\&.
 Since \fBicmstart\fP uses \fIcp\fP to install files, \fIcp\fP must be
@@ -70,7 +70,7 @@ available when \fBicmstart\fP should install skeleton files\&.
 
 .PP 
 Skeleton resource files may contain comment (empty lines and lines beginning
-with the hash-mark (\fI#\fP)) which is ignored, and should otherwise contain
+with the hash\-mark (\fI#\fP)) which is ignored, and should otherwise contain
 specifications of resource \fBs\fP to install\&.
 .PP 
 The default resource file is \fI/etc/icmake/icmstart\&.rc\fP, contains
@@ -102,7 +102,7 @@ Default skeleton resource file\&.
 
 .PP 
 .SH "SEE ALSO"
-\fBicmake\fP(1), \fBicmbuild\fP(1), \fBicmstart\fP(7)\&.
+\fBicmake\fP(1), \fBicmbuild\fP(1), \fBicmstart\&.rc\fP(7)\&.
 .PP 
 .SH "BUGS"
 None reported

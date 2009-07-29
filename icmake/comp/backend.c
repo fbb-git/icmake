@@ -49,7 +49,7 @@ void backend()
 
     outbin(&opexit, sizeof(INT8));          /* generate op_ret at the end */
 
-    strcpy(hdr.version, version);           /* set the version */
+    strncpy(hdr.version, version, sizeof(hdr.version));           /* set the version */
 
     hdr.offset[0] = ftell(s_bin);           /* here the strings start */
 

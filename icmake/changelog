@@ -1,5 +1,11 @@
 icmake (7.12.2)
 
+  * applied the patch given in Debian bug report #537574
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 29 Jul 2009 13:22:13 +0200
+
+icmake (7.12.2)
+
   * icmbuild  touches 'version.cc' only if it exists.
 
   * The built-in function 'gets()' will now remove a trailing \n as per the

@@ -1,12 +1,12 @@
-.TH "icmake" "1" "1992-2009" "icmake\&.7\&.12\&.1\&.tar\&.gz" "A program maintenance utility"
+.TH "icmake" "1" "1992\-2009" "icmake\&.7\&.12\&.3\&.tar\&.gz" "A program maintenance utility"
 
 .PP 
 .SH "NAME"
 icmake \- A program maintenance (\fImake\fP) utility using a
-\fBC\fP-like grammar
+\fBC\fP\-like grammar
 .PP 
 .SH "SYNOPSIS"
-\fBicmake\fP [options] \fIsource[\&.im] [dest[\&.bim]]\fP [-- [args]]
+\fBicmake\fP [options] \fIsource[\&.im] [dest[\&.bim]]\fP [\-\- [args]]
 .PP 
 \fBicmun\fP \fIbimfile\fP
 .PP 
@@ -16,21 +16,21 @@ icmake \- A program maintenance (\fImake\fP) utility using a
 \fBIcmake\fP(1) can be used as an alternative to \fBmake\fP(1)\&. In its standard
 operation more, it calls the following programs:
 .IP o 
-\fIicm-pp\fP  to preprocess the icmake file 
+\fIicm\-pp\fP  to preprocess the icmake file 
 .IP o 
-\fIicm-comp\fP   to byte-code compile the \fBicmake\fP  \fBs\fP
+\fIicm\-comp\fP   to byte\-code compile the \fBicmake\fP  \fBs\fP
 .IP o 
-\fIicm-exec\fP   to interpret the byte-code file
+\fIicm\-exec\fP   to interpret the byte\-code file
 
 .PP 
 \fBIcmake\fP allows the programmer to use a program language (closely resembling
-the well-known \fBC\fP-programming language) to define the actions involved in
+the well\-known \fBC\fP\-programming language) to define the actions involved in
 (complex) program maintenance\&. For this, \fBicmake\fP offers various special
 operators as well as a set of support functions that have proven to be useful
 in program maintenance\&.
 .PP 
 The program \fBicmun\fP(1) may be used to disassemble the compiled 
-byte-code file\&.
+byte\-code file\&.
 .PP 
 .SH "NEW IN VERSION 7\&.00"
 
@@ -42,7 +42,7 @@ Integral constants may be specified using hexadecimal notation (e\&.g\&.,
 The \fIIM\fP environment variable may contain multiple directories,
 separated from each other by colons (\fI:\fP)\&.
 .IP o 
-\fI#define\fP-directives may refer to other macro definitions using the
+\fI#define\fP\-directives may refer to other macro definitions using the
 \fI${identifier}\fP format\&.
 .IP o 
 \fI#ifdef\fP, \fI#ifndef\fP, \fI#else\fP and \fI#endif\fP directives can be
@@ -52,13 +52,13 @@ The `backtick\(cq\& operator is defined, executing a program in a shell
 and collecting its standard output in a list (see below)\&.
 .IP o 
 The index operator (\fI[]\fP) is defined as an alternative to the
-pre-defined function \fIelement()\fP, and can be used on lists and
+pre\-defined function \fIelement()\fP, and can be used on lists and
 strings\&. 
 .IP o 
 The function \fIstring getenv(string envvar)\fP is predefined\&. If
 existing scripts already define a \fIgetenv()\fP function of their own,
 it it suggested to remove this function and use the new \fIgetenv()\fP
-function instead\&. Alternatively, rename the script-defined function
+function instead\&. Alternatively, rename the script\-defined function
 \fIgetenv()\fP and calls of this function to, e\&.g\&. \fImy_getenv()\fP\&.
 .IP o 
 The function \fIint strstr(string haystack, string needle)\fP is 
@@ -66,7 +66,7 @@ renamed to \fIint strfind(string haystack, string needle)\fP\&.
 .IP 
 \fBNOTE: this modification in version 7\&.00 could very well
 affect your earlier (6\&.xx) icmake scripts\&. Changing `strstr\(cq\&
-into `strfind\(cq\& should bring your older scripts up-to-date again\&.\fP
+into `strfind\(cq\& should bring your older scripts up\-to\-date again\&.\fP
 
 .PP 
 .SH "OPTIONS"
@@ -78,45 +78,45 @@ into `strfind\(cq\& should bring your older scripts up-to-date again\&.\fP
 .PP 
 \fIdest\fP:   binary \fBicmake\fP script file (default:  \fI`source\(cq\&\&.bim\fP)\&.
 .PP 
-\fI--\fP:  \fBicmake\fP/\fBicmake\fP-script arguments separator
+\fI\-\-\fP:  \fBicmake\fP/\fBicmake\fP\-script arguments separator
 .PP 
-\fIargs\fP:  arguments following \fI--\fP are entered into the \fBicmake\fP scipt 
-\fImain()\fP function\(cq\&s \fIargv\fP-list (see below at section
+\fIargs\fP:  arguments following \fI\-\-\fP are entered into the \fBicmake\fP scipt 
+\fImain()\fP function\(cq\&s \fIargv\fP\-list (see below at section
 \fBUSER DEFINED FUNCTIONS\fP)\&.
 .PP 
 .IP o 
-\fB-a\fP  
+\fB\-a\fP  
 .br 
 information about \fBicmake\fP
 .IP o 
-\fB-b\fP  
+\fB\-b\fP  
 .br 
 blunt execution of the destinationfile
 .IP o 
-\fB-c\fP  
+\fB\-c\fP  
 .br 
 the destination file is only compiled
 .IP o 
-\fB-i\fP file 
+\fB\-i\fP file 
 .br 
 \fIfile\fP: name of source\&.  \fBIcmake\fP argument processing stops\&.
 .IP o 
-\fB-o\fP file 
+\fB\-o\fP file 
 .br 
 all \fBicmake\fP output is written to \fIfile\fP (Not
 implemented on unix platforms)
 .IP o 
-\fB-p\fP  
+\fB\-p\fP  
 .br 
 only the preprocessor is activated
 .IP o 
-\fB-q\fP  
+\fB\-q\fP  
 .br 
 quiet mode: copyright banner not displayed
 .IP o 
-\fB-t\fP file 
+\fB\-t\fP file 
 .br 
-\fIfile\fP is used as a temporary bim-file, to be
+\fIfile\fP is used as a temporary bim\-file, to be
 removed on exit\&. \fBIcmake\fP argument processing stops\&.
 
 .PP 
@@ -132,10 +132,10 @@ The following preprocessor directives are available:
 comment:
 .br 
 standard \fBC\fP comment (all between \fI/*\fP and \fI*/\fP) as well as
-comment-to-end-of-line (all line contents following \fI//\fP) are
+comment\-to\-end\-of\-line (all line contents following \fI//\fP) are
 ignored\&.
 .IP o 
-Shell startup: The first line of the \fBicmake\fP-script may start with
+Shell startup: The first line of the \fBicmake\fP\-script may start with
 \fI#!path\fP, where \fIpath\fP defines the absolute location of the \fBicmake\fP
 program\&. By making the script executable, it can be called without
 explicitly calling \fBicmake\fP\&.  
@@ -144,30 +144,30 @@ E\&.g\&., if the first line of an (executable) icmakefile \(cq\&icm\(cq\&
 (without extension) contains
 .nf 
 
-            #!/usr/bin/icmake -qi
+            #!/usr/bin/icmake \-qi
         
 .fi 
 then \fIicm\fP may be given as a command, thus executing
 .nf 
 
-            /usr/bin/icmake -qi icm \&.\&.\&.
+            /usr/bin/icmake \-qi icm \&.\&.\&.
         
 .fi 
 Alternatively, 
 .nf 
 
-            #! /usr/bin/icmake -qt /tmp/icm
+            #! /usr/bin/icmake \-qt /tmp/icm
         
 .fi 
 may be used, resulting in the execution of
 .nf 
 
-            #! /usr/bin/icmake -qt /tmp/icm icm \&.\&.\&.
+            #! /usr/bin/icmake \-qt /tmp/icm icm \&.\&.\&.
         
 .fi 
 In this case the binary makefile is not kept, but a temporary file
 \fI/tmp/icm\&.PID\fP is used and removed on exit\&. The PID extension being
-the process-id of the \fBicmake\fP program executing \fIicm\fP\&.
+the process\-id of the \fBicmake\fP program executing \fIicm\fP\&.
 .IP o 
 \fI#include \(dq\&filename\(dq\&\fP
 .br 
@@ -185,20 +185,20 @@ The text \fIidentifier\fP will be replaced by \fIdefinition\fP\&. The
 definition may contain references to already defined identifiers,
 using the \fI${identifier}\fP format\&. If the \fI${identifier}\fP hasn\(cq\&t
 been defined (yet), the text \fI${identifier}\fP is literally kept\&. At
-each \fI#define\fP at most 100 text-replacements are performed,
+each \fI#define\fP at most 100 text\-replacements are performed,
 preventing infinite recursion\&.
 .IP o 
 \fI#ifdef identifier\fP
 .br 
 If the \fIidentifier\fP macro was defined the next block of code (until
 a matching \fI#else\fP or \fI#endif\fP directive was detected) is
-byte-compiled\&. Otherwise, the block of code is ignored\&.
+byte\-compiled\&. Otherwise, the block of code is ignored\&.
 .IP o 
 \fI#ifndef identifier\fP
 .br 
 If the \fIidentifier\fP macro was \fInot\fP defined the next block of code
 (until a matching \fI#else\fP or \fI#endif\fP directive was detected) is
-byte-compiled\&. Otherwise, the block of code is ignored\&.
+byte\-compiled\&. Otherwise, the block of code is ignored\&.
 .IP o 
 \fI#else\fP
 .br 
@@ -224,7 +224,7 @@ The following data types are available:
 .IP o 
 \fIint\fP
 .br 
-Integral values, ranging from \fI-0x8000\fP until \fI0x7fff\fP\&. \fIint\fP
+Integral values, ranging from \fI\-0x8000\fP until \fI0x7fff\fP\&. \fIint\fP
 constants may be specified as decimal numbers, hexadecimal numbers or
 as \fIASCII\fP character constants (e\&.g\&., \fI\(cq\&x\(cq\&\fP)\&.
 .IP o 
@@ -232,7 +232,7 @@ as \fIASCII\fP character constants (e\&.g\&., \fI\(cq\&x\(cq\&\fP)\&.
 .br 
 Text variables\&. Text constants are delimited by double quotes\&. Multiple
 text constants may be concatenated, but a text constant may not extend
-over multiple lines\&. To indicate an end-of-line in a text constant use
+over multiple lines\&. To indicate an end\-of\-line in a text constant use
 the \fI\en\fP escape sequence\&. The escape sequences \fI\ea \eb \ef \en \er\fP
 and \fI\et\fP are available\&. Otherwise, \fI\ex\fP is interpreted as a
 literal \fIx\fP\&. So, use \fI\e\e\fP to indicate \fI\e\fP within a text
@@ -355,12 +355,12 @@ ll
 --
 c.
 symbol~1 when defined on the platform, otherwise 0
-MSDOS~MS-DOS platform (with MSC 7\&.00 compiler)
+MSDOS~MS\-DOS platform (with MSC 7\&.00 compiler)
 unix~Unix, usually with GNU\(cq\&s gcc compiler
 linux~x86 running Linux (usually with gcc)
 M_SYSV, M_UNIX~x86 running SCO/Unix (usually with) Microsoft C
 _POSIX~_SOURCE   Unix with Posix complient compiler
-__hpux~HP-UX, with the native HP compiler
+__hpux~HP\-UX, with the native HP compiler
 
 .TE 
 .SH "OPERATORS"
@@ -405,9 +405,9 @@ predefined function (see below, section \fBPREDEFINED FUNCTIONS\fP)\&.
 \fIb\fP doesn\(cq\&t exist 0 is returned; if neither \fIa\fP nor \fIb\fP exists, 0 is
 returned; if they are of the same age, 0 is returned\&.
 .IP o 
-\fI[]\fP: the index operator is defined as an alternative to the built-in
+\fI[]\fP: the index operator is defined as an alternative to the built\-in
 function \fIelement\fP\&. It can only be applied (as holds true for \fIelement()\fP
-as well) as so-called \fIrvalue\fP\&. Therefore, constructions like:
+as well) as so\-called \fIrvalue\fP\&. Therefore, constructions like:
 .nf 
 
         // assume str1 and str2 are strings
@@ -430,26 +430,26 @@ operators are available:
 element appears both in \fIa\fP and in \fIb\fP, they will appear twice in the
 resulting list\&.
 .IP o 
-\fIa - b\fP: returns a new \fIlist\fP value containing the elements in \fIa\fP
+\fIa \- b\fP: returns a new \fIlist\fP value containing the elements in \fIa\fP
 that are not present in \fIb\fP\&. This \fIis\fP a set operation\&.
 .IP o 
 \fIa += b\fP: elements in \fIb\fP are added to the elements in \fIa\fP, which 
 must be a  \fIlist\fP variable\&.  This is \fInot\fP a set operation\&.
 .IP o 
-\fIa -= b\fP: elements in \fIb\fP are removed from the elements in \fIa\fP,
+\fIa \-= b\fP: elements in \fIb\fP are removed from the elements in \fIa\fP,
 which must be a \fIlist\fP variable\&.  This \fIis\fP a set operation\&.
 .IP o 
 list equality comparisons: operators \fI!=\fP and \fI==\fP may be applied
 to \fIlist\fP values or variables\&. Operator \fI==\fP returns 1 if both lists have
-element-by-element identical elements, 0 otherwise\&. Operator \fI!=\fP reverses
+element\-by\-element identical elements, 0 otherwise\&. Operator \fI!=\fP reverses
 the result of \fI==\fP\&.
 .IP o 
 \fI!a\fP: the boolean \fI!\fP operator returns 1 if the \fIlist a\fP is
 empty, otherwise 0 is returned\&.
 .IP o 
-\fI[]\fP: the index operator is defined as an alternative to the built-in
+\fI[]\fP: the index operator is defined as an alternative to the built\-in
 function \fIelement\fP\&. It can only be applied (as holds true for \fIelement()\fP
-as well) as so-called \fIrvalue\fP\&. Therefore, constructions like:
+as well) as so\-called \fIrvalue\fP\&. Therefore, constructions like:
 .nf 
 
         // assume lst is a list, str is a string
@@ -464,7 +464,7 @@ will be accepted, but the following construction will not be accepted:
 .fi 
 
 .PP 
-Typecasts may be performed using the standard \fBC\fP cast-operator to cast:
+Typecasts may be performed using the standard \fBC\fP cast\-operator to cast:
 .IP o 
 Strings to ints and vice versa (\fI(int)\(dq\&123\(dq\&, (string)55\fP)
 .IP o 
@@ -514,7 +514,7 @@ condition\&. \fBC\fP\(cq\&s \fIcontinue\fP is not available\&.
 .IP o 
 \fIexit(expression)\fP
 .br 
-To terminate the \fBicmake\fP-script\&. The \fIexpression\fP must evaluate to an
+To terminate the \fBicmake\fP\-script\&. The \fIexpression\fP must evaluate to an
 \fIint\fP value, which becomes the script\(cq\&s exit value\&.
 
 .PP 
@@ -539,7 +539,7 @@ Defines the `argument tail\(cq\&, to be used with \fIexec()\fP\&. By default,
 the `argument tail\(cq\& is an empty string\&.
 
 .PP 
-String-to-ascii converters:
+String\-to\-ascii converters:
 .IP o 
 \fIint ascii(string s)\fP
 .br 
@@ -589,7 +589,7 @@ Changes the extension of \fIfile\fP, returns the changed name\&. E\&.g,
 .br 
 Changes the path specification of \fIfile\fP, returns the changed name\&.
 E\&.g, \fIchange_path(\(dq\&tmp/binary\(dq\&, \(dq\&/usr/bin\(dq\&)\fP returns 
-\fI\(dq\&/usr/bin/binary\(dq\&\fP\&. Note that the \fI/\fP-separator is inserted if
+\fI\(dq\&/usr/bin/binary\(dq\&\fP\&. Note that the \fI/\fP\-separator is inserted if
 required\&. 
 
 .PP 
@@ -603,7 +603,7 @@ absolute path\&.
 Use \fIchdir(\(dq\&\&.\(dq\&)\fP to get current working directory, 
 \fIchdir(\(dq\&\(dq\&)\fP may be used to obtain the startup working directory (this
 functionality was broken in releases before than 7\&.00, but is now
-operational)\&. The function terminates the \fBicmake\fP-script if the
+operational)\&. The function terminates the \fBicmake\fP\-script if the
 specified \fInewdir\fP does not exist\&.
 .IP o 
 \fIstring chdir(int checking, string newdir)\fP
@@ -639,13 +639,13 @@ Functions returning elements of aggregates:
 .IP o 
 \fIstring element(int index, list lst)\fP
 .br 
-Returns string \fIindex\fP (0-based) from \fIlst\fP\&. An empty string is
+Returns string \fIindex\fP (0\-based) from \fIlst\fP\&. An empty string is
 returned if an unavailable index value is provided\&. See also the
 \fI[]\fP operator in the section \fBOPERATORS\fP\&.
 .IP o 
 \fIstring element(int index, string str)\fP
 .br 
-Returns character \fIindex\fP (0-based) from \fIstr\fP\&. An empty string is
+Returns character \fIindex\fP (0\-based) from \fIstr\fP\&. An empty string is
 returned if an unavailable index value is provided\&. See also the
 \fI[]\fP operator in the section \fBOPERATORS\fP\&.
 
@@ -695,7 +695,7 @@ System interface:
 .IP o 
 \fIint exists(string file)\fP
 .br 
-Returns a non-zero value if \fIfile\fP exists, otherwise 0 is returned\&. 
+Returns a non\-zero value if \fIfile\fP exists, otherwise 0 is returned\&. 
 
 .PP 
 Input interface:
@@ -781,16 +781,16 @@ Input interface:
 \fIstring getch()\fP
 .br 
 Returns the next pressed key as a string (no `Enter\(cq\& required for
-ms-dos and unix (incl\&. linux) systems)\&.
+ms\-dos and unix (incl\&. linux) systems)\&.
 
 .PP 
 Filename modifier:
 .IP o 
 \fIstring get_path(string file)\fP
 .br 
-Returns the path-prefix of \fIfile\fP\&. The path prefix is all information
+Returns the path\-prefix of \fIfile\fP\&. The path prefix is all information
 up to (and including) the final directory separator (which is,
-depending on the operating system, a forward- or backslash)\&.
+depending on the operating system, a forward\- or backslash)\&.
 .IP 
 If no path is found, an empty strring is returned\&.
 
@@ -799,8 +799,8 @@ System interface:
 .IP o 
 \fIint getpid()\fP
 .br 
-Returns the process-id (UNIX) or PSP-paragraph (DOS) of the icmake byte
-code interpreter \fBicm-exec\fP\&.
+Returns the process\-id (UNIX) or PSP\-paragraph (DOS) of the icmake byte
+code interpreter \fBicm\-exec\fP\&.
 
 .PP 
 Input interface:
@@ -851,7 +851,7 @@ O_FILE~obtain a list of files~
 O_SUBDIR~obtain all subdirectories~
 
 .TE 
-Note that the pattern \fI*\fP will not match hidden entries under Unix-type
+Note that the pattern \fI*\fP will not match hidden entries under Unix\-type
 operating systems\&. Use \fI\&.*\fP for that\&.
 .IP o 
 \fIlist makelist(string mask, newer, string comparefile)\fP
@@ -909,7 +909,7 @@ Returns \fBstat\fP(2) information of directory entry \fIentry\fP as
 a list\&. The returned list has two elements: element 0 is the
 \fIattribute value\fP, element 1 contains the size of the file\&.
 .IP 
-Attributes are  returned as bit-flags, composed from the
+Attributes are  returned as bit\-flags, composed from the
 following predefined constants: 
 .nf 
 
@@ -934,14 +934,14 @@ Returns the number of characters in \fIs\fP (not counting the final 0)\&.
 .IP o 
 \fIint strfind(string haystack, string needle)\fP
 .br 
-returns index in \fIhaystack\fP where \fIneedle\fP is found, or -1 if 
+returns index in \fIhaystack\fP where \fIneedle\fP is found, or \-1 if 
 \fIneedle\fP is not contained in \fIhaystack\fP\&.
 .br 
 \fBThis function was called strstr() in versions before 7\&.00\fP\&.
 .IP o 
 \fIstring strlwr(string s)\fP
 .br 
-Returns a lower-case duplicate of \fIs\fP\&.
+Returns a lower\-case duplicate of \fIs\fP\&.
 .IP o 
 \fIlist strtok(string str, string separators)\fP
 .br 
@@ -952,7 +952,7 @@ the three strings \fI\(dq\&hello\(dq\&\fP, \fI\(dq\&icmake\(cq\&s\(dq\&\fP, and 
 .IP o 
 \fIstring strupr(string s)\fP
 .br 
-Returns an upper-case duplicate of \fIs\fP\&.
+Returns an upper\-case duplicate of \fIs\fP\&.
 .IP o 
 \fIstring substr(string text, int offset, int count)\fP
 .br 
@@ -989,7 +989,7 @@ used explicitly, e\&.g\&., \fIvoid\fP\&. There is no default type\&.
 .IP o 
 The function\(cq\&s name, e\&.g\&., \fIcompile\fP\&.
 .IP o 
-A parameter list, defining zero or more comma-separated
+A parameter list, defining zero or more comma\-separated
 parameters\&. The parameters themselves consist of a type name followed by the
 parameter\(cq\&s identifier\&. E\&.g\&., \fI(string outfile, string source)\fP\&.
 .IP o 
@@ -1003,7 +1003,7 @@ variable is not explicitly initialized it is initialized by default\&. An
 text (\fI\(dq\&\(dq\&\fP) and a \fIlist\fP is initialized to a list of zero elements\&.
 .IP 
 Following variable definitions, bodies may contain zero or more statements
-(see below at section \fBFLOW CONTROL\fP for the various flow-control
+(see below at section \fBFLOW CONTROL\fP for the various flow\-control
 statements)\&. Note that all local variables must be defined at the very
 beginning of function bodies\&.
 
@@ -1012,7 +1012,7 @@ User defined functions must be defined before they can be used, although they
 may be called recursively\&. Therefore, indirect recursion is not supported by
 \fBicmake\fP\&.
 .PP 
-The user-defined function \fImain()\fP has three optional arguments, which may
+The user\-defined function \fImain()\fP has three optional arguments, which may
 be omitted from the last one (\fIenvp\fP) to the first (\fIargc\fP), as in
 \fBC\fP\&. Its full prototype is (note: \fBvoid\fP return type):
 .nf 
@@ -1044,7 +1044,7 @@ Example:
 
         if (toCompile = altered(\(dq\&*\&.cc\(dq\&))
         {
-            for (idx = sizeof(toCompile); idx--; )
+            for (idx = sizeof(toCompile); idx\-\-; )
                 compile(element(idx, toCompile));
 
             if (getenv(\(dq\&dryrun\(dq\&)[0] == \(dq\&0\(dq\&)
@@ -1065,11 +1065,11 @@ The mentioned paths are sugestive only and may be installation dependent:
 .IP o 
 \fB/usr/bin/icmun\fP: the \fBicmake\fP unassembler;
 .IP o 
-\fB/usr/lib/icm-pp\fP: the preprocessor called by \fBicmake\fP;
+\fB/usr/lib/icm\-pp\fP: the preprocessor called by \fBicmake\fP;
 .IP o 
-\fB/usr/lib/icm-comp\fP: the compiler called by \fBicmake\fP;
+\fB/usr/lib/icm\-comp\fP: the compiler called by \fBicmake\fP;
 .IP o 
-\fB/usr/lib/icm-exec\fP: the byte-code interpreter called by \fBicmake\fP;
+\fB/usr/lib/icm\-exec\fP: the byte\-code interpreter called by \fBicmake\fP;
 
 .PP 
 .SH "EXAMPLES"

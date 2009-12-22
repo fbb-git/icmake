@@ -1,3 +1,13 @@
+icmake (7.12.4)
+
+  * repaired lacking directory recognition in scripts/icmstart.im
+  * removed `return 0;' from usr/share/icmake/main.cc as 0 is returned by
+    default 
+  * replaced endl by `\n' in usr/share/icmake/usage.cc
+  * changed the location of the main repository in make/about.c
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 22 Dec 2009 14:53:53 +0100
+
 icmake (7.12.3)
 
   * applied the patch given in Debian bug report #537574

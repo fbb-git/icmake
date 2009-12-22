@@ -45,6 +45,11 @@ void die(string s)
     exit(1);
 }
 
+int isFileOrDir(string s)
+{
+    return (int)stat(P_NOCHECK, s)[0] & (S_IFREG | S_IFDIR);
+}
+
 int isFile(string s)
 {
     return (int)stat(P_NOCHECK, s)[0] & S_IFREG;
@@ -204,7 +209,7 @@ int install_dest(string source, string dest)
 {
     int idx;
 
-    if (!isFile(source))
+    if (!isFileOrDir(source))
         die("Can't find `" + source + "'\n");
 
     if (dest == "")

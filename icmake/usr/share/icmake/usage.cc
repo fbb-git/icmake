@@ -14,5 +14,5 @@ void usage(std::string const &progname)
     "      --help (-h)      - provide this help\n"
     "      --version (-v)   - show version information and terminate\n"
     "   args   - explain additional arguments.\n"
-    << endl;
+    "\n";
 }

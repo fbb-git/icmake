@@ -77,7 +77,7 @@ binary-arch: build install
 # catches silent file content forges at the upstream server side
 # Archive downloaded from https://www.icce.rug.nl/debian/icmake
 #   file: icmake_x.y.z.tar.gz
-MD5TRUSTED := 589dac6a3ebeaaa491c16b419114eb78
+MD5TRUSTED := ac3e993c5582d5a0315aba96fe06f5a8
 
 DEBVERSION:=$(shell head -n 1 debian/changelog | sed -e 's/^[^(]*(\([^)]*\)).*/\1/')
 UPVERSION:=$(shell echo $(DEBVERSION) | sed -e 's/^.*://' -e 's/-[0-9.]*$$//' -e 's/.dfsg$$//')

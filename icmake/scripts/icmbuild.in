@@ -105,7 +105,7 @@ void scanner()
 
     if (!rerun)
     {
-        scanfiles = makelist(PARSSPEC);
+        scanfiles = makelist(PARSSPEC) + makelist(SCANSPEC);
     
         #ifdef SCANFILES
             scanfiles += makelist(SCANFILES);

@@ -21,7 +21,7 @@ report(_Pakx_ _CurVers_)
 
 center(htmlcommand(<img src="icmake.jpg">))
 
-This is the (very preliminary) main page of the bf(_pakx_) project as hosted
+This is the main page of the bf(_pakx_) project as hosted
 on Sourceforge.net.
 
 The project itself can be reached at 
@@ -34,12 +34,18 @@ width="80" height="15" alt="Get icmake at SourceForge.net. Fast, secure and
 Free Open Source software downloads" /></a>
     )
 
-COMMENT(
+Documentation:
+itemization(
+it() Manual pages (html-versions):
     itemization(
-    it() Here is the url(html-version of the _pakx_ main index man-page)
-                (_pakx_.7.html).
+    it() The url(_pakx_)(icmake.html) main man-page;
+    it() The url(the icmstart)(icmstart.html) project starter man-page;
+    it() The url(icmstart.rc)(icmstart.html) resource file man-page;
+    it() The url(icmbuild)(icmbuild.html) project maintenance script man-page.
     )
-END)
+it() The url(original (1994))(icmake.ps) PostScript version of the icmake
+manual. 
+)
 
 Enjoy _pakx_ !
 

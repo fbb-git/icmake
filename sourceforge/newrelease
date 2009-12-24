@@ -1,0 +1,22 @@
+#!/bin/bash
+
+rm -f release.yo
+buildrelease || exit 1
+
+CWD=`pwd`
+cd ../icmake/doc/manpage
+    ln -sf ../../../sourceforge/release.yo .
+    for yo in ic*yo
+    do
+        yodl2html --no-warnings $yo
+    done
+cd $CWD
+
+yodl2html index || exit 1
+
+
+scp *html ../icmake/doc/manpage/*.html ../icmake/doc/icmake.ps\
+        fbb,icmake@shell.sourceforge.net:/home/groups/i/ic/icmake/htdocs
+
+rm -f ../icmake/doc/manpage/{*.html,release.yo}
+

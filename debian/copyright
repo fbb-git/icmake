@@ -1,6 +1,6 @@
 Format-Specification: http://wiki.debian.org/Proposals/CopyrightFormat?action=recall&rev=143
 Upstream-Name: icmake
-Upstream-Source: ftp://ftp.rug.nl/contrib/frank/software/linux/icmake/
+Upstream-Source: https://www.icce.rug.nl/debian/icmake/
     
 Files: *
  Copyright, Copyright 1992-NOW, Frank B. Brokken (f.b.brokken@rug.nl) and 

@@ -368,6 +368,7 @@ void link(string maino)
     if (strlen(g_libs))
         compiler += g_libs + g_libpath;
 
+#ifndef REFRESH
     if 
     (
         maino younger "bin/" BINARY
@@ -376,6 +377,7 @@ void link(string maino)
         ||
         g_compiled
     )
+#endif
         system(compiler + " " LINKER_OPTIONS);
 
     chdir("");
@@ -441,14 +443,33 @@ void install(string base)
     exit(0);
 }
 
+void clearScreen(int cls)
+{
+    if (cls)
+        system("tput clear");
+}
+
 void main(int argc, list argv, list envp)
 {
+    int cls;
     string prog;
     string option;
 
     echo(USE_ECHO);
 
     option = argv[1];
+
+    if (option == "-c")
+    {
+        cls = 1;
+        option = argv[2];
+    }
+    else
+        cls = 0;
+
+#ifdef CLS
+    cls = 1;
+#endif
 
 #ifdef DEFCOM
     if (option == "")
@@ -480,24 +501,30 @@ void main(int argc, list argv, list envp)
     if (option == "install")
         install(argv[2]);
 
-     if (option == "program")
-         program();
+    if (option == "program")
+    {
+        clearScreen(cls);
+        program();
+    }
 
-     if (option == "library")
-     {
-         build_libraries();      
-         exit(0);
-     }
+    if (option == "library")
+    {
+        clearScreen(cls);
+        build_libraries();      
+        exit(0);
+    }
 
-     if (option == "strip-shared")
-     {
-         strip_shared();      
-         exit(0);
-     }
+    if (option == "strip-shared")
+    {
+        strip_shared();      
+        exit(0);
+    }
 
     prog = change_ext(change_path(argv[0], ""), "");
 
-    printf("Usage: ", prog, " mode\n"
+    printf("Usage: [-c] ", prog, " mode\n"
+        "   -c              - Does 'tput clear' (clear screen) just before\n"
+        "                     starting 'program' or 'library'\n"
         "Where `mode' is one of:\n"
         "   clean           - clean up remnants of previous activities\n"
         "   library         - build the static library " TMP_DIR "/lib"

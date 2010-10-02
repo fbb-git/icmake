@@ -1,3 +1,19 @@
+icmake (7.13.0)
+
+ * the icmconf file has a (default not active) #define REFRESH that may be
+   activated when a binary program is created. When active a new binary is
+   always created even if no source was compiled. This may be useful when 
+   the program uses a library that is actively under development and is
+   frequently changed.
+
+ * the icmbuild script offers the option -c doing a 'tput clear' (clear
+   screen) just before starting the build process. The icmconf #define CLS, by
+   default not active, accomplishes the same.
+
+ * /etc/icmake/VERSION contains 2010
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 02 Oct 2010 15:52:09 +0200
+
 icmake (7.12.5)
 
  * added missing test for modified SCANSPEC (lexer) file in

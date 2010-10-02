@@ -11,6 +11,9 @@
     // define the installation path at `BIN_INSTALL' below) and use
     // `icmbuild install' to install the binary.
 #define BINARY              "binary"
+    // Uncomment to relink the binary, even when no sources were
+    // changed (this is useful if, e.g., a library was rebuilt)
+//#define REFRESH
 
     // Uncomment to install the binary in the provided path using 
     // `icmbuild install'
@@ -36,15 +39,20 @@
     // #defines used for compilation and linking:
     // ==========================================
 
+    // Uncomment to clear the screen just before starting the compilation
+    // process 
+//#define CLS
+
     // define the compiler to use:
 #define COMPILER            "g++"
 
     // define the compiler options to use. 
-    // For the upcoming c++0x standard with the Gnu g++ compiler add the
-    // -std=c++0x flag 
+    // In preparation for the upcoming c++0x standard with the Gnu g++ 
+    // compiler the --std=c++0x flag is now part of the default
+    // COMPILER_OPTIONS 
     // To enable GNU extensions in addition to C++0x extensions, add the
-    // -std=gnu++0x flag
-#define COMPILER_OPTIONS    "-g -Wall -O2"
+    // --std=gnu++0x flag
+#define COMPILER_OPTIONS    "--std=c++0x -g -Wall -O2"
 
     // define the pattern to locate sources in a directory:
 #define SOURCES             "*.cc"

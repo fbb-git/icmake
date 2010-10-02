@@ -1,3 +1,9 @@
+icmake (7.13.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 02 Oct 2010 15:54:20 +0200
+
 icmake (7.12.5-2) UNRELEASED; urgency=low
 
   * debian/watch, debian/copright:

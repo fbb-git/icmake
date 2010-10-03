@@ -1,4 +1,4 @@
-.TH "icmbuild" "1" "1992\-2009" "icmake\&.7\&.12\&.5\&.tar\&.gz" "A generic program maintenance script"
+.TH "icmbuild" "1" "1992\-2010" "icmake\&.7\&.13\&.1\&.tar\&.gz" "A generic program maintenance script"
 
 .PP 
 .SH "NAME"
@@ -135,6 +135,9 @@ program, using the library \fIlibbobcat1\fP as an additional library:
     // define the installation path at `BIN_INSTALL\(cq\& below) and use
     // `icmbuild install\(cq\& to install the binary\&.
 #define BINARY              \(dq\&binary\(dq\&
+    // Uncomment to relink the binary, even when no sources were
+    // changed (this is useful if, e\&.g\&., a library was rebuilt)
+//#define REFRESH
 
     // Uncomment to install the binary in the provided path using 
     // `icmbuild install\(cq\&
@@ -160,15 +163,20 @@ program, using the library \fIlibbobcat1\fP as an additional library:
     // #defines used for compilation and linking:
     // ==========================================
 
+    // Uncomment to clear the screen just before starting the compilation
+    // process 
+//#define CLS
+
     // define the compiler to use:
 #define COMPILER            \(dq\&g++\(dq\&
 
     // define the compiler options to use\&. 
-    // For the upcoming c++0x standard with the Gnu g++ compiler add the
-    // \-std=c++0x flag 
+    // In preparation for the upcoming c++0x standard with the Gnu g++ 
+    // compiler the \-\-std=c++0x flag is now part of the default
+    // COMPILER_OPTIONS 
     // To enable GNU extensions in addition to C++0x extensions, add the
-    // \-std=gnu++0x flag
-#define COMPILER_OPTIONS    \(dq\&\-g \-Wall \-O2\(dq\&
+    // \-\-std=gnu++0x flag
+#define COMPILER_OPTIONS    \(dq\&\-\-std=c++0x \-g \-Wall \-O2\(dq\&
 
     // define the pattern to locate sources in a directory:
 #define SOURCES             \(dq\&*\&.cc\(dq\&

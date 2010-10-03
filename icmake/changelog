@@ -1,3 +1,9 @@
+icmake (7.13.1)
+
+ * Manpages in release 7.13.0 were not refreshed. Now repaired.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 03 Oct 2010 14:42:48 +0200
+
 icmake (7.13.0)
 
  * the icmconf file has a (default not active) #define REFRESH that may be

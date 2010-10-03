@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ icmake/VERSION -nt icmake/doc/icmake.1 ]
+then
+    cd icmake/doc/manpage
+    ./build
+fi

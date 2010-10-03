@@ -8,7 +8,6 @@
 build: build-stamp
 build-stamp:
 		dh_testdir
-
 		# Add here commands to compile the package.
 		./icm_bootstrap /
 		touch build-stamp
@@ -17,16 +16,14 @@ clean:
 		dh_testdir
 		dh_testroot
 		rm -f build-stamp
-
 		# Add here commands to clean up after the build process.
 		rm -rf tmp
-
 		dh_clean
 
 install: build
 		dh_testdir
 		dh_testroot
-		dh_clean -k
+		dh_prep
 		dh_installdirs
 
 		# Add here commands to install the package into debian/icmake
@@ -37,40 +34,21 @@ install: build
 		./icm_install doc debian/icmake
 		./icm_install etc debian/icmake
 
-install-indep:
-		./icm_install docdoc  debian/icmake-doc
-
 # Build architecture-independent files here.
-binary-indep: install-indep
-		dh_testdir -i
-		dh_testroot -i
+binary-indep:
+		./icm_install docdoc  debian/icmake-doc
 		dh_installdocs -i
-		dh_installinfo -i
 		dh_installchangelogs -i
-		dh_link -i
 		dh_compress -i
-		dh_fixperms -i
-		dh_installdeb -i
-		dh_gencontrol -i
-		dh_md5sums -i
-		dh_builddeb -i
+		dh $@
 
 # Build architecture-dependent files here.
 binary-arch: build install
-		dh_testdir
-		dh_testroot
-		dh_installchangelogs
-		dh_installdocs debian/mail.frank
-		dh_installexamples
+		dh $@
+
+override_dh_link:
 		dh_link usr/share/man/man1/icmake.1 usr/share/man/man1/icmun.1
-		dh_strip
-		dh_compress
-		dh_fixperms
-		dh_installdeb
-		dh_shlibdeps
-		dh_gencontrol
-		dh_md5sums
-		dh_builddeb -picmake
+
 
 # The following is for internal development usage only
 # Update that sum when new _upstream_ releases occur, this

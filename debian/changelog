@@ -1,16 +1,17 @@
-icmake (7.13.0-1) unstable; urgency=low
+icmake (7.13.0-1) experimental; urgency=low
 
+  [ Frank B. Brokken ]
   * New upstream release
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 02 Oct 2010 15:54:20 +0200
-
-icmake (7.12.5-2) UNRELEASED; urgency=low
-
+  [ tony mancill ]
   * debian/watch, debian/copright:
       Update to point to the new upstream location.
   * Bump standards version to 3.9.1 (no changes).
+  * Convert to source format 3.0 (quilt). 
+  * Rework debian/rules for debhelper 7.
+  * Set distribution to experimental until squeeze freeze ends.
 
- -- tony mancill <tmancill@debian.org>  Tue, 03 Aug 2010 10:42:03 -0700
+ -- tony mancill <tmancill@debian.org>  Sat, 02 Oct 2010 15:21:36 -0700
 
 icmake (7.12.5-1) unstable; urgency=low
 

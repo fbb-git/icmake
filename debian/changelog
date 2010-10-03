@@ -1,3 +1,9 @@
+icmake (7.13.1-1) experimental; urgency=low
+
+  * New upstream release
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 03 Oct 2010 14:44:42 +0200
+
 icmake (7.13.0-1) experimental; urgency=low
 
   [ Frank B. Brokken ]

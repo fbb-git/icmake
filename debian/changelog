@@ -1,3 +1,9 @@
+icmake (7.13.1-2) unstable; urgency=low
+
+  * Set distribution to unstable.
+
+ -- tony mancill <tmancill@debian.org>  Fri, 24 Dec 2010 10:43:13 -0800
+
 icmake (7.13.1-1) experimental; urgency=low
 
   * New upstream release

@@ -104,7 +104,7 @@ specified when calling bf(icmstart)(1).
 the destination directory specified when calling bf(icmstart)(1).
     it() tt(# text)nl()
         Interpreted as comment and ignored. The tt(#)-character must be the
-first character on the line.
+        first character on the line.
     it() an empty line+nl()
         Empty lines are skipped.
     )

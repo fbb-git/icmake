@@ -42,6 +42,7 @@ void main(int argc, list argv)
     yodl("../icmstart.1", "icmstart.yo");
     yodl("../icmbuild.1", "icmbuild.yo");
     yodl("../icmstart.rc.7", "icmstart.rc.yo");
+    yodl("../icmconf.7", "icmconf.yo");
 
     rmrelease();
 }

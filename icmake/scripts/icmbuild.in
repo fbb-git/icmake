@@ -127,6 +127,59 @@ void scanner()
     chdir("..");
 }
 
+#ifdef USE_ALL
+
+    int find(string needle, list haystack)
+    {
+        int idx;
+        for (idx = sizeof(haystack); idx--; )
+        {
+            if (needle == haystack[idx])
+                break;
+        }
+        return idx;
+    }
+    
+    void dependent(int idx)
+    {
+        list dependencies;
+        int depIdx;
+        string target;
+    
+        target = g_classes[idx];
+        g_depHaystack += (list)target;
+    
+        printf("RECOMPILE: ", target, "\n");
+    
+        for (depIdx = idx + 1; depIdx != g_nClasses; ++depIdx)
+        {
+            dependencies = strtok(g_classLines[depIdx], " \t\n");
+            if 
+            (
+                find(target, dependencies) != -1 
+                && 
+                find(dependencies[0], g_depHaystack) == -1
+            )
+                dependent(depIdx);
+        }
+    }            
+    
+    void checkALL()
+    {
+        int idx;
+        string all;
+    
+        for (idx = 0; idx != g_nClasses; ++idx)
+        {
+            all = g_classes[idx] + "/a";
+    
+            if (exists(all))
+                dependent(idx);
+        }
+    }
+    
+#endif
+
 void setClasses()
 {
     string dir;
@@ -159,6 +212,10 @@ void setClasses()
     }
 
     g_nClasses = sizeof(g_classes);
+
+    #ifdef USE_ALL
+        checkALL();
+    #endif
 }
 
 list inspect(string destDir, 
@@ -253,8 +310,10 @@ void shared_library(string libso, string libsoshared)
     {
         libsomajor  = libso + "." + element(0, strtok(g_version, "."));
 
-        system("gcc -shared -Wl,-z,def,-soname," + libsomajor +
-            " -o " + TMP_DIR + "/" + libsoshared + " */o/*.o");
+        system(COMPILER " -shared -Wl,--as-needed,-z,defs,-soname," + 
+                libsomajor + 
+                " -o " + TMP_DIR + "/" + libsoshared + " */o/*.o 
+                " SHAREDREQ);
     
         chdir(TMP_DIR);
     

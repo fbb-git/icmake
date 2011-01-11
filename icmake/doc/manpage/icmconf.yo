@@ -20,38 +20,39 @@ DELETEMACRO(tt)
 DEFINEMACRO(tt)(1)(em(ARG1))
 
 COMMENT( man-request, section, date, distribution file, general name)
-manpage(icmstart)(1)(_CurYrs_)(icmake._CurVers_.tar.gz)
-        (starts icmbuild program maintenance)
+manpage(icmconf)(7)(_CurYrs_)(icmake._CurVers_.tar.gz)
+        (configuration file for bf(icmbuild)(1))
 
 COMMENT( man-request, larger title )
-manpagename(icmstart)(A startup script for icmbuild program maintenance)
-
-COMMENT( all other: add after () )
-manpagesynopsis()
-       bf(icmstart) tt([Options]) top-dir [program|library]
+manpagename(icmconf)(Configuration file for the bf(icmbuild)(1) 
+                    program maintenance script)
 
 manpagedescription()
 
-The bf(icmstart) script is a generic script that can be used to start program
-maintenance using bf(icmake)(1) and bf(icmbuild)(1). bf(Icmstart) will create
-an initial directory tt(top-dir) and will install the files tt(CLASSES,
-VERSION) and tt(icmconf) below tt(top-dir). A second argument  `tt(program)'
-or `tt(library)' may be specified as the default mode of operation of the
-bf(icmbuild)(1) script. 
+The bf(icmconf) configuration file is used to specify and tailor the
+characteristics of program maintenance performed by the bf(icmbuild)(1) icmake
+script. It can be used to activate and specify various parameters that
+determine how the program or library maintenance will proceed. 
 
-Skeleton files for the main directory and subdirectories, by default listed in
-the file tt(/etc/icmake/icmstart.rc), may be installed as well
-(cf. bf(icmstart.rc)(7)).
+The parameters are biased towards the construction of a bf(C++) program, but
+program maintenance for other languages (e.g., bf(C)) can easily be realized
+as well. 
 
-After changing to the directory created by bf(icmstart) the bf(icmbuild)(1)
-script may be used for program maintenance.
+manpagesection(PROGRAM AND SOURCE CONFIGURATION)
 
-manpageoptions()
-
-    tt(Icmstart) may be called with the following options, which (if specified)
-    must be the first arguments of tt(icmstart):
     itemization(
-    itt(-c confpath)nl() Use the configuration files (tt(icmstart.rc, AUTHOR,
+    itb(#define MAIN "main.cc")
+        The specification of the file defining the tt(int main) function. This
+        specification may be left as-is if bf(icmbuild)(1) is used for library
+        maintenance rather than program maintenance.
+
+    itb(#define BINARY  "binary")
+        The name of the binary program
+
+    tt(Icmconf) may be called with the following options, which (if specified)
+    must be the first arguments of tt(icmconf):
+    itemization(
+    itt(-c confpath)nl() Use the configuration files (tt(icmconf, AUTHOR,
         YEARS) and tt(VERSION)) if found in `confpath' rather than in
         tt(~/.icmake) and/or tt(/etc/icmake/). Once a file is found it is used
         allowing partial overrides of the default files provided by
@@ -63,21 +64,21 @@ manpageoptions()
        Do not install files. 
     itt(-r) 
        Unconditionally replace existing files. If tt(-r) is not
-        provided bf(icmstart) will ask the user to confirm that an existing
+        provided bf(icmconf) will ask the user to confirm that an existing
         file must
         be overwritten. If a skeleton specification refers to a directory, the
         full directory and its subdirectories will be replaced.
     itt(-s skeleton-path) nl() 
        By default skeleton files are listed in the skeleton resource file
-        tt(/usr/share/icmake/icmstart.rc). Alternatively, the skeleton
+        tt(/usr/share/icmake/icmconf). Alternatively, the skeleton
         resource file may be specified by the tt(ICM) environment variable,
         which -in turn- may be overruled by the path specified with the tt(-s)
         option. The skeleton path may be specified as a full file-path or as a
         directory, in which case the skeleton resource file is assumed to be
-        tt(icmstart.rc) (see below at bf(SKELETON FILES)).
+        tt(icmconf) (see below at bf(SKELETON FILES)).
     )
-    Since bf(icmstart) uses tt(cp) to install files, tt(cp) must be
-available when bf(icmstart) should install skeleton files.
+    Since bf(icmconf) uses tt(cp) to install files, tt(cp) must be
+available when bf(icmconf) should install skeleton files.
 
 manpagesection(SKELETON FILES)
 
@@ -85,7 +86,7 @@ Skeleton resource files may contain comment (empty lines and lines beginning
 with the hash-mark (tt(#))) which is ignored, and should otherwise contain
 specifications of resource file(s) to install.
 
-The default resource file is tt(/etc/icmake/icmstart.rc), contains
+The default resource file is tt(/etc/icmake/icmconf), contains
         verb(
     CLASSES
     main.cc     
@@ -95,22 +96,22 @@ The default resource file is tt(/etc/icmake/icmstart.rc), contains
     ? scanner
     ? parser
         )
-    This file is overruled by tt(~/.icmake/icmstart.rc). See
-bf(icmstart.rc)(7) for details about the format of the tt(icmstart.rc) file.
+    This file is overruled by tt(~/.icmake/icmconf). See
+bf(icmconf)(7) for details about the format of the tt(icmconf) file.
 
 manpagefiles()
     The mentioned paths are sugestive only and may be installation dependent:
     itemization(
     it() bf(/usr/share/icmake/icmconf)
-        Example of a bf(icmstart) configuration file;
+        Example of a bf(icmconf) configuration file;
     it() bf(/usr/share/icmake/CLASSES)
-        Example of a bf(icmstart) tt(CLASSES) file.
-    it() bf(/usr/share/icmake/icmstart.rc)
+        Example of a bf(icmconf) tt(CLASSES) file.
+    it() bf(/usr/share/icmake/icmconf)
         Default skeleton resource file.
     )
 
 manpageseealso()
-    bf(icmake)(1), bf(icmconf)(7), bf(icmbuild)(1), bf(icmstart.rc)(7).
+    bf(icmake)(1), bf(icmbuild)(1), bf(icmstart)(1), bf(icmstart.rc)(7).
 
 manpagebugs()
     None reported

@@ -822,7 +822,8 @@ particular the tt(examples/icmbuild) subdirectory containing a general script
 for bf(C++) and bf(C) program maintenance.
 
 manpageseealso()
-    bf(icmbuild)(1), bf(icmstart)(1), bf(icmstart.rc)(7), bf(make)(1)
+    bf(icmbuild)(1), bf(icmconf)(7), 
+    bf(icmstart)(1), bf(icmstart.rc)(7), bf(make)(1)
 
 manpagebugs()
     None reported

@@ -1,3 +1,16 @@
+icmake (7.14.0)
+
+  * Modified the shared library construction function to use the linker flag
+    --as-needed, repaired the 'defs' flag spelling (was: def), added the
+    icmconf entry SHAREDREQ to contain the names and paths of libraries
+    required by the shared library, and the shared library construction is now
+    using COMPILER (rather than gcc) to construct the shared library with.
+
+  * added the `ALL' facility to icmbuild, allowing the specification of a
+    class dependency graph in the CLASSES file. 
+
+  * Added the icmconf(7) man page
+
 icmake (7.13.1)
 
  * Manpages in release 7.13.0 were not refreshed. Now repaired.

@@ -97,7 +97,7 @@ manpageoptions()
     itt(help)nl()
         provide help and exit (default when called without arguments)
     itt(library)nl()
-        build the static library
+        build the library (static and optionally the dynamic library)
     itt(program)nl()
         build the binary program
     itt(install <base>)
@@ -129,7 +129,7 @@ manpagesection(EXAMPLES)
     verbinclude(../../usr/share/icmake/icmconf)
 
 manpageseealso()
-    bf(icmake)(1), bf(icmstart)(1), bf(icmstart.rc)(7)
+    bf(icmake)(1), bf(icmconf)(7), bf(icmstart)(1), bf(icmstart.rc)(7)
 
 manpagebugs()
     None reported

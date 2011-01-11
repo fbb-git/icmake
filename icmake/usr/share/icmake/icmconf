@@ -11,6 +11,7 @@
     // define the installation path at `BIN_INSTALL' below) and use
     // `icmbuild install' to install the binary.
 #define BINARY              "binary"
+
     // Uncomment to relink the binary, even when no sources were
     // changed (this is useful if, e.g., a library was rebuilt)
 //#define REFRESH
@@ -26,10 +27,19 @@
     // built it will be linked against the library rather than the individual
     // object modules). Change the lib's name at you own digression (don't use
     // lib or an extension like .a)
-//#define LIBRARY             "modules"
+//#define LIBRARY           "modules"
 
     // Uncomment to construct a shared library 
 //#define SHARED
+
+    // When creating a shared library:
+    // Specify the names of any libraries and library paths that are required
+    // by the shared library. E.g., if a library is found in /usr/lib/special
+    // use "-L/usr/lib/special -lspecial" if the name of the library is
+    // libspecial.so
+    // The /lib and /usr/lib paths are usually predefined and need not be 
+    // specified
+#define SHAREDREQ           ""
 
     // Uncomment to install the libraries in the provided path using 
     // `icmbuild install'
@@ -42,6 +52,14 @@
     // Uncomment to clear the screen just before starting the compilation
     // process 
 //#define CLS
+
+    // Uncomment to use the ALL facility and a class dependency setup in the
+    // CLASSES file. When a directory contains a file ALL then all class
+    // sources and sources of all classes depending on it are also compiled.
+    // Class dependencies in CLASSES consist of the class name (as the first 
+    // word on a line) optionally followed by additional class names, which
+    // are the classes directly depending on the line's first class name.
+//#define USE_ALL
 
     // define the compiler to use:
 #define COMPILER            "g++"

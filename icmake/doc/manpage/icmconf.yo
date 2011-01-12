@@ -42,72 +42,78 @@ manpagesection(PROGRAM AND SOURCE CONFIGURATION)
 
     itemization(
     itb(#define MAIN "main.cc")
-        The specification of the file defining the tt(int main) function. This
+       The specification of the file defining the tt(int main) function. This
         specification may be left as-is if bf(icmbuild)(1) is used for library
         maintenance rather than program maintenance.
 
-    itb(#define BINARY  "binary")
-        The name of the binary program
+    itb(#define BINARY "binary") 
+       The name of the binary program. Can be left as-is if the intent is to
+        construct a library rather than a program. Don't specify a path
+        here. The installation path can be specified at the tt(BIN_INSTALL)
+        parameter (see below)
 
-    tt(Icmconf) may be called with the following options, which (if specified)
-    must be the first arguments of tt(icmconf):
-    itemization(
-    itt(-c confpath)nl() Use the configuration files (tt(icmconf, AUTHOR,
-        YEARS) and tt(VERSION)) if found in `confpath' rather than in
-        tt(~/.icmake) and/or tt(/etc/icmake/). Once a file is found it is used
-        allowing partial overrides of the default files provided by
-        bf(icmake)(1).
-    itt(-d)nl()
-       Do not execute any commands, but show the commands that would have been
-        executed on the standard output.
-    itt(-I)nl()
-       Do not install files. 
-    itt(-r) 
-       Unconditionally replace existing files. If tt(-r) is not
-        provided bf(icmconf) will ask the user to confirm that an existing
-        file must
-        be overwritten. If a skeleton specification refers to a directory, the
-        full directory and its subdirectories will be replaced.
-    itt(-s skeleton-path) nl() 
-       By default skeleton files are listed in the skeleton resource file
-        tt(/usr/share/icmake/icmconf). Alternatively, the skeleton
-        resource file may be specified by the tt(ICM) environment variable,
-        which -in turn- may be overruled by the path specified with the tt(-s)
-        option. The skeleton path may be specified as a full file-path or as a
-        directory, in which case the skeleton resource file is assumed to be
-        tt(icmconf) (see below at bf(SKELETON FILES)).
+    itb(#define REFRESH)
+       By defining tt(REFRESH) the binary program is always relinked, even
+        when no sources were modified. This can be useful if, e.g., a separate
+        library was rebuilt against which the program must be linked. By
+        default tt(REFRESH) is em(not) defined.
+
+    itb(#define BIN_INSTALL         "/usr/local/bin")
+       This parameter specifies the location where tt(icmbuild install) will
+        install the binary program.
     )
-    Since bf(icmconf) uses tt(cp) to install files, tt(cp) must be
-available when bf(icmconf) should install skeleton files.
 
-manpagesection(SKELETON FILES)
 
-Skeleton resource files may contain comment (empty lines and lines beginning
-with the hash-mark (tt(#))) which is ignored, and should otherwise contain
-specifications of resource file(s) to install.
+manpagesection(LIBRARY CONSTRUCTION)
 
-The default resource file is tt(/etc/icmake/icmconf), contains
-        verb(
-    CLASSES
-    main.cc     
-    main.ih     
-    usage.cc
-    version.cc
-    ? scanner
-    ? parser
-        )
-    This file is overruled by tt(~/.icmake/icmconf). See
-bf(icmconf)(7) for details about the format of the tt(icmconf) file.
+    itemization(
+    itb(#define LIBRARY           "modules")
+       By default this parameter is not defined. If defined a local library is
+        defined. When a binary program is built it will be linked against the
+        library rather than the individual object modules. Change the
+        library's name at your own digression. Don't use tt(lib) or an
+        extension like tt(.a).
+
+    itb(#define SHARED)
+       This parameter is only interpreted if tt(LIBRARY) was also specified.
+        If tt(SHARED) is defined a static library (extension tt(.a)) as well
+        as a shared library (extension tt(.so)) is built. If not specified
+        only the static library is built. By default tt(SHARED) is not
+        defined.
+
+    itb(#define SHAREDREQ           "")
+       When creating a shared library:
+       Specify the names of any libraries and library paths that are required
+        by the shared library between the double quotes. E.g., if a library is
+        found in tt(/usr/lib/special) use tt("-L/usr/lib/special -lspecial")
+        assuming that the name of the required library is tt(libspecial.so).
+        The tt(/lib) and tt(/usr/lib) paths are usually predefined and need
+        not be specified. This parameter is only interpreted if tt(SHARED) and
+        tt(LIBRARY) were also defined.
+
+    itb(#define LIB_INSTALL         "/usr/local/lib")
+       This parameter specifies the location where tt(icmbuild install) will
+        install the library (libraries). By default it is not specified. It
+        should only be specified if tt(LIBRARY) was also specified.
+    )
+
+manpagesection(COMPILATION AND LINKING)
+
+    itemization(
+    itb(#define CLS)
+       The em(clear screen) parameter. If defined tt(tput clear) is called to
+        clear the terminal screen before starting the compilation. By default
+        it is not defined.
+
+
 
 manpagefiles()
     The mentioned paths are sugestive only and may be installation dependent:
     itemization(
-    it() bf(/usr/share/icmake/icmconf)
-        Example of a bf(icmconf) configuration file;
     it() bf(/usr/share/icmake/CLASSES)
         Example of a bf(icmconf) tt(CLASSES) file.
     it() bf(/usr/share/icmake/icmconf)
-        Default skeleton resource file.
+        Example and default skeleton resource file.
     )
 
 manpageseealso()

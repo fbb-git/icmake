@@ -54,12 +54,13 @@
 //#define CLS
 
     // Uncomment to use the ALL facility and a class dependency setup in the
-    // CLASSES file. When a directory contains a file ALL then all class
-    // sources and sources of all classes depending on it are also compiled.
-    // Class dependencies in CLASSES consist of the class name (as the first 
-    // word on a line) optionally followed by additional class names, which
-    // are the classes directly depending on the line's first class name.
-//#define USE_ALL
+    // CLASSES file. When a directory contains a file ALL (optionally rename
+    // this filename by providing an alternative name) then all class sources
+    // and sources of all classes depending on it are also compiled.  Class
+    // dependencies in CLASSES consist of the class name (as the first word on
+    // a line) optionally followed by additional class names, which are the
+    // classes directly depending on the line's first class name.
+//#define USE_ALL             "ALL"
 
     // define the compiler to use:
 #define COMPILER            "g++"

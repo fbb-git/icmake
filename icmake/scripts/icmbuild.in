@@ -26,6 +26,7 @@ int    g_nClasses;      // number of class-directories
 string g_binary;        // binary program to build
 int    g_compiled;      // any source compiled (but main)?
 int    g_keepGramspec;  // keep the gramspec directory
+list   g_classLines;    // list of all lines in CLASSES
 
 string g_version = VERSION;
 
@@ -129,12 +130,12 @@ void scanner()
 
 #ifdef USE_ALL
 
-    int find(string needle, list haystack)
+    int find(string needle)
     {
         int idx;
-        for (idx = sizeof(haystack); idx--; )
+        for (idx = g_nClasses; idx--; )
         {
-            if (needle == haystack[idx])
+            if (needle == g_classes[idx])
                 break;
         }
         return idx;
@@ -144,23 +145,31 @@ void scanner()
     {
         list dependencies;
         int depIdx;
+        int nextIdx;
         string target;
+        string next;
+        string all;
+
+        target = g_classes[idx];            // starting class name (with ALL)
     
-        target = g_classes[idx];
-        g_depHaystack += (list)target;
+                                            // get classes depending on target
+        dependencies = strtok(g_classLines[idx], " \t\n");
     
-        printf("RECOMPILE: ", target, "\n");
-    
-        for (depIdx = idx + 1; depIdx != g_nClasses; ++depIdx)
+        for (depIdx = sizeof(dependencies); depIdx--; )
         {
-            dependencies = strtok(g_classLines[depIdx], " \t\n");
-            if 
-            (
-                find(target, dependencies) != -1 
-                && 
-                find(dependencies[0], g_depHaystack) == -1
-            )
-                dependent(depIdx);
+            next = dependencies[depIdx];
+            all = next + "/" USE_ALL;
+
+            if (!exists(all))
+            {
+                echo(OFF);
+                system("touch " + all);
+                echo(USE_ECHO);
+
+                nextIdx = find(next);
+                if (nextIdx != -1)
+                    dependent(nextIdx);
+            }
         }
     }            
     
@@ -168,10 +177,10 @@ void scanner()
     {
         int idx;
         string all;
-    
+
         for (idx = 0; idx != g_nClasses; ++idx)
         {
-            all = g_classes[idx] + "/a";
+            all = g_classes[idx] + "/" USE_ALL;
     
             if (exists(all))
                 dependent(idx);
@@ -196,23 +205,34 @@ void setClasses()
     while (sizeof(class = fgets("CLASSES", (int)class[1])))
     {
         dir = element(0, strtok(class[0], " \t\n"));
+
         if 
+        (
+            dir == SCANNER_DIR          // SCANNER_DIR is already there
+            || 
+            dir == PARSER_DIR           // PARSER_DIR is already there
+        )
+            g_classLines += (list)class[0];
+        else if 
         (
             strlen(dir)                 // no empty dirs
             &&
-            dir != SCANNER_DIR          // SCANNER_DIR is already there
-            && 
-            dir != PARSER_DIR           // PARSER_DIR is already there
-            &&
             strfind(dir, "#") != 0      // omit lines starting in #
             &&
-            strfind(dir, "/") != 0     // omit lines starting in //
+            strfind(dir, "/") != 0      // omit lines starting in //
         )
+        {
             g_classes += (list)dir;     // all passed? then add this dir.
+            g_classLines += (list)class[0];
+        }
     }
+    // classLines contains the full lines of the CLASSES file, and thus
+    // stores its dependencies.
 
     g_nClasses = sizeof(g_classes);
 
+    // g_classes has been defined. checkALL creates the file ALL in all 
+    // directories depending on classes containing the file ALL
     #ifdef USE_ALL
         checkALL();
     #endif
@@ -226,26 +246,43 @@ list inspect(string destDir,
     string oprefix;
     string file;
     string source;
+    string all;
 
     oprefix = destDir + "/" + (string)prefix;
     srcDir += "/";
+    all = srcDir + USE_ALL;
 
     for (idx = sizeof(srcList); idx--; )
     {
         file  = srcList[idx];   
         source = srcDir + file;
-
+        
         ofile   = oprefix + change_ext(file, "o");    // make o-filename
 
-        // A file s must be recompiled if it's newer than its object
-        // file o or newer than its target library l, or if neither o nor l
-        // exist. 
+        // A file s must be recompiled if:
+        //  the ofile exists and is older than ALL
+        //  the ofile doesn't exist but the lib. exists and is older than ALL
+        //  neither the ofile nor the lib. exists and ALL exists
+
+        // if ALL doesn't exist it must be recompiled if:
+        //  it's newer than its object file o or newer than its target 
+        //  library l, 
+        //  if neither o nor l exist.
+
         // Since `a newer b' is true if a is newer than b, or if a exists and
         // b doesn't exist s must be compiled if s newer o and s newer l.
         // So, it doesn't have to be compiled if s older o or s older l.
-
                                             // redo if file has changed
-         if (source older ofile || source older library)
+
+        if 
+        (
+            (ofile older all && library older all)
+        )
+            srcList += (list)file;
+        else if 
+        (
+            source older ofile || source older library 
+        )
             srcList -= (list)file;
     }
     return srcList;
@@ -283,6 +320,7 @@ void std_cpp(int ignoreMain, string destDir,
     if (ignoreMain)
         files -= (list)MAIN;
     chdir("");
+
     files = inspect(destDir, prefix, srcDir, files, library);  
 
     if (sizeof(files))
@@ -471,13 +509,23 @@ void program()
 
     link(maino);
 
+#ifdef USE_ALL
+    echo(OFF);
+    system("rm -f */" USE_ALL);
+    echo(USE_ECHO);
+#endif
+
     exit(0);
 }
 
 void clean()
 {
     chdir("");
+#ifdef USE_ALL
+    system("rm -rf */" USE_ALL " " TMP_DIR);
+#else
     system("rm -rf " TMP_DIR);
+#endif
 
     exit(0);
 }
@@ -570,6 +618,13 @@ void main(int argc, list argv, list envp)
     {
         clearScreen(cls);
         build_libraries();      
+
+#ifdef USE_ALL
+        echo(OFF);
+        system("rm -f */" USE_ALL);
+        echo(USE_ECHO);
+#endif
+
         exit(0);
     }
 

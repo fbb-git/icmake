@@ -107,12 +107,13 @@ manpagesection(COMPILING AND LINKING)
         clear the terminal screen before starting the compilation. By default
         it is not defined.
 
-    itb(#define USE_ALL)
+    itb(#define USE_ALL     "ALL")
        When this directive is specified (by default it is em(not) specified) a
         class dependency setup defined in the CLASSES file will be used. In
-        this case, when a directory contains a file named tt(ALL) (capitals!)
-        then all sources of that class as well as all sources of all classes
-        depending on it are (re)compiled.
+        this case, when a directory contains a file named at the tt(USE_ALL)
+        directive (the default tt(icmconf) file pre-specifies the filename
+        tt(ALL)) then all sources of that class as well as all sources of all
+        classes depending on it are (re)compiled.
 
         Class dependencies in CLASSES consist of the class name (as the first
         word on a line) optionally followed by additional class names, which
@@ -143,7 +144,11 @@ manpagesection(COMPILING AND LINKING)
         its data members is modified. By simply creating a file tt(ALL) the
         required recompilations will be performed.
 
-        Following the recompilation the tt(ALL) file(s) are removed. 
+        Following the recompilation the tt(ALL) file(s) are removed.  
+
+        Note also that when the tt(USE_ALL) directive is used the command
+        tt(icmbuild clean) also removes any leftover tt(USE_ALL) files from
+        the program's direct subdirectories.
 
     itb(#define COMPILER            "g++")
        This directive defines the compiler to use. The default is shown.

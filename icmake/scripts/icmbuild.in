@@ -312,8 +312,8 @@ void shared_library(string libso, string libsoshared)
 
         system(COMPILER " -shared -Wl,--as-needed,-z,defs,-soname," + 
                 libsomajor + 
-                " -o " + TMP_DIR + "/" + libsoshared + " */o/*.o 
-                " SHAREDREQ);
+                " -o " + TMP_DIR + "/" + libsoshared + " */o/*.o "
+                SHAREDREQ);
     
         chdir(TMP_DIR);
     

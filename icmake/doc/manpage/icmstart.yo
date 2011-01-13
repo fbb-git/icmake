@@ -13,7 +13,7 @@ DEFINEMACRO(itt)(1)(\
 )
 
 DEFINEMACRO(itb)(1)(\
-    it()bf(ARG1)\
+    it()bf(ARG1)nl()\
 )
 
 DELETEMACRO(tt)
@@ -102,15 +102,15 @@ manpagefiles()
     The mentioned paths are sugestive only and may be installation dependent:
     itemization(
     it() bf(/usr/share/icmake/icmconf)
-        Example of a bf(icmstart) configuration file;
+        Example of a bf(icmbuild) configuration file;
     it() bf(/usr/share/icmake/CLASSES)
-        Example of a bf(icmstart) tt(CLASSES) file.
+        Example of a bf(icmbuild) tt(CLASSES) file.
     it() bf(/usr/share/icmake/icmstart.rc)
         Default skeleton resource file.
     )
 
 manpageseealso()
-    bf(icmake)(1), bf(icmconf)(7), bf(icmbuild)(1), bf(icmstart.rc)(7).
+    bf(icmake)(1), bf(icmbuild)(1), bf(icmconf)(7), bf(icmstart.rc)(7).
 
 manpagebugs()
     None reported

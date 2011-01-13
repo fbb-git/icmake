@@ -13,7 +13,7 @@ DEFINEMACRO(itt)(1)(\
 )
 
 DEFINEMACRO(itb)(1)(\
-    it()bf(ARG1)\
+    it()bf(ARG1)nl()\
 )
 
 DEFINEMACRO(icm)(0)(bf(icmbuild))

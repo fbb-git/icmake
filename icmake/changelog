@@ -11,6 +11,8 @@ icmake (7.14.0)
 
   * Added the icmconf(7) man page
 
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 13 Jan 2011 10:38:51 +0100
+
 icmake (7.13.1)
 
  * Manpages in release 7.13.0 were not refreshed. Now repaired.

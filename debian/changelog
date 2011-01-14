@@ -1,3 +1,10 @@
+icmake (7.14.0-1) unstable; urgency=low
+
+  * New upstream release: repaired shared lib. construction, new icmbuild
+                          facilities and new man-page, and various bug-fixes
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 14 Jan 2011 13:20:50 +0100
+
 icmake (7.13.1-2) unstable; urgency=low
 
   * Set distribution to unstable.

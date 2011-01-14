@@ -8,8 +8,12 @@ void outcode(ESTRUC_ *ep, int value, register size_t size)
 {
     register size_t
         codelen;
-    char
-        buffer[2];
+    union
+    {
+        char buffer[2];
+        INT16 int16;
+    } u;
+
 
     codelen = ep->code ?                    /* use local codelen in register */
                 ep->codelen
@@ -17,15 +21,15 @@ void outcode(ESTRUC_ *ep, int value, register size_t size)
                 0;                          /* 0 if not yet any code */
 
     if (size == sizeof(char))               /* assign char to write */
-        buffer[0] = (char)value;
+        u.buffer[0] = (char)value;
     else                                    /* use char[2] as intermediate */
-        *(INT16 *)buffer = (INT16)value;    /* to store INT16 value        */
+        u.int16 = (INT16)value;             /* to store INT16 value        */
 
                                             /* make room for new code */
     ep->code = xrealloc(ep->code, (codelen + size) * sizeof(char));
 
                                             /* append the new code */
-    memcpy(ep->code + codelen, buffer, size);
+    memcpy(ep->code + codelen, u.buffer, size);
 
     ep->codelen = codelen + size;           /* update the codelen-counter */
 }

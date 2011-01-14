@@ -14,7 +14,7 @@ Configurable defines:
     scratch.  
 */
 
-#include "../def/destinations"
+// #include "../def/destinations"
 
 string
     CLASSES;
@@ -332,6 +332,7 @@ void main(int argc, list argv)
     list cut;
     string key;
     string value;
+    string cwd;
     string versionh = "../tmp/version.h";
     versionFile = "../VERSION";
 
@@ -343,7 +344,13 @@ void main(int argc, list argv)
         exit (1);
     }
 
-    system("mkdir -p ../tmp/");
+    cwd = chdir("");
+    
+    chdir("..");
+    system("./icm_prepare");
+    chdir(cwd);
+
+//    system("mkdir -p ../tmp/");
 
     echo(OFF);
     system("rm -f " + versionh);
@@ -380,7 +387,7 @@ void main(int argc, list argv)
         cpp_make
         (
             "",
-            "rss"  // static- or so-library
+            "icrss"  // static- or so-library
         );
     }
 

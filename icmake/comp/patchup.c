@@ -11,8 +11,13 @@ void patchup(INT8 *code, size_t len, unsigned *list, size_t listlen,
         idx,
         beyond_jump;
     char
-        *cp,                                /* codepointer */
-        jumpsize[2];
+        *cp;                                /* codepointer */
+
+    union
+    {
+        char jumpsize[2];
+        INT16 int16;
+    } u;
 
     if (!listlen)                           /* done if nothing to patchup */
         return;
@@ -33,11 +38,11 @@ void patchup(INT8 *code, size_t len, unsigned *list, size_t listlen,
             */
 
                                             /* determine the size of the jmp */
-        *(INT16 *)jumpsize = pos - beyond_jump;
+        u.int16 = pos - beyond_jump;
         cp = (char *)code + beyond_jump - 2;/* point to codebytes to patch */
 
-        *cp = jumpsize[0];                  /* copy byte 0 */
-        *(cp + 1) = jumpsize[1];            /* copy byte 1 */
+        *cp = u.jumpsize[0];                /* copy byte 0 */
+        *(cp + 1) = u.jumpsize[1];          /* copy byte 1 */
     }
 
     free(list);

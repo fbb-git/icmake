@@ -100,8 +100,8 @@ typedef struct
         *symbol;
 } SYMTAB_;
 
-typedef struct
-{
+typedef struct                              /* see also display code in */
+{                                           /* callfun.c                */
     E_TYPE_
         type;                               /* type of the expression */
     size_t

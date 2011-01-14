@@ -31,7 +31,7 @@ void setClasses()
 
 #define ECHO_REQUEST       1
 
-#define LIBS               "rss"
+#define LIBS               "icrss"
 #define LIBPATH            "../tmp"
 
 //                      NO CONFIGURABLE PARTS BELOW THIS LINE

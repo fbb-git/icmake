@@ -1,5 +1,18 @@
 icmake (7.14.0)
 
+  * Repaired segfault error caused by calling an underfined function
+    (comp/callfun.c) 
+
+  * Removed compiler warning about dangerous casts from comp/outcode.c and 
+    comp/patchup.c by defining a union for char[2] and INT16, rather than
+    casting the char[2] to INT16.
+
+  * Defined icm_prepare, called from icm_bootstrap and rss/build to prepare
+    the tmp/ directory
+
+  * The separate 'build' icmake scripts were still expecting librss.a. Changed
+    to the proper library name: libicrss.a
+
   * Modified the shared library construction function to use the linker flag
     --as-needed, repaired the 'defs' flag spelling (was: def), added the
     icmconf entry SHAREDREQ to contain the names and paths of libraries
@@ -11,7 +24,7 @@ icmake (7.14.0)
 
   * Added the icmconf(7) man page
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 13 Jan 2011 11:25:49 +0100
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 14 Jan 2011 13:19:59 +0100
 
 icmake (7.13.1)
 

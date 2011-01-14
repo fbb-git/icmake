@@ -19,49 +19,69 @@ ESTRUC_ *callfun(x, e)
         err,
         old_sem;
 
-    if (x != funtab.n_defined)              /* function name found ? */
-    {                                       /* then check correct # of args */
-        n_pars = funtab.symbol[x].var.vu.i->ls.list.size;
-        if ((size_t)e->type != n_pars)
-        {
-            err = 1;
-            semantic("Function '%s()' requires %u arguments",
-                        funtab.symbol[x].name, n_pars);
-        }
-        else
-        {                                   /* and check argument types */
-            for
-            (
-                err = 0,
-                a = (ESTRUC_ *)e->code,
-                idx = 0;
-                    idx < n_pars;
-                        idx++,
-                        a++
-            )
-            {
-                if
-                (
-                    !
-                    (
-                        ((char *)
-                           funtab.symbol[x].var.vu.i->ls.list.element)[idx]
-                        & a->type & ALLTYPES
-                    )
-                )
-                {
-                    old_sem = sem_err;
-                    err = 1;
-                    semantic("Incorrect type of argument %u of function '%s()'",
-                        idx + 1, funtab.symbol[x].name);
-                    sem_err = old_sem;
-                }
-            }
-            sem_err |= err;
-        }
+/*
+    fprintf(stderr,
+        "type: %d\n"
+        "truelen: %d\n"
+        "falselen: %d\n"
+        "codelen: %d\n"
+        "evalue: %d\n"
+        "truelist: %p\n"
+        "falselist: %p\n"
+        "code: %p\n",
+        e->type,
+        e->truelen,
+        e->falselen,
+        e->codelen,
+        e->evalue,
+        e->truelist,
+        e->falselist,
+        e->code);
+*/            
+
+    if (x == funtab.n_defined)              /* function name not found ? */
+        return e;                           /* nothing to do here        */
+
+
+                                            /* then check correct # of args */
+    n_pars = funtab.symbol[x].var.vu.i->ls.list.size;
+    if ((size_t)e->type != n_pars)
+    {
+        err = 1;
+        semantic("Function '%s()' requires %u arguments",
+                    funtab.symbol[x].name, n_pars);
     }
     else
-        n_pars = 0;                         /* prevent unitialized n_pars */
+    {                                   /* and check argument types */
+        for
+        (
+            err = 0,
+            a = (ESTRUC_ *)e->code,
+            idx = 0;
+                idx < n_pars;
+                    idx++,
+                    a++
+        )
+        {
+            if
+            (
+                !
+                (
+                    ((char *)
+                       funtab.symbol[x].var.vu.i->ls.list.element)[idx]
+                    & a->type & ALLTYPES
+                )
+            )
+            {
+                old_sem = sem_err;
+                err = 1;
+                semantic("Incorrect type of argument %u of function '%s()'",
+                    idx + 1, funtab.symbol[x].name);
+                sem_err = old_sem;
+            }
+        }
+        sem_err |= err;
+    }
 
     catargs(e);                             /* convert args to code */
 
@@ -70,5 +90,5 @@ ESTRUC_ *callfun(x, e)
     gencode(e, op_asp,  n_pars);
     set_type(e, funtab.symbol[x].var.type);
 
-    return (e);                             /* return called function code */
+    return e;                               /* return called function code */
 }

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+try()
+{
+    echo $*
+    $* || exit 1
+}
+
+echo Creating the intermediate destination directory ./tmp
+try rm -rf tmp
+try mkdir -p tmp
+
+echo    Writing tmp/ROOT
+echo "ROOT=$1/" > tmp/ROOT
+ 
+. scripts/conversions
+
+echo "
+#define BINDIR      \"${BINDIR}\"
+#define SKELDIR     \"${SKELDIR}\"
+#define MANDIR      \"${MANDIR}\"
+#define LIBDIR      \"${LIBDIR}\"
+#define CONFDIR     \"${CONFDIR}\"
+#define DOCDIR      \"${DOCDIR}\"
+#define DOCDOCDIR   \"${DOCDOCDIR}\"
+#define VERSION     \"${VERSION}\"
+#define YEARS       \"${YEARS}\"
+" > tmp/INSTALL.im
+
+cat tmp/INSTALL.im
+
+echo Creating remaining intermediate destination directories
+try  mkdir -p tmp/${BINDIR}  tmp/${LIBDIR}      tmp/${SKELDIR}  \
+           tmp/${CONFDIR} tmp/${MANDIR}/man1 tmp/${MANDIR}/man7 \
+           tmp/${DOCDIR}  tmp/${DOCDOCDIR}
+  

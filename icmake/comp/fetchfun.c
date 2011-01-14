@@ -6,12 +6,11 @@
 
 size_t fetchfun()
 {
-    register size_t
-        idx;
+    register size_t idx;
 
                                             /* test function defined */
     if ((idx = looksym(&funtab)) == funtab.n_defined)
         semantic ("Function '%s()' not defined", lexstring);
 
-    return (idx);
+    return idx;
 }

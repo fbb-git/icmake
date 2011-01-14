@@ -250,7 +250,9 @@ list inspect(string destDir,
 
     oprefix = destDir + "/" + (string)prefix;
     srcDir += "/";
+#ifdef USE_ALL
     all = srcDir + USE_ALL;
+#endif
 
     for (idx = sizeof(srcList); idx--; )
     {
@@ -273,16 +275,12 @@ list inspect(string destDir,
         // b doesn't exist s must be compiled if s newer o and s newer l.
         // So, it doesn't have to be compiled if s older o or s older l.
                                             // redo if file has changed
-
-        if 
-        (
-            (ofile older all && library older all)
-        )
+#ifdef USE_ALL
+        if (ofile older all && library older all)
             srcList += (list)file;
-        else if 
-        (
-            source older ofile || source older library 
-        )
+        else 
+#endif
+        if (source older ofile || source older library)
             srcList -= (list)file;
     }
     return srcList;

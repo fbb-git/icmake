@@ -16,6 +16,10 @@
 #define BIN_INSTALL "."
 #endif
 
+#ifndef SHAREDREQ
+#define SHAREDREQ   ""
+#endif
+
 //                      NO CONFIGURABLE PARTS BELOW THIS LINE
 
 string g_sources;       // Pattern for the sources to use

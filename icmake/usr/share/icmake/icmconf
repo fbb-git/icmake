@@ -1,6 +1,8 @@
     // Inspect the following #defines. Change them to taste. If you don't
     // need a particular option, change its value into an empty string
 
+    // For more information about this file: 'man 7 icmconf'
+
     // The final program and source containing main():
     // ===============================================
 
@@ -121,13 +123,13 @@
     // containing the parser's specification file
 #define PARSER_DIR          ""
 
-    // What it the program generating a parser?
+    // What is the program generating a parser?
 #define PARSGEN             "bisonc++"
 
     // Flags to provide PARSGEN with:
 #define PARSFLAGS           "-V -l"
 
-    // What it the grammar specification file?
+    // What is the grammar specification file?
 #define PARSSPEC            "grammar"
 
     // Specify additional grammar specification files using patterns

@@ -1,4 +1,4 @@
-.TH "icmbuild" "1" "1992\-2011" "icmake\&.7\&.14\&.0\&.tar\&.gz" "A generic program maintenance script"
+.TH "icmbuild" "1" "1992\-2011" "icmake\&.7\&.15\&.00\&.tar\&.gz" "A generic program maintenance script"
 
 .PP 
 .SH "NAME"
@@ -125,6 +125,8 @@ program, using the library \fIlibbobcat1\fP as an additional library:
     // Inspect the following #defines\&. Change them to taste\&. If you don\(cq\&t
     // need a particular option, change its value into an empty string
 
+    // For more information about this file: \(cq\&man 7 icmconf\(cq\&
+
     // The final program and source containing main():
     // ===============================================
 
@@ -245,13 +247,13 @@ program, using the library \fIlibbobcat1\fP as an additional library:
     // containing the parser\(cq\&s specification file
 #define PARSER_DIR          \(dq\&\(dq\&
 
-    // What it the program generating a parser?
+    // What is the program generating a parser?
 #define PARSGEN             \(dq\&bisonc++\(dq\&
 
     // Flags to provide PARSGEN with:
 #define PARSFLAGS           \(dq\&\-V \-l\(dq\&
 
-    // What it the grammar specification file?
+    // What is the grammar specification file?
 #define PARSSPEC            \(dq\&grammar\(dq\&
 
     // Specify additional grammar specification files using patterns

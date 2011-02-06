@@ -1,4 +1,4 @@
-.TH "icmstart" "1" "1992\-2011" "icmake\&.7\&.14\&.0\&.tar\&.gz" "starts icmbuild program maintenance"
+.TH "icmstart" "1" "1992\-2011" "icmake\&.7\&.15\&.00\&.tar\&.gz" "starts icmbuild program maintenance"
 
 .PP 
 .SH "NAME"
@@ -11,8 +11,8 @@ icmstart \- A startup script for icmbuild program maintenance
 
 .PP 
 The \fBicmstart\fP script is a generic script that can be used to start program
-maintenance using \fBicmake\fP(1) and \fBicmbuild\fP(1)\&. \fBIcmstart\fP will create
-an initial directory \fItop\-dir\fP and will install the files \fICLASSES,
+maintenance using \fBicmake\fP(1) and \fBicmbuild\fP(1)\&. \fBIcmstart\fP creates
+an initial directory \fItop\-dir\fP and installs the files \fICLASSES,
 VERSION\fP and \fIicmconf\fP below \fItop\-dir\fP\&. A second argument  `\fIprogram\fP\(cq\&
 or `\fIlibrary\fP\(cq\& may be specified as the default mode of operation of the
 \fBicmbuild\fP(1) script\&. 
@@ -77,16 +77,82 @@ The default resource file is \fI/etc/icmake/icmstart\&.rc\fP, contains
 .nf 
 
     CLASSES
-    main\&.cc     
-    main\&.ih     
-    usage\&.cc
-    version\&.cc
-    ? scanner
-    ? parser
+    P main\&.cc 
+    P main\&.ih 
+    P usage\&.cc
+    P version\&.cc
+    P ? scanner 
+    P ? parser  
         
 .fi 
 This file is overruled by \fI~/\&.icmake/icmstart\&.rc\fP\&. See
 \fBicmstart\&.rc\fP(7) for details about the format of the \fIicmstart\&.rc\fP file\&.
+.PP 
+.SH "CONFIGURATION FILES"
+
+.PP 
+The configuration files \fIicmstart\&.rc, AUTHOR, YEARS\fP and \fIVERSION\fP are
+recognized and processed by \fIicmstart\fP\&. 
+.PP 
+If the \fI\-c\fP option was specified configuration files found in the path
+specified at this option are used\&. If not specified or if a file isn\(cq\&t
+found then the path \fI~/icmake\fP is inspected\&. If a configuration file isn\(cq\&t
+found in \fI~/icmake\fP either, configuration files in \fI/etc/icmake\fP are used\&.
+.PP 
+Configuration files are not required for the proper operation of \fIicmstart\fP\&.
+When absent \fIicmstart\fP performs the following  default actions:
+.PP 
+.IP o 
+If the file \fIAUTHOR\fP does not exist \fIicmstart\fP uses \fI#define
+AUTHOR \(dq\&\(dq\&\fP\&. 
+.IP 
+When the file \fIAUTHOR\fP is defined in a configuration path it should have
+one line, defining the author of the program\&. E\&.g\&.,
+.nf 
+
+    #define AUTHOR \(dq\&Frank B\&. Brokken <f\&.b\&.brokken@rug\&.nl>\(dq\&
+        
+.fi 
+
+.IP 
+.IP o 
+If the file \fIVERSION\fP does not exist \fIicmstart\fP uses \fI#define
+VERSION \(dq\&0\&.00\&.00\(dq\&\fP\&. 
+.IP 
+When the file \fIVERSION\fP is defined in a configuration path it should
+have one line, defining the program\(cq\&s initial version\&. E\&.g\&.,
+.nf 
+
+    #define VERSION \(dq\&1\&.00\&.00\(dq\&
+        
+.fi 
+
+.IP 
+.IP o 
+If the file \fIYEAR\fP does not exist \fIicmstart\fP uses \fI#define
+YEARS \(dq\&yyyy\(dq\&\fP where \fIyyyy\fP is the current year\&. 
+.IP 
+When the file \fIYEAR\fP is defined in a configuration path it should have
+one line, defining the program\(cq\&s initial release year\&. E\&.g\&.,
+.nf 
+
+    #define YEARS \(dq\&2011\(dq\&
+        
+.fi 
+Plural is used here since a release year usually becomes a range of years
+after some time, as with Icmake\(cq\&s years specification:
+.nf 
+
+    #define YEARS \(dq\&1992\-2011\(dq\&
+        
+.fi 
+
+.PP 
+.IP o 
+If the file \fIicmstart\&.rc\fP does not exist (or is empty) \fIicmstart\fP
+will not install any of the files normally found in \fIicmstart\&.rc\fP, but the
+initial project directory, \fIicmconf\fP and \fIVERSION\fP are installed\&.
+)
 .PP 
 .SH "FILES"
 The mentioned paths are sugestive only and may be installation dependent:

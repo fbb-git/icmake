@@ -1,4 +1,4 @@
-.TH "icmstart\&.rc" "7" "1992\-2011" "icmake\&.7\&.14\&.0\&.tar\&.gz" "icmstart resource file"
+.TH "icmstart\&.rc" "7" "1992\-2011" "icmake\&.7\&.15\&.00\&.tar\&.gz" "icmstart resource file"
 
 .PP 
 .SH "NAME"
@@ -20,19 +20,26 @@ the construction of a \fBC++\fP program using \fBicmbuild\fP(1):
 .nf 
 
     CLASSES
-    main\&.cc     
-    main\&.ih     
-    usage\&.cc
-    version\&.cc
-    ? scanner
-    ? parser
+    P main\&.cc 
+    P main\&.ih 
+    P usage\&.cc
+    P version\&.cc
+    P ? scanner 
+    P ? parser  
         
 .fi 
 The \fIicmstart\&.rc\fP file may contain:
 .IP o 
-empty lines are ignored;
+empty lines, which are ignored;
 .IP o 
-lines beginning with the hash\-character (\fI#\fP) are ignored;
+lines beginning with a hash\-character (\fI#\fP), also ignored;
+.IP o 
+Optionally: a P (don\(cq\&t install with \fIicmstart xxx library\fP) or an L
+(don\(cq\&t install with \fIicmstart xxx program\fP), followed by a blank; see also
+\fBicmstart\fP(1)\&.
+.IP o 
+Optionall: a \fI?\fP (followed by a blank) following the optional P or
+L in which case the installation of the element must be confirmed by the user\&.
 .IP o 
 Source path names\&. Relative path names are interpreted relative to
 the current working directory\&. Environment variables are not expanded, the
@@ -49,11 +56,6 @@ specified when calling \fBicmstart\fP(1)\&.
 .PP 
 If a destination is omitted, the source is installed as specified below
 \fBicmstart\fP(1)\(cq\&s destination directory\&.
-.PP 
-The first character of a line may be a question mark (followed by white
-space, a source path and optionally a destination path\&. In this case the user
-is 
-asked to confirm that the source path should indeed be installed\&. 
 .PP 
 .SH "EXAMPLES"
 

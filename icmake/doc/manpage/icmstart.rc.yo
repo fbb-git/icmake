@@ -40,17 +40,22 @@ The default resource file contains the following specifications, preparing for
 the construction of a bf(C++) program using bf(icmbuild)(1):
         verb(
     CLASSES
-    main.cc     
-    main.ih     
-    usage.cc
-    version.cc
-    ? scanner
-    ? parser
+    P main.cc 
+    P main.ih 
+    P usage.cc
+    P version.cc
+    P ? scanner 
+    P ? parser  
         )
 The tt(icmstart.rc) file may contain:
     itemization(
-    it() empty lines are ignored;
-    it() lines beginning with the hash-character (tt(#)) are ignored;
+    it() empty lines, which are ignored;
+    it() lines beginning with a hash-character (tt(#)), also ignored;
+    it() Optionally: a P (don't install with tt(icmstart xxx library)) or an L
+(don't install with tt(icmstart xxx program)), followed by a blank; see also
+bf(icmstart)(1).
+    it() Optionall: a tt(?) (followed by a blank) following the optional P or
+L in which case the installation of the element must be confirmed by the user.
     it() Source path names. Relative path names are interpreted relative to
 the current working directory. Environment variables are not expanded, the
 initial tilde character is interpreset as the user's home directory.
@@ -66,11 +71,6 @@ specified when calling bf(icmstart)(1).
 
 If a destination is omitted, the source is installed as specified below
 bf(icmstart)(1)'s destination directory.
-
-The first character of a line may be a question mark (followed by white
-space, a source path and optionally a destination path. In this case the user
-is 
-asked to confirm that the source path should indeed be installed. 
 
 manpagesection(EXAMPLES)
 

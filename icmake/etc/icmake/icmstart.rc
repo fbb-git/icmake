@@ -2,13 +2,18 @@
 # empty lines and lines starting with # are ignored.
 
 # Files and directories are installed by tar, see icmstart(1)'s man-page
-# Confirmation to install is required for entries on lines starting with ?
+# Lines starting with P are not installed when 'icmstart xxx library' is
+# requested.
+# Lines starting with L are not installed when 'icmstart xxx program' is
+# requested.
+# User-confirmation to install is required for entries on lines having a ?
+# following the optional P or L.
 
-CLASSES
-main.cc     
-main.ih     
-usage.cc
-version.cc
-
-? scanner
-? parser
+    CLASSES
+P   main.cc     
+P   main.ih     
+P   usage.cc
+P   version.cc
+ 
+P ? scanner
+P ? parser

@@ -1,3 +1,18 @@
+icmake (7.15.00)
+
+  * AUTHOR, VERSION and YEAR removed from /etc/icmake, see icmstart(1)
+
+  * Double installation of changelog.gz prevented
+
+  * /usr/share/doc/icmake/mail.frank removed from the installation
+
+  * icmstart.rc supports optional P and L flags for program and library
+    only icmake project installations. See icmstart.rc(7)
+
+  * Using standard x.yy.zz version number format
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>
+
 icmake (7.14.1)
 
   * Added test for defined SHAREDREQ to icmbuild

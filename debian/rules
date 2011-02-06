@@ -31,7 +31,7 @@ install: build
 		./icm_install scripts debian/icmake
 		./icm_install skel debian/icmake
 		./icm_install man debian/icmake
-		./icm_install doc debian/icmake
+		# ./icm_install doc debian/icmake
 		./icm_install etc debian/icmake
 
 # Build architecture-independent files here.

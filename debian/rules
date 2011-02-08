@@ -31,7 +31,7 @@ install: build
 		./icm_install scripts debian/icmake
 		./icm_install skel debian/icmake
 		./icm_install man debian/icmake
-		# ./icm_install doc debian/icmake
+		./icm_install doc debian/icmake
 		./icm_install etc debian/icmake
 
 # Build architecture-independent files here.
@@ -55,7 +55,7 @@ override_dh_link:
 # catches silent file content forges at the upstream server side
 # Archive downloaded from https://www.icce.rug.nl/debian/icmake
 #   file: icmake_x.y.z.tar.gz
-MD5TRUSTED := 63e68f18ba7984abd0c79af9ad74690b
+MD5TRUSTED := 3f23dcd960b03fd5b808f29372980dbc
 
 DEBVERSION:=$(shell head -n 1 debian/changelog | sed -e 's/^[^(]*(\([^)]*\)).*/\1/')
 UPVERSION:=$(shell echo $(DEBVERSION) | sed -e 's/^.*://' -e 's/-[0-9.]*$$//' -e 's/.dfsg$$//')

@@ -39,9 +39,10 @@ itemization(
 it() Manual pages (html-versions):
     itemization(
     it() The url(_pakx_)(icmake.html) main man-page;
+    it() The url(icmbuild)(icmbuild.html) project maintenance script man-page.
+    it() The url(icmconf)(icmconf.html) project initial configuration file.
     it() The url(the icmstart)(icmstart.html) project starter man-page;
     it() The url(icmstart.rc)(icmstart.html) resource file man-page;
-    it() The url(icmbuild)(icmbuild.html) project maintenance script man-page.
     )
 it() The url(original (1994))(icmake.ps) PostScript version of the icmake
 manual. 

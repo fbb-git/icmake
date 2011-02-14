@@ -2,7 +2,11 @@ icmake (7.15.00-1) unstable; urgency=low
 
   * New upstream release, moved 'mail.frank' to upstream
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 06 Feb 2011 16:49:20 +0100
+  * Files /etc/icmake/{AUTHOR,VERSION,YEARS} are now obsolete. See icmstart(1)
+    for details. The files are removed by the upgrading process unless they
+    were modified `by hand', in which case they are moved to *.dpkg-bak.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 14 Feb 2011 20:30:36 +0100
 
 icmake (7.14.1-1) unstable; urgency=low
 

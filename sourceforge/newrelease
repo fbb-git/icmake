@@ -18,7 +18,5 @@ yodl2html index || exit 1
 scp *html ../icmake/doc/manpage/*.html ../icmake/doc/icmake.ps\
     fbb,icmake@web.sourceforge.net:htdocs/
 
-#        fbb,icmake@shell.sourceforge.net:/home/groups/i/ic/icmake/htdocs
-
 rm -f ../icmake/doc/manpage/{*.html,release.yo}
 

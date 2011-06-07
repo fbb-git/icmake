@@ -1,9 +1,7 @@
 #!/usr/bin/make -f
-# Sample debian/rules that uses debhelper.
-# This file is public domain software, originally written by Joey Hess.
 
 # Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
+# export DH_VERBOSE=1
 
 build: build-stamp
 build-stamp:
@@ -86,7 +84,6 @@ get-orig-source:
 			echo "Upstream filename md5sum is trusted!" ; \
 	fi
 
-
 get-svn-trunk:
 	@@dh_testdir
 	@@[ -d ../tarballs/. ]||mkdir -p ../tarballs
@@ -97,10 +94,9 @@ get-svn-trunk:
 	@@GZIP=-9 tar -b1 -czf ../tarballs/$(DEFILE) -C ../tarballs icmake-svn-trunk
 	rm -rf ../tarballs/icmake-svn-trunk
 
-
 print-version:
-	@@echo "Debian version:					 $(DEBVERSION)"
-	@@echo "Upstream version:				 $(UPVERSION)"
+	@@echo "Debian version:	$(DEBVERSION)"
+	@@echo "Upstream version: $(UPVERSION)"
 
 binary: binary-arch binary-indep
 .PHONY: build clean binary-indep binary-arch binary install myclean

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+GLB=-DHAVE_GLOB
+
 if [ "$#" == "0" ] ; then
 echo "
     Usage: bootstrap root-directory
@@ -10,7 +12,7 @@ echo "
     This script assumes that the GCC compiler is available, and that
     the function glob() is available in the gcc-runtime library.
     If that's not the case, remove the -DHAVE_GLOB define from the 
-    gcc flags.
+    gcc flags at the top of $0.
 
     Furthermore, it assumes that the parser files parser.c and parser.h have
     already been generated from the file parser and that the file lexer.c has
@@ -25,45 +27,61 @@ try()
     $* || exit 1
 }
 
+CF=$CPPFLAGS
+LF=$LDFLAGS
+
 . icm_prepare
+
+if [ "${CF}" != "" ] ; then CPPFLAGS=${CF}; fi
+if [ "${LF}" != "" ] ; then LDFLAGS=${LF}; fi
   
 echo Creating tmp/libicrss.a
+
 try cd rss
-try gcc -c -O2 -g -Wall -DHAVE_GLOB *.c
+try gcc -c -Wall ${CPPFLAGS} ${GLB} *.c
 try ar rs ../tmp/libicrss.a *.o
 rm *.o
 cd ..
 
 echo Creating tmp/${BINDIR}/icmake${EXTENSION}
 try cd make
-try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BINDIR}/icmake${EXTENSION} *.c ../tmp/libicrss.a
+try gcc -Wall  ${CPPFLAGS} ${GLB} \
+        -o ../tmp/${BINDIR}/icmake${EXTENSION} *.c ../tmp/libicrss.a \
+        ${LDFLAGS}
 cd ..
 
 echo Creating tmp/${BINDIR}/icmun${EXTENSION}
 try cd un
-try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${BINDIR}/icmun${EXTENSION} *.c ../tmp/libicrss.a
+try gcc -Wall ${GLB}  ${CPPFLAGS} \
+        -o ../tmp/${BINDIR}/icmun${EXTENSION} *.c ../tmp/libicrss.a \
+        ${LDFLAGS}
 cd ..  
 
 echo Creating tmp/${LIBDIR}/icm-pp${EXTENSION}
 try cd pp
-try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIBDIR}/icm-pp${EXTENSION} *.c ../tmp/libicrss.a
+try gcc -Wall ${GLB} ${CPPFLAGS} \
+        -o ../tmp/${LIBDIR}/icm-pp${EXTENSION} *.c ../tmp/libicrss.a \
+        ${LDFLAGS}
 cd ..
 
 echo Creating tmp/${LIBDIR}/icm-comp${EXTENSION}
 try cd comp
-try gcc -O2 -g -Wall -DHAVE_GLOB -o ../tmp/${LIBDIR}/icm-comp${EXTENSION} *.c ../tmp/libicrss.a
+try gcc -Wall ${GLB} ${CPPFLAGS} \
+        -o ../tmp/${LIBDIR}/icm-comp${EXTENSION} *.c ../tmp/libicrss.a \
+        ${LDFLAGS}
 cd ..
 
 echo Creating tmp/${LIBDIR}/icm-exec${EXTENSION}
 try cd exec
-try gcc -O2 -g -Wall -DHAVE_GLOB -c *.c 
+try gcc -Wall ${CPPFLAGS} ${GLB} -c *.c 
 for x in auks var virtual int list string stack opcodefun builtin
 do
     try cd $x
-    try gcc -O2 -g -Wall -DHAVE_GLOB -c *.c
+    try gcc -Wall ${GLB} ${CPPFLAGS} -c *.c
     try cd ..
 done
-try gcc -o ../tmp/${LIBDIR}/icm-exec${EXTENSION} *.o */*.o ../tmp/libicrss.a
+try gcc -o ../tmp/${LIBDIR}/icm-exec${EXTENSION} *.o \
+            */*.o ../tmp/libicrss.a ${LDFLAGS}
 rm *.o */*.o
 cd ..
 

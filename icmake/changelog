@@ -1,3 +1,16 @@
+icmake (7.16.00)
+
+  * icmbuild script now correctly interprets class dependencies defined in
+    CLASSES and correctly interprets USE_ALL (see 'man icmbuild') 
+
+  * `build' script now recognizes CPPFLAGS and LDFLAGS for, resp. gcc and ld
+    flags. Default values are set in INSTALL.im, as before.
+
+  * `icmbuild' script now recognizes CXXFLAGS and LDFLAGS for, resp. g++ and 
+    ld flags. Default values are set in INSTALL.im, as before.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 23 Jun 2011 15:18:54 +0200
+
 icmake (7.15.00)
 
   * AUTHOR, VERSION and YEAR removed from /etc/icmake, see icmstart(1)

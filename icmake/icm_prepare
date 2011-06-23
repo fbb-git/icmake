@@ -25,6 +25,14 @@ echo "
 #define DOCDOCDIR   \"${DOCDOCDIR}\"
 #define VERSION     \"${VERSION}\"
 #define YEARS       \"${YEARS}\"
+#define CPPFLAGS    ${CPPFLAGS}
+    // Specify compiler options that should be used. Overruled by the CPPFLAGS
+    // environment variable. 
+    // The option "-Wall" is always used.
+    // For profiling use the  -pg flags, and don't strip
+#define LDFLAGS     ${LDFLAGS}
+    // Specify linker options. None by default. Do not specify -s (strip) here
+    // as strip is handled by adding a command to the build call.
 " > tmp/INSTALL.im
 
 cat tmp/INSTALL.im
@@ -34,3 +42,6 @@ try  mkdir -p tmp/${BINDIR}  tmp/${LIBDIR}      tmp/${SKELDIR}  \
            tmp/${CONFDIR} tmp/${MANDIR}/man1 tmp/${MANDIR}/man7 \
            tmp/${DOCDIR}  tmp/${DOCDOCDIR}
   
+CPPFLAGS=`echo ${CPPFLAGS} | sed 's/^[[:blank:]]*\"\(.*\)\"[[:blank:]]*$/\1/'`
+LDFLAGS=`echo ${LDFLAGS} | sed 's/^[[:blank:]]*\"\(.*\)\"[[:blank:]]*$/\1/'`
+

@@ -25,6 +25,7 @@
 string g_sources;       // Pattern for the sources to use
 string g_libpath;       // the extra library paths
 string g_libs;          // the extra libraries
+string g_copt;          // options for the C++ compiler
 list   g_classes;       // all class-directories
 int    g_nClasses;      // number of class-directories
 string g_binary;        // binary program to build
@@ -35,7 +36,7 @@ list   g_classLines;    // list of all lines in CLASSES
 string g_version = VERSION;
 
                         // std call of the compiler when compiling
-string g_compiler = COMPILER " " COMPILER_OPTIONS " -c -o ";
+string g_compiler = COMPILER " -Wall --std=c++0x -c -o ";
 string g_cwd = chdir("");   // initial working directory
 
 void md(string dir)
@@ -50,6 +51,21 @@ string cd(string next)
         printf("chdir " + next + "\n");
 
     return chdir(next);
+}
+
+string setOpt(string install_im, string envvar)
+{
+    list optvar;
+    string ret;
+
+    optvar = getenv(envvar);    
+
+    if (optvar[0] == "1")
+        ret = optvar[1];
+    else 
+        ret = install_im;
+
+    return ret;
 }
 
 list patternList(string pattern)
@@ -134,62 +150,66 @@ void scanner()
 
 #ifdef USE_ALL
 
-    int find(string needle)
+int find(string needle, list haystack)
+{
+    int idx;
+    for (idx = sizeof(haystack); idx--; )
     {
-        int idx;
-        for (idx = g_nClasses; idx--; )
-        {
-            if (needle == g_classes[idx])
-                break;
-        }
-        return idx;
+        if (needle == haystack[idx])
+            break;
     }
-    
-    void dependent(int idx)
+    return idx;
+}
+
+void dependent(int idx)
+{
+    list dependencies;
+    string target;
+    int ret;
+    int depIdx;
+
+    target = g_classes[idx];
+    g_depHaystack += (list)target;
+
+    printf("RECOMPILE: ", target, "\n");
+    system("touch " + target + "/*.cc");
+
+    for (depIdx = idx + 1; depIdx != g_nClasses; ++depIdx)
     {
-        list dependencies;
-        int depIdx;
-        int nextIdx;
-        string target;
-        string next;
-        string all;
-
-        target = g_classes[idx];            // starting class name (with ALL)
+        dependencies = strtok(g_classLines[depIdx], " \t\n");
+        if 
+        (
+            find(target, dependencies) != -1 
+            && 
+            find(dependencies[0], g_depHaystack) == -1
+        )
+            dependent(depIdx);
+    }
+}            
     
-                                            // get classes depending on target
-        dependencies = strtok(g_classLines[idx], " \t\n");
-    
-        for (depIdx = sizeof(dependencies); depIdx--; )
-        {
-            next = dependencies[depIdx];
-            all = next + "/" USE_ALL;
+void checkALL()
+{
+    int idx;
+    int base;
+    string all;
 
-            if (!exists(all))
-            {
-                echo(OFF);
-                system("touch " + all);
-                echo(USE_ECHO);
-
-                nextIdx = find(next);
-                if (nextIdx != -1)
-                    dependent(nextIdx);
-            }
-        }
-    }            
-    
-    void checkALL()
+    base = 0;
+    for (idx = 0; idx != g_nClasses; ++idx)
     {
-        int idx;
-        string all;
+        all = g_classes[idx] + "/" USE_ALL;
 
-        for (idx = 0; idx != g_nClasses; ++idx)
+        if (exists(all))
         {
-            all = g_classes[idx] + "/" USE_ALL;
-    
-            if (exists(all))
-                dependent(idx);
+            dependent(idx);
+            base = 1;
         }
     }
+    if (base)
+    {
+        system("rm -f */a");
+        system("touch *.cc");
+    }
+}
     
 #endif
 
@@ -304,7 +324,8 @@ void c_compile(int prefix, string destDir, string srcDir, list cfiles)
     for (idx = sizeof(cfiles); idx--; )
     {
         file = cfiles[idx];
-        system(compiler + change_ext(file, OBJ_EXT) + " " + srcDir + file);
+        system(compiler + change_ext(file, OBJ_EXT) + " " + g_opt + " " + 
+                srcDir + file);
         g_compiled = 1;
     }
 }
@@ -404,6 +425,8 @@ void build_libraries()
     )
         system("touch version.cc");
 
+    g_copt = setOpt(CXXFLAGS, "CXXFLAGS");
+
                                             // compile all files in subdirs
     for (idx = g_nClasses; idx--; )
         std_cpp(0, TMP_DIR "/o", idx + 1, g_classes[idx], staticLib);
@@ -417,7 +440,7 @@ void build_libraries()
         libso = "lib" LIBRARY ".so";
         libsoshared = libso + "." + g_version;
                                             // add option for shared lib
-        g_compiler = COMPILER " " COMPILER_OPTIONS " -fPIC -c -o "; 
+        g_compiler = COMPILER " -fPIC -c -o "; 
         for (idx = g_nClasses; idx--; )
             std_cpp(0, TMP_DIR "/o", idx + 1, g_classes[idx], 
                                             libsoshared);
@@ -448,7 +471,7 @@ void setLibs()
         g_libpath += " -L" + cut[index];
 }
 
-void link(string maino)
+void link(string maino, string strip)
 {
 #ifdef BINARY
     string compiler;
@@ -477,7 +500,7 @@ void link(string maino)
         g_compiled
     )
 #endif
-        system(compiler + " " LINKER_OPTIONS);
+        system(compiler + " " + strip + setOpt(LDFLAGS, "LDFLAGS"));
 
     chdir("");
 #endif
@@ -498,7 +521,7 @@ void strip_shared()
 }
 
 
-void program()
+void program(string strip)
 {
     string maino = change_ext(MAIN, OBJ_EXT);
 
@@ -509,7 +532,7 @@ void program()
     if (MAIN younger TMP_DIR "/" + maino)
         system(g_compiler + TMP_DIR "/" + maino + " " MAIN);
 
-    link(maino);
+    link(maino, strip);
 
 #ifdef USE_ALL
     echo(OFF);
@@ -613,7 +636,13 @@ void main(int argc, list argv, list envp)
     if (option == "program")
     {
         clearScreen(cls);
-        program();
+
+        if (argv[2] == "strip")
+            option = "-s";
+        else
+            option = "";
+
+        program(option);
     }
 
     if (option == "library")
@@ -650,6 +679,7 @@ void main(int argc, list argv, list envp)
         "   strip-shared    - strip a shared library\n"
 #ifdef BINARY
         "   program         - build " TMP_DIR "/" BINARY "\n"
+        "   program strip   - build stripped " TMP_DIR "/" BINARY "\n"
 #endif
         "   install <base>  - to install the software in the locations\n"
         "                     defined in the icmconf file, optionally\n"

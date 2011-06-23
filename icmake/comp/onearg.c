@@ -15,7 +15,7 @@ ESTRUC_ *onearg(type, arg)
 
     etoc(arg);                               /* arg to stack */
 
-    switch (type)
+    switch ((FUNNR_)type)
     {
         case f_ascii_int:
             if ( (ok = test_type(arg, e_str | e_int)) )

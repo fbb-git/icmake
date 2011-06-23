@@ -24,7 +24,7 @@ ESTRUC_ *exec_fprintf(type, args)
 
     e0 = codestruc(args, 0);                /* pointer to first arg */
 
-    switch (type)
+    switch ((FUNNR_)type)
     {
         case f_fprintf:                     /* first arg must be string */
             ok = test_type(e0, e_str);

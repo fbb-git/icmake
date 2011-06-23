@@ -13,12 +13,6 @@
 
 ESTRUC_ *makelist(ESTRUC_ *args, E_TYPE_ type)
 {
-    ESTRUC_
-        *e0;
-
-    e0 = codestruc(args, 0);
-    e0 = codestruc(args, 1);
-
     if
     (                                       /* first arg not int */
         !test_type(codestruc(args, 0), e_int)
@@ -38,8 +32,8 @@ ESTRUC_ *makelist(ESTRUC_ *args, E_TYPE_ type)
 
     catargs(args);                          /* catenate all arguments */
 
-    if (type != op_hlt)                     /* hidden function called */
-        callhidden(type == op_younger, args);
+    if ((OPCODE_)type != op_hlt)            /* hidden function called */
+        callhidden((OPCODE_)type == op_younger, args);
     else
         callrss(args, f_makelist);
 

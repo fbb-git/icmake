@@ -18,7 +18,7 @@ ESTRUC_ *return_stmnt(op, e)
 
     last = &funtab.symbol[funtab.n_defined - 1];
 
-    if (op == op_ret)                       /* return opcode received */
+    if ((OPCODE_)op == op_ret)              /* return opcode received */
     {
         if
         (

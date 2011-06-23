@@ -13,7 +13,7 @@ ESTRUC_ *specials(type, marg)
     register size_t
         count;
 
-    if (type == f_execute)
+    if ((FUNNR_)type == f_execute)
         return(execute(marg));              /* full list of arguments */
 
     count = marg->type;                     /* count # of arguments */

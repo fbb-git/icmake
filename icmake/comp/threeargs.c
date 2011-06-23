@@ -19,7 +19,7 @@ ESTRUC_ *threeargs(type, larg, marg, rarg)
     etoc(marg);                             /* arg to stack */
     etoc(rarg);                             /* arg to stack */
 
-    switch (type)
+    switch ((FUNNR_)type)
     {
         case f_substr:
             ok = test_type(larg, e_str) && 

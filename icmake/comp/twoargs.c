@@ -17,7 +17,7 @@ ESTRUC_ *twoargs(type, larg, rarg)
     etoc(larg);                             /* arg to stack */
     etoc(rarg);                             /* arg to stack */
 
-    switch (type)
+    switch ((FUNNR_)type)
     {
         case f_fgets:
             ok = test_type(larg, e_str) && test_type(rarg, e_int);

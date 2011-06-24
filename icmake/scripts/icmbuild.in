@@ -25,18 +25,16 @@
 string g_sources;       // Pattern for the sources to use
 string g_libpath;       // the extra library paths
 string g_libs;          // the extra libraries
-string g_copt;          // options for the C++ compiler
 list   g_classes;       // all class-directories
 int    g_nClasses;      // number of class-directories
 string g_binary;        // binary program to build
 int    g_compiled;      // any source compiled (but main)?
 int    g_keepGramspec;  // keep the gramspec directory
 list   g_classLines;    // list of all lines in CLASSES
+list   g_depHaystack;   // list used with USE_ALL
 
 string g_version = VERSION;
-
-                        // std call of the compiler when compiling
-string g_compiler = COMPILER " -Wall --std=c++0x -c -o ";
+string g_compiler;
 string g_cwd = chdir("");   // initial working directory
 
 void md(string dir)
@@ -68,6 +66,15 @@ string setOpt(string install_im, string envvar)
     return ret;
 }
 
+void setGcompiler()
+{
+#ifdef COPTS
+    g_compiler = COMPILER " -c " + setOpt(COMPILER_OPTIONS, COPTS);
+#else
+    g_compiler = COMPILER " -c " COMPILER_OPTIONS;
+#endif
+}
+
 list patternList(string pattern)
 {
     list in;
@@ -90,15 +97,15 @@ void parser()
 
     gramfiles = makelist(PARSSPEC);
 
-    #ifdef PARSFILES
-        gramfiles += makelist(PARSFILES);
-    #else
-        #ifdef GRAMBUILD
-            cd("gramspec");
-            system("./grambuild");
-            chdir("..");
-        #endif
+#ifdef PARSFILES
+    gramfiles += makelist(PARSFILES);
+#else
+    #ifdef GRAMBUILD
+        cd("gramspec");
+        system("./grambuild");
+        chdir("..");
     #endif
+#endif
 
     for (idx = sizeof(gramfiles); idx--; )
     {
@@ -168,22 +175,25 @@ void dependent(int idx)
     int ret;
     int depIdx;
 
-    target = g_classes[idx];
-    g_depHaystack += (list)target;
-
+    target = g_classes[idx];            // recompile this dir.
+    g_depHaystack += (list)target;      // recompile classes depending on 
+                                        // these classes
     printf("RECOMPILE: ", target, "\n");
     system("touch " + target + "/*.cc");
 
-    for (depIdx = idx + 1; depIdx != g_nClasses; ++depIdx)
+                                        // inspect all classes
+    for (depIdx = 0; depIdx != g_nClasses; ++depIdx)
     {
+                                        // get all dependencies for depIdx
         dependencies = strtok(g_classLines[depIdx], " \t\n");
+        
         if 
         (
-            find(target, dependencies) != -1 
-            && 
+            find(target, dependencies) != -1    // depIdx depends on target
+            &&                                  // and depIdx not yet recorded
             find(dependencies[0], g_depHaystack) == -1
         )
-            dependent(depIdx);
+            dependent(depIdx);                  // then do depIdx's deps
     }
 }            
     
@@ -204,9 +214,10 @@ void checkALL()
             base = 1;
         }
     }
+
     if (base)
     {
-        system("rm -f */a");
+        system("rm -f */" USE_ALL);
         system("touch *.cc");
     }
 }
@@ -220,7 +231,7 @@ void setClasses()
                                         // make sure that scanner/parser
                                         // directories come first, so they
                                         // don't get reordered
-    if (SCANNER_DIR != "")              
+    if (SCANNER_DIR != "")
         g_classes = (list)SCANNER_DIR;  // add the scanner-dir
 
     if (PARSER_DIR != "")
@@ -232,21 +243,21 @@ void setClasses()
 
         if 
         (
-            dir == SCANNER_DIR          // SCANNER_DIR is already there
-            || 
-            dir == PARSER_DIR           // PARSER_DIR is already there
-        )
-            g_classLines += (list)class[0];
-        else if 
-        (
-            strlen(dir)                 // no empty dirs
+            strlen(dir)                 // omit empty lines
             &&
             strfind(dir, "#") != 0      // omit lines starting in #
             &&
             strfind(dir, "/") != 0      // omit lines starting in //
         )
         {
-            g_classes += (list)dir;     // all passed? then add this dir.
+            if 
+            (
+                dir != SCANNER_DIR          // SCANNER_DIR is already there
+                &&
+                dir != PARSER_DIR           // PARSER_DIR is already there
+            )
+                g_classes += (list)dir;     // add this dir.
+
             g_classLines += (list)class[0];
         }
     }
@@ -319,13 +330,12 @@ void c_compile(int prefix, string destDir, string srcDir, list cfiles)
     if (srcDir != "")
         srcDir += "/";
 
-    compiler = g_compiler + destDir + "/" + (string)prefix;
+    compiler = g_compiler + " -o " + destDir + "/" + (string)prefix;
 
     for (idx = sizeof(cfiles); idx--; )
     {
         file = cfiles[idx];
-        system(compiler + change_ext(file, OBJ_EXT) + " " + g_opt + " " + 
-                srcDir + file);
+        system(compiler + change_ext(file, OBJ_EXT) + " " + srcDir + file);
         g_compiled = 1;
     }
 }
@@ -425,8 +435,6 @@ void build_libraries()
     )
         system("touch version.cc");
 
-    g_copt = setOpt(CXXFLAGS, "CXXFLAGS");
-
                                             // compile all files in subdirs
     for (idx = g_nClasses; idx--; )
         std_cpp(0, TMP_DIR "/o", idx + 1, g_classes[idx], staticLib);
@@ -440,7 +448,9 @@ void build_libraries()
         libso = "lib" LIBRARY ".so";
         libsoshared = libso + "." + g_version;
                                             // add option for shared lib
-        g_compiler = COMPILER " -fPIC -c -o "; 
+        setGcompiler();
+        g_compiler += " -fPIC -o "; 
+
         for (idx = g_nClasses; idx--; )
             std_cpp(0, TMP_DIR "/o", idx + 1, g_classes[idx], 
                                             libsoshared);
@@ -490,17 +500,17 @@ void link(string maino, string strip)
     if (strlen(g_libs))
         compiler += g_libs + g_libpath;
 
-#ifndef REFRESH
-    if 
-    (
-        maino younger "bin/" BINARY
-        || 
-        "lib" LIBRARY ".a" younger "bin/" BINARY
-        ||
-        g_compiled
-    )
-#endif
-        system(compiler + " " + strip + setOpt(LDFLAGS, "LDFLAGS"));
+    #ifndef REFRESH
+        if 
+        (
+            maino younger "bin/" BINARY
+            || 
+            "lib" LIBRARY ".a" younger "bin/" BINARY
+            ||
+            g_compiled
+        )
+    #endif
+        system(compiler + " " + strip + setOpt(LINKER_OPTIONS, "LDFLAGS"));
 
     chdir("");
 #endif
@@ -530,7 +540,7 @@ void program(string strip)
     build_libraries();
 
     if (MAIN younger TMP_DIR "/" + maino)
-        system(g_compiler + TMP_DIR "/" + maino + " " MAIN);
+        system(g_compiler + " -o " TMP_DIR "/" + maino + " " MAIN);
 
     link(maino, strip);
 
@@ -589,6 +599,8 @@ void main(int argc, list argv, list envp)
 
     echo(USE_ECHO);
 
+    setGcompiler();
+
     option = argv[1];
 
     if (option == "-c")
@@ -636,7 +648,6 @@ void main(int argc, list argv, list envp)
     if (option == "program")
     {
         clearScreen(cls);
-
         if (argv[2] == "strip")
             option = "-s";
         else

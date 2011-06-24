@@ -27,57 +27,53 @@ try()
     $* || exit 1
 }
 
-CF=$CPPFLAGS
-LF=$LDFLAGS
-
 . icm_prepare
 
-if [ "${CF}" != "" ] ; then CPPFLAGS=${CF}; fi
-if [ "${LF}" != "" ] ; then LDFLAGS=${LF}; fi
+if [ "${CFLAGS}" == "" ] ; then CFLAGS="-O2 -g"; fi
   
 echo Creating tmp/libicrss.a
 
 try cd rss
-try gcc -c -Wall ${CPPFLAGS} ${GLB} *.c
+try gcc -c -Wall ${CFLAGS} ${GLB} *.c
 try ar rs ../tmp/libicrss.a *.o
 rm *.o
 cd ..
 
 echo Creating tmp/${BINDIR}/icmake${EXTENSION}
 try cd make
-try gcc -Wall  ${CPPFLAGS} ${GLB} \
+try gcc -Wall  ${CFLAGS} ${GLB} \
         -o ../tmp/${BINDIR}/icmake${EXTENSION} *.c ../tmp/libicrss.a \
         ${LDFLAGS}
 cd ..
 
 echo Creating tmp/${BINDIR}/icmun${EXTENSION}
 try cd un
-try gcc -Wall ${GLB}  ${CPPFLAGS} \
+try gcc -Wall ${GLB}  ${CFLAGS} \
         -o ../tmp/${BINDIR}/icmun${EXTENSION} *.c ../tmp/libicrss.a \
         ${LDFLAGS}
 cd ..  
 
 echo Creating tmp/${LIBDIR}/icm-pp${EXTENSION}
 try cd pp
-try gcc -Wall ${GLB} ${CPPFLAGS} \
+try gcc -Wall ${GLB} ${CFLAGS} \
         -o ../tmp/${LIBDIR}/icm-pp${EXTENSION} *.c ../tmp/libicrss.a \
         ${LDFLAGS}
 cd ..
 
 echo Creating tmp/${LIBDIR}/icm-comp${EXTENSION}
 try cd comp
-try gcc -Wall ${GLB} ${CPPFLAGS} \
+try gcc -Wall ${GLB} ${CFLAGS} \
         -o ../tmp/${LIBDIR}/icm-comp${EXTENSION} *.c ../tmp/libicrss.a \
         ${LDFLAGS}
 cd ..
 
 echo Creating tmp/${LIBDIR}/icm-exec${EXTENSION}
 try cd exec
-try gcc -Wall ${CPPFLAGS} ${GLB} -c *.c 
+try gcc -Wall ${CFLAGS} ${GLB} -c *.c 
 for x in auks var virtual int list string stack opcodefun builtin
 do
     try cd $x
-    try gcc -Wall ${GLB} ${CPPFLAGS} -c *.c
+    try gcc -Wall ${GLB} ${CFLAGS} -c *.c
     try cd ..
 done
 try gcc -o ../tmp/${LIBDIR}/icm-exec${EXTENSION} *.o \

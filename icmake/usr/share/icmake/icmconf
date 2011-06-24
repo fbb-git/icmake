@@ -62,24 +62,30 @@
     // dependencies in CLASSES consist of the class name (as the first word on
     // a line) optionally followed by additional class names, which are the
     // classes directly depending on the line's first class name.
-//#define USE_ALL             "ALL"
+//#define USE_ALL             "a"
 
-    // define the compiler to use:
-#define COMPILER            "g++"
+    // define the compiler to use. Options specified here will always be used
+    // and cannot be overruled by COMPILER_OPTIONS or COPT settings
+#define COMPILER            "g++ --std=c++0x -Wall"
 
     // define the compiler options to use. 
-    // In preparation for the upcoming c++0x standard with the Gnu g++ 
-    // compiler the --std=c++0x flag is now part of the default
-    // COMPILER_OPTIONS 
     // To enable GNU extensions in addition to C++0x extensions, add the
     // --std=gnu++0x flag
-#define COMPILER_OPTIONS    "--std=c++0x -g -Wall -O2"
+#define COMPILER_OPTIONS    "-g -O2"
 
     // define the pattern to locate sources in a directory:
 #define SOURCES             "*.cc"
 
     // define the options used for linking:
 #define LINKER_OPTIONS      "-s"
+
+    // By providing the following two #defines the contents of environment
+    // variables named as specified will overrule, resp. COMPILER_OPTIONS 
+    // and LINKER_OPTIONS. If the #defines are provided and the environment 
+    // variables haven't been specified then COMPILER_OPTIONS and
+    // LINKER_OPTIONS will be used as-is
+//#define COPT "CXXFLAGS"
+//#define LOPT "LDFLAGS"
 
     // define any additional libraries BINARY may need:
 #define ADD_LIBRARIES       ""

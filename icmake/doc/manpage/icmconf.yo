@@ -107,7 +107,7 @@ manpagesection(COMPILING AND LINKING)
         clear the terminal screen before starting the compilation. By default
         it is not defined.
 
-    itb(#define USE_ALL     "ALL")
+    itb(#define USE_ALL     "a")
        When this directive is specified (by default it is em(not) specified) a
         class dependency setup defined in the CLASSES file will be used. In
         this case, when a directory contains a file named at the tt(USE_ALL)
@@ -117,71 +117,90 @@ manpagesection(COMPILING AND LINKING)
 
         Class dependencies in CLASSES consist of the class name (as the first
         word on a line) optionally followed by additional class names, which
-        are the classes directly depending on the line's first class name.
+        are the classes on which the line's first class name depends. 
 
         Assuming that a program uses five classes tt(One, Two, Three, Four) and
-        tt(five) and that class tt(Three) depends on class tt(Two), which in
+        tt(Five) and that class tt(Three) depends on class tt(Two), which in
         turn depends on class tt(One), while class tt(Five) depends on
-        tt(Four) and tt(Two), then the file tt(CLASSES) may reflect these
-        dependencies: 
+        tt(Three) and tt(Four), then the file tt(CLASSES) may reflect these
+        dependencies as follows: 
             verb(
     one
     two     one
     three   two
     four
-    five    two four
+    five    three four
             )
-        Creating the file tt(three/ALL) (using e.g., tt(touch three/ALL)) will
-        cause all sources of the classes tt(Three, Two) and tt(One) to be
-        recompiled. Creating tt(tt(five/ALL)) will cause all sources of
-        classes tt(Five, Four, Two) and tt(One) to be recompiled.
+        Now touching (creating) the file tt(two/a) (using e.g., tt(touch
+two/a)) causes all sources of the classes tt(Two, Three) and tt(Five) to be
+recompiled: tt(Two) is recompiled because of the existence of tt(two/a),
+tt(Three) is recompiled because it depends on tt(Two), tt(Five) is recompiled
+because it, in turn, depends on tt(Three).
 
-        This facility was added to the tt(icmbuild) script because bf(C++)
-        header files are often modified em(without) the need to recompile all
-        their depending sources. No recompilation is necessary when a new
-        class member is declared. Recompilation em(is) necessary when the
-        class's internal organization changes, e.g., when the organization of
-        its data members is modified. By simply creating a file tt(ALL) the
-        required recompilations will be performed.
+This facility was added to the tt(icmbuild) script because bf(C++) header
+files are often modified em(without) the need to recompile all their depending
+sources. No recompilation is necessary when a new class member is
+declared. Recompilation em(is) necessary when the class's internal
+organization changes, e.g., when the organization of its data members is
+modified. By simply creating a file tt(ALL) the required recompilations will
+be performed.
 
-        Following the recompilation the tt(ALL) file(s) are removed.  
+Following the recompilation the tt(a) file(s) are removed.  
 
-        Note also that when the tt(USE_ALL) directive is used the command
-        tt(icmbuild clean) also removes any leftover tt(USE_ALL) files from
-        the program's direct subdirectories.
+Note also that when the tt(USE_ALL) directive is used the command tt(icmbuild
+clean) also removes any leftover tt(USE_ALL) files from the program's direct
+subdirectories.
 
-    itb(#define COMPILER            "g++")
-       This directive defines the compiler to use. The default is shown.
+    itb(#define COMPILER            "g++ --std=c++0x -Wall")
+       This directive defines the compiler to use. The default is shown. The
+default illustrates that the compiler definition may also be provided with
+compiler options. when specified, these options are always used and cannot be
+suppressed by tt(COMPILER_OPTIONS) (see below).
 
-    itb(#define COMPILER_OPTIONS    "--std=c++0x -g -Wall -O2")
-       This directive defines the compiler options to use. The default flags
-        are shown. To enable GNU extensions in addition to the compiler's
-        C++0x extensions, add the tt(--std=gnu++0x) flag.
+    itb(#define COMPILER_OPTIONS    "-g -O2")
+       This directive defines the compiler options to use. The default options
+are shown. To enable GNU extensions in addition to the compiler's C++0x
+extensions, add the option tt(--std=gnu++0x).
+
+    itb(#define COPT "CXXFLAGS")
+        When defined (by default tt(COPT) is not defined but embedded in
+comment) tt(COPT) defines the name of an environment variable that may be
+defined holding compiler options. When this environment variable is defined
+the tt(COMPILER_OPTIONS) specification is ignored and the value of the
+specified environment variable will be used instead. 
 
     itb(#define SOURCES             "*.cc")
        This directive defines the pattern to locate sources in a
         directory. Its default value is shown.
 
-    itb(#define LINKER_OPTIONS      "-s")
+    itb(#define LINKER_OPTIONS      "")
        This directive defines the options the compiler should pass to the
-        linker. Its default value is shown.
+        linker. By default no special options are used
+
+    itb(#define LOPT "LDFLAGS")
+        When defined (by default tt(LOPT) is not defined but embedded in
+comment) tt(LOPT) defines the name of an environment variable that may be
+defined holding linker options. When this environment variable is defined
+the tt(LINKER_OPTIONS) specification is ignored and the value of the
+specified environment variable will be used instead. 
+
 
     itb(#define ADD_LIBRARIES       "")
        When a program (see tt(BINARY) above) must be linked against additional
-        libraries (other than the name of the program's library itself, if
-        specified at tt(LIBRARY)) then those libraries should be specified,
-        blank space separated, here. E.g., when a program is linked against
-        tt(libbobcat) then the specification is:
+libraries (other than the name of the program's library itself, if specified
+at tt(LIBRARY)) then those libraries should be specified, blank space
+separated, here. E.g., when a program is linked against tt(libbobcat) then the
+specification is:
     verb(
     #define ADD_LIBRARIES   "bobcat"
     )
 
     itb(#define ADD_LIBRARY_PATHS  "")
        When the additional libraries (specified at tt(ADD_LIBRARIES)) are
-        located in non-standard library locations (e.g., not in tt(/lib) and
-        tt(/usr/lib)) then these additional paths are (blank space separated) 
-        specified here. Only the paths should be specified, not the tt(-L)
-        flags. 
+located in non-standard library locations (e.g., not in tt(/lib) and
+tt(/usr/lib)) then these additional paths are (blank space separated) 
+specified here. Only the paths should be specified, not the tt(-L)
+flags. 
     )
 
 manpagesection(LEXICAL SCANNERS)
@@ -282,23 +301,27 @@ manpagesection(ADDITIONAL DIRECTIVES)
 
     itb(#define DEFCOM  "...")
        A tt(DEFCOM) directive may be added to the tt(icmconf) file by
-        tt(icmstart). If added, it may be defined as
+        tt(icmstart). If added, it may contain:
         verb(
     #define DEFCOM  "program"
         )
-       in which case tt(icmbuild) will do program maintenance. It may also be
-        defined as as 
+       in which case tt(icmbuild) will do program maintenance. Alternatively
+it may contain:
+        verb(
+    #define DEFCOM  "program strip"
+        )
+       in which case tt(icmbuild) will do program maintenance, creating a
+stripped binary program. It may also contain 
        verb(
     #define DEFCOM  "library"
        )
        in which case tt(icmbuild) will de library maintenance. 
 
-        If this directive was not added by tt(icmstart) it can always be added
-        to tt(icmconf) by hand.
+        If this directive was not added by bf(icmstart)(1) it can always be
+added to tt(icmconf) by hand.
     )
 
     The following directives usually require no tweaking:
-
     itemization(
     itb(#define USE_ECHO              ON)
         When specified as tt(ON) (rather than tt(OFF)) commands executed by
@@ -337,6 +360,7 @@ manpageseealso()
     bf(icmake)(1), bf(icmbuild)(1), bf(icmstart)(1), bf(icmstart.rc)(7).
 
 manpagebugs()
-    None reported
+    The interpretation of the class dependencies (see section bf(COMPILING AND
+LINKING) has altered when tt(icmake) was updated to version 7.16.00. 
 
 includefile(trailer.inc)

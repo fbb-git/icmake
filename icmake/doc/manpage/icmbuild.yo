@@ -43,12 +43,12 @@ maintenance is required, and the icm() script should be available in your
 path or it should be started as, e.g., tt(./icmbuild)
 
 Icm() assumes that your sources exist in and below a directory in which the
-files tt(icmconf) and tt(CLASSES) live. The file tt(CLASSES)
-contains the names of all subdirectories in which class-specific sources are
-kept. The file tt(examples/icmbuild) in bf(icmake)(1)'s distribution
-offers an example of the configuration parameters. In this latter file 
-it is assumed that  bf(C++) sources are maintained, but the icm() script is
-not restricted to do maintenance for bf(C++)  programs.
+files tt(icmconf) and tt(CLASSES) live. The file tt(CLASSES) contains the
+names of all subdirectories in which class-specific sources are kept. The file
+tt(icmconf) in bf(icmake)(1)'s distribution offers an example of the
+configuration parameters that are used for program maintenance. In this latter
+file it is assumed that bf(C++) sources are maintained, but the icm() script
+is not restricted to do maintenance for bf(C++) programs.
 
 Icm() compiles all sources in each of the subdirectories named in the file
 tt(CLASSES), and then compiles all sources in the current working directory
@@ -100,16 +100,24 @@ manpageoptions()
         build the library (static and optionally the dynamic library)
     itt(program)nl()
         build the binary program
+    itt(program strip)nl()
+        build the stripped binary program
     itt(install <base>)
         install the software in the locations defined in the tt(icmconf)
          file, optionally below the directory tt(<base>)
     )
-    The bf(icmconf) file may contain a line defining tt(DEFCOM) containing the
-default operational mode to use when none is specified. E.g.,
+    The bf(icmconf) file may be given a line defining tt(DEFCOM) containing
+the default operational mode to use when none is specified. E.g.,
         verb(
     #define DEFCOM "program"
         )
-    will construct the program when the command `tt(icmbuild)' is entered.
+    constructs the program when the command `tt(icmbuild)' is
+entered. tt(DEFCOM) may also contain combined options, like 
+        verb(
+    #define DEFCOM "program strip"
+        )
+    Note that tt(DEFCOM) is ignored when an explicit operational mode is
+provided to the icm() script.
 
 manpagefiles()
 

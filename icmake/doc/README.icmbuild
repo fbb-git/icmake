@@ -54,6 +54,7 @@ To use icmbuild the following is suggested:
            clean           - clean up remnants of previous activities
            library         - build the static library tmp/libmodules.a
            program         - build tmp/binary
+           program strip   - build stripped tmp/binary
            install <base>  - to install the software in the locations
                              defined in the icmconf file, optionally
                              below <base>

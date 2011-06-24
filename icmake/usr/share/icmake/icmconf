@@ -77,7 +77,7 @@
 #define SOURCES             "*.cc"
 
     // define the options used for linking:
-#define LINKER_OPTIONS      "-s"
+#define LINKER_OPTIONS      ""
 
     // By providing the following two #defines the contents of environment
     // variables named as specified will overrule, resp. COMPILER_OPTIONS 

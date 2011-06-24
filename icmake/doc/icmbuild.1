@@ -1,4 +1,4 @@
-.TH "icmbuild" "1" "1992\-2011" "icmake\&.7\&.15\&.00\&.tar\&.gz" "A generic program maintenance script"
+.TH "icmbuild" "1" "1992\-2011" "icmake\&.7\&.16\&.00\&.tar\&.gz" "A generic program maintenance script"
 
 .PP 
 .SH "NAME"
@@ -18,12 +18,12 @@ maintenance is required, and the \fBicmbuild\fP script should be available in yo
 path or it should be started as, e\&.g\&., \fI\&./icmbuild\fP
 .PP 
 \fBIcmbuild\fP assumes that your sources exist in and below a directory in which the
-files \fIicmconf\fP and \fICLASSES\fP live\&. The file \fICLASSES\fP
-contains the names of all subdirectories in which class\-specific sources are
-kept\&. The file \fIexamples/icmbuild\fP in \fBicmake\fP(1)\(cq\&s distribution
-offers an example of the configuration parameters\&. In this latter file 
-it is assumed that  \fBC++\fP sources are maintained, but the \fBicmbuild\fP script is
-not restricted to do maintenance for \fBC++\fP  programs\&.
+files \fIicmconf\fP and \fICLASSES\fP live\&. The file \fICLASSES\fP contains the
+names of all subdirectories in which class\-specific sources are kept\&. The file
+\fIicmconf\fP in \fBicmake\fP(1)\(cq\&s distribution offers an example of the
+configuration parameters that are used for program maintenance\&. In this latter
+file it is assumed that \fBC++\fP sources are maintained, but the \fBicmbuild\fP script
+is not restricted to do maintenance for \fBC++\fP programs\&.
 .PP 
 \fBIcmbuild\fP compiles all sources in each of the subdirectories named in the file
 \fICLASSES\fP, and then compiles all sources in the current working directory
@@ -91,17 +91,29 @@ build the library (static and optionally the dynamic library)
 .br 
 build the binary program
 .IP o 
+\fIprogram strip\fP
+.br 
+build the stripped binary program
+.IP o 
 \fIinstall <base>\fP
 install the software in the locations defined in the \fIicmconf\fP
 file, optionally below the directory \fI<base>\fP
-The \fBicmconf\fP file may contain a line defining \fIDEFCOM\fP containing the
-default operational mode to use when none is specified\&. E\&.g\&.,
+The \fBicmconf\fP file may be given a line defining \fIDEFCOM\fP containing
+the default operational mode to use when none is specified\&. E\&.g\&.,
 .nf 
 
     #define DEFCOM \(dq\&program\(dq\&
         
 .fi 
-will construct the program when the command `\fIicmbuild\fP\(cq\& is entered\&.
+constructs the program when the command `\fIicmbuild\fP\(cq\& is
+entered\&. \fIDEFCOM\fP may also contain combined options, like 
+.nf 
+
+    #define DEFCOM \(dq\&program strip\(dq\&
+        
+.fi 
+Note that \fIDEFCOM\fP is ignored when an explicit operational mode is
+provided to the \fBicmbuild\fP script\&.
 .PP 
 .SH "FILES"
 
@@ -186,24 +198,30 @@ program, using the library \fIlibbobcat1\fP as an additional library:
     // dependencies in CLASSES consist of the class name (as the first word on
     // a line) optionally followed by additional class names, which are the
     // classes directly depending on the line\(cq\&s first class name\&.
-//#define USE_ALL             \(dq\&ALL\(dq\&
+//#define USE_ALL             \(dq\&a\(dq\&
 
-    // define the compiler to use:
-#define COMPILER            \(dq\&g++\(dq\&
+    // define the compiler to use\&. Options specified here will always be used
+    // and cannot be overruled by COMPILER_OPTIONS or COPT settings
+#define COMPILER            \(dq\&g++ \-\-std=c++0x \-Wall\(dq\&
 
     // define the compiler options to use\&. 
-    // In preparation for the upcoming c++0x standard with the Gnu g++ 
-    // compiler the \-\-std=c++0x flag is now part of the default
-    // COMPILER_OPTIONS 
     // To enable GNU extensions in addition to C++0x extensions, add the
     // \-\-std=gnu++0x flag
-#define COMPILER_OPTIONS    \(dq\&\-\-std=c++0x \-g \-Wall \-O2\(dq\&
+#define COMPILER_OPTIONS    \(dq\&\-g \-O2\(dq\&
 
     // define the pattern to locate sources in a directory:
 #define SOURCES             \(dq\&*\&.cc\(dq\&
 
     // define the options used for linking:
-#define LINKER_OPTIONS      \(dq\&\-s\(dq\&
+#define LINKER_OPTIONS      \(dq\&\(dq\&
+
+    // By providing the following two #defines the contents of environment
+    // variables named as specified will overrule, resp\&. COMPILER_OPTIONS 
+    // and LINKER_OPTIONS\&. If the #defines are provided and the environment 
+    // variables haven\(cq\&t been specified then COMPILER_OPTIONS and
+    // LINKER_OPTIONS will be used as\-is
+//#define COPT \(dq\&CXXFLAGS\(dq\&
+//#define LOPT \(dq\&LDFLAGS\(dq\&
 
     // define any additional libraries BINARY may need:
 #define ADD_LIBRARIES       \(dq\&\(dq\&

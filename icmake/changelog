@@ -1,10 +1,10 @@
 icmake (7.16.00)
 
-  * icmbuild script now correctly interprets class dependencies defined in
-    CLASSES and correctly interprets USE_ALL (see 'man icmbuild') 
-
   * `icm_bootstrap' script now recognizes CFLAGS and LDFLAGS environment
     variables for, resp. gcc and ld flags. 
+
+  * icmbuild script now correctly interprets class dependencies defined in
+    CLASSES and correctly interprets USE_ALL (see `man icmconf') 
 
   * `icmbuild' script now recognizes (configurable) CXXFLAGS and LDFLAGS for,
     resp. g++ and ld flags. Default values are defined in the program's
@@ -15,7 +15,9 @@ icmake (7.16.00)
 
   * The default file name suggested for USE_ALL is 'a' (e.g., class/a)
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 23 Jun 2011 15:18:54 +0200
+  * Documentation was updated (in particular the `icmconf' man-page)
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 24 Jun 2011 20:29:38 +0200
 
 icmake (7.15.00)
 

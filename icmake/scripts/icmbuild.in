@@ -617,7 +617,10 @@ void main(int argc, list argv, list envp)
 
 #ifdef DEFCOM
     if (option == "")
-        option = DEFCOM;
+    {
+        argv = (list)"" + strtok(DEFCOM, " \t");
+        option = argv[1];
+    }
 #endif
 
 #ifdef KEEPGRAMSPEC

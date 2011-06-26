@@ -1,8 +1,14 @@
 icmake (7.16.00-1) unstable; urgency=low
 
+  [ Frank B. Brokken ]
   * New upstream release, acknowledges CFLAGS, LDFLAGS etc.
+  * Bump standards version to 3.9.2 (no changes).
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 24 Jun 2011 20:35:48 +0200
+  [ tony mancill ]
+  * Add optional build-arch and build-indep targets to debian/rules as 
+    per Debian Policy section 4.9.
+
+ -- tony mancill <tmancill@debian.org>  Sun, 26 Jun 2011 09:27:35 -0700
 
 icmake (7.15.00-1) unstable; urgency=low
 

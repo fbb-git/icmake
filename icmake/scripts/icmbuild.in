@@ -449,7 +449,7 @@ void build_libraries()
         libsoshared = libso + "." + g_version;
                                             // add option for shared lib
         setGcompiler();
-        g_compiler += " -fPIC -o "; 
+        g_compiler += " -fPIC "; 
 
         for (idx = g_nClasses; idx--; )
             std_cpp(0, TMP_DIR "/o", idx + 1, g_classes[idx], 

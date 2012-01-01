@@ -1,3 +1,9 @@
+icmake (7.16.02-1) unstable; urgency=low
+
+  * New upstream release updates icmake's release years
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 01 Jan 2012 15:38:17 +0100
+
 icmake (7.16.01-1) unstable; urgency=low
 
   * New upstream release fixes minor flaw.

@@ -16,7 +16,7 @@
 #endif
 
 #ifndef YEARS
-#define YEARS "2011"
+#define YEARS "2012"
 #endif
 
 namespace Icmbuild

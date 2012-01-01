@@ -1,3 +1,9 @@
+icmake (7.16.02) ISN
+
+  * Updated YEAR information in the file VERSION
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 01 Jan 2012 15:31:23 +0100
+
 icmake (7.16.01)
 
   * Removed erroneous -o from '-fPIC -o' in icmbuild at line 450 in

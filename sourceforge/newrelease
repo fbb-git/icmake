@@ -19,4 +19,3 @@ scp *html ../icmake/doc/manpage/*.html ../icmake/doc/icmake.ps\
     fbb,icmake@web.sourceforge.net:htdocs/
 
 rm -f ../icmake/doc/manpage/{*.html,release.yo}
-

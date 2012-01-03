@@ -109,11 +109,11 @@ manpagesection(COMPILING AND LINKING)
 
     itb(#define USE_ALL     "a")
        When this directive is specified (by default it is em(not) specified) a
-        class dependency setup defined in the CLASSES file will be used. In
+        class dependency setup defined in the CLASSES file is interpreted. In
         this case, when a directory contains a file named at the tt(USE_ALL)
-        directive (the default tt(icmconf) file pre-specifies the filename
-        tt(ALL)) then all sources of that class as well as all sources of all
-        classes depending on it are (re)compiled.
+        directive, then all sources of that class as well as all sources of
+        all classes depending on it are (re)compiled. The program's root
+        directory is assumed to depend on all other directories.
 
         Class dependencies in CLASSES consist of the class name (as the first
         word on a line) optionally followed by additional class names, which
@@ -129,23 +129,24 @@ manpagesection(COMPILING AND LINKING)
     two     one
     three   two
     four
-    five    three four
-            )
-        Now touching (creating) the file tt(two/a) (using e.g., tt(touch
-two/a)) causes all sources of the classes tt(Two, Three) and tt(Five) to be
-recompiled: tt(Two) is recompiled because of the existence of tt(two/a),
-tt(Three) is recompiled because it depends on tt(Two), tt(Five) is recompiled
-because it, in turn, depends on tt(Three).
+    five three four ) 
+    Now touching (creating) the file tt(two/a) (using e.g., the command
+tt(touch two/a)) causes all sources of the classes tt(Two, Three) and tt(Five)
+as well as all the sources in the program's root directory to be recompiled:
+tt(Two) is recompiled because of the existence of tt(two/a), tt(Three) is
+recompiled because it depends on tt(Two), tt(Five) is recompiled because it
+depends on tt(Three), the sources in the program's root directory are
+recompiled because at least one directory is recompiled.
 
 This facility was added to the tt(icmbuild) script because bf(C++) header
 files are often modified em(without) the need to recompile all their depending
-sources. No recompilation is necessary when a new class member is
-declared. Recompilation em(is) necessary when the class's internal
+sources. No recompilation is necessary when a new class member function is
+declared. Recompilation, however, em(is) necessary when the class's internal
 organization changes, e.g., when the organization of its data members is
-modified. By simply creating a file tt(ALL) the required recompilations will
-be performed.
+modified. Simply touching a file tt("a") is sufficient to perform 
+the necessary recompilations.
 
-Following the recompilation the tt(a) file(s) are removed.  
+Following the recompilations the tt(a) file(s) are removed.  
 
 Note also that when the tt(USE_ALL) directive is used the command tt(icmbuild
 clean) also removes any leftover tt(USE_ALL) files from the program's direct

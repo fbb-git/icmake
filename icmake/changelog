@@ -1,8 +1,12 @@
-icmake (7.16.02) ISN
+icmake (7.17.00)
 
-  * Updated YEAR information in the file VERSION
+  * Changed (mproved/repaired) the directory dependencies handling (as defined
+    in CLASSES) by icmbuild.in; improved the readability of icmbuild's output.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 01 Jan 2012 15:31:23 +0100
+  * Updated YEAR(S) information in VERSION and ./usr/share/icmake/version.cc
+    to 2012.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 03 Jan 2012 17:39:28 +0100
 
 icmake (7.16.01)
 

@@ -22,20 +22,24 @@
 
 //                      NO CONFIGURABLE PARTS BELOW THIS LINE
 
-string g_sources;       // Pattern for the sources to use
-string g_libpath;       // the extra library paths
-string g_libs;          // the extra libraries
-list   g_classes;       // all class-directories
-int    g_nClasses;      // number of class-directories
-string g_binary;        // binary program to build
-int    g_compiled;      // any source compiled (but main)?
-int    g_keepGramspec;  // keep the gramspec directory
-list   g_classLines;    // list of all lines in CLASSES
-list   g_depHaystack;   // list used with USE_ALL
+string  g_sources;      // Pattern for the sources to use
+string  g_libpath;      // the extra library paths
+string  g_libs;         // the extra libraries
+list    g_classes;      // all class-directories
+int     g_nClasses;     // number of class-directories
+string  g_binary;       // binary program to build
+int     g_compiled;     // any source compiled (but main)?
+int     g_keepGramspec; // keep the gramspec directory
+list    g_classLines;   // list of all lines in CLASSES
+list    g_inspected;    // list of classes whose dependencies have been 
+                        // inspected (used with USE_ALL)
+int     g_base;         // compile the sources in the base directory
+int     g_chdir;        // display chdirs to directories without sources to
+                        // compile
 
-string g_version = VERSION;
-string g_compiler;
-string g_cwd = chdir("");   // initial working directory
+string  g_version = VERSION;
+string  g_compiler;
+string  g_cwd = chdir("");  // initial working directory
 
 void md(string dir)
 {
@@ -43,12 +47,11 @@ void md(string dir)
         system("mkdir -p " + dir);
 }
 
-string cd(string next)
+void showCd(string dir)
 {
-    if (USE_ECHO && next != ".")
-        printf("chdir " + next + "\n");
-
-    return chdir(next);
+    if (USE_ECHO)    
+        printf("\n"
+                "chdir ", dir, "\n");
 }
 
 string setOpt(string install_im, string envvar)
@@ -93,7 +96,7 @@ void parser()
     list gramfiles;
     int idx;
 
-    cd(PARSER_DIR);
+    chdir(PARSER_DIR);
 
     gramfiles = makelist(PARSSPEC);
 
@@ -101,7 +104,9 @@ void parser()
     gramfiles += makelist(PARSFILES);
 #else
     #ifdef GRAMBUILD
-        cd("gramspec");
+        chdir("gramspec");
+        showCd(PARSER_DIR "gramspec");
+
         system("./grambuild");
         chdir("..");
     #endif
@@ -111,6 +116,7 @@ void parser()
     {
         if (gramfiles[idx] younger PARSOUT)    // need new parser
         {
+            showCd(PARSER_DIR);
             if (USE_ECHO)
                 printf("New parser: `", gramfiles[idx], "' changed\n");
             system(PARSGEN " " PARSFLAGS " " PARSSPEC);
@@ -127,7 +133,7 @@ void scanner()
     int idx;
     int rerun;
 
-    cd(SCANNER_DIR);
+    chdir(SCANNER_DIR);
 
     rerun = PARSER_DIR != "" && "../"PARSER_DIR"/"PARSOUT  younger SCANOUT;
 
@@ -143,6 +149,7 @@ void scanner()
         {
             if (scanfiles[idx]  younger SCANOUT)
             {
+                showCd(SCANNER_DIR);
                 rerun = 1;
                 break;
             }
@@ -168,58 +175,87 @@ int find(string needle, list haystack)
     return idx;
 }
 
-void dependent(int idx)
-{
-    list dependencies;
-    string target;
-    int ret;
-    int depIdx;
+list classLine(int idx)     // return the list of classes that depend on
+{                           // class[idx]
+    string class;
+    int lineIdx;
+    list ret;
 
-    target = g_classes[idx];            // recompile this dir.
-    g_depHaystack += (list)target;      // recompile classes depending on 
-                                        // these classes
-    printf("RECOMPILE: ", target, "\n");
-    system("touch " + target + "/*.cc");
-
-                                        // inspect all classes
-    for (depIdx = 0; depIdx != g_nClasses; ++depIdx)
+    class = g_classes[idx];
+    for (idx = 0; idx != g_nClasses; ++idx)
     {
-                                        // get all dependencies for depIdx
-        dependencies = strtok(g_classLines[depIdx], " \t\n");
-        
-        if 
-        (
-            find(target, dependencies) != -1    // depIdx depends on target
-            &&                                  // and depIdx not yet recorded
-            find(dependencies[0], g_depHaystack) == -1
-        )
-            dependent(depIdx);                  // then do depIdx's deps
+        ret = strtok(g_classLines[idx], " \t\n");
+
+        if (ret[0] == class)
+        {
+            ret -= (list)class;
+            break;
+        }
+    }
+    return ret;
+}
+
+void touch(string dir)
+{
+    echo(OFF);
+    if (!exists(dir + "/" USE_ALL))
+        system("touch " + dir + "/" USE_ALL);
+    echo(USE_ECHO);
+}
+            
+    //  g_classes[idx] has USE_ALL set. 
+    //  find all classes that depend on g_classes[idx], 
+    //  if those classes haven't been inspected yet, then set their USE_ALL 
+    //  file and inspect their dependencies.
+void dependendenciesOf(int thisIdx)
+{
+    string thisClass;
+    int ret;
+    int idx;
+    list classIdxDependencies;
+
+    thisClass = g_classes[thisIdx];         // recompile this dir.
+
+    if (find(thisClass, g_inspected) != -1) // this class already inspected
+        return;                             // then done with this class
+
+    printf("RECOMPILE: ", thisClass, "\n");
+    g_base = 1;                             // recompile the base's files
+
+    g_inspected += (list)thisClass;         // now inspected
+
+        // find all classes depending on thisClass
+    for (idx = 0; idx != g_nClasses; ++idx)
+    {
+            // classIdxDependencies holds all classes on which class[idx]
+            // depends 
+        classIdxDependencies = classLine(idx);
+  
+            // if class[idx] depends on thisClass then recompile it
+            // and determine the classes that depend on class[idx]
+        if (find(thisClass, classIdxDependencies) != -1)
+        {
+            touch(g_classes[idx]);
+            dependendenciesOf(idx);
+        }
     }
 }            
     
 void checkALL()
 {
     int idx;
-    int base;
     string all;
 
-    base = 0;
     for (idx = 0; idx != g_nClasses; ++idx)
     {
         all = g_classes[idx] + "/" USE_ALL;
 
         if (exists(all))
-        {
-            dependent(idx);
-            base = 1;
-        }
+            dependendenciesOf(idx);
     }
 
-    if (base)
-    {
-        system("rm -f */" USE_ALL);
-        system("touch *.cc");
-    }
+    if (g_base)
+        touch(".");
 }
     
 #endif
@@ -327,6 +363,8 @@ void c_compile(int prefix, string destDir, string srcDir, list cfiles)
     string compiler;
     string file;
 
+    showCd(srcDir);
+
     if (srcDir != "")
         srcDir += "/";
 
@@ -348,7 +386,7 @@ void std_cpp(int ignoreMain, string destDir,
     chdir("");
                                                     // make list of all files
     md(destDir);
-    cd(srcDir);
+    chdir(srcDir);
     files = makelist(g_sources);
     if (ignoreMain)
         files -= (list)MAIN;
@@ -362,10 +400,12 @@ void std_cpp(int ignoreMain, string destDir,
 
 void static_library()
 {
-    cd(TMP_DIR "/o");
+    chdir(TMP_DIR "/o");
 
     if (strlen(LIBRARY) && sizeof(makelist("*" OBJ_EXT)))
     {
+        showCd(TMP_DIR "/o");
+
         system("ar cru ../lib" LIBRARY + ".a *" OBJ_EXT);
         system("ranlib ../lib" LIBRARY + ".a");
         system("rm *" OBJ_EXT);
@@ -486,7 +526,7 @@ void link(string maino, string strip)
 #ifdef BINARY
     string compiler;
 
-    cd(TMP_DIR);
+    chdir(TMP_DIR);
 
     compiler = COMPILER " -o bin/" BINARY " " + maino;
 
@@ -510,7 +550,11 @@ void link(string maino, string strip)
             g_compiled
         )
     #endif
+    {
+        showCd(TMP_DIR);
+        printf("LINKING:\n");
         system(compiler + " " + strip + setOpt(LINKER_OPTIONS, "LDFLAGS"));
+    }
 
     chdir("");
 #endif
@@ -537,16 +581,25 @@ void program(string strip)
 
     md(TMP_DIR "/bin");
 
+#ifdef USE_ALL
+    g_base = exists(USE_ALL);
+#endif
+
     build_libraries();
 
-    if (MAIN younger TMP_DIR "/" + maino)
+    if (g_base || MAIN younger TMP_DIR "/" + maino)
+    {
+        printf("\n"
+                "chdir .\n"
+                "RECOMPILE: main.cc\n");
         system(g_compiler + " -o " TMP_DIR "/" + maino + " " MAIN);
+    }
 
     link(maino, strip);
 
 #ifdef USE_ALL
     echo(OFF);
-    system("rm -f */" USE_ALL);
+    system("rm -f " USE_ALL " */" USE_ALL);
     echo(USE_ECHO);
 #endif
 
@@ -557,7 +610,7 @@ void clean()
 {
     chdir("");
 #ifdef USE_ALL
-    system("rm -rf */" USE_ALL " " TMP_DIR);
+    system("rm -rf " USE_ALL " */" USE_ALL " " TMP_DIR);
 #else
     system("rm -rf " TMP_DIR);
 #endif
@@ -666,7 +719,7 @@ void main(int argc, list argv, list envp)
 
 #ifdef USE_ALL
         echo(OFF);
-        system("rm -f */" USE_ALL);
+        system("rm -f " USE_ALL " */" USE_ALL);
         echo(USE_ECHO);
 #endif
 

@@ -1,3 +1,11 @@
+icmake (7.18.00)
+
+  * Fine-tuned icmbuild so that only used USE_ALL files are removed instead of
+    all files named so
+
+  * TODO: improve the documentation about class dependency handling
+
+
 icmake (7.17.00)
 
   * Changed (mproved/repaired) the directory dependencies handling (as defined

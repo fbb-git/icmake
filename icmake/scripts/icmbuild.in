@@ -175,26 +175,6 @@ int find(string needle, list haystack)
     return idx;
 }
 
-list classLine(int idx)     // return the list of classes that depend on
-{                           // class[idx]
-    string class;
-    int lineIdx;
-    list ret;
-
-    class = g_classes[idx];
-    for (idx = 0; idx != g_nClasses; ++idx)
-    {
-        ret = strtok(g_classLines[idx], " \t\n");
-
-        if (ret[0] == class)
-        {
-            ret -= (list)class;
-            break;
-        }
-    }
-    return ret;
-}
-
 void touch(string dir)
 {
     echo(OFF);
@@ -207,36 +187,31 @@ void touch(string dir)
     //  find all classes that depend on g_classes[idx], 
     //  if those classes haven't been inspected yet, then set their USE_ALL 
     //  file and inspect their dependencies.
-void dependendenciesOf(int thisIdx)
+void dependendenciesOf(string thisClass)
 {
-    string thisClass;
     int ret;
     int idx;
-    list classIdxDependencies;
-
-    thisClass = g_classes[thisIdx];         // recompile this dir.
+    string classLine;
+    string hit;
 
     if (find(thisClass, g_inspected) != -1) // this class already inspected
         return;                             // then done with this class
 
-    printf("RECOMPILE: ", thisClass, "\n");
     g_base = 1;                             // recompile the base's files
 
+    printf("RECOMPILE: ", thisClass, "\n");
     g_inspected += (list)thisClass;         // now inspected
 
         // find all classes depending on thisClass
     for (idx = 0; idx != g_nClasses; ++idx)
     {
-            // classIdxDependencies holds all classes on which class[idx]
-            // depends 
-        classIdxDependencies = classLine(idx);
-  
-            // if class[idx] depends on thisClass then recompile it
-            // and determine the classes that depend on class[idx]
-        if (find(thisClass, classIdxDependencies) != -1)
+        classLine = g_classLines[idx];
+
+        if (strfind(classLine, thisClass) > 0)
         {
-            touch(g_classes[idx]);
-            dependendenciesOf(idx);
+            hit = strtok(classLine, " \t")[0];
+            touch(hit);
+            dependendenciesOf(hit);
         }
     }
 }            
@@ -251,7 +226,7 @@ void checkALL()
         all = g_classes[idx] + "/" USE_ALL;
 
         if (exists(all))
-            dependendenciesOf(idx);
+            dependendenciesOf(g_classes[idx]);
     }
 
     if (g_base)
@@ -574,6 +549,21 @@ void strip_shared()
         printf("Can't find " TMP_DIR "/" + libsoshared + "\n");
 }
 
+#ifdef USE_ALL
+void rmUSE_ALLfiles()
+{
+    int idx;
+
+    echo(OFF);
+
+    for (idx = sizeof(g_inspected); idx--; )
+        system("rm -f " + g_inspected[idx] + "/" USE_ALL);
+    if (sizeof(g_inspected))
+        system("rm -f " USE_ALL);
+
+    echo(USE_ECHO);
+}
+#endif
 
 void program(string strip)
 {
@@ -598,9 +588,7 @@ void program(string strip)
     link(maino, strip);
 
 #ifdef USE_ALL
-    echo(OFF);
-    system("rm -f " USE_ALL " */" USE_ALL);
-    echo(USE_ECHO);
+    rmUSE_ALLfiles();
 #endif
 
     exit(0);
@@ -718,11 +706,8 @@ void main(int argc, list argv, list envp)
         build_libraries();      
 
 #ifdef USE_ALL
-        echo(OFF);
-        system("rm -f " USE_ALL " */" USE_ALL);
-        echo(USE_ECHO);
+    rmUSE_ALLfiles();
 #endif
-
         exit(0);
     }
 

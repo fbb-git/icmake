@@ -56,7 +56,7 @@ override_dh_link:
 # catches silent file content forges at the upstream server side
 # Archive downloaded from https://www.icce.rug.nl/debian/icmake
 #   file: icmake_x.y.z.tar.gz
-MD5TRUSTED := dd9286a62193d3997e58c0b9354a16de
+MD5TRUSTED := b3bd3d35ffe41918f602faada3314706
 
 DEBVERSION:=$(shell head -n 1 debian/changelog | sed -e 's/^[^(]*(\([^)]*\)).*/\1/')
 UPVERSION:=$(shell echo $(DEBVERSION) | sed -e 's/^.*://' -e 's/-[0-9.]*$$//' -e 's/.dfsg$$//')

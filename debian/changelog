@@ -1,3 +1,12 @@
+icmake (7.18.00-1) unstable; urgency=low
+
+  * New upstream release's default skeleton files are tailored to flexc++ and
+    bisonc++ >= 3.00.00. Also, the documentation about setting up class
+    dependencies in the CLASSES file used by icmbuild was improved
+    (cf. icmconf(7)) 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 22 Feb 2012 14:15:25 +0100
+
 icmake (7.17.00-1) unstable; urgency=low
 
   * New upstream release updates icmake's release years and modified the

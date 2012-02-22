@@ -16,7 +16,7 @@
 #
 # If postrm fails during upgrade or fails on failed upgrade:
 #       <old-preinst> abort-upgrade <new-version>
-
+#
 
 dpkg-maintscript-helper rm_conffile /etc/icmake/AUTHOR  7.14.1-1 -- "$@"
 dpkg-maintscript-helper rm_conffile /etc/icmake/VERSION 7.14.1-1 -- "$@"

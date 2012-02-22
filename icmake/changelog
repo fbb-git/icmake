@@ -3,8 +3,13 @@ icmake (7.18.00)
   * Fine-tuned icmbuild so that only used USE_ALL files are removed instead of
     all files named so
 
-  * TODO: improve the documentation about class dependency handling
+  * The initial program files installed by default by icmstart assume that the
+    flexc++ scanner generator (0.93.00) and the bisonc++ parser generator (>=
+    3.00.00) is available.
 
+  * The documentation about class dependency handling was improved
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 22 Feb 2012 14:06:48 +0100
 
 icmake (7.17.00)
 

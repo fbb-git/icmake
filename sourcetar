@@ -18,7 +18,7 @@ DISTRIBUTION=${PROJECT}-${VERSION}      # define the distribution's dir name
 tgz()
 {
     ln -s ${PROJECT} ${DISTRIBUTION}        # distribution's dir name
-    tar czvf $1 --exclude-from=excluded  ${DISTRIBUTION}/*
+    tar czvf $1 ${DISTRIBUTION}/*
     rm ${DISTRIBUTION}  ${PROJECT}/LICENSE  # rm the link/license file
 }
 

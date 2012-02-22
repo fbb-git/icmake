@@ -1,4 +1,4 @@
-.TH "icmconf" "7" "1992\-2011" "icmake\&.7\&.14\&.0\&.tar\&.gz" "configuration file for \fBicmbuild\fP(1)"
+.TH "icmconf" "7" "1992\-2012" "icmake\&.7\&.18\&.00\&.tar\&.gz" "configuration file for \fBicmbuild\fP(1)"
 
 .PP 
 .SH "NAME"
@@ -16,6 +16,92 @@ determine how the program or library maintenance will proceed\&.
 The directives are biased towards the construction of a \fBC++\fP program, but
 program maintenance for other languages (e\&.g\&., \fBC\fP) can easily be realized
 as well\&. 
+.PP 
+.SH "CLASS DEPENDENCIES"
+
+.PP 
+Traditional make\-utilities recompile sources once header files are
+modified\&. In the context of \fBC++\fP program development this is often a bad
+idea, as adding a new member to a class does not normally require you to
+recompile the class\(cq\&s sources\&. To handle class dependencies in a more sensible
+way, \fBicmake\fP(1)\(cq\&s \fICLASSES\fP file may define dependencies among classes\&. 
+.PP 
+If a class Y depends on class X as in:
+.nf 
+
+  class Y: public X
+    {
+        \&.\&.\&.
+    };
+        
+.fi 
+or as in:
+.nf 
+
+    class Y 
+    { 
+        X d_y; 
+        \&.\&.\&.
+    };
+        
+.fi 
+then the sources of class Y should be recompiled if X\(cq\&s data organization
+has changed\&. In cases like these Y depends on X\&. 
+.PP 
+Such class dependencies can be specified in the CLASSES file using the
+form: 
+.nf 
+
+  y   x
+    
+.fi 
+where x and y are the directories holding the respective class sources\&. Then,
+when altering X\(cq\&s data organization, do \(cq\&touch x/a\(cq\&, followed by \(cq\&icmbuild
+program\(cq\&: x\(cq\&s sources as well as the sources in directories (in)directly
+depending on x (e\&.g\&., y) are then automatically recompiled by icmbuild\&.
+.PP 
+Multiple dependencies can also be specified\&. If the class
+organization looks like this:
+.nf 
+
+    class Z: public Y
+    {
+        X d_x;
+    };
+        
+.fi 
+then Z depends on both Y and X\&. In the CLASSES file this may be indicated
+by the line
+.nf 
+
+    z   x   y
+        
+.fi 
+Indirect dependencies are automatically followed\&. After changing X\(cq\&s data
+organization where CLASSES contains the lines
+.nf 
+
+    x
+    y   x
+    z   y
+        
+.fi 
+then \(cq\&icmbuild program\(cq\& will result in the recompilation of all of the
+sources in classes x, y and z\&.
+.PP 
+By default, class\-dependencies are not interpreted\&. To activate them the line
+.nf 
+
+//#define USE_ALL             \(dq\&a\(dq\&
+    
+.fi 
+in the \fIicmconf\fP file must be uncommented:
+.nf 
+
+#define USE_ALL             \(dq\&a\(dq\&
+    
+.fi 
+
 .PP 
 .SH "PROGRAM AND SOURCE CONFIGURATION"
 
@@ -104,63 +190,77 @@ clear the terminal screen before starting the compilation\&. By default
 it is not defined\&.
 .IP 
 .IP o 
-\fB#define USE_ALL     \(dq\&ALL\(dq\&\fP
+\fB#define USE_ALL     \(dq\&a\(dq\&\fP
 .br 
 When this directive is specified (by default it is \fInot\fP specified) a
-class dependency setup defined in the CLASSES file will be used\&. In
+class dependency setup defined in the CLASSES file is interpreted\&. In
 this case, when a directory contains a file named at the \fIUSE_ALL\fP
-directive (the default \fIicmconf\fP file pre\-specifies the filename
-\fIALL\fP) then all sources of that class as well as all sources of all
-classes depending on it are (re)compiled\&.
+directive, then all sources of that class as well as all sources of
+all classes depending on it are (re)compiled\&. The program\(cq\&s root
+directory is assumed to depend on all other directories\&.
 .IP 
 Class dependencies in CLASSES consist of the class name (as the first
 word on a line) optionally followed by additional class names, which
-are the classes directly depending on the line\(cq\&s first class name\&.
+are the classes on which the line\(cq\&s first class name depends\&. 
 .IP 
 Assuming that a program uses five classes \fIOne, Two, Three, Four\fP and
-\fIfive\fP and that class \fIThree\fP depends on class \fITwo\fP, which in
+\fIFive\fP and that class \fIThree\fP depends on class \fITwo\fP, which in
 turn depends on class \fIOne\fP, while class \fIFive\fP depends on
-\fIFour\fP and \fITwo\fP, then the file \fICLASSES\fP may reflect these
-dependencies: 
+\fIThree\fP and \fIFour\fP, then the file \fICLASSES\fP may reflect these
+dependencies as follows: 
 .nf 
 
     one
     two     one
     three   two
     four
-    five    two four
-            
+    five three four 
 .fi 
-Creating the file \fIthree/ALL\fP (using e\&.g\&., \fItouch three/ALL\fP) will
-cause all sources of the classes \fIThree, Two\fP and \fIOne\fP to be
-recompiled\&. Creating \fI\fIfive/ALL\fP\fP will cause all sources of
-classes \fIFive, Four, Two\fP and \fIOne\fP to be recompiled\&.
+Now touching (creating) the file \fItwo/a\fP (using e\&.g\&., the command
+\fItouch two/a\fP) causes all sources of the classes \fITwo, Three\fP and \fIFive\fP
+as well as all the sources in the program\(cq\&s root directory to be recompiled:
+\fITwo\fP is recompiled because of the existence of \fItwo/a\fP, \fIThree\fP is
+recompiled because it depends on \fITwo\fP, \fIFive\fP is recompiled because it
+depends on \fIThree\fP, the sources in the program\(cq\&s root directory are
+recompiled because at least one directory is recompiled\&.
 .IP 
-This facility was added to the \fIicmbuild\fP script because \fBC++\fP
-header files are often modified \fIwithout\fP the need to recompile all
-their depending sources\&. No recompilation is necessary when a new
-class member is declared\&. Recompilation \fIis\fP necessary when the
-class\(cq\&s internal organization changes, e\&.g\&., when the organization of
-its data members is modified\&. By simply creating a file \fIALL\fP the
-required recompilations will be performed\&.
+This facility was added to the \fIicmbuild\fP script because \fBC++\fP header
+files are often modified \fIwithout\fP the need to recompile all their depending
+sources\&. No recompilation is necessary when a new class member function is
+declared\&. Recompilation, however, \fIis\fP necessary when the class\(cq\&s internal
+organization changes, e\&.g\&., when the organization of its data members is
+modified\&. Simply touching a file \fI\(dq\&a\(dq\&\fP is sufficient to perform 
+the necessary recompilations\&.
 .IP 
-Following the recompilation the \fIALL\fP \fBs\fP are removed\&.  
+Following the recompilations the \fIa\fP \fBs\fP are removed\&.  
 .IP 
-Note also that when the \fIUSE_ALL\fP directive is used the command
-\fIicmbuild clean\fP also removes any leftover \fIUSE_ALL\fP files from
-the program\(cq\&s direct subdirectories\&.
-.IP 
-.IP o 
-\fB#define COMPILER            \(dq\&g++\(dq\&\fP
-.br 
-This directive defines the compiler to use\&. The default is shown\&.
+Note also that when the \fIUSE_ALL\fP directive is used the command \fIicmbuild
+clean\fP also removes any leftover \fIUSE_ALL\fP files from the program\(cq\&s direct
+subdirectories\&.
 .IP 
 .IP o 
-\fB#define COMPILER_OPTIONS    \(dq\&\-\-std=c++0x \-g \-Wall \-O2\(dq\&\fP
+\fB#define COMPILER            \(dq\&g++ \-\-std=c++0x \-Wall\(dq\&\fP
 .br 
-This directive defines the compiler options to use\&. The default flags
-are shown\&. To enable GNU extensions in addition to the compiler\(cq\&s
-C++0x extensions, add the \fI\-\-std=gnu++0x\fP flag\&.
+This directive defines the compiler to use\&. The default is shown\&. The
+default illustrates that the compiler definition may also be provided with
+compiler options\&. when specified, these options are always used and cannot be
+suppressed by \fICOMPILER_OPTIONS\fP (see below)\&.
+.IP 
+.IP o 
+\fB#define COMPILER_OPTIONS    \(dq\&\-g \-O2\(dq\&\fP
+.br 
+This directive defines the compiler options to use\&. The default options
+are shown\&. To enable GNU extensions in addition to the compiler\(cq\&s C++0x
+extensions, add the option \fI\-\-std=gnu++0x\fP\&.
+.IP 
+.IP o 
+\fB#define COPT \(dq\&CXXFLAGS\(dq\&\fP
+.br 
+When defined (by default \fICOPT\fP is not defined but embedded in
+comment) \fICOPT\fP defines the name of an environment variable that may be
+defined holding compiler options\&. When this environment variable is defined
+the \fICOMPILER_OPTIONS\fP specification is ignored and the value of the
+specified environment variable will be used instead\&. 
 .IP 
 .IP o 
 \fB#define SOURCES             \(dq\&*\&.cc\(dq\&\fP
@@ -169,19 +269,28 @@ This directive defines the pattern to locate sources in a
 directory\&. Its default value is shown\&.
 .IP 
 .IP o 
-\fB#define LINKER_OPTIONS      \(dq\&\-s\(dq\&\fP
+\fB#define LINKER_OPTIONS      \(dq\&\(dq\&\fP
 .br 
 This directive defines the options the compiler should pass to the
-linker\&. Its default value is shown\&.
+linker\&. By default no special options are used
+.IP 
+.IP o 
+\fB#define LOPT \(dq\&LDFLAGS\(dq\&\fP
+.br 
+When defined (by default \fILOPT\fP is not defined but embedded in
+comment) \fILOPT\fP defines the name of an environment variable that may be
+defined holding linker options\&. When this environment variable is defined
+the \fILINKER_OPTIONS\fP specification is ignored and the value of the
+specified environment variable will be used instead\&. 
 .IP 
 .IP o 
 \fB#define ADD_LIBRARIES       \(dq\&\(dq\&\fP
 .br 
 When a program (see \fIBINARY\fP above) must be linked against additional
-libraries (other than the name of the program\(cq\&s library itself, if
-specified at \fILIBRARY\fP) then those libraries should be specified,
-blank space separated, here\&. E\&.g\&., when a program is linked against
-\fIlibbobcat\fP then the specification is:
+libraries (other than the name of the program\(cq\&s library itself, if specified
+at \fILIBRARY\fP) then those libraries should be specified, blank space
+separated, here\&. E\&.g\&., when a program is linked against \fIlibbobcat\fP then the
+specification is:
 .nf 
 
     #define ADD_LIBRARIES   \(dq\&bobcat\(dq\&
@@ -217,12 +326,12 @@ by \fIicmbuild\fP and all remaining scanner\-related directives are
 ignored\&. 
 .IP 
 .IP o 
-\fB#define SCANGEN             \(dq\&flex\(dq\&\fP
+\fB#define SCANGEN             \(dq\&flexc++\(dq\&\fP
 .br 
 The name of the program generating the lexical scanner\&.
 .IP 
 .IP o 
-\fB#define SCANFLAGS           \(dq\&\-I\(dq\&\fP
+\fB#define SCANFLAGS           \(dq\&\(dq\&\fP
 .br 
 The flags to use when calling the program specified at \fISCANGEN\fP\&.
 .IP 
@@ -244,7 +353,7 @@ matching the pattern are modified then a new lexical scanner will be
 created\&. By default no additional specification files are used\&.
 .IP 
 .IP o 
-\fB#define SCANOUT             \(dq\&yylex\&.cc\(dq\&\fP
+\fB#define SCANOUT             \(dq\&lex\&.cc\(dq\&\fP
 .br 
 The name of the file generated by the lexical scanner (which is used by
 \fIicmbuild\fP to compare the timestamps of the scanner specification
@@ -274,7 +383,7 @@ ignored\&.
 The name of the program generating the parser\&.
 .IP 
 .IP o 
-\fB#define PARSFLAGS           \(dq\&\-V \-l\(dq\&\fP
+\fB#define PARSFLAGS           \(dq\&\-V\(dq\&\fP
 .br 
 The flags to use when calling the program specified at \fIPARSGEN\fP\&.
 .IP 
@@ -301,14 +410,6 @@ created\&. By default no additional specification files are used\&.
 The name of the file generated by the parser generator (which is used
 by \fIicmbuild\fP to compare the timestamps of the parser specification
 \fBs\fP against)\&.
-.IP 
-.IP o 
-\fB#define GRAMBUILD\fP
-.br 
-Since \fIbisonc++\fP version 2\&.0\&.0 this directive is obsolete, but is
-kept for backward compatibility\&. It is removed from the \fIicmconf\fP
-skeleton file\&. The \fIPARSEFILES\fP directive overrules the use of
-\fIGRAMBUILD\fP\&.
 
 .PP 
 .SH "ADDITIONAL DIRECTIVES"
@@ -327,14 +428,21 @@ defines \fIAUTHOR, VERSION\fP and \fIYEARS\fP\&.
 \fB#define DEFCOM  \(dq\&\&.\&.\&.\(dq\&\fP
 .br 
 A \fIDEFCOM\fP directive may be added to the \fIicmconf\fP file by
-\fIicmstart\fP\&. If added, it may be defined as
+\fIicmstart\fP\&. If added, it may contain:
 .nf 
 
     #define DEFCOM  \(dq\&program\(dq\&
         
 .fi 
-in which case \fIicmbuild\fP will do program maintenance\&. It may also be
-defined as as 
+in which case \fIicmbuild\fP will do program maintenance\&. Alternatively
+it may contain:
+.nf 
+
+    #define DEFCOM  \(dq\&program strip\(dq\&
+        
+.fi 
+in which case \fIicmbuild\fP will do program maintenance, creating a
+stripped binary program\&. It may also contain 
 .nf 
 
     #define DEFCOM  \(dq\&library\(dq\&
@@ -342,12 +450,11 @@ defined as as
 .fi 
 in which case \fIicmbuild\fP will de library maintenance\&. 
 .IP 
-If this directive was not added by \fIicmstart\fP it can always be added
-to \fIicmconf\fP by hand\&.
+If this directive was not added by \fBicmstart\fP(1) it can always be
+added to \fIicmconf\fP by hand\&.
 
 .PP 
 The following directives usually require no tweaking:
-.PP 
 .IP o 
 \fB#define USE_ECHO              ON\fP
 .br 
@@ -399,7 +506,8 @@ name\&. E\&.g\&., my \fI\&.icmake/AUTHOR\fP file contains:
 \fBicmake\fP(1), \fBicmbuild\fP(1), \fBicmstart\fP(1), \fBicmstart\&.rc\fP(7)\&.
 .PP 
 .SH "BUGS"
-None reported
+The interpretation of the class dependencies (see section \fBCOMPILING AND
+LINKING\fP has altered when \fIicmake\fP was updated to version 7\&.16\&.00\&. 
 .PP 
 .SH "COPYRIGHT"
 This is free software, distributed under the terms of the 

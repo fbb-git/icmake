@@ -10,3 +10,18 @@
 
 # sources in the current (i.e., this) directory are also compiled.
 
+# If a class Y depends on class X as in:
+#   class Y: public X
+# or:
+#   class Y 
+#   { 
+#       X d_y; 
+#   };
+# then specify the dependency here using the form
+#   y   x
+# where x and y are the directories holding the resp. class sources. Multiple
+#   dependencies are OK. Then, when altering X's data organization, do 'touch
+#   x/a', followed by 'icmbuild program': x's sources as well as the sources in 
+#   directories (in)directly depending on x (e.g., y) are then automatically 
+#   recompiled by icmbuild.
+

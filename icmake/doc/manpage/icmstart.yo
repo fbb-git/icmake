@@ -137,12 +137,12 @@ YEARS "yyyy") where tt(yyyy) is the current year.
     When the file tt(YEAR) is defined in a configuration path it should have
 one line, defining the program's initial release year. E.g.,
         verb(
-    #define YEARS "2011"
+    #define YEARS "2012"
         )
     Plural is used here since a release year usually becomes a range of years
 after some time, as with Icmake's years specification:
         verb(
-    #define YEARS "1992-2011"
+    #define YEARS "1992-2012"
         )
     )
 

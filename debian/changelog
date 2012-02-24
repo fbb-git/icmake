@@ -1,3 +1,14 @@
+icmake (7.18.00-2) unstable; urgency=low
+
+  * Apply dh_installdeb maintscript support patch. (Closes: #659758)
+    - Thanks to Colin Watson.
+  * Set d/compat level to 8.
+  * Bump Standards-Version to 3.9.3 (no changes necessary).
+  * Fix typo in icmake-doc synopsis in d/control.
+    - Thanks to Vincent Blut. (Closes: #643898, #654620) 
+
+ -- tony mancill <tmancill@debian.org>  Fri, 24 Feb 2012 05:54:25 +0000
+
 icmake (7.18.00-1) unstable; urgency=low
 
   * New upstream release's default skeleton files are tailored to flexc++ and

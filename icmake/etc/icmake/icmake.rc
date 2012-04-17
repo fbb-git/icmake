@@ -1,0 +1,21 @@
+# This is the icmake configuration file. It is available since icmake 8.0.0
+# This file defines the locations of various files used by icmake itself.
+# Change these entries and icmake will look at the new locations
+#   
+# The location of this file itself is (in order of searching):
+#       -c configPath       -- a program command-line parameter
+#       ~/.icmake.rc        -- a configuration file in the user's home dir
+#       /etc/icmake/icmake.cf
+
+    # the full path to the icm-comp icmake compiler:
+icm-comp:   /usr/lib/icmake/icm-comp
+
+    # the full path to the icm-exec icmake executer:
+icm-exec:   /usr/lib/icmake/icm-exec
+
+    # the full path to the icm-pp icmake pre-processor:
+icm-pp:     /usr/lib/icmake/icm-pp
+
+    # the skeleton directory:
+skeletons:  /usr/share/icmake
+

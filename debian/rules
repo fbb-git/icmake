@@ -72,7 +72,7 @@ get-orig-source:
 	@@[ -d ../tarballs/. ]||mkdir -p ../tarballs
 
 	-@if [ ! -f ../tarballs/$(DEFILE) ] ; then \
-			echo "Downloading $(URL)/$(UPFILE)\nSaving into ../tarballs/$(DEFILE) ..." ; \
+			echo -e "Downloading $(URL)/$(UPFILE)\nSaving into ../tarballs/$(DEFILE) ..." ; \
 			wget --no-check-certificate --quiet -N -nv -T20 -t3 -O \
 					 ../tarballs/$(DEFILE) $(URL)/$(UPFILE) ; \
 	else \

@@ -8,26 +8,18 @@
 #define VERSION "0.00.00"
 #endif
 
-#ifndef LIBRARY
-#define LIBRARY ""
-#endif
-
-#ifndef BIN_INSTALL
-#define BIN_INSTALL "."
-#endif
-
 #ifndef SHAREDREQ
 #define SHAREDREQ   ""
 #endif
 
 //                      NO CONFIGURABLE PARTS BELOW THIS LINE
 
+string  g_command;      // command to execute
 string  g_sources;      // Pattern for the sources to use
 string  g_libpath;      // the extra library paths
 string  g_libs;         // the extra libraries
 list    g_classes;      // all class-directories
 int     g_nClasses;     // number of class-directories
-string  g_binary;       // binary program to build
 int     g_compiled;     // any source compiled (but main)?
 int     g_keepGramspec; // keep the gramspec directory
 list    g_classLines;   // list of all lines in CLASSES
@@ -71,10 +63,17 @@ string setOpt(string install_im, string envvar)
 
 void setGcompiler()
 {
-#ifdef COPTS
-    g_compiler = COMPILER " -c " + setOpt(COMPILER_OPTIONS, COPTS);
+    // try a C++ compiler; if not found: try a C compiler; if not found
+    // try COMPILER. 
+    // Same for matching options.
+#ifdef CXX
+    g_compiler = setOpt(CXX, "CXX") + " " + setOpt(CXXFLAGS, "CXXFLAGS");
 #else
-    g_compiler = COMPILER " -c " COMPILER_OPTIONS;
+    #ifdef CC
+        g_compiler = setOpt(CC, "CC") + " " + setOpt(CFLAGS, "CFLAGS");
+    #else
+        g_compiler = COMPILER + " " + setOpt(COMPILER_OPTIONS, COPTS);
+    #endif
 #endif
 }
 
@@ -343,7 +342,7 @@ void c_compile(int prefix, string destDir, string srcDir, list cfiles)
     if (srcDir != "")
         srcDir += "/";
 
-    compiler = g_compiler + " -o " + destDir + "/" + (string)prefix;
+    compiler = g_compiler + " -c -o " + destDir + "/" + (string)prefix;
 
     for (idx = sizeof(cfiles); idx--; )
     {
@@ -375,9 +374,10 @@ void std_cpp(int ignoreMain, string destDir,
 
 void static_library()
 {
-    chdir(TMP_DIR "/o");
+#ifdef LIBRARY
 
-    if (strlen(LIBRARY) && sizeof(makelist("*" OBJ_EXT)))
+    chdir(TMP_DIR "/o");
+    if (sizeof(makelist("*" OBJ_EXT)))
     {
         showCd(TMP_DIR "/o");
 
@@ -386,6 +386,8 @@ void static_library()
         system("rm *" OBJ_EXT);
     }
     chdir("");
+
+#endif
 }
 
 void shared_library(string libso, string libsoshared)
@@ -396,7 +398,7 @@ void shared_library(string libso, string libsoshared)
     {
         libsomajor  = libso + "." + element(0, strtok(g_version, "."));
 
-        system(COMPILER " -shared -Wl,--as-needed,-z,defs,-soname," + 
+        system(g_compiler + " -shared -Wl,--as-needed,-z,defs,-soname," + 
                 libsomajor + 
                 " -o " + TMP_DIR + "/" + libsoshared + " */o/*.o "
                 SHAREDREQ);
@@ -425,13 +427,15 @@ void build_libraries()
 
     md(TMP_DIR);
 
-    staticLib = g_cwd + TMP_DIR "/lib" LIBRARY ".a";
-
     if (PARSER_DIR != "")
         parser();
 
     if (SCANNER_DIR != "")
         scanner();
+
+#ifdef LIBRARY
+    staticLib = g_cwd + TMP_DIR "/lib" LIBRARY ".a";
+#endif
 
     g_sources = SOURCES;
     g_compiled = 0;
@@ -460,6 +464,7 @@ void build_libraries()
     static_library();                       // make the library
 
     #ifdef SHARED
+    #ifdef LIBRARY
         libso = "lib" LIBRARY ".so";
         libsoshared = libso + "." + g_version;
                                             // add option for shared lib
@@ -474,6 +479,7 @@ void build_libraries()
         std_cpp(1, TMP_DIR "/o", 0, ".", libsoshared);  
 
         shared_library(libso, libsoshared);// make a shared library
+    #endif
     #endif
 
     chdir("");
@@ -501,42 +507,55 @@ void link(string maino, string strip)
 #ifdef BINARY
     string compiler;
 
+    if (g_command != "program")
+        return;
+
     chdir(TMP_DIR);
 
-    compiler = COMPILER " -o bin/" BINARY " " + maino;
+    compiler = g_compiler + " -o bin/binary " + maino;
 
-    if (exists("lib" LIBRARY ".a"))
-        compiler += " -l" LIBRARY " -L.";
-    else if (sizeof(makelist("o/*" OBJ_EXT)))
+#ifdef LIBRARY
+    compiler += " -l" LIBRARY " -L.";
+#else
+    if (sizeof(makelist("o/*" OBJ_EXT)))
         compiler += " o/*" OBJ_EXT;
+#endif
 
     setLibs();
 
     if (strlen(g_libs))
         compiler += g_libs + g_libpath;
 
-    #ifndef REFRESH
-        if 
-        (
-            maino younger "bin/" BINARY
-            || 
-            "lib" LIBRARY ".a" younger "bin/" BINARY
-            ||
-            g_compiled
-        )
+#ifdef LDFLAGS
+    compiler += " " + setOpt(LDFLAGS, "LDLAGS");
+#else
+    compiler += " " + LINKER_OPTIONS;
+#endif
+
+#ifndef REFRESH
+    if 
+    (
+        maino younger "bin/binary"
+    #ifdef LIBRARY
+        || 
+        "lib" LIBRARY ".a" younger "bin/binary"
     #endif
+        ||
+        g_compiled
+    )
+#endif
     {
         showCd(TMP_DIR);
         printf("LINKING:\n");
-        system(compiler + " " + strip + setOpt(LINKER_OPTIONS, "LDFLAGS"));
+        system(compiler + " " + strip);
     }
 
     chdir("");
-#endif
 }
 
 void strip_shared()
 {
+#ifdef LIBRARY
     string libsoshared;
 
     libsoshared = "lib" LIBRARY ".so." + g_version;
@@ -547,6 +566,7 @@ void strip_shared()
         system("strip --strip-unneeded " + libsoshared);
     else
         printf("Can't find " TMP_DIR "/" + libsoshared + "\n");
+#endif
 }
 
 #ifdef USE_ALL
@@ -582,7 +602,7 @@ void program(string strip)
         printf("\n"
                 "chdir .\n"
                 "RECOMPILE: main.cc\n");
-        system(g_compiler + " -o " TMP_DIR "/" + maino + " " MAIN);
+        system(g_compiler + " -c -o " TMP_DIR "/" + maino + " " MAIN);
     }
 
     link(maino, strip);
@@ -606,23 +626,27 @@ void clean()
     exit(0);
 }
 
-void install(string base)
+void install(string what, string path)
 {
 #ifdef BINARY
 #ifdef BIN_INSTALL
-    md(base + BIN_INSTALL);
+    string dir;
 
-    system("cp " TMP_DIR "/bin/" BINARY " " + 
-            base + BIN_INSTALL "/" + BINARY);
+    if (what == "program")
+    {
+        dir = get_path(path);
+        if (dir != "")    
+            md(dir);
+        
+        system("cp " TMP_DIR "/bin/binary " + path);
+    }
 
-#endif
-#endif
-#ifdef LIBRARY
-#ifdef LIB_INSTALL
-    md(base + LIB_INSTALL);
-    system("cp -d " TMP_DIR "/lib/* " + base + LIB_INSTALL);
-#endif
-#endif
+    if (what == "library")
+    {
+        md(path);
+        system("cp -d " TMP_DIR "/lib/* " + path);
+    }
+
     exit(0);
 }
 
@@ -642,12 +666,12 @@ void main(int argc, list argv, list envp)
 
     setGcompiler();
 
-    option = argv[1];
+    g_command = argv[1];
 
-    if (option == "-c")
+    if (g_command == "-c")
     {
         cls = 1;
-        option = argv[2];
+        g_command = argv[2];
     }
     else
         cls = 0;
@@ -657,10 +681,10 @@ void main(int argc, list argv, list envp)
 #endif
 
 #ifdef DEFCOM
-    if (option == "")
+    if (g_command == "")
     {
         argv = (list)"" + strtok(DEFCOM, " \t");
-        option = argv[1];
+        g_command = argv[1];
     }
 #endif
 
@@ -683,13 +707,13 @@ void main(int argc, list argv, list envp)
     }
 #endif                
 
-    if (option == "clean")
+    if (g_command == "clean")
         clean();
 
-    if (option == "install")
-        install(argv[2]);
+    if (g_command == "install")
+        install(argv[2], argv[3]);
 
-    if (option == "program")
+    if (g_command == "program")
     {
         clearScreen(cls);
         if (argv[2] == "strip")
@@ -700,7 +724,7 @@ void main(int argc, list argv, list envp)
         program(option);
     }
 
-    if (option == "library")
+    if (g_command == "library")
     {
         clearScreen(cls);
         build_libraries();      
@@ -711,7 +735,7 @@ void main(int argc, list argv, list envp)
         exit(0);
     }
 
-    if (option == "strip-shared")
+    if (g_command == "strip-shared")
     {
         strip_shared();      
         exit(0);
@@ -719,23 +743,31 @@ void main(int argc, list argv, list envp)
 
     prog = change_ext(change_path(argv[0], ""), "");
 
-    printf("Usage: [-c] ", prog, " mode\n"
+    printf("Usage: ", prog, " [-c] cmd\n"
         "   -c              - Does 'tput clear' (clear screen) just before\n"
         "                     starting 'program' or 'library'\n"
-        "Where `mode' is one of:\n"
-        "   clean           - clean up remnants of previous activities\n"
-        "   library         - build the static library " TMP_DIR "/lib"
+        "   cmd: command to execute:\n"
+        "        clean           - clean up remnants of previous activities\n"
+
+    #ifdef LIBRARY
+        "        library         - build the static library " TMP_DIR "/lib"
                                                             LIBRARY  ".a\n"
-        "                     optionally (SHARED in icmconf) build a shared\n"
-        "                     library as well\n"
-        "   strip-shared    - strip a shared library\n"
-#ifdef BINARY
-        "   program         - build " TMP_DIR "/" BINARY "\n"
-        "   program strip   - build stripped " TMP_DIR "/" BINARY "\n"
-#endif
-        "   install <base>  - to install the software in the locations\n"
-        "                     defined in the icmconf file, optionally\n"
-        "                     below <base>\n"
+        "                          optionally (SHARED in icmconf) build a\n"
+        "                           shared library as well\n"
+    #endif
+
+    #ifdef SHARED
+        "        strip-shared    - strip a shared library\n"
+    #endif
+
+        "   When building a program:\n"
+        "        program         - build " TMP_DIR "/binary\n"
+        "        program strip   - build stripped " TMP_DIR "/binary\n"
+        "        install program path - to install the binary at `path'\n"
+        "                         (provide the full path-name)\n"
+        "   When building a library:\n"
+        "        install library base - install the library(ies) under "
+                                                                "`base'\n"
     );
 
     exit(1);

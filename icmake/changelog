@@ -1,3 +1,17 @@
+icmake (7.19.00)
+
+  * build scripts for constructing icmake now support the CC environment
+    flags as well. CC defines the C-compiler to use.
+
+  * icmbuild script's COMPILER and COMPILER_OPTIONS variables should be
+    considered obsolete, and are overruled by 
+        CXX and CXXFLAGS, defining the C++ compiler and flags
+    or
+        CC and CFLAGS, defining the C compiler and flags
+    in that order.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 16 Jul 2012 15:39:52 +0200
+
 icmake (7.18.00)
 
   * Fine-tuned icmbuild so that only used USE_ALL files are removed instead of

@@ -72,7 +72,11 @@ void setGcompiler()
     #ifdef CC
         g_compiler = setOpt(CC, "CC") + " " + setOpt(CFLAGS, "CFLAGS");
     #else
-        g_compiler = COMPILER + " " + setOpt(COMPILER_OPTIONS, COPTS);
+        #ifdef COMPILER
+        #ifdef COMPILER_OPTIONS
+            g_compiler = COMPILER + " " + COMPILER_OPTIONS;
+        #endif
+        #endif
     #endif
 #endif
 }
@@ -362,8 +366,10 @@ void std_cpp(int ignoreMain, string destDir,
     md(destDir);
     chdir(srcDir);
     files = makelist(g_sources);
+#ifdef MAIN
     if (ignoreMain)
         files -= (list)MAIN;
+#endif
     chdir("");
 
     files = inspect(destDir, prefix, srcDir, files, library);  
@@ -504,7 +510,6 @@ void setLibs()
 
 void link(string maino, string strip)
 {
-#ifdef BINARY
     string compiler;
 
     if (g_command != "program")
@@ -529,7 +534,9 @@ void link(string maino, string strip)
 #ifdef LDFLAGS
     compiler += " " + setOpt(LDFLAGS, "LDLAGS");
 #else
-    compiler += " " + LINKER_OPTIONS;
+    #ifdef LINKER_OPTIONS
+        compiler += " " + LINKER_OPTIONS;
+    #endif
 #endif
 
 #ifndef REFRESH
@@ -587,13 +594,14 @@ void rmUSE_ALLfiles()
 
 void program(string strip)
 {
+#ifdef MAIN
     string maino = change_ext(MAIN, OBJ_EXT);
 
     md(TMP_DIR "/bin");
 
-#ifdef USE_ALL
-    g_base = exists(USE_ALL);
-#endif
+    #ifdef USE_ALL
+        g_base = exists(USE_ALL);
+    #endif
 
     build_libraries();
 
@@ -607,10 +615,11 @@ void program(string strip)
 
     link(maino, strip);
 
-#ifdef USE_ALL
-    rmUSE_ALLfiles();
-#endif
+    #ifdef USE_ALL
+        rmUSE_ALLfiles();
+    #endif
 
+#endif
     exit(0);
 }
 
@@ -628,8 +637,6 @@ void clean()
 
 void install(string what, string path)
 {
-#ifdef BINARY
-#ifdef BIN_INSTALL
     string dir;
 
     if (what == "program")
@@ -637,15 +644,23 @@ void install(string what, string path)
         dir = get_path(path);
         if (dir != "")    
             md(dir);
-        
+            
         system("cp " TMP_DIR "/bin/binary " + path);
     }
-
-    if (what == "library")
+#ifdef LIBRARY
+    else if (what == "static")
     {
         md(path);
-        system("cp -d " TMP_DIR "/lib/* " + path);
+        system("cp " TMP_DIR "/lib/lib" LIBRARY ".a " + path);
     }
+#ifdef SHARED
+    else if (what == "shared")
+    {
+        md(path);
+        system("cp -d " TMP_DIR "/lib/lib" LIBRARY ".so.* " + path);
+    }
+#endif
+#endif
 
     exit(0);
 }
@@ -766,7 +781,9 @@ void main(int argc, list argv, list envp)
         "        install program path - to install the binary at `path'\n"
         "                         (provide the full path-name)\n"
         "   When building a library:\n"
-        "        install library base - install the library(ies) under "
+        "        install static base - install the static library under "
+                                                                "`base'\n"
+        "        install shared base - install the shared library under "
                                                                 "`base'\n"
     );
 

@@ -22,16 +22,12 @@
 
 char *xstrcat (char *s1, char const *s2)
 {
-    register size_t
-        s1len;
+    if (!s1 || !*s1)
+        return xstrdup(s2);
+    if (!s2 || !*s2)
+        return xstrdup(s1);
 
-    if (! s1 || ! *s1)
-        return (xstrdup (s2));
-    if (! s2 || ! *s2)
-        return (xstrdup (s1));
-
-    s1len = strlen (s1);
-    s1 = xrealloc (s1, strlen (s1) + strlen (s2) + 1);
-    strcat (s1, s2);
-    return (s1);
+    s1 = xrealloc(s1, strlen(s1) + strlen(s2) + 1);
+    strcat(s1, s2);
+    return s1;
 }

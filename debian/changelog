@@ -1,3 +1,10 @@
+icmake (7.19.00-1) unstable; urgency=low
+
+  * New upstream release reorganizes icmconf and its manpage supporting
+    standard environment variables
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 16 Jul 2012 20:14:19 +0200
+
 icmake (7.18.00-2) unstable; urgency=low
 
   * Apply dh_installdeb maintscript support patch. (Closes: #659758)

@@ -532,7 +532,7 @@ void link(string maino, string strip)
         compiler += g_libs + g_libpath;
 
 #ifdef LDFLAGS
-    compiler += " " + setOpt(LDFLAGS, "LDLAGS");
+    compiler += " " + setOpt(LDFLAGS, "LDFLAGS");
 #else
     #ifdef LINKER_OPTIONS
         compiler += " " + LINKER_OPTIONS;

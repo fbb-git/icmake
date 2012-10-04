@@ -1,0 +1,134 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+# export DH_VERBOSE=1
+
+export CFLAGS = $(shell dpkg-buildflags --get CFLAGS)
+export LDFLAGS = $(shell dpkg-buildflags --get LDFLAGS)
+
+build: build-arch build-indep
+build-arch: build-stamp
+build-indep: build-stamp
+build-stamp:
+	dh_testdir
+	# Add here commands to compile the package.
+	./icm_bootstrap /
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	# Add here commands to clean up after the build process.
+	rm -rf tmp
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	# Add here commands to install the package into debian/icmake
+	./icm_install strip progs debian/icmake
+	./icm_install scripts debian/icmake
+	./icm_install skel debian/icmake
+	./icm_install man debian/icmake
+	./icm_install doc debian/icmake
+	./icm_install etc debian/icmake
+
+# Build architecture-independent files here.
+binary-indep:
+	./icm_install docdoc  debian/icmake-doc
+	dh_installdocs -i
+	dh_installchangelogs -i
+	dh_compress -i
+	dh $@
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh $@
+
+override_dh_link:
+	dh_link usr/share/man/man1/icmake.1 usr/share/man/man1/icmun.1
+
+
+# The following is for internal development usage only
+# Update that sum when new _upstream_ releases occur, this
+# catches silent file content forges at the upstream server side
+# Archive downloaded from https://www.icce.rug.nl/debian/icmake
+#   file: icmake_x.y.z.tar.gz
+MD5TRUSTED := db44ac9811b5d7ae05ea8eaf3bc1ab0f
+
+DEBVERSION:=$(shell head -n 1 debian/changelog | sed -e 's/^[^(]*(\([^)]*\)).*/\1/')
+UPVERSION:=$(shell echo $(DEBVERSION) | sed -e 's/^.*://' -e 's/-[0-9.]*$$//' -e 's/.dfsg$$//')
+UPNAME := icmake
+UPFILE := $(UPNAME)_$(UPVERSION).tar.gz
+DEFILE := $(UPNAME)_$(UPVERSION).orig.tar.gz
+URL                := https://www.icce.rug.nl/debian/icmake
+MD5CURRENT := `md5sum ../tarballs/$(DEFILE) | sed -e 's/ .*//'`
+SVNTRUNK   := https://svn.sourceforge.net/svnroot/bisoncpp/trunk/icmake
+
+get-orig-source:
+	@@dh_testdir
+	@@[ -d ../tarballs/. ]||mkdir -p ../tarballs
+
+	-@if [ ! -f ../tarballs/$(DEFILE) ] ; then \
+	    echo -e "Downloading $(URL)/$(UPFILE)\nSaving into ../tarballs/$(DEFILE) ..." ; \
+	    wget --no-check-certificate --quiet -N -nv -T20 -t3 -O \
+		    ../tarballs/$(DEFILE) $(URL)/$(UPFILE) ; \
+	else \
+	    echo "Upstream source tarball has been already downloaded" ; \
+	fi
+
+	-@if [ "$(MD5CURRENT)" != "$(MD5TRUSTED)" ] ; then \
+	    echo "Expecting upstream filename md5sum $(MD5TRUSTED), but $(MD5CURRENT) found" ; \
+	    echo "Upstream filename md5sum is NOT trusted! Possible upstream filename forge!" ; \
+	    false ; \
+	else \
+	    echo "Upstream filename md5sum is trusted!" ; \
+	fi
+
+# call git-build from the project's base directory as `fakeroot debian/rules git-build'
+# it creates the ./build-area and runs dpkg-buildpackage in build-area/$(UPNAME)-$(UPVERSION)
+# which, if successful, creates the debian files in the build-area
+# Probably easier to use is `git-bl'
+git-build:
+	@@[ -d ./build-area/. ]||mkdir -p ./build-area
+
+	-@if [ ! -f ../tarballs/$(DEFILE) ] ; then \
+	    echo "Upstream source tarball ../tarballs/$(DEFILE) not found" ; \
+	else \
+	    rm -rf build-area/$(UPNAME)-$(UPVERSION) build-area/run.lintian ; \
+	    cp ../tarballs/$(DEFILE) build-area ; \
+	    chdir build-area ; \
+	    tar xzf $(DEFILE) ; \
+	    cp -r ../debian $(UPNAME)-$(UPVERSION) ; \
+	    chdir $(UPNAME)-$(UPVERSION) ; \
+	    dpkg-buildpackage $(DPKG_BUILDPACKAGE) ; \
+	    if [ "$$?" -eq 0 ] ; then \
+	        chdir .. ; \
+	        touch run.lintian ; \
+	        rm -rf $(UPNAME)-$(UPVERSION) ; \
+	    else \
+	        chdir .. ; \
+	        mv $(UPNAME)-$(UPVERSION) $(UPNAME)-$(UPVERSION)-obsolete-`date +%s` ; \
+	    fi \
+	fi
+
+#get-svn-trunk:
+#       @@dh_testdir
+#       @@[ -d ../tarballs/. ]||mkdir -p ../tarballs
+#       rm -rf ../tarballs/$(DEFILE) ../tarballs/icmake-svn-trunk
+#       svn --force export $(SVNTRUNK) ../tarballs/icmake-svn-trunk
+#       @@if [ -d ../tarballs/icmake-svn-trunk/debian ] ; then rm -rf ../tarballs/icmake-svn-trunk/debian; fi
+#       @@ echo Building the SVN TRUNK tarball in ../tarballs/$(DEFILE)
+#       @@GZIP=-9 tar -b1 -czf ../tarballs/$(DEFILE) -C ../tarballs icmake-svn-trunk
+#       rm -rf ../tarballs/icmake-svn-trunk
+
+print-version:
+	@@echo "Debian version: $(DEBVERSION)"
+	@@echo "Upstream version: $(UPVERSION)"
+
+binary: binary-arch binary-indep
+.PHONY: build clean binary-indep binary-arch binary install myclean

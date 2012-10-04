@@ -1,0 +1,35 @@
+Source: icmake
+Section: devel
+Priority: optional
+Maintainer: Francesco Paolo Lovergine <frankie@debian.org>
+Uploaders: George Danchev <danchev@spnet.net>, 
+           Frank B. Brokken <f.b.brokken@rug.nl>,
+           tony mancill <tmancill@debian.org>
+Build-Depends: debhelper (>= 8.1.0~)
+Standards-Version: 3.9.3
+Homepage: http://icmake.sourceforge.net/
+Vcs-Svn: https://svn.openfmi.net/debian-addons-bg/icmake/trunk
+
+Package: icmake
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: icmake-doc
+Description: Intelligent C-like MAKEr, or the ICce MAKE utility
+ Icmake is a hybrid between a 'make' utility and a 'shell script'
+ language.  Originally, it was written to provide a useful tool for
+ automatic program maintenance and system administrative tasks on MS-DOS
+ platforms. 
+
+Package: icmake-doc
+Architecture: all
+Section: doc
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description:  Documentation files for icmake
+ Icmake is a hybrid between a 'make' utility and a 'shell script'
+ language.  Originally, it was written to provide a useful tool for
+ automatic program maintenance and system administrative tasks on MS-DOS
+ platforms. 
+ .
+ This package provides the supplemental documentation for icmake.
+

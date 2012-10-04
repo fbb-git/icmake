@@ -1,0 +1,3 @@
+version=3
+https://www.icce.rug.nl/debian/icmake/icmake_([\d\.]+)\.tar\.gz \
+debian  uupdate

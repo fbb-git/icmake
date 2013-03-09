@@ -1,3 +1,16 @@
+icmake (7.20.00)
+
+  * added missing '\n' to the strtok call in icmbuild's 'dependenciesOf'
+    function
+
+  * line continuation in CLASSES results in one line being counted in the
+    icmbuild script.
+
+  * Added suggestions by Johann 'Myrkraverk' Oskarsson about compiling icmake
+    on solaris (in ./contributions/solaris)
+
+
+
 icmake (7.19.00)
 
   * build scripts for constructing icmake now support the CC environment

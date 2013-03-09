@@ -94,8 +94,8 @@ organization where CLASSES contains the lines
     y   x
     z   y
         )
-    then 'icmbuild program' will result in the recompilation of all of the
-sources in classes x, y and z.
+    then 'icmbuild program' results in recompiling all of the sources in
+classes x, y and z.
 
 By default, class-dependencies are not interpreted. To activate them the line
     verb(
@@ -106,6 +106,15 @@ By default, class-dependencies are not interpreted. To activate them the line
 #define USE_ALL             "a"
     )
 
+Empty lines and lines whose first non-blank character is a hash-mark (tt(#))
+or whose first non-blank characters are two consecutive forward slashes (//)
+are ignored. Long lines can be split over multiple lines by using a final
+backslash character at lines which continue at the next line. E.g.,
+        verb(
+    name1 depends on     \
+          multiple other \
+          classes
+        )
 
 manpagesection(ICMCONF PARAMETERS)
     itemization(

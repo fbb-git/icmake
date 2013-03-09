@@ -23,6 +23,7 @@ int     g_nClasses;     // number of class-directories
 int     g_compiled;     // any source compiled (but main)?
 int     g_keepGramspec; // keep the gramspec directory
 list    g_classLines;   // list of all lines in CLASSES
+list    g_classLine;    // line of the CLASSES file
 list    g_inspected;    // list of classes whose dependencies have been 
                         // inspected (used with USE_ALL)
 int     g_base;         // compile the sources in the base directory
@@ -190,12 +191,11 @@ void touch(string dir)
     //  find all classes that depend on g_classes[idx], 
     //  if those classes haven't been inspected yet, then set their USE_ALL 
     //  file and inspect their dependencies.
-void dependendenciesOf(string thisClass)
+void dependenciesOf(string thisClass)
 {
     int ret;
     int idx;
-    string classLine;
-    string hit;
+    list hit;
 
     if (find(thisClass, g_inspected) != -1) // this class already inspected
         return;                             // then done with this class
@@ -208,13 +208,12 @@ void dependendenciesOf(string thisClass)
         // find all classes depending on thisClass
     for (idx = 0; idx != g_nClasses; ++idx)
     {
-        classLine = g_classLines[idx];
+        hit = strtok(g_classLines[idx], " \t");
 
-        if (strfind(classLine, thisClass) > 0)
+        if (find(thisClass, hit) > 0)
         {
-            hit = strtok(classLine, " \t")[0];
-            touch(hit);
-            dependendenciesOf(hit);
+            touch(hit[0]);
+            dependendenciesOf(hit[0]);
         }
     }
 }            
@@ -229,8 +228,7 @@ void checkALL()
         all = g_classes[idx] + "/" USE_ALL;
 
         if (exists(all))
-            dependendenciesOf(g_classes[idx]);
-    }
+            dependenciesOf(g_classes[idx]);
 
     if (g_base)
         touch(".");
@@ -238,6 +236,54 @@ void checkALL()
     
 #endif
 
+int isEmpty(string line)
+{
+    list parts;
+
+    parts = strtok(line, " \t");
+    
+    return (int)(sizeof(parts) == 0 ||
+                parts[0][0] == "#" || strfind(parts[0], "//") == 0);
+}
+
+    
+list nextCLASSESline()
+{
+    string ret;
+    string line;
+    int last;
+    int backslash;
+
+    while (sizeof(g_classLine = fgets("CLASSES", (int)g_classLine[1])))
+    {
+        line = strtok(g_classLine[0], "\n")[0];     // get the string
+
+        if (isEmpty(line))
+        {
+            if (strlen(ret) != 0)
+                break;
+        }
+        else 
+        {
+            last = strlen(line) - 1;
+            backslash = line[last] == "\\";
+
+            if (backslash)
+                line = substr(line, 0, last);
+
+            ret += line + " ";
+
+            if (!backslash)
+                break;
+        }
+    }
+
+    if (!isEmpty(ret))
+        g_classLines += (list)ret;
+
+    return strtok(ret, " \t");
+}
+    
 void setClasses()
 {
     string dir;
@@ -251,30 +297,19 @@ void setClasses()
     if (PARSER_DIR != "")
         g_classes += (list)PARSER_DIR;
 
-    while (sizeof(class = fgets("CLASSES", (int)class[1])))
+    while (sizeof(class = nextCLASSESline()))
     {
-        dir = element(0, strtok(class[0], " \t\n"));
+        dir = class[0];
 
         if 
         (
-            strlen(dir)                 // omit empty lines
+            dir != SCANNER_DIR          // SCANNER_DIR is already there
             &&
-            strfind(dir, "#") != 0      // omit lines starting in #
-            &&
-            strfind(dir, "/") != 0      // omit lines starting in //
+            dir != PARSER_DIR           // PARSER_DIR is already there
         )
-        {
-            if 
-            (
-                dir != SCANNER_DIR          // SCANNER_DIR is already there
-                &&
-                dir != PARSER_DIR           // PARSER_DIR is already there
-            )
-                g_classes += (list)dir;     // add this dir.
-
-            g_classLines += (list)class[0];
-        }
+            g_classes += (list)dir;     // add this dir.
     }
+
     // classLines contains the full lines of the CLASSES file, and thus
     // stores its dependencies.
 

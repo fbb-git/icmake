@@ -1,0 +1,61 @@
+Date: Sun, 16 Oct 2011 19:59:00 +0000
+Subject: A few hoops for icmake to compile on Solaris
+From: "Johann 'Myrkraverk' Oskarsson"
+To: f.b.brokken@rug.nl
+
+
+Hi,
+
+Here is a short list of hoops I had to jump through in order to make
+icmake compile on Solaris.  Specifically OpenIndiana 151a.
+
+Change to icm_bootstrap: The comp subdirectory does not build with
+gcc, but does with Solaris Studio 12.3 cc:
+
+echo Creating tmp/${LIBDIR}/icm-comp${EXTENSION}
+try cd comp
+try cc ${GLB} ${CFLAGS} \
+        -o ../tmp/${LIBDIR}/icm-comp${EXTENSION} *.c ../tmp/libicrss.a \
+        ${LDFLAGS}
+cd ..
+
+In the following three files, before #include <stdlib.h>,
+exec/string/string.ih, exec/virtual/virtual.ih, exec/list/list.ih:
+
+#undef getopt
+#undef getoptindex
+#undef getoptval
+
+I was unable to find a way to exclude these three symbols from the
+header file with a -Ddefine.  If these symbols are not meant to be
+there in some Posix standard it should be.  The reason: it conflicts
+with the ic_ definitions from earlier include files.
+
+Above, when comp is compiled with gcc, errors similar (or same as) the
+following spew out:
+
+In file included from /usr/include/stdio.h:81:0,
+                 from lexer.c:21:
+/usr/include/iso/stdio_iso.h:212:60: error: redefinition of parameter 'restrict'
+
+
+If you need more information to fix this for future versions of
+icmake, please just ask,
+
+Johann
+
+
+----------------------------------------
+
+Date: Tue, 22 Apr 2008 00:56:23 +0000
+
+o   Bitrot: I had to add -std=c99 to all gcc lines due to some macro
+defining the "restrict" keyword in my system header files.  I suspect
+something defined in the icmake header files but I 'm not sure.
+
+o   I had to change all getoptXXX calls to ic_getoptXXX becouse of
+some conflict with my system getopt/headers/macros or something.
+
+o   In all build scripts, I had to change the shebang lines from
+#!tmp/icmake -qt/tmp/pp to #!/opt/myrkraverk/bin/icmake -qt/tmp/pp --
+or at least, I had to change them due to something.

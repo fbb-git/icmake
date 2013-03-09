@@ -213,7 +213,7 @@ void dependenciesOf(string thisClass)
         if (find(thisClass, hit) > 0)
         {
             touch(hit[0]);
-            dependendenciesOf(hit[0]);
+            dependenciesOf(hit[0]);
         }
     }
 }            
@@ -229,6 +229,7 @@ void checkALL()
 
         if (exists(all))
             dependenciesOf(g_classes[idx]);
+    }
 
     if (g_base)
         touch(".");

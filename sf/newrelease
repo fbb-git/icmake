@@ -5,7 +5,7 @@ buildrelease || exit 1
 
 CWD=`pwd`
 cd ../icmake/doc/manpage
-    ln -sf ../../../sourceforge/release.yo .
+    ln -sf ../../../sf/release.yo .
     for yo in ic*yo
     do
         yodl2html --no-warnings $yo

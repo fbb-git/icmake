@@ -9,7 +9,7 @@ icmake (7.20.00)
   * Added suggestions by Johann 'Myrkraverk' Oskarsson about compiling icmake
     on solaris (in ./contributions/solaris)
 
-
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 09 Mar 2013 14:39:37 +0100
 
 icmake (7.19.00)
 

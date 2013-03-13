@@ -1,3 +1,0 @@
-rm_conffile /etc/icmake/AUTHOR  7.14.1-1
-rm_conffile /etc/icmake/VERSION 7.14.1-1
-rm_conffile /etc/icmake/YEARS   7.14.1-1

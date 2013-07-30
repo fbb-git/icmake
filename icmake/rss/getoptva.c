@@ -107,10 +107,11 @@ char *ic_getoptval(int *p_argc, char **argv)
     argc = *p_argc;                         /* get local argc value */
 
     if
-    (                                       /* next one is option ? */
-        strchr(icce_optchar, *argv[icce_next_option])
-        ||                                  /* or */
+    (
         icce_next_option >= argc            /* no more entries */
+        ||                                  /* or */
+                                            /* next one is option ? */
+        strchr(icce_optchar, *argv[icce_next_option])
     )
         return (NULL);                      /* then no value string */
 
@@ -124,3 +125,7 @@ char *ic_getoptval(int *p_argc, char **argv)
 
     return (optval);                        /* return the option value. */
 }
+
+
+
+

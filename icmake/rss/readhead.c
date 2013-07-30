@@ -58,6 +58,10 @@ static BIN_HEADER_ header;
 
 BIN_HEADER_ *readheader (FILE *f, size_t v)
 {
+    struct stat buffer;
+    int idx;
+    INT32 f_size;
+    
     if (! fread (&header, sizeof (BIN_HEADER_), 1, f) )
         error ("cannot read header from binary file, corrupted?");
 
@@ -73,6 +77,14 @@ BIN_HEADER_ *readheader (FILE *f, size_t v)
                " by the binary\n"
                "file. Upgrade to a newer `icmake' version.");
 
+    fstat(fileno(f), &buffer);
+    f_size = buffer.st_size;
+    
+    for (idx = 0; idx != 4; ++idx)
+    {
+        if (header.offset[idx] >= f_size)
+            error("invalid .bim file, corrupted?");
+    }
+
     return &header;
 }
-

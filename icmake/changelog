@@ -1,7 +1,7 @@
-icmake (7.21.00) ISN
+icmake (7.21.00)
 
-  * Repaired segfaults using icmake, icm-exec, and icmun, as found by
-    Alexandre Reber.
+  * Repaired segfaults found in icmake, icm-exec, and icmun by Alexandre
+    Reber.
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 30 Jul 2013 16:49:58 +0200
     

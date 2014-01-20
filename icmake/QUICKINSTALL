@@ -3,11 +3,15 @@
 
 1. Inspect and modify if necessary the current locations in INSTALL.im.
 
-2. Create the icmake installation files:
+2. If you want the compiler to insert debugging code in the icmake programs
+   then define a CFLAGS environment variable. E.g., 
+                   CFLAGS="-Wall -O2 -g"
+
+3. Create the icmake installation files:
                    ./icm_bootstrap /
 
-3. To install, do as root:
+4. To install, do as root:
                     ./icm_install strip all /
                     
-4. Remove intermediate construction area:
+5. Remove intermediate construction area:
                     rm -rf tmp

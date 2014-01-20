@@ -29,7 +29,7 @@ try()
 
 . icm_prepare
 
-if [ "${CFLAGS}" == "" ] ; then CFLAGS="-Wall -O2 -g"; fi
+if [ "${CFLAGS}" == "" ] ; then CFLAGS="-Wall -O2"; fi
 if [ "${CC}" == "" ] ; then CC="gcc"; fi
   
 echo Creating tmp/libicrss.a

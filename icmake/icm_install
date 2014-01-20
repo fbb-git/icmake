@@ -67,7 +67,7 @@ case $1 in
         into ${SKELDIR}
         into ${DOCDIR}
         into ${DOCDOCDIR}
-        into etc/icmake
+        into ${CONFDIR}
     ;;
 
     (progs)
@@ -91,7 +91,7 @@ case $1 in
     ;;
 
     (etc)
-        into etc/icmake
+        into ${CONFDIR}
     ;;
 
     (docdoc)

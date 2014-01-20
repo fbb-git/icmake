@@ -1,3 +1,22 @@
+icmake (7.21.01)
+
+  * By default, ./icm_bootstrap no longer specifies -g when compiling icmake's
+    sources. If you *want* to use the -g flag, define an environment variable
+    CFLAGS. E.g., CFLAGS="-Wall -O2 -g".
+
+  * Applied Colin Herbert's patches (to see Colin's patches use the prefix
+    https://gist.github.com/ColinHebert/): 
+
+    Removed the redundant definition of __STDC_VERSION__ from lexer.c:
+        1377507/raw/545a60cb39105c80d97e543dc77e00ab7ecbb5ff/lexer.c.diff
+
+    Removed the hard coded path to CONFDIR:
+        1377533/raw/c7cb3f768deafa8c2e393bed1f5d4acd42edc7bd/icm_install.diff
+
+  * The above changes were suggested by Florian Franzen. Thanks!
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 20 Jan 2014 11:00:27 +0100
+        
 icmake (7.21.00)
 
   * Repaired segfaults found in icmake, icm-exec, and icmun by Alexandre

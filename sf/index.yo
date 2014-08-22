@@ -9,7 +9,7 @@ COMMENT(Fill in the name of the program/package in these SUBSTs
 SUBST(_pakx_)(icmake)
 SUBST(_Pakx_)(Icmake)
 
-mailto(fbbrokken@users.sourceforge.net)
+mailto(f.b.brokken@rug.nl)
 
 affiliation(Center for Information Technology, University of Groningen)
 

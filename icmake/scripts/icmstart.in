@@ -340,6 +340,15 @@ void install_std()
                                         // provided as last arg.
     if (install_file("icmconf", "") && g_defaultcommand != "")
         fprintf(g_destpath + "icmconf", g_defaultcommand);
+
+										// for libraries: uncomment the
+										// #define LIBRARY spec, and
+										// comment out #define MAIN
+	if (strfind(g_defaultcommand, "library") != -1)
+		syscall("sed -i '\n"
+			"s?^//\\(#define LIBRARY\\)?\\1?\n"
+			"s?^\\(#define MAIN\\)?//\\1?\n"
+			"' " + g_destpath + "icmconf");
 }
 
 int confirminstall(string source, string dest)

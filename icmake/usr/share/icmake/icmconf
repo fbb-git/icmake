@@ -20,7 +20,7 @@
 
     // The compiler options to use. Define CFLAGS instead if a C compiler is
     // used.
-#define CXXFLAGS        " --std=c++0x -Wall -g -O2"
+#define CXXFLAGS        " --std=c++14 -Wall -g -O2"
 //#define CFLAGS        " -Wall -g -O2"
 
     // Options passed to the linker:

@@ -3,6 +3,8 @@ icmake (7.21.02) ISN
   *	`icmstart dir library' uncomments the library construction spec. and
 	comments out the main.cc spec. in icmconf
 
+  * The default compiler flags now specifies c++14
+
 
 icmake (7.21.01)
 

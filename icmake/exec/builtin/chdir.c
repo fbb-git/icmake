@@ -51,7 +51,7 @@ void fun_chdir ()
                                                         /* P_CHECK is on */
     free(dir);
     
-    getcwd (newdir, _MAX_PATH);                     /* return value: */
+    last = getcwd (newdir, _MAX_PATH);                  /* return value: */
 
     if (newdir[strlen(newdir) - 1] != DIRSEP)       /* cwd */
         strcat (newdir, dirsep);

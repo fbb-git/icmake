@@ -37,7 +37,7 @@ int main (int argc, char **argv)
 
     atexit (cleanup);
     signal (SIGINT, (void (*)(int))abnormal);
-    getcwd (orgdir, _MAX_PATH - 1);
+    progname = getcwd (orgdir, _MAX_PATH - 1);  /* keeps the compiler happy */
 
 
     if (argc == 1)

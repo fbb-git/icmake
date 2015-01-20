@@ -14,7 +14,13 @@ icmake (7.22.00)
   * Added the file 'required' summarizing the software which was used for
     building icmake.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 20 Jan 2015 12:16:04 +0100
+  * The entry //#define EXTENSION   ".exe" was removed from INSTALL.im as it's
+    apparently no longer required for systems like cygwin. In cases the .exe
+    extension is needed, rename the binaries accordingly after building them.
+
+  * Removed -D__STDC_VERSION__=199901L from the flex call in ./comp/build
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 20 Jan 2015 15:53:40 +0100
 
 icmake (7.21.01)
 

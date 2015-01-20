@@ -1,4 +1,4 @@
-.TH "icmstart" "1" "1992\-2014" "icmake\&.7\&.21\&.01\&.tar\&.gz" "starts icmbuild program maintenance"
+.TH "icmstart" "1" "1992\-2015" "icmake\&.7\&.22\&.00\&.tar\&.gz" "starts icmbuild program maintenance"
 
 .PP 
 .SH "NAME"
@@ -29,6 +29,12 @@ script may be used for program maintenance\&.
 .PP 
 \fIIcmstart\fP may be called with the following options, which (if specified)
 must be the first arguments of \fIicmstart\fP:
+.IP o 
+\fI\-b\fP
+.br 
+Basic installation: the files VERSION, usage\&.cc and version\&.cc are not
+installed, and the #define USE_VERSION entry in icmconf is commented
+out\&.
 .IP o 
 \fI\-c confpath\fP
 .br 

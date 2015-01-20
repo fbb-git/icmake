@@ -77,7 +77,7 @@ void initialize()
     if ("parser" younger "parser.c")
         system("bison -d -o parser.c parser");
     if ("lexer" younger "lexer.c" || "parser" younger "lexer.c")
-        system("flex -D__STDC_VERSION__=199901L -o lexer.c lexer");
+        system("flex -o lexer.c lexer");
 }
 
 

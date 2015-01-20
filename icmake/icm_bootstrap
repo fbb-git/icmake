@@ -40,35 +40,35 @@ try ar rs ../tmp/libicrss.a *.o
 rm *.o
 cd ..
 
-echo Creating tmp/${BINDIR}/icmake${EXTENSION}
+echo Creating tmp/${BINDIR}/icmake
 try cd make
 try ${CC}  ${CFLAGS} ${GLB} \
-        -o ../tmp/${BINDIR}/icmake${EXTENSION} *.c ../tmp/libicrss.a \
+        -o ../tmp/${BINDIR}/icmake *.c ../tmp/libicrss.a \
         ${LDFLAGS}
 cd ..
 
-echo Creating tmp/${BINDIR}/icmun${EXTENSION}
+echo Creating tmp/${BINDIR}/icmun
 try cd un
 try ${CC} ${GLB}  ${CFLAGS} \
-        -o ../tmp/${BINDIR}/icmun${EXTENSION} *.c ../tmp/libicrss.a \
+        -o ../tmp/${BINDIR}/icmun *.c ../tmp/libicrss.a \
         ${LDFLAGS}
 cd ..  
 
-echo Creating tmp/${LIBDIR}/icm-pp${EXTENSION}
+echo Creating tmp/${LIBDIR}/icm-pp
 try cd pp
 try ${CC} ${GLB} ${CFLAGS} \
-        -o ../tmp/${LIBDIR}/icm-pp${EXTENSION} *.c ../tmp/libicrss.a \
+        -o ../tmp/${LIBDIR}/icm-pp *.c ../tmp/libicrss.a \
         ${LDFLAGS}
 cd ..
 
-echo Creating tmp/${LIBDIR}/icm-comp${EXTENSION}
+echo Creating tmp/${LIBDIR}/icm-comp
 try cd comp
 try ${CC} ${GLB} ${CFLAGS} \
-        -o ../tmp/${LIBDIR}/icm-comp${EXTENSION} *.c ../tmp/libicrss.a \
+        -o ../tmp/${LIBDIR}/icm-comp *.c ../tmp/libicrss.a \
         ${LDFLAGS}
 cd ..
 
-echo Creating tmp/${LIBDIR}/icm-exec${EXTENSION}
+echo Creating tmp/${LIBDIR}/icm-exec
 try cd exec
 try ${CC} ${CFLAGS} ${GLB} -c *.c 
 for x in auks var virtual int list string stack opcodefun builtin
@@ -77,7 +77,7 @@ do
     try ${CC} ${GLB} ${CFLAGS} -c *.c
     try cd ..
 done
-try ${CC} -o ../tmp/${LIBDIR}/icm-exec${EXTENSION} *.o \
+try ${CC} -o ../tmp/${LIBDIR}/icm-exec *.o \
             */*.o ../tmp/libicrss.a ${LDFLAGS}
 rm *.o */*.o
 cd ..

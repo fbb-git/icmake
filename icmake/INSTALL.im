@@ -19,9 +19,6 @@
         DOCDOCDIR   more extensive documentation (icmake.ps, examples)
 */
 
-// Define EXTENSION as ".exe" when compiling for CYGWIN
-//#define EXTENSION   ".exe"
-
 #define BINDIR      "usr/bin"
 #define SKELDIR     "usr/share/icmake"
 #define MANDIR      "usr/share/man"

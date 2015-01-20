@@ -1,10 +1,20 @@
-icmake (7.21.02) ISN
+icmake (7.22.00)
 
-  *	`icmstart dir library' uncomments the library construction spec. and
-	comments out the main.cc spec. in icmconf
+  * `icmstart dir library' uncomments the library construction spec. and
+    comments out the main.cc spec. in icmconf
 
-  * The default compiler flags now specifies c++14
+  * `icmstart -b ...' (basic installation), won't install the default
+    VERSION, usage.cc and version.cc files
 
+  * `icmstart -b ...' and `icmstart ... library comments out the line
+     #define USE_LIBRARY in icmconf.
+
+  * The default g++ compiler flags now specify c++14
+
+  * Added the file 'required' summarizing the software which was used for
+    building icmake.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 20 Jan 2015 12:16:04 +0100
 
 icmake (7.21.01)
 

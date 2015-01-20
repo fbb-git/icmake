@@ -51,6 +51,10 @@ manpageoptions()
     tt(Icmstart) may be called with the following options, which (if specified)
     must be the first arguments of tt(icmstart):
     itemization(
+    itt(-b)nl()
+       Basic installation: the files VERSION, usage.cc and version.cc are not
+        installed, and the #define USE_VERSION entry in icmconf is commented
+        out.
     itt(-c confpath)nl() Use the configuration files (tt(icmstart.rc, AUTHOR,
         YEARS) and tt(VERSION)) if found in `confpath' rather than in
         tt(~/.icmake) and/or tt(/etc/icmake/). Once a file is found it is used

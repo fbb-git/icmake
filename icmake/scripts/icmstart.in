@@ -16,12 +16,16 @@ int g_skeletons = 1;
 int g_replace = 0;
 int g_debug = 0;
 int g_askreplace = 1;
+int g_basic = 0;
+int g_version = 1;
 
 void usage()
 {
     printf("Usage: ", g_program, " [Options] dir [program|library]\n"
         "Where:\n"
         "   Options:\n"
+        "     -b: basic: the files usage.cc and version.cc are not "
+                                                                "installed\n"
         "     -c confpath: Use the configuration files (icmstart.rc, "
                                                                 "AUTHOR,\n"
         "                  VERSION, YEARS found in `confpath' rather than\n"
@@ -104,7 +108,12 @@ void arguments(int argc, list argv)
         if (arg[0] != "-")              // no (more) options
             break;
 
-        if (arg[1] == "c")              // -c: re-assign g_confpath
+        if (arg[1] == "b")              // -b: basic installation
+        {
+            g_basic = 1;
+            g_version = 0;
+        }
+        else if (arg[1] == "c")         // -c: re-assign g_confpath
         {
             arg = substr(arg, 2, 999);  // get all beyond -c
 
@@ -163,8 +172,12 @@ void arguments(int argc, list argv)
             || 
             g_defaultcommandArg == "library"
         )
+        {
             g_defaultcommand = 
                         "#define DEFCOM \"" + g_defaultcommandArg + "\"\n";
+            if (g_defaultcommandArg == "library")
+                g_version = 0;
+        }
         else
             printf("Ignored initial command `", g_defaultcommandArg, 
                                                         "' for icmbuild\n");
@@ -321,6 +334,9 @@ void install_version()
     string str;
     str = g_destpath + "VERSION";
 
+    if (!g_version)
+        return;
+
     if (install(str))
     {
         system(P_NOCHECK, "rm -f " + g_destpath + "VERSION");
@@ -341,14 +357,19 @@ void install_std()
     if (install_file("icmconf", "") && g_defaultcommand != "")
         fprintf(g_destpath + "icmconf", g_defaultcommand);
 
-										// for libraries: uncomment the
-										// #define LIBRARY spec, and
-										// comment out #define MAIN
-	if (strfind(g_defaultcommand, "library") != -1)
-		syscall("sed -i '\n"
-			"s?^//\\(#define LIBRARY\\)?\\1?\n"
-			"s?^\\(#define MAIN\\)?//\\1?\n"
-			"' " + g_destpath + "icmconf");
+                                        // for libraries: uncomment the
+                                        // #define LIBRARY spec, and
+                                        // comment out #define MAIN
+    if (strfind(g_defaultcommand, "library") != -1)
+        syscall("sed -i '\n"
+            "s?^//\\(#define LIBRARY\\)?\\1?\n"
+            "s?^\\(#define MAIN\\)?//\\1?\n"
+            "' " + g_destpath + "icmconf");
+
+    if (!g_version)                     // uncomment
+        syscall("sed -i '\n"            // #define USE_VERSION
+                "s?^\\(#define USE_VERSION\\)?//\\1?\n"
+            "' " + g_destpath + "icmconf");
 }
 
 int confirminstall(string source, string dest)
@@ -461,10 +482,19 @@ void install_line(string confline)
     install_file(source, dest);
 }
 
+int last(string haystack, string needle)
+{
+    list entry;
+    
+    entry = strtok(haystack, " \t\n");
+    return entry[sizeof(entry) - 1] == needle;
+}
+
 void install_rc()
 {
     list line;
     string conffile;
+    string file;
 
     conffile = findFile("icmstart.rc");
 
@@ -476,7 +506,17 @@ void install_rc()
         line = fgets(conffile, (int)line[1]);
         if (!line)
             break;
-        install_line(line[0]);
+
+        file = line[0];
+
+        if
+        (
+            !(
+                g_basic &&          // don't install version/usage for basic
+                (last(file, "version.cc") || last(file, "usage.cc"))
+            )
+        )
+            install_line(file);
     }
 }
 

@@ -4,6 +4,9 @@ rm -f release.yo
 buildrelease || exit 1
 
 CWD=`pwd`
+
+cp ../icmake/required ~/git/icmake/wip/
+
 cd ../icmake/doc/manpage
     ln -sf ../../../sf/release.yo .
     for yo in ic*yo

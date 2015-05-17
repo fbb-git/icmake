@@ -1,3 +1,12 @@
+icmake (7.22.01)
+
+  * The `ar' program in binutils >= 2.25.7 generates a warning when the u
+    modifier is used in combination with the r option. Icmake's icmbuild
+    script previously used 'ar cru'. To prevent the warning, 'ar cr' is now
+    used.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 16 May 2015 20:35:40 +0200
+
 icmake (7.22.00)
 
   * `icmstart dir library' uncomments the library construction spec. and

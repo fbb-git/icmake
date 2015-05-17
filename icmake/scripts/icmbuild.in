@@ -423,7 +423,7 @@ void static_library()
     {
         showCd(TMP_DIR "/o");
 
-        system("ar cru ../lib" LIBRARY + ".a *" OBJ_EXT);
+        system("ar cr ../lib" LIBRARY + ".a *" OBJ_EXT);
         system("ranlib ../lib" LIBRARY + ".a");
         system("rm *" OBJ_EXT);
     }

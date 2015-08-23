@@ -1,0 +1,220 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>icmstart</title>
+<style type="text/css">
+    figure {text-align: center;}
+    img {vertical-align: center;}
+</style>
+<link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
+</head>
+<body text="#27408B" bgcolor="#FFFAF0">
+<hr>
+<h1>icmstart</h1>
+<h2>icmake.7.22.01.tar.gz</h2>
+<h2>1992-2015</h2>
+
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<style type="text/css">
+    figure {text-align: center;}
+    img {vertical-align: center;}
+    figure {text-align: center;}
+    img {vertical-align: center;}
+</style>
+<link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
+</head>
+<body text="#27408B" bgcolor="#FFFAF0">
+<hr>
+<h1></h1>
+
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>icmstart(1)</title>
+<style type="text/css">
+    figure {text-align: center;}
+    img {vertical-align: center;}
+    figure {text-align: center;}
+    img {vertical-align: center;}
+    figure {text-align: center;}
+    img {vertical-align: center;}
+</style>
+<link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
+</head>
+<body text="#27408B" bgcolor="#FFFAF0">
+<hr>
+<h1>icmstart(1)</h1>
+<h2>icmake.7.22.01.tar.gz starts icmbuild program maintenance</h2>
+<h2>1992-2015</h2>
+
+
+<p>
+
+<h2>NAME</h2>icmstart - A startup script for icmbuild program maintenance
+<p>
+
+<h2>SYNOPSIS</h2>
+       <strong>icmstart</strong> <em>[Options]</em> top-dir [program|library]
+<p>
+<h2>DESCRIPTION</h2>
+<p>
+The <strong>icmstart</strong> script is a generic script that can be used to start program
+maintenance using <strong>icmake</strong>(1) and <strong>icmbuild</strong>(1). <strong>Icmstart</strong> creates
+an initial directory <em>top-dir</em> and installs the files <em>CLASSES,
+VERSION</em> and <em>icmconf</em> below <em>top-dir</em>. A second argument  `<em>program</em>'
+or `<em>library</em>' may be specified as the default mode of operation of the
+<strong>icmbuild</strong>(1) script. 
+<p>
+Skeleton files for the main directory and subdirectories, by default listed in
+the file <em>/etc/icmake/icmstart.rc</em>, may be installed as well
+(cf. <strong>icmstart.rc</strong>(7)).
+<p>
+After changing to the directory created by <strong>icmstart</strong> the <strong>icmbuild</strong>(1)
+script may be used for program maintenance.
+<p>
+<h2>OPTIONS</h2>
+<p>
+<em>Icmstart</em> may be called with the following options, which (if specified)
+    must be the first arguments of <em>icmstart</em>:
+    <ul>
+    <li><em>-b</em><br>
+       Basic installation: the files VERSION, usage.cc and version.cc are not
+        installed, and the #define USE_VERSION entry in icmconf is commented
+        out.
+    <li><em>-c confpath</em><br> Use the configuration files (<em>icmstart.rc, AUTHOR,
+        YEARS</em> and <em>VERSION</em>) if found in `confpath' rather than in
+        <em>~/.icmake</em> and/or <em>/etc/icmake/</em>. Once a file is found it is used
+        allowing partial overrides of the default files provided by
+        <strong>icmake</strong>(1).
+    <li><em>-d</em><br>
+       Do not execute any commands, but show the commands that would have been
+        executed on the standard output.
+    <li><em>-I</em><br>
+       Do not install files. 
+    <li><em>-r</em> 
+       Unconditionally replace existing files. If <em>-r</em> is not
+        provided <strong>icmstart</strong> will ask the user to confirm that an existing
+        file must
+        be overwritten. If a skeleton specification refers to a directory, the
+        full directory and its subdirectories will be replaced.
+    <li><em>-s skeleton-path</em> <br> 
+       By default skeleton files are listed in the skeleton resource file
+        <em>/usr/share/icmake/icmstart.rc</em>. Alternatively, the skeleton
+        resource file may be specified by the <em>ICM</em> environment variable,
+        which -in turn- may be overruled by the path specified with the <em>-s</em>
+        option. The skeleton path may be specified as a full file-path or as a
+        directory, in which case the skeleton resource file is assumed to be
+        <em>icmstart.rc</em> (see below at <strong>SKELETON FILES</strong>).
+    </ul>
+    Since <strong>icmstart</strong> uses <em>cp</em> to install files, <em>cp</em> must be
+available when <strong>icmstart</strong> should install skeleton files.
+<p>
+<h2>SKELETON FILES</h2>
+<p>
+Skeleton resource files may contain comment (empty lines and lines beginning
+with the hash-mark (<em>#</em>)) which is ignored, and should otherwise contain
+specifications of resource <strong>s</strong> to install.
+<p>
+The default resource file is <em>/etc/icmake/icmstart.rc</em>, contains
+        <pre>
+
+    CLASSES
+    P main.cc 
+    P main.ih 
+    P usage.cc
+    P version.cc
+    P ? scanner 
+    P ? parser  
+        
+</pre>
+
+    This file is overruled by <em>~/.icmake/icmstart.rc</em>. See
+<strong>icmstart.rc</strong>(7) for details about the format of the <em>icmstart.rc</em> file.
+<p>
+<h2>CONFIGURATION FILES</h2>
+<p>
+The configuration files <em>icmstart.rc, AUTHOR, YEARS</em> and <em>VERSION</em> are
+recognized and processed by <em>icmstart</em>. 
+<p>
+If the <em>-c</em> option was specified configuration files found in the path
+specified at this option are used. If not specified or if a file isn't
+found then the path <em>~/icmake</em> is inspected. If a configuration file isn't
+found in <em>~/icmake</em> either, configuration files in <em>/etc/icmake</em> are used.
+<p>
+Configuration files are not required for the proper operation of <em>icmstart</em>.
+When absent <em>icmstart</em> performs the following  default actions:
+<p>
+<ul>
+    <li> If the file <em>AUTHOR</em> does not exist <em>icmstart</em> uses <em>#define
+AUTHOR ""</em>. 
+<p>
+When the file <em>AUTHOR</em> is defined in a configuration path it should have
+one line, defining the author of the program. E.g.,
+        <pre>
+
+    #define AUTHOR "Frank B. Brokken &lt;f.b.brokken@rug.nl&gt;"
+        
+</pre>
+
+<p>
+<li> If the file <em>VERSION</em> does not exist <em>icmstart</em> uses <em>#define
+VERSION "0.00.00"</em>. 
+<p>
+When the file <em>VERSION</em> is defined in a configuration path it should
+have one line, defining the program's initial version. E.g.,
+        <pre>
+
+    #define VERSION "1.00.00"
+        
+</pre>
+
+<p>
+<li> If the file <em>YEAR</em> does not exist <em>icmstart</em> uses <em>#define
+YEARS "yyyy"</em> where <em>yyyy</em> is the current year. 
+<p>
+When the file <em>YEAR</em> is defined in a configuration path it should have
+one line, defining the program's initial release year. E.g.,
+        <pre>
+
+    #define YEARS "2012"
+        
+</pre>
+
+    Plural is used here since a release year usually becomes a range of years
+after some time, as with Icmake's years specification:
+        <pre>
+
+    #define YEARS "1992-2012"
+        
+</pre>
+
+    </ul>
+<p>
+<li> If the file <em>icmstart.rc</em> does not exist (or is empty) <em>icmstart</em>
+will not install any of the files normally found in <em>icmstart.rc</em>, but the
+initial project directory, <em>icmconf</em> and <em>VERSION</em> are installed.
+    )
+<p>
+<h2>FILES</h2>
+    The mentioned paths are sugestive only and may be installation dependent:
+    <ul>
+    <li> <strong>/usr/share/icmake/icmconf</strong>
+        Example of a <strong>icmbuild</strong> configuration file;
+    <li> <strong>/usr/share/icmake/CLASSES</strong>
+        Example of a <strong>icmbuild</strong> <em>CLASSES</em> file.
+    <li> <strong>/usr/share/icmake/icmstart.rc</strong>
+        Default skeleton resource file.
+    </ul>
+<p>
+<h2>SEE ALSO</h2>
+    <strong>icmake</strong>(1), <strong>icmbuild</strong>(1), <strong>icmconf</strong>(7), <strong>icmstart.rc</strong>(7).
+<p>
+<h2>BUGS</h2>
+    None reported
+<p>
+<h2>COPYRIGHT</h2>
+    This is free software, distributed under the terms of the 
+    GNU General Public License (GPL).
+<p>
+<h2>AUTHOR</h2>
+    Frank B. Brokken (<strong>f.b.brokken@rug.nl</strong>).
+<p>

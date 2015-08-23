@@ -1,0 +1,163 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>icmstart.rc</title>
+<style type="text/css">
+    figure {text-align: center;}
+    img {vertical-align: center;}
+</style>
+<link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
+</head>
+<body text="#27408B" bgcolor="#FFFAF0">
+<hr>
+<h1>icmstart.rc</h1>
+<h2>icmake.7.22.01.tar.gz</h2>
+<h2>1992-2015</h2>
+
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<style type="text/css">
+    figure {text-align: center;}
+    img {vertical-align: center;}
+    figure {text-align: center;}
+    img {vertical-align: center;}
+</style>
+<link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
+</head>
+<body text="#27408B" bgcolor="#FFFAF0">
+<hr>
+<h1></h1>
+
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>icmstart.rc(7)</title>
+<style type="text/css">
+    figure {text-align: center;}
+    img {vertical-align: center;}
+    figure {text-align: center;}
+    img {vertical-align: center;}
+    figure {text-align: center;}
+    img {vertical-align: center;}
+</style>
+<link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
+</head>
+<body text="#27408B" bgcolor="#FFFAF0">
+<hr>
+<h1>icmstart.rc(7)</h1>
+<h2>icmake.7.22.01.tar.gz icmstart resource file</h2>
+<h2>1992-2015</h2>
+
+
+<p>
+
+<h2>NAME</h2>icmstart.rc - The icmstart(1) resource file
+<p>
+<h2>DESCRIPTION</h2>
+<p>
+The <strong>icmstart.rc</strong> file defines the initial files of a program that are
+installed by <strong>icmstart</strong>(1). 
+<p>
+By default <strong>icmstart.rc</strong> is found in <em>/etc/icmake/icmstart.rc</em>, but if a
+file <em>$HOME/.icmake/icmstart.rc</em> is found then the latter file is used by
+<strong>icmstart</strong>(1). <em>$HOME/.icmake/icmstart.rc</em> in turn is overruled by
+specifying a <em>-c</em> option when invoking <strong>icmstart</strong>(1).
+<p>
+The default resource file contains the following specifications, preparing for
+the construction of a <strong>C++</strong> program using <strong>icmbuild</strong>(1):
+        <pre>
+
+    CLASSES
+    P main.cc 
+    P main.ih 
+    P usage.cc
+    P version.cc
+    P ? scanner 
+    P ? parser  
+        
+</pre>
+
+The <em>icmstart.rc</em> file may contain:
+    <ul>
+    <li> empty lines, which are ignored;
+    <li> lines beginning with a hash-character (<em>#</em>), also ignored;
+    <li> Optionally: a P (don't install with <em>icmstart xxx library</em>) or an L
+(don't install with <em>icmstart xxx program</em>), followed by a blank; see also
+<strong>icmstart</strong>(1).
+    <li> Optionall: a <em>?</em> (followed by a blank) following the optional P or
+L in which case the installation of the element must be confirmed by the user.
+    <li> Source path names. Relative path names are interpreted relative to
+the current working directory. Environment variables are not expanded, the
+initial tilde character is interpreset as the user's home directory.
+    <li> Source path names followed by a destination (relative to the
+directory initialized by <strong>icmstart</strong>(1)).
+    </ul>
+    A source path may be either a file or a directory. If a directory is
+specified then all files in and below that directory will be installed.
+<p>
+When specifying a destination a path may be specified as well. However, the
+destination path is always interpreted relative to the installation directory
+specified when calling <strong>icmstart</strong>(1).
+<p>
+If a destination is omitted, the source is installed as specified below
+<strong>icmstart</strong>(1)'s destination directory.
+<p>
+<h2>EXAMPLES</h2>
+<p>
+The following entries can be used in an <em>icmstart.rc</em> file:
+    <ul>
+    <li> <em>source</em><br>
+        `Source' must be in the skeleton directory visited by <strong>icmstart(1)</strong>
+and is installed as <em>source</em> in the destination directory specified when
+calling <strong>icmstart</strong>(1).
+    <li> <em>source dest</em><br>
+        `Source' must be in the skeleton directory visited by <strong>icmstart(1)</strong>
+and is installed as <em>dest</em> in the destination directory specified when
+calling <strong>icmstart</strong>(1).
+    <li> <em>~/path</em><br>
+        `~/path' is installed as <em>~/path</em> in the destination directory
+specified when calling <strong>icmstart</strong>(1). The <em>~</em>-character is expanded to the
+user's home directory.
+    <li> <em>~/path dest</em><br>
+        `~/path' is installed as <em>dest</em> in the destination directory
+specified when calling <strong>icmstart</strong>(1). The <em>~</em>-characteris expanded to the
+user's home directory.
+    <li> <em>/path</em><br>
+        `/path' is installed as <em>./path</em> in the destination directory
+specified when calling <strong>icmstart</strong>(1).
+    <li> <em>/path dest</em><br>
+        `/path' is installed as <em>dest</em> in the destination directory
+    <li> <em>? source</em><br>
+        The user must confirm the installation of <em>source</em>.
+    <li> <em>? source dest</em><br>
+        The user must confirm the installation of <em>source</em> as <em>dest</em> in
+the destination directory specified when calling <strong>icmstart</strong>(1).
+    <li> <em># text</em><br>
+        Interpreted as comment and ignored. The <em>#</em>-character must be the
+        first character on the line.
+    <li> an empty line<br>
+        Empty lines are skipped.
+    </ul>
+<p>
+<h2>FILES</h2>
+    The mentioned paths are sugestive only and may be installation dependent:
+    <ul>
+    <li> <strong>/usr/share/icmake/icmconf</strong>
+        Example of an <strong>icmbuild</strong> configuration file;
+    <li> <strong>/usr/share/icmake/CLASSES</strong>
+        Example of an <strong>icmbuild</strong> <em>CLASSES</em> file.
+    <li> <strong>/usr/share/icmake/icmstart.rc</strong>
+        Default skeleton resource file.
+    </ul>
+<p>
+<h2>SEE ALSO</h2>
+    <strong>icmake</strong>(1), <strong>icmbuild</strong>(1), <strong>icmconf</strong>(7), <strong>icmstart</strong>(1)
+<p>
+<h2>BUGS</h2>
+    None reported
+<p>
+<h2>COPYRIGHT</h2>
+    This is free software, distributed under the terms of the 
+    GNU General Public License (GPL).
+<p>
+<h2>AUTHOR</h2>
+    Frank B. Brokken (<strong>f.b.brokken@rug.nl</strong>).
+<p>

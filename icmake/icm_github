@@ -7,6 +7,12 @@ read yesno
 
 [ "$yesno" == "y" ] || exit 0
 
+. icm_prepare
+
+
+cp doc/*.1 tmp/${MANDIR}/man1
+cp doc/*.7 tmp/${MANDIR}/man7
+
 cp changelog ../../wip/changelog.txt
 
 sed '

@@ -10,9 +10,7 @@ if [ "$yesno" == "y" ] ; then
     git co master
 
     cd ${_product_}		    # check
-    icm_prepare
     icm_github
-    rm -rf tmp
     cd ..    
     git co gh-pages
 fi

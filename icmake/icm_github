@@ -1,0 +1,37 @@
+#!/bin/bash
+
+echo -n "This script is for internal use only. 
+Are you sure you want to run it [y/n] ?"
+
+read yesno
+
+[ "$yesno" == "y" ] || exit 0
+
+cp changelog ../../wip/changelog.txt
+
+sed '
+s/VERSION=\(.*\)/SUBST\(_CurVers_\)\(\1\)/ 
+s/YEARS=\(.*\)/SUBST\(_CurYrs_\)\(\1\)/ 
+' VERSION > release.yo
+
+cp release.yo required ../../wip/
+
+cd doc/manpage
+    ln -sf ../../release.yo .
+    for yo in ic*yo
+    do
+        yodl2html --no-warnings $yo
+    done
+
+cd ..
+mkdir -p ../../../wip/manpages
+
+cp -r manpage/*.html ../../../wip/manpages
+
+rm -f manpage/{*.html,release.yo}
+
+cd ..
+rm -r tmp release.yo
+
+
+

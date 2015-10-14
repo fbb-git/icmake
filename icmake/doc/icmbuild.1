@@ -1,4 +1,4 @@
-.TH "icmbuild" "1" "1992\-2015" "icmake\&.7\&.22\&.01\&.tar\&.gz" "A generic program maintenance script"
+.TH "icmbuild" "1" "1992\-2015" "icmake\&.7\&.23\&.00\&.tar\&.gz" "A generic program maintenance script"
 
 .PP 
 .SH "NAME"
@@ -159,6 +159,9 @@ program, using the library \fIlibbobcat1\fP as an additional library:
 #define CXXFLAGS        \(dq\& \-\-std=c++14 \-Wall \-g \-O2\(dq\&
 //#define CFLAGS        \(dq\& \-Wall \-g \-O2\(dq\&
 
+    // The extension of internal header files\&. See PRECOMP below
+#define IH              \(dq\&\&.ih\(dq\&
+
     // Options passed to the linker:
 #define LDFLAGS         \(dq\&\(dq\&
 
@@ -193,6 +196,11 @@ program, using the library \fIlibbobcat1\fP as an additional library:
 
     // What is the grammar specification file?
 #define PARSSPEC            \(dq\&grammar\(dq\&
+
+    // Uncomment to generate precompiled headers\&. When activated internal
+    // header files are precompiled when they are more recent than their 
+    // precompiled versions\&. PRECOMP requires IH
+//#define PRECOMP \(dq\&\-x c++\-header\(dq\&
 
     // Uncomment to relink the binary, even when no sources were changed 
 //#define REFRESH

@@ -1,4 +1,4 @@
-.TH "icmconf" "7" "1992\-2015" "icmake\&.7\&.22\&.01\&.tar\&.gz" "configuration file for \fBicmbuild\fP(1)"
+.TH "icmconf" "7" "1992\-2015" "icmake\&.7\&.23\&.00\&.tar\&.gz" "configuration file for \fBicmbuild\fP(1)"
 
 .PP 
 .SH "NAME"
@@ -153,7 +153,7 @@ The C++ compiler to use\&. For a \fBC\fP compiler use, e\&.g\&., \fI#define CC
 variable\&.
 .IP 
 .IP o 
-\fB#define CXXFLAGS            \(dq\&\-\-std=c++0x \-Wall \-g \-O2\(dq\&\fP
+\fB#define CXXFLAGS            \(dq\&\-\-std=c++14 \-Wall \-g \-O2\(dq\&\fP
 .br 
 The compiler options to use\&. The default options are shown\&. When the
 \fBC\fP compiler is used, use \fI#define CFLAGS\fP rather than
@@ -188,6 +188,12 @@ in which case \fIicmbuild\fP will de library maintenance\&.
 .IP 
 If this directive was not added by \fBicmstart\fP(1) it can always be
 added to \fIicmconf\fP by hand\&.
+.IP 
+.IP o 
+\fB#define IH                  \(dq\&\&.ih\(dq\&\fP
+.br 
+The extension used for internal header files\&. See \fI#define PRECOMP\fP
+below\&. 
 .IP 
 .IP o 
 \fB#define LDFLAGS             \(dq\&\(dq\&\fP
@@ -265,6 +271,15 @@ by \fIicmbuild\fP to compare the timestamps of the parser specification
 .br 
 The name of the parser specification file\&. This file is
 expected in the directory specified at \fIPARSER_DIR\fP\&.
+.IP 
+.IP o 
+\fB//#define PRECOMP           \(dq\&\-x c++\-headers\(dq\&\fP
+.br 
+When activated internal header files (see \fI#define IH\fP) are
+precompiled when they are more recent than their precompiled
+versions\&. They are removed again by \fIicmbuild clean\fP\&. To specify
+internal header files for other languages change the \fI\-x\fP
+specification accordingly\&. By default this \fI#define\fP is not active\&.
 .IP 
 .IP o 
 \fB#define REFRESH\fP

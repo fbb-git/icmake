@@ -496,6 +496,10 @@ void build_libraries()
 
 #ifdef PRECOMP
     precompileHeaders();
+
+    if (DEFCOM == "program")
+        precompile(get_base(MAIN));
+    
 #endif
 
     md(TMP_DIR);
@@ -541,7 +545,6 @@ void build_libraries()
         libso = "lib" LIBRARY ".so";
         libsoshared = libso + "." + g_version;
                                             // add option for shared lib
-//FBB SF        setGcompiler();
         g_compiler += " -fPIC "; 
 
         for (idx = g_nClasses; idx--; )
@@ -671,10 +674,6 @@ void program(string strip)
     #endif
 
     build_libraries();
-
-#ifdef PRECOMP
-    precompile(get_base(MAIN));
-#endif
 
     if (g_base || MAIN younger TMP_DIR "/" + maino)
     {

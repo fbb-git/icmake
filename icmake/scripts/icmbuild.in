@@ -456,6 +456,33 @@ void shared_library(string libso, string libsoshared)
     }
 }
 
+void precompile(string class)
+{
+    string classIH;
+
+    classIH = class + IH;
+    if (classIH younger class + IH ".gch")
+        system(g_compiler + " " PRECOMP " " + classIH);
+}
+
+void precompileHeaders()
+{
+    int idx;
+    list classes;
+    string class;
+
+    classes = makelist(O_SUBDIR, "*");
+
+    for (idx = sizeof(g_classes); idx--; )
+    {
+        class = g_classes[idx];
+
+        chdir(class);
+        precompile(class);        
+        chdir(g_cwd);
+    }
+}
+
 void build_libraries()
 {
     int idx;
@@ -466,6 +493,10 @@ void build_libraries()
     string staticLib;
 
     setClasses();
+
+#ifdef PRECOMP
+    precompileHeaders();
+#endif
 
     md(TMP_DIR);
 
@@ -510,7 +541,7 @@ void build_libraries()
         libso = "lib" LIBRARY ".so";
         libsoshared = libso + "." + g_version;
                                             // add option for shared lib
-        setGcompiler();
+//FBB SF        setGcompiler();
         g_compiler += " -fPIC "; 
 
         for (idx = g_nClasses; idx--; )
@@ -641,6 +672,10 @@ void program(string strip)
 
     build_libraries();
 
+#ifdef PRECOMP
+    precompile(get_base(MAIN));
+#endif
+
     if (g_base || MAIN younger TMP_DIR "/" + maino)
     {
         printf("\n"
@@ -666,6 +701,10 @@ void clean()
     system("rm -rf " USE_ALL " */" USE_ALL " " TMP_DIR);
 #else
     system("rm -rf " TMP_DIR);
+#endif
+
+#ifdef PRECOMP
+    system("find ./ -type f -name  \"*" IH ".gch\" -exec rm -f \\{\\} \\;");
 #endif
 
     exit(0);

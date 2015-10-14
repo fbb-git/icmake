@@ -144,8 +144,7 @@ manpagesection(ICMCONF PARAMETERS)
         "gcc"). Its setting is overruled by an identically named environment
         variable.
 
-
-    itb(#define CXXFLAGS            "--std=c++0x -Wall -g -O2")
+    itb(#define CXXFLAGS            "--std=c++14 -Wall -g -O2")
        The compiler options to use. The default options are shown. When the
         bf(C) compiler is used, use tt(#define CFLAGS) rather than
         tt(CXXFLAGS). Its setting is overruled by an identically named
@@ -171,6 +170,10 @@ manpagesection(ICMCONF PARAMETERS)
 
        If this directive was not added by bf(icmstart)(1) it can always be
         added to tt(icmconf) by hand.
+
+    itb(#define IH                  ".ih")
+       The extension used for internal header files. See tt(#define PRECOMP)
+        below. 
 
     itb(#define LDFLAGS             "")
        The linker options to use. By default no options are passed to the
@@ -228,6 +231,13 @@ manpagesection(ICMCONF PARAMETERS)
     itb(#define PARSSPEC            "grammar")
        The name of the parser specification file. This file is
         expected in the directory specified at tt(PARSER_DIR).
+
+    itb(//#define PRECOMP           "-x c++-headers")
+       When activated internal header files (see tt(#define IH)) are
+        precompiled when they are more recent than their precompiled
+        versions. They are removed again by tt(icmbuild clean). To specify
+        internal header files for other languages change the tt(-x)
+        specification accordingly. By default this tt(#define) is not active.
 
     itb(#define REFRESH)
        Define tt(REFRESH) to relink the binary program at every tt(icmbuild

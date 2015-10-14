@@ -550,6 +550,8 @@ provided:
             process(line[0]);
         }
             )
+        Note that the function tt(fgets) cannot read files beyond offset
+        65536.
     )
 
     Output interface:

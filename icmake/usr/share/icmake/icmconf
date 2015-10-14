@@ -23,6 +23,9 @@
 #define CXXFLAGS        " --std=c++14 -Wall -g -O2"
 //#define CFLAGS        " -Wall -g -O2"
 
+    // The extension of internal header files. See PRECOMP below
+#define IH              ".ih"
+
     // Options passed to the linker:
 #define LDFLAGS         ""
 
@@ -57,6 +60,11 @@
 
     // What is the grammar specification file?
 #define PARSSPEC            "grammar"
+
+    // Uncomment to generate precompiled headers. When activated internal
+    // header files are precompiled when they are more recent than their 
+    // precompiled versions. PRECOMP requires IH
+//#define PRECOMP "-x c++-header"
 
     // Uncomment to relink the binary, even when no sources were changed 
 //#define REFRESH

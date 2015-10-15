@@ -1,3 +1,22 @@
+icmake (7.23.00)
+
+  * Updated CXXFLAGS in generated icmconf files to contain --std=c++14
+
+  * Added the define
+        //#define PRECOMP "-x c++-header"
+    to icmconf files. When activated, internal header files are precompiled 
+    when they are more recent than their precompiled versions.
+
+  * Added the define
+        #define IH ".ih"
+    to icmconf files, specifying the extension of internal header files. It is
+    used by PRECOMP. 
+
+  * Reorganized the #defines in the icmconf mold file so that related #defines
+    are easily recognized.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 15 Oct 2015 14:52:21 +0200
+
 icmake (7.22.01)
 
   * The `ar' program in binutils >= 2.25.7 generates a warning when the u

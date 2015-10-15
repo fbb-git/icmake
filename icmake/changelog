@@ -12,6 +12,10 @@ icmake (7.23.00)
     to icmconf files, specifying the extension of internal header files. It is
     used by PRECOMP. 
 
+  * Reorganized the #defines in the icmconf mold file so that related #defines
+    are easily recognized.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 15 Oct 2015 14:52:21 +0200
 
 icmake (7.22.01)
 

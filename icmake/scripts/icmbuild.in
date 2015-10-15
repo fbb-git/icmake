@@ -458,11 +458,13 @@ void shared_library(string libso, string libsoshared)
 
 void precompile(string class)
 {
+#ifdef PRECOMP
     string classIH;
 
     classIH = class + IH;
     if (classIH younger class + IH ".gch")
         system(g_compiler + " " PRECOMP " " + classIH);
+#endif
 }
 
 void precompileHeaders()

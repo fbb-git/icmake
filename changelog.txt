@@ -1,3 +1,10 @@
+icmake (7.23.01)
+
+  * Overlooked checking for PRECOMP in icmbuild's precompile() function.
+    Now fixed.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 15 Oct 2015 16:45:39 +0200
+
 icmake (7.23.00)
 
   * Updated CXXFLAGS in generated icmconf files to contain --std=c++14

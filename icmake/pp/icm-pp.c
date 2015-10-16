@@ -112,7 +112,7 @@ int main(int argc, char **argv)
         imdir = ".";
 
     if (!(outfile = fopen(argv[2], "w")) )
-        error("cannot open input file %s", argv[2]);
+        error("cannot write output file %s", argv[2]);
 
     pushfile(argv[1]);
     construct_active();

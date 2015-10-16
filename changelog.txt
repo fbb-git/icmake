@@ -1,3 +1,11 @@
+icmake (7.23.02)
+
+  * Wow! After > 20 years being used, Martin Dorwig found a bug in icm_pp's
+    getident() function: it didn't accept digits in identifiers. It's fixed in
+    this release, now implementing the standard definition of an identifier.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 16 Oct 2015 14:46:41 +0200
+
 icmake (7.23.01)
 
   * Overlooked checking for PRECOMP in icmbuild's precompile() function.

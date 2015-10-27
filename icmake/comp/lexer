@@ -299,7 +299,7 @@ younger                 {
 "<<"                    {
                             return(SHL);
                         }
-0x[0-9]+                {
+0x[0-9A-Fa-f]+          {
                             unsigned value;
                             sscanf(yytext + 2, "%x", &value);
                             sprintf(lexstring, "%d", (int)value);

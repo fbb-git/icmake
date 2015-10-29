@@ -17,9 +17,9 @@
                 leading period
 */
 
-#include "icrssdef.h"
+#include "rss.ih"
 
-void _splitpath(const char * path,
+void ic_splitpath(char const * path,
     char * drive, char * dir, char * fname, char * ext)
 {
 

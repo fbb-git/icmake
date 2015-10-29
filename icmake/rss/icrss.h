@@ -233,54 +233,52 @@ typedef enum                                /* names of rss-functions */
     f_arg_tail,
     f_ascii_int,                            /* return int */
     f_ascii_str,                            /* return str */
-
+    f_backtick,                             
     f_c_base,
-    f_chdir,
     f_c_ext,
+    f_c_path,
+    f_chdir,
     f_cmd_head,
     f_cmd_tail,
-    f_c_path,
-
     f_echo,
     f_element,
     f_exec,
     f_execute,                              /* only used by the compiler */
     f_exists,
-
-    f_fields,
     f_fgets,
+    f_fields,
     f_fprintf,
-
     f_g_base,
-    f_getch,
-    f_gets,
+    f_g_dext,
     f_g_ext,
     f_g_path,
-
+    f_getch,
+    f_getenv,
+    f_getpid,                               /* used by several programs  */
+    f_gets,
     f_makelist,
-
     f_printf,
     f_putenv,
-
     f_sizeoflist,
     f_stat,
     f_str_el,
+    f_strfind,                              /* IDEM */
+    f_strformat,
+    f_strlen,                               /* only used by the compiler */
     f_strlwr,                               /* only used by the compiler */
     f_strupr,                               /* only used by the compiler */
+    f_substr,
     f_system,
+    f_trim,
+    f_trimleft,
+    f_trimright,
+
+    /* 20 left for new opcodes until f_hlt */
+
+    f_hlt = f_trimright + 21                /* dummy marker for non-existing */
+} FUNNR_;
 
                       /* reserved rss function opcodes for subreleases */
-    f_strlen,                               /* NEW: only for the compiler */
-    f_strfind,                              /* IDEM */
-    f_getpid,                               /* used by several programs  */
-
-    f_substr,
-    f_getenv,
-
-    f_backtick,                             /* 4 left until f_hlt */
-
-    f_hlt = f_system + 10                   /* dummy marker for non-existing */
-} FUNNR_;
 
 typedef enum
 {                       /* hexnr:     */
@@ -405,16 +403,16 @@ extern char
     release[];
 
 
-void        _makepath(char *, const char *, const char *,
-                      const char *, const char *);
-void        _splitpath(const char *, char *, char *, char *, char *);
-size_t    _dos_findfirst(char const *, size_t, struct _find_t *);
-size_t    _dos_findnext(struct _find_t *);
+void        ic_makepath(char *, char const *, char const *,
+                      char const *, char const *);
+void        ic_splitpath(char const *, char *, char *, char *, char *);
+size_t      ic_dos_findfirst(char const *, size_t, struct _find_t *);
+size_t      ic_dos_findnext(struct _find_t *);
 
-int         _spawnlp(int, const char *, const char *, ...);           /* ok */
-int         _spawnvp(int, const char *, const char **);               /* ok */
-char        *_strlwr(char *);                                         /* ok */
-char        *_strupr(char *);
+int         ic_spawnlp(int, char const *, char const *, ...);
+int         ic_spawnvp(int, char const *, char const **);
+char        *ic_strlwr(char *);
+char        *ic_strupr(char *);
 
 char const *change_ext (char const *, char const *);
 char const *change_base (char const *, char const *);

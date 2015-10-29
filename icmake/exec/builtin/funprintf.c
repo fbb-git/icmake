@@ -19,7 +19,7 @@
 
 void fun_printf(void)
 {
-    fun_ffprintf(stdout, 1);
+    formatedFprintf(stdout, 1);
 }
 
 

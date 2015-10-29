@@ -51,8 +51,7 @@
     }
 */
 
-#include "icrssdef.h"
-#include "icm.h"
+#include "rss.ih"
 
 static BIN_HEADER_ header;
 

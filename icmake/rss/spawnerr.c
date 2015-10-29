@@ -18,9 +18,7 @@
     }
 */
 
-#include "icrssdef.h"
-#include "icm.h"
-#include <errno.h>
+#include "rss.ih"
 
 void spawn_err (progname)
 char *progname;

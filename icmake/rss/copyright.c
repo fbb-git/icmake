@@ -29,7 +29,7 @@ the {\em All rights reserved\,} string is used.
 }
 */
 
-#include "icrssdef.h"
+#include "rss.ih"
 
 void copyright(char *function, char *versionStr, char *years)
 {

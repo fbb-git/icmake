@@ -16,16 +16,12 @@
 
 */
 
-#include <stdio.h>
-#include <string.h>
-#include "icm.h"
-#include "icrssdef.h"
+#include "rss.ih"
 
-static char
-    dot[] = ".";
+static char dot[] = ".";
 
-void _makepath(char * path,
-    const char * drive, const char * dir, const char * fname, const char * ext)
+void ic_makepath(char * path,
+    char const * drive, char const * dir, char const * fname, char const * ext)
 {
     path[0] = '\x0';                        /*  prepare for strcats */
 

@@ -35,7 +35,7 @@
     }
 */
 
-#include "icrssdef.h"
+#include "rss.ih"
 
 void initvar (VAR_ *v)
 {

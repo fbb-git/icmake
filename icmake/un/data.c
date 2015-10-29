@@ -8,51 +8,47 @@ char
     {
         "arghead",
         "argtail",
-        "ascii_str2int",
         "ascii_int2str",
-
+        "ascii_str2int",
+        "backtick",
         "change_base",
-        "chdir",
         "change_ext",
+        "change_path",
+        "chdir",
         "cmdhead",
         "cmdtail",
-        "change_path",
-
         "echo",
         "list_element",
         "exec",
         "execute",
         "exists",
-
-        "strtok",
         "fgets",
+        "fields",
         "fprintf",
-
         "get_base",
-        "getch",
-        "gets",
+        "get_dext",
         "get_ext",
         "get_path",
-
+        "getch",
+        "getenv",
+        "getpid",
+        "gets",
         "makelist",
-
         "printf",
         "putenv",
-
         "sizeoflist",
         "stat",
         "string_element",
+        "strfind",
+        "strformat",
+        "strlen",
         "strlwr",
         "strupr",
-        "system",
-
-        "strlen",
-        "strfind",
-        "getpid",
-
         "substr",
-        "getenv",
-        "backtick",
+        "system",
+        "trim",
+        "trimleft",
+        "trimright",
     };
 
 FILE

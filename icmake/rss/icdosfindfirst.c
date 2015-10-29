@@ -6,8 +6,8 @@
     main makefile and go for it. glob() must follow the syntaxis:
 
        #include <glob.h>
-       int glob(const char *pattern, int flags,
-                int errfunc(const char * epath, int eerrno),
+       int glob(char const *pattern, int flags,
+                int errfunc(char const * epath, int eerrno),
                 glob_t *pglob);
        void globfree(glob_t *pglob);
 
@@ -18,20 +18,13 @@
     are read.
 */
 
-#ifdef HAVE_GLOB
-#   include <glob.h>
-#endif
-
-#include "icrssdef.h"
+#include "rss.ih"
 
 #ifdef HAVE_GLOB
-static glob_t
-    gdata;                                      /* globbing struct */
-static size_t
-    nextglob;                                   /* next name in list */
+static glob_t gdata;                            /* globbing struct */
+static size_t nextglob;                         /* next name in list */
 #else
-static FILE
-    *fp = NULL;                                 /* echo program pipe */
+static FILE *fp = NULL;                         /* echo program pipe */
 #endif
 
 static char *filename (char *fname)             /* return pointer into */
@@ -78,14 +71,14 @@ static int make_attrib (char *fname)            /* make DOS attribs */
 /* glob() error handler
    returns 0: signal for glob to ignore the error
 */
-static int globerr (const char *path, int errnr)
+static int globerr (char const *path, int errnr)
 {
     return (0);
 }
 #endif
                                                 /* dos_findfirst emulator */
                                                 /* ignores attribute! */
-size_t _dos_findfirst(char const * fspec, size_t attrib,
+size_t ic_dos_findfirst(char const * fspec, size_t attrib,
     struct _find_t * fileinfo)
 {
 #ifdef HAVE_GLOB
@@ -125,7 +118,7 @@ size_t _dos_findfirst(char const * fspec, size_t attrib,
 #endif
 }
 
-size_t _dos_findnext(struct _find_t * fileinfo)
+size_t ic_dos_findnext(struct _find_t * fileinfo)
 {
 #ifdef HAVE_GLOB
     if (nextglob >= gdata.gl_pathc)             /* done with list ? */

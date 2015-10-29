@@ -1,6 +1,6 @@
-#include "icrssdef.h"
+#include "rss.ih"
 
-int _spawnlp (int mode, const char *prog, const char *av0, ...)
+int ic_spawnlp (int mode, char const *prog, char const *av0, ...)
 {
     va_list
         marker;

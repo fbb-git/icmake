@@ -34,7 +34,7 @@
 
     // define any additional paths (other than the standard paths) the
     // additional libraries are located in:
-#define ADD_LIBRARY_PATHS  "../../rss"
+#define ADD_LIBRARY_PATHS  "../../tmp"
 
     // #defines used for the final product:
     // ====================================

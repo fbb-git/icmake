@@ -2,7 +2,7 @@
 
 */
 
-#include "../rss/icrssdef.h"
+#include "rss.ih"
 
 static char hexnumbers[] = "0123456789abcdef";
 

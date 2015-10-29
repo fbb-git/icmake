@@ -7,7 +7,7 @@
 
 void fun_strlwr()
 {
-    char *cp = _strlwr(xstrdup(stringStr(top())));
+    char *cp = ic_strlwr(xstrdup(stringStr(top())));
     reg = *stringConstructor_cP(cp);
     free(cp);
 }

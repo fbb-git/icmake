@@ -2,11 +2,15 @@
 
 void formater(void *dest, size_t start)
 {
-    size_t lastIdx = atart + intValue(top());   /* get the last arg idx */
-    char *begin = getarg(start, &newElement);   /* get the fmt string  */
+    int stop;
+    size_t lastIdx = start + intValue(top());   /* get the last arg idx */
+    char *begin = getarg(start, &stop);         /* get the fmt string  */
 
     char *end = begin + strlen(begin);          /* end of the fmt string    */
     char *mid;                                  /* midway                   */
+
+fprintf(stderr, "formater: %s\n", begin);
+return;
 
     while (begin != end)                        /* process the fmt string   */
     {
@@ -14,8 +18,7 @@ void formater(void *dest, size_t start)
 
         mid = findPercent(begin, end);          /* mid points to a %<nr>    */
 
-                                                /* write the first part     */
-        (*p_destWrite)(dest, begin, mid - begin);
+        (*p_destWrite)(dest, begin, mid);       /* write the first part     */
 
         begin = getNr(&idx, mid);               /* get the nr of %<nr>      */
 

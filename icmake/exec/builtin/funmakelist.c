@@ -43,12 +43,12 @@ void fun_makelist()
                                         /* find a first name */
         char *namefound = findfirst (name, attrib);
 
-        _splitpath (name, drive, dir, fname, ext);
+        ic_splitpath (name, drive, dir, fname, ext);
 
         while (namefound)               /* as long as that succeeds */
         {
                                         /* make a new path */
-            _makepath (newname, drive, dir, namefound, "");
+            ic_makepath (newname, drive, dir, namefound, "");
 
                                         /* add entry to the list */
 #ifdef MSDOS                            /* under DOS: lower case */

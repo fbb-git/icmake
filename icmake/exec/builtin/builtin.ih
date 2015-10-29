@@ -1,7 +1,8 @@
 #include "builtin.h"
 
 #include <unistd.h>
- 
+
+#include <errno.h> 
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -98,9 +99,13 @@ void fun_trimright(void);
 void fun_printarg(FILE *out, size_t i, int *newelement);
 
 int termch(void);
-char *percentDigit(char *fmt);  /* ptr to fir
 void formatedFprintf(FILE *f, size_t start);
 
 extern void (*p_destWrite)(void *dest, char const *begin, char const *end);
 void fileWrite(void *dest, char const *begin, char const *end);
-void stringWrite(void *dest, char const *begin, char *end);
+void stringWrite(void *dest, char const *begin, char const *end);
+void formater(void *dest, size_t start);
+void writeArg(void *dest, size_t idx);
+void writeArgument(void *dest, size_t idx, int *stop);
+
+

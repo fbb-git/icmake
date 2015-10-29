@@ -61,17 +61,14 @@ void main(int argc, char **argv)
 \normalsize
 */
 
-#include <stdio.h>
-#include <string.h>
-#include "icrssdef.h"
+#include "rss.ih"
 
 char
     *icce_beyond_optchar,              /* no character beyond optchar yet */
     *icce_optchar = "-",
     *icce_optval;
 
-int
-    icce_next_option = 0;
+int icce_next_option = 0;
 
 
 int ic_getopt(int *p_argc, char **argv)

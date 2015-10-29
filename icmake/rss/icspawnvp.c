@@ -1,10 +1,6 @@
-#include <stdarg.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "icrssdef.h"
+#include "rss.ih"
 
-int _spawnvp (int mode, const char *prog, const char **av)
+int ic_spawnvp (int mode, char const *prog, char const **av)
 {
     char
         buf [_MAX_PATH * 4];
@@ -28,7 +24,7 @@ int main ()
     static char
         *args [] = { "ls", "*.c", "*.h", NULL };
 
-    _spawnvp (0, "ls", (const char **) args);
+    _spawnvp (0, "ls", (char const **) args);
 
     return (0);
 }

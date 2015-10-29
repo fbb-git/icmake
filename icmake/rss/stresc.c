@@ -3,7 +3,7 @@
 
 */
 
-#include "../rss/icrssdef.h"
+#include "rss.ih"
 
 char *stresc(char *source)
 {

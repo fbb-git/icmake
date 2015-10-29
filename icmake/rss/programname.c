@@ -32,7 +32,7 @@ the basename of the function.
 }
 */
 
-#include "icrssdef.h"
+#include "rss.ih"
 
 char *program_name(char *argv)
 {

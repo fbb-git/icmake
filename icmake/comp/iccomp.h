@@ -148,15 +148,15 @@ extern FILE
 
 extern int
     initialization,                         /* for initialization expr. */
-    yy_init,                                /* yylex() initializer: 1 to init. */
-    yyleng,                                 /* strlen(yytext) */
-    yynerrs;                                /* number of parse errors so far */
+    yy_init;                                /* yylex() initializer: 1 to init. */
 
-extern int
-    yylineno;                               /* yylex() line counter */
+extern size_t yyleng;                       /* strlen(yytext) */
 
-extern char
-    *yytext;                                /* yylex() read input chars */
+extern int yynerrs;                         /* number of parse errors so far */
+
+extern int yylineno;                        /* yylex() line counter */
+
+extern char *yytext;                        /* yylex() read input chars */
 
 extern int
     parse_error,

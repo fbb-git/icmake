@@ -89,7 +89,7 @@ int main (                         /* icmake source(txt) dest(bin) */
 
         signal(SIGINT, abnormal_exit);      /* abnormal exits process */
                                             /* do the preprocessing */
-        ret = _spawnlp(P_WAIT, icm_pp, icm_pp, source_name, temporary, NULL);
+        ret = ic_spawnlp(P_WAIT, icm_pp, icm_pp, source_name, temporary, NULL);
         if (ret)
         {
             if (ret == -1)
@@ -102,7 +102,7 @@ int main (                         /* icmake source(txt) dest(bin) */
             return (0);
 
                                             /* do the compilation */
-        errors = _spawnlp(P_WAIT, icm_comp, icm_comp,
+        errors = ic_spawnlp(P_WAIT, icm_comp, icm_comp,
                                   temporary, dest_name, NULL);
         cleanup();
 

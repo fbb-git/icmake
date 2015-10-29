@@ -13,7 +13,7 @@ void fun_strformat(void)
     
     formater(&ptr, 1);
 
-    reg = stringConstructor_cP(ptr);
+    reg = *stringConstructor_cP(ptr);
     free(ptr);
 }
 

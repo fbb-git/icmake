@@ -71,10 +71,7 @@ void main(int argc, char **argv)
 \normalsize
 */
 
-
-#include <stdio.h>
-#include <string.h>
-#include "icrssdef.h"
+#include "rss.ih"
 
 extern char
     *icce_beyond_optchar,

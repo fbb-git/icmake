@@ -24,7 +24,7 @@
     }
 */
 
-#include "icrssdef.h"
+#include "rss.ih"
 
 char *hexstring (size_t val, size_t len)
 {

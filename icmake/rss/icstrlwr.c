@@ -1,9 +1,8 @@
-#include "icrssdef.h"
+#include "rss.ih"
 
-char *_strlwr (char *s)
+char *ic_strlwr (char *s)
 {
-    register char
-        *cp;
+    register char *cp;
 
     for (cp = s; *cp; ++cp)
         *cp = tolower(*cp);

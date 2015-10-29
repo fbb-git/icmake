@@ -1,12 +1,12 @@
 #include "builtin.h"
 
-void stringWrite(void *dest, char const *begin, char *end)
+void stringWrite(void *dest, char const *begin, char const *end)
 {
     char beyond = *end;
-    *end = 0;
+    *(char *)end = 0;
 
-    *dest = xstrcat(*dest, begin);
+    *(char **)dest = xstrcat(*(char **)dest, begin);
 
-    *end = beyond;
+    *(char *)end = beyond;
 }
 

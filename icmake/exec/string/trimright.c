@@ -7,8 +7,8 @@ STRINGVAR_  *stringTrimRight(STRINGVAR_ const *param)
 
     char org;
     STRINGVAR_ *ret;
-
-    for (; cp-- != begin && isspace(*cp)) /* find the last non-ws char. pos */
+                                        /* find the last non-ws char. pos */
+    for (; cp-- != begin && isspace(*cp); ) 
         ;
     org = *++cp;                        /* save the 1st RHS tail's ws char */
     *cp = 0;                            /* cut off the RHS tail */

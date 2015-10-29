@@ -5,8 +5,7 @@
     fail, probably) 
 */
 
-#include "icrss.h"
-
+#include "rss.ih"
 
 char *try_source(char const *source)
 {

@@ -4,12 +4,12 @@
     Note on the MSDOS platforms:
 
     With file specifications terminating in a relative path (i.e.,
-    terminating in . or ..) _dos_findfirst() fails, and findfirst() will
+    terminating in . or ..) ic_dos_findfirst() fails, and findfirst() will
     fail too.
 
 */
 
-#include "icrssdef.h"
+#include "rss.ih"
 
 ICMAKE_FIND_
     ifs;                                    /* icmake find-struct */
@@ -22,7 +22,7 @@ char *findfirst(char const *fspec, size_t attrib)
     ifs.attrib = attrib;                    /* initialize ifs */
 
                                             /* find all entries */
-    if (_dos_findfirst(fspec, (size_t)-1, &ifs.find))
+    if (ic_dos_findfirst(fspec, (size_t)-1, &ifs.find))
         return (NULL);                      /* failed already: return NULL */
 
     return

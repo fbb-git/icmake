@@ -27,7 +27,7 @@
 {See the return value description}
 */
 
-#include "icrssdef.h"
+#include "rss.ih"
 
 int younger(char const *lval, char const *rval)
 {

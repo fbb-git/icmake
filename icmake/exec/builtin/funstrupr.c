@@ -7,7 +7,7 @@
 
 void fun_strupr()
 {
-    char *cp = _strupr(xstrdup(stringStr(top())));
+    char *cp = ic_strupr(xstrdup(stringStr(top())));
     reg = *stringConstructor_cP(cp);
     free(cp);
 }

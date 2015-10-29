@@ -2,6 +2,6 @@
 
 void fileWrite(void *dest, char const *begin, char const *end)
 {
-    fwrite((FILE *)dest, begin, end - begin);
+    fwrite(begin, 1, end - begin, (FILE *)dest);
 }
 

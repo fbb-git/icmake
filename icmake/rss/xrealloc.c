@@ -20,7 +20,7 @@
 */
 
 
-#include "icrssdef.h"
+#include "rss.ih"
 
 void *xrealloc (void *ptr, size_t size)
 {

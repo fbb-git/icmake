@@ -17,17 +17,12 @@
 
 #include "builtin.ih"
 
-void fun_printf ()
+void fun_printf(void)
 {
-    size_t i;
-    int newelement;
-    size_t nargs = intValue(top());
-
-    for (i = 1; i <= nargs; i += newelement)
-    {
-        char *string = getarg(i, &newelement);
-        printf("%s%s", string, 
-                       typeValue(top() - i) & e_list && *string ? " " : "");
-        free(string);
-    }
+    fun_ffprintf(stdout, 1);
 }
+
+
+
+
+

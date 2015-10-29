@@ -21,6 +21,7 @@
         C_PATH
         G_BASE
         G_EXT
+        G_DEXT
         G_PATH
         ELEMENT
         ELSE
@@ -54,8 +55,12 @@
         STRLWR
         STRUPR
         STRFIND
+        STRFORMAT
         SUBSTR
         SYSTEM
+        TRIM
+        TRIMLEFT
+        TRIMRIGHT
         VOID
         WHILE
 
@@ -655,7 +660,14 @@ function:
             $$ = *exec_fprintf($1.type, &$3);
         }
     |
-        funname
+        STRFORMAT
+        openpar
+        args                                /* first may be anything */
+        {
+            $$ = *specials(f_strformat, &$3);
+        }
+    |
+       funname
         openpar
         opt_arglist
         {
@@ -905,6 +917,8 @@ one_arg_funs:
     |
         G_EXT
     |
+        G_DEXT
+    |
         PUTENV
     |
         GETENV
@@ -914,7 +928,13 @@ one_arg_funs:
         STRUPR
     |
         STRLWR
-    ;
+    |
+    	TRIM
+    |
+    	TRIMLEFT
+    |
+    	TRIMRIGHT
+   ;
 
 openpar:    {parse_error = err_openpar_expected; }      '(' ;
 openbrace:  {parse_error = err_openbrace_expected; }    '{' ;

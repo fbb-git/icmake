@@ -22,21 +22,19 @@
 
 void fun_fprintf()
 {
-    size_t i;
-    int newelement;
-    size_t nargs = (size_t)intValue(top());
     char const *filename = stringStr(top() - 1);
     FILE *outf;
 
-    if (! (outf = fopen (filename, "a")) )
-        error ("failure to open file \"%s\"", filename);
-
-    for (i = 2; i <= nargs; i += newelement)
-    {
-        char *string = getarg(i, &newelement);
-        fprintf(outf, "%s%s", string, 
-                        typeValue(top() - i) & e_list && *string ? " " : "");
-        free(string);
-    }
+    if (! (outf = fopen(filename, "a")) )
+        error("failure to open file \"%s\"", filename);
+    fun_ffprintf(outf, 2);
     fclose (outf);
 }
+
+
+
+
+
+
+
+

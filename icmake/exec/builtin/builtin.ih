@@ -22,6 +22,9 @@ extern int echo;
 extern void (*builtinfun[])(void);
 
 char *setstring(char *);
+char *findPercent(char *cp, char *end);
+char *getNr(size_t *idx, char *mid);
+
 
 
 /*
@@ -59,6 +62,7 @@ void fun_stat(void);
 void fun_putenv(void);
 void fun_chdir(void);
 void fun_getenv(void);
+void fun_cmd_head(void);
 void fun_cmd_tail(void);
 void fun_c_base(void);
 void fun_c_ext(void);
@@ -66,10 +70,12 @@ void fun_c_path(void);
 void fun_fields(void);
 void fun_fgets(void);
 void fun_fprintf(void);
+void fun_ffprintf(FILE *f, size_t start);
 void fun_g_base(void);
 void fun_getch(void);
 void fun_getpid (void);
 void fun_gets(void);
+void fun_g_dext(void);
 void fun_g_ext(void);
 void fun_g_path(void);
 void fun_echo(void);
@@ -81,11 +87,16 @@ void fun_printf(void);
 void fun_sizeoflist(void);
 void fun_str_el(void);
 void fun_strfind(void);
+void fun_strformat(void);
 void fun_strlen(void);
 void fun_strlwr(void);
 void fun_strupr(void);
 void fun_substr(void);
 void fun_system(void);
-void fun_cmd_head(void);
+void fun_trim(void);
+void fun_trimleft(void);
+void fun_trimright(void);
+void fun_printarg(FILE *out, size_t i, int *newelement);
 
 int termch(void);
+char *percentDigit(char *fmt);  /* ptr to fir

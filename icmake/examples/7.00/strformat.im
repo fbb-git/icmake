@@ -1,0 +1,15 @@
+#!/usr/bin/icmake -qi
+int main(int argc, list argv)
+{
+	int i;
+	string str;
+
+	for (i = 0 ; i != length(argv); ++i)
+	{
+		if (length(argv[i]).length != 0)
+			str += strformat("arg %1 is '%2'\n", i + 1, argv[i]);
+	}
+	printf("%1", str);
+
+	return 0;
+}

@@ -1,3 +1,5 @@
+  * Added trim, trimleft, trimright, length, get_dext
+
 icmake (7.23.02)
 
   * Wow! After > 20 years being used, Martin Dorwig found a bug in icm_pp's

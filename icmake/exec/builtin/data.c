@@ -36,6 +36,7 @@ void (*builtinfun[])(void) =
          fun_g_base,         fun_getch,
          fun_gets,
          fun_g_ext,
+         fun_g_dext,
          fun_g_path,
     
          fun_makelist,
@@ -48,6 +49,7 @@ void (*builtinfun[])(void) =
          fun_str_el,
          fun_strlwr,
          fun_strupr,
+         fun_strformat,
          fun_system,
          
          fun_strlen,
@@ -55,6 +57,9 @@ void (*builtinfun[])(void) =
          fun_getpid,
     
          fun_substr,
+         fun_trim,
+         fun_trimleft,
+         fun_trimright,
          fun_getenv,
          fun_backtick,
          fun_empty,

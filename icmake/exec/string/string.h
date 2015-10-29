@@ -17,4 +17,7 @@ int         stringLogical(STRINGVAR_ const *lhs);
 
 char        *stringStr(STRINGVAR_ const *lhs);  /* const removed */
 
+STRINGVAR_  *stringTrimLeft(STRINGVAR_ const *str);
+STRINGVAR_  *stringTrimRight(STRINGVAR_ const *str);
+
 #endif

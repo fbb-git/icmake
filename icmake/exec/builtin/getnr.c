@@ -1,10 +1,10 @@
 #include "builtin.ih"
 
-char *getNr(size_t *idx, char *mid)
+char *getNr(size_t *idx, char *ptr)     /* ptr points at <nr> of %<nr>  */
 {
     char *beyond;
-    *idx = strtol(mid + 1, &beyond, 10);
-    return beyond;                      /* return the position beyond %<nr> */
+    *idx = strtol(ptr, &beyond, 10);
+    return beyond;                      /* return the position beyond <nr>  */
 }
 
     

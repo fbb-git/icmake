@@ -6,11 +6,12 @@ void writeArgument(void *dest, size_t idx, int *stop)
 {
     char *string = getarg(idx, stop);
 
-    stringWrite(dest, string, string + strlen(string));
-
-    if (typeValue(top() - idx) & e_list && *string && *stop == 0)
-        stringWrite(dest, separator, separator + 1);
+    (*p_destWrite)(dest, string, string + strlen(string));
 
     free(string);
+
+                                            /* at a list: write a separator */
+    if (typeValue(top() - idx) & e_list && *string && !*stop)
+        (*p_destWrite)(dest, separator, separator + 1);
 }
 

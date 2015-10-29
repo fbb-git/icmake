@@ -23,7 +23,7 @@ extern int echo;
 extern void (*builtinfun[])(void);
 
 char *setstring(char *);
-char *findPercent(char *cp, char *end);
+char *findPercent(char *begin);
 char *getNr(size_t *idx, char *mid);
 
 

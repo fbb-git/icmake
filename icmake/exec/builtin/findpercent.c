@@ -1,19 +1,26 @@
 #include "builtin.ih"
 
-char *findPercent(char *cp, char *end)
+char *findPercent(char *ptr)
 {
-    while (cp != end)                       /* search the string        */
+    while (1)                               /* search the string        */
     {
-        size_t idx = strcspn(cp, "\\%");    /* find idx of 1st \ or %   */
+        ptr += strcspn(ptr, "\\%");         /* ptr -> \, % or \0        */
 
-        if (cp[idx] == '\\')                /* skip the next char and   */
-        {                                   /* continue if \            */
-            cp += idx + 2;
-            continue;
-        }
-        
-        if (isdigit(cp[1]))                 /* at a % check for %<nr>   */
+        switch (*ptr)
+        {
+            case 0:                         /* at end of string         */
+            return ptr;
+
+            case '\\':                      /* at a backslash           */
+                if (*++ptr)                 /* skip the next char       */
+                    ++ptr;
             break;
+
+            default:                        /* at %                     */
+                if (isdigit(ptr[1]))        /* if at %<nr>              */
+                    return ptr;             /* return ptr -> %          */
+                ++ptr;                      /* or skip % and continue   */
+            break;
+        }
     }
-    return cp;
 }

@@ -70,7 +70,6 @@ void fun_c_path(void);
 void fun_fields(void);
 void fun_fgets(void);
 void fun_fprintf(void);
-void fun_ffprintf(FILE *f, size_t start);
 void fun_g_base(void);
 void fun_getch(void);
 void fun_getpid (void);
@@ -100,3 +99,8 @@ void fun_printarg(FILE *out, size_t i, int *newelement);
 
 int termch(void);
 char *percentDigit(char *fmt);  /* ptr to fir
+void formatedFprintf(FILE *f, size_t start);
+
+extern void (*p_destWrite)(void *dest, char const *begin, char const *end);
+void fileWrite(void *dest, char const *begin, char const *end);
+void stringWrite(void *dest, char const *begin, char *end);

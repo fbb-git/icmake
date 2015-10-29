@@ -428,6 +428,7 @@ char     *findnext(void);                       /* remaining matching entries   
 char     *fgetz (char *, size_t, FILE *);
 
 char const *get_ext(char const *);
+char const *get_dext(char const *);
 char const *get_base(char const *);
 char const *get_path (char const *);
 

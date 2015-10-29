@@ -1,11 +1,9 @@
 #include "builtin.ih"
 
-void writeArg(FILE *out, size_t idx)
+void writeArg(void *dest, size_t idx)
 {
-    int newElement;
-
+    int stop;
     do
-        printarg(out, start + i, &newElement);
-    while (newElement == 0);
+        writeArgument(dest, idx, &stop);
+    while (!stop);
 }
-    

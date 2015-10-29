@@ -1,9 +1,7 @@
 #include "builtin.ih"
 
-void fun_ffprintf (FILE *out, size_t start)
+void formater(void *dest, size_t start)
 {
-    int newElement;
-
     size_t lastIdx = atart + intValue(top());   /* get the last arg idx */
     char *begin = getarg(start, &newElement);   /* get the fmt string  */
 
@@ -15,14 +13,17 @@ void fun_ffprintf (FILE *out, size_t start)
         size_t idx;                             /* idx of the requested arg */
 
         mid = findPercent(begin, end);          /* mid points to a %<nr>    */
-        fwrite(out, begin, mid - begin);        /* write the 1st part       */
+
+                                                /* write the first part     */
+        (*p_destWrite)(dest, begin, mid - begin);
+
         begin = getNr(&idx, mid);               /* get the nr of %<nr>      */
 
         if (errno == 0 && idx >= 1 && idx <= lastIdx)
-            writeArg(out, start + idx);         /* write argument st + idx  */
+            writeArg(dest, start + idx);        /* write argument st + idx  */
         else
-            fputs("(null)", out);
+            (*p_destWrite)(dest, mid, begin);   /* or write the %<nr> as is */
     }
-        
+
 }
 

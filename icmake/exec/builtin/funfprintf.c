@@ -27,7 +27,9 @@ void fun_fprintf()
 
     if (! (outf = fopen(filename, "a")) )
         error("failure to open file \"%s\"", filename);
-    fun_ffprintf(outf, 2);
+
+    formatedFprintf(outf, 2);
+
     fclose (outf);
 }
 

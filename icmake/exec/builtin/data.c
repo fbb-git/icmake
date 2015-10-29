@@ -70,3 +70,7 @@ void (*builtinfun[])(void) =
          /* fun_hlt is non-existent.. */
          /* f_hlt used to mark unexisting functions */
      };
+
+void (*p_destWrite)(void *dest, char const *begin, char const *end);
+
+

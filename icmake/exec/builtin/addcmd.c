@@ -25,8 +25,7 @@
 
 #include "builtin.ih"
 
-char **addcmd (cmd, string)
-char **cmd, *string;
+char **addcmd(char **cmd, char *string)
 {
     register int
         i,

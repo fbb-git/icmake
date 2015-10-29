@@ -61,12 +61,18 @@ char const *change_path (char const *n, char const *p)
     return name;
 }
 
-char const *get_ext (char const *n)
+char const *get_ext(char const *n)
 {
     split (n);
     if (*ext == '.')
         return (xstrdup (ext + 1));
     return ext;
+}
+
+char const *get_dext(char const *n)     /* including the dot */
+{
+    split (n);
+    return *ext == '.' ? xstrdup(ext) : ext;
 }
 
 char const *get_base (char const *n)

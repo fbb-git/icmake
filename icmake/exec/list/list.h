@@ -21,7 +21,7 @@ void        listAdd_L(LISTVAR_ *lhs, LISTVAR_ const *rhs);
 void        listSub(LISTVAR_ *lhs, LISTVAR_ const *rhs);
 int         listLogical(LISTVAR_ const *lhs);
 int         listContains(LISTVAR_ *lhs, char const *str);
-size_t    listSize(LISTVAR_ const *list);
+size_t      listSize(LISTVAR_ const *list);
 char const *listAt(LISTVAR_ const *list, size_t idx);
 void        listSort(LISTVAR_ *list);
 

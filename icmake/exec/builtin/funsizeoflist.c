@@ -14,7 +14,14 @@
 
 #include "builtin.ih"
 
-void fun_sizeoflist ()
+void fun_sizeoflist()
 {
-    reg = *intConstructor_i((int)listSize(top()));
+    VAR_ *base = top();
+
+    reg = *intConstructor_i(
+                typeValue(base) == e_str ? 
+                    (int)strlen(stringStr(base))
+                :
+                    (int)listSize(base)
+        );
 }

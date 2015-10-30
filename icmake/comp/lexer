@@ -101,6 +101,10 @@ get_ext                 {
                             yylval.type = f_g_ext;
                             return(G_EXT);
                         }
+get_dext                {
+                            yylval.type = f_g_dext;
+                            return(G_DEXT);
+                        }
 get_path                {
                             yylval.type = f_g_path;
                             return(G_PATH);
@@ -236,18 +240,18 @@ system                  {
                             yylval.type = f_system;
                             return(SYSTEM);
                         }
-trim       			    {
-							yylval.type = f_trim;
-							return TRIMLEFT;
-						}
-trimleft       			{
-							yylval.type = f_trimleft;
-							return TRIMLEFT;
-						}
-trimright				{
-							yylval.type = f_trimright;
-							return TRIMRIGHT;
-						}
+trim                    {
+                            yylval.type = f_trim;
+                            return TRIMLEFT;
+                        }
+trimleft                {
+                            yylval.type = f_trimleft;
+                            return TRIMLEFT;
+                        }
+trimright               {
+                            yylval.type = f_trimright;
+                            return TRIMRIGHT;
+                        }
 while                   {
                             return(WHILE);
                         }

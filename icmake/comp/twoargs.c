@@ -20,7 +20,7 @@ ESTRUC_ *twoargs(type, larg, rarg)
     switch ((FUNNR_)type)
     {
         case f_fgets:
-            ok = test_type(larg, e_str) && test_type(rarg, e_int);
+            ok = test_type(larg, e_str) && test_type(rarg, e_list);
         break;
 
         case f_element:                     /* f_element */

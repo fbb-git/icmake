@@ -4,14 +4,9 @@
 
 #include "iccomp.h"
 
-ESTRUC_ *onearg(type, arg)
-    E_TYPE_
-        type;
-    ESTRUC_
-        *arg;
+ESTRUC_ *onearg(E_TYPE_ type, ESTRUC_ *arg)
 {
-    register int
-        ok;
+    register int ok;
 
     etoc(arg);                               /* arg to stack */
 
@@ -27,7 +22,7 @@ ESTRUC_ *onearg(type, arg)
         break;
 
         case f_sizeoflist:
-            ok = test_type(arg, e_list);
+            ok = test_type(arg, e_list | e_str);
         break;
 
         case f_echo:

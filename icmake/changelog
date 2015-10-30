@@ -1,9 +1,12 @@
 icmake (8.00.00)
 
-  * Added trim, trimleft, trimright, length, get_dext
+  * Added trim, trimleft, trimright, length, get_dext (see icmake(1) for
+    details).
+
+  * The 16 bit offset limit was removed from fgets. See icmake(1) for details.
 
   * This release adds several new builtin functions, which required a
-    redefinition of the builtin function codes. Because of this existing bim
+    redefinition of the builtin function codes. Because of this existing .bim
     files should be recompiled from their .im source files
 
 

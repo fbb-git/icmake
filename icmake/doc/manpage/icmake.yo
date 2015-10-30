@@ -539,28 +539,37 @@ provided:
 
     Input interface:
     itemization(    
-    itt(list fgets(string file, int offset))nl()
-        The next line found at offet tt(offset) is read from tt(file). 
-        It returns a list tt(retlist) containing two elements:nl()
-        tt(element(0, retlist)) is the string that was read 
-        (including the tt(\n), if found)nl()
-        tt(element(1, retlist)) is the next offset to read.nl()
+    itt(list fgets(string file, list offset))nl()
 
-        An empty return list signifies tt(EOF). Since an empty list's `first'
-        eement is an empty string, which is converted to the value 0, a file
-        may be read and processed as follows:
+        bf(NOTE:) the prototype of this function changed from 
+        tt(fgets(string file, int offset)) to tt(fgets(string file, list
+            offset)) at version 8.00.00.nl()
+
+        The next line found at offet tt(offset) is read from tt(file).  It
+        returns a list tt(retlist) containing as its first element the
+        contents of the read line, as its second element the line's tt(\n) (if
+        encountered), and as its third element the string tt(OK) if a line was
+        successfully read, tt(FAIL) if reading from file failed, and tt(EOF)
+        if reading failed because of an end-of-file condition.  The list may
+        contain additional elements, which are internally used by
+        tt(fgets).nl()
+
+        To read multiple lines, start by passing an empty list as tt(gets's)
+        second argument. To read subsequent lines, pass the previously
+        returned list to tt(fgets's) second argument.
+
+        Here is an example showing how to read a complete file:
             verb(
-        list line;
+        list ret;
         while (1)
         {
-            line = fgets("filename", (int)line[1]);
-            if (!line)
+            ret = fgets("filename", ret);
+            if (!ret)
                 break;
-            process(line[0]);
+            process(ret[0], ret[1]);
         }
             )
-        Note that the function tt(fgets) cannot read files beyond offset
-        65536.
+
     itt(string getch())nl()
         Returns the next pressed key as a string (no `Enter' required for
         ms-dos and unix (incl. linux) systems).
@@ -697,23 +706,28 @@ provided:
     List information:
     itemization(        
     itt(int length(list l))nl()
-        Returns the number of elements in tt(list)
+        Returns the number of elements in tt(list) (tt(length) may also be
+        used for tt(string) objects.
     itt(int sizeof(list l))nl()
-        Returns the number of elements in tt(list)
+        Deprecated: use tt(length).
     itt(int sizeoflist(list l))nl()
-        Returns the number of elements in tt(list)
+        Deprecated: use tt(length).
     )
 
     String support:
     itemization(
-    itt(int strlen(string s))nl()
+    itt(int length(string s))nl()
         Returns the number of characters in tt(s) (not counting the final 0).
+        The function tt(length) can also be used to
+        determine the number of elements in a tt(list). 
+    itt(int strlen(string s))nl()
+        Synonym of tt(length). 
     itt(int strfind(string haystack, string needle))nl()
-        returns index in tt(haystack) where tt(needle) is found, or -1 if 
+        Returns index in tt(haystack) where tt(needle) is found, or -1 if 
         tt(needle) is not contained in tt(haystack).nl()
         bf(This function was called strstr() in versions before 7.00).
     itt(int strformat(string format,...))nl()
-        returns a formatted string using placeholders %1 .. %2 to address
+        Returns a formatted string using placeholders %1 .. %2 to address
         arguments following format.nl() 
         Example:nl()
         verb(
@@ -793,7 +807,7 @@ bf(C). Its full prototype is (note: bf(void) return type):
     itt(argc) represents the number of elements in tt(argv);
     itt(argv) contains the arguments, with element 0 the compiled icm() script
 (the `tt(.bim)' file);
-    itt(envp) containts the `environment' variables. The function tt(sizeof())
+    itt(envp) containts the `environment' variables. The function tt(length())
 (see below) may be used to determine its elements. Elements in tt(envp) have
 the form tt(variable=value). Alternatively, the function tt(getenv()) (see
 below) can be used to retrieve a specific environment variable immediately.
@@ -810,7 +824,7 @@ below) can be used to retrieve a specific environment variable immediately.
 
         if (toCompile = altered("*.cc"))
         {
-            for (idx = sizeof(toCompile); idx--; )
+            for (idx = length(toCompile); idx--; )
                 compile(element(idx, toCompile));
 
             if (getenv("dryrun")[0] == "0")

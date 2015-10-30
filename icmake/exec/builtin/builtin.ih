@@ -19,12 +19,13 @@
 #include "../int/int.h"
 
 extern int echo;
+extern size_t listIndex;
 
 extern void (*builtinfun[])(void);
 
 char *setstring(char *);
 char *findPercent(char *begin);
-char *getNr(size_t *idx, char *mid);
+size_t getNr(char **ptr);
 
 
 
@@ -99,13 +100,18 @@ void fun_trimright(void);
 void fun_printarg(FILE *out, size_t i, int *newelement);
 
 int termch(void);
+
 void formatedFprintf(FILE *f, size_t start);
 
 extern void (*p_destWrite)(void *dest, char const *begin, char const *end);
+
 void fileWrite(void *dest, char const *begin, char const *end);
 void stringWrite(void *dest, char const *begin, char const *end);
-void formater(void *dest, size_t start);
-void writeArg(void *dest, size_t idx);
-void writeArgument(void *dest, size_t idx, int *stop);
+
+void formatter(void *dest, size_t start);
+void noFormatting(void *dest, size_t start, size_t lastIdx);
+void writeArgument(void *dest, size_t idx);
 
 
+void updateFgets(FILE *inf, char *dest);
+void fgetsStatus(char const *status);

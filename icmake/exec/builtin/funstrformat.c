@@ -11,7 +11,7 @@ void fun_strformat(void)
 
     p_destWrite = stringWrite;
     
-    formater(&ptr, 1);
+    formatter(&ptr, 1);
 
     reg = *stringConstructor_cP(ptr);
     free(ptr);

@@ -30,44 +30,42 @@
 
 #include "builtin.ih"
 
-char *getarg (size_t n, int *flag)
+char *getarg(size_t idx, int *flag)
 {
-    char
-        convbuf [50];
-    static size_t
-        listindex;
-    register char
-        *ret;
-    VAR_ *base = top() - n;
+    char convbuf [50];
+
+    register char *ret;
+    VAR_ *base = top() - idx;
+
     *flag = 1;                              /* assume that done with args */
 
     if (typeValue(base) & e_int)            /* incase of an int.. */
     {
-        listindex = 0;
+        listIndex = 0;
         sprintf (convbuf, "%d", intValue(base));
         return (xstrdup (convbuf));
     }
 
     if (typeValue(base) & e_str)            /* incase of a string.. */
     {
-        listindex = 0;
+        listIndex = 0;
         return xstrdup(stringStr(base));
     }
 
                                             /* incase of a list: */
     if (!listSize(base))
     {
-        listindex = 0;
+        listIndex = 0;
         ret = xstrdup("");
     }
     else
     {
-        ret = xstrdup(listAt(base, listindex));
-        listindex++;
-        if (listindex < listSize(base))
+        ret = xstrdup(listAt(base, listIndex));
+        ++listIndex;
+        if (listIndex < listSize(base))
             *flag = 0;                      /* if more elements, not done */
         else                                /* with args.. */
-            listindex = 0;                  /* otherwise: returnflag = 1, */
+            listIndex = 0;                  /* otherwise: returnflag = 1, */
     }                                       /* no next elements to get */
 
     return (ret);

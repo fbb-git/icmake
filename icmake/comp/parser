@@ -929,11 +929,11 @@ one_arg_funs:
     |
         STRLWR
     |
-    	TRIM
+        TRIM
     |
-    	TRIMLEFT
+        TRIMLEFT
     |
-    	TRIMRIGHT
+        TRIMRIGHT
    ;
 
 openpar:    {parse_error = err_openpar_expected; }      '(' ;

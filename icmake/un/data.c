@@ -36,7 +36,7 @@ char
         "makelist",
         "printf",
         "putenv",
-        "sizeoflist",
+        "length",
         "stat",
         "string_element",
         "strfind",

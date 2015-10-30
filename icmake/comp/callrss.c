@@ -6,16 +6,13 @@
 
 void callrss(ESTRUC_ *e, FUNNR_ funnr, ...)
 {
-    register E_TYPE_
-        type = e_reg | e_int;               /* default return type: intreg */
-    register size_t
-        args = 1;                           /* most f()s having 1 argument */
-    va_list
-        marker;
+    register E_TYPE_ type = e_reg | e_int; /* default return type: intreg */
+    register size_t args = 1;              /* most f()s having 1 argument */
+    va_list marker;
 
     va_start(marker, funnr);
 
-    gencode (e, op_call_rss, funnr);        /* call the function */
+    gencode(e, op_call_rss, funnr);        /* call the function */
 
     switch (funnr)
     {

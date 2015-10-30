@@ -2,16 +2,22 @@
 
 static char separator[] = {' ', 0};
 
-void writeArgument(void *dest, size_t idx, int *stop)
+void writeArgument(void *dest, size_t idx)
 {
-    char *string = getarg(idx, stop);
+    int stop;
 
-    (*p_destWrite)(dest, string, string + strlen(string));
+    do
+    {
+        char *string = getarg(idx, &stop);
 
-    free(string);
+        (*p_destWrite)(dest, string, string + strlen(string));
 
-                                            /* at a list: write a separator */
-    if (typeValue(top() - idx) & e_list && *string && !*stop)
-        (*p_destWrite)(dest, separator, separator + 1);
+                                            /* write a separator between */
+        if (!stop && *string)               /* list elements */
+            (*p_destWrite)(dest, separator, separator + 1);
+
+        free(string);
+    }
+    while (!stop);
 }
 

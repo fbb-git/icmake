@@ -3,6 +3,7 @@
 VAR_            reg;
 
 int echo = 1;
+size_t listIndex;           /* getarg.c, noformatting.c */
 
 char           *arghead;
 char           *argtail;

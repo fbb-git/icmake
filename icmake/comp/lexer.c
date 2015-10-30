@@ -1421,25 +1421,25 @@ case 59:
 YY_RULE_SETUP
 #line 243 "lexer"
 {
-							yylval.type = f_trim;
-							return TRIMLEFT;
-						}
+                            yylval.type = f_trim;
+                            return TRIMLEFT;
+                        }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
 #line 247 "lexer"
 {
-							yylval.type = f_trimleft;
-							return TRIMLEFT;
-						}
+                            yylval.type = f_trimleft;
+                            return TRIMLEFT;
+                        }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
 #line 251 "lexer"
 {
-							yylval.type = f_trimright;
-							return TRIMRIGHT;
-						}
+                            yylval.type = f_trimright;
+                            return TRIMRIGHT;
+                        }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP

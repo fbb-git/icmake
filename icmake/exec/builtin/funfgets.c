@@ -40,11 +40,15 @@ void fun_fgets()
         return;
     }
 
+    long offset = listSize(list) == 0 ? 
+                        0 
+                    : 
+                        strtol(listAt(list, 3), 0, 10);
     if 
     (                                       
         (inf = fopen(filename, "r"))
-        &&                                      /* locate the read-pos. */
-        (fseek(inf, strtol(listAt(list, 3), 0, 10), SEEK_SET) == 0)
+        &&                                      
+        (fseek(inf, offset, SEEK_SET) == 0)     /* locate the read-pos. */
     )
     {
         char *dest = getLine(inf);

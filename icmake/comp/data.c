@@ -107,8 +107,7 @@ char
     *stringbuf,                          /* final STRING */
     type_conflict[] = "conflicting operand types for %s";
 
-E_TYPE_
-    vartype;
+E_TYPE_ vartype;
 
 E_TYPE_
     optype[] =
@@ -158,8 +157,7 @@ E_TYPE_
         e_int,                              /* op_shr */
     };
 
-FILE
-    *s_bin;
+FILE *s_bin;
 
 int
     initialization = 0,
@@ -167,11 +165,9 @@ int
     (*yylex_input)(char *, int) =           /* pointer to yylex input to use */
                             yylex_file;     /* start reading from file       */
 
-OPCODE_
-    lastop = op_hlt;
+OPCODE_ lastop = op_hlt;
 
-STRINGTAB_
-    *stringtab;
+STRINGTAB_ *stringtab;
 
 SYMTAB_
     local,

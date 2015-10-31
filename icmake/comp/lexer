@@ -35,7 +35,7 @@ int fileno(FILE *stream);
                             BEGIN 0;
                             if (!stresc(lexstring))
                                 semantic("illegal escape sequence in string");
-                            return(STRING);
+                            return STRING;
                         }
 [ \t]                   ;
 \n                      yylineno++;
@@ -47,120 +47,123 @@ int fileno(FILE *stream);
                         }
 '.'                     {
                             sprintf(lexstring, "%d%c", yytext[1], 0);
-                            return(NUMBER);
+                            return NUMBER;
                         }
 
 arghead                 {
                             yylval.type = f_arg_head;
-                            return(ARG_HEAD);
+                            return ARG_HEAD;
                         }
 argtail                 {
                             yylval.type = f_arg_tail;
-                            return(ARG_TAIL);
+                            return ARG_TAIL;
                         }
 ascii                   {                   /* ascii_int may become ascii_str */
                             yylval.type = f_ascii_int;
-                            return(ASCII);
+                            return ASCII;
                         }
 break                   {
-                            return(BREAK);
+                            return BREAK;
                         }
 chdir                   {
                             yylval.type = f_chdir;
-                            return(CHDIR);
+                            return CHDIR;
                         }
 cmdtail                 {
                             yylval.type = f_cmd_tail;
-                            return(CMD_TAIL);
+                            return CMD_TAIL;
                         }
 cmdhead                 {
                             yylval.type = f_cmd_head;
-                            return(CMD_HEAD);
+                            return CMD_HEAD;
                         }
 change_base             {
                             yylval.type = f_c_base;
-                            return(C_BASE);
+                            return C_BASE;
                         }
 change_ext              {
                             yylval.type = f_c_ext;
-                            return(C_EXT);
+                            return C_EXT;
                         }
 change_path             {
                             yylval.type = f_c_path;
-                            return(C_PATH);
+                            return C_PATH;
+                        }
+continue                {
+                            return CONTINUE;
                         }
 fprintf                 {
                             yylval.type = f_fprintf;
-                            return(FPRINTF);
+                            return FPRINTF;
                         }
 get_base                {
                             yylval.type = f_g_base;
-                            return(G_BASE);
+                            return G_BASE;
                         }
 get_ext                 {
                             yylval.type = f_g_ext;
-                            return(G_EXT);
+                            return G_EXT;
                         }
 get_dext                {
                             yylval.type = f_g_dext;
-                            return(G_DEXT);
+                            return G_DEXT;
                         }
 get_path                {
                             yylval.type = f_g_path;
-                            return(G_PATH);
+                            return G_PATH;
                         }
 getch                   {
                             yylval.type = f_getch;
-                            return(GETCH);
+                            return GETCH;
                         }
 getpid                  {
                             yylval.type = f_getpid;
-                            return(GETPID);
+                            return GETPID;
                         }
 gets                    {
                             yylval.type = f_gets;
-                            return(GETS);
+                            return GETS;
                         }
 echo                    {
                             yylval.type = f_echo;
-                            return(M_ECHO);
+                            return M_ECHO;
                         }
 element                 {
                             yylval.type = f_element;
-                            return(ELEMENT);
+                            return ELEMENT;
                         }
 else                    {
-                            return(ELSE);
+                            return ELSE;
                         }
 exec                    {
                             yylval.type = f_exec;
-                            return(EXEC);
+                            return EXEC;
                         }
 execute                 {
                             yylval.type = f_execute;
-                            return(EXECUTE);
+                            return EXECUTE;
                         }
 exists                  {
                             yylval.type = f_exists;
-                            return(EXISTS);
+                            return EXISTS;
                         }
 exit                    {
                             yylval.type = op_exit;
-                            return(EXIT);
+                            return EXIT;
                         }
 fgets                   {
                             yylval.type = f_fgets;
                             return (FGETS);
                         }
 for                     {
-                            return(FOR);
+                            return FOR;
                         }
 getenv                  {
                             yylval.type = f_getenv;
                             return GETENV;
                         }
 if                      {
-                            return(IF);
+                            return IF;
                         }
 void                    {
                             yylval.type = 0;    /* 0 == void */
@@ -168,23 +171,23 @@ void                    {
                         }
 int                     {
                             yylval.type = e_int;
-                            return(INT);
+                            return INT;
                         }
 list                    {
                             yylval.type = e_list;
-                            return(LIST);
+                            return LIST;
                         }
 makelist                {
                             yylval.type = f_makelist;
-                            return(MAKELIST);
+                            return MAKELIST;
                         }
 older                   {
                             yylval.type = op_older;
-                            return(OLDER);
+                            return OLDER;
                         }
 printf                  {
                             yylval.type = f_printf;
-                            return(PRINTF);
+                            return PRINTF;
                         }
 putenv                  {
                             yylval.type = f_putenv;
@@ -192,13 +195,13 @@ putenv                  {
                         }
 return                  {
                             yylval.type = op_ret;
-                            return(RETURN);
+                            return RETURN;
                         }
 length          |
 sizeof          |
 sizeoflist              {
                             yylval.type = f_sizeoflist;
-                            return(SIZEOFLIST);
+                            return SIZEOFLIST;
                         }
 stat                    {
                             yylval.type = f_stat;
@@ -206,23 +209,23 @@ stat                    {
                         }
 string                  {
                             yylval.type = e_str;
-                            return(STRINGTYPE);
+                            return STRINGTYPE;
                         }
 strlen                  {
                             yylval.type = f_strlen;
-                            return(STRLEN);
+                            return STRLEN;
                         }
 strlwr                  {
                             yylval.type = f_strlwr;
-                            return(STRLWR);
+                            return STRLWR;
                         }
 strupr                  {
                             yylval.type = f_strupr;
-                            return(STRUPR);
+                            return STRUPR;
                         }
 strtok                  {
                             yylval.type = f_fields;
-                            return(FIELDS);
+                            return FIELDS;
                         }
 strfind                 {
                             yylval.type = f_strfind;
@@ -238,7 +241,7 @@ substr                  {
                         }
 system                  {
                             yylval.type = f_system;
-                            return(SYSTEM);
+                            return SYSTEM;
                         }
 trim                    {
                             yylval.type = f_trim;
@@ -253,120 +256,120 @@ trimright               {
                             return TRIMRIGHT;
                         }
 while                   {
-                            return(WHILE);
+                            return WHILE;
                         }
 newer   |
 younger                 {
                             yylval.type = op_younger;
-                            return(YOUNGER);
+                            return YOUNGER;
                         }
 "++"                    {
-                            return(INC);
+                            return INC;
                         }
 "--"                    {
-                            return(DEC);
+                            return DEC;
                         }
 "/="                    {
-                            return(DIV_IS);
+                            return DIV_IS;
                         }
 "-="                    {
-                            return(MINUS_IS);
+                            return MINUS_IS;
                         }
 "*="                    {
-                            return(MUL_IS);
+                            return MUL_IS;
                         }
 "%="                    {
-                            return(MOD_IS);
+                            return MOD_IS;
                         }
 "+="                    {
-                            return(PLUS_IS);
+                            return PLUS_IS;
                         }
 "&="                    {
-                            return(AND_IS);
+                            return AND_IS;
                         }
 "|="                    {
-                            return(OR_IS);
+                            return OR_IS;
                         }
 "^="                    {
-                            return(XOR_IS);
+                            return XOR_IS;
                         }
 "<<="                   {
-                            return(SHL_IS);
+                            return SHL_IS;
                         }
 ">>="                   {
-                            return(SHR_IS);
+                            return SHR_IS;
                         }
 "||"                    {
-                            return(OR);
+                            return OR;
                         }
 "&&"                    {
-                            return(AND);
+                            return AND;
                         }
 "=="                    {
-                            return(EQUAL);
+                            return EQUAL;
                         }
 "!="                    {
-                            return(NOT_EQUAL);
+                            return NOT_EQUAL;
                         }
 "<="                    {
-                            return(SMALLER_EQUAL);
+                            return SMALLER_EQUAL;
                         }
 ">="                    {
-                            return(GREATER_EQUAL);
+                            return GREATER_EQUAL;
                         }
 ">>"                    {
-                            return(SHR);
+                            return SHR;
                         }
 "<<"                    {
-                            return(SHL);
+                            return SHL;
                         }
 0x[0-9A-Fa-f]+          {
                             unsigned value;
                             sscanf(yytext + 2, "%x", &value);
                             sprintf(lexstring, "%d", (int)value);
-                            return(NUMBER);
+                            return NUMBER;
                         }
 [0-9]+                  {
                             lexstring = xstrdup(yytext);
-                            return(NUMBER);
+                            return NUMBER;
                         }
 OFF         |
 P_CHECK                 {                   /* P_CHECK: value in icm.h */
                             lexstring = xstrdup("0");
-                            return(NUMBER);
+                            return NUMBER;
                         }
 S_IFDIR     |
 O_FILE      |                               /* O_FILE: value in icm.h */
 ON                      {
                             lexstring = xstrdup("1");
-                            return(NUMBER);
+                            return NUMBER;
                         }
 S_IFCHR     |
 P_NOCHECK   |
 O_DIR                   {                   /* O_DIR: value in icm.h */
                             lexstring = xstrdup("2");
-                            return(NUMBER);
+                            return NUMBER;
                         }
 S_IFREG     |
 O_SUBDIR                {                   /* O_SUBDIR: value in icm.h */
                             lexstring = xstrdup("4");
-                            return(NUMBER);
+                            return NUMBER;
                         }
 S_IREAD     |
 O_ALL                   {                   /* O_ALL: value in icm.h */
                             lexstring = xstrdup("8");
-                            return(NUMBER);
+                            return NUMBER;
                         }
 S_IWRITE                {
                             lexstring = xstrdup("16");
-                            return(NUMBER);
+                            return NUMBER;
                         }
 S_IEXEC                 {
                             lexstring = xstrdup("32");
-                            return(NUMBER);
+                            return NUMBER;
                         }
 [_A-Za-z][A-Za-z0-9_]*  {
                             lexstring = xstrdup(yytext);
-                            return(IDENTIFIER);
+                            return IDENTIFIER;
                         }
 .                       return yytext[0];

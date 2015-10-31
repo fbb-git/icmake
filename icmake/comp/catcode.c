@@ -7,8 +7,7 @@
 static void patchadd(register size_t value, unsigned **dest, 
                      size_t *dlen, unsigned *source, size_t slen)
 {
-    register size_t
-        idx;
+    register size_t idx;
 
     if (!*dlen)
         *dest = NULL;                       /* no memory for dest as yet */
@@ -26,9 +25,8 @@ static void patchadd(register size_t value, unsigned **dest,
 
 ESTRUC_ *catcode(ESTRUC_ *lval, ESTRUC_ *rval)
 {
-    register size_t
-        l,
-        r;
+    register size_t l;
+    register size_t r;
 
     r = rval->codelen;                      /* sizeof rval code */
     l = lval->codelen;                      /* sizeof lval code */
@@ -46,6 +44,9 @@ ESTRUC_ *catcode(ESTRUC_ *lval, ESTRUC_ *rval)
     patchadd(l, &lval->falselist, &lval->falselen,
                 rval->falselist, rval->falselen);
 
+    patchadd(l, &lval->continuelist, &lval->continuelen,
+                 rval->continuelist,  rval->continuelen);
+
     lval->type |= rval->type;               /* type of combined code */
                                             /* (is ok with same types) */
 
@@ -53,3 +54,7 @@ ESTRUC_ *catcode(ESTRUC_ *lval, ESTRUC_ *rval)
 
     return (lval);                          /* return new frame */
 }
+
+
+
+

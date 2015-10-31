@@ -63,7 +63,8 @@ typedef enum
 {
     j_uncond,                               /* unconditional jump */
     j_truelist,                             /* jump batchpatch for truelist */
-    j_falselist                             /* jump backbatch for falselist */
+    j_falselist,                            /* jump backbatch for falselist */
+    j_continuelist                          /* jump backp. for continuelist */
 } JMP_COND_;
 
 #define down_type(e,v)          ((e)->type &= ~(v))
@@ -77,18 +78,14 @@ typedef enum
 
 typedef struct
 {
-    unsigned
-        index;                              /* index in stringsection */
-    char
-        *string;                            /* string itself */
+    unsigned index;                         /* index in stringsection */
+    char *string;                           /* string itself */
 } STRINGTAB_;
 
 typedef struct                              /* symtab used with the compiler */
 {
-    VAR_
-        var;
-    char
-        *name;
+    VAR_ var;
+    char *name;
 } SYMBOL_;
 
 typedef struct
@@ -107,11 +104,13 @@ typedef struct                              /* see also display code in */
     size_t
         truelen,
         falselen,
+        continuelen,
         codelen,                            /* length of the code */
         evalue;                             /* index or value of the expression */
     unsigned
         *truelist,
-        *falselist;
+        *falselist,
+        *continuelist;
     INT8
         *code;
 } ESTRUC_;
@@ -280,6 +279,7 @@ ESTRUC_ *cat_expr (ESTRUC_ *,               /* ,-separated expressions */
                              ESTRUC_ *);
 ESTRUC_ *cat_stmnt (ESTRUC_ *,              /* catenate/write stmnts */
                              ESTRUC_ *);
+ESTRUC_ *continue_stmnt (void);           /* process continue stmnt */
 ESTRUC_ *divide (ESTRUC_ *, ESTRUC_ *);    /* / code */
 ESTRUC_ *equal (ESTRUC_ *, ESTRUC_ *);     /* == code */
 ESTRUC_ *exec_fprintf (E_TYPE_, ESTRUC_ *);/* exec() and fprintf() */
@@ -332,7 +332,7 @@ ESTRUC_ *threeargs (E_TYPE_, ESTRUC_ *,         /* fun(x, y, z)  code */
 ESTRUC_ *twoargs (E_TYPE_, ESTRUC_ *,           /* fun(x, y)  code */
                                ESTRUC_ *);
 ESTRUC_ *unequal (ESTRUC_ *, ESTRUC_ *);   /* != code */
-ESTRUC_ *while_stmnt (ESTRUC_ *, ESTRUC_ *);/* while code */
+ESTRUC_ *while_stmnt (ESTRUC_ *, ESTRUC_ *, int pureWhile);/* while code */
 ESTRUC_ *young (ESTRUC_ *, ESTRUC_ *);     /* younger code */
 ESTRUC_ *xor  (ESTRUC_ *, ESTRUC_ *);           /* ^ (binary) code */
 ESTRUC_ *zeroargs (E_TYPE_);               /* fun()  code */
@@ -370,12 +370,15 @@ void    open_fun (void);               /* open a function */
 void    outbin (void *, size_t);     /* write INT8s to s_bin */
 void    outcode (ESTRUC_ *, int,        /* append code to e->code */
                         size_t);
+void    patchcontinue(ESTRUC_ *);      /* jmp_continue target */
 void    patchfalse (ESTRUC_ *);        /* jmp_false target */
 void    patchtrue (ESTRUC_ *);         /* jmp_true target */
 void    patchup (INT8 *, size_t,      /* patchup t/f list */
                      unsigned *, size_t, int);
 void    patchup_true (ESTRUC_ *, int); /* batchpatch truelist */
 void    patchup_false (ESTRUC_ *, int);/* batchpatch truelist */
+void    patchup_continue(ESTRUC_ *e, int pos);  /* backpatch continuelist */
+
 void    pop_dead(void);                 /* restore dead-level */
 void    push_dead(void);                /* new dead-level */
 void    semantic (char *, ...);         /* give semantic error */

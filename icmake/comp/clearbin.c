@@ -1,10 +1,6 @@
-/*
-                                C L E A R B I N . C
-*/
-
 #include "iccomp.h"
 
-void clearbin(ESTRUC_ *lval, ESTRUC *rval)
+void clearbin(ESTRUC_ *lval, ESTRUC_ *rval)
 {
     discard(rval);
     discard(lval);

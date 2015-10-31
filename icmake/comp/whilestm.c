@@ -1,6 +1,6 @@
 #include "iccomp.h"
 
-ESTRUC_ *while_stmnt(ESTRUC_ *e, ESTRUC_ *s)
+ESTRUC_ *while_stmnt(ESTRUC_ *e, ESTRUC_ *s, int pureWhile)
 {
     register size_t len;
     unsigned *list;
@@ -31,6 +31,9 @@ ESTRUC_ *while_stmnt(ESTRUC_ *e, ESTRUC_ *s)
 
     catcode(e, s);                          /* append s to e */
 
+//    if (pureWhile)                          /* not a while stmd that's part */
+//        patchup_continue(e, -e->codelen);   /* of a for stmnt               */
+
     gencode(e, op_jmp, j_falselist);        /* jmp to begin of code */
 
     patchup_false(e, 0);                    /* patch to BOC */
@@ -42,3 +45,8 @@ ESTRUC_ *while_stmnt(ESTRUC_ *e, ESTRUC_ *s)
 
     return e;
 }
+
+
+
+
+

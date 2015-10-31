@@ -35,6 +35,10 @@ void patchup(INT8 *code, size_t len, unsigned *list, size_t listlen,
 
                                             /* determine the size of the jmp */
         u.int16 = pos - beyond_jump;
+
+printf("    patchup %d at %x to %x (%u)\n", pos, beyond_jump, u.int16,
+u.int16);
+
         cp = (char *)code + beyond_jump - 2;/* point to codebytes to patch */
 
         *cp = u.jumpsize[0];                /* copy byte 0 */

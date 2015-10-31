@@ -40,6 +40,10 @@ void gencode(ESTRUC_ *e, OPCODE_ opcode, ...)
                 case j_falselist:
                     patchfalse(e);          /* new falselist item */
                 break;
+
+                case j_continuelist:
+                    patchcontinue(e);       /* new continuelist item */
+                break;
             }
         break;
 

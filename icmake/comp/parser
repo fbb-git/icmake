@@ -16,6 +16,7 @@
         CHDIR
         CMD_HEAD
         CMD_TAIL
+        CONTINUE
         C_BASE
         C_EXT
         C_PATH
@@ -143,6 +144,13 @@ break_stat:
         }
     ;
                                             /* C */
+continue_stat:
+        CONTINUE
+        {
+            $$ = *continue_stmnt();
+        }
+    ;
+
 casttype:
         INT
     |
@@ -562,14 +570,14 @@ for:
 for_stat:
         for
         openpar
-        opt_expr_list
+        opt_expr_list       /* $3: init */
         semicol
-        opt_expression
+        opt_expression      /* $5: cond */
         semicol
-        opt_expr_list
+        opt_expr_list       /* $7 inc   */
         closepar
         break_ok
-        statement
+        statement           /* $10 stmnt    */
         popdead
         {
             $$ = *for_stmnt(&$3, &$5, &$7, &$10);
@@ -1080,6 +1088,9 @@ stm:
         break_stat
         semicol
     |
+        continue_stat
+        semicol
+    |
         error
         ok
     ;
@@ -1193,7 +1204,7 @@ while_stat:
         statement
         popdead
         {
-            $$ = *while_stmnt(&$3, &$6);
+            $$ = *while_stmnt(&$3, &$6, 1);
         }
     ;
 

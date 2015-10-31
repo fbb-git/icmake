@@ -1,16 +1,6 @@
-/*
-                             O P T I N T S T . C
-
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *optint_string(type, larg, rarg)
-    E_TYPE_
-        type;
-    ESTRUC_
-        *larg,
-        *rarg;
+ESTRUC_ *optint_string(E_TYPE_ type, ESTRUC_ *larg, ESTRUC_ *rarg)
 {
     etoc(larg);                             /* argument to stack */
 

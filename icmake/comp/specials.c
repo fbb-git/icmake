@@ -1,17 +1,8 @@
-/*
-                                S P E C I A L S . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *specials(type, marg)
-    E_TYPE_
-        type;
-    ESTRUC_
-        *marg;                              /* array of arguments */
+ESTRUC_ *specials(E_TYPE_ type, ESTRUC_ *marg)  /* array of arguments */
 {
-    register size_t
-        count;
+    register size_t count;
 
     if ((FUNNR_)type == f_execute)
         return(execute(marg));              /* full list of arguments */

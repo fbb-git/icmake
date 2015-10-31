@@ -1,18 +1,8 @@
-/*
-                                T W O A R G S . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *twoargs(type, larg, rarg)
-    E_TYPE_
-        type;
-    ESTRUC_
-        *larg,
-        *rarg;
+ESTRUC_ *twoargs(E_TYPE_ type, ESTRUC_ *larg, ESTRUC_ *rarg)
 {
-    register int
-        ok;
+    register int ok;
 
     etoc(larg);                             /* arg to stack */
     etoc(rarg);                             /* arg to stack */

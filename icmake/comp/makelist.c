@@ -1,6 +1,4 @@
 /*
-                             M A K E L I S T . C
-
     Possibilities:
         1- makelist(int, string)
         2- makelist(int, string, older, string)     -- younger ok too

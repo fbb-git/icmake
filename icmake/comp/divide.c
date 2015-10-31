@@ -4,10 +4,7 @@
 
 #include "iccomp.h"
 
-ESTRUC_ *divide (lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+ESTRUC_ *divide(ESTRUC_ *lval, ESTRUC_ *rval)
 {
     if (test_binop(op_div, lval, rval))
         return (lval);                      /* test for correct types */

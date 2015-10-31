@@ -1,7 +1,3 @@
-/*
-                            N U L L F R A M E . C
-*/
-
 #include "iccomp.h"
 
 ESTRUC_ *nullframe(ESTRUC_ *e)

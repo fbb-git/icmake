@@ -1,7 +1,3 @@
-/*
-                             M A T H A S S . C
-*/
-
 #include "iccomp.h"
 
 ESTRUC_ *math_ass(ESTRUC_ *lval, ESTRUC_ *rval, 

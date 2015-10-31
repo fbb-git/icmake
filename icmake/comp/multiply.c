@@ -1,7 +1,3 @@
-/*
-                            M U L T I P L Y . C
-*/
-
 #include "iccomp.h"
 
 ESTRUC_ *multiply (ESTRUC_ *lval, ESTRUC_ *rval)

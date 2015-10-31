@@ -1,13 +1,6 @@
-/*
-                            S M A L L E R . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *smaller (lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+ESTRUC_ *smaller(ESTRUC_ *lval, ESTRUC_ *rval)
 {
     btoi(lval);                             /* convert boolean to i */
     btoi(rval);

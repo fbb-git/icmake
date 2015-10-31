@@ -1,6 +1,4 @@
 /*
-                            F E T C H V A R . C
-
     Frame organization:
 
             Low address

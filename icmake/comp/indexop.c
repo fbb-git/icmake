@@ -1,7 +1,3 @@
-/*
-                                I N D E X O P . C
-*/
-
 #include "iccomp.h"
 
 ESTRUC_ *indexOp(ESTRUC_ *larg, ESTRUC_ *rarg)

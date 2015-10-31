@@ -4,11 +4,7 @@
 
 #include "iccomp.h"
 
-ESTRUC_ *callfun(x, e)
-    size_t
-        x;
-    ESTRUC_
-        *e;
+ESTRUC_ *callfun(size_t x, ESTRUC_ *e)
 {
     ESTRUC_
         *a;

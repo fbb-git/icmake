@@ -4,13 +4,13 @@
 
 #include "iccomp.h"
 
-ESTRUC_ *equal (ESTRUC_ *lval, ESTRUC_ *rval)
+ESTRUC_ *equal(ESTRUC_ *lval, ESTRUC_ *rval)
 {
     btoi(lval);                             /* convert boolean to i */
     btoi(rval);
 
     if (conflict(lval, rval, op_eq))        /* test type conflict */
-        return(lval);
+        return lval;
 
     if ((lval->type & rval->type & (size_t)~ALLTYPES) == e_const)
     {
@@ -32,5 +32,5 @@ ESTRUC_ *equal (ESTRUC_ *lval, ESTRUC_ *rval)
     else
         defcode(lval, rval, op_eq);
 
-    return (lval);                          /* return new expression */
+    return lval;                            /* return new expression */
 }

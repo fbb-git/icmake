@@ -1,10 +1,6 @@
-/*
-                            S H L . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *shl (ESTRUC_ *lval, ESTRUC_ *rval)
+ESTRUC_ *shl(ESTRUC_ *lval, ESTRUC_ *rval)
 {
     if (test_binop(op_shl, lval, rval))
         return (lval);                      /* test for correct types */

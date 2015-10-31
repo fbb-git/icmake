@@ -1,6 +1,4 @@
 /*
-                           L O O K S T R I . C
-
     Lookup (and maybe enter) a string
 */
 
@@ -9,8 +7,7 @@
 static size_t
     n_allocated;
 
-size_t lookstring(s)
-    char *s;
+size_t lookstring(char *s)
 {
     register size_t
         idx;

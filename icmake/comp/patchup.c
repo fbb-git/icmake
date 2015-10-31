@@ -1,7 +1,3 @@
-/*
-                              P A T C H U P . C
-*/
-
 #include "iccomp.h"
 
 void patchup(INT8 *code, size_t len, unsigned *list, size_t listlen,

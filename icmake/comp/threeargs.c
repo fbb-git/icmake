@@ -1,19 +1,8 @@
-/*
-                                T H R E E A R G S . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *threeargs(type, larg, marg, rarg)
-    E_TYPE_
-        type;
-    ESTRUC_
-        *larg,
-        *marg,
-        *rarg;
+ESTRUC_ *threeargs(E_TYPE_ type, ESTRUC_ *larg, ESTRUC_ *marg, ESTRUC_ *rarg)
 {
-    register int
-        ok;
+    register int ok;
 
     etoc(larg);                             /* arg to stack */
     etoc(marg);                             /* arg to stack */

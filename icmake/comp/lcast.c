@@ -1,12 +1,6 @@
-/*
-                                    L C A S T . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *lcast(e)
-    ESTRUC_
-        *e;
+ESTRUC_ *lcast(ESTRUC_ *e)
 {
     if (test_type(e, e_int))               /* (int)list not ok */
     {

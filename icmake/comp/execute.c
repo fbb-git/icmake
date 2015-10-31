@@ -1,7 +1,3 @@
-/*
-                            E X E C U T E . C
-*/
-
 #include "iccomp.h"
 
 /*
@@ -13,12 +9,9 @@
         at least required: 6 arguments
 
 */
-ESTRUC_ *execute(arr)
-    ESTRUC_
-        *arr;
+ESTRUC_ *execute(ESTRUC_ *arr)
 {
-    register size_t
-        count;
+    register size_t count;
     ESTRUC_
         tmp,
         *argp,                              /* pointer to args */

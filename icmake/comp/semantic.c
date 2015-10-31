@@ -1,12 +1,6 @@
-/*
-                                S E M A N T I C . C
-*/
-
 #include "iccomp.h"
 
-#ifdef __STDC__
-void semantic (char *s, ...)
-#endif
+void semantic(char *s, ...)
 {
     va_list
         marker;

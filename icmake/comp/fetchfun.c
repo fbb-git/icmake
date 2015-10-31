@@ -1,7 +1,3 @@
-/*
-                           F E T C H F U N . C
-*/
-
 #include "iccomp.h"
 
 size_t fetchfun()

@@ -1,12 +1,6 @@
-/*
-                                N O T B O O L E . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *not_boolean(e)
-    ESTRUC_
-        *e;
+ESTRUC_ *not_boolean(ESTRUC_ *e)
 {
     size_t len;
     unsigned *list;

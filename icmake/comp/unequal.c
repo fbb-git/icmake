@@ -1,13 +1,6 @@
-/*
-                            U N E Q U A L . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *unequal (lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+ESTRUC_ *unequal(ESTRUC_ *lval, ESTRUC_ *rval)
 {
     btoi(lval);                             /* convert boolean to i */
     btoi(rval);

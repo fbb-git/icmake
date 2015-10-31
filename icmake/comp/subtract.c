@@ -1,16 +1,8 @@
-/*
-                            S U B T R A C T . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *subtract (lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+ESTRUC_ *subtract(ESTRUC_ *lval, ESTRUC_ *rval)
 {
-    register E_TYPE_
-        type;
+    register E_TYPE_ type;
 
     if (test_binop(op_sub, lval, rval))
         return (lval);                      /* test for correct types */

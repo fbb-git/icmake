@@ -18,5 +18,5 @@ ESTRUC_ *break_stmnt()
         e.type = e_bool | e_code;
         ++dead[dead_sp];                    /* next code is dead */
     }
-    return (&e);
+    return &e;
 }

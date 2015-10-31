@@ -1,27 +1,17 @@
-/*
-                             A S S I G N M E . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *assignment(lval, rval, opstr)      /* opstr is '=', or "/=", etc. */
-    ESTRUC_
-        *lval,
-        *rval;
-    char
-        *opstr;
+                                            /* opstr is '=', or "/=", etc. */
+ESTRUC_ *assignment(ESTRUC_ *lval, ESTRUC_ *rval, char *opstr)
 {
-    ESTRUC_
-        *tmp;
-    size_t
-        type,
-        value;
+    ESTRUC_ *tmp;
+    size_t type;
+    size_t value;
 
     if (!test_type(lval, e_var))
     {
         semantic(lvalue_needed, opstr);
         discard(rval);
-        return (lval);
+        return lval;
     }
 
     etoc(rval);                             /* convert rval to code */

@@ -1,7 +1,3 @@
-/*
-                                O N E A R G . C
-*/
-
 #include "iccomp.h"
 
 ESTRUC_ *onearg(E_TYPE_ type, ESTRUC_ *arg)

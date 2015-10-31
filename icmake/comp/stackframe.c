@@ -1,11 +1,6 @@
-/*
-                            S T A C K F R A . C
-*/
-
 #include "iccomp.h"
 
-static ESTRUC_
-    frame;
+static ESTRUC_ frame;
 
 ESTRUC_ *stackframe(E_TYPE_ type)
 {

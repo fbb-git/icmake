@@ -19,9 +19,7 @@ static size_t
     filenames_len,
     sp = N_FILES;
 
-void change_file(s)
-    char
-        *s;                                 /* name of source file to open */
+void change_file(char *s)               /* name of source file to open */
 {
     register int
         slen;

@@ -4,11 +4,7 @@
 
 #include "iccomp.h"
 
-ESTRUC_ *cast(target, e)
-    E_TYPE_
-        target;
-    ESTRUC_
-        *e;
+ESTRUC_ *cast(E_TYPE_ target, ESTRUC_ *e)
 {
     btoi(e);                                /* convert boolean to int */
 

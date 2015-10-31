@@ -1,11 +1,6 @@
-/*
-                                Z E R O A R G S . C
-*/
-
 #include "iccomp.h"
 
-static ESTRUC_
-    e;
+static ESTRUC_ e;
 
 ESTRUC_ *zeroargs(E_TYPE_ type)
 {

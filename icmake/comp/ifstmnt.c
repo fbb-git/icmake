@@ -1,14 +1,6 @@
-/*
-                            I F S T M N T . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *if_stmnt(e, s, s2)
-    ESTRUC_
-        *e,
-        *s,
-        *s2;
+ESTRUC_ *if_stmnt(ESTRUC_ *e, ESTRUC_ *s, ESTRUC_ *s2)
 {
     register size_t
         len;

@@ -1,13 +1,6 @@
-/*
-                            M O D U L O . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *modulo (lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+ESTRUC_ *modulo(ESTRUC_ *lval, ESTRUC_ *rval;
 {
     if (test_binop(op_mod, lval, rval))
         return (lval);                      /* test for correct types */

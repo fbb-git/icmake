@@ -4,7 +4,7 @@
 
 #include "iccomp.h"
 
-ESTRUC_ *greater (ESTRUC_ *lval, ESTRUC_ *rval)
+ESTRUC_ *greater(ESTRUC_ *lval, ESTRUC_ *rval)
 {
     btoi(lval);                             /* convert boolean to i */
     btoi(rval);

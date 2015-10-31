@@ -1,18 +1,8 @@
-/*
-                                T E S T B I N O . C
-*/
-
 #include "iccomp.h"
 
-int test_binop(opcode, lval, rval)
-    OPCODE_
-        opcode;
-    ESTRUC_
-        *lval,
-        *rval;
+int test_binop(OPCODE_ opcode, ESTRUC_ *lval, ESTRUC_ *rval)
 {
-    register int
-        ret;
+    register int ret;
 
     if
     (
@@ -26,5 +16,5 @@ int test_binop(opcode, lval, rval)
     )
         clearbin(rval, lval);
 
-    return(ret);
+    return ret;
 }

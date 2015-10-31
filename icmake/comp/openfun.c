@@ -1,7 +1,3 @@
-/*
-                                O P E N F U N . C
-*/
-
 #include "iccomp.h"
 
 void open_fun()

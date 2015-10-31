@@ -21,8 +21,7 @@ static char *err_msg[] =
     };
 
 
-int yyerror (s)
-    char *s;
+int yyerror(char *s)
 {
     errcount++;
     printf ("[%s] Line %d", source_name, yylineno);

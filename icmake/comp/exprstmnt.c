@@ -1,12 +1,6 @@
-/*
-                            E X P R S T M N . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *expr_stmnt(e)
-    ESTRUC_
-        *e;
+ESTRUC_ *expr_stmnt(ESTRUC_ *e)
 {
     btoi(e);                                /* convert boolean to i */
 

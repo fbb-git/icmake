@@ -1,12 +1,6 @@
-/*
-                                L A S T S T M N . C
-*/
-
 #include "iccomp.h"
 
-void last_stmnt(lval)
-    ESTRUC_
-        *lval;
+void last_stmnt(ESTRUC_ *lval)
 {
     patchup_false(lval, 1);
 

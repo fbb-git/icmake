@@ -4,10 +4,7 @@
 
 #include "iccomp.h"
 
-ESTRUC_ *and_boolean(lexp, rexp)
-    ESTRUC_
-        *lexp,
-        *rexp;
+ESTRUC_ *and_boolean(ESTRUC_ *lexp, ESTRUC_ *rexp)
 {
     if (lexp->type & rexp->type & e_const)  /* two constants: compute result */
     {
@@ -28,5 +25,5 @@ ESTRUC_ *and_boolean(lexp, rexp)
         set_type(lexp, e_bool | e_code);
     }
 
-    return (lexp);
+    return lexp;
 }

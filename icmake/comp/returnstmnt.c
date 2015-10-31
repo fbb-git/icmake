@@ -1,14 +1,6 @@
-/*
-                            R E T U R N S T . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *return_stmnt(op, e)
-    E_TYPE_
-        op;
-    ESTRUC_
-        *e;
+ESTRUC_ *return_stmnt(E_TYPE_ op, ESTRUC_ *e)
 {
     SYMBOL_
         *last;

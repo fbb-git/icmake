@@ -1,12 +1,6 @@
-/*
-                                    S C A S T . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *scast(e)
-    ESTRUC_
-        *e;
+ESTRUC_ *scast(ESTRUC_ *e)
 {
     char buffer[10];
 

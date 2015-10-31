@@ -1,20 +1,9 @@
-/*
-                             E X E C F P R I . C
-
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *exec_fprintf(type, args)
-    E_TYPE_
-        type;
-    ESTRUC_
-        *args;
+ESTRUC_ *exec_fprintf(E_TYPE_ type, ESTRUC_ *args)
 {
-    register int
-        ok;
-    ESTRUC_
-        *e0;
+    register int ok;
+    ESTRUC_ *e0;
 
     if (args->type < 2)                     /* argcount must be at least 2 */
     {

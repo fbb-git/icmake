@@ -1,7 +1,3 @@
-/*
-                                M A K E F R A M . C
-*/
-
 #include "iccomp.h"
 
 void make_frame()

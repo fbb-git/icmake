@@ -1,16 +1,6 @@
-/*
-                            I N C D E C . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *incdec (pp, opcode, e)
-    PREPOST_
-        pp;
-    OPCODE_
-        opcode;
-    ESTRUC_
-        *e;
+ESTRUC_ *incdec(PREPOST_ pp, OPCODE_ opcode, ESTRUC_ *e)
 {
     register size_t
         varnr;

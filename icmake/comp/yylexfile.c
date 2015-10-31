@@ -1,6 +1,4 @@
 /*
-                                Y Y L E X F I L . C
-
      Function reading input for yylex() in the standard (file) situation
 */
 
@@ -9,9 +7,7 @@
 
 int yylex_file(char *buf, int max_size)
 {
-    int
-        result;
-
+    int result;
                                             /* try to read from file */
     if ( (result = read( fileno(yyin), buf, (size_t)max_size )) > 0 )
         return (result);                    /* return # bytes read if any */

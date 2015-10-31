@@ -7,9 +7,7 @@
 static ESTRUC_
     arr;
 
-ESTRUC_ *firstarg(e)
-    ESTRUC_
-        *e;
+ESTRUC_ *firstarg(ESTRUC_ *e)
 {
     etoc(e);                                /* argument is code now */
                                             /* code points to ESTRUC_ */

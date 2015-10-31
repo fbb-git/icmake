@@ -1,14 +1,10 @@
 /*
-                                F E T O B . C
-
              Force conversion of expression to boolean expression
 */
 
 #include "iccomp.h"
 
-void fetob(e)
-    ESTRUC_
-        *e;
+void fetob(ESTRUC_ *e)
 {
     if (test_type(e, e_bool))
         return;                             /* done if boolean aloready */

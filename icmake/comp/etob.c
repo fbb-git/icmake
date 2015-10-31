@@ -8,9 +8,7 @@
 
 #include "iccomp.h"
 
-void etob(e)
-    ESTRUC_
-        *e;
+void etob(ESTRUC_ *e)
 {
     switch (e->type & (e_int | e_str | e_list | e_bool))
     {

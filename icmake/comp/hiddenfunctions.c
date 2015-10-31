@@ -1,8 +1,3 @@
-/*
-                             H I D D E N F U . C
-*/
-
-
 #include "iccomp.h"
 
 static int next_call(void)

@@ -1,14 +1,6 @@
-/*
-                                O U T B I N . C
-*/
-
 #include "iccomp.h"
 
-void outbin(source, size)
-    void
-        *source;
-    size_t
-        size;
+void outbin(void *source, size_t size)
 {
     if
     (

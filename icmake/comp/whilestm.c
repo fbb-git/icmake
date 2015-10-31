@@ -1,13 +1,6 @@
-/*
-                            W H I L E S T A . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *while_stmnt(e, s)
-    ESTRUC_
-        *e,
-        *s;
+ESTRUC_ *while_stmnt(ESTRUC_ *e, ESTRUC_ *s)
 {
     register size_t len;
     unsigned *list;
@@ -47,5 +40,5 @@ ESTRUC_ *while_stmnt(e, s)
 
     patchup_true(e, 1);                    /* patchup break targets to EOC */
 
-    return (e);
+    return e;
 }

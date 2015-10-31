@@ -1,13 +1,6 @@
-/*
-                            O R B O O L E A . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *or_boolean(lexp, rexp)
-    ESTRUC_
-        *lexp,
-        *rexp;
+ESTRUC_ *or_boolean(ESTRUC_ *lexp, ESTRUC_ *rexp)
 {
     if (lexp->type & rexp->type & e_const)  /* two constants: compute result */
     {

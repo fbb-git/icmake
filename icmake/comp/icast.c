@@ -4,9 +4,7 @@
 
 #include "iccomp.h"
 
-ESTRUC_ *icast(e)
-    ESTRUC_
-        *e;
+ESTRUC_ *icast(ESTRUC_ *e)
 {
     if (test_type(e, e_list))               /* (int)list not ok */
     {

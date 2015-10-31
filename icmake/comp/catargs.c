@@ -4,9 +4,7 @@
 
 #include "iccomp.h"
 
-void catargs (arr)
-    ESTRUC_
-        *arr;
+void catargs(ESTRUC_ *arr)
 {
     register size_t
         count;

@@ -1,12 +1,6 @@
-/*
-                            P A T C H F A L . C
-*/
-
 #include "iccomp.h"
 
-void patchfalse(e)
-    ESTRUC_
-        *e;
+void patchfalse(ESTRUC_ *e)
 {
     e->falselist = xrealloc(e->falselist,   /* expand the falselist */
                             (e->falselen + 1) * sizeof(size_t));

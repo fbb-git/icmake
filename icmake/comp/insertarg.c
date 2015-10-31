@@ -1,13 +1,6 @@
-/*
-                            I N S E R T A R . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *insertarg(insert, mult)
-    ESTRUC_
-        *insert,
-        *mult;
+ESTRUC_ *insertarg(ESTRUC_ *insert, ESTRUC_ *mult)
 {
     register size_t
         count;

@@ -1,7 +1,3 @@
-/*
-                        O U T C O D E . C
-*/
-
 #include "iccomp.h"
 
 void outcode(ESTRUC_ *ep, int value, register size_t size)

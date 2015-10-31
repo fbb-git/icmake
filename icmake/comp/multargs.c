@@ -1,16 +1,8 @@
-/*
-                            M U L T A R G S . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *multargs(left, right)
-    ESTRUC_
-        *left,
-        *right;
+ESTRUC_ *multargs(ESTRUC_ *left, ESTRUC_ *right)
 {
-    register size_t
-        count;
+    register size_t count;
 
     count = ++left->type;                   /* get/increase # of args */
                                             /* room for extra ESTRUC_ */

@@ -4,10 +4,7 @@
 
 #include "iccomp.h"
 
-void catstrings(lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+void catstrings(ESTRUC_ *lval, ESTRUC_ *rval)
 {
     char
         *cp;

@@ -4,12 +4,9 @@
 
 #include "iccomp.h"
 
-static INT8
-    opret = op_ret;
+static INT8 opret = op_ret;
 
-void close_fun(e)
-    ESTRUC_
-        *e;
+void close_fun(ESTRUC_ *e)
 {
     entertab = &global;
 

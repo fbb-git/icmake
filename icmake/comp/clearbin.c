@@ -4,10 +4,7 @@
 
 #include "iccomp.h"
 
-void clearbin (lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+void clearbin(ESTRUC_ *lval, ESTRUC *rval)
 {
     discard(rval);
     discard(lval);

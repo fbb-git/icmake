@@ -4,9 +4,7 @@
 
 #include "iccomp.h"
 
-void btoi(e)
-    ESTRUC_
-        *e;
+void btoi(ESTRUC_ *e)
 {
     if (!test_type(e, e_bool))              /* no batchpatching needed */
         return;

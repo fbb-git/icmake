@@ -4,10 +4,7 @@
 
 #include "iccomp.h"
 
-ESTRUC_ *assign(lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+ESTRUC_ *assign(ESTRUC_ *lval, ESTRUC_ *rval)
 {
-    return (assignment(lval, rval, "="));
+    return assignment(lval, rval, "=");
 }

@@ -1,13 +1,6 @@
-/*
-                            S M E Q U A L . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *sm_equal (lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+ESTRUC_ *sm_equal(ESTRUC_ *lval, ESTRUC_ *rval)
 {
     btoi(lval);                             /* convert boolean to i */
     btoi(rval);

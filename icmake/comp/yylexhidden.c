@@ -1,6 +1,4 @@
 /*
-                                Y Y L E X H I D . C
-
                    Function called when yylex_file() is at eof.
 
     If new hidden functions are defined, then the array hidden[] must be
@@ -9,16 +7,13 @@
 
 #include "iccomp.h"
 
-static int
-    hidden_idx = -1;                      /* hidden function idx */
+static int hidden_idx = -1;                /* hidden function idx */
 
-static char
-    *cp = nullstring;
+static char *cp = nullstring;
 
 int yylex_hidden(char *buf, register int max_size)
 {
-    register int
-        result = 0;
+    register int result = 0;
 
     while (max_size)                        /* fill as much as possible */
     {

@@ -1,13 +1,6 @@
-/*
-                            O L D . C
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *old (lval, rval)
-    ESTRUC_
-        *lval,
-        *rval;
+ESTRUC_ *old(ESTRUC_ *lval, ESTRUC_ *rval)
 {
 
     if (test_binop(op_older, lval, rval))

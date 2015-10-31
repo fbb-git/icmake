@@ -1,19 +1,8 @@
-/*
-                             O P T I N T S P . C
-
-*/
-
 #include "iccomp.h"
 
-ESTRUC_ *optint_special(type, larg, rarg)
-    E_TYPE_
-        type;
-    ESTRUC_
-        *larg,
-        *rarg;
+ESTRUC_ *optint_special(E_TYPE_ type, ESTRUC_ *larg, ESTRUC_ *rarg)
 {
-    ESTRUC_
-        tmp;
+    ESTRUC_ tmp;
 
     etoc(larg);                             /* arg to stack */
 

@@ -1,7 +1,3 @@
-/*
-                             N E G A T E . C
-*/
-
 #include "iccomp.h"
 
 ESTRUC_ *negate(ESTRUC_ *e)                  /* expression so far */

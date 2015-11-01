@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bison -d -o parser.c parser || exit 1
+bison --defines=tokens.h -o parser.c grammar || exit 1
 flex -o lexer.c lexer       || exot 1
 
 echo generated new parser and scanner 

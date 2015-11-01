@@ -1,0 +1,188 @@
+#include "parser.h"
+
+#include <string.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+#include "../../rss/rss.h"
+#include "../scanner/scanner.h"
+#include "../util/util.h"
+#include "../symtab/symtab.h"
+
+#define test_type(e,v)          ((e)->type &   (v))
+#define set_type(e,v)           ((e)->type =   (v))
+#define up_type(e,v)            ((e)->type |=  (v))
+#define down_type(e,v)          ((e)->type &= ~(v))
+
+#define ALLTYPES                (e_int | e_list | e_str | e_bool)
+#define codestruc(estruc, x)    (&(((ESTRUC_ *)((estruc)->code))[x]))
+
+typedef enum
+{
+    err_openpar_expected,
+    err_closepar_expected,
+    err_openbrace_expected,
+    err_closebrace_expected,
+    err_semicol_expected,
+    err_assign_expected,
+    err_in_expression,
+    err_comma_expected,
+    err_statements_expected,
+    err_identifier_expected,
+    err_code_or_vars_expected,
+    err_comma_or_closepar_expected,
+    err_number_expected,
+    err_older_younger,
+    err_backtick_expected
+} PARSE_ERR_;
+
+
+typedef enum
+{
+    pre_op,
+    post_op
+} PREPOST_;
+
+typedef enum
+{
+    j_uncond,                               /* unconditional jump */
+    j_truelist,                             /* jump batchpatch for truelist */
+    j_falselist,                            /* jump backbatch for falselist */
+    j_continuelist                          /* jump backp. for continuelist */
+} JMP_COND_;
+
+extern int      gp_parse_error;
+extern int      gp_initialization;
+extern size_t   gp_breakOK;
+extern size_t   gp_nestLevel;
+extern size_t   gp_nParams;
+extern size_t   gp_stringsize;
+
+extern char     gp_typeConflict[];
+extern char    *gp_funstring[];
+extern char     gp_illegalType[];
+extern char    *gp_opstring[];
+extern char     gp_lvalueNeeded[];
+extern char     gp_init_expr_not_const[];
+extern char     gp_illegalArgCount[];
+extern char     gp_illegalCast[];
+
+extern E_TYPE_  gp_varType;
+
+extern SYMTAB_  gp_local;
+
+extern E_TYPE_ gp_opType[];
+
+extern OPCODE_ gp_lastOp;
+
+
+ESTRUC_ *addition (ESTRUC_ *, ESTRUC_ *);       /* + code */
+ESTRUC_ *and_boolean (ESTRUC_ *, ESTRUC_ *);/* && code */
+ESTRUC_ *assign  (ESTRUC_ *, ESTRUC_ *);        /*  = code (shell) */
+ESTRUC_ *band (ESTRUC_ *, ESTRUC_ *);           /* & (binary) code */
+ESTRUC_ *bnot (ESTRUC_ *);                      /* ~ code */
+ESTRUC_ *bor  (ESTRUC_ *, ESTRUC_ *);           /* | (binary) code */
+ESTRUC_ *break_stmnt (void);                /* process break stmnt */
+ESTRUC_ *callfun (size_t, ESTRUC_ *);       /* call function */
+ESTRUC_ *cast (E_TYPE_, ESTRUC_ *);         /* perform cast */
+ESTRUC_ *catcode (ESTRUC_ *, ESTRUC_ *);    /* write info rval behind lval */
+ESTRUC_ *cat_expr (ESTRUC_ *, ESTRUC_ *);   /* ,-separated expressions */
+ESTRUC_ *cat_stmnt (ESTRUC_ *, ESTRUC_ *);  /* catenate/write stmnts */
+ESTRUC_ *continue_stmnt (void);             /* process continue stmnt */
+ESTRUC_ *divide (ESTRUC_ *, ESTRUC_ *);     /* / code */
+ESTRUC_ *equal (ESTRUC_ *, ESTRUC_ *);      /* == code */
+ESTRUC_ *exec_fprintf (E_TYPE_, ESTRUC_ *); /* exec() and fprintf() */
+ESTRUC_ *execute (ESTRUC_ *);               /* execute() (full arglist) */
+ESTRUC_ *expr_stmnt (ESTRUC_ *);            /* expr ; code */
+ESTRUC_ *fetchvar (void);                   /* fetch variable */
+ESTRUC_ *firstarg (ESTRUC_ *);              /* (arg   code */
+ESTRUC_ *first_stmnt (ESTRUC_ *);           /* catenate/write stmnts */
+ESTRUC_ *for_stmnt (ESTRUC_ *, ESTRUC_ *,   /* for statement */
+                       ESTRUC_ *, ESTRUC_ *);
+ESTRUC_ *greater (ESTRUC_ *, ESTRUC_ *);   /* > code */
+ESTRUC_ *gr_equal (ESTRUC_ *, ESTRUC_ *);  /* >= code */
+ESTRUC_ *if_stmnt (ESTRUC_ *, ESTRUC_ *,    /* if code */
+                               ESTRUC_ *);
+ESTRUC_ *incdec (PREPOST_, OPCODE_,         /* E.g., c++ */
+                               ESTRUC_ *);
+ESTRUC_ *indexOp  (ESTRUC_ *, ESTRUC_ *);     /*  [] operator */
+ESTRUC_ *makelist (ESTRUC_ *, E_TYPE_);         /* makelist() */
+ESTRUC_ *math_ass (ESTRUC_ *, ESTRUC_ *,    /* shell for math-asgnmt */
+                       ESTRUC_ *(*)(ESTRUC_ *, ESTRUC_ *),
+                       char *);
+ESTRUC_ *modulo (ESTRUC_ *, ESTRUC_ *);    /* % code */
+ESTRUC_ *multargs (ESTRUC_ *, ESTRUC_ *);  /* (arg1, arg2, ... code */
+ESTRUC_ *multiply (ESTRUC_ *, ESTRUC_ *);  /* * code */
+ESTRUC_ *negate (ESTRUC_ *);               /* - (unary) code */
+ESTRUC_ *not_boolean (ESTRUC_ *);          /* ! code */
+ESTRUC_ *old (ESTRUC_ *, ESTRUC_ *);       /* older code */
+ESTRUC_ *onearg (E_TYPE_, ESTRUC_ *);      /* fun(x)  code */
+ESTRUC_ *optint_special (E_TYPE_,           /* fun([int,] ...) */
+                      ESTRUC_ *, ESTRUC_ *);
+ESTRUC_ *optint_string (E_TYPE_,        /* chdir(), system() */
+                      ESTRUC_ *, ESTRUC_ *);
+ESTRUC_ *or_boolean (ESTRUC_ *, ESTRUC_ *);/* || code */
+ESTRUC_ *return_stmnt (E_TYPE_, ESTRUC_ *);/* exit(), return(); */
+ESTRUC_ *specials (E_TYPE_, ESTRUC_ *);    /* fun(x, y, ...)  code */
+ESTRUC_ *shl (ESTRUC_ *, ESTRUC_ *);            /* << (binary) code */
+ESTRUC_ *shr (ESTRUC_ *, ESTRUC_ *);            /* >> (binary) code */
+ESTRUC_ *smaller (ESTRUC_ *, ESTRUC_ *);   /* < code */
+ESTRUC_ *sm_equal (ESTRUC_ *, ESTRUC_ *);  /* <= code */
+ESTRUC_ *stackframe (E_TYPE_);              /* initialize a stack-element */
+ESTRUC_ *subtract (ESTRUC_ *, ESTRUC_ *);  /* - (binary) code */
+ESTRUC_ *threeargs (E_TYPE_, ESTRUC_ *,         /* fun(x, y, z)  code */
+                        ESTRUC_ *, ESTRUC_ *);
+ESTRUC_ *twoargs (E_TYPE_, ESTRUC_ *,           /* fun(x, y)  code */
+                               ESTRUC_ *);
+ESTRUC_ *unequal (ESTRUC_ *, ESTRUC_ *);   /* != code */
+ESTRUC_ *while_stmnt (ESTRUC_ *, ESTRUC_ *, int pureWhile);/* while code */
+ESTRUC_ *young (ESTRUC_ *, ESTRUC_ *);     /* younger code */
+ESTRUC_ *xor  (ESTRUC_ *, ESTRUC_ *);           /* ^ (binary) code */
+ESTRUC_ *zeroargs (E_TYPE_);               /* fun()  code */
+void    close_fun (ESTRUC_ *);         /* close a function def. */
+void    make_frame (void);             /* generate op_frame */
+void    outbin (void *, size_t);     /* write INT8s to s_bin */
+void    pop_dead(void);                 /* restore dead-level */
+void    push_dead(void);                /* new dead-level */
+
+
+void    callrss(ESTRUC_ *e, FUNNR_ funnr, ...);
+void    defcode(ESTRUC_ *lval, ESTRUC_ *rval, OPCODE_ opcode);
+int     conflict(ESTRUC_ *lval, ESTRUC_ *rval, OPCODE_ opcode);
+void    btoi(ESTRUC_ *e);
+int     test_binop(OPCODE_ opcode, ESTRUC_ *lval, ESTRUC_ *rval);
+void    etoc(ESTRUC_ *e);
+void    etob(ESTRUC_ *e);
+void    clearbin(ESTRUC_ *lval, ESTRUC_ *rval);
+void    patchup_true(ESTRUC_ *e, int pos);
+void    patchup_false(ESTRUC_ *e, int pos);
+void    gencode(ESTRUC_ *e, OPCODE_ opcode, ...);
+void    discard(ESTRUC_ *e);
+void    patchup_continue(ESTRUC_ *e, int pos);
+void    entervar();
+void    enter();
+void    open_fun();
+int     yyerror(char *s);
+void    fetob(ESTRUC_ *e);
+size_t  rm_jmp_zero(register size_t codelen, unsigned *list, register size_t listlen);
+ESTRUC_ *insertarg(ESTRUC_ *insert, ESTRUC_ *mult);
+int     test_operand(ESTRUC_ *e, OPCODE_ opcode);
+ESTRUC_ *assignment(ESTRUC_ *lval, ESTRUC_ *rval, char *opstr);
+void    catargs(ESTRUC_ *arr);
+void    callhidden(register int fun, ESTRUC_ *rarg);
+void    addpatch(unsigned *list, size_t len, register size_t value);
+void    outcode(ESTRUC_ *ep, int value, register size_t size);
+void    patchtrue(ESTRUC_ *e);
+void    patchfalse(ESTRUC_ *e);
+void    patchcontinue(ESTRUC_ *e);
+void    patchup(INT8 *code, size_t len, unsigned *list, size_t listlen, int pos);
+void    copy_to_pop(ESTRUC_ *e);
+ESTRUC_ *lcast(ESTRUC_ *e);
+ESTRUC_ *scast(ESTRUC_ *e);
+ESTRUC_ *icast(ESTRUC_ *e);
+size_t  lookstring(char *s);
+ESTRUC_ *callfun(size_t x, ESTRUC_ *e);
+ESTRUC_ *execute(ESTRUC_ *arr);
+void    catstrings(ESTRUC_ *lval, ESTRUC_ *rval);
+ESTRUC_ *nullframe(ESTRUC_ *e);
+void    last_stmnt(ESTRUC_ *lval);

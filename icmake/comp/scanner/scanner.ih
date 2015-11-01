@@ -1,0 +1,28 @@
+#include "scanner.h"
+
+#include <string.h>
+#include <stdlib.h>
+
+#include "../../rss/rss.h"
+
+#include "../global.h"
+#include "../util/util.h"
+
+#include "../parser/parser.h"
+
+#ifndef fileno
+    int fileno(FILE *stream);
+#endif
+
+// #undef  YY_INPUT
+// #define YY_INPUT(buf,result,max_size) result = yylex_input(buf, max_size);
+
+#ifdef unput
+    /* If this stops working, have a look at lexer2.c to see what was   */
+    /* changed in the flex-implementation                               */
+
+    static void yyunput (int c,char *buf_ptr  );
+    void (*unusedUnput)(int c,char *buf_ptr) = &yyunput;
+#endif
+
+void change_file(char *s);               /* name of source file to open */

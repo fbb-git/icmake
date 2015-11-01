@@ -23,7 +23,7 @@
 
 int error_occurred = 0;
 
-void error (char *fmt, ...)
+void error(char *fmt, ...)
 {
     va_list
         args;

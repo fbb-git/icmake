@@ -6,7 +6,7 @@
 
             funtab.symbol[index_of_the_function].var.vu.i->count
 
-        contains the offset of the 1st byte of the function in the s_bin file.
+        contains the offset of the 1st byte of the function in the g_bin file.
 
 
     Adding a hidden (macro) function:
@@ -188,7 +188,7 @@ typedef enum
 
 extern char
     release[],
-    *filenames,
+    *g_filenames,
     *funstring[],
     icm_comp[],
     illegal_argcount[],
@@ -198,12 +198,12 @@ extern char
     lvalue_needed[],
     not_on_lists[],
     not_on_strings[],
-    nullstring[],
+    g_nullstring[],
     only_on_ints[],
     *opstring[],
-    *source_name,
-    *lexstring,
-    *stringbuf,
+    *g_sourceName,
+    *g_lexstring,
+    *g_stringbuf,
     type_conflict[],
     version[];
 
@@ -215,27 +215,27 @@ extern E_TYPE_
 
 
 extern FILE
-    *s_bin;
+    *g_bin;
 
 extern OPCODE_
     lastop;
 
 extern STRINGTAB_
-    *stringtab;
+    *g_stringtab;
 
 extern SYMTAB_
     funtab,
     local,
     global,
-    *entertab;
+    *g_entertab;
 
 extern HIDDEN_FUNCTION_
     hidden[he_];
 
 extern size_t
     break_ok,
-    dead_sp,
-    errcount,
+    g_dead_sp,
+    g_errcount,
     hidden_called,
     nestlevel,
     n_params,
@@ -243,7 +243,7 @@ extern size_t
     sem_err,
     stringsize;
 
-unsigned *dead;
+unsigned *g_dead;
 
 extern ESTRUC_ global_init;             /* code for initializing globals */
 
@@ -256,90 +256,29 @@ int yylex_file(char *, int);            /* read yylex input from yyin */
 int yylex_hidden(char *, int);          /* read yylex input from buffer */
 
 size_t fetchfun (void);              /* fetch index of function */
-size_t lookstring (char *);          /* look for string in stringtab */
+size_t lookstring (char *);          /* look for string in g_stringtab */
 size_t looksym (SYMTAB_ *);          /* look for symbol in symboltab */
 size_t rm_jmp_zero (size_t,         /* remove jmp 0 from || && lists */
                  unsigned *, size_t);
 
-ESTRUC_ *addition (ESTRUC_ *, ESTRUC_ *);  /* + code */
-ESTRUC_ *and_boolean (ESTRUC_ *, ESTRUC_ *);/* && code */
-ESTRUC_ *assign  (ESTRUC_ *, ESTRUC_ *);        /*  = code (shell) */
 ESTRUC_ *assignconst(ESTRUC_ *, ESTRUC_ *);     /* initialization code */
 ESTRUC_ *assignment  (ESTRUC_ *, ESTRUC_ *,     /*  = code */
                                     char *);
-ESTRUC_ *band (ESTRUC_ *, ESTRUC_ *);           /* & (binary) code */
-ESTRUC_ *bnot (ESTRUC_ *);                      /* ~ code */
-ESTRUC_ *bor  (ESTRUC_ *, ESTRUC_ *);           /* | (binary) code */
-ESTRUC_ *break_stmnt (void);           /* process break stmnt */
-ESTRUC_ *callfun (size_t, ESTRUC_ *);  /* call function */
-ESTRUC_ *cast (E_TYPE_, ESTRUC_ *);      /* perform cast */
-ESTRUC_ *catcode (ESTRUC_ *,              /* write info rval behind lval */
-                             ESTRUC_ *);
-ESTRUC_ *cat_expr (ESTRUC_ *,               /* ,-separated expressions */
-                             ESTRUC_ *);
-ESTRUC_ *cat_stmnt (ESTRUC_ *,              /* catenate/write stmnts */
-                             ESTRUC_ *);
-ESTRUC_ *continue_stmnt (void);           /* process continue stmnt */
-ESTRUC_ *divide (ESTRUC_ *, ESTRUC_ *);    /* / code */
-ESTRUC_ *equal (ESTRUC_ *, ESTRUC_ *);     /* == code */
-ESTRUC_ *exec_fprintf (E_TYPE_, ESTRUC_ *);/* exec() and fprintf() */
-ESTRUC_ *execute (ESTRUC_ *);              /* execute() (full arglist) */
-ESTRUC_ *expr_stmnt (ESTRUC_ *);           /* expr ; code */
-ESTRUC_ *fetchvar (void);                  /* fetch variable */
-ESTRUC_ *firstarg (ESTRUC_ *);             /* (arg   code */
-ESTRUC_ *first_stmnt (ESTRUC_ *);          /* catenate/write stmnts */
-ESTRUC_ *for_stmnt (ESTRUC_ *, ESTRUC_ *,   /* for statement */
-                       ESTRUC_ *, ESTRUC_ *);
-ESTRUC_ *greater (ESTRUC_ *, ESTRUC_ *);   /* > code */
-ESTRUC_ *gr_equal (ESTRUC_ *, ESTRUC_ *);  /* >= code */
+                             
 ESTRUC_ *icast (ESTRUC_ *);                /* cast to int */
-ESTRUC_ *if_stmnt (ESTRUC_ *, ESTRUC_ *,    /* if code */
-                               ESTRUC_ *);
-ESTRUC_ *incdec (PREPOST_, OPCODE_,         /* E.g., c++ */
-                               ESTRUC_ *);
-ESTRUC_ *indexOp  (ESTRUC_ *, ESTRUC_ *);     /*  [] operator */
+
 ESTRUC_ *insertarg (ESTRUC_ *, ESTRUC_ *);/* arg1, before arg2, ... */
 ESTRUC_ *lcast (ESTRUC_ *);                /* cast to list */
-ESTRUC_ *makelist (ESTRUC_ *, E_TYPE_);         /* makelist() */
-ESTRUC_ *math_ass (ESTRUC_ *, ESTRUC_ *,    /* shell for math-asgnmt */
-                       ESTRUC_ *(*)(ESTRUC_ *, ESTRUC_ *),
-                       char *);
-ESTRUC_ *modulo (ESTRUC_ *, ESTRUC_ *);    /* % code */
-ESTRUC_ *multargs (ESTRUC_ *, ESTRUC_ *);  /* (arg1, arg2, ... code */
-ESTRUC_ *multiply (ESTRUC_ *, ESTRUC_ *);  /* * code */
-ESTRUC_ *negate (ESTRUC_ *);               /* - (unary) code */
-ESTRUC_ *not_boolean (ESTRUC_ *);          /* ! code */
+
 ESTRUC_ *nullframe(ESTRUC_ *e);              /* discard(e) + *e = stackfr(0) */
-ESTRUC_ *old (ESTRUC_ *, ESTRUC_ *);       /* older code */
-ESTRUC_ *onearg (E_TYPE_, ESTRUC_ *);      /* fun(x)  code */
-ESTRUC_ *optint_special (E_TYPE_,           /* fun([int,] ...) */
-                      ESTRUC_ *, ESTRUC_ *);
-ESTRUC_ *optint_string (E_TYPE_,        /* chdir(), system() */
-                      ESTRUC_ *, ESTRUC_ *);
-ESTRUC_ *or_boolean (ESTRUC_ *, ESTRUC_ *);/* || code */
-ESTRUC_ *return_stmnt (E_TYPE_, ESTRUC_ *);/* exit(), return(); */
-ESTRUC_ *specials (E_TYPE_, ESTRUC_ *);    /* fun(x, y, ...)  code */
+
 ESTRUC_ *scast (ESTRUC_ *);                /* cast to str */
-ESTRUC_ *shl (ESTRUC_ *, ESTRUC_ *);            /* << (binary) code */
-ESTRUC_ *shr (ESTRUC_ *, ESTRUC_ *);            /* >> (binary) code */
-ESTRUC_ *smaller (ESTRUC_ *, ESTRUC_ *);   /* < code */
-ESTRUC_ *sm_equal (ESTRUC_ *, ESTRUC_ *);  /* <= code */
-ESTRUC_ *stackframe (E_TYPE_);              /* initialize a stack-element */
-ESTRUC_ *subtract (ESTRUC_ *, ESTRUC_ *);  /* - (binary) code */
+
 ESTRUC_ *strupr_lwr (E_TYPE_, ESTRUC_ *);       /* strupr<->strlwr */
-ESTRUC_ *threeargs (E_TYPE_, ESTRUC_ *,         /* fun(x, y, z)  code */
-                        ESTRUC_ *, ESTRUC_ *);
-ESTRUC_ *twoargs (E_TYPE_, ESTRUC_ *,           /* fun(x, y)  code */
-                               ESTRUC_ *);
-ESTRUC_ *unequal (ESTRUC_ *, ESTRUC_ *);   /* != code */
-ESTRUC_ *while_stmnt (ESTRUC_ *, ESTRUC_ *, int pureWhile);/* while code */
-ESTRUC_ *young (ESTRUC_ *, ESTRUC_ *);     /* younger code */
-ESTRUC_ *xor  (ESTRUC_ *, ESTRUC_ *);           /* ^ (binary) code */
-ESTRUC_ *zeroargs (E_TYPE_);               /* fun()  code */
 
 void    addpatch (unsigned *, size_t,     /* add value to patch-list */
                                size_t);
-void    backend (void);                /* finish s_bin construction */
+void    backend (void);                /* finish g_bin construction */
 void    btoi (ESTRUC_ *);              /* boolean to int */
 void    callrss (ESTRUC_ *, FUNNR_,     /* call rss function */
                                 ...);   /* and add asp, xxx instruction */
@@ -351,7 +290,6 @@ void    change_file (char *);          /* switch to other file */
 void    clearbin (ESTRUC_ *,            /* clear and init 2 ESTRUC_s */
                       ESTRUC_ *);
 void    clear_hidden(void);                 /* clear hidden function-names */
-void    close_fun (ESTRUC_ *);         /* close a function def. */
 void    copy_to_pop (ESTRUC_ *);       /* op_copy_var to op_pop_var */
 void    defcode (ESTRUC_ *, ESTRUC_ *,  /* generate default e_int|e_code */
                   OPCODE_);
@@ -363,11 +301,10 @@ void    entervar (void);               /* enter variable in l/g-tab */
 void    fetob (ESTRUC_ *);             /* forced e conversion to boolean */
 void    hidden_functions (void);            /* patchup/generate hidden funs */
 void    last_stmnt (ESTRUC_ *);        /* write last stmnt */
-void    make_frame (void);             /* generate op_frame */
 void    gencode (ESTRUC_ *, OPCODE_,    /* append new code */
                                    ...);
 void    open_fun (void);               /* open a function */
-void    outbin (void *, size_t);     /* write INT8s to s_bin */
+
 void    outcode (ESTRUC_ *, int,        /* append code to e->code */
                         size_t);
 void    patchcontinue(ESTRUC_ *);      /* jmp_continue target */
@@ -379,7 +316,5 @@ void    patchup_true (ESTRUC_ *, int); /* batchpatch truelist */
 void    patchup_false (ESTRUC_ *, int);/* batchpatch truelist */
 void    patchup_continue(ESTRUC_ *e, int pos);  /* backpatch continuelist */
 
-void    pop_dead(void);                 /* restore dead-level */
-void    push_dead(void);                /* new dead-level */
 void    semantic (char *, ...);         /* give semantic error */
 

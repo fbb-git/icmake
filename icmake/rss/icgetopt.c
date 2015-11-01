@@ -91,8 +91,8 @@ int ic_getopt(int *p_argc, char **argv)
                 icce_beyond_optchar = NULL;      /* option processed */
                 return (0);
             }
-            else
-                icce_beyond_optchar = NULL;      /* option processed */
+
+            icce_beyond_optchar = NULL;         /* option processed */
         }
 
         org_argv = argv;                        /* save original address */

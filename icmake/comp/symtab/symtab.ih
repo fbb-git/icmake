@@ -1,0 +1,8 @@
+#include "symtab.h"
+
+#include <string.h>
+
+#include "../global.h"
+
+
+

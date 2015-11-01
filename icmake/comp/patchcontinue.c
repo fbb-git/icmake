@@ -10,8 +10,4 @@ void patchcontinue(ESTRUC_ *e)
                                             /* store jumpstart location */
 
     e->continuelist[e->continuelen++] = e->codelen;   
-
-printf("patch continue: len = %u, address = 0x%x\n", e->continuelen,
-e->codelen);
-
 }

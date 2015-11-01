@@ -190,7 +190,7 @@ compound:
     ;
                                             /* D */
 def_var_or_fun:
-        opt_gp_varType
+        type_of_var         /* varType  */
         var_or_fun
     |
         voidtype
@@ -990,14 +990,6 @@ opt_parlist:
     |
     ;
 
-opt_gp_varType:
-        type_of_var
-    |
-        {
-            gp_varType = e_int;
-        }
-    ;
-                                            /* P */
 pars:
         pars
         comma
@@ -1128,7 +1120,7 @@ three_arg_funs:
 ;
         
 type_of_var:
-        gp_varType
+        varType
         {
             gp_parse_error = err_identifier_expected;
             gp_varType = $1.type;
@@ -1172,7 +1164,7 @@ var_or_fun:
         funcdef
     ;
 
-gp_varType:
+varType:
         INT
     |
         STRINGTYPE

@@ -20,11 +20,12 @@ void enter()
 
     sym = g_entertab->symbol + n_defined;
 
-    sym->name = xstrdup(g_lexstring);         /* set the name of the var */
-    sym->var.type = gp_varType;                /* set the type of the var */
+    sym->name = xstrdup(g_lexstring);       /* set the name of the var */
+    sym->var.type = gp_varType;             /* set the type of the var */
 
-    if (g_entertab == &g_globaltab)                /* clear new g_globaltab entry */
+    if (g_entertab == &g_globaltab)         /* clear new g_globaltab entry */
         memset (&sym->var.vu, 0, sizeof(VAR_UNION_));
 
-    g_entertab->n_defined++;                  /* next free */
+    g_entertab->n_defined++;                /* next free */
 }
+

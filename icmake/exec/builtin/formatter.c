@@ -1,6 +1,6 @@
 #include "builtin.ih"
 
-void formatter(void *dest, size_t start)
+size_t formatter(void *dest, size_t start)
 {
     size_t lastIdx = start + intValue(top());   /* get the last arg idx */
 
@@ -9,13 +9,16 @@ void formatter(void *dest, size_t start)
 
     char *end = findPercent(fmt);               /* 'end' at 0 or %<nr>      */
 
+    size_t ret;
+
     if (*end == 0)                              /* no % in the first str    */
     {
-        noFormatting(dest, start, lastIdx);
+        ret = noFormatting(dest, start, lastIdx);
         free(fmt);
-        return;
+        return ret;
     }
 
+    ret = 1;
     char *begin = fmt;
 
     while (1)                                   /* process the fmt string   */
@@ -32,7 +35,10 @@ void formatter(void *dest, size_t start)
                                                 /* end -> %<nr>             */
 
         if (errno == 0 && idx > 0 && idx <= lastIdx)    /* if idx OK        */
+        {
+            ++ret;
             writeArgument(dest, start + idx);   /* write argument st + idx  */
+        }
         else
             (*p_destWrite)(dest, begin, end);   /* or write the %<nr> as-is */
 
@@ -42,6 +48,7 @@ void formatter(void *dest, size_t start)
     }
 
     free(fmt);
+    return ret;
 }
 
 

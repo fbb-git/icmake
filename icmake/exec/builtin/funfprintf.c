@@ -28,7 +28,7 @@ void fun_fprintf()
     if (! (outf = fopen(filename, "a")) )
         error("failure to open file \"%s\"", filename);
 
-    formatedFprintf(outf, 2);
+    reg = *intConstructor_i(formattedFprintf(outf, 2));
 
     fclose (outf);
 }

@@ -101,15 +101,15 @@ void fun_printarg(FILE *out, size_t i, int *newelement);
 
 int termch(void);
 
-void formatedFprintf(FILE *f, size_t start);
+size_t formattedFprintf(FILE *f, size_t start);
 
 extern void (*p_destWrite)(void *dest, char const *begin, char const *end);
 
 void fileWrite(void *dest, char const *begin, char const *end);
 void stringWrite(void *dest, char const *begin, char const *end);
 
-void formatter(void *dest, size_t start);
-void noFormatting(void *dest, size_t start, size_t lastIdx);
+size_t formatter(void *dest, size_t start);
+size_t noFormatting(void *dest, size_t start, size_t lastIdx);
 void writeArgument(void *dest, size_t idx);
 
 

@@ -19,7 +19,7 @@
 
 void fun_printf(void)
 {
-    formatedFprintf(stdout, 1);
+    reg = *intConstructor_i(formattedFprintf(stdout, 1));
 }
 
 

@@ -594,7 +594,8 @@ provided:
         output stream). Returns the number of printed arguments.
     itt(int printf(string format, ...))nl()
         Shows all (comma separated) arguments to screen (i.e., the standard
-        output stream). Returns the number of printed arguments.nl()
+        output stream). Returns the number of printed arguments (the
+        tt(format) string counts as one argument).nl()
         If tt(format) contains placeholders %1 .. %n the output is 
             formatted (see also tt(strformat)).
    )

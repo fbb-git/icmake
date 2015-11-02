@@ -22,10 +22,10 @@ void hidden_functions(void)
                 fseek(g_bin, -(long)sizeof(INT16), SEEK_CUR);
                 g_lexstring = xstrdup(g_hiddenFun[fun].name);
                                             /* update the function's address */
-                outbin(&(g_funtab.symbol[fetchfun()].var.vu.i->count),
-                         sizeof(INT16));
+                outbin(symtabFunAddr(), sizeof(INT16));
                 fseek(g_bin, 0, SEEK_CUR);  /* ready to read again */
             }
         }
     }
 }
+

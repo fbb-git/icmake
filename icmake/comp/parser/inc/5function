@@ -107,7 +107,7 @@ _opt_arglist:
 _funname:
     IDENTIFIER
     {
-        $$.evalue = fetchfun();
+        $$.evalue = functionIdx();
     }
 ;
 

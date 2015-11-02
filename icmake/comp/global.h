@@ -32,7 +32,7 @@ typedef struct                      /* see also display code in */
     size_t falselen;
     size_t continuelen;
     size_t codelen;                    /* length of the code */
-    size_t evalue;                     /* index or value of the expression */
+    int    evalue;                     /* index or value of the expression */
 
     size_t *truelist;
     size_t *falselist;
@@ -62,10 +62,10 @@ extern char *g_lexstring;
 extern char *g_filenames;
 extern char *g_sourceName;
 
-extern SYMTAB_ g_funtab;
-extern SYMTAB_ local;
-extern SYMTAB_ g_globaltab;
-extern SYMTAB_ *g_entertab;
+//extern SYMTAB_ g_funtab;
+//extern SYMTAB_ local;
+//extern SYMTAB_ g_globaltab;
+//extern SYMTAB_ *g_entertab;
 
 extern STRINGTAB_ *g_stringtab;
 

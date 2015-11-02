@@ -24,23 +24,22 @@
 
 void *xrealloc (void *ptr, size_t size)
 {
-    register void
-        *newptr;
+    register void *newptr;
 
     if (! size)
     {
         if (ptr)
             free (ptr);
-        return (NULL);
+        return NULL;
     }
 
-    if (ptr)
-        newptr = realloc (ptr, size);
-    else
-        newptr = malloc (size);
+    newprt = ptr != NULL ?
+                    realloc(ptr, size)
+                :
+                    malloc (size);
 
     if (! newptr)
         error ("out of memory");
 
-    return (newptr);
+    return newptr;
 }

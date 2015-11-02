@@ -155,4 +155,4 @@ E_TYPE_ gp_varType;
 
 OPCODE_ gp_lastOp = op_hlt;
 
-SYMTAB_  gp_local;
+// SYMTAB_  gp_local;

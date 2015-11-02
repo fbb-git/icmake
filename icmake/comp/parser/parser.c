@@ -2270,7 +2270,7 @@ yyreduce:
   case 141:
 #line 796 "grammar" /* yacc.c:1646  */
     {
-        (yyval).evalue = fetchfun();
+        (yyval).evalue = symtabFunIdx();
     }
 #line 2276 "parser.c" /* yacc.c:1646  */
     break;

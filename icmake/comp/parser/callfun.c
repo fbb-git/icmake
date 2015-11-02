@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *callfun(size_t x, ESTRUC_ *e)
+ESTRUC_ *callfun(int funIdx, ESTRUC_ *e)
 {
     ESTRUC_ *a;
     register size_t idx;
@@ -28,17 +28,17 @@ ESTRUC_ *callfun(size_t x, ESTRUC_ *e)
         e->code);
 */            
 
-    if (x == g_funtab.n_defined)              /* function name not found ? */
-        return e;                           /* nothing to do here        */
+    if (funIdx == -1)                   /* function name not found ? */
+        return e;                       /* nothing to do here        */
 
 
                                             /* then check correct # of args */
-    n_pars = g_funtab.symbol[x].var.vu.i->ls.list.size;
+    n_pars = g_funtab.symbol[funIdx].var.vu.i->ls.list.size;
     if ((size_t)e->type != n_pars)
     {
         err = 1;
         semantic("Function '%s()' requires %u arguments",
-                    g_funtab.symbol[x].name, n_pars);
+                    g_funtab.symbol[funIdx].name, n_pars);
     }
     else
     {                                   /* and check argument types */
@@ -57,7 +57,7 @@ ESTRUC_ *callfun(size_t x, ESTRUC_ *e)
                 !
                 (
                     ((char *)
-                       g_funtab.symbol[x].var.vu.i->ls.list.element)[idx]
+                       g_funtab.symbol[funIdx].var.vu.i->ls.list.element)[idx]
                     & a->type & ALLTYPES
                 )
             )
@@ -65,7 +65,7 @@ ESTRUC_ *callfun(size_t x, ESTRUC_ *e)
                 old_sem = g_sem_err;
                 err = 1;
                 semantic("Incorrect type of argument %u of function '%s()'",
-                    idx + 1, g_funtab.symbol[x].name);
+                    idx + 1, g_funtab.symbol[funIdx].name);
                 g_sem_err = old_sem;
             }
         }
@@ -75,9 +75,9 @@ ESTRUC_ *callfun(size_t x, ESTRUC_ *e)
     catargs(e);                             /* convert args to code */
 
                                             /* call function and clean stack */
-    gencode(e, op_call, g_funtab.symbol[x].var.vu.i->count);
+    gencode(e, op_call, g_funtab.symbol[funIdx].var.vu.i->count);
     gencode(e, op_asp,  n_pars);
-    set_type(e, g_funtab.symbol[x].var.type);
+    set_type(e, g_funtab.symbol[funIdx].var.type);
 
     return e;                               /* return called function code */
 }

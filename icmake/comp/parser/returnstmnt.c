@@ -2,13 +2,12 @@
 
 ESTRUC_ *return_stmnt(E_TYPE_ op, ESTRUC_ *e)
 {
-    SYMBOL_
-        *last;
+    Symbol const *last;
 
     if (!test_type(e, e_code))
         etoc(e);
 
-    last = &g_funtab.symbol[g_funtab.n_defined - 1];
+    last = symtabLastFunction();
 
     if ((OPCODE_)op == op_ret)              /* return opcode received */
     {
@@ -27,7 +26,7 @@ ESTRUC_ *return_stmnt(E_TYPE_ op, ESTRUC_ *e)
         )
         {
             gencode(e, op);                 /* generate the 'ret' opcode */
-            return (e);                     /* done */
+            return e;                       /* done */
         }
 
         if (!(test_type(e, last->var.type & ALLTYPES)))
@@ -37,5 +36,5 @@ ESTRUC_ *return_stmnt(E_TYPE_ op, ESTRUC_ *e)
     gencode(e, op_pop_reg);
     gencode(e, op);
 
-    return (e);
+    return e;
 }

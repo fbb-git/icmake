@@ -68,7 +68,7 @@ extern char     gp_illegalCast[];
 
 extern E_TYPE_  gp_varType;
 
-extern SYMTAB_  gp_local;
+// extern SYMTAB_  gp_local;
 
 extern E_TYPE_ gp_opType[];
 
@@ -193,3 +193,4 @@ void    patchup_continue(ESTRUC_ *e, int pos);
 void    patchup_false(ESTRUC_ *e, int pos);
 void    patchup_true(ESTRUC_ *e, int pos);
 
+int     functionIdx();

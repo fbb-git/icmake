@@ -1,0 +1,15 @@
+_voidtype:
+    VOID
+    {
+        gp_varType = 0;
+    }
+;
+
+def_var_or_fun:
+    type_of_var         /* varType  */
+    var_or_fun
+|
+    _voidtype
+    funcdef
+;
+

@@ -1,0 +1,15 @@
+_varType:
+        INT
+    |
+        STRINGTYPE
+    |
+        LIST
+    ;
+
+type_of_var:
+    _varType
+    {
+        gp_parse_error = err_identifier_expected;
+        gp_varType = $1.type;
+    }
+;

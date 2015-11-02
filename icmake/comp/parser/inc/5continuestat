@@ -1,0 +1,6 @@
+continue_stat:
+    CONTINUE
+    {
+        $$ = *continue_stmnt();
+    }
+;

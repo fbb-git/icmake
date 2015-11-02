@@ -1,0 +1,14 @@
+
+%expect 1
+
+       /* Grammar Rules */
+
+%%
+
+input:
+    input
+    def_var_or_fun
+|
+    def_var_or_fun
+;
+

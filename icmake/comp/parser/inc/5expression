@@ -1,0 +1,356 @@
+_casttype:
+    INT
+|
+    LIST
+|
+    STRINGTYPE
+;
+
+_string:
+    _string
+    STRING
+    {                                       /* catenate the new string */
+        g_stringbuf = xstrcat(g_stringbuf, g_lexstring);
+    }
+|
+    STRING
+    {
+        free(g_stringbuf);                  /* free former string */
+        g_stringbuf = xstrdup(g_lexstring); /* duplicate initial string */
+    }
+;
+
+_func_or_var:
+    function
+    closepar
+|
+    IDENTIFIER
+    {
+        $$ = *fetchvar();
+    }
+;
+
+_backtick:   
+    {
+        gp_parse_error = err_backtick_expected;
+    }
+    '`' 
+;
+
+expression:
+        expression
+        '='
+        expression
+        {
+            $$ = *assign(&$1, &$3);
+        }
+    |
+        expression
+        '['
+        expression
+        ']'
+        {
+            $$ = *indexOp(&$1, &$3);
+        }
+    |
+        expression
+        MUL_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, multiply, "*=");
+        }
+    |
+        expression
+        DIV_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, divide, "/=");
+        }
+    |
+        expression
+        MOD_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, modulo, "%=");
+        }
+    |
+        expression
+        PLUS_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, addition, "+=");
+        }
+    |
+        expression
+        MINUS_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, subtract, "-=");
+        }
+    |
+        expression
+        AND_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, band, "&=");
+        }
+    |
+        expression
+        OR_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, bor, "|=");
+        }
+    |
+        expression
+        XOR_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, xor, "^=");
+        }
+    |
+        expression
+        SHL_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, shl, "<<=");
+        }
+    |
+        expression
+        SHR_IS
+        expression
+        {
+            $$ = *math_ass(&$1, &$3, shr, ">>=");
+        }
+    |
+        expression
+        OR
+        expression
+        {
+            $$ = *or_boolean(&$1, &$3);
+        }
+    |
+        expression
+        AND
+        expression
+        {
+            $$ = *and_boolean(&$1, &$3);
+        }
+    |
+        expression
+        EQUAL
+        expression
+        {
+            $$ = *equal(&$1, &$3);
+        }
+    |
+        expression
+        NOT_EQUAL
+        expression
+        {
+            $$ = *unequal(&$1, &$3);
+        }
+    |
+        expression
+        '?'
+        expression
+        ':'
+        expression
+        {
+            $$ = *ternary(&$1, &$3, &$5);
+        }
+    |
+        expression
+        '<'
+        expression
+        {
+            $$ = *smaller(&$1, &$3);
+        }
+    |
+        expression
+        '>'
+        expression
+        {
+            $$ = *greater(&$1, &$3);
+        }
+    |
+        expression
+        SMALLER_EQUAL
+        expression
+        {
+            $$ = *sm_equal(&$1, &$3);
+        }
+    |
+        expression
+        GREATER_EQUAL
+        expression
+        {
+            $$ = *gr_equal(&$1, &$3);
+        }
+    |
+        expression
+        '+'
+        expression
+        {
+            $$ = *addition(&$1, &$3);
+        }
+    |
+        expression
+        '&'
+        expression
+        {
+            $$ = *band(&$1, &$3);
+        }
+    |
+        expression
+        '|'
+        expression
+        {
+            $$ = *bor(&$1, &$3);
+        }
+    |
+        expression
+        '^'
+        expression
+        {
+            $$ = *xor(&$1, &$3);
+        }
+    |
+        expression
+        SHL
+        expression
+        {
+            $$ = *shl(&$1, &$3);
+        }
+    |
+        expression
+        SHR
+        expression
+        {
+            $$ = *shr(&$1, &$3);
+        }
+    |
+        expression
+        '-'
+        expression
+        {
+            $$ = *subtract(&$1, &$3);
+        }
+    |
+        expression
+        '*'
+        expression
+        {
+            $$ = *multiply(&$1, &$3);
+        }
+    |
+        expression
+        YOUNGER
+        expression
+        {
+            $$ = *young(&$1, &$3);
+        }
+    |
+        expression
+        OLDER
+        expression
+        {
+            $$ = *old(&$1, &$3);
+        }
+    |
+        expression
+        '/'
+        expression
+        {
+            $$ = *divide(&$1, &$3);
+        }
+    |
+        expression
+        '%'
+        expression
+        {
+            $$ = *modulo(&$1, &$3);
+        }
+    |
+        '-'
+        expression          %prec '!'
+        {
+            $$ = *negate(&$2);
+        }
+    |
+        INC
+        expression
+        {
+            $$ = *incdec(pre_op, op_inc, &$2);
+        }
+    |
+        expression
+        INC
+        {
+            $$ = *incdec(post_op, op_inc, &$1);
+        }
+    |
+        DEC
+        expression
+        {
+            $$ = *incdec(pre_op, op_dec, &$2);
+        }
+    |
+        expression
+        DEC
+        {
+            $$ = *incdec(post_op, op_dec, &$1);
+        }
+    |
+        '+'
+        expression          %prec '!'
+        {
+            $$ = $2;
+        }
+    |
+        '~'
+        expression          %prec '!'
+        {
+            $$ = *bnot(&$2);
+        }
+    |
+        '!'
+        expression
+        {
+            $$ = *not_boolean(&$2);
+        }
+    |
+        '('
+        _casttype
+        ')'
+        expression         %prec '!'
+        {
+            $$ = *cast($2.type, &$4);
+        }
+    |
+        _string
+        {
+            $$ = *stackframe(e_str | e_const);
+        }
+    |
+        NUMBER
+        {
+            $$ = *stackframe(e_int | e_const);
+        }
+    |
+        '('
+        expression
+        closepar
+        {
+            $$ = $2;
+        }
+    |
+        _func_or_var
+    |
+        '`'
+        expression
+        _backtick
+        {
+            $$ = *onearg(f_backtick, &$2);
+        }
+    ;

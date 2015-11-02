@@ -2,9 +2,6 @@
 
 ESTRUC_ *ternary(ESTRUC_ *cond, ESTRUC_ *ifTrue, ESTRUC_ *ifFalse)
 {
-//    register size_t len;
-//    unsigned *list;
-
     if ((ifTrue->type & ifFalse->type & ALLTYPES) == 0)
     {
         semantic(gp_typeConflict, "?:");

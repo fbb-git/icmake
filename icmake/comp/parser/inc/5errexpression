@@ -1,0 +1,9 @@
+err_expression:
+    {
+        gp_parse_error = err_in_expression;
+    }
+    expression
+    {
+        $$ = $2;
+    }
+;

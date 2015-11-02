@@ -1,0 +1,15 @@
+#!/bin/bash
+
+cd parser/inc
+
+files=`ls | grep -v build`
+
+for file in $files
+do
+    if [ $file -nt "../grammar" ] ; then
+        cat $files > ../grammar
+        exit 0
+    fi
+done
+
+    

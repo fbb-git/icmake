@@ -1,0 +1,76 @@
+_partype:
+    type_of_var
+    enterid
+    {
+        ++gp_nParams;
+    }
+;
+
+_pars:
+    _pars
+    comma
+    _partype
+|
+    _partype
+;
+
+_opt_parlist:
+    _pars
+|
+    /* empty */
+;
+
+_local_list:
+    type_of_var
+    vardefs                         /* + semicol, initialization code */
+    {
+        $$ = $2;
+    }
+;
+
+_locals:
+    _locals
+    _local_list                         /* type + variables */
+    {
+        $$ = *catcode(&$1, &$2);        /* cat initialization code */
+    }            
+|
+    _local_list                         /* initialization code of 1st var */
+;
+                                            /* M */
+
+_opt_locals:
+     _locals                             /* initialization code */
+ |
+     zeroframe                           /* empty init. code */
+ ;
+
+_funvars:
+    openpar
+    _opt_parlist
+    ')'
+    openbrace
+    _opt_locals
+    {
+        make_frame();
+        outbin($5.code, $5.codelen);
+    }
+;
+
+_funid:
+    IDENTIFIER
+    {
+        open_fun();
+    }
+;
+
+
+funcdef:
+    _funid                          /* name of the function */
+    _funvars                         /* returns init code */
+    statements
+    closebrace
+    {
+        close_fun(&$3);
+    }
+;

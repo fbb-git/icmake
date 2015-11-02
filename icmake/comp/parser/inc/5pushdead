@@ -1,0 +1,5 @@
+pushdead:
+    {
+        push_dead();                    /* set new dead-level */
+    }
+;

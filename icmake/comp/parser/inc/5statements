@@ -1,0 +1,9 @@
+statements:
+    statements
+    statement
+    {
+        $$ = *cat_stmnt(&$1, &$2);
+    }
+|
+    zeroframe
+;

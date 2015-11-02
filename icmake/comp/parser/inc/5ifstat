@@ -1,0 +1,30 @@
+_if:
+    IF
+    nesting
+;
+
+_else:
+    ELSE
+    statement
+    {
+        $$ = $2;
+    }
+|
+    zeroframe
+;
+
+if_stat:
+    _if
+    openpar
+    err_expression
+    closepar
+    statement
+    popdead
+    pushdead
+    _else
+    popdead
+    {
+        $$ = *if_stmnt(&$3, &$5, &$8);
+    }
+;
+

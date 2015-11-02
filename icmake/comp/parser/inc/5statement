@@ -1,0 +1,37 @@
+_stm:
+    compound
+|
+    ';'
+    zeroframe
+    {
+        $$ = $1;
+    }
+|
+    expr_code
+    semicol
+|
+    while_stat
+|
+    if_stat
+|
+    for_stat
+|
+    return_stat
+    semicol
+|
+    break_stat
+    semicol
+|
+    continue_stat
+    semicol
+|
+    error
+    ok
+;
+
+statement:
+    _stm
+    {
+        g_sem_err = 0;
+    }
+;

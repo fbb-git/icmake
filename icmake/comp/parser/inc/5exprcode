@@ -1,0 +1,6 @@
+expr_code:
+    err_expression
+    {
+        $$ = *expr_stmnt(&$1);
+    }
+;

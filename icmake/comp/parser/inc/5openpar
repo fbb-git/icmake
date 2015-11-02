@@ -1,0 +1,6 @@
+openpar:
+    {
+        gp_parse_error = err_openpar_expected;
+    }
+    '('
+;

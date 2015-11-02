@@ -108,129 +108,142 @@
 %%
 
 input:
-        input
-        def_var_or_fun
-    |
-        def_var_or_fun
-    ;
+    input
+    def_var_or_fun
+|
+    def_var_or_fun
+;
 
 args:
-        args
-        comma
-        err_expression
-        {
-            $$ = *multargs(&$1, &$3);
-        }
-    |
-        err_expression
-        {
-            $$ = *firstarg(&$1);
-        }
-    ;
-
+    args
+    comma
+    err_expression
+    {
+        $$ = *multargs(&$1, &$3);
+    }
+|
+    err_expression
+    {
+        $$ = *firstarg(&$1);
+    }
+;
 break_ok:
-        {
-            gp_breakOK++;
-        }
-    ;
-
+    {
+        gp_breakOK++;
+    }
+;
 break_stat:
-        BREAK
-        {
-            $$ = *break_stmnt();
-        }
-    ;
-
-continue_stat:
-        CONTINUE
-        {
-            $$ = *continue_stmnt();
-        }
-    ;
-
-casttype:
-        INT
-    |
-        LIST
-    |
-        STRINGTYPE
-    ;
-
-backtick:   {gp_parse_error = err_backtick_expected; }     '`' ;
-closebrace: {gp_parse_error = err_closebrace_expected; }   '}' ;
-closepar:   {gp_parse_error = err_closepar_expected; }     ')' ;
-comma:      {gp_parse_error = err_comma_expected; }        ',' ;
-
-comma_arglist:
-        ','
-        args
-        {
-            $$ = $2;
-        }
-    |
-        zeroframe
-    ;
-
-comma_expr:
-        ','
-        err_expression
-        {
-            $$ = $2;
-        }
-    |
-        zeroframe
-    ;
-
+    BREAK
+    {
+        $$ = *break_stmnt();
+    }
+;
+closebrace: 
+    {
+        gp_parse_error = err_closebrace_expected;
+    }                       /* '{' for matching */
+    '}' 
+;
+closepar:   
+    {
+        gp_parse_error = err_closepar_expected; 
+    }
+    ')' 
+;
+comma:      
+    {
+        gp_parse_error = err_comma_expected; 
+    }        
+    ',' 
+;
 compound:
-        '{'                                 /* } (for matching) */
-        statements
-        closebrace
-        {
-            $$ = $2;
-        }
-    ;
+    '{'                                 /* } (for matching) */
+    statements
+    closebrace
+    {
+        $$ = $2;
+    }
+;
+continue_stat:
+    CONTINUE
+    {
+        $$ = *continue_stmnt();
+    }
+;
+_voidtype:
+    VOID
+    {
+        gp_varType = 0;
+    }
+;
 
 def_var_or_fun:
-        type_of_var         /* varType  */
-        var_or_fun
-    |
-        voidtype
-        funcdef
-    ;
-
-else_tail:
-        ELSE
-        statement
-        {
-            $$ = $2;
-        }
-    |
-        zeroframe
-    ;
+    type_of_var         /* varType  */
+    var_or_fun
+|
+    _voidtype
+    funcdef
+;
 
 enterid:
-        IDENTIFIER
-        {
-            entervar();
-        }
-    ;
+    IDENTIFIER
+    {
+        entervar();
+    }
+;
+err_expression:
+    {
+        gp_parse_error = err_in_expression;
+    }
+    expression
+    {
+        $$ = $2;
+    }
+;
+expr_code:
+    err_expression
+    {
+        $$ = *expr_stmnt(&$1);
+    }
+;
+_casttype:
+    INT
+|
+    LIST
+|
+    STRINGTYPE
+;
 
-entervarid:
-    enterid
+_string:
+    _string
+    STRING
+    {                                       /* catenate the new string */
+        g_stringbuf = xstrcat(g_stringbuf, g_lexstring);
+    }
+|
+    STRING
+    {
+        free(g_stringbuf);                  /* free former string */
+        g_stringbuf = xstrdup(g_lexstring); /* duplicate initial string */
+    }
+;
+
+_func_or_var:
+    function
+    closepar
+|
+    IDENTIFIER
     {
         $$ = *fetchvar();
     }
 ;
 
-err_expression:
-        {
-            gp_parse_error = err_in_expression;
-        }
-        expression
-        {
-            $$ = $2;
-        }
-    ;
+_backtick:   
+    {
+        gp_parse_error = err_backtick_expected;
+    }
+    '`' 
+;
 
 expression:
         expression
@@ -516,14 +529,14 @@ expression:
         }
     |
         '('
-        casttype
+        _casttype
         ')'
         expression         %prec '!'
         {
             $$ = *cast($2.type, &$4);
         }
     |
-        string
+        _string
         {
             $$ = *stackframe(e_str | e_const);
         }
@@ -540,189 +553,604 @@ expression:
             $$ = $2;
         }
     |
-        func_or_var
+        _func_or_var
     |
         '`'
         expression
-        backtick
+        _backtick
         {
             $$ = *onearg(f_backtick, &$2);
         }
     ;
+_for:
+    FOR
+    nesting
+;
 
-expr_code:
-        err_expression
-        {
-            $$ = *expr_stmnt(&$1);
-        }
-    ;
+_expr_list:
+    _expr_list
+    ','
+    expr_code
+    {
+        $$ = *catcode(&$1, &$3);
+    }
+|
+    expr_code
+;
 
-expr_list:
-        expr_list
-        ','
-        expr_code
-        {
-            $$ = *catcode(&$1, &$3);
-        }
-    |
-        expr_code
-    ;
+_opt_expr_list:
+    _expr_list
+|
+    zeroframe
+;
 
-for:
-        FOR
-        nesting
-    ;
+_opt_expression:
+    err_expression
+|
+    {
+        $$ = *stackframe(e_int | e_const);
+        $$.evalue = 1;
+    }
+;
 
 for_stat:
-        for
-        openpar
-        opt_expr_list       /* $3: init */
-        semicol
-        opt_expression      /* $5: cond */
-        semicol
-        opt_expr_list       /* $7 inc   */
-        closepar
-        break_ok
-        statement           /* $10 stmnt    */
-        popdead
-        {
-            $$ = *for_stmnt(&$3, &$5, &$7, &$10);
-        }
-    ;
+    _for
+    openpar
+    _opt_expr_list      /* $3: init */
+    semicol
+    _opt_expression     /* $5: cond */
+    semicol
+    _opt_expr_list      /* $7 inc   */
+    closepar
+    break_ok
+    statement           /* $10 stmnt    */
+    popdead
+    {
+        $$ = *for_stmnt(&$3, &$5, &$7, &$10);
+    }
+;
+_partype:
+    type_of_var
+    enterid
+    {
+        ++gp_nParams;
+    }
+;
+
+_pars:
+    _pars
+    comma
+    _partype
+|
+    _partype
+;
+
+_opt_parlist:
+    _pars
+|
+    /* empty */
+;
+
+_local_list:
+    type_of_var
+    vardefs                         /* + semicol, initialization code */
+    {
+        $$ = $2;
+    }
+;
+
+_locals:
+    _locals
+    _local_list                         /* type + variables */
+    {
+        $$ = *catcode(&$1, &$2);        /* cat initialization code */
+    }            
+|
+    _local_list                         /* initialization code of 1st var */
+;
+                                            /* M */
+
+_opt_locals:
+     _locals                             /* initialization code */
+ |
+     zeroframe                           /* empty init. code */
+ ;
+
+_funvars:
+    openpar
+    _opt_parlist
+    ')'
+    openbrace
+    _opt_locals
+    {
+        make_frame();
+        outbin($5.code, $5.codelen);
+    }
+;
+
+_funid:
+    IDENTIFIER
+    {
+        open_fun();
+    }
+;
+
 
 funcdef:
-        funid                           /* name of the function */
-        funvars                         /* returns init code */
-        statements
-        closebrace
-        {
-            close_fun(&$3);
-        }
-    ;
+    _funid                          /* name of the function */
+    _funvars                         /* returns init code */
+    statements
+    closebrace
+    {
+        close_fun(&$3);
+    }
+;
+_zero_arg_funs:
+    GETCH
+|
+    GETPID
+|
+    GETS
+;
 
-func_or_var:
-        function
-        closepar
-    |
-        IDENTIFIER
-        {
-            $$ = *fetchvar();
-        }
-    ;
+_one_arg_funs:
+    ASCII
+|
+    SIZEOFLIST
+|
+    EXISTS
+|
+    M_ECHO
+|
+    CMD_TAIL
+|
+    CMD_HEAD
+|
+    ARG_HEAD
+|
+    ARG_TAIL
+|
+    G_BASE
+|
+    G_PATH
+|
+    G_EXT
+|
+    G_DEXT
+|
+    PUTENV
+|
+    GETENV
+|
+    STRLEN
+|
+    STRUPR
+|
+    STRLWR
+|
+    TRIM
+|
+    TRIMLEFT
+|
+    TRIMRIGHT
+;
+
+_two_arg_funs:
+    C_EXT                               /* string, string */
+|
+    C_BASE
+|
+    C_PATH
+|
+    ELEMENT                             /* int, list | int, string */
+|
+    FGETS                               /* list fgets(string, int) */
+|
+    FIELDS                              /* string, string */
+|
+    STRFIND                              /* string, string */
+;
+
+_optint_string:
+    STAT
+|
+    CHDIR
+|
+    SYSTEM
+;
+
+_comma_expr:
+    ','
+    err_expression
+    {
+        $$ = $2;
+    }
+|
+    zeroframe
+;
+
+_optint_special:
+    EXEC                                /* optional int allowed */
+|
+    EXECUTE
+;
+
+_comma_arglist:
+    ','
+    args
+    {
+        $$ = $2;
+    }
+|
+    zeroframe
+;
+
+_opt_arglist:
+    args
+|
+    zeroframe
+;
+
+_funname:
+    IDENTIFIER
+    {
+        $$.evalue = fetchfun();
+    }
+;
 
 function:
-        zero_arg_funs                       /* getch() or gets() */
-        openpar
-        {
-            $$ = *zeroargs($1.type);
-        }
+    _zero_arg_funs                       /* getch() or gets() */
+    openpar
+    {
+        $$ = *zeroargs($1.type);
+    }
+|
+    _one_arg_funs
+    openpar
+    err_expression
+    {
+        $$ = *onearg($1.type, &$3);
+    }
+|
+    _two_arg_funs
+    openpar
+    err_expression
+    comma
+    err_expression
+    {
+        $$ = *twoargs($1.type, &$3, &$5);
+    }
+|
+    SUBSTR                              /* three arg function */
+    openpar
+    err_expression
+    comma
+    err_expression
+    comma
+    err_expression
+    {
+        $$ = *threeargs($1.type, &$3, &$5, &$7);
+    }
+|
+    _optint_string                      /* CHDIR, SYSTEM, STAT */
+    openpar
+    err_expression                      /* int inserted if string */
+    _comma_expr                         /* may be string if first == int */
+    {
+        $$ = *optint_string($1.type, &$3, &$4);
+    }
+|
+    _optint_special                     /* EXEC, EXECUTE */
+    openpar                             /* alternatives: */
+    err_expression                      /* fun(int, string, ...) */
+    _comma_arglist                      /* fun(string, ...)       */
+    {
+        $$ = *optint_special($1.type, &$3, &$4);
+    }
+|
+    PRINTF
+    openpar
+    args                                /* first may be anything */
+    {
+        $$ = *specials(f_printf, &$3);
+    }
+|
+    FPRINTF
+    openpar
+    args                                /* argcount >= 2 required */
+    {
+        $$ = *exec_fprintf($1.type, &$3);
+    }
+|
+    STRFORMAT
+    openpar
+    args                                /* first may be anything */
+    {
+        $$ = *specials(f_strformat, &$3);
+    }
+|
+    _funname
+    openpar
+    _opt_arglist
+    {
+        $$ = *callfun($1.evalue, &$3);
+    }
+|
+    makelist
+;
+_if:
+    IF
+    nesting
+;
+
+_else:
+    ELSE
+    statement
+    {
+        $$ = $2;
+    }
+|
+    zeroframe
+;
+
+if_stat:
+    _if
+    openpar
+    err_expression
+    closepar
+    statement
+    popdead
+    pushdead
+    _else
+    popdead
+    {
+        $$ = *if_stmnt(&$3, &$5, &$8);
+    }
+;
+
+_makelist_expr:
+    MAKELIST
+    openpar
+    err_expression
+    {
+        $$ = $3;
+    }
+;
+
+_makelist_normal:
+    {
+        $$ = *stackframe(e_int | e_const);
+        $$.evalue = O_FILE;
+    }
+;
+
+_old_young:
+    OLDER
+|
+    YOUNGER
+;
+
+_older_younger:
+    {
+        gp_parse_error = err_older_younger; 
+    }
+    _old_young
+    {
+        $$ = $2;
+    }
+;
+
+makelist:
+    _makelist_expr                  /* makelist(expr) */
+    _makelist_normal                /* returns O_FILE expression */
+    {
+        $$ = *makelist
+             (
+                 multargs
+                 (
+                     firstarg(&$2),     /* O_FILE is passed */
+                     &$1                /* expression is passed */
+                 ),
+                 op_hlt                 /* not op_younger or op_older */
+             );
+    }
+|
+                                        /* makelist(expr, expr) */
+    _makelist_expr
+    comma
+    err_expression
+    {
+        $$ = *makelist
+             (
+                 multargs
+                 (
+                     firstarg(&$1),     /* fileattribute is passed */
+                     &$3                /* expression is passed */
+                 ),
+                 op_hlt                 /* not op_younger or op_older */
+             );
+    }
+|
+    _makelist_expr                       /* makelist(expr, older, expr) */
+    comma
+    _older_younger
+    comma
+    err_expression
+    _makelist_normal
+    {
+        $$ = *makelist
+             (
+                multargs
+                (
+                    multargs
+                    (
+                        firstarg(&$6),  /* O_FILE   is passed */
+                        &$1             /* 1st expression is passed */
+                    ),
+                    &$5                 /* 2nd expression is passed */
+                 ),
+                 $3.type                /* older/younger */
+             );
+    }
+|
+    _makelist_expr                 /* makelist(expr, expr, older, expr) */
+    comma
+    err_expression
+    comma
+    _older_younger
+    comma
+    err_expression
+    {
+        $$ = *makelist
+             (
+                multargs
+                (
+                    multargs
+                    (
+                        firstarg(&$1),  /* attribute is passed */
+                        &$3             /* 2nd expression is passed */
+                    ),
+                    &$7                 /* 3rd expression is passed */
+                 ),
+                 $5.type                /* older/younger */
+             );
+    }
+;
+nesting:
+    pushdead
+    {
+        gp_nestLevel++;
+    }
+;
+ok:
+    ';'
+    {
+        yyerrok;
+    }
+;
+openbrace:
+    {
+        gp_parse_error = err_openbrace_expected;
+    }    
+    '{'                             /* } (for matching) */
+;
+
+openpar:
+    {
+        gp_parse_error = err_openpar_expected;
+    }
+    '('
+;
+popdead:
+    {
+        pop_dead();
+    }
+;
+pushdead:
+    {
+        push_dead();                    /* set new dead-level */
+    }
+;
+_return_tail:
+    err_expression
+|
+    zeroframe
+;
+
+_leave:
+    RETURN
+|
+    EXIT
+;
+
+return_stat:
+    _leave
+    _return_tail
+    {
+        $$ = *return_stmnt($1.type, &$2);
+    }
+;
+
+
+semicol:    
+    {
+        gp_parse_error = err_semicol_expected; 
+    }      
+    ';' 
+;
+_stm:
+    compound
+|
+    ';'
+    zeroframe
+    {
+        $$ = $1;
+    }
+|
+    expr_code
+    semicol
+|
+    while_stat
+|
+    if_stat
+|
+    for_stat
+|
+    return_stat
+    semicol
+|
+    break_stat
+    semicol
+|
+    continue_stat
+    semicol
+|
+    error
+    ok
+;
+
+statement:
+    _stm
+    {
+        g_sem_err = 0;
+    }
+;
+statements:
+    statements
+    statement
+    {
+        $$ = *cat_stmnt(&$1, &$2);
+    }
+|
+    zeroframe
+;
+_varType:
+        INT
     |
-        one_arg_funs
-        openpar
-        err_expression
-        {
-            $$ = *onearg($1.type, &$3);
-        }
+        STRINGTYPE
     |
-        two_arg_funs
-        openpar
-        err_expression
-        comma
-        err_expression
-        {
-            $$ = *twoargs($1.type, &$3, &$5);
-        }
-    |
-        three_arg_funs
-        openpar
-        err_expression
-        comma
-        err_expression
-        comma
-        err_expression
-        {
-            $$ = *threeargs($1.type, &$3, &$5, &$7);
-        }
-    |
-        optint_string                       /* CHDIR, SYSTEM, STAT */
-        openpar
-        err_expression                      /* int inserted if string */
-        comma_expr                          /* may be string if first == int */
-        {
-            $$ = *optint_string($1.type, &$3, &$4);
-        }
-    |
-        optint_special                      /* EXEC, EXECUTE */
-        openpar                             /* alternatives: */
-        err_expression                      /* fun(int, string, ...) */
-        comma_arglist                       /* fun(string, ...)       */
-        {
-            $$ = *optint_special($1.type, &$3, &$4);
-        }
-    |
-        PRINTF
-        openpar
-        args                                /* first may be anything */
-        {
-            $$ = *specials(f_printf, &$3);
-        }
-    |
-        FPRINTF
-        openpar
-        args                                /* argcount >= 2 required */
-        {
-            $$ = *exec_fprintf($1.type, &$3);
-        }
-    |
-        STRFORMAT
-        openpar
-        args                                /* first may be anything */
-        {
-            $$ = *specials(f_strformat, &$3);
-        }
-    |
-       funname
-        openpar
-        opt_arglist
-        {
-            $$ = *callfun($1.evalue, &$3);
-        }
-    |
-        makelist
+        LIST
     ;
 
-funid:
-        IDENTIFIER
-        {
-            open_fun();
-        }
-    ;
+type_of_var:
+    _varType
+    {
+        gp_parse_error = err_identifier_expected;
+        gp_varType = $1.type;
+    }
+;
+_entervarid:
+    enterid
+    {
+        $$ = *fetchvar();
+    }
+;
 
-funname:
-        IDENTIFIER
-        {
-            $$.evalue = fetchfun();
-        }
-    ;
-
-funvars:
-        openpar
-        opt_parlist
-        ')'
-        openbrace
-        opt_locals
-
-        {
-            make_frame();
-            outbin($5.code, $5.codelen);
-        }
-    ;
-
-idexpr:
+_idexpr:
     enterid
     zeroframe                           /* no explicit initialization */
 |
-    entervarid
+    _entervarid
     '='
     expression
     {
@@ -730,423 +1158,32 @@ idexpr:
     }        
 ;
 
-if:
-        IF
-        nesting
-    ;
-
-if_stat:
-        if
-        openpar
-        err_expression
-        closepar
-        statement
-        popdead
-        pushdead
-        else_tail
-        popdead
-        {
-            $$ = *if_stmnt(&$3, &$5, &$8);
-        }
-    ;
-
-leave_key:
-        RETURN
-    |
-        EXIT
-    ;
-
-local_list:
-        type_of_var
-        vardefs                         /* + semicol, initialization code */
-        {
-            $$ = $2;
-        }
-    ;
-
-locals:
-    locals
-    local_list                          /* type + variables */
+_varnames:
+    _varnames
+    comma
+    _idexpr
     {
-        $$ = *catcode(&$1, &$2);        /* cat initialization code */
+        $$ = *catcode(&$1, &$3);    /* catenate variable    */
+                                    /* initialization code  */
     }            
 |
-    local_list                          /* initialization code of 1st var */
-;
-                                            /* M */
-makelist:
-                                             /* makelist(expr) */
-        makelist_expr
-        makelist_normal                     /* returns O_FILE expression */
-        {
-            $$ = *makelist
-                 (
-                     multargs
-                     (
-                         firstarg(&$2),     /* O_FILE is passed */
-                         &$1                /* expression is passed */
-                     ),
-                     op_hlt                 /* not op_younger or op_older */
-                 );
-        }
-    |
-                                            /* makelist(expr, expr) */
-        makelist_expr
-        comma
-        err_expression
-        {
-            $$ = *makelist
-                 (
-                     multargs
-                     (
-                         firstarg(&$1),     /* fileattribute is passed */
-                         &$3                /* expression is passed */
-                     ),
-                     op_hlt                 /* not op_younger or op_older */
-                 );
-        }
-    |
-        makelist_expr                       /* makelist(expr, older, expr) */
-        comma
-        older_younger
-        comma
-        err_expression
-        makelist_normal
-        {
-            $$ = *makelist
-                 (
-                    multargs
-                    (
-                        multargs
-                        (
-                            firstarg(&$6),  /* O_FILE   is passed */
-                            &$1             /* 1st expression is passed */
-                        ),
-                        &$5                 /* 2nd expression is passed */
-                     ),
-                     $3.type                /* older/younger */
-                 );
-        }
-    |
-        makelist_expr                 /* makelist(expr, expr, older, expr) */
-        comma
-        err_expression
-        comma
-        older_younger
-        comma
-        err_expression
-        {
-            $$ = *makelist
-                 (
-                    multargs
-                    (
-                        multargs
-                        (
-                            firstarg(&$1),  /* attribute is passed */
-                            &$3             /* 2nd expression is passed */
-                        ),
-                        &$7                 /* 3rd expression is passed */
-                     ),
-                     $5.type                /* older/younger */
-                 );
-        }
-    ;
-
-makelist_expr:
-        MAKELIST
-        openpar
-        err_expression
-        {
-            $$ = $3;
-        }
-    ;
-
-makelist_normal:
-        {
-            $$ = *stackframe(e_int | e_const);
-            $$.evalue = O_FILE;
-        }
-    ;
-
-nesting:
-        pushdead
-        {
-            gp_nestLevel++;
-        }
-    ;
-
-ok:
-    ';'
-        {
-            yyerrok;
-        }
-    ;
-
-older_younger:
-        {gp_parse_error = err_older_younger; }
-        old_young
-        {
-            $$ = $2;
-        }
-    ;
-
-old_young:
-        OLDER
-    |
-        YOUNGER
-    ;
-
-one_arg_funs:
-        ASCII
-    |
-        SIZEOFLIST
-    |
-        EXISTS
-    |
-        M_ECHO
-    |
-        CMD_TAIL
-    |
-        CMD_HEAD
-    |
-        ARG_HEAD
-    |
-        ARG_TAIL
-    |
-        G_BASE
-    |
-        G_PATH
-    |
-        G_EXT
-    |
-        G_DEXT
-    |
-        PUTENV
-    |
-        GETENV
-    |
-        STRLEN
-    |
-        STRUPR
-    |
-        STRLWR
-    |
-        TRIM
-    |
-        TRIMLEFT
-    |
-        TRIMRIGHT
-   ;
-
-openpar:    {gp_parse_error = err_openpar_expected; }      '(' ;
-openbrace:  {gp_parse_error = err_openbrace_expected; }    '{' ;
-                                                     /* } for matching */
-opt_arglist:
-        args
-    |
-        zeroframe
-    ;
-
-opt_expression:
-        err_expression
-    |
-        {
-            $$ = *stackframe(e_int | e_const);
-            $$.evalue = 1;
-        }
-    ;
-
-opt_expr_list:
-        expr_list
-    |
-        zeroframe
-    ;
-
-optint_special:
-        EXEC                                /* optional int allowed */
-    |
-        EXECUTE
-    ;
-
-optint_string:
-        STAT
-    |
-        CHDIR
-    |
-        SYSTEM
-    ;
-
-opt_locals:
-         locals                              /* initialization code */
-     |
-         zeroframe                           /* empty init. code */
-     ;
-
-opt_parlist:
-        pars
-    |
-    ;
-
-pars:
-        pars
-        comma
-        partype
-    |
-        partype
-    ;
-
-partype:
-        type_of_var
-        enterid
-        {
-            ++gp_nParams;
-        }
-    ;
-
-popdead:
-        {
-            pop_dead();
-        }
-    ;
-
-pushdead:
-        {
-            push_dead();                    /* set new dead-level */
-        }
-    ;
-
-return_stat:
-    leave_key
-    return_tail
-    {
-        $$ = *return_stmnt($1.type, &$2);
-    }
-;
-
-return_tail:
-        err_expression
-    |
-        zeroframe
-;
-
-semicol:    {gp_parse_error = err_semicol_expected; }      ';' ;
-
-statement:
-    stm
-    {
-        g_sem_err = 0;
-    }
-;
-
-statements:
-        statements
-        statement
-        {
-            $$ = *cat_stmnt(&$1, &$2);
-        }
-    |
-        zeroframe
-    ;
-
-stm:
-        compound
-    |
-        ';'
-        zeroframe
-        {
-            $$ = $1;
-        }
-    |
-        expr_code
-        semicol
-    |
-        while_stat
-    |
-        if_stat
-    |
-        for_stat
-    |
-        return_stat
-        semicol
-    |
-        break_stat
-        semicol
-    |
-        continue_stat
-        semicol
+    _idexpr
 |
-        error
-        ok
-    ;
-
-string:
-    string
-    STRING
+    error
+    ok
+    zeroframe                       /* Empty stmnt  */
     {
-        g_stringbuf = xstrcat(g_stringbuf, g_lexstring);/* catenate the new string */
-    }
-|
-    STRING
-    {
-        free(g_stringbuf);                    /* free former string */
-        g_stringbuf = xstrdup(g_lexstring);     /* duplicate initial string */
+        $$ = $3;
     }
 ;
-
-two_arg_funs:
-        C_EXT                               /* string, string */
-    |
-        C_BASE
-    |
-        C_PATH
-    |
-        ELEMENT                             /* int, list | int, string */
-    |
-        FGETS                               /* list fgets(string, int) */
-    |
-        FIELDS                              /* string, string */
-    |
-        STRFIND                              /* string, string */
-    ;
-
-three_arg_funs:
-    SUBSTR
-;
-        
-type_of_var:
-        varType
-        {
-            gp_parse_error = err_identifier_expected;
-            gp_varType = $1.type;
-        }
-    ;
 
 vardefs:
-    varnames
+    _varnames
     semicol
     {
         $$ = $1;                    /* initialization code */
     }
 ;
-
-varnames:
-        varnames
-        comma
-        idexpr
-        {
-            $$ = *catcode(&$1, &$3);    /* catenate variable    */
-                                        /* initialization code  */
-        }            
-    |
-        idexpr
-    |
-        error
-        ok
-        zeroframe                       /* Empty stmnt  */
-        {
-            $$ = $3;
-        }
-    ;
 
 var_or_fun:
         vardefs
@@ -1156,53 +1193,29 @@ var_or_fun:
     |
         funcdef
     ;
-
-varType:
-        INT
-    |
-        STRINGTYPE
-    |
-        LIST
-    ;
-
-voidtype:
-        VOID
-        {
-            gp_varType = 0;
-        }
-    ;
-
-while:
-        WHILE
-        nesting
-    ;
+_while:
+    WHILE
+    nesting
+;
 
 while_stat:
-        while
-        openpar
-        err_expression
-        closepar
-        break_ok
-        statement
-        popdead
-        {
-            $$ = *while_stmnt(&$3, &$6, 1);
-        }
-    ;
-
-zero_arg_funs:
-        GETCH
-    |
-        GETPID
-    |
-        GETS
-    ;
-
+    _while
+    openpar
+    err_expression
+    closepar
+    break_ok
+    statement
+    popdead
+    {
+        $$ = *while_stmnt(&$3, &$6, 1);
+    }
+;
 zeroframe:
-        {
-            $$ = *stackframe(0);
-        }
-    ;
+    {
+        $$ = *stackframe(0);
+    }
+;
+
 %%
 
 int yywrap(void)

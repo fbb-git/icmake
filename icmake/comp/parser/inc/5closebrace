@@ -1,0 +1,6 @@
+closebrace: 
+    {
+        gp_parse_error = err_closebrace_expected;
+    }                       /* '{' for matching */
+    '}' 
+;

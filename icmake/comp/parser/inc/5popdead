@@ -1,0 +1,5 @@
+popdead:
+    {
+        pop_dead();
+    }
+;

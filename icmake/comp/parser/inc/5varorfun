@@ -1,0 +1,8 @@
+var_or_fun:
+        vardefs
+        {
+            g_init = *catcode(&g_init, &$1);
+        }
+    |
+        funcdef
+    ;

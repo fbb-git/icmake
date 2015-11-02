@@ -1,0 +1,6 @@
+closepar:   
+    {
+        gp_parse_error = err_closepar_expected; 
+    }
+    ')' 
+;

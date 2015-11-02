@@ -1,0 +1,5 @@
+break_ok:
+    {
+        gp_breakOK++;
+    }
+;

@@ -1,0 +1,40 @@
+
+%right
+    '='
+    AND_IS                                  /* binary-assignment */
+    OR_IS
+    XOR_IS
+    SHL_IS
+    SHR_IS
+
+    DIV_IS                                  /* arithmetic assignment */
+    MINUS_IS
+    MUL_IS
+    MOD_IS
+    PLUS_IS
+
+%right '?' ':'
+
+%left OR
+
+%left AND
+
+%left '|'
+
+%left '^'
+
+%left '&'
+
+%left EQUAL NOT_EQUAL
+
+%left '<' '>' SMALLER_EQUAL GREATER_EQUAL OLDER YOUNGER
+
+%left SHL SHR
+
+%left '+' '-'
+
+%left '*' '/' '%'
+
+%right '!' INC DEC '~'
+
+%left '['

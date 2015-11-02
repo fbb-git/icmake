@@ -1,0 +1,21 @@
+_return_tail:
+    err_expression
+|
+    zeroframe
+;
+
+_leave:
+    RETURN
+|
+    EXIT
+;
+
+return_stat:
+    _leave
+    _return_tail
+    {
+        $$ = *return_stmnt($1.type, &$2);
+    }
+;
+
+

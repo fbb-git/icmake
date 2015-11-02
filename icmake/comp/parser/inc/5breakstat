@@ -1,0 +1,6 @@
+break_stat:
+    BREAK
+    {
+        $$ = *break_stmnt();
+    }
+;

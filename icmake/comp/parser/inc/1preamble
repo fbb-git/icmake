@@ -1,0 +1,6 @@
+%{
+    #include "../global.h"
+    #define YYSTYPE ESTRUC_
+    #include "parser.ih"
+%}
+

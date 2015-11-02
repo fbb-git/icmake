@@ -22,7 +22,7 @@ ESTRUC_ *if_stmnt(ESTRUC_ *cond, ESTRUC_ *trueStmnt, ESTRUC_ *falseStmnt)
         return falseStmnt;
     }
 
-    patchup_true(cond, 1);              /* patch to EOC */
+    patchup_true(cond, 1);              /* true dest: the end of cond */
 
     if (!falseStmnt->type)              /* no falsestmnt */
     {
@@ -30,6 +30,7 @@ ESTRUC_ *if_stmnt(ESTRUC_ *cond, ESTRUC_ *trueStmnt, ESTRUC_ *falseStmnt)
         return cond;
     }
 
+    
     gencode(trueStmnt, op_jmp, j_falselist);
 
     list = trueStmnt->falselist;        /* save the falselist */

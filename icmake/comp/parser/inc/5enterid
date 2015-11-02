@@ -1,0 +1,6 @@
+enterid:
+    IDENTIFIER
+    {
+        entervar();
+    }
+;

@@ -1,0 +1,6 @@
+nesting:
+    pushdead
+    {
+        gp_nestLevel++;
+    }
+;

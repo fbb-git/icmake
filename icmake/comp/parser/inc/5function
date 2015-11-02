@@ -1,0 +1,193 @@
+_zero_arg_funs:
+    GETCH
+|
+    GETPID
+|
+    GETS
+;
+
+_one_arg_funs:
+    ASCII
+|
+    SIZEOFLIST
+|
+    EXISTS
+|
+    M_ECHO
+|
+    CMD_TAIL
+|
+    CMD_HEAD
+|
+    ARG_HEAD
+|
+    ARG_TAIL
+|
+    G_BASE
+|
+    G_PATH
+|
+    G_EXT
+|
+    G_DEXT
+|
+    PUTENV
+|
+    GETENV
+|
+    STRLEN
+|
+    STRUPR
+|
+    STRLWR
+|
+    TRIM
+|
+    TRIMLEFT
+|
+    TRIMRIGHT
+;
+
+_two_arg_funs:
+    C_EXT                               /* string, string */
+|
+    C_BASE
+|
+    C_PATH
+|
+    ELEMENT                             /* int, list | int, string */
+|
+    FGETS                               /* list fgets(string, int) */
+|
+    FIELDS                              /* string, string */
+|
+    STRFIND                              /* string, string */
+;
+
+_optint_string:
+    STAT
+|
+    CHDIR
+|
+    SYSTEM
+;
+
+_comma_expr:
+    ','
+    err_expression
+    {
+        $$ = $2;
+    }
+|
+    zeroframe
+;
+
+_optint_special:
+    EXEC                                /* optional int allowed */
+|
+    EXECUTE
+;
+
+_comma_arglist:
+    ','
+    args
+    {
+        $$ = $2;
+    }
+|
+    zeroframe
+;
+
+_opt_arglist:
+    args
+|
+    zeroframe
+;
+
+_funname:
+    IDENTIFIER
+    {
+        $$.evalue = fetchfun();
+    }
+;
+
+function:
+    _zero_arg_funs                       /* getch() or gets() */
+    openpar
+    {
+        $$ = *zeroargs($1.type);
+    }
+|
+    _one_arg_funs
+    openpar
+    err_expression
+    {
+        $$ = *onearg($1.type, &$3);
+    }
+|
+    _two_arg_funs
+    openpar
+    err_expression
+    comma
+    err_expression
+    {
+        $$ = *twoargs($1.type, &$3, &$5);
+    }
+|
+    SUBSTR                              /* three arg function */
+    openpar
+    err_expression
+    comma
+    err_expression
+    comma
+    err_expression
+    {
+        $$ = *threeargs($1.type, &$3, &$5, &$7);
+    }
+|
+    _optint_string                      /* CHDIR, SYSTEM, STAT */
+    openpar
+    err_expression                      /* int inserted if string */
+    _comma_expr                         /* may be string if first == int */
+    {
+        $$ = *optint_string($1.type, &$3, &$4);
+    }
+|
+    _optint_special                     /* EXEC, EXECUTE */
+    openpar                             /* alternatives: */
+    err_expression                      /* fun(int, string, ...) */
+    _comma_arglist                      /* fun(string, ...)       */
+    {
+        $$ = *optint_special($1.type, &$3, &$4);
+    }
+|
+    PRINTF
+    openpar
+    args                                /* first may be anything */
+    {
+        $$ = *specials(f_printf, &$3);
+    }
+|
+    FPRINTF
+    openpar
+    args                                /* argcount >= 2 required */
+    {
+        $$ = *exec_fprintf($1.type, &$3);
+    }
+|
+    STRFORMAT
+    openpar
+    args                                /* first may be anything */
+    {
+        $$ = *specials(f_strformat, &$3);
+    }
+|
+    _funname
+    openpar
+    _opt_arglist
+    {
+        $$ = *callfun($1.evalue, &$3);
+    }
+|
+    makelist
+;

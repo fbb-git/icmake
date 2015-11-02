@@ -1,0 +1,8 @@
+compound:
+    '{'                                 /* } (for matching) */
+    statements
+    closebrace
+    {
+        $$ = $2;
+    }
+;

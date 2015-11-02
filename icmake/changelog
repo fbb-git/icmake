@@ -9,6 +9,18 @@ icmake (8.00.00)
     redefinition of the builtin function codes. Because of this existing .bim
     files should be recompiled from their .im source files
 
+  * Added the 'continue' statement/keyword to the flow constrol statements. It
+    can be used inside while and for statements.
+
+  * Added the ternary operator (?:) to the set of supported operators. 
+
+  * Global variable initialization can now use expression statements, not just
+    constant expressions.
+
+  * Fixed a bug in the printf family of functions: these functions now return
+    the number of printed arguments (as documented in icmake(1)'s man-page).
+
+
 
 icmake (7.23.02)
 

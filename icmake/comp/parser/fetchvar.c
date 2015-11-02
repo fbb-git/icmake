@@ -20,28 +20,20 @@ static ESTRUC_ ret;
 
 ESTRUC_ *fetchvar()
 {
-    register size_t
-        idx;
-    E_TYPE_
-        type = 0;
+    register size_t idx;
+    E_TYPE_ type = 0;
 
     ret = *stackframe(0);
-
-    if (gp_initialization)
-    {
-        semantic(gp_init_expr_not_const);
-        return &ret;
-    }
                                             /* not a local variable ? */
     if ((idx = looksym(&gp_local)) == gp_local.n_defined)
     {                                       /* not a global variable ? */
-        if ((idx = looksym(&g_globaltab)) == g_globaltab.n_defined)
+        if ((idx = looksym(&g_globaltab)) != g_globaltab.n_defined)
+            type = g_globaltab.symbol[idx].var.type;
+        else
         {
             idx = 0xffff;
             semantic("%s undefined", g_lexstring);
         }
-        else
-            type = g_globaltab.symbol[idx].var.type;
     }
     else
     {
@@ -57,5 +49,6 @@ ESTRUC_ *fetchvar()
         ret.evalue = idx;                /* set idx and type */
         ret.type =  type;
     }
+
     return &ret;                         /* return the frame */
 }

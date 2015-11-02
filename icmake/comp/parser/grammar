@@ -75,6 +75,8 @@
     MOD_IS
     PLUS_IS
 
+%right '?' ':'
+
 %left OR
 
 %left AND
@@ -112,7 +114,6 @@ input:
         def_var_or_fun
     ;
 
-                                            /* A */
 args:
         args
         comma
@@ -126,7 +127,7 @@ args:
             $$ = *firstarg(&$1);
         }
     ;
-                                            /* B */
+
 break_ok:
         {
             gp_breakOK++;
@@ -139,7 +140,7 @@ break_stat:
             $$ = *break_stmnt();
         }
     ;
-                                            /* C */
+
 continue_stat:
         CONTINUE
         {
@@ -188,7 +189,7 @@ compound:
             $$ = $2;
         }
     ;
-                                            /* D */
+
 def_var_or_fun:
         type_of_var         /* varType  */
         var_or_fun
@@ -196,7 +197,7 @@ def_var_or_fun:
         voidtype
         funcdef
     ;
-                                            /* E */
+
 else_tail:
         ELSE
         statement
@@ -343,6 +344,15 @@ expression:
         expression
         {
             $$ = *unequal(&$1, &$3);
+        }
+    |
+        expression
+        '?'
+        expression
+        ':'
+        expression
+        {
+            $$ = *ternary(&$1, &$3, &$5);
         }
     |
         expression
@@ -557,7 +567,7 @@ expr_list:
     |
         expr_code
     ;
-                                            /* F */
+
 for:
         FOR
         nesting
@@ -708,18 +718,14 @@ funvars:
         }
     ;
 
-                                            /* G */
-                                            /* H */
-                                            /* I */
 idexpr:
     enterid
     zeroframe                           /* no explicit initialization */
 |
     entervarid
-    initassign
+    '='
     expression
     {
-        gp_initialization = 0;
         $$ = *expr_stmnt(assign(&$1, &$3));    /* explicit initialization */
     }        
 ;
@@ -744,15 +750,6 @@ if_stat:
         }
     ;
 
-initassign:
-    '='
-    {
-        gp_initialization = 1;
-    }
-
-                                            /* J */
-                                            /* K */
-                                            /* L */
 leave_key:
         RETURN
     |
@@ -870,14 +867,14 @@ makelist_normal:
             $$.evalue = O_FILE;
         }
     ;
-                                             /* N */
+
 nesting:
         pushdead
         {
             gp_nestLevel++;
         }
     ;
-                                            /* O */
+
 ok:
     ';'
         {
@@ -1018,8 +1015,6 @@ pushdead:
         }
     ;
 
-                                            /* Q */
-                                            /* R */
 return_stat:
     leave_key
     return_tail
@@ -1033,7 +1028,7 @@ return_tail:
     |
         zeroframe
 ;
-                                            /* S */
+
 semicol:    {gp_parse_error = err_semicol_expected; }      ';' ;
 
 statement:
@@ -1098,7 +1093,6 @@ string:
     }
 ;
 
-                                        /* T */
 two_arg_funs:
         C_EXT                               /* string, string */
     |
@@ -1126,8 +1120,7 @@ type_of_var:
             gp_varType = $1.type;
         }
     ;
-                                            /* U */
-                                            /* V */
+
 vardefs:
     varnames
     semicol
@@ -1178,7 +1171,7 @@ voidtype:
             gp_varType = 0;
         }
     ;
-                                            /* W */
+
 while:
         WHILE
         nesting
@@ -1197,9 +1190,6 @@ while_stat:
         }
     ;
 
-                                            /* X */
-                                            /* Y */
-                                            /* Z */
 zero_arg_funs:
         GETCH
     |

@@ -1,55 +1,52 @@
 #include "parser.ih"
 
-ESTRUC_ *if_stmnt(ESTRUC_ *e, ESTRUC_ *s, ESTRUC_ *s2)
+ESTRUC_ *if_stmnt(ESTRUC_ *cond, ESTRUC_ *trueStmnt, ESTRUC_ *falseStmnt)
 {
-    register size_t
-        len;
-    unsigned
-        *list;
+    register size_t len;
+    unsigned *list;
 
-    gp_nestLevel--;                            /* reduce nesting level */
+    gp_nestLevel--;                     /* reduce nesting level */
 
-    etob(e);                                /* make links for E */
+    etob(cond);                         /* make links for cond */
 
-    if (test_type(e, e_const))              /* constant: either always/never */
+    if (test_type(cond, e_const))       /* consts: either always/never */
     {
-        discard(e);
-        if (e->evalue)                      /* S always executed */
+        discard(cond);
+        if (cond->evalue)               /* trueStmnt always executed */
         {
-            discard(s2);
-            return (s);
+            discard(falseStmnt);
+            return  trueStmnt;
         }
-        else                                /* S2 always executed */
-        {
-            discard(s);
-            return (s2);
-        }
+                                        /* falsestmnt always executed */
+        discard(trueStmnt);
+        return falseStmnt;
     }
 
-    patchup_true(e, 1);                     /* patch to EOC */
+    patchup_true(cond, 1);              /* patch to EOC */
 
-    if (!s2->type)                          /* no S2 */
+    if (!falseStmnt->type)              /* no falsestmnt */
     {
-        catcode(e, s);                      /* E = E ~ S */
-        return (e);
+        catcode(cond, trueStmnt);       /* cond = cond ~ trueStmnt */
+        return cond;
     }
 
-    gencode(s, op_jmp, j_falselist);
+    gencode(trueStmnt, op_jmp, j_falselist);
 
-    list = s->falselist;                    /* save the falselist */
-    len  = s->falselen;
+    list = trueStmnt->falselist;        /* save the falselist */
+    len  = trueStmnt->falselen;
 
-    addpatch(list, len, e->codelen);       /* increase the patch targets */
+    addpatch(list, len, cond->codelen); /* increase the patch targets */
 
-    s->falselen = 0;
+    trueStmnt->falselen = 0;
 
-    catcode(e, s);                          /* E = E ~ S */
-    patchup_false(e, 1);                   /* patch to EOC */
+    catcode(cond, trueStmnt);           /* cond = cond ~ trueStmnt */
+    patchup_false(cond, 1);             /* patch to EOC */
 
-    e->falselen = len;                      /* restore the falselist */
-    e->falselist = list;
+    cond->falselen = len;               /* restore the falselist */
+    cond->falselist = list;
 
-    catcode(e, s2);                         /* if .. else cat. */
+    catcode(cond, falseStmnt);          /* if .. else cat. */
 
-    return (e);                             /* if .. else return */
+    return cond;                        /* if .. else return */
 }
+

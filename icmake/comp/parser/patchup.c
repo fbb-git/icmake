@@ -2,9 +2,9 @@
 
 void patchup(INT8 *code, size_t len, unsigned *list, size_t listlen, int pos)
 {                                           /* list, listlen: list of */
-    register size_t idx;        /* offsets to patchup     */
+    register size_t idx;                    /* offsets to patchup     */
     register size_t beyond_jump;
-    char *cp;                                /* codepointer */
+    char *cp;                               /* codepointer */
 
     union
     {
@@ -30,8 +30,7 @@ void patchup(INT8 *code, size_t len, unsigned *list, size_t listlen, int pos)
                 than beyond_jump, as part of the jump instruction.
             */
 
-                                            /* determine the size of the jmp */
-        u.int16 = pos - beyond_jump;
+        u.int16 = pos - beyond_jump;        /* determine the size of the jmp */
 
         cp = (char *)code + beyond_jump - 2;/* point to codebytes to patch */
 

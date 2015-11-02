@@ -267,8 +267,8 @@ manpagesection(PREDEFINED SYMBOLS)
     )
 manpagesection(OPERATORS)
 
-    All bf(C) operators, except for the ternary operator, are supported,
-operating like their bf(C) counterparts on tt(int) variables and/or values.
+    All bf(C) operators are supported, operating like their bf(C) counterparts
+on tt(int) variables and/or values.
 
     Additionally, for tt(string) type variables and/or values the following
 operators are available:

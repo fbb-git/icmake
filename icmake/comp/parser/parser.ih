@@ -52,7 +52,6 @@ typedef enum
 } JMP_COND_;
 
 extern int      gp_parse_error;
-extern int      gp_initialization;
 extern size_t   gp_breakOK;
 extern size_t   gp_nestLevel;
 extern size_t   gp_nParams;
@@ -130,6 +129,7 @@ ESTRUC_ *smaller (ESTRUC_ *, ESTRUC_ *);   /* < code */
 ESTRUC_ *sm_equal (ESTRUC_ *, ESTRUC_ *);  /* <= code */
 ESTRUC_ *stackframe (E_TYPE_);              /* initialize a stack-element */
 ESTRUC_ *subtract (ESTRUC_ *, ESTRUC_ *);  /* - (binary) code */
+ESTRUC_ *ternary(ESTRUC_ *cond, ESTRUC_ *iftrue, ESTRUC_ *iffalse);
 ESTRUC_ *threeargs (E_TYPE_, ESTRUC_ *,         /* fun(x, y, z)  code */
                         ESTRUC_ *, ESTRUC_ *);
 ESTRUC_ *twoargs (E_TYPE_, ESTRUC_ *,           /* fun(x, y)  code */
@@ -139,6 +139,7 @@ ESTRUC_ *while_stmnt (ESTRUC_ *, ESTRUC_ *, int pureWhile);/* while code */
 ESTRUC_ *young (ESTRUC_ *, ESTRUC_ *);     /* younger code */
 ESTRUC_ *xor  (ESTRUC_ *, ESTRUC_ *);           /* ^ (binary) code */
 ESTRUC_ *zeroargs (E_TYPE_);               /* fun()  code */
+
 void    close_fun (ESTRUC_ *);         /* close a function def. */
 void    make_frame (void);             /* generate op_frame */
 void    outbin (void *, size_t);     /* write INT8s to s_bin */
@@ -146,43 +147,49 @@ void    pop_dead(void);                 /* restore dead-level */
 void    push_dead(void);                /* new dead-level */
 
 
-void    callrss(ESTRUC_ *e, FUNNR_ funnr, ...);
-void    defcode(ESTRUC_ *lval, ESTRUC_ *rval, OPCODE_ opcode);
-int     conflict(ESTRUC_ *lval, ESTRUC_ *rval, OPCODE_ opcode);
-void    btoi(ESTRUC_ *e);
-int     test_binop(OPCODE_ opcode, ESTRUC_ *lval, ESTRUC_ *rval);
-void    etoc(ESTRUC_ *e);
-void    etob(ESTRUC_ *e);
-void    clearbin(ESTRUC_ *lval, ESTRUC_ *rval);
-void    patchup_true(ESTRUC_ *e, int pos);
-void    patchup_false(ESTRUC_ *e, int pos);
-void    gencode(ESTRUC_ *e, OPCODE_ opcode, ...);
-void    discard(ESTRUC_ *e);
-void    patchup_continue(ESTRUC_ *e, int pos);
-void    entervar();
-void    enter();
-void    open_fun();
-int     yyerror(char *s);
-void    fetob(ESTRUC_ *e);
-size_t  rm_jmp_zero(register size_t codelen, unsigned *list, register size_t listlen);
-ESTRUC_ *insertarg(ESTRUC_ *insert, ESTRUC_ *mult);
-int     test_operand(ESTRUC_ *e, OPCODE_ opcode);
 ESTRUC_ *assignment(ESTRUC_ *lval, ESTRUC_ *rval, char *opstr);
-void    catargs(ESTRUC_ *arr);
-void    callhidden(register int fun, ESTRUC_ *rarg);
-void    addpatch(unsigned *list, size_t len, register size_t value);
-void    outcode(ESTRUC_ *ep, int value, register size_t size);
-void    patchtrue(ESTRUC_ *e);
-void    patchfalse(ESTRUC_ *e);
-void    patchcontinue(ESTRUC_ *e);
-void    patchup(INT8 *code, size_t len, unsigned *list, size_t listlen, int pos);
-void    copy_to_pop(ESTRUC_ *e);
-ESTRUC_ *lcast(ESTRUC_ *e);
-ESTRUC_ *scast(ESTRUC_ *e);
-ESTRUC_ *icast(ESTRUC_ *e);
-size_t  lookstring(char *s);
 ESTRUC_ *callfun(size_t x, ESTRUC_ *e);
 ESTRUC_ *execute(ESTRUC_ *arr);
-void    catstrings(ESTRUC_ *lval, ESTRUC_ *rval);
+ESTRUC_ *icast(ESTRUC_ *e);
+ESTRUC_ *insertarg(ESTRUC_ *insert, ESTRUC_ *mult);
+ESTRUC_ *lcast(ESTRUC_ *e);
 ESTRUC_ *nullframe(ESTRUC_ *e);
+ESTRUC_ *scast(ESTRUC_ *e);
+int     conflict(ESTRUC_ *lval, ESTRUC_ *rval, OPCODE_ opcode);
+int     test_binop(OPCODE_ opcode, ESTRUC_ *lval, ESTRUC_ *rval);
+int     test_operand(ESTRUC_ *e, OPCODE_ opcode);
+int     yyerror(char *s);
+size_t  lookstring(char *s);
+size_t  rm_jmp_zero(register size_t codelen, unsigned *list, register size_t listlen);
+void    addpatch(unsigned *list, size_t len, register size_t value);
+void    btoi(ESTRUC_ *e);
+void    callhidden(register int fun, ESTRUC_ *rarg);
+void    callrss(ESTRUC_ *e, FUNNR_ funnr, ...);
+void    catargs(ESTRUC_ *arr);
+void    catstrings(ESTRUC_ *lval, ESTRUC_ *rval);
+void    clearbin(ESTRUC_ *lval, ESTRUC_ *rval);
+void    copy_to_pop(ESTRUC_ *e);
+void    defcode(ESTRUC_ *lval, ESTRUC_ *rval, OPCODE_ opcode);
+void    discard(ESTRUC_ *e);
+void    enter();
+void    entervar();
+void    etob(ESTRUC_ *e);
+void    etoc(ESTRUC_ *e);
+void    fetob(ESTRUC_ *e);
+void    gencode(ESTRUC_ *e, OPCODE_ opcode, ...);
 void    last_stmnt(ESTRUC_ *lval);
+void    open_fun();
+void    outcode(ESTRUC_ *ep, int value, register size_t size);
+void    patchcontinue(ESTRUC_ *e);
+void    patchfalse(ESTRUC_ *e);
+void    patchtrue(ESTRUC_ *e);
+
+    /* 'pos' == 0 means: jump back to the begin of the code,
+        otherwise jump forward to the end of the code
+    */
+void    patchup(INT8 *code, size_t len, unsigned *list, size_t listlen, int
+                pos); 
+void    patchup_continue(ESTRUC_ *e, int pos);
+void    patchup_false(ESTRUC_ *e, int pos);
+void    patchup_true(ESTRUC_ *e, int pos);
+

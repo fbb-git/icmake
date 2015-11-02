@@ -1,6 +1,5 @@
 #include "parser.ih"
 
-int gp_initialization = 0;
 int gp_parse_error = err_code_or_vars_expected;
 size_t  gp_breakOK;
 size_t  gp_nestLevel;

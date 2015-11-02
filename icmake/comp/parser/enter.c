@@ -28,4 +28,3 @@ void enter()
 
     g_entertab->n_defined++;                /* next free */
 }
-

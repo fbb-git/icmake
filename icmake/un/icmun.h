@@ -26,7 +26,7 @@ extern VAR_
     *var;
 
 extern char
-    *varname (E_TYPE_),
+    *varname (ExprType),
     *printvar (int);
 
 extern void

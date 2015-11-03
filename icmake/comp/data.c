@@ -18,7 +18,7 @@ char *g_sourceName;
 //SYMTAB_     g_globaltab;
 //SYMTAB_    *g_entertab = &g_globaltab;
 
-ESTRUC_ g_init;                     /* code initializing globals */
+SemVal g_init;                     /* code initializing globals */
 
 STRINGTAB_ *g_stringtab;
 

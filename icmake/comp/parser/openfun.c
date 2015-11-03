@@ -10,6 +10,7 @@ void open_fun()
     }
 
     symtabReset();                  /* setup the local symbol table */
+                                    /* 1 global, 1 local symbol table */
 
     gp_nParams = 0;                           /* no parameters as yet */
     g_dead_sp = 0;                            /* allow code generation */

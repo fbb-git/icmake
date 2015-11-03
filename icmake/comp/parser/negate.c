@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *negate(ESTRUC_ *e)                  /* expression so far */
+SemVal *negate(SemVal *e)                  /* expression so far */
 {
     if (test_operand(e, op_umin))            /* test types ok */
     {

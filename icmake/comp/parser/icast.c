@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *icast(ESTRUC_ *e)
+SemVal *icast(SemVal *e)
 {
     if (test_type(e, e_list))               /* (int)list not ok */
     {

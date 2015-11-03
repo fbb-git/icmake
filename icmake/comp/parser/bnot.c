@@ -4,7 +4,7 @@
 
 #include "parser.ih"
 
-ESTRUC_ *bnot(ESTRUC_ *e)                   /* expression so far */
+SemVal *bnot(SemVal *e)                   /* expression so far */
 {
     if (test_operand(e, op_bnot))            /* test types ok */
     {
@@ -12,7 +12,7 @@ ESTRUC_ *bnot(ESTRUC_ *e)                   /* expression so far */
         return e;
     }
 
-    if ((e->type & (size_t)~ALLTYPES) == e_const)   /* immediate value */
+    if ((e->type & (size_t)~e_typeMask) == e_const)   /* immediate value */
         e->evalue = ~e->evalue;
     else
     {

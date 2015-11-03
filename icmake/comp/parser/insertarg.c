@@ -1,17 +1,17 @@
 #include "parser.ih"
 
-ESTRUC_ *insertarg(ESTRUC_ *insert, ESTRUC_ *mult)
+SemVal *insertarg(SemVal *insert, SemVal *mult)
 {
     register size_t count;
 
     count = ++mult->type;                   /* get/increase # of args */
-                                            /* room for extra ESTRUC_ */
-    mult->code = xrealloc(mult->code, count * sizeof(ESTRUC_));
+                                            /* room for extra SemVal */
+    mult->code = xrealloc(mult->code, count * sizeof(SemVal));
 
     memmove(                                /* shift up for new firstarg */
          codestruc(mult, 1),
          codestruc(mult, 0),
-         (count - 1) * sizeof(ESTRUC_));
+         (count - 1) * sizeof(SemVal));
 
     etoc(insert);                           /* argument is code now */
     *codestruc(mult, 0) = *insert;          /* insert expression in array */

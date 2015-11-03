@@ -1,10 +1,10 @@
 #include "parser.ih"
 
-ESTRUC_ *callfun(int funIdx, ESTRUC_ *e)
+SemVal *callfun(int funIdx, SemVal *e)
 {
-    ESTRUC_ *a;
+    SemVal *a;
     register size_t idx;
-    register size_t n_pars;
+    register size_t nParams;
     size_t err;
     size_t old_sem;
 
@@ -33,21 +33,23 @@ ESTRUC_ *callfun(int funIdx, ESTRUC_ *e)
 
 
                                             /* then check correct # of args */
-    n_pars = g_funtab.symbol[funIdx].var.vu.i->ls.list.size;
-    if ((size_t)e->type != n_pars)
+    nParams = symtab_nParams(idx);
+              
+    if ((size_t)e->type != nParams)
     {
         err = 1;
         semantic("Function '%s()' requires %u arguments",
-                    g_funtab.symbol[funIdx].name, n_pars);
+                    g_funtab.symbol[funIdx].name, nParams);
     }
     else
+        checkArgumentTypes();
     {                                   /* and check argument types */
         for
         (
             err = 0,
-            a = (ESTRUC_ *)e->code,
+            a = (SemVal *)e->code,
             idx = 0;
-                idx < n_pars;
+                idx < nParams;
                     idx++,
                     a++
         )
@@ -58,7 +60,7 @@ ESTRUC_ *callfun(int funIdx, ESTRUC_ *e)
                 (
                     ((char *)
                        g_funtab.symbol[funIdx].var.vu.i->ls.list.element)[idx]
-                    & a->type & ALLTYPES
+                    & a->type & e_typeMask
                 )
             )
             {
@@ -76,7 +78,7 @@ ESTRUC_ *callfun(int funIdx, ESTRUC_ *e)
 
                                             /* call function and clean stack */
     gencode(e, op_call, g_funtab.symbol[funIdx].var.vu.i->count);
-    gencode(e, op_asp,  n_pars);
+    gencode(e, op_asp,  nParams);
     set_type(e, g_funtab.symbol[funIdx].var.type);
 
     return e;                               /* return called function code */

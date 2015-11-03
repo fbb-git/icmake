@@ -4,16 +4,16 @@
 
 #include "parser.ih"
 
-static ESTRUC_
+static SemVal
     arr;
 
-ESTRUC_ *firstarg(ESTRUC_ *e)
+SemVal *firstarg(SemVal *e)
 {
     etoc(e);                                /* argument is code now */
-                                            /* code points to ESTRUC_ */
-    arr.code = xrealloc(NULL, sizeof(ESTRUC_));
+                                            /* code points to SemVal */
+    arr.code = xrealloc(NULL, sizeof(SemVal));
 
-    *(ESTRUC_ *)arr.code = *e;              /* arr->code contains e */
+    *(SemVal *)arr.code = *e;              /* arr->code contains e */
     arr.type = 1;                           /* type field: # of active e's */
     return (&arr);
 }

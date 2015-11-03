@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *incdec(PREPOST_ pp, OPCODE_ opcode, ESTRUC_ *e)
+SemVal *incdec(PREPOST_ pp, OPCODE_ opcode, SemVal *e)
 {
     register size_t
         varnr;

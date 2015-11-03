@@ -5,7 +5,7 @@
 
 #include "parser.ih"
 
-void callhidden(register int fun, ESTRUC_ *rarg)
+void callhidden(register int fun, SemVal *rarg)
 {
     g_hidden_called = 1;              /* hidden function calls */
 

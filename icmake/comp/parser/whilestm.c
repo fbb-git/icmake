@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *while_stmnt(ESTRUC_ *e, ESTRUC_ *s, int pureWhile)
+SemVal *while_stmnt(SemVal *e, SemVal *s, int pureWhile)
 {
     register size_t len;
     unsigned *list;

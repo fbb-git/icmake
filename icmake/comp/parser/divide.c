@@ -4,7 +4,7 @@
 
 #include "parser.ih"
 
-ESTRUC_ *divide(ESTRUC_ *lval, ESTRUC_ *rval)
+SemVal *divide(SemVal *lval, SemVal *rval)
 {
     if (test_binop(op_div, lval, rval))
         return (lval);                      /* test for correct types */

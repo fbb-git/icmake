@@ -1,10 +1,10 @@
 #include "parser.ih"
 
-ESTRUC_ *math_ass(ESTRUC_ *lval, ESTRUC_ *rval, 
-                    ESTRUC_ *(*fun)(ESTRUC_ *, ESTRUC_ *),
+SemVal *math_ass(SemVal *lval, SemVal *rval, 
+                    SemVal *(*fun)(SemVal *, SemVal *),
                     char *opstr)
 {
-    register E_TYPE_
+    register ExprType
         ltype;
     register size_t
         evalue;

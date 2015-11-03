@@ -1,7 +1,7 @@
 #include "icmun.h"
 
 char *varname (type)
-E_TYPE_ type;
+ExprType type;
 {
     if (type & e_str)
         return ("string");

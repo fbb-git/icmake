@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-int symtabAddFunction(E_TYPE_ type) /* 0: function added, -1: already def'd */
+int symtabAddFunction(ExprType type) /* 0: function added, -1: already def'd */
 {
     if (symtabFunIdx() != gs_functions->nSymbols)
         return -1;

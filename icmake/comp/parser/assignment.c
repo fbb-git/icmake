@@ -1,8 +1,8 @@
 #include "parser.ih"
                                             /* opstr is '=', or "/=", etc. */
-ESTRUC_ *assignment(ESTRUC_ *lval, ESTRUC_ *rval, char *opstr)
+SemVal *assignment(SemVal *lval, SemVal *rval, char *opstr)
 {
-    ESTRUC_ *tmp;
+    SemVal *tmp;
     size_t type;
     size_t value;
 

@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void discard(ESTRUC_ *e)
+void discard(SemVal *e)
 {
     if (e->falselen)
         free(e->falselist);

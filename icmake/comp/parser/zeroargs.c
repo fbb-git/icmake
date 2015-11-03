@@ -1,8 +1,8 @@
 #include "parser.ih"
 
-static ESTRUC_ e;
+static SemVal e;
 
-ESTRUC_ *zeroargs(E_TYPE_ type)
+SemVal *zeroargs(ExprType type)
 {
     e = *stackframe(0);                     /* reinitialize e */
     callrss(&e, type);

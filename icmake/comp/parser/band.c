@@ -4,7 +4,7 @@
 
 #include "parser.ih"
 
-ESTRUC_ *band(ESTRUC_ *lval, ESTRUC_ *rval)
+SemVal *band(SemVal *lval, SemVal *rval)
 {
     if (test_binop(op_band, lval, rval))
         return lval;                        /* test for correct types */
@@ -15,7 +15,7 @@ ESTRUC_ *band(ESTRUC_ *lval, ESTRUC_ *rval)
     if (conflict(lval, rval, op_band))       /* test type conflict */
         return lval;
 
-    if ((lval->type & rval->type & (size_t)~ALLTYPES) == e_const)
+    if ((lval->type & rval->type & (size_t)~e_typeMask) == e_const)
         lval->evalue &= rval->evalue;
     else
         defcode(lval, rval, op_band);

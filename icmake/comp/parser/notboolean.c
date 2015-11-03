@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *not_boolean(ESTRUC_ *e)
+SemVal *not_boolean(SemVal *e)
 {
     size_t len;
     unsigned *list;

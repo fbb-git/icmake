@@ -4,9 +4,9 @@
 
 #include "parser.ih"
 
-ESTRUC_ *addition (ESTRUC_ *lval, ESTRUC_ *rval)
+SemVal *addition (SemVal *lval, SemVal *rval)
 {
-    register E_TYPE_ type;
+    register ExprType type;
 
     if (test_binop(op_add, lval, rval))
         return (lval);                      /* test for correct types */
@@ -19,7 +19,7 @@ ESTRUC_ *addition (ESTRUC_ *lval, ESTRUC_ *rval)
 
     type = lval->type;                      /* keep type for later */
 
-    if ((type & rval->type & (size_t)~ALLTYPES) == e_const)
+    if ((type & rval->type & (size_t)~e_typeMask) == e_const)
     {
         if (test_type(lval, e_int))
             lval->evalue += rval->evalue;
@@ -29,7 +29,7 @@ ESTRUC_ *addition (ESTRUC_ *lval, ESTRUC_ *rval)
     else 
     {
         defcode(lval, rval, op_add);
-        set_type(lval, (type & ALLTYPES) | e_code);
+        set_type(lval, (type & e_typeMask) | e_code);
     }
 
     return (lval);                          /* return new expression */

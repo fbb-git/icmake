@@ -23,15 +23,16 @@ typedef struct
     size_t nargs;                   /* # of arguments */
 } HIDDEN_FUNCTION_;
 
-
+    /* The semantic value struct used by the parser */
 typedef struct                      /* see also display code in */
 {                                   /* callfun.c                */
-    E_TYPE_ type;                   /* type of the expression */
+    ExprType type;                   /* type of the expression */
 
     size_t truelen;
     size_t falselen;
     size_t continuelen;
     size_t codelen;                    /* length of the code */
+
     int    evalue;                     /* index or value of the expression */
 
     size_t *truelist;
@@ -39,7 +40,7 @@ typedef struct                      /* see also display code in */
     size_t *continuelist;
 
     INT8 *code;
-} ESTRUC_;
+} SemVal;
 
 typedef struct
 {
@@ -69,7 +70,7 @@ extern char *g_sourceName;
 
 extern STRINGTAB_ *g_stringtab;
 
-extern ESTRUC_ g_init;                  /* code initializing globals */
+extern SemVal g_init;                  /* code initializing globals */
 
 extern HIDDEN_FUNCTION_ g_hiddenFun[];
 

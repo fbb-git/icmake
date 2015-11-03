@@ -2,7 +2,7 @@
 
 #include "parser.ih"
 
-void fetob(ESTRUC_ *e)
+void fetob(SemVal *e)
 {
     if (test_type(e, e_bool))
         return;                             /* done if boolean aloready */

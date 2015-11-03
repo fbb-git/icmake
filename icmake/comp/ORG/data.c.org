@@ -107,9 +107,9 @@ char
     *g_stringbuf,                          /* final STRING */
     type_conflict[] = "conflicting operand types for %s";
 
-E_TYPE_ vartype;
+ExprType vartype;
 
-E_TYPE_
+ExprType
     gp_opType[] =
     {
         0,                                  /*     op_jmp, */
@@ -129,10 +129,10 @@ E_TYPE_
         e_int | e_bool,                     /* op_mul,  */
         e_int | e_bool,                     /* op_div,  */
         e_int | e_bool,                     /* op_mod,  */
-        ALLTYPES,                           /* op_add, */
-        ALLTYPES,                           /* op_sub, */
-        ALLTYPES,                           /* op_eq, */
-        ALLTYPES,                           /* op_neq, */
+        e_typeMask,                           /* op_add, */
+        e_typeMask,                           /* op_sub, */
+        e_typeMask,                           /* op_eq, */
+        e_typeMask,                           /* op_neq, */
         e_int | e_bool | e_str,             /* op_sm, */
         e_int | e_bool | e_str,             /* op_gr, */
         e_str,                              /* op_younger, */
@@ -249,4 +249,4 @@ size_t
 
 unsigned *g_dead;
 
-ESTRUC_ g_init;             /* code for initializing globals */
+SemVal g_init;             /* code for initializing globals */

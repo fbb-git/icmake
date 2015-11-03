@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void btoi(ESTRUC_ *e)
+void btoi(SemVal *e)
 {
     if (!test_type(e, e_bool))              /* no batchpatching needed */
         return;

@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-int test_binop(OPCODE_ opcode, ESTRUC_ *lval, ESTRUC_ *rval)
+int test_binop(OPCODE_ opcode, SemVal *lval, SemVal *rval)
 {
     register int ret;
 

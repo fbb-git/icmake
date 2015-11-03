@@ -100,6 +100,8 @@
 /*   The compiler uses E_TYPE 0 to indicate the void type.  */
 typedef enum
 {
+    e_null          = 0,
+
     /* rss + compiler: */
     e_int           = (1 << 0),             /* int-type    expression */
     e_str           = (1 << 1),             /* string-type expression */
@@ -108,6 +110,8 @@ typedef enum
     /* compiler only: */
     e_bool          = (1 << 3),             /* bool-type   expression */
 
+    e_typeMask      = (e_int | e_list | e_str | e_bool),
+
     e_const         = (1 << 4),             /* immediate value */
     e_var           = (1 << 5),             /* variable */
     e_reg           = (1 << 6),             /* register */
@@ -115,7 +119,7 @@ typedef enum
 
     e_pre_inc_dec   = (1 << 8),             /* pre-inc or pre-dec        */
     e_post_inc_dec  = (1 << 9)              /* post-inc or post-dec      */
-} E_TYPE_;
+} ExprType;
 
 typedef enum                                /* names of rss-functions */
 {
@@ -249,7 +253,7 @@ typedef union
 
 typedef struct                            /* defined variable */
 {
-    E_TYPE_ type;                         /* maybe stringconst, int, list */
+    ExprType type;                         /* maybe stringconst, int, list */
     VAR_UNION_ vu;                        /* value of the element */
 } VAR_;
 

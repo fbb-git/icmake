@@ -18,13 +18,11 @@ extern Symtab *gs_functions;   /* symbol table for functions */
 
 
 extern Symtab *gs_variables;   /* symbol table for variables */
+extern Symtab *gs_top;          /* points to the topmost symtab */
 extern size_t gs_nVartab;
 extern size_t gs_vartabCap;
 
 extern size_t *gs_nLocals;      /* number of local vars in nested levels */
-extern size_t gs_depth;        
-extern size_t gs_depthCap;
-
 
 void st_init(Symtab **ptr, size_t count);
 void st_symtabInit(Symtab *location);
@@ -33,3 +31,9 @@ Symbol *st_next(Symtab *symtabptr); /* return addr. of next available elem. */
 
 int st_find(Symtab *symtab);        /* returns -1 if not found */
 void st_free(Symtab *table);        /* free the name fiels of the table */
+
+                                    /* assign param. types */
+void st_setParamTypes(Symbol *last, size_t nParams);
+
+void st_addVar(ExprType type);      /* add variable to the topmost symbol 
+                                        table */

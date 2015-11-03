@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *expr_stmnt(ESTRUC_ *e)
+SemVal *expr_stmnt(SemVal *e)
 {
     btoi(e);                                /* convert boolean to i */
 

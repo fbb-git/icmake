@@ -1,8 +1,8 @@
 #include "parser.ih"
 
-void callrss(ESTRUC_ *e, FUNNR_ funnr, ...)
+void callrss(SemVal *e, FUNNR_ funnr, ...)
 {
-    register E_TYPE_ type = e_reg | e_int; /* default return type: intreg */
+    register ExprType type = e_reg | e_int; /* default return type: intreg */
     register size_t args = 1;              /* most f()s having 1 argument */
     va_list marker;
 

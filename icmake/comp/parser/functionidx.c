@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-size_t functionIdx()
+int functionIdx()
 {
     register int idx = symtabFunIdx();
 

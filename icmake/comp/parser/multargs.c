@@ -1,12 +1,12 @@
 #include "parser.ih"
 
-ESTRUC_ *multargs(ESTRUC_ *left, ESTRUC_ *right)
+SemVal *multargs(SemVal *left, SemVal *right)
 {
     register size_t count;
 
     count = ++left->type;                   /* get/increase # of args */
-                                            /* room for extra ESTRUC_ */
-    left->code = xrealloc(left->code, count * sizeof(ESTRUC_));
+                                            /* room for extra SemVal */
+    left->code = xrealloc(left->code, count * sizeof(SemVal));
     etoc(right);                            /* argument is code now */
                                             /* right expression in array */
 

@@ -1,10 +1,10 @@
 #include "parser.ih"
 
-ESTRUC_ *indexOp(ESTRUC_ *larg, ESTRUC_ *rarg)
+SemVal *indexOp(SemVal *larg, SemVal *rarg)
 {
     register int ok;
-    E_TYPE_ type = f_element;
-    ESTRUC_ *tmp;
+    ExprType type = f_element;
+    SemVal *tmp;
 
 
     etoc(larg);                             /* arg to stack */

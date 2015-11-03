@@ -225,7 +225,7 @@ typedef enum
 
     e_pre_inc_dec   = (1 << 8),             /* pre-inc or pre-dec        */
     e_post_inc_dec  = (1 << 9)              /* post-inc or post-dec      */
-} E_TYPE_;
+} ExprType;
 
 typedef enum                                /* names of rss-functions */
 {
@@ -370,7 +370,7 @@ typedef union
 
 typedef struct                              /* defined variable */
 {
-    E_TYPE_
+    ExprType
         type;                               /* maybe stringconst, int, list */
     VAR_UNION_
         vu;                                 /* value of the element */

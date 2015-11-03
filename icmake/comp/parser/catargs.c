@@ -1,15 +1,15 @@
 #include "parser.ih"
 
-void catargs(ESTRUC_ *arr)
+void catargs(SemVal *arr)
 {
     register size_t count;
-    ESTRUC_ *ep;
-    ESTRUC_ e;
+    SemVal *ep;
+    SemVal e;
 
     if (!(count = arr->type))
         return;                             /* no arguments */
 
-    ep = (ESTRUC_ *)arr->code;              /* local pointer to ESTRUC_s */
+    ep = (SemVal *)arr->code;              /* local pointer to SemVals */
 
     e = ep[--count];                        /* e: code of last argument */
 

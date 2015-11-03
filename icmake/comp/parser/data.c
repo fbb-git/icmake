@@ -49,7 +49,7 @@ char *gp_funstring[] =                          /* only one_arg  */
     "system",
 };
 
-E_TYPE_ gp_opType[] =
+ExprType gp_opType[] =
 {
     0,                                  /*     op_jmp, */
     0,                                  /*     op_jmp_false, */
@@ -68,10 +68,10 @@ E_TYPE_ gp_opType[] =
     e_int | e_bool,                     /* op_mul,  */
     e_int | e_bool,                     /* op_div,  */
     e_int | e_bool,                     /* op_mod,  */
-    ALLTYPES,                           /* op_add, */
-    ALLTYPES,                           /* op_sub, */
-    ALLTYPES,                           /* op_eq, */
-    ALLTYPES,                           /* op_neq, */
+    e_typeMask,                           /* op_add, */
+    e_typeMask,                           /* op_sub, */
+    e_typeMask,                           /* op_eq, */
+    e_typeMask,                           /* op_neq, */
     e_int | e_bool | e_str,             /* op_sm, */
     e_int | e_bool | e_str,             /* op_gr, */
     e_str,                              /* op_younger, */
@@ -151,7 +151,7 @@ char    gp_illegalArgCount[]  = "%s(): too few arguments";
 char    gp_illegalCast[]      = "illegal cast";
 
 
-E_TYPE_ gp_varType;
+ExprType gp_varType;
 
 OPCODE_ gp_lastOp = op_hlt;
 

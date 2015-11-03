@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void patchcontinue(ESTRUC_ *e)
+void patchcontinue(SemVal *e)
 {
     e->continuelist = xrealloc(e->continuelist,   /* expand the continuelist */
                             (e->continuelen + 1) * sizeof(size_t));

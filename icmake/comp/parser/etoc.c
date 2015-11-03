@@ -4,9 +4,9 @@
 
 #include "parser.ih"
 
-void etoc(ESTRUC_ *e)
+void etoc(SemVal *e)
 {
-    ESTRUC_ pre;
+    SemVal pre;
 
     switch
     (

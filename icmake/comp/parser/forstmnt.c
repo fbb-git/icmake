@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *for_stmnt(ESTRUC_ *init, ESTRUC_ *cond, ESTRUC_ *inc, ESTRUC_ *stmnt)
+SemVal *for_stmnt(SemVal *init, SemVal *cond, SemVal *inc, SemVal *stmnt)
 {
     size_t codelen = stmnt->codelen;
 

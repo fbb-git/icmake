@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *nullframe(ESTRUC_ *e)
+SemVal *nullframe(SemVal *e)
 {
     discard(e);
     *e = *stackframe(0);

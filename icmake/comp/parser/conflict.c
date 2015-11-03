@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-int conflict(ESTRUC_ *lval, ESTRUC_ *rval, OPCODE_ opcode) 
+int conflict(SemVal *lval, SemVal *rval, OPCODE_ opcode) 
 {
     register int ret;
 

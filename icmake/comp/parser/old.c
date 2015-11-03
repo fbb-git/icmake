@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *old(ESTRUC_ *lval, ESTRUC_ *rval)
+SemVal *old(SemVal *lval, SemVal *rval)
 {
 
     if (test_binop(op_older, lval, rval))

@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *specials(E_TYPE_ type, ESTRUC_ *marg)  /* array of arguments */
+SemVal *specials(ExprType type, SemVal *marg)  /* array of arguments */
 {
     register size_t count;
 

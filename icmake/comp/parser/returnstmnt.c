@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *return_stmnt(E_TYPE_ op, ESTRUC_ *e)
+SemVal *return_stmnt(ExprType op, SemVal *e)
 {
     Symbol const *last;
 
@@ -21,7 +21,7 @@ ESTRUC_ *return_stmnt(E_TYPE_ op, ESTRUC_ *e)
                     e->type                 /* type of the expression */
                 )
                 &                           /* intersected with */
-                ALLTYPES                    /* all types */
+                e_typeMask                    /* all types */
             )                               /* is empty. */
         )
         {
@@ -29,7 +29,7 @@ ESTRUC_ *return_stmnt(E_TYPE_ op, ESTRUC_ *e)
             return e;                       /* done */
         }
 
-        if (!(test_type(e, last->var.type & ALLTYPES)))
+        if (!(test_type(e, last->var.type & e_typeMask)))
             semantic("Incorrect returntype for function '%s()'", last->name);
     }
 

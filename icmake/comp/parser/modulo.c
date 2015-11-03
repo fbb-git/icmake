@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *modulo(ESTRUC_ *lval, ESTRUC_ *rval)
+SemVal *modulo(SemVal *lval, SemVal *rval)
 {
     if (test_binop(op_mod, lval, rval))
         return (lval);                      /* test for correct types */

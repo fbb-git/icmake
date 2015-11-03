@@ -4,7 +4,7 @@
 
 #include "parser.ih"
 
-ESTRUC_ *equal(ESTRUC_ *lval, ESTRUC_ *rval)
+SemVal *equal(SemVal *lval, SemVal *rval)
 {
     btoi(lval);                             /* convert boolean to i */
     btoi(rval);
@@ -12,7 +12,7 @@ ESTRUC_ *equal(ESTRUC_ *lval, ESTRUC_ *rval)
     if (conflict(lval, rval, op_eq))        /* test type conflict */
         return lval;
 
-    if ((lval->type & rval->type & (size_t)~ALLTYPES) == e_const)
+    if ((lval->type & rval->type & (size_t)~e_typeMask) == e_const)
     {
         if (test_type(lval, e_int))
             lval->evalue = (lval->evalue == rval->evalue);

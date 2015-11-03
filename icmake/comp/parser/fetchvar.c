@@ -16,39 +16,56 @@
 
 #include "parser.ih"
 
-static ESTRUC_ ret;
+static SemVal ret;
 
-ESTRUC_ *fetchvar()
+SemVal *fetchvar()
 {
     register size_t idx;
-    E_TYPE_ type = 0;
 
     ret = *stackframe(0);
-                                            /* not a local variable ? */
-    if ((idx = looksym(&gp_local)) == gp_local.n_defined)
-    {                                       /* not a global variable ? */
-        if ((idx = looksym(&g_globaltab)) != g_globaltab.n_defined)
-            type = g_globaltab.symbol[idx].var.type;
-        else
-        {
-            idx = 0xffff;
-            semantic("%s undefined", g_lexstring);
-        }
-    }
-    else
+
+    idx = symtabVarIdx();                   /* find the index of var.
+                                                g_lexstring */
+
+    if (idx == -1)                          
     {
-        type = gp_local.symbol[idx].var.type;
-        if (idx < gp_nParams)               /* Parameters: */
-            idx += 0xc002;
-        else                                /* Locals: */
-            idx = 0xbfff - (idx - gp_nParams);
+        semantic("%s undefined", g_lexstring);
+        return &ret;
     }
 
-    if (idx != 0xffff)
-    {
-        ret.evalue = idx;                /* set idx and type */
-        ret.type =  type;
-    }
+    if (idx < gp_nParams)                   /* idx refers to a parameter */
+        idx += 0xc002;
+    else
+        idx = 0xbfff - (idx - gp_nParams);  /* idx refers to a local var */
+
+    ret.evalue = idx;
+    ret.type = symtabVarType(idx);
+
+//                                            /* not a local variable ? */
+//    if ((idx = looksym(&gp_local)) == gp_local.n_defined)
+//    {                                       /* not a global variable ? */
+//        if ((idx = looksym(&g_globaltab)) != g_globaltab.n_defined)
+//            type = g_globaltab.symbol[idx].var.type;
+//        else
+//        {
+//            idx = 0xffff;
+//            semantic("%s undefined", g_lexstring);
+//        }
+//    }
+//    else
+//    {
+//        type = gp_local.symbol[idx].var.type;
+//        if (idx < gp_nParams)               /* Parameters: */
+//            idx += 0xc002;
+//        else                                /* Locals: */
+//            idx = 0xbfff - (idx - gp_nParams);
+//    }
+//
+//    if (idx != 0xffff)
+//    {
+//        ret.evalue = idx;                /* set idx and type */
+//        ret.type =  type;
+//    }
 
     return &ret;                         /* return the frame */
 }

@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *if_stmnt(ESTRUC_ *cond, ESTRUC_ *trueStmnt, ESTRUC_ *falseStmnt)
+SemVal *if_stmnt(SemVal *cond, SemVal *trueStmnt, SemVal *falseStmnt)
 {
     register size_t len;
     unsigned *list;

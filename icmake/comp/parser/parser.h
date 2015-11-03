@@ -3,7 +3,7 @@
 
 #include "../global.h"
 
-#define YYSTYPE ESTRUC_
+#define YYSTYPE SemVal
 
 #include "tokens.h"
 

@@ -1,8 +1,8 @@
 #include "parser.ih"
 
-ESTRUC_ *ternary(ESTRUC_ *cond, ESTRUC_ *ifTrue, ESTRUC_ *ifFalse)
+SemVal *ternary(SemVal *cond, SemVal *ifTrue, SemVal *ifFalse)
 {
-    if ((ifTrue->type & ifFalse->type & ALLTYPES) == 0)
+    if ((ifTrue->type & ifFalse->type & e_typeMask) == 0)
     {
         semantic(gp_typeConflict, "?:");
         clearbin(ifTrue, ifFalse);

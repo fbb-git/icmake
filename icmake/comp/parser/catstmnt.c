@@ -4,7 +4,7 @@
 
 #include "parser.ih"
 
-ESTRUC_ *cat_stmnt(ESTRUC_ *lval, ESTRUC_ *rval)
+SemVal *cat_stmnt(SemVal *lval, SemVal *rval)
 {
     patchup_false(lval, 1);
 

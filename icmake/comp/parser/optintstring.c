@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *optint_string(E_TYPE_ type, ESTRUC_ *larg, ESTRUC_ *rarg)
+SemVal *optint_string(ExprType type, SemVal *larg, SemVal *rarg)
 {
     etoc(larg);                             /* argument to stack */
 

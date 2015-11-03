@@ -4,7 +4,7 @@
 
 #include "parser.ih"
 
-ESTRUC_ *cast(E_TYPE_ target, ESTRUC_ *e)
+SemVal *cast(ExprType target, SemVal *e)
 {
     btoi(e);                                /* convert boolean to int */
 

@@ -6,7 +6,7 @@
 
 #include "parser.ih"
 
-void etob(ESTRUC_ *e)
+void etob(SemVal *e)
 {
     switch (e->type & (e_int | e_str | e_list | e_bool))
     {

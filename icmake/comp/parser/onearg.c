@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *onearg(E_TYPE_ type, ESTRUC_ *arg)
+SemVal *onearg(ExprType type, SemVal *arg)
 {
     register int ok;
 

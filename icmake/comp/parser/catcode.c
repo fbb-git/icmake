@@ -23,7 +23,7 @@ static void patchadd(register size_t value, unsigned **dest,
     *dlen += slen;                          /* increment # element */
 }
 
-ESTRUC_ *catcode(ESTRUC_ *lval, ESTRUC_ *rval)
+SemVal *catcode(SemVal *lval, SemVal *rval)
 {
     register size_t l;
     register size_t r;
@@ -50,7 +50,7 @@ ESTRUC_ *catcode(ESTRUC_ *lval, ESTRUC_ *rval)
     lval->type |= rval->type;               /* type of combined code */
                                             /* (is ok with same types) */
 
-    discard(rval);                          /* free memory used by ESTRUC_ */
+    discard(rval);                          /* free memory used by SemVal */
 
     return (lval);                          /* return new frame */
 }

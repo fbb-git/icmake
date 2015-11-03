@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *threeargs(E_TYPE_ type, ESTRUC_ *larg, ESTRUC_ *marg, ESTRUC_ *rarg)
+SemVal *threeargs(ExprType type, SemVal *larg, SemVal *marg, SemVal *rarg)
 {
     register int ok;
 

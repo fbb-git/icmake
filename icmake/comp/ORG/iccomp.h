@@ -72,9 +72,9 @@ typedef enum
 #define set_type(e,v)           ((e)->type =   (v))
 #define up_type(e,v)            ((e)->type |=  (v))
 
-#define ALLTYPES                (e_int | e_list | e_str | e_bool)
+#define e_typeMask                (e_int | e_list | e_str | e_bool)
 
-#define codestruc(estruc, x)    (&(((ESTRUC_ *)((estruc)->code))[x]))
+#define codestruc(estruc, x)    (&(((SemVal *)((estruc)->code))[x]))
 
 typedef struct
 {
@@ -99,7 +99,7 @@ typedef struct
 
 typedef struct                              /* see also display code in */
 {                                           /* callfun.c                */
-    E_TYPE_
+    ExprType
         type;                               /* type of the expression */
     size_t
         truelen,
@@ -113,7 +113,7 @@ typedef struct                              /* see also display code in */
         *continuelist;
     INT8
         *code;
-} ESTRUC_;
+} SemVal;
 
 typedef struct
 {
@@ -126,7 +126,7 @@ typedef struct
         nargs;                              /* # of arguments */
 } HIDDEN_FUNCTION_;
 
-#define YYSTYPE ESTRUC_
+#define YYSTYPE SemVal
 
 /*
     Prototypes of often used functions and variabels defined in code
@@ -207,10 +207,10 @@ extern char
     type_conflict[],
     version[];
 
-extern E_TYPE_
+extern ExprType
     vartype;
 
-extern E_TYPE_
+extern ExprType
     gp_opType[];
 
 
@@ -245,13 +245,13 @@ extern size_t
 
 unsigned *g_dead;
 
-extern ESTRUC_ g_init;             /* code for initializing globals */
+extern SemVal g_init;             /* code for initializing globals */
 
-int conflict (ESTRUC_ *, ESTRUC_ *,     /* conflicting binary types */
+int conflict (SemVal *, SemVal *,     /* conflicting binary types */
                   OPCODE_);
-int test_binop (OPCODE_, ESTRUC_ *,     /* test binop legality */
-                      ESTRUC_ *);
-int test_operand (ESTRUC_ *, OPCODE_);  /* test legality of operand */
+int test_binop (OPCODE_, SemVal *,     /* test binop legality */
+                      SemVal *);
+int test_operand (SemVal *, OPCODE_);  /* test legality of operand */
 int yylex_file(char *, int);            /* read yylex input from yyin */
 int yylex_hidden(char *, int);          /* read yylex input from buffer */
 
@@ -261,60 +261,60 @@ size_t looksym (SYMTAB_ *);          /* look for symbol in symboltab */
 size_t rm_jmp_zero (size_t,         /* remove jmp 0 from || && lists */
                  unsigned *, size_t);
 
-ESTRUC_ *assignconst(ESTRUC_ *, ESTRUC_ *);     /* initialization code */
-ESTRUC_ *assignment  (ESTRUC_ *, ESTRUC_ *,     /*  = code */
+SemVal *assignconst(SemVal *, SemVal *);     /* initialization code */
+SemVal *assignment  (SemVal *, SemVal *,     /*  = code */
                                     char *);
                              
-ESTRUC_ *icast (ESTRUC_ *);                /* cast to int */
+SemVal *icast (SemVal *);                /* cast to int */
 
-ESTRUC_ *insertarg (ESTRUC_ *, ESTRUC_ *);/* arg1, before arg2, ... */
-ESTRUC_ *lcast (ESTRUC_ *);                /* cast to list */
+SemVal *insertarg (SemVal *, SemVal *);/* arg1, before arg2, ... */
+SemVal *lcast (SemVal *);                /* cast to list */
 
-ESTRUC_ *nullframe(ESTRUC_ *e);              /* discard(e) + *e = stackfr(0) */
+SemVal *nullframe(SemVal *e);              /* discard(e) + *e = stackfr(0) */
 
-ESTRUC_ *scast (ESTRUC_ *);                /* cast to str */
+SemVal *scast (SemVal *);                /* cast to str */
 
-ESTRUC_ *strupr_lwr (E_TYPE_, ESTRUC_ *);       /* strupr<->strlwr */
+SemVal *strupr_lwr (ExprType, SemVal *);       /* strupr<->strlwr */
 
 void    addpatch (unsigned *, size_t,     /* add value to patch-list */
                                size_t);
 void    backend (void);                /* finish g_bin construction */
-void    btoi (ESTRUC_ *);              /* boolean to int */
-void    callrss (ESTRUC_ *, FUNNR_,     /* call rss function */
+void    btoi (SemVal *);              /* boolean to int */
+void    callrss (SemVal *, FUNNR_,     /* call rss function */
                                 ...);   /* and add asp, xxx instruction */
-void    callhidden(int, ESTRUC_ *);         /* call hidden function */
-void    catargs (ESTRUC_ *);           /* arguments to code */
-void    catstrings (ESTRUC_ *,          /* catenate string consts */
-                             ESTRUC_ *);
+void    callhidden(int, SemVal *);         /* call hidden function */
+void    catargs (SemVal *);           /* arguments to code */
+void    catstrings (SemVal *,          /* catenate string consts */
+                             SemVal *);
 void    change_file (char *);          /* switch to other file */
-void    clearbin (ESTRUC_ *,            /* clear and init 2 ESTRUC_s */
-                      ESTRUC_ *);
+void    clearbin (SemVal *,            /* clear and init 2 SemVals */
+                      SemVal *);
 void    clear_hidden(void);                 /* clear hidden function-names */
-void    copy_to_pop (ESTRUC_ *);       /* op_copy_var to op_pop_var */
-void    defcode (ESTRUC_ *, ESTRUC_ *,  /* generate default e_int|e_code */
+void    copy_to_pop (SemVal *);       /* op_copy_var to op_pop_var */
+void    defcode (SemVal *, SemVal *,  /* generate default e_int|e_code */
                   OPCODE_);
-void    discard (ESTRUC_ *);           /* free memory used by ESTRUC_ */
-void    etob (ESTRUC_ *);              /* expr. prepare for boolean */
-void    etoc (ESTRUC_ *);              /* convert E to code */
+void    discard (SemVal *);           /* free memory used by SemVal */
+void    etob (SemVal *);              /* expr. prepare for boolean */
+void    etoc (SemVal *);              /* convert E to code */
 void    enter (void);                  /* enter somthing in a symtab */
 void    entervar (void);               /* enter variable in l/g-tab */
-void    fetob (ESTRUC_ *);             /* forced e conversion to boolean */
+void    fetob (SemVal *);             /* forced e conversion to boolean */
 void    hidden_functions (void);            /* patchup/generate hidden funs */
-void    last_stmnt (ESTRUC_ *);        /* write last stmnt */
-void    gencode (ESTRUC_ *, OPCODE_,    /* append new code */
+void    last_stmnt (SemVal *);        /* write last stmnt */
+void    gencode (SemVal *, OPCODE_,    /* append new code */
                                    ...);
 void    open_fun (void);               /* open a function */
 
-void    outcode (ESTRUC_ *, int,        /* append code to e->code */
+void    outcode (SemVal *, int,        /* append code to e->code */
                         size_t);
-void    patchcontinue(ESTRUC_ *);      /* jmp_continue target */
-void    patchfalse (ESTRUC_ *);        /* jmp_false target */
-void    patchtrue (ESTRUC_ *);         /* jmp_true target */
+void    patchcontinue(SemVal *);      /* jmp_continue target */
+void    patchfalse (SemVal *);        /* jmp_false target */
+void    patchtrue (SemVal *);         /* jmp_true target */
 void    patchup (INT8 *, size_t,      /* patchup t/f list */
                      unsigned *, size_t, int);
-void    patchup_true (ESTRUC_ *, int); /* batchpatch truelist */
-void    patchup_false (ESTRUC_ *, int);/* batchpatch truelist */
-void    patchup_continue(ESTRUC_ *e, int pos);  /* backpatch continuelist */
+void    patchup_true (SemVal *, int); /* batchpatch truelist */
+void    patchup_false (SemVal *, int);/* batchpatch truelist */
+void    patchup_continue(SemVal *e, int pos);  /* backpatch continuelist */
 
 void    semantic (char *, ...);         /* give semantic error */
 

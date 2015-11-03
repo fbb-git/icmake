@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void outcode(ESTRUC_ *ep, int value, register size_t size)
+void outcode(SemVal *ep, int value, register size_t size)
 {
     register size_t codelen;
 

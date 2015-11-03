@@ -65,7 +65,7 @@
 #line 1 "grammar" /* yacc.c:339  */
 
     #include "../global.h"
-    #define YYSTYPE ESTRUC_
+    #define YYSTYPE SemVal
     #include "parser.ih"
 
 #line 72 "parser.c" /* yacc.c:339  */
@@ -230,8 +230,8 @@ typedef short int yytype_int16;
 #endif
 
 #ifndef YYSIZE_T
-# ifdef __SIZE_TYPE__
-#  define YYSIZE_T __SIZE_TYPE__
+# ifdef __SIZExprType_
+#  define YYSIZE_T __SIZExprType_
 # elif defined size_t
 #  define YYSIZE_T size_t
 # elif ! defined YYSIZE_T

@@ -4,9 +4,9 @@
 
 #include "parser.ih"
 
-static ESTRUC_ e;
+static SemVal e;
 
-ESTRUC_ *break_stmnt()
+SemVal *break_stmnt()
 {
     e = *stackframe(0);
 

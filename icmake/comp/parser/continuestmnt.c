@@ -1,8 +1,8 @@
 #include "parser.ih"
 
-static ESTRUC_ e;
+static SemVal e;
 
-ESTRUC_ *continue_stmnt()
+SemVal *continue_stmnt()
 {
     e = *stackframe(0);
 

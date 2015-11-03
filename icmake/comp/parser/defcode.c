@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void defcode(ESTRUC_ *lval, ESTRUC_ *rval, OPCODE_ opcode)
+void defcode(SemVal *lval, SemVal *rval, OPCODE_ opcode)
 {
     etoc(lval);                     /* convert to code */
     etoc(rval);

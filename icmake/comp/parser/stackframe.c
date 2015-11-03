@@ -1,8 +1,8 @@
 #include "parser.ih"
 
-static ESTRUC_ frame;
+static SemVal frame;
 
-ESTRUC_ *stackframe(E_TYPE_ type)
+SemVal *stackframe(ExprType type)
 {
     frame.type = type;
 

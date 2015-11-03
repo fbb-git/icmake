@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void last_stmnt(ESTRUC_ *lval)
+void last_stmnt(SemVal *lval)
 {
     patchup_false(lval, 1);
 

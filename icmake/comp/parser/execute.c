@@ -10,10 +10,10 @@
 
 */
 
-ESTRUC_ *execute(ESTRUC_ *arr)
+SemVal *execute(SemVal *arr)
 {
     register size_t count;
-    ESTRUC_
+    SemVal
         tmp,
         *argp,                              /* pointer to args */
         e;
@@ -41,7 +41,7 @@ ESTRUC_ *execute(ESTRUC_ *arr)
     catcode(&e, &argp[count - 1]);          /* code appended to e*/
 
                                             /* keep variable # of args */
-    memmove(argp + 2, argp + 4, (count - 2) * sizeof(ESTRUC_));
+    memmove(argp + 2, argp + 4, (count - 2) * sizeof(SemVal));
     arr->type -= 4;                         /* remove 4 arguments */
 
     catcode(&e, specials(f_exec, arr));     /* catenate call-code */

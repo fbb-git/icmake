@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *unequal(ESTRUC_ *lval, ESTRUC_ *rval)
+SemVal *unequal(SemVal *lval, SemVal *rval)
 {
     btoi(lval);                             /* convert boolean to i */
     btoi(rval);
@@ -8,7 +8,7 @@ ESTRUC_ *unequal(ESTRUC_ *lval, ESTRUC_ *rval)
     if (conflict(lval, rval, op_neq))       /* test type conflict */
         return(lval);
 
-    if ((lval->type & rval->type & (size_t)~ALLTYPES) == e_const)
+    if ((lval->type & rval->type & (size_t)~e_typeMask) == e_const)
     {
         if (test_type(lval, e_int))
             lval->evalue = (lval->evalue != rval->evalue);

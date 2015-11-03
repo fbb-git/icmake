@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void patchtrue(ESTRUC_ *e)
+void patchtrue(SemVal *e)
 {                                           /* expand the truelist */
     e->truelist = xrealloc(e->truelist, (e->truelen + 1) * sizeof(size_t));
 

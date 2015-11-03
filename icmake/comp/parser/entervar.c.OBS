@@ -1,5 +1,6 @@
 #include "parser.ih"
 
+    /* enter a local variable in the topmost symbol table */
 void entervar()
 {
     enter();

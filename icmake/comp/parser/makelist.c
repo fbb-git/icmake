@@ -9,7 +9,7 @@
 
 #include "parser.ih"
 
-ESTRUC_ *makelist(ESTRUC_ *args, E_TYPE_ type)
+SemVal *makelist(SemVal *args, ExprType type)
 {
     if
     (                                       /* first arg not int */

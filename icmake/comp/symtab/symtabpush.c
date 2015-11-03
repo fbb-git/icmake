@@ -8,6 +8,5 @@ void symtabPush()
         xrealloc(gs_nLocals,    (gs_vartabCap += 4) * sizeof(size_t));
     }
 
-    st_symtabInit(gs_variables + gs_nVartab++);
-
+    st_symtabInit(gs_top = (gs_variables + gs_nVartab++));
 }

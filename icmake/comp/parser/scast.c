@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-ESTRUC_ *scast(ESTRUC_ *e)
+SemVal *scast(SemVal *e)
 {
     char buffer[10];
 

@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void catstrings(ESTRUC_ *lval, ESTRUC_ *rval)
+void catstrings(SemVal *lval, SemVal *rval)
 {
     char *cp;
     register size_t

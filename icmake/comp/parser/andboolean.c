@@ -4,7 +4,7 @@
 
 #include "parser.ih"
 
-ESTRUC_ *and_boolean(ESTRUC_ *lexp, ESTRUC_ *rexp)
+SemVal *and_boolean(SemVal *lexp, SemVal *rexp)
 {
     if (lexp->type & rexp->type & e_const)  /* two constants: compute result */
     {

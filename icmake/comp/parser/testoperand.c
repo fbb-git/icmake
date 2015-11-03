@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-int test_operand(ESTRUC_ *e, OPCODE_ opcode)
+int test_operand(SemVal *e, OPCODE_ opcode)
 {
     register int ret;
 

@@ -1,11 +1,9 @@
 #include "parser.ih"
 
-void gencode(ESTRUC_ *e, OPCODE_ opcode, ...)
+void gencode(SemVal *e, OPCODE_ opcode, ...)
 {
     register size_t idx;
-    register size_t last;
     int marker_value;
-    size_t count;
     va_list marker;
 
     if (g_dead[g_dead_sp])
@@ -53,13 +51,17 @@ void gencode(ESTRUC_ *e, OPCODE_ opcode, ...)
         break;
 
         case op_frame:
-            count = last = gp_local.n_defined - gp_nParams;
-            outcode(e, (int)count, sizeof(char));
-            for (idx = 0; idx < last; idx++)
+        {
+            size_t nLocalVars = symtab_nLocalVariables();
+
+            outcode(e, (int)nLocalVars, sizeof(char));
+
+            for (idx = 0; idx != nLocalVars; ++idx)
             {
-                count = gp_local.symbol[gp_nParams + idx].var.type & ALLTYPES;
-                outcode(e, (int)count, sizeof(char));
+                int type = symtabLocalType(idx);
+                outcode(e, type, sizeof(char));
             }
+        }
         break;
 
         case op_copy_var:                   /* write # of the var. */

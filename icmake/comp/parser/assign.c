@@ -4,7 +4,7 @@
 
 #include "parser.ih"
 
-ESTRUC_ *assign(ESTRUC_ *lval, ESTRUC_ *rval)
+SemVal *assign(SemVal *lval, SemVal *rval)
 {
     return assignment(lval, rval, "=");
 }

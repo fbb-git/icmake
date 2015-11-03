@@ -33,6 +33,11 @@ Symbol const *symtabLastFunction(); /* addr. of last defined function       */
 size_t symtabSetLastFunction(size_t nParams); /* initializes the fields of    */
                                             /* the last defined function;   */
                                             /* returns # local variables    */
+size_t symtab_nGlobalVariables();    /* the number of global variables defined
+                                        so far */
+
+Symbol *symtabGlobalInfo(size_t idx);   /* info about global var 'idx' */
+
 size_t symtab_nLocalVariables();    /* the number of local variables of the 
                                        function that's currently defined */
     
@@ -40,13 +45,21 @@ int symtabLocalType(size_t idx);    /* type of local variable idx, 1st local
                                         var has idx 0 */
 
 ExprType symtabVarType(size_t idx); /* type of variable idx */
-size_t symtab_nParams(size_t idx);  /* # params */
 
 int symtabDefineVar(ExprType type); /* Define a local var. at the topmost
                                         symbol table (-1 if already def'd) */
 
 void symtabCleanup();       /* pop all but the global symtab, patchup local
                                 variable locations */
+
+Symbol const *symtabFunInfo(size_t idx); /* Symtab record of function idx */
+char const *symtabFunName(Symbol const *funInfo); 
+size_t      symtabFun_nParams(Symbol const *funInfo);  /* # params */
+size_t      symtabFunAddress(Symbol const *funInfo);
+ExprType    symtabFunType(Symbol const *funInfo);
+
+
+ExprType symtabFunParameterType(Symbol const *funInfo, size_t idx);
 
 #endif
 

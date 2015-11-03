@@ -1,6 +1,6 @@
 #include "util.ih"
 
-void semantic(char *s, ...)
+void semantic(char const *s, ...)
 {
     va_list marker;
 

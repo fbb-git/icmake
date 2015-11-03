@@ -142,13 +142,11 @@ SemVal *zeroargs (ExprType);               /* fun()  code */
 
 void    close_fun (SemVal *);         /* close a function def. */
 void    make_frame (void);             /* generate op_frame */
-void    outbin (void *, size_t);     /* write INT8s to s_bin */
 void    pop_dead(void);                 /* restore dead-level */
 void    push_dead(void);                /* new dead-level */
 
 
 SemVal *assignment(SemVal *lval, SemVal *rval, char *opstr);
-SemVal *callfun(size_t x, SemVal *e);
 SemVal *execute(SemVal *arr);
 SemVal *icast(SemVal *e);
 SemVal *insertarg(SemVal *insert, SemVal *mult);
@@ -198,3 +196,4 @@ void    patchup_false(SemVal *e, int pos);
 void    patchup_true(SemVal *e, int pos);
 
 int     functionIdx();
+void    checkArgumentTypes(size_t nParams, Symbol const *funInfo, SemVal *a);

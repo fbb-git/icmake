@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-void st_AddVar(ExprType type)
+void st_addVar(ExprType type)
 {
     Symbol *next = st_next(gs_top);
 

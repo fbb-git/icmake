@@ -2,7 +2,7 @@
 
 #include "../global.h"
 
-void outbin(void *source, size_t size)
+void outbin(void const *source, size_t size)
 {
     if
     (

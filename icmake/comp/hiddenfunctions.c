@@ -20,7 +20,9 @@ void hidden_functions(void)
             if (fun >= 0)                   /* hidden function */
             {                               /* reset to patchup */
                 fseek(g_bin, -(long)sizeof(INT16), SEEK_CUR);
+
                 g_lexstring = xstrdup(g_hiddenFun[fun].name);
+
                                             /* update the function's address */
                 outbin(symtabFunAddr(), sizeof(INT16));
                 fseek(g_bin, 0, SEEK_CUR);  /* ready to read again */

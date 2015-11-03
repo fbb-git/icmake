@@ -2,11 +2,7 @@
 
 SemVal *callfun(int funIdx, SemVal *e)
 {
-    SemVal *a;
-    register size_t idx;
     register size_t nParams;
-    size_t err;
-    size_t old_sem;
 
 /*
     fprintf(stderr,
@@ -31,55 +27,23 @@ SemVal *callfun(int funIdx, SemVal *e)
     if (funIdx == -1)                   /* function name not found ? */
         return e;                       /* nothing to do here        */
 
+    Symbol const *funInfo = symtabFunInfo(funIdx);
 
                                             /* then check correct # of args */
-    nParams = symtab_nParams(idx);
+    nParams = symtabFun_nParams(funInfo);
               
-    if ((size_t)e->type != nParams)
-    {
-        err = 1;
-        semantic("Function '%s()' requires %u arguments",
-                    g_funtab.symbol[funIdx].name, nParams);
-    }
+    if ((size_t)e->type == nParams)
+        checkArgumentTypes(nParams, funInfo, (SemVal *)e->code);
     else
-        checkArgumentTypes();
-    {                                   /* and check argument types */
-        for
-        (
-            err = 0,
-            a = (SemVal *)e->code,
-            idx = 0;
-                idx < nParams;
-                    idx++,
-                    a++
-        )
-        {
-            if
-            (
-                !
-                (
-                    ((char *)
-                       g_funtab.symbol[funIdx].var.vu.i->ls.list.element)[idx]
-                    & a->type & e_typeMask
-                )
-            )
-            {
-                old_sem = g_sem_err;
-                err = 1;
-                semantic("Incorrect type of argument %u of function '%s()'",
-                    idx + 1, g_funtab.symbol[funIdx].name);
-                g_sem_err = old_sem;
-            }
-        }
-        g_sem_err |= err;
-    }
+        semantic("Function '%s()' requires %u arguments",
+                    symtabFunName(funInfo), nParams);
 
     catargs(e);                             /* convert args to code */
 
                                             /* call function and clean stack */
-    gencode(e, op_call, g_funtab.symbol[funIdx].var.vu.i->count);
+    gencode(e, op_call, symtabFunAddress(funInfo));
     gencode(e, op_asp,  nParams);
-    set_type(e, g_funtab.symbol[funIdx].var.type);
+    set_type(e, symtabFunType(funInfo));
 
     return e;                               /* return called function code */
 }

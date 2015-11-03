@@ -241,7 +241,9 @@ typedef union
 
 typedef struct
 {
-    UNS16 count;                              /* allocation count */
+    UNS16 count;                            /* allocation count, or 
+                                               1st address of a function */
+                                            
     LS_UNION_ ls;
 } INTER_;
 

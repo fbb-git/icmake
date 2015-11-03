@@ -230,8 +230,8 @@ typedef short int yytype_int16;
 #endif
 
 #ifndef YYSIZE_T
-# ifdef __SIZExprType_
-#  define YYSIZE_T __SIZExprType_
+# ifdef __SIZE_TYPE__
+#  define YYSIZE_T __SIZE_TYPE__
 # elif defined size_t
 #  define YYSIZE_T size_t
 # elif ! defined YYSIZE_T
@@ -1747,7 +1747,7 @@ yyreduce:
   case 19:
 #line 190 "grammar" /* yacc.c:1646  */
     {
-        entervar();
+        defineVar();
     }
 #line 1753 "parser.c" /* yacc.c:1646  */
     break;
@@ -2270,7 +2270,7 @@ yyreduce:
   case 141:
 #line 796 "grammar" /* yacc.c:1646  */
     {
-        (yyval).evalue = symtabFunIdx();
+        (yyval).evalue = functionIdx();
     }
 #line 2276 "parser.c" /* yacc.c:1646  */
     break;

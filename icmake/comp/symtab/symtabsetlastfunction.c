@@ -18,7 +18,7 @@ size_t symtabSetLastFunction(size_t nParams)
 
     st_setParamTypes(last, nParams);        /* assign param. types */
 
-    return st_nLocalVariables();            /* return # of local variables */
+    return symtab_nLocalVariables();        /* return # of local variables */
 }
 
 

@@ -3,8 +3,8 @@
 
 #include <stddef.h>
 
-void    outbin(void *source, size_t size);
-void    semantic(char *s, ...);
+void    outbin(void const *source, size_t size);
+void    semantic(char const *s, ...);
 size_t  fetchfun();
 
 #endif

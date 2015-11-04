@@ -1,10 +1,27 @@
 #include "symtab.h"
 
+#include <search.h>
 #include <string.h>
 #include <stdlib.h>
 
 #include "../global.h"
 #include "../util/util.h"
+
+enum 
+{
+    initialCapacity = 10
+};
+
+
+typedef struct
+{
+    char    *name;
+} FunInfo;
+
+typedef struct
+{
+    char    *name;
+} VarInfo;
 
 typedef struct
 {
@@ -14,26 +31,44 @@ typedef struct
 } Symtab;
 
 
-extern Symtab *gs_functions;   /* symbol table for functions */
+extern FunInfo *gs_functions;   /* symbol table for functions */
+extern size_t gs_nFunctions;
+extern size_t gs_funCapacity;
 
+extern VarInfo *gs_global;      /* symbol table for global variables */
+extern size_t gs_nGlobals;
+extern size_t gs_globCapacity;
 
-extern Symtab *gs_variables;   /* symbol table for variables */
-extern Symtab *gs_top;          /* points to the topmost symtab */
-extern size_t gs_nVartab;
-extern size_t gs_vartabCap;
+extern VarInfo *gs_local;       /* symbol table for local variables  */
+extern size_t gs_nLocals;
+extern size_t gs_locCapacity;
 
-extern size_t *gs_nLocals;      /* number of local vars in nested levels */
+extern VarInfo **gs_level;      /* pointers to VarInfo pointers per nesting
+                                    level. At each nesting level a new VarInfo
+                                    * array is used containing pointers to the
+                                    VarInfo records of variables that are
+                                    defined at that level.
+                                   At the end of a function gs_level is reset,
+                                    and gs_local contains the info of all
+                                    variables that are locally defined,
+                                    allowing the frame to be constructed
+                                */
+extern size_t gs_nestingLevel;
+extern size_t gs_levelCapacity;
 
-void st_init(Symtab **ptr, size_t count);
-void st_symtabInit(Symtab *location);
+extern VarInfo **gs_top;        /* points to the topmost local level */
 
-Symbol *st_next(Symtab *symtabptr); /* return addr. of next available elem. */
+int st_findFun(void const *key, void const *funInfo);
 
-int st_find(Symtab *symtab);        /* returns -1 if not found */
-void st_free(Symtab *table);        /* free the name fiels of the table */
-
-                                    /* assign param. types */
-void st_setParamTypes(Symbol *last, size_t nParams);
-
-void st_addVar(ExprType type);      /* add variable to the topmost symbol 
-                                        table */
+//void st_symtabInit(Symtab *location);
+//
+//Symbol *st_next(Symtab *symtabptr); /* return addr. of next available elem. */
+//
+//int st_find(Symtab *symtab);        /* returns -1 if not found */
+//void st_free(Symtab *table);        /* free the name fiels of the table */
+//
+//                                    /* assign param. types */
+//void st_setParamTypes(Symbol *last, size_t nParams);
+//
+//void st_addVar(ExprType type);      /* add variable to the topmost symbol 
+//                                        table */

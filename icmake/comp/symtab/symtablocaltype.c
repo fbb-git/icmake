@@ -1,7 +1,6 @@
 #include "symtab.ih"
 
-int symtabLocalType(size_t idx)
+ExprType symtabLocalType(size_t idx)
 {
-//                count = gp_local.symbol[gp_nParams + idx].var.type & e_typeMask;
-    return 0;
+    return (gs_locals + idx).type & e_typeMask;
 }

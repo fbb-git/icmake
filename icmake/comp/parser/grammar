@@ -157,7 +157,7 @@ comma:
     ',' 
 ;
 compound:
-    '{'                                 /* } (for matching) */
+    openbrace
     statements
     closebrace
     {
@@ -565,6 +565,9 @@ expression:
 _for:
     FOR
     nesting
+    {
+        symtabPush();
+    }
 ;
 
 _expr_list:
@@ -574,6 +577,8 @@ _expr_list:
     {
         $$ = *catcode(&$1, &$3);
     }
+|
+    varlist
 |
     expr_code
 ;
@@ -609,6 +614,14 @@ for_stat:
         $$ = *for_stmnt(&$3, &$5, &$7, &$10);
     }
 ;
+
+
+
+
+
+
+
+
 _partype:
     type_of_var
     enterid
@@ -631,41 +644,50 @@ _opt_parlist:
     /* empty */
 ;
 
-_local_list:
-    type_of_var
-    vardefs                         /* + semicol, initialization code */
-    {
-        $$ = $2;
-    }
-;
-
-_locals:
-    _locals
-    _local_list                         /* type + variables */
-    {
-        $$ = *catcode(&$1, &$2);        /* cat initialization code */
-    }            
-|
-    _local_list                         /* initialization code of 1st var */
-;
-                                            /* M */
-
-_opt_locals:
-     _locals                             /* initialization code */
- |
-     zeroframe                           /* empty init. code */
- ;
+/*    _local_list:
+/*        type_of_var
+/*        vardefs                         /* + semicol, initialization code */
+/*        {
+/*            $$ = $2;
+/*        }
+/*    ;
+/*    
+/*    _locals:
+/*        _locals
+/*        _local_list                         /* type + variables */
+/*        {
+/*            $$ = *catcode(&$1, &$2);        /* cat initialization code */
+/*        }            
+/*    |
+/*        _local_list                         /* initialization code of 1st var */
+/*    ;
+/*                                                /* M */
+/*    
+/*    _opt_locals:
+/*         _locals                             /* initialization code */
+/*     |
+/*         zeroframe                           /* empty init. code */
+/*     ;
+/*
+/*
+/*    _funvars:
+/*        openpar
+/*        _opt_parlist
+/*        ')'
+/*        openbrace
+/*        _opt_locals
+/*        {
+/*            make_frame();
+/*            outbin($5.code, $5.codelen);
+/*        }
+/*    ;
+/**/
 
 _funvars:
     openpar
     _opt_parlist
     ')'
     openbrace
-    _opt_locals
-    {
-        make_frame();
-        outbin($5.code, $5.codelen);
-    }
 ;
 
 _funid:
@@ -1033,6 +1055,9 @@ openbrace:
         gp_parse_error = err_openbrace_expected;
     }    
     '{'                             /* } (for matching) */
+    {
+        symtabPush();
+    }
 ;
 
 openpar:
@@ -1114,6 +1139,9 @@ statement:
     {
         g_sem_err = 0;
     }
+|
+    varlist
+    semicol
 ;
 statements:
     statements
@@ -1185,6 +1213,14 @@ vardefs:
     }
 ;
 
+
+varlist:
+    type_of_var
+    vardefs
+    {
+        $$ = $1;
+    }
+;
 var_or_fun:
         vardefs
         {

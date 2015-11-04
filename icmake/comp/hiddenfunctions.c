@@ -24,7 +24,7 @@ void hidden_functions(void)
                 g_lexstring = xstrdup(g_hiddenFun[fun].name);
 
                                             /* update the function's address */
-                outbin(symtabFunAddr(), sizeof(INT16));
+                out(g_bin, symtabFunAddr(), sizeof(INT16));
                 fseek(g_bin, 0, SEEK_CUR);  /* ready to read again */
             }
         }

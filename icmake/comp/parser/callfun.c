@@ -27,16 +27,13 @@ SemVal *callfun(int funIdx, SemVal *e)
     if (funIdx == -1)                   /* function name not found ? */
         return e;                       /* nothing to do here        */
 
-    Symbol const *funInfo = symtabFunInfo(funIdx);
-
-                                            /* then check correct # of args */
-    nParams = symtabFun_nParams(funInfo);
+    nParams = symtabFun_nParams(funIdx);    /* then check correct # of args */
               
     if ((size_t)e->type == nParams)
         checkArgumentTypes(nParams, funInfo, (SemVal *)e->code);
     else
         semantic("Function '%s()' requires %u arguments",
-                    symtabFunName(funInfo), nParams);
+                    symtabFunName(funIdx), nParams);
 
     catargs(e);                             /* convert args to code */
 

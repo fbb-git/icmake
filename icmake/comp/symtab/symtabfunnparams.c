@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-size_t symtabFun_nParams(Symbol const *funInfo)
+size_t symtabFun_nParams(size_t funIdx)
 {
-    return funInfo->var.vu.i->ls.list.size;
+    return gs_functions[funIdx].nParams;
 }

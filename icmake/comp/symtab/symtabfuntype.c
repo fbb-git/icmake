@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-ExprType symtabFunType(Symbol const *funInfo)
+ExprType symtabFunType(size_t funIdx)
 {
-    return funInfo->var.type;
+    return gs_functions[funIdx].type;
 }

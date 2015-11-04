@@ -12,7 +12,7 @@ VarInfo *gs_local = NULL;       /* symbol table for local variables  */
 size_t gs_nLocals = 0;
 size_t gs_locCapacity = initialCapacity;
 
-VarInfo **gs_level = NULL;  /* pointers to VarInfo pointers per nesting
+VarInfoRef *gs_level = NULL;  /* pointers to VarInfo pointers per nesting
                              level. At each nesting level a new VarInfo
                              * array is used containing pointers to the
                              VarInfo records of variables that are

@@ -2,13 +2,13 @@
 
 #include "../global.h"
 
-void outbin(void const *source, size_t size)
+void out(FILE *bin, void const *source, size_t size)
 {
     if
     (
         size
         &&
-        !fwrite(source, size * sizeof(INT8), 1, g_bin)
+        !fwrite(source, size * sizeof(INT8), 1, bin)
     )
         error("Error in writing binary file");
 }

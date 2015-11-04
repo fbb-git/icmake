@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-char const *symtabFunName(Symbol const *funInfo)
+char const *symtabFunName(size_t funIdx)
 {
-    return funInfo->name;
+    return gs_functions[funIdx].name;
 }

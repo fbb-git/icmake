@@ -6,7 +6,7 @@ SemVal *continue_stmnt()
 {
     e = *stackframe(0);
 
-    if (!gp_breakOK)
+    if (!gp_continueOK)
         semantic("'continue' only in 'while' or 'for' statements");
     else
     {

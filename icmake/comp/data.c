@@ -14,10 +14,6 @@ char *g_lexstring;
 char *g_filenames;
 char *g_sourceName;
 
-//SYMTAB_     g_funtab;
-//SYMTAB_     g_globaltab;
-//SYMTAB_    *g_entertab = &g_globaltab;
-
 SemVal g_init;                     /* code initializing globals */
 
 STRINGTAB_ *g_stringtab;

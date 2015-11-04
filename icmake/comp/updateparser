@@ -1,0 +1,10 @@
+#!/bin/bash
+
+./updategrammar || exit 1
+
+cd parser
+
+bison --defines=tokens.h -o parser.c grammar
+
+
+    

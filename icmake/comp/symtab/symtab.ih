@@ -7,22 +7,6 @@
 #include "../global.h"
 #include "../util/util.h"
 
-enum 
-{
-    initialCapacity = 10
-};
-
-
-typedef struct
-{
-    char    *name;
-} FunInfo;
-
-typedef struct
-{
-    char    *name;
-} VarInfo;
-
 typedef struct
 {
     size_t nSymbols;                           /* defined SYMBOL_s */
@@ -31,34 +15,91 @@ typedef struct
 } Symtab;
 
 
+enum 
+{
+    capacityInc = 10
+};
+
+
+typedef struct
+{
+    char        *name;
+    UNS16       address;
+    size_t      nParams;
+    ExprType    type;
+} FunInfo;
+
+typedef struct
+{
+    char        *name;
+    UNS16       value;
+    TypeInfo    type;
+} VarInfo;
+
+typedef struct
+{
+    size_t *index;      /* indices of vars in either gs_global or _local*/
+    size_t nVars;
+    size_t capacity;
+} VarInfoRef;
+
+
 extern FunInfo *gs_functions;   /* symbol table for functions */
 extern size_t gs_nFunctions;
 extern size_t gs_funCapacity;
 
-extern VarInfo *gs_global;      /* symbol table for global variables */
-extern size_t gs_nGlobals;
-extern size_t gs_globCapacity;
 
-extern VarInfo *gs_local;       /* symbol table for local variables  */
-extern size_t gs_nLocals;
-extern size_t gs_locCapacity;
+extern VarInfo *gs_global = NULL;      /* symbol table for global variables */
+extern size_t gs_nGlobals = 0;
+extern size_t gs_globCapacity = initialCapacity;
 
-extern VarInfo **gs_level;      /* pointers to VarInfo pointers per nesting
-                                    level. At each nesting level a new VarInfo
-                                    * array is used containing pointers to the
-                                    VarInfo records of variables that are
-                                    defined at that level.
+extern VarInfo *gs_local = NULL;       /* symbol table for local variables  */
+extern size_t gs_nLocals = 0;
+extern size_t gs_locCapacity = initialCapacity;
+
+extern VarInfoRef *gs_level = NULL;  /* pointers to VarInfo pointers per nesting
+                             level. At each nesting level a new VarInfo
+                             * array is used containing pointers to the
+                             VarInfo records of variables that are
+                             defined at that level.
+                             At the end of a function gs_level is reset,
+                             and gs_local contains the info of all
+                             variables that are locally defined,
+                             allowing the frame to be constructed
+                         */
+extern size_t gs_nestingLevel = 0;
+extern size_t gs_levelCapacity = initialCapacity;
+
+extern VarInfoRef *gs_vars;     /* VarInfoRef objects per nesting level. At
+                                    each nesting level a new VarInfoRef is
+                                    used allowing access  to the VarInfo
+                                    records of variables that are defined at
+                                    that level.
                                    At the end of a function gs_level is reset,
                                     and gs_local contains the info of all
                                     variables that are locally defined,
                                     allowing the frame to be constructed
                                 */
 extern size_t gs_nestingLevel;
-extern size_t gs_levelCapacity;
+extern size_t gs_varsCapacity;
 
-extern VarInfo **gs_top;        /* points to the topmost local level */
+extern VarInfoRef *gs_top;        /* points to the topmost local level */
+
 
 int st_findFun(void const *key, void const *funInfo);
+
+
+
+void st_deleteLocal();      /* delete all local variables, gs_nLocals = 0 */
+
+int st_findVar(void const *key, void const *varInfo)
+
+int st_defineGlobalVar(ExprType type);  /* return -1 if already def'd,
+                                         otherwise return new var's idx */
+
+void st_newGlobal(ExprType type);       /* define a new global var. */
+
+void st_iniVar(VarInfo *next, ExprType type);   /* initialize new variable */
 
 //void st_symtabInit(Symtab *location);
 //

@@ -45,7 +45,7 @@ void backend()
 
     outbin(&opcall, sizeof(INT8));          /* call main() at its offset */
 
-    outbin(symtabFunAddress(symtabFunInfo(idx)), sizeof(INT16));
+    outbin(symtabFunAddress(idx), sizeof(INT16));
 
     outbin(&opexit, sizeof(INT8));          /* generate op_ret at the end */
 
@@ -59,14 +59,7 @@ void backend()
 
     hdr.offset[1] = ftell(g_bin);           /* here the vars start */
     
-    size_t nGlobals = symtab_nGlobalVariables();
-    for (idx = 0; idx != nGlobals; ++idx)
-    {
-        Symbol *info = symtabGlobalInfo(idx);
-        
-        info->var.type &= ~e_var;           /* remove 'var' indicator */
-        fwrite(&info->var, 1, sizeof(VAR_), g_bin);
-    }
+    writeGlobalInfo(symtab_nGlobals());
 
     hdr.offset[2] = ftell(g_bin);           /* here the g_filenames start */
     fputs(g_filenames, g_bin);

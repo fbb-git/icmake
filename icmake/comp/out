@@ -1,18 +1,28 @@
-backend.c
-data.c
-global.h
-hiddenfunctions.c
-iccomp.h
-main.ih
-parser/gencode.c
-parser/callfun.c
-parser/parser.ih
-parser/data.c
-parser/closefun.c
-parser/functionidx.c
-parser/definevar.c
-parser/makeframe.c
-parser/checkargumenttypes.c
-parser/openfun.c
-parser/fetchvar.c
-parser/returnstmnt.c
+backend.c:    idx = symtabFunIdx();
+hiddenfunctions.c:                out(g_bin, symtabFunAddr(), sizeof(INT16));
+
+parser/functionidx.c:    register int idx = symtabFunIdx();
+parser/forstmnt.c:    symtabPop();
+parser/callfun.c:    nParams = symtabFun_nParams(funIdx);    /* then check correct # of args */
+parser/callfun.c:                    symtabFunName(funIdx), nParams);
+parser/callfun.c:    gencode(e, op_call, symtabFunAddress(funInfo));
+parser/callfun.c:    set_type(e, symtabFunType(funInfo));
+parser/definevar.c:    int ret = symtabDefineVar(gp_varType);
+parser/parser.c:        symtabPush();
+parser/parser.c:        symtabPush();
+parser/inc/openbrace.5:        symtabPush();
+parser/inc/forstat.5:        symtabPush();
+parser/inc/funcdef.5:        Maybe defining a symtab type representing a parameter?
+parser/grammar:        symtabPush();
+parser/grammar:        symtabPush();
+parser/gencode.c:            size_t nLocalVars = symtab_nLocals();
+parser/gencode.c:                ExprType type = symtabLocalType(idx);
+parser/closefun.c:    symtabCleanup();        /* pop all but the global symtab, update the local
+parser/returnstmnt.c:    last = symtabLastFunction();
+parser/openfun.c:    symtabReset();                  /* setup the local symbol table */
+parser/fetchvar.c:    idx = symtabVarIdx();                   /* find the index of var.
+parser/fetchvar.c:    ret.type = symtabVarType(idx);
+parser/checkargumenttypes.c:                idx + 1, symtabFunName(funInfo));
+parser/makeframe.c:    size_t nLocalVars = symtabSetLastFunction(gp_nParams);
+
+writeglobalinfo.c:        symtabWriteGlobal(g_bin, idx);

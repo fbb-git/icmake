@@ -13,5 +13,6 @@
 void    backend (void);                /* finish g_bin construction */
 int     next_call(void);
 void    hidden_functions(void);
+void    writeGlobalInfo(size_t nGlobals);
 
 

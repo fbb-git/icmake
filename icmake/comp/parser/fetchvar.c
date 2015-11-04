@@ -22,16 +22,17 @@ SemVal *fetchvar()
 {
     register size_t idx;
 
-    ret = *stackframe(0);
+    ret = *stackframe(e_null);
 
     idx = symtabVarIdx();                   /* find the index of var.
-                                                g_lexstring */
+                                               g_lexstring */
 
     if (idx == -1)                          
     {
         semantic("%s undefined", g_lexstring);
         return &ret;
     }
+
 
     if (idx < gp_nParams)                   /* idx refers to a parameter */
         idx += 0xc002;

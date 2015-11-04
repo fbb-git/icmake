@@ -52,23 +52,26 @@ void gencode(SemVal *e, OPCODE_ opcode, ...)
 
         case op_frame:
         {
-            size_t nLocalVars = symtab_nLocalVariables();
+            size_t nLocalVars = symtab_nLocals();
 
             outcode(e, (int)nLocalVars, sizeof(char));
 
             for (idx = 0; idx != nLocalVars; ++idx)
             {
-                int type = symtabLocalType(idx);
+                ExprType type = symtabLocalType(idx);
                 outcode(e, type, sizeof(char));
             }
         }
         break;
 
         case op_copy_var:                   /* write # of the var. */
-        case op_push_imm:                   /* write value of the int */
         case op_push_var:                   /* write # of the var. */
         case op_dec:                        /* write # of the var. */
         case op_inc:                        /* write # of the var. */
+            /* write backpatch info and fall through ? */
+        // FALLING THRU
+
+        case op_push_imm:                   /* write value of the int */
         case op_call:                       /* write offset of function */
             outcode(e, va_arg(marker, int), sizeof(INT16));
         break;

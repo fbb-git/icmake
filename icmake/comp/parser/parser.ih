@@ -68,8 +68,6 @@ extern char     gp_illegalCast[];
 
 extern ExprType  gp_varType;
 
-// extern SYMTAB_  gp_local;
-
 extern ExprType gp_opType[];
 
 extern OPCODE_ gp_lastOp;

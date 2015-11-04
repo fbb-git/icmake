@@ -63,11 +63,6 @@ extern char *g_lexstring;
 extern char *g_filenames;
 extern char *g_sourceName;
 
-//extern SYMTAB_ g_funtab;
-//extern SYMTAB_ local;
-//extern SYMTAB_ g_globaltab;
-//extern SYMTAB_ *g_entertab;
-
 extern STRINGTAB_ *g_stringtab;
 
 extern SemVal g_init;                  /* code initializing globals */

@@ -2,7 +2,7 @@
 
 cd parser/inc
 
-files=`ls | grep -v build`
+files=`ls -X | grep -v build`
 
 for file in $files
 do

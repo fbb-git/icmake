@@ -1,7 +1,3 @@
-/*
-                                C A T C O D E . C
-*/
-
 #include "parser.ih"
 
 static void patchadd(register size_t value, unsigned **dest, 

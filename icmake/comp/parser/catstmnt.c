@@ -1,7 +1,3 @@
-/*
-                         C A T S T M N T . C
-*/
-
 #include "parser.ih"
 
 SemVal *cat_stmnt(SemVal *lval, SemVal *rval)

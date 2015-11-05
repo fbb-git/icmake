@@ -37,7 +37,7 @@ typedef struct
 {
     char        *name;
     UNS16       value;
-    TypeInfo    type;
+    ExprType    type;
 } VarInfo;
 
 typedef struct
@@ -60,7 +60,7 @@ typedef struct
 
     size_t nParams;             /* the number of parameters of the function 
                                     currently being defined */
-    VarIndices *indices;
+    VarIndices *indices;        /* level 0 holds indices of global vars */
     size_t nLevels;             /* at least 1: the global level */
     size_t capacity;
 } VarRef;
@@ -89,10 +89,10 @@ VarIndices  *st_topLevel();
 VarTab      *st_varTab();       /* vartab to use, given the nestinglevel */
 
 
-SymtabIndex st_varIdx(ExprType type);   /* idx == -1: g_lexstring not found */
-int         st_compareVars(char const *key, size_t *idxPtr) /* compare key to 
-                                                entry in gs_compareTable */
-int         st_findVar(size_t depth)    /* find g_lexstring in gs_vars */
+SymtabIndex st_varIdx();        /* idx == -1: g_lexstring not found */
+int         st_compareVars(char const *key, size_t *idxPtr); /* compare key 
+                                                to entry in gs_compareTable */
+int         st_findVar(size_t depth);   /* find g_lexstring in gs_vars */
 
 
 SymtabIndex st_addVar(ExprType type);   /* add variable to the topmost symbol 
@@ -102,25 +102,21 @@ size_t *st_stNewIdxPtr();       /* pointer to the next available index[] */
 size_t st_newVarIdx(VarInfo **vi); /* idx of an uninitialized record of a new 
                                         variable */
 
+void st_deleteVars(VarTab *varTab); /* delete all info allocated by VarInfo
+                                        objects */
+
 /*------------------------ */
 
-
-
-
-void st_deleteLocal();      /* delete all local variables, gs_nLocals = 0 */
-
-int st_findVar(void const *key, void const *varInfo)
-
-int st_defineGlobalVar(ExprType type);  /* return -1 if already def'd,
-                                         otherwise return new var's idx */
-
-void st_newGlobal(ExprType type);       /* define a new global var. */
-
-void st_iniVar(VarInfo *next, ExprType type);   /* initialize new variable */
-
-//void st_symtabInit(Symtab *location);
+//int st_defineGlobalVar(ExprType type);  /* return -1 if already def'd,
+//                                         otherwise return new var's idx */
 //
-//Symbol *st_next(Symtab *symtabptr); /* return addr. of next available elem. */
+//void st_newGlobal(ExprType type);       /* define a new global var. */
+//
+//void st_iniVar(VarInfo *next, ExprType type);   /* initialize new variable */
+
+//void st_symtab_init(Symtab *location);
+//
+//Symbol *st_next(Symtab *symtab_ptr); /* return addr. of next available elem. */
 //
 //int st_find(Symtab *symtab);        /* returns -1 if not found */
 //void st_free(Symtab *table);        /* free the name fiels of the table */

@@ -1,11 +1,12 @@
 #include "symtab.ih"
 
-void symtabCleanup()
+void symtab_cleanup()
 {
-    if (gs_nestingLevel != 1)   /* only a global and local symtab expected */
-        error("DESIGN ERROR: > 2 symbol tables remain at end of function");
+    symtab_pop();                /* remove the local symtab  */
 
-    st_deleteLocal();
+    if (gs_vars.nLevels != 1)   /* only the global symtab should be left */
+        error("DESIGN ERROR: > 1 symbol table remains at end of function");
 
-    symtabPop();                /* remove the local symtab  */
+    st_deleteVars(gs_vars.varTab + 1);
+
 }

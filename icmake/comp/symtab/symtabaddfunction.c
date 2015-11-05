@@ -1,8 +1,8 @@
 #include "symtab.ih"
 
-int symtabAddFunction(ExprType type) /* 0: function added, -1: already def'd */
+int symtab_addFunction(ExprType type) /* 0: function added, -1: already def'd */
 {
-    if (symtabFunIdx() != gs_functions->nSymbols)
+    if (symtab_funIdx() != gs_functions->nSymbols)
         return -1;
 
     Symbol *next = st_next(gs_functions);

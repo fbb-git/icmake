@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-void symtabSetNparams()
+void symtab_setNparams()
 {
-    gs_vars.nParams = gs_function.info[gs_function.nVars - 1].nParams;
+    gs_vars.nParams = gs_functions.info[gs_functions.nFunctions - 1].nParams;
 }

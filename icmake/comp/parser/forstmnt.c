@@ -11,7 +11,7 @@ SemVal *for_stmnt(SemVal *init, SemVal *cond, SemVal *inc, SemVal *stmnt)
 
     while_stmnt(cond, stmnt, 0);            /* create while-stmnt */
 
-    symtabPop();
+    symtab_pop();
 
     return catcode(init, cond);             /* return final code */
 }

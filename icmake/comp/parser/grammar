@@ -566,7 +566,7 @@ _for:
     FOR
     nesting
     {
-        symtabPush();
+        symtab_push();
     }
 ;
 
@@ -1056,7 +1056,7 @@ openbrace:
     }    
     '{'                             /* } (for matching) */
     {
-        symtabPush();
+        symtab_push();
     }
 ;
 

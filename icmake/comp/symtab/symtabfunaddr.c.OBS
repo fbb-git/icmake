@@ -1,7 +1,7 @@
 #include "symtab.ih"
 
-UNS16 const *symtabFunAddr()    /* uses g_lexstring (the name of an */
+UNS16 const *symtab_funAddr()    /* uses g_lexstring (the name of an */
 {                               /*  existing function )             */
 
-    return &gs_functions->symbol[symtabFunIdx()].var.vu.i->count;
+    return &gs_functions->symbol[symtab_funIdx()].var.vu.i->count;
 }

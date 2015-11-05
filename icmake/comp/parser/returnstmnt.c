@@ -5,11 +5,11 @@ SemVal *return_stmnt(ExprType op, SemVal *e)
     if (!test_type(e, e_code))
         etoc(e);
 
-    size_t idx = symtabLastFunction();
+    size_t idx = symtab_lastFunction();
 
     if ((OPCODE_)op == op_ret)              /* return opcode received */
     {
-        ExprType funType = symtabFunType(funIdx);
+        ExprType funType = symtab_funType(funIdx);
 
                             /* void if the union of the type of the function
                                 and the type of the expression is not a std

@@ -58,7 +58,7 @@ void gencode(SemVal *e, OPCODE_ opcode, ...)
 
             for (idx = 0; idx != nLocalVars; ++idx)
             {
-                ExprType type = symtabLocalType(idx);
+                ExprType type = symtab_localType(idx);
                 outcode(e, type, sizeof(char));
             }
         }

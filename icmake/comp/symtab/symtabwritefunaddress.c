@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-void symtabWriteFunAddress(FILE *bin, size_t funIdx)
+void symtab_writeFunAddress(FILE *bin, size_t funIdx)
 {
-    out(bin, &gs_functions[funIdx].address, sizeof(UNS16);
+    out(bin, &gs_functions.info[funIdx].address, sizeof(UNS16));
 }

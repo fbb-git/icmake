@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-size_t symtabFun_nParams(size_t funIdx)
+size_t symtab_fun_nParams(size_t funIdx)
 {
-    return gs_functions[funIdx].nParams;
+    return gs_functions.info[funIdx].nParams;
 }

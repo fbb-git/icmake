@@ -24,7 +24,7 @@ SemVal *fetchvar()
 
     ret = *stackframe(e_null);
 
-    idx = symtabVarIdx();                   /* find the index of var.
+    idx = symtab_varIdx();                   /* find the index of var.
                                                g_lexstring */
 
     if (idx == -1)                          
@@ -40,7 +40,7 @@ SemVal *fetchvar()
         idx = 0xbfff - (idx - gp_nParams);  /* idx refers to a local var */
 
     ret.evalue = idx;
-    ret.type = symtabVarType(idx);
+    ret.type = symtab_varType(idx);
 
 //                                            /* not a local variable ? */
 //    if ((idx = looksym(&gp_local)) == gp_local.n_defined)

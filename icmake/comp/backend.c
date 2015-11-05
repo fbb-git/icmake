@@ -25,7 +25,7 @@ void backend()
 
     g_lexstring = xstrdup("main");
 
-    idx = symtabFunIdx();
+    idx = symtab_funIdx();
     if (idx == -1)
     {
         semantic("function 'main()' not defined");
@@ -45,7 +45,7 @@ void backend()
 
     outbin(&opcall, sizeof(INT8));          /* call main() at its offset */
 
-    outbin(symtabFunAddress(idx), sizeof(INT16));
+    outbin(symtab_funAddress(idx), sizeof(INT16));
 
     outbin(&opexit, sizeof(INT8));          /* generate op_ret at the end */
 
@@ -59,7 +59,7 @@ void backend()
 
     hdr.offset[1] = ftell(g_bin);           /* here the vars start */
     
-    writeGlobalInfo(symtab_nGlobals());
+    symtab_writeGlobals(g_bin);             /* write the global variables */
 
     hdr.offset[2] = ftell(g_bin);           /* here the g_filenames start */
     fputs(g_filenames, g_bin);

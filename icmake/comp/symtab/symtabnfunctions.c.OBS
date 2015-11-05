@@ -1,6 +1,6 @@
 //#include "symtab.ih"
 //
-//size_t symtabNfunctions()
+//size_t symtab_nfunctions()
 //{
 //    return gs_functions->nSymbols;
 //}

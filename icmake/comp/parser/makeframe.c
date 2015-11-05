@@ -9,9 +9,7 @@
         
 void make_frame()
 {
-    size_t nLocalVars = symtabSetLastFunction(gp_nParams);
-
-    if (nLocalVars)
+//FBB    if (symtab_setLastFunction())
     {
         SemVal e = *stackframe(0);         /* initialize empty frame */
         gencode(&e, op_frame);              /* generate frame instruction */

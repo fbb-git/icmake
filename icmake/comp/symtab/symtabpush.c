@@ -1,12 +1,11 @@
 #include "symtab.ih"
 
-void symtabPush()
+void symtab_push()
 {
-    if (gs_nVartab == gs_vartabCap) /* all used: allocate some more */
-    {
-        xrealloc(gs_variables,  (gs_vartabCap += 4) * sizeof(Symtab));
-        xrealloc(gs_nLocals,    (gs_vartabCap += 4) * sizeof(size_t));
-    }
+    if (gs_vars.nLevels == gs_vars.capacity)
+        gs_vars.indices = xrealloc(gs_vars.indices, 
+                            (gs_vars.capacity += capacityInc) 
+                            * sizeof(VarIndices));
 
-    st_symtabInit(gs_top = (gs_variables + gs_nVartab++));
+    memset(gs_vars.indices + gs_vars.nLevels++, 0, sizeof(VarIndices));
 }

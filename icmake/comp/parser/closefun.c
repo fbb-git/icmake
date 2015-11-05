@@ -14,6 +14,6 @@ void close_fun(SemVal *funStmnt)
         g_dead[g_dead_sp] = 0;  /* leaving a function: code generation ok,  */
                                 /* e.g. to define global variables          */
 
-    symtabCleanup();        /* pop all but the global symtab, update the local
+    symtab_cleanup();        /* pop all but the global symtab, update the local
                                 variable offsets */
 }

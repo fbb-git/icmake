@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-size_t symtabLastFunction() /* idx of last defined function       */
+size_t symtab_lastFunction() /* idx of last defined function       */
 {
     return gs_functions.nFunctions - 1;
 }

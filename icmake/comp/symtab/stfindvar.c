@@ -4,7 +4,7 @@ int st_findVar(size_t depth)   /* find g_lexstring in gs_vars[depth] */
 {
                                 /* variable table to use when looking for
                                     g_lexstring */
-    gs_compareTable = gs_vars.varTab + depth > 0;
+    gs_compareTable = st_varTab();
 
     VarIndices indices = gs_vars.indices + depth;   /* Select the correct
                                                         index vector */

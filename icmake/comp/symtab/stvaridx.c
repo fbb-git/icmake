@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-SymtabIndex st_varIdx(ExprType type)
+SymtabIndex st_varIdx()
 {
     size_t depth;
     SymtabIndex ret;

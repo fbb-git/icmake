@@ -2,5 +2,5 @@
 
 size_t symtab_nGlobals()
 {
-    return gs_vars ? gs_vars->nVars : 0;
+    return gs_vars.varTab->nVars;
 }

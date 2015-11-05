@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-void st_symtabInit(Symtab *location)
+void st_symtab_init(Symtab *location)
 {
     location->nSymbols  = 0;
     location->capacity  = 20;

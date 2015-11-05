@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-ExprType symtabLocalType(size_t idx)
+ExprType symtab_localType(size_t idx)
 {
-    return gs_vars[1].info[idx + gs_vars.nParams].type & e_typeMask;
+    return gs_vars.varTab[1].info[idx + gs_vars.nParams].type & e_typeMask;
 }

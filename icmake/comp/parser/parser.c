@@ -2178,7 +2178,7 @@ yyreduce:
   case 79:
 #line 568 "grammar" /* yacc.c:1646  */
     {
-        symtabPush();
+        symtab_push();
     }
 #line 2184 "parser.c" /* yacc.c:1646  */
     break;
@@ -2484,7 +2484,7 @@ yyreduce:
   case 166:
 #line 1058 "grammar" /* yacc.c:1646  */
     {
-        symtabPush();
+        symtab_push();
     }
 #line 2490 "parser.c" /* yacc.c:1646  */
     break;

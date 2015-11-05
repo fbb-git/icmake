@@ -5,25 +5,39 @@
 
 #include "../../rss/rss.h"
 
-typedef struct                              /* symtab used with the compiler */
+typedef enum 
 {
-    VAR_ var;
-    char *name;
-} Symbol;
-
+    st_global = 0,      /* indices of gs_vars */
+    st_local,           /* all larger values indicate a local var or param */
+} SymtabType;
+    
+typedef struct 
+{
+    short idx;          /* if -1 global is undetermined */
+    SymtabType type;
+} SymtabIndex;
 
 //size_t symtabNfunctions();  /* returns the # defined functions */
 
-int symtabFunIdx();         /* g_lexstring holds the name of a function */
-                            /* returns its idx or -1 if not found       */
+void symtab();              /* initializes the symbol table data structure.
+                                call only once (not checked) */
 
+
+int         symtabFindFun(); /* g_lexstring holds the name of a function 
+                                returns its idx or -1 if not found       */
 size_t      symtabFun_nParams(size_t funIdx);
 char const *symtabFunName(size_t funIdx); 
 UNS16       symtabFunAddress(size_t funIdx); 
-ExprType    symtabFunType(Symbol const *funInfo);
+ExprType    symtabFunType(size_t funIdx);
+ExprType    symtabFunParameterType(size_t funIdx, size_t paramIdx);
 
 void symtabWriteFunAddress(FILE *bin, size_t funidx);
 
+size_t symtabLastFunction();    /* index of last defined function       */
+
+SymtabIndex symtabDefineVar(ExprType type); /* Define a var. at the topmost
+                                                symbol table (.idx == -1 if 
+                                                already def'd) */
 
 
 size_t symtab_nGlobals();       /* the number of global variables defined
@@ -34,7 +48,14 @@ size_t symtab_nLocals();        /* the number of local variables of the
 ExprType symtabLocalType(size_t idx);   /* type of local variable idx, 1st 
                                             local var has idx 0 */
 
+
+
 void symtabWriteGlobal(FILE *bin, size_t idx);
+void symtabSetNparams();
+
+
+
+
 
 void symtabCleanup();           /* pop all local variables */
 void symtabPop();               /* remove the topmost local symtab  */
@@ -47,15 +68,11 @@ void symtabPop();               /* remove the topmost local symtab  */
 //                            /* returns its idx or -1 if not found       */
 //
 //
-//int symtabAddFunction(ExprType type); /* add new function. returns 0 if 
-//                                           added,  != 0 if already def'd    */
 //
 //void symtabReset();          /* initialize the symtabs at function begin */
 //void symtabPush();          /* initialize a new local symtab  */
 //
 //UNS16 const *symtabFunAddr();/* uses g_lexstring; returns address of fun    */
-//Symbol const *symtabLastFunction(); /* addr. of last defined function       */
-//                                    /* or NULL if none defined              */
 //
 //size_t symtabSetLastFunction(size_t nParams); /* initializes the fields of    */
 //                                            /* the last defined function;   */
@@ -67,13 +84,12 @@ void symtabPop();               /* remove the topmost local symtab  */
 //
 //ExprType symtabVarType(size_t idx); /* type of variable idx */
 //
-//int symtabDefineVar(ExprType type); /* Define a local var. at the topmost
-//                                        symbol table (-1 if already def'd) */
 //
 //Symbol const *symtabFunInfo(size_t idx); /* Symtab record of function idx */
 //
 //
-//ExprType symtabFunParameterType(Symbol const *funInfo, size_t idx);
+//int symtabAddFunction(ExprType type); /* add new function. returns 0 if 
+//                                           added,  != 0 if already def'd    */
 
 #endif
 

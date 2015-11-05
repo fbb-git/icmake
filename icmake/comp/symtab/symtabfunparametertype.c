@@ -1,9 +1,12 @@
 #include "symtab.ih"
 
-ExprType symtabFunParameterType(Symbol const *fun, size_t idx)
+ExprType symtabFunParameterType(size_t funIdx, size_t paramIdx)
 {
-    return (ExprType)fun->var.vu.i->ls.list.element[idx] & e_typeMask;
+    return gs_function[funIdx].paramType[paramIdx]; // & e_typeMask; (?)
 }
+
+
+
 
 //    ((char *)
 //       g_funtab.symbol[funIdx].var.vu.i->ls.list.element)[idx]

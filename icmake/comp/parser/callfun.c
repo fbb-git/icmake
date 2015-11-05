@@ -30,7 +30,7 @@ SemVal *callfun(int funIdx, SemVal *e)
     nParams = symtabFun_nParams(funIdx);    /* then check correct # of args */
               
     if ((size_t)e->type == nParams)
-        checkArgumentTypes(nParams, funInfo, (SemVal *)e->code);
+        checkArgumentTypes(nParams, funIdx, (SemVal *)e->code);
     else
         semantic("Function '%s()' requires %u arguments",
                     symtabFunName(funIdx), nParams);
@@ -38,7 +38,7 @@ SemVal *callfun(int funIdx, SemVal *e)
     catargs(e);                             /* convert args to code */
 
                                             /* call function and clean stack */
-    gencode(e, op_call, symtabFunAddress(funInfo));
+    gencode(e, op_call, symtabFunAddress(funIdx));
     gencode(e, op_asp,  nParams);
     set_type(e, symtabFunType(funInfo));
 

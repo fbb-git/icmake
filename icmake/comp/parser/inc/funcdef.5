@@ -1,16 +1,15 @@
     /*
         parameters are defined as local variables of the current function,
         while counting the number of parameters. 
-        At the end of a function definition the number of local variables
-        minus gp_nParams equals the number of `real' local variables.
-
-        Maybe defining a symtab type representing a parameter?
+        At the end of a function definition head it's symtab nParams fields
+        holds the number of its parameters, which are represented by the
+        initial nParams elements of symtab's local variables array.
     */
 _partype:
     type_of_var
     enterid
     {
-        ++gp_nParams;
+        ++gp_nParams;       /* should be SF as symtab keeps track of this */
     }
 ;
 
@@ -72,6 +71,9 @@ _funvars:
     _opt_parlist
     ')'
     openbrace
+    {
+        symtabSetNparams();
+    }
 ;
 
 _funid:

@@ -1,12 +1,14 @@
 #include "symtab.ih"
 
-void st_addVar(ExprType type)
+SymtabIndex st_addVar(ExprType type)
 {
-    Symbol *next = st_next(gs_top);
+    VarInfo *vi;
+    size_t idx = st_nextVarIdx(&vi);
 
-    next->name = xstrdup(g_lexstring);      /* set the name of the var */
-    next->var.type = type | e_var;          /* set the type of the var */
+    vi->name = xstrdup(g_lexstring);      /* set the name of the var */
+    vi->type = type | e_var;          /* set the type of the var */
+    vi->value = 0;
 
-    if (gs_nVartab == 1)                    /* initialize global variable */
-        memset(&next->var.vu, 0, sizeof(VAR_UNION_));
+    SymtabIndex ret = {idx, st_nestingLevel()};
+    return ret;
 }

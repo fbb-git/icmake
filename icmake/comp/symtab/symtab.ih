@@ -7,14 +7,6 @@
 #include "../global.h"
 #include "../util/util.h"
 
-typedef struct
-{
-    size_t nSymbols;                           /* defined SYMBOL_s */
-    size_t capacity;                           /* available memory */
-    Symbol *symbol;
-} Symtab;
-
-
 enum 
 {
     capacityInc = 10
@@ -26,8 +18,20 @@ typedef struct
     char        *name;
     UNS16       address;
     size_t      nParams;
-    ExprType    type;
+    ExprType    *paramType;     /* nParams elements */
+    ExprType    returnType;
 } FunInfo;
+
+typedef struct
+{
+    FunInfo *info;
+    size_t nFunctions;
+    size_t capacity;
+} FunInfoTab;
+   
+extern FunInfoTab gs_functions; /* symbol table for functions */
+int st_findFun(void const *key, void const *funInfo);
+
 
 typedef struct
 {
@@ -38,40 +42,37 @@ typedef struct
 
 typedef struct
 {
-    size_t *index;      /* indices of vars in either gs_global or _local*/
+    VarInfo *info;
     size_t nVars;
     size_t capacity;
-} VarInfoRef;
+} VarTab;
+
+typedef struct
+{
+    size_t *index;
+    size_t nVars;
+    size_t capacity;
+} VarIndices;
+   
+typedef struct
+{
+    VarTab *varTab;             /* points to global [0] or local [1] vars */
+
+    size_t nParams;             /* the number of parameters of the function 
+                                    currently being defined */
+    VarIndices *indices;
+    size_t nLevels;             /* at least 1: the global level */
+    size_t capacity;
+} VarRef;
 
 
-extern FunInfo *gs_functions;   /* symbol table for functions */
-extern size_t gs_nFunctions;
-extern size_t gs_funCapacity;
+extern VarTab *gs_compareTable; /* set by st_findVar for st_compareVars 
+                                        to gs_global or gs_local    */
 
-
-extern VarInfo *gs_global = NULL;      /* symbol table for global variables */
-extern size_t gs_nGlobals = 0;
-extern size_t gs_globCapacity = initialCapacity;
-
-extern VarInfo *gs_local = NULL;       /* symbol table for local variables  */
-extern size_t gs_nLocals = 0;
-extern size_t gs_locCapacity = initialCapacity;
-
-extern VarInfoRef *gs_level = NULL;  /* pointers to VarInfo pointers per nesting
-                             level. At each nesting level a new VarInfo
-                             * array is used containing pointers to the
-                             VarInfo records of variables that are
-                             defined at that level.
-                             At the end of a function gs_level is reset,
-                             and gs_local contains the info of all
-                             variables that are locally defined,
-                             allowing the frame to be constructed
-                         */
-extern size_t gs_nestingLevel = 0;
-extern size_t gs_levelCapacity = initialCapacity;
-
-extern VarInfoRef *gs_vars;     /* VarInfoRef objects per nesting level. At
-                                    each nesting level a new VarInfoRef is
+extern VarRef gs_vars;     /* 
+                                    OLD:
+                                   VarRef objects per nesting level. At
+                                    each nesting level a new VarRef is
                                     used allowing access  to the VarInfo
                                     records of variables that are defined at
                                     that level.
@@ -80,13 +81,29 @@ extern VarInfoRef *gs_vars;     /* VarInfoRef objects per nesting level. At
                                     variables that are locally defined,
                                     allowing the frame to be constructed
                                 */
-extern size_t gs_nestingLevel;
-extern size_t gs_varsCapacity;
+//extern size_t gs_nestingLevel;
+//extern size_t gs_varsCapacity;
 
-extern VarInfoRef *gs_top;        /* points to the topmost local level */
+size_t       st_nestingLevel();
+VarIndices  *st_topLevel();
+VarTab      *st_varTab();       /* vartab to use, given the nestinglevel */
 
 
-int st_findFun(void const *key, void const *funInfo);
+SymtabIndex st_varIdx(ExprType type);   /* idx == -1: g_lexstring not found */
+int         st_compareVars(char const *key, size_t *idxPtr) /* compare key to 
+                                                entry in gs_compareTable */
+int         st_findVar(size_t depth)    /* find g_lexstring in gs_vars */
+
+
+SymtabIndex st_addVar(ExprType type);   /* add variable to the topmost symbol 
+                                            table */
+size_t st_nextVarIdx();         /* return idx of next variable */
+size_t *st_stNewIdxPtr();       /* pointer to the next available index[] */
+size_t st_newVarIdx(VarInfo **vi); /* idx of an uninitialized record of a new 
+                                        variable */
+
+/*------------------------ */
+
 
 
 
@@ -111,5 +128,3 @@ void st_iniVar(VarInfo *next, ExprType type);   /* initialize new variable */
 //                                    /* assign param. types */
 //void st_setParamTypes(Symbol *last, size_t nParams);
 //
-//void st_addVar(ExprType type);      /* add variable to the topmost symbol 
-//                                        table */

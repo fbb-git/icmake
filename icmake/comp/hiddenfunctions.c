@@ -3,7 +3,7 @@
 void hidden_functions(void)
 {
     long eof;
-    register int fun;
+    register int funIdx;
 
     if (!g_hidden_called)
         return;                             /* no hidden calls: nothing to do */
@@ -12,19 +12,20 @@ void hidden_functions(void)
                                             /* go to begin of code */
     fseek(g_bin, sizeof(BIN_HEADER_), SEEK_SET);
 
-    while (ftell(g_bin) < eof)              /* continue until code processed */
+    while (ftell(g_bin) < eof)            /* continue until code processed */
     {
-        if (next_call())                    /* find function call */
+        if (next_call())                  /* find function call */
         {
-            fun = -getint16(g_bin);         /* get the address (toggled sign) */
-            if (fun >= 0)                   /* hidden function */
-            {                               /* reset to patchup */
+            funIdx = -getint16(g_bin);    /* get the address (toggled sign) */
+
+            if (funIdx >= 0)              /* hidden function */
+            {                             /* reset to patchup */
                 fseek(g_bin, -(long)sizeof(INT16), SEEK_CUR);
 
-                g_lexstring = xstrdup(g_hiddenFun[fun].name);
+                g_lexstring = xstrdup(g_hiddenFun[funIdx].name);
 
                                             /* update the function's address */
-                out(g_bin, symtabFunAddr(), sizeof(INT16));
+                symtabWriteFunAddress(g_bin, funIdx);
                 fseek(g_bin, 0, SEEK_CUR);  /* ready to read again */
             }
         }

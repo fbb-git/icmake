@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-int symtabFunIdx()       /* g_lexstring holds the name of an existing    */
+int symtabFindFun()      /* g_lexstring holds the name of an existing    */
 {                        /* function, returns -1 if not                  */
 
     void *ret = lfind(g_lexstring, gs_functions, &gs_nFunctions, 

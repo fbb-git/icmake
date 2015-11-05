@@ -194,4 +194,4 @@ void    patchup_false(SemVal *e, int pos);
 void    patchup_true(SemVal *e, int pos);
 
 int     functionIdx();
-void    checkArgumentTypes(size_t nParams, Symbol const *funInfo, SemVal *a);
+void    checkArgumentTypes(size_t nParams, size_t funIdx, SemVal *a);

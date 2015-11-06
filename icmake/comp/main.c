@@ -16,7 +16,7 @@ int main (int argc, char **argv)            /* icm-comp source(txt) dest(bin) */
         return 0;
     }
 
-    parser();
+    parser(argv);
 
     yyparse();                              /* parse the source */
 

@@ -65,9 +65,8 @@
 #line 1 "grammar" /* yacc.c:339  */
 
     #include "parser.ih"
-    #define YYSTYPE SemVal
 
-#line 71 "parse.c" /* yacc.c:339  */
+#line 70 "parse.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -198,7 +197,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 202 "parse.c" /* yacc.c:358  */
+#line 201 "parse.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -503,7 +502,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   110,   110,   113,   117,   124,   130,   135,   141,   141,
+       0,   109,   109,   112,   116,   123,   129,   134,   140,   140,
      147,   147,   153,   153,   159,   167,   173,   180,   183,   188,
      194,   194,   203,   209,   211,   213,   217,   223,   231,   234,
      241,   241,   248,   255,   263,   270,   277,   284,   291,   298,
@@ -1662,41 +1661,42 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 120 "grammar" /* yacc.c:1646  */
+#line 119 "grammar" /* yacc.c:1646  */
     {
         (yyval) = *multargs(&(yyvsp[-2]), &(yyvsp[0]));
     }
-#line 1670 "parse.c" /* yacc.c:1646  */
+#line 1669 "parse.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 125 "grammar" /* yacc.c:1646  */
+#line 124 "grammar" /* yacc.c:1646  */
     {
         (yyval) = *firstarg(&(yyvsp[0]));
     }
-#line 1678 "parse.c" /* yacc.c:1646  */
+#line 1677 "parse.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 130 "grammar" /* yacc.c:1646  */
+#line 129 "grammar" /* yacc.c:1646  */
     {
         gp_breakOK++;
     }
-#line 1686 "parse.c" /* yacc.c:1646  */
+#line 1685 "parse.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 136 "grammar" /* yacc.c:1646  */
+#line 135 "grammar" /* yacc.c:1646  */
     {
         (yyval) = *break_stmnt();
     }
-#line 1694 "parse.c" /* yacc.c:1646  */
+#line 1693 "parse.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 141 "grammar" /* yacc.c:1646  */
+#line 140 "grammar" /* yacc.c:1646  */
     {
         gp_parse_error = err_closebrace_expected;
+        symtab_pop();
     }
 #line 1702 "parse.c" /* yacc.c:1646  */
     break;

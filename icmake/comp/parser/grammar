@@ -1,6 +1,5 @@
 %{
     #include "parser.ih"
-    #define YYSTYPE SemVal
 %}
 
 %token
@@ -140,6 +139,7 @@ break_stat:
 closebrace: 
     {
         gp_parse_error = err_closebrace_expected;
+        symtab_pop();
     }                       /* '{' for matching */
     '}' 
 ;

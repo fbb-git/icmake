@@ -3,7 +3,7 @@
 
 #include "../global.h"
 
-void parser();              /* call once */
+void parser(char **argv);              /* call once */
 int yyparse(void);
 int parser_backend();
 

@@ -22,7 +22,7 @@ void parser(char **argv)
         yydebug = YYDEBUG;
     #endif
 
-
+    fprintf(stderr, "parser called\n");
 }
 
 

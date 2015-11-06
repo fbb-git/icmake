@@ -80,7 +80,6 @@ typedef enum
 extern int      gp_parse_error;
 extern size_t   gp_breakOK;
 extern size_t   gp_nestLevel;
-extern size_t   gp_nParams;
 extern size_t   gp_stringsize;
 
 extern char     gp_typeConflict[];

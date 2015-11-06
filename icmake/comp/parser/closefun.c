@@ -4,13 +4,13 @@ static INT8 opret = op_ret;
 
 void close_fun(SemVal *funStmnt)
 {
-    fprintf(stderr, "close_fun\n");
+//    fprintf(stderr, "close_fun\n");
 
     last_stmnt(funStmnt);   /* patch funStmnnt's false list */
 
     make_frame();           /* make the frame, defining the local variables */
 
-    fprintf(stderr, "mid close_fun\n");
+//    fprintf(stderr, "mid close_fun\n");
 
     if (!gp_dead[gp_dead_sp])
         util_out(gp_bin, &opret, sizeof(INT8));   /* add a 'ret' instruction */

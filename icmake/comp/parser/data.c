@@ -3,7 +3,6 @@
 int gp_parse_error = err_code_or_vars_expected;
 size_t  gp_breakOK;
 size_t  gp_nestLevel;
-size_t  gp_nParams;
 size_t  gp_stringsize;
 size_t  gp_hidden_called;
 HiddenFunction gp_hiddenFun[he_];

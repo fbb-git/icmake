@@ -4,7 +4,7 @@ VarIndex symtab_defineVar(ExprType type)
 {
     VarIndex ret;
 
-    int idx = st_findVar(st_nestingLevel());    /* see if the var. exists at
+    int idx = st_findVar(st_nestingOffset());    /* see if the var. exists at
                                                     the current nesting level 
                                                 */
 

@@ -86,7 +86,7 @@ extern VarRef gs_vars;     /*
 size_t st_nextFunIdx(void);      /* idx of an uninitialized record of a 
                                     function */
 
-size_t       st_nestingLevel(void);
+size_t       st_nestingOffset(void);
 
 VarIndices  *st_topLevel(void);
 

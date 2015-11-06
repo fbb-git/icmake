@@ -9,7 +9,7 @@
         
 void make_frame()
 {
-//FBB    if (symtab_setLastFunction())
+    if (symtab_setFunctionInfo(ftell(gp_bin)))
     {
         SemVal e = *stackframe(0);         /* initialize empty frame */
         gencode(&e, op_frame);              /* generate frame instruction */

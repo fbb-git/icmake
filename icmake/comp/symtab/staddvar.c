@@ -9,6 +9,9 @@ VarIndex st_addVar(ExprType type)
     vi->type = type | e_var;          /* set the type of the var */
     vi->value = 0;
 
-    VarIndex ret = {idx, st_nestingLevel() > 0};
+    fprintf(stderr, "var %s defined at nesting offset %u\n",
+            vi->name, st_nestingOffset());
+
+    VarIndex ret = {idx, st_nestingOffset() > 0};
     return ret;
 }

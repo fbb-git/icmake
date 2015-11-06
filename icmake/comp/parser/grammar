@@ -632,7 +632,7 @@ _partype:
     type_of_var
     enterid
     {
-        ++gp_nParams;       /* should be SF as symtab keeps track of this */
+        symtab_newParam();
     }
 ;
 

@@ -29,6 +29,8 @@ int         symtab_findFun(void); /* util_string() holds the name of a function
 
 size_t      symtab_fun_nParams(size_t funIdx);
 
+void        symtab_newParam();  /* counts the number of params so far */
+
 char const *symtab_funName(size_t funIdx); 
 
 UNS16       symtab_funAddress(size_t funIdx); 
@@ -41,7 +43,7 @@ void        symtab_writeFunAddress(FILE *bin, size_t funidx);
 
 size_t      symtab_lastFunction(void);  /* index of last defined function */
 
-size_t      symtab_setLastFunction(size_t nParams); /* initializes the fields 
+size_t      symtab_setFunctionInfo(size_t nParams); /* initializes the fields 
                                                  of the last defined function;
                                                  returns # local variables */
 

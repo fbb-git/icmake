@@ -33,11 +33,14 @@ SemVal *fetchvar()
         return &ret;
     }
 
+//FBB fetchvar must distinguish between global vars, params, and local vars:
 
-    if (vi.idx < gp_nParams)                   /* idx refers to a parameter */
+    size_t nParams = 0;
+
+    if (vi.idx < nParams)                   /* idx refers to a parameter */
         idx += 0xc002;
     else                                    /* idx refers to a local var */
-        vi.idx = 0xbfff - (vi.idx - gp_nParams); 
+        vi.idx = 0xbfff - (vi.idx - nParams); 
 
     ret.evalue = vi.idx;
     ret.type = symtab_varType(vi);

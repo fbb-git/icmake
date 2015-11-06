@@ -2210,7 +2210,7 @@ yyreduce:
   case 88:
 #line 634 "grammar" /* yacc.c:1646  */
     {
-        ++gp_nParams;       /* should be SF as symtab keeps track of this */
+        symtab_newParam();
     }
 #line 2216 "parse.c" /* yacc.c:1646  */
     break;

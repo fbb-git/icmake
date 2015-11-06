@@ -2,9 +2,9 @@
 
     /*  
         make_frame writes the op_frame instruction, defining the number and
-        types of all local variables, to g_bin. 
+        types of all local variables, to gp_bin. 
         make_frame is called by close_fun, which writes the statements of the
-        functions to g_bin after calling make_frame.
+        functions to gp_bin after calling make_frame.
     */
         
 void make_frame()
@@ -13,7 +13,7 @@ void make_frame()
     {
         SemVal e = *stackframe(0);         /* initialize empty frame */
         gencode(&e, op_frame);              /* generate frame instruction */
-        outbin(e.code, e.codelen);          /* write to g_bin */
+        util_out(gp_bin, e.code, e.codelen); /* write to gp_bin */
         free(e.code);
     }
 }

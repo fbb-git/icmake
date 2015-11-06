@@ -1,10 +1,10 @@
-#include "main.ih"
+#include "parser.ih"
 
 int next_call(void)
 {
     register int opcode;
 
-    switch (opcode = getopcode(g_bin))
+    switch (opcode = getopcode(gp_bin))
     {
         case op_push_imm:
         case op_jmp:
@@ -16,13 +16,13 @@ int next_call(void)
         case op_copy_var:
         case op_inc:
         case op_dec:
-            fseek(g_bin, sizeof(INT16), SEEK_CUR);
+            fseek(gp_bin, sizeof(INT16), SEEK_CUR);
         return 0;                         /* close, but no cigar */
 
         case op_push_1_jmp_end:
         case op_call_rss:
         case op_asp:
-            fseek(g_bin, sizeof(char), SEEK_CUR);
+            fseek(gp_bin, sizeof(char), SEEK_CUR);
         return 0;                         /* close, but no cigar */
 
         case op_push_0:
@@ -60,7 +60,7 @@ int next_call(void)
         return 1;                         /* cigar! check this argument */
 
         case op_frame:                  /* next byte: # bytes to skip */
-            fseek(g_bin, (int)getopcode(g_bin), SEEK_CUR);
+            fseek(gp_bin, (int)getopcode(gp_bin), SEEK_CUR);
         return 0;                         /* close, but no cigar */
 
         default:
@@ -73,7 +73,7 @@ int next_call(void)
                   "Please inform the ICCE ICMAKE (Z-side) support group\n"
                   "\n"
                   "THE BIM-FILE IS INVALID AND SHOULD *NOT* BE USED\n"
-                  , ftell(g_bin)
+                  , ftell(gp_bin)
                   , opcode
                   );
     }

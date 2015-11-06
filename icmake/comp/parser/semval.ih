@@ -1,0 +1,19 @@
+typedef struct                      /* see also display code in */
+{                                   /* callfun.c                */
+    ExprType type;                   /* type of the expression */
+
+    size_t truelen;
+    size_t falselen;
+    size_t continuelen;
+    size_t codelen;                    /* length of the code */
+
+    int    evalue;                     /* index or value of the expression */
+
+    size_t *truelist;
+    size_t *falselist;
+    size_t *continuelist;
+
+    INT8 *code;
+} SemVal;
+
+#define YYSTYPE SemVal

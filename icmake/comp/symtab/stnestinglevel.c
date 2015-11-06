@@ -2,5 +2,5 @@
 
 size_t st_nestingLevel()
 {
-    return gs_vars.nlevels;
+    return gs_vars.nLevels;
 }

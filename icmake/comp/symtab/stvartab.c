@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-VarTab *st_varTab()
+VarTab *st_varTab(size_t nesting)
 {
-    return gs_var.varTab + st_nestingLevel() > 0;
+    return gs_vars.varTab + (nesting > 0);
 }

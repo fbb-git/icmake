@@ -9,11 +9,11 @@ SemVal *stackframe(ExprType type)
     switch ((int)type)
     {
         case e_int | e_const:
-            frame.evalue = atoi(g_lexstring);
+            frame.evalue = atoi(util_string());
         break;
 
         case e_str | e_const:
-            frame.evalue = lookstring(g_stringbuf);
+            frame.evalue = lookstring(gp_stringbuf);
         break;
 
         default:

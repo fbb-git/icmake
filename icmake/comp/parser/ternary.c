@@ -4,7 +4,7 @@ SemVal *ternary(SemVal *cond, SemVal *ifTrue, SemVal *ifFalse)
 {
     if ((ifTrue->type & ifFalse->type & e_typeMask) == 0)
     {
-        semantic(gp_typeConflict, "?:");
+        util_semantic(gp_typeConflict, "?:");
         clearbin(ifTrue, ifFalse);
         
         return cond;

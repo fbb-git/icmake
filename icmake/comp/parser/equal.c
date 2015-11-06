@@ -22,8 +22,8 @@ SemVal *equal(SemVal *lval, SemVal *rval)
                       (
                         strcmp
                         (
-                            g_stringtab[lval->evalue].string,
-                            g_stringtab[rval->evalue].string
+                            gp_stringTable[lval->evalue].string,
+                            gp_stringTable[rval->evalue].string
                         )
                       );
             set_type(lval, e_int | e_const);

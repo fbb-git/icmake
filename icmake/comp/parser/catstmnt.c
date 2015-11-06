@@ -6,7 +6,7 @@ SemVal *cat_stmnt(SemVal *lval, SemVal *rval)
 
     if (!gp_nestLevel)
     {
-        outbin(lval->code, lval->codelen);
+        util_out(gp_bin, lval->code, lval->codelen);
         discard(lval);
         return rval;
     }

@@ -7,8 +7,8 @@ void catstrings(SemVal *lval, SemVal *rval)
         l_len,
         r_len;
 
-    l_len = strlen( g_stringtab[ lval->evalue ].string );
-    r_len = strlen( g_stringtab[ rval->evalue ].string );
+    l_len = strlen( gp_stringTable[ lval->evalue ].string );
+    r_len = strlen( gp_stringTable[ rval->evalue ].string );
 
     cp = xrealloc(NULL, l_len + r_len + 1); /* room for catenated string */
     lval->evalue =
@@ -16,8 +16,8 @@ void catstrings(SemVal *lval, SemVal *rval)
         (
             strcat                          /* catenate two strings */
             (
-                strcpy(cp, g_stringtab[lval->evalue].string),
-                g_stringtab[rval->evalue].string
+                strcpy(cp, gp_stringTable[lval->evalue].string),
+                gp_stringTable[rval->evalue].string
             )
         );
     free(cp);                               /* free intermediate memory */

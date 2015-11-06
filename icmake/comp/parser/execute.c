@@ -22,7 +22,7 @@ SemVal *execute(SemVal *arr)
 
     if (count < 6)                          /* to few arguments */
     {
-        semantic(gp_illegalArgCount, "execute");
+        util_semantic(gp_illegalArgCount, "execute");
         return (arr);                       /* dummy  args return */
     }
 
@@ -46,8 +46,8 @@ SemVal *execute(SemVal *arr)
 
     catcode(&e, specials(f_exec, arr));     /* catenate call-code */
 
-    free(g_stringbuf);                        /* make sure empty string */
-    g_stringbuf = xstrdup("");              /* is pushed */
+    free(gp_stringbuf);                        /* make sure empty string */
+    gp_stringbuf = xstrdup("");              /* is pushed */
 
     tmp = *stackframe(e_str | e_const);     /* empty string argument */
 

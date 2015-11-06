@@ -1,7 +1,6 @@
 #include "symtab.ih"
 
-ExprType symtab_varType(size_t idx)
+ExprType symtab_varType(VarIndex vt)
 {
-//                count = gp_local.symbol[gp_nParams + idx].var.type & e_typeMask;
-    return e_null;
+    return gs_vars.varTab[vt.type].info[vt.idx].type;
 }

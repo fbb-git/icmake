@@ -4,7 +4,7 @@
 
 cd parser
 
-bison --defines=tokens.h -o parser.c grammar
+bison --defines=tokens.h -o parse.c grammar
 
 
     

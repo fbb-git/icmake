@@ -6,7 +6,7 @@ void gencode(SemVal *e, OPCODE_ opcode, ...)
     int marker_value;
     va_list marker;
 
-    if (g_dead[g_dead_sp])
+    if (gp_dead[gp_dead_sp])
         return;
 
     va_start(marker, opcode);
@@ -47,7 +47,7 @@ void gencode(SemVal *e, OPCODE_ opcode, ...)
 
         case op_push_strconst:              /* write idx of the const */
             outcode(e, 
-                (int)g_stringtab[va_arg(marker, int)].index, sizeof(INT16));
+                (int)gp_stringTable[va_arg(marker, int)].index, sizeof(INT16));
         break;
 
         case op_frame:
@@ -90,7 +90,7 @@ void gencode(SemVal *e, OPCODE_ opcode, ...)
 
         case op_ret:
         case op_exit:
-            ++g_dead[g_dead_sp];
+            ++gp_dead[gp_dead_sp];
         break;
 
         default:

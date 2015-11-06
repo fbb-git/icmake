@@ -51,7 +51,7 @@ SemVal *onearg(ExprType type, SemVal *arg)
     if (ok)
         callrss(arg, type);
     else
-        semantic(gp_typeConflict, gp_funstring[type]);
+        util_semantic(gp_typeConflict, gp_funstring[type]);
 
     return (arg);
 }

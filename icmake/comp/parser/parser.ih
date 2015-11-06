@@ -9,6 +9,9 @@
 #include "../util/util.h"
 #include "../symtab/symtab.h"
 
+#include "semval.ih"
+
+
 #define test_type(e,v)          ((e)->type &   (v))
 #define set_type(e,v)           ((e)->type =   (v))
 #define up_type(e,v)            ((e)->type |=  (v))
@@ -16,6 +19,29 @@
 
 #define e_typeMask                (e_int | e_list | e_str | e_bool)
 #define codestruc(estruc, x)    (&(((SemVal *)((estruc)->code))[x]))
+
+typedef enum                        /* order of elements must follow */
+{                                   /* definition of hidden[] in     */
+    he_older = 0,                   /* data.c                        */
+    he_younger = 1,                 /* reserved values 0 and 1 */
+
+    he_                             /* must be last ! */
+} Hidden;
+
+typedef struct
+{
+    char *name;                      /* name of the hidden fun */
+    char *source;                   /* source of the hidden function */
+    size_t type;                    /* returntype */
+    size_t this;                    /* set to 1 if called */
+    size_t nargs;                   /* # of arguments */
+} HiddenFunction;
+
+typedef struct
+{
+    unsigned index;                         /* index in stringsection */
+    char *string;                           /* string itself */
+} StringTable;
 
 typedef enum
 {
@@ -72,6 +98,23 @@ extern ExprType gp_opType[];
 
 extern OPCODE_ gp_lastOp;
 
+extern size_t   gp_dead_sp;
+extern size_t  *gp_dead;
+extern FILE    *gp_bin;
+
+extern size_t   gp_hidden_called;
+extern HiddenFunction gp_hiddenFun[];
+
+extern size_t   gp_nStrings;
+extern StringTable *gp_stringTable;
+
+extern SemVal gp_init;                  /* code initializing globals */
+
+extern char *gp_stringbuf;
+
+extern int yydebug;
+
+/* ================================================================== */
 
 SemVal *addition (SemVal *, SemVal *);       /* + code */
 SemVal *and_boolean (SemVal *, SemVal *);/* && code */
@@ -166,7 +209,7 @@ void    catstrings(SemVal *lval, SemVal *rval);
 void    clearbin(SemVal *lval, SemVal *rval);
 void    copy_to_pop(SemVal *e);
 void    defcode(SemVal *lval, SemVal *rval, OPCODE_ opcode);
-void    defineVar();        /* parameter or local var */
+void    defineVar(void);        /* parameter or local var */
 void    discard(SemVal *e);
 
 //FBB void    enter();
@@ -177,12 +220,12 @@ void    etoc(SemVal *e);
 void    fetob(SemVal *e);
 void    gencode(SemVal *e, OPCODE_ opcode, ...);
 void    last_stmnt(SemVal *lval);
-void    open_fun();
+void    open_fun(void);
 void    outcode(SemVal *ep, int value, register size_t size);
 void    patchcontinue(SemVal *e);
 void    patchfalse(SemVal *e);
 void    patchtrue(SemVal *e);
-void    patchVariables();
+void    patchVariables(void);
 
     /* 'pos' == 0 means: jump back to the begin of the code,
         otherwise jump forward to the end of the code
@@ -193,5 +236,7 @@ void    patchup_continue(SemVal *e, int pos);
 void    patchup_false(SemVal *e, int pos);
 void    patchup_true(SemVal *e, int pos);
 
-int     functionIdx();
+int     functionIdx(void);
 void    checkArgumentTypes(size_t nParams, size_t funIdx, SemVal *a);
+void    hidden_functions(void);
+int     next_call(void);

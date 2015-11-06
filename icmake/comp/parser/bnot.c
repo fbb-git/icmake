@@ -8,7 +8,7 @@ SemVal *bnot(SemVal *e)                   /* expression so far */
 {
     if (test_operand(e, op_bnot))            /* test types ok */
     {
-        semantic(gp_illegalType, gp_opstring[op_bnot]);
+        util_semantic(gp_illegalType, gp_opstring[op_bnot]);
         return e;
     }
 

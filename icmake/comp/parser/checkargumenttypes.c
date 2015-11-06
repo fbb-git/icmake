@@ -9,14 +9,16 @@ void checkArgumentTypes(size_t nParams, size_t funIdx, SemVal *a)
     {
         if (symtab_funParameterType(funIdx, idx) != (a->type & e_typeMask))
         {
-            size_t sem_err = g_sem_err;
+            size_t sem_err = util_semErr();
+
             err = 1;
-            semantic("Incorrect type of argument %u of function '%s()'",
+            util_semantic("Incorrect type of argument %u of function '%s()'",
                 idx + 1, symtab_funName(funIdx));
-            g_sem_err = sem_err;
+
+            util_setSemErr(sem_err);
         }
     }
 
-    g_sem_err |= err;
+    util_orSemErr(err);
 }
 

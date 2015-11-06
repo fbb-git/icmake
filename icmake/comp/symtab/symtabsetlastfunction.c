@@ -9,7 +9,7 @@
 //    Symbol *last = gs_functions[gs_functions->nSymbols - 1].symbol;
 //
 //                                            /* set offset of 1st byte       */
-//    last->var.vu.i->count = (size_t)ftell(g_bin);
+//    last->var.vu.i->count = (size_t)ftell(gp_bin);
 //
 //    last->var.vu.i->ls.list.element =       /* room for type-bytes */
 //                                xrealloc(NULL, nParams * sizeof(char));

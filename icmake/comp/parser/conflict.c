@@ -6,7 +6,7 @@ int conflict(SemVal *lval, SemVal *rval, OPCODE_ opcode)
 
     if ( (ret = !(lval->type & rval->type & gp_opType[opcode])) )
     {
-        semantic(gp_typeConflict, gp_opstring[opcode]);
+        util_semantic(gp_typeConflict, gp_opstring[opcode]);
         clearbin(lval, rval);
     }
     return ret;

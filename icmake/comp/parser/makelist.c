@@ -24,7 +24,7 @@ SemVal *makelist(SemVal *args, ExprType type)
             )
     )
     {
-        semantic(gp_typeConflict, gp_funstring[f_makelist]);
+        util_semantic(gp_typeConflict, gp_funstring[f_makelist]);
         return (args);
     }
 

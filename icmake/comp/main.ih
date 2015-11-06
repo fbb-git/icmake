@@ -1,18 +1,5 @@
-#include <stdlib.h>
-#include <string.h>
-
 #include "../rss/rss.h"
 
-#include "scanner/scanner.h"
 #include "parser/parser.h"
-#include "symtab/symtab.h"
-
-#include "global.h"
-#include "util/util.h"
-
-void    backend (void);                /* finish g_bin construction */
-int     next_call(void);
-void    hidden_functions(void);
-void    writeGlobalInfo(size_t nGlobals);
 
 

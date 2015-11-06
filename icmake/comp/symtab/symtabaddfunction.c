@@ -2,14 +2,16 @@
 
 int symtab_addFunction(ExprType type) /* 0: function added, -1: already def'd */
 {
-    if (symtab_funIdx() != gs_functions->nSymbols)
-        return -1;
+    if (symtab_findFun() != -1)
+        return -1;                          /* already defined */
 
-    Symbol *next = st_next(gs_functions);
+    size_t idx = st_nextFunIdx();
 
-    next->name = xstrdup(g_lexstring);
-    next->var.type = type;
-    next->var.vu.i = xrealloc(NULL, sizeof(INTER_));
+    FunInfo *next = gs_functions.info + idx;
+
+    memset(next, 0, sizeof(FunInfo));
+    next->name = xstrdup(util_string());
+    next->returnType = type | e_reg;
 
     return 0;
 }

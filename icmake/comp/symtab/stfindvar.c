@@ -1,17 +1,17 @@
 #include "symtab.ih"
 
-int st_findVar(size_t depth)   /* find g_lexstring in gs_vars[depth] */
+int st_findVar(size_t nesting)   /* find util_string() via gs_vars[nesting] */
 {
                                 /* variable table to use when looking for
-                                    g_lexstring */
-    gs_compareTable = st_varTab();
+                                    util_string() */
+    gs_compareTable = st_varTab(nesting);
 
-    VarIndices indices = gs_vars.indices + depth;   /* Select the correct
-                                                        index vector */
+    VarIndices *indices = gs_vars.varIndices + nesting;  /* Select the correct
+                                                            index vector */
 
                                                     /* find the var's index */
-    void *size_tPtr = lfind(g_lexstring, indices->index, &indices->nVars,
+    void *size_tPtr = lfind(util_string(), indices->index, &indices->nVars,
                             sizeof(size_t), st_compareVars);
 
-    return size_tPtr == NULL ? -1 : *(int)size_tPtr;
+    return size_tPtr == NULL ? -1 : *(int *)size_tPtr;
 }

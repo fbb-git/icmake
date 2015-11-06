@@ -4,7 +4,7 @@ SemVal *lcast(SemVal *e)
 {
     if (test_type(e, e_int))               /* (int)list not ok */
     {
-        semantic(gp_illegalCast);
+        util_semantic(gp_illegalCast);
         discard(e);
         set_type(e, e_list | e_var);
     }

@@ -5,6 +5,8 @@ size_t  gp_breakOK;
 size_t  gp_nestLevel;
 size_t  gp_nParams;
 size_t  gp_stringsize;
+size_t  gp_hidden_called;
+HiddenFunction gp_hiddenFun[he_];
 
 char *gp_funstring[] =                          /* only one_arg  */
 {
@@ -154,3 +156,15 @@ char    gp_illegalCast[]      = "illegal cast";
 ExprType gp_varType;
 
 OPCODE_ gp_lastOp = op_hlt;
+
+size_t  gp_dead_sp;
+size_t *gp_dead;
+
+FILE *gp_bin;
+
+size_t  gp_nStrings;
+StringTable *gp_stringTable;
+
+SemVal gp_init;                     /* code initializing globals */
+
+char *gp_stringbuf;

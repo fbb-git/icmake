@@ -4,7 +4,7 @@ SemVal *icast(SemVal *e)
 {
     if (test_type(e, e_list))               /* (int)list not ok */
     {
-        semantic(gp_illegalCast);
+        util_semantic(gp_illegalCast);
         discard(e);
         set_type(e, e_int | e_const);
     }
@@ -13,7 +13,7 @@ SemVal *icast(SemVal *e)
         if (test_type(e, e_const))          /* string const to a */
         {
             e->evalue =                      /* convert to string */
-                atoi(g_stringtab[e->evalue].string);
+                atoi(gp_stringTable[e->evalue].string);
             set_type(e, e_const | e_int);
         }
         else

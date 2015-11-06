@@ -2,8 +2,8 @@
 
 void defineVar()
 {
-    int ret = symtab_defineVar(gp_varType);
+    VarIndex ret = symtab_defineVar(gp_varType);
 
-    if (ret == -1)
-        semantic("%s multiply defined", g_lexstring);
+    if (ret.idx == -1)
+        util_semantic("%s multiply defined", util_string());
 }

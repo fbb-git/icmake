@@ -6,7 +6,7 @@
 
             g_funtab.symbol[index_of_the_function].var.vu.i->count
 
-        contains the offset of the 1st byte of the function in the g_bin file.
+        contains the offset of the 1st byte of the function in the gp_bin file.
 
 
     Adding a hidden (macro) function:
@@ -215,7 +215,7 @@ extern ExprType
 
 
 extern FILE
-    *g_bin;
+    *gp_bin;
 
 extern OPCODE_
     lastop;
@@ -234,8 +234,8 @@ extern HIDDEN_FUNCTION_
 
 extern size_t
     break_ok,
-    g_dead_sp,
-    g_errcount,
+    gp_dead_sp,
+    gu_errcount,
     g_hidden_called,
     nestlevel,
     n_params,
@@ -243,7 +243,7 @@ extern size_t
     g_sem_err,
     stringsize;
 
-unsigned *g_dead;
+unsigned *gp_dead;
 
 extern SemVal g_init;             /* code for initializing globals */
 
@@ -278,7 +278,7 @@ SemVal *strupr_lwr (ExprType, SemVal *);       /* strupr<->strlwr */
 
 void    addpatch (unsigned *, size_t,     /* add value to patch-list */
                                size_t);
-void    backend (void);                /* finish g_bin construction */
+void    backend (void);                /* finish gp_bin construction */
 void    btoi (SemVal *);              /* boolean to int */
 void    callrss (SemVal *, FUNNR_,     /* call rss function */
                                 ...);   /* and add asp, xxx instruction */

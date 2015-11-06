@@ -157,7 +157,7 @@ ExprType
         e_int,                              /* op_shr */
     };
 
-FILE *g_bin;
+FILE *gp_bin;
 
 int
     initialization = 0,
@@ -237,8 +237,8 @@ HIDDEN_FUNCTION_
 
 size_t
     break_ok,
-    g_dead_sp,
-    g_errcount,
+    gp_dead_sp,
+    gu_errcount,
     g_hidden_called,
     nestlevel,
     n_params,
@@ -247,6 +247,6 @@ size_t
     g_sem_err,
     stringsize;
 
-unsigned *g_dead;
+unsigned *gp_dead;
 
 SemVal g_init;             /* code for initializing globals */

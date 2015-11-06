@@ -3,11 +3,9 @@
 
 #include "../global.h"
 
-#define YYSTYPE SemVal
+void parser();              /* call once */
+int yyparse(void);
+int parser_backend();
 
-#include "tokens.h"
-
-extern int yydebug;
-extern int yynerrs;
 
 #endif

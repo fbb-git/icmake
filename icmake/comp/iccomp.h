@@ -6,7 +6,7 @@
 
             funtab.symbol[index_of_the_function].var.vu.i->count
 
-        contains the offset of the 1st byte of the function in the g_bin file.
+        contains the offset of the 1st byte of the function in the gp_bin file.
 
 
     Adding a hidden (macro) function:
@@ -51,7 +51,7 @@ typedef enum                                /* order of elements must follow */
     he_younger = 1,                         /* reserved values 0 and 1 */
 
     he_                                     /* must be last ! */
-} HIDDEN_ENUM_;
+} Hidden;
 
 typedef enum
 {
@@ -78,7 +78,7 @@ typedef struct
 {
     unsigned index;                         /* index in stringsection */
     char *string;                           /* string itself */
-} STRINGTAB_;
+} StringTable;
 
 typedef struct                              /* symtab used with the compiler */
 {
@@ -122,7 +122,7 @@ typedef struct
         type,                               /* returntype */
         this,                               /* set to 1 if called */
         nargs;                              /* # of arguments */
-} HIDDEN_FUNCTION_;
+} HiddenFunction;
 
 #define YYSTYPE SemVal
 
@@ -186,7 +186,7 @@ typedef enum
 
 extern char
     release[],
-    *g_filenames,
+    *gs_filenames,
     *funstring[],
     icm_comp[],
     illegal_argcount[],
@@ -199,9 +199,9 @@ extern char
     g_nullstring[],
     only_on_ints[],
     *opstring[],
-    *g_sourceName,
-    *g_lexstring,
-    *g_stringbuf,
+    *gu_sourceName,
+    *gu_lexstring,
+    *gp_stringbuf,
     type_conflict[],
     version[];
 
@@ -213,13 +213,13 @@ extern ExprType
 
 
 extern FILE
-    *g_bin;
+    *gp_bin;
 
 extern OPCODE_
     lastop;
 
-extern STRINGTAB_
-    *g_stringtab;
+extern StringTable
+    *gp_stringTable;
 
 extern SYMTAB_
     funtab,
@@ -227,13 +227,13 @@ extern SYMTAB_
     global,
     *g_entertab;
 
-extern HIDDEN_FUNCTION_
+extern HiddenFunction
     hidden[he_];
 
 extern size_t
     break_ok,
-    g_dead_sp,
-    g_errcount,
+    gp_dead_sp,
+    gu_errcount,
     hidden_called,
     nestlevel,
     n_params,
@@ -241,7 +241,7 @@ extern size_t
     sem_err,
     stringsize;
 
-unsigned *g_dead;
+unsigned *gp_dead;
 
 extern SemVal global_init;             /* code for initializing globals */
 
@@ -254,7 +254,7 @@ int yylex_file(char *, int);            /* read yylex input from yyin */
 int yylex_hidden(char *, int);          /* read yylex input from buffer */
 
 size_t fetchfun (void);              /* fetch index of function */
-size_t lookstring (char *);          /* look for string in g_stringtab */
+size_t lookstring (char *);          /* look for string in gp_stringTable */
 size_t looksym (SYMTAB_ *);          /* look for symbol in symboltab */
 size_t rm_jmp_zero (size_t,         /* remove jmp 0 from || && lists */
                  unsigned *, size_t);
@@ -276,7 +276,7 @@ SemVal *strupr_lwr (ExprType, SemVal *);       /* strupr<->strlwr */
 
 void    addpatch (unsigned *, size_t,     /* add value to patch-list */
                                size_t);
-void    backend (void);                /* finish g_bin construction */
+void    backend (void);                /* finish gp_bin construction */
 void    btoi (SemVal *);              /* boolean to int */
 void    callrss (SemVal *, FUNNR_,     /* call rss function */
                                 ...);   /* and add asp, xxx instruction */

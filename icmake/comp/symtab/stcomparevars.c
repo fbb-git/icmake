@@ -1,7 +1,8 @@
 #include "symtab.ih"
 
-int st_compareVars(char const *key, size_t *idxPtr)
+int st_compareVars(void const *key, void const *idxPtr)
 {
-    return strcmp(key, gs_compareTable[*idPtr].name);
+    return strcmp((char const *)key, 
+                    gs_compareTable->info[*(size_t const *)idxPtr].name);
 }
 

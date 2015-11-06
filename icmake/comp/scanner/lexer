@@ -14,12 +14,13 @@
 
 <str>[^"]   |
 <str>\\.                {  
-                            g_lexstring = xstrcat(g_lexstring, yytext);
+                            util_catString(yytext);
                         }
 <str>\"                 {
                             BEGIN 0;
-                            if (!stresc(g_lexstring))
-                                semantic("illegal escape sequence in string");
+                            if (util_unescape())
+                                util_semantic(
+                                        "illegal escape sequence in string");
                             return STRING;
                         }
 [ \t]                   ;
@@ -28,10 +29,10 @@
                             change_file(yytext + 1);
                         }
 \"                      {
-                            g_lexstring[0] = 0; BEGIN str;
+                            util_setString(""); BEGIN str;
                         }
 '.'                     {
-                            sprintf(g_lexstring, "%d%c", yytext[1], 0);
+                            util_printf("%d%c", yytext[1], 0);
                             return NUMBER;
                         }
 
@@ -311,50 +312,50 @@ younger                 {
 0x[0-9A-Fa-f]+          {
                             unsigned value;
                             sscanf(yytext + 2, "%x", &value);
-                            sprintf(g_lexstring, "%d", (int)value);
+                            util_printf("%d", (int)value);
                             return NUMBER;
                         }
 [0-9]+                  {
-                            g_lexstring = xstrdup(yytext);
+                            util_setString(yytext);
                             return NUMBER;
                         }
 OFF         |
 P_CHECK                 {                   /* P_CHECK: value in icm.h */
-                            g_lexstring = xstrdup("0");
+                            util_setString("0");
                             return NUMBER;
                         }
 S_IFDIR     |
 O_FILE      |                               /* O_FILE: value in icm.h */
 ON                      {
-                            g_lexstring = xstrdup("1");
+                            util_setString("1");
                             return NUMBER;
                         }
 S_IFCHR     |
 P_NOCHECK   |
 O_DIR                   {                   /* O_DIR: value in icm.h */
-                            g_lexstring = xstrdup("2");
+                            util_setString("2");
                             return NUMBER;
                         }
 S_IFREG     |
 O_SUBDIR                {                   /* O_SUBDIR: value in icm.h */
-                            g_lexstring = xstrdup("4");
+                            util_setString("4");
                             return NUMBER;
                         }
 S_IREAD     |
 O_ALL                   {                   /* O_ALL: value in icm.h */
-                            g_lexstring = xstrdup("8");
+                            util_setString("8");
                             return NUMBER;
                         }
 S_IWRITE                {
-                            g_lexstring = xstrdup("16");
+                            util_setString("16");
                             return NUMBER;
                         }
 S_IEXEC                 {
-                            g_lexstring = xstrdup("32");
+                            util_setString("32");
                             return NUMBER;
                         }
 [_A-Za-z][A-Za-z0-9_]*  {
-                            g_lexstring = xstrdup(yytext);
+                            util_setString(yytext);
                             return IDENTIFIER;
                         }
 .                       return yytext[0];

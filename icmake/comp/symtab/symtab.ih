@@ -60,7 +60,7 @@ typedef struct
 
     size_t nParams;             /* the number of parameters of the function 
                                     currently being defined */
-    VarIndices *indices;        /* level 0 holds indices of global vars */
+    VarIndices *varIndices;     /* level 0 holds indices of global vars */
     size_t nLevels;             /* at least 1: the global level */
     size_t capacity;
 } VarRef;
@@ -81,46 +81,43 @@ extern VarRef gs_vars;     /*
                                     variables that are locally defined,
                                     allowing the frame to be constructed
                                 */
-//extern size_t gs_nestingLevel;
-//extern size_t gs_varsCapacity;
-
-size_t       st_nestingLevel();
-VarIndices  *st_topLevel();
-VarTab      *st_varTab();       /* vartab to use, given the nestinglevel */
 
 
-SymtabIndex st_varIdx();        /* idx == -1: g_lexstring not found */
-int         st_compareVars(char const *key, size_t *idxPtr); /* compare key 
+size_t st_nextFunIdx(void);      /* idx of an uninitialized record of a 
+                                    function */
+
+size_t       st_nestingLevel(void);
+
+VarIndices  *st_topLevel(void);
+
+VarTab      *st_varTab(size_t nesting); /* vartab to use, given nestinglevel */
+
+int st_compareVars(void const *key, void const *idxPtr);    /* compare key 
                                                 to entry in gs_compareTable */
-int         st_findVar(size_t depth);   /* find g_lexstring in gs_vars */
 
+int         st_findVar(size_t nesting); /* find util_string() in vars indexed
+                                            at gs_vars.indices[nesting].
+                                            return idx in VarTab.info or -1 */
 
-SymtabIndex st_addVar(ExprType type);   /* add variable to the topmost symbol 
+VarIndex st_addVar(ExprType type);   /* add variable to the topmost symbol 
                                             table */
-size_t st_nextVarIdx();         /* return idx of next variable */
-size_t *st_stNewIdxPtr();       /* pointer to the next available index[] */
-size_t st_newVarIdx(VarInfo **vi); /* idx of an uninitialized record of a new 
+
+size_t st_nextVarIdx(VarInfo **vi); /* return idx of next variable, and set
+                                        a ptr to its record using RBA */
+
+size_t *st_newIdxPtr(void);   /* pointer to the next available index[] */
+
+size_t st_newVarIdx(void);    /* idx of an uninitialized record of a new 
                                         variable */
+
+VarTab *st_varTab(size_t nesting); /* return the variable table matching the 
+                                   currrent nesting level (global or local) */
 
 void st_deleteVars(VarTab *varTab); /* delete all info allocated by VarInfo
                                         objects */
 
-/*------------------------ */
 
-//int st_defineGlobalVar(ExprType type);  /* return -1 if already def'd,
-//                                         otherwise return new var's idx */
-//
-//void st_newGlobal(ExprType type);       /* define a new global var. */
-//
-//void st_iniVar(VarInfo *next, ExprType type);   /* initialize new variable */
 
-//void st_symtab_init(Symtab *location);
-//
-//Symbol *st_next(Symtab *symtab_ptr); /* return addr. of next available elem. */
-//
-//int st_find(Symtab *symtab);        /* returns -1 if not found */
-//void st_free(Symtab *table);        /* free the name fiels of the table */
-//
-//                                    /* assign param. types */
-//void st_setParamTypes(Symbol *last, size_t nParams);
-//
+
+
+

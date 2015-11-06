@@ -15,7 +15,7 @@ SemVal *modulo(SemVal *lval, SemVal *rval)
     {
         if (!rval->evalue)                   /* no "E / 0" */
         {
-            semantic("modulo 0: undefined");
+            util_semantic("modulo 0: undefined");
             clearbin(lval, rval);
             return (lval);
         }

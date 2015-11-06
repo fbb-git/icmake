@@ -5,7 +5,7 @@ SemVal *return_stmnt(ExprType op, SemVal *e)
     if (!test_type(e, e_code))
         etoc(e);
 
-    size_t idx = symtab_lastFunction();
+    size_t funIdx = symtab_lastFunction();
 
     if ((OPCODE_)op == op_ret)              /* return opcode received */
     {
@@ -21,7 +21,8 @@ SemVal *return_stmnt(ExprType op, SemVal *e)
         }
 
         if (!(test_type(e, funType & e_typeMask)))
-            semantic("Incorrect returntype for function '%s()'", last->name);
+            util_semantic("Incorrect returntype for function '%s()'", 
+                                                    symtab_funName(funIdx));
     }
 
     gencode(e, op_pop_reg);

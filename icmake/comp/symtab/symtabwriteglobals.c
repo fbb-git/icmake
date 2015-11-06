@@ -8,8 +8,8 @@ void symtab_writeGlobals(FILE *bin)
                 ++begin)
     {        
         char type = (char)begin->type & ~e_var;
-        out(bin, &type, sizeof(char));
+        util_out(bin, &type, sizeof(char));
         
-        out(bin, &begin->value, sizeof(UNS16));
+        util_out(bin, &begin->value, sizeof(UNS16));
     }
 }

@@ -1,7 +1,6 @@
 %{
-    #include "../global.h"
-    #define YYSTYPE SemVal
     #include "parser.ih"
+    #define YYSTYPE SemVal
 %}
 
 %token
@@ -218,13 +217,13 @@ _string:
     _string
     STRING
     {                                       /* catenate the new string */
-        g_stringbuf = xstrcat(g_stringbuf, g_lexstring);
+        gp_stringbuf = xstrcat(gp_stringbuf, util_string());
     }
 |
     STRING
     {
-        free(g_stringbuf);                  /* free former string */
-        g_stringbuf = xstrdup(g_lexstring); /* duplicate initial string */
+        free(gp_stringbuf);                  /* free former string */
+        gp_stringbuf = xstrdup(util_string()); /* duplicate initial string */
     }
 ;
 
@@ -622,11 +621,18 @@ for_stat:
 
 
 
+    /*
+        parameters are defined as local variables of the current function,
+        while counting the number of parameters. 
+        At the end of a function definition head it's symtab nParams fields
+        holds the number of its parameters, which are represented by the
+        initial nParams elements of symtab's local variables array.
+    */
 _partype:
     type_of_var
     enterid
     {
-        ++gp_nParams;
+        ++gp_nParams;       /* should be SF as symtab keeps track of this */
     }
 ;
 
@@ -688,6 +694,9 @@ _funvars:
     _opt_parlist
     ')'
     openbrace
+    {
+        symtab_setNparams();
+    }
 ;
 
 _funid:
@@ -707,6 +716,10 @@ funcdef:
         close_fun(&$3);
     }
 ;
+
+
+
+
 _zero_arg_funs:
     GETCH
 |
@@ -1137,7 +1150,7 @@ _stm:
 statement:
     _stm
     {
-        g_sem_err = 0;
+        util_resetSemErr();
     }
 |
     varlist
@@ -1224,7 +1237,7 @@ varlist:
 var_or_fun:
         vardefs
         {
-            g_init = *catcode(&g_init, &$1);
+            gp_init = *catcode(&gp_init, &$1);
         }
     |
         funcdef

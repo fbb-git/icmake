@@ -8,10 +8,10 @@ void close_fun(SemVal *funStmnt)
 
     make_frame();           /* make the frame, defining the local variables */
 
-    if (!g_dead[g_dead_sp])
-        out(g_bin, &opret, sizeof(INT8));   /* add a 'ret' instruction */
+    if (!gp_dead[gp_dead_sp])
+        util_out(gp_bin, &opret, sizeof(INT8));   /* add a 'ret' instruction */
     else
-        g_dead[g_dead_sp] = 0;  /* leaving a function: code generation ok,  */
+        gp_dead[gp_dead_sp] = 0;  /* leaving a function: code generation ok,  */
                                 /* e.g. to define global variables          */
 
     symtab_cleanup();        /* pop all but the global symtab, update the local

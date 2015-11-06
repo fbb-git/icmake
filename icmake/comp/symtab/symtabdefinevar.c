@@ -1,11 +1,15 @@
 #include "symtab.ih"
 
-SymtabIndex symtab_defineVar(ExprType type)
+VarIndex symtab_defineVar(ExprType type)
 {
-    SymtabIndex ret = st_varIdx();
+    VarIndex ret;
 
-    if (ret.idx == -1)
-        ret = st_addVar(type);                  /* add it */
+    int idx = st_findVar(st_nestingLevel());    /* see if the var. exists at
+                                                    the current nesting level 
+                                                */
+
+    if (idx == -1)                              /* if not, then add it */
+        ret = st_addVar(type);                  /* add a new variable */
     else        
         ret.idx = -1;                           /* already defined */
 

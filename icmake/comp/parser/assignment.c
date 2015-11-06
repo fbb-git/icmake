@@ -8,7 +8,7 @@ SemVal *assignment(SemVal *lval, SemVal *rval, char *opstr)
 
     if (!test_type(lval, e_var))
     {
-        semantic(gp_lvalueNeeded, opstr);
+        util_semantic(gp_lvalueNeeded, opstr);
         discard(rval);
         return lval;
     }
@@ -30,7 +30,7 @@ SemVal *assignment(SemVal *lval, SemVal *rval, char *opstr)
         return tmp;
     }
 
-    semantic(gp_typeConflict, opstr);
+    util_semantic(gp_typeConflict, opstr);
     discard(rval);
 
     return lval;

@@ -3,8 +3,8 @@
 char *g_lexstring;                          /* resizing STRING buffer */
 char *g_stringbuf;                          /* final STRING */
 
-FILE *g_bin;
+FILE *gp_bin;
 
-size_t  g_dead_sp;
-size_t  g_errcount;
-size_t *g_dead;
+size_t  gp_dead_sp;
+size_t  gu_errcount;
+size_t *gp_dead;

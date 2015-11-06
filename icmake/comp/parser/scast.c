@@ -6,7 +6,7 @@ SemVal *scast(SemVal *e)
 
     if (test_type(e, e_list))               /* (string)list not ok */
     {
-        semantic(gp_illegalCast);
+        util_semantic(gp_illegalCast);
         discard(e);
         set_type(e, e_str | e_const);
     }

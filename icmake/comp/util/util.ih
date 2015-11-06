@@ -1,9 +1,14 @@
 #include "util.h"
 
-#include <stdarg.h>
-
 #include "../../rss/rss.h"
 
+#include <stdarg.h>
+#include <stdlib.h>
+
 #include "../global.h"
-#include "../parser/parser.h"
-#include "../scanner/scanner.h"
+
+extern size_t  gu_errcount;
+extern size_t  gu_sem_err;
+extern char *gu_sourceName;
+extern char *gu_lexstring;
+

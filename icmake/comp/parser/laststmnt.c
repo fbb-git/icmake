@@ -4,6 +4,6 @@ void last_stmnt(SemVal *lval)
 {
     patchup_false(lval, 1);
 
-    outbin(lval->code, lval->codelen);
+    util_out(gp_bin, lval->code, lval->codelen);
     discard(lval);
 }

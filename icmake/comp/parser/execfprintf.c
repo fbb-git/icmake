@@ -7,7 +7,7 @@ SemVal *exec_fprintf(ExprType type, SemVal *args)
 
     if (args->type < 2)                     /* argcount must be at least 2 */
     {
-        semantic(gp_illegalArgCount, gp_funstring[type]);
+        util_semantic(gp_illegalArgCount, gp_funstring[type]);
         return (args);
     }
 
@@ -27,6 +27,6 @@ SemVal *exec_fprintf(ExprType type, SemVal *args)
     if (ok)
         return (specials(type, args));      /* return specials call */
 
-    semantic(gp_typeConflict, gp_funstring[type]); /* type conflict error */
+    util_semantic(gp_typeConflict, gp_funstring[type]); /* type conflict error */
     return (args);
 }

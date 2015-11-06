@@ -5,28 +5,22 @@
 
 #include "rss.ih"
 
-char *stresc(char *source)
+char *stresc(char *source)  /* unescapes and returns source */
 {
-    register int
-        c;
-    int
-        n;
-    char
-        *ret,
-        *dest;
-
-    ret = source;                           /* Set return pointer */
-    dest = source;                          /* Initially: target is source */
+    register int c;
+    int n;
+    char *ret = source;                    /* Set return pointer */
+    char *dest = source;                   /* Initially: target is source */
 
     while (1)
     {
         if ((c = chesc(source, &n)) < 0)    /* error ? */
-            return (NULL);                  /* then ERROR out */
+            return NULL;                    /* then ERROR out */
 
-        *dest++ = (char)c;                  /* Set destination */
+        *dest++ = c;                        /* Set destination */
 
-        if (!c)                             /* No character ? */
-            return (ret);                   /* then OK out */
+        if (c == 0)                         /* terminating 0 ? */
+            return ret;                     /* then OK out */
 
         source += n;                        /* Skip to next char to convert */
     }

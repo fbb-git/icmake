@@ -2,5 +2,5 @@
 
 void symtab_pop()
 {
-    free(gs_vars.indices + --gs_vars.nLevels);
+    free(gs_vars.varIndices + --gs_vars.nLevels);
 }

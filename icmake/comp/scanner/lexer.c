@@ -977,7 +977,7 @@ case 2:
 YY_RULE_SETUP
 #line 16 "lexer"
 {  
-                            g_lexstring = xstrcat(g_lexstring, yytext);
+                            util_catString(yytext);
                         }
 	YY_BREAK
 case 3:
@@ -985,47 +985,48 @@ YY_RULE_SETUP
 #line 19 "lexer"
 {
                             BEGIN 0;
-                            if (!stresc(g_lexstring))
-                                semantic("illegal escape sequence in string");
+                            if (util_unescape())
+                                util_semantic(
+                                        "illegal escape sequence in string");
                             return STRING;
                         }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 25 "lexer"
+#line 26 "lexer"
 ;
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 26 "lexer"
+#line 27 "lexer"
 yylineno++;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 27 "lexer"
+#line 28 "lexer"
 {
                             change_file(yytext + 1);
                         }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 30 "lexer"
+#line 31 "lexer"
 {
-                            g_lexstring[0] = 0; BEGIN str;
+                            util_setString(""); BEGIN str;
                         }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 33 "lexer"
+#line 34 "lexer"
 {
-                            sprintf(g_lexstring, "%d%c", yytext[1], 0);
+                            util_printf("%d%c", yytext[1], 0);
                             return NUMBER;
                         }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 38 "lexer"
+#line 39 "lexer"
 {
                             yylval.type = f_arg_head;
                             return ARG_HEAD;
@@ -1033,7 +1034,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 42 "lexer"
+#line 43 "lexer"
 {
                             yylval.type = f_arg_tail;
                             return ARG_TAIL;
@@ -1041,7 +1042,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 46 "lexer"
+#line 47 "lexer"
 {                   /* ascii_int may become ascii_str */
                             yylval.type = f_ascii_int;
                             return ASCII;
@@ -1049,14 +1050,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 50 "lexer"
+#line 51 "lexer"
 {
                             return BREAK;
                         }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 53 "lexer"
+#line 54 "lexer"
 {
                             yylval.type = f_chdir;
                             return CHDIR;
@@ -1064,7 +1065,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 57 "lexer"
+#line 58 "lexer"
 {
                             yylval.type = f_cmd_tail;
                             return CMD_TAIL;
@@ -1072,7 +1073,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 61 "lexer"
+#line 62 "lexer"
 {
                             yylval.type = f_cmd_head;
                             return CMD_HEAD;
@@ -1080,7 +1081,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 65 "lexer"
+#line 66 "lexer"
 {
                             yylval.type = f_c_base;
                             return C_BASE;
@@ -1088,7 +1089,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 69 "lexer"
+#line 70 "lexer"
 {
                             yylval.type = f_c_ext;
                             return C_EXT;
@@ -1096,7 +1097,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 73 "lexer"
+#line 74 "lexer"
 {
                             yylval.type = f_c_path;
                             return C_PATH;
@@ -1104,14 +1105,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 77 "lexer"
+#line 78 "lexer"
 {
                             return CONTINUE;
                         }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 80 "lexer"
+#line 81 "lexer"
 {
                             yylval.type = f_fprintf;
                             return FPRINTF;
@@ -1119,7 +1120,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 84 "lexer"
+#line 85 "lexer"
 {
                             yylval.type = f_g_base;
                             return G_BASE;
@@ -1127,7 +1128,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 88 "lexer"
+#line 89 "lexer"
 {
                             yylval.type = f_g_ext;
                             return G_EXT;
@@ -1135,7 +1136,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 92 "lexer"
+#line 93 "lexer"
 {
                             yylval.type = f_g_dext;
                             return G_DEXT;
@@ -1143,7 +1144,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 96 "lexer"
+#line 97 "lexer"
 {
                             yylval.type = f_g_path;
                             return G_PATH;
@@ -1151,7 +1152,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 100 "lexer"
+#line 101 "lexer"
 {
                             yylval.type = f_getch;
                             return GETCH;
@@ -1159,7 +1160,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 104 "lexer"
+#line 105 "lexer"
 {
                             yylval.type = f_getpid;
                             return GETPID;
@@ -1167,7 +1168,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 108 "lexer"
+#line 109 "lexer"
 {
                             yylval.type = f_gets;
                             return GETS;
@@ -1175,7 +1176,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 112 "lexer"
+#line 113 "lexer"
 {
                             yylval.type = f_echo;
                             return M_ECHO;
@@ -1183,7 +1184,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 116 "lexer"
+#line 117 "lexer"
 {
                             yylval.type = f_element;
                             return ELEMENT;
@@ -1191,14 +1192,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 120 "lexer"
+#line 121 "lexer"
 {
                             return ELSE;
                         }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 123 "lexer"
+#line 124 "lexer"
 {
                             yylval.type = f_exec;
                             return EXEC;
@@ -1206,7 +1207,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 127 "lexer"
+#line 128 "lexer"
 {
                             yylval.type = f_execute;
                             return EXECUTE;
@@ -1214,7 +1215,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 131 "lexer"
+#line 132 "lexer"
 {
                             yylval.type = f_exists;
                             return EXISTS;
@@ -1222,7 +1223,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 135 "lexer"
+#line 136 "lexer"
 {
                             yylval.type = op_exit;
                             return EXIT;
@@ -1230,7 +1231,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 139 "lexer"
+#line 140 "lexer"
 {
                             yylval.type = f_fgets;
                             return (FGETS);
@@ -1238,14 +1239,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 143 "lexer"
+#line 144 "lexer"
 {
                             return FOR;
                         }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 146 "lexer"
+#line 147 "lexer"
 {
                             yylval.type = f_getenv;
                             return GETENV;
@@ -1253,14 +1254,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 150 "lexer"
+#line 151 "lexer"
 {
                             return IF;
                         }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 153 "lexer"
+#line 154 "lexer"
 {
                             yylval.type = 0;    /* 0 == void */
                             return (VOID);
@@ -1268,7 +1269,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 157 "lexer"
+#line 158 "lexer"
 {
                             yylval.type = e_int;
                             return INT;
@@ -1276,7 +1277,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 161 "lexer"
+#line 162 "lexer"
 {
                             yylval.type = e_list;
                             return LIST;
@@ -1284,7 +1285,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 165 "lexer"
+#line 166 "lexer"
 {
                             yylval.type = f_makelist;
                             return MAKELIST;
@@ -1292,7 +1293,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 169 "lexer"
+#line 170 "lexer"
 {
                             yylval.type = op_older;
                             return OLDER;
@@ -1300,7 +1301,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 173 "lexer"
+#line 174 "lexer"
 {
                             yylval.type = f_printf;
                             return PRINTF;
@@ -1308,7 +1309,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 177 "lexer"
+#line 178 "lexer"
 {
                             yylval.type = f_putenv;
                             return (PUTENV);
@@ -1316,19 +1317,19 @@ YY_RULE_SETUP
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 181 "lexer"
+#line 182 "lexer"
 {
                             yylval.type = op_ret;
                             return RETURN;
                         }
 	YY_BREAK
 case 47:
-#line 186 "lexer"
-case 48:
 #line 187 "lexer"
+case 48:
+#line 188 "lexer"
 case 49:
 YY_RULE_SETUP
-#line 187 "lexer"
+#line 188 "lexer"
 {
                             yylval.type = f_sizeoflist;
                             return SIZEOFLIST;
@@ -1336,7 +1337,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 191 "lexer"
+#line 192 "lexer"
 {
                             yylval.type = f_stat;
                             return (STAT);
@@ -1344,7 +1345,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 195 "lexer"
+#line 196 "lexer"
 {
                             yylval.type = e_str;
                             return STRINGTYPE;
@@ -1352,7 +1353,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 199 "lexer"
+#line 200 "lexer"
 {
                             yylval.type = f_strlen;
                             return STRLEN;
@@ -1360,7 +1361,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 203 "lexer"
+#line 204 "lexer"
 {
                             yylval.type = f_strlwr;
                             return STRLWR;
@@ -1368,7 +1369,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 207 "lexer"
+#line 208 "lexer"
 {
                             yylval.type = f_strupr;
                             return STRUPR;
@@ -1376,7 +1377,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 211 "lexer"
+#line 212 "lexer"
 {
                             yylval.type = f_fields;
                             return FIELDS;
@@ -1384,7 +1385,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 215 "lexer"
+#line 216 "lexer"
 {
                             yylval.type = f_strfind;
                             return STRFIND;
@@ -1392,7 +1393,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 219 "lexer"
+#line 220 "lexer"
 {
                             yylval.type = f_strformat;
                             return STRFORMAT;
@@ -1400,7 +1401,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 223 "lexer"
+#line 224 "lexer"
 {
                             yylval.type = f_substr;
                             return SUBSTR;
@@ -1408,7 +1409,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 227 "lexer"
+#line 228 "lexer"
 {
                             yylval.type = f_system;
                             return SYSTEM;
@@ -1416,7 +1417,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 231 "lexer"
+#line 232 "lexer"
 {
                             yylval.type = f_trim;
                             return TRIMLEFT;
@@ -1424,7 +1425,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 235 "lexer"
+#line 236 "lexer"
 {
                             yylval.type = f_trimleft;
                             return TRIMLEFT;
@@ -1432,7 +1433,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 239 "lexer"
+#line 240 "lexer"
 {
                             yylval.type = f_trimright;
                             return TRIMRIGHT;
@@ -1440,16 +1441,16 @@ YY_RULE_SETUP
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 243 "lexer"
+#line 244 "lexer"
 {
                             return WHILE;
                         }
 	YY_BREAK
 case 64:
-#line 247 "lexer"
+#line 248 "lexer"
 case 65:
 YY_RULE_SETUP
-#line 247 "lexer"
+#line 248 "lexer"
 {
                             yylval.type = op_younger;
                             return YOUNGER;
@@ -1457,251 +1458,251 @@ YY_RULE_SETUP
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 251 "lexer"
+#line 252 "lexer"
 {
                             return INC;
                         }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 254 "lexer"
+#line 255 "lexer"
 {
                             return DEC;
                         }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 257 "lexer"
+#line 258 "lexer"
 {
                             return DIV_IS;
                         }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 260 "lexer"
+#line 261 "lexer"
 {
                             return MINUS_IS;
                         }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 263 "lexer"
+#line 264 "lexer"
 {
                             return MUL_IS;
                         }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 266 "lexer"
+#line 267 "lexer"
 {
                             return MOD_IS;
                         }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 269 "lexer"
+#line 270 "lexer"
 {
                             return PLUS_IS;
                         }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 272 "lexer"
+#line 273 "lexer"
 {
                             return AND_IS;
                         }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 275 "lexer"
+#line 276 "lexer"
 {
                             return OR_IS;
                         }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 278 "lexer"
+#line 279 "lexer"
 {
                             return XOR_IS;
                         }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 281 "lexer"
+#line 282 "lexer"
 {
                             return SHL_IS;
                         }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 284 "lexer"
+#line 285 "lexer"
 {
                             return SHR_IS;
                         }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 287 "lexer"
+#line 288 "lexer"
 {
                             return OR;
                         }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 290 "lexer"
+#line 291 "lexer"
 {
                             return AND;
                         }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 293 "lexer"
+#line 294 "lexer"
 {
                             return EQUAL;
                         }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 296 "lexer"
+#line 297 "lexer"
 {
                             return NOT_EQUAL;
                         }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 299 "lexer"
+#line 300 "lexer"
 {
                             return SMALLER_EQUAL;
                         }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 302 "lexer"
+#line 303 "lexer"
 {
                             return GREATER_EQUAL;
                         }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 305 "lexer"
+#line 306 "lexer"
 {
                             return SHR;
                         }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 308 "lexer"
+#line 309 "lexer"
 {
                             return SHL;
                         }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 311 "lexer"
+#line 312 "lexer"
 {
                             unsigned value;
                             sscanf(yytext + 2, "%x", &value);
-                            sprintf(g_lexstring, "%d", (int)value);
+                            util_printf("%d", (int)value);
                             return NUMBER;
                         }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 317 "lexer"
+#line 318 "lexer"
 {
-                            g_lexstring = xstrdup(yytext);
+                            util_setString(yytext);
                             return NUMBER;
                         }
 	YY_BREAK
 case 88:
-#line 322 "lexer"
+#line 323 "lexer"
 case 89:
 YY_RULE_SETUP
-#line 322 "lexer"
+#line 323 "lexer"
 {                   /* P_CHECK: value in icm.h */
-                            g_lexstring = xstrdup("0");
+                            util_setString("0");
                             return NUMBER;
                         }
 	YY_BREAK
 case 90:
-#line 327 "lexer"
-case 91:
 #line 328 "lexer"
+case 91:
+#line 329 "lexer"
 case 92:
 YY_RULE_SETUP
-#line 328 "lexer"
+#line 329 "lexer"
 {
-                            g_lexstring = xstrdup("1");
+                            util_setString("1");
                             return NUMBER;
                         }
 	YY_BREAK
 case 93:
-#line 333 "lexer"
-case 94:
 #line 334 "lexer"
+case 94:
+#line 335 "lexer"
 case 95:
 YY_RULE_SETUP
-#line 334 "lexer"
+#line 335 "lexer"
 {                   /* O_DIR: value in icm.h */
-                            g_lexstring = xstrdup("2");
+                            util_setString("2");
                             return NUMBER;
                         }
 	YY_BREAK
 case 96:
-#line 339 "lexer"
+#line 340 "lexer"
 case 97:
 YY_RULE_SETUP
-#line 339 "lexer"
+#line 340 "lexer"
 {                   /* O_SUBDIR: value in icm.h */
-                            g_lexstring = xstrdup("4");
+                            util_setString("4");
                             return NUMBER;
                         }
 	YY_BREAK
 case 98:
-#line 344 "lexer"
+#line 345 "lexer"
 case 99:
 YY_RULE_SETUP
-#line 344 "lexer"
+#line 345 "lexer"
 {                   /* O_ALL: value in icm.h */
-                            g_lexstring = xstrdup("8");
+                            util_setString("8");
                             return NUMBER;
                         }
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 348 "lexer"
+#line 349 "lexer"
 {
-                            g_lexstring = xstrdup("16");
+                            util_setString("16");
                             return NUMBER;
                         }
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 352 "lexer"
+#line 353 "lexer"
 {
-                            g_lexstring = xstrdup("32");
+                            util_setString("32");
                             return NUMBER;
                         }
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 356 "lexer"
+#line 357 "lexer"
 {
-                            g_lexstring = xstrdup(yytext);
+                            util_setString(yytext);
                             return IDENTIFIER;
                         }
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
-#line 360 "lexer"
+#line 361 "lexer"
 return yytext[0];
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 361 "lexer"
+#line 362 "lexer"
 ECHO;
 	YY_BREAK
-#line 1705 "lexer.c"
+#line 1706 "lexer.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(str):
 	yyterminate();
@@ -2700,4 +2701,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 360 "lexer"
+#line 361 "lexer"

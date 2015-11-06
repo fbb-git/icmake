@@ -25,12 +25,12 @@ void change_file(char *s)               /* name of source file to open */
         stack[sp].fname = xstrdup(s);       /* save the name of the file */
         stack[sp].former_linenr = yylineno; /* save the line number */
 
-        g_filenames = xrealloc(g_filenames,     /* room for new filename */
+        gs_filenames = xrealloc(gs_filenames,     /* room for new filename */
                         filenames_len +
                         (slen = strlen(s)) +
                         2);
                                             /* append name */
-        sprintf(g_filenames + filenames_len, "%s\n", s);
+        sprintf(gs_filenames + filenames_len, "%s\n", s);
         filenames_len += slen + 1;          /* new length of string */
 
         yylineno = 0;                       /* start at new file */
@@ -38,12 +38,12 @@ void change_file(char *s)               /* name of source file to open */
     else
     {
         if (sp == N_FILES - 1)
-            error("[%s] Line %d: Include file stack empty", g_sourceName,
+            error("[%s] Line %d: Include file stack empty", util_sourceName(),
                                                         yylineno);
         free(stack[sp].fname);
         yylineno = stack[sp].former_linenr - 1;
         sp++;                               /* free stack element */
     }
 
-    g_sourceName = stack[sp].fname;
+    util_setSourceName(stack[sp].fname);
 }

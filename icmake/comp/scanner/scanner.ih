@@ -2,20 +2,20 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "../../rss/rss.h"
 
-#include "../global.h"
 #include "../util/util.h"
+#include "../global.h"
 
-#include "../parser/parser.h"
+
+#include "../parser/semval.ih"
+#include "../parser/tokens.h"   /* parser.h" */
 
 #ifndef fileno
     int fileno(FILE *stream);
 #endif
-
-// #undef  YY_INPUT
-// #define YY_INPUT(buf,result,max_size) result = yylex_input(buf, max_size);
 
 #ifdef unput
     /* If this stops working, have a look at lexer2.c to see what was   */
@@ -24,5 +24,13 @@
     static void yyunput (int c,char *buf_ptr  );
     void (*unusedUnput)(int c,char *buf_ptr) = &yyunput;
 #endif
+
+extern char *gs_filenames;
+
+extern size_t   yyleng;
+
+extern FILE *yyin;
+extern FILE *yyout;
+
 
 void change_file(char *s);               /* name of source file to open */

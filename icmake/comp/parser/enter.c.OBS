@@ -9,7 +9,7 @@ void enter()
 //
 //    if (looksym(g_entertab) != n_defined) /* look for symbol in active tab. */
 //    {                                     /* message if multiply defined */
-//        semantic("%s multiply defined", g_lexstring);
+//        semantic("%s multiply defined", util_string());
 //        return;
 //    }
 //
@@ -20,7 +20,7 @@ void enter()
 //
 //    sym = g_entertab->symbol + n_defined;
 //
-//    sym->name = xstrdup(g_lexstring);       /* set the name of the var */
+//    sym->name = xstrdup(util_string());       /* set the name of the var */
 //    sym->var.type = gp_varType;             /* set the type of the var */
 //
 //    if (g_entertab == &g_globaltab)         /* clear new g_globaltab entry */

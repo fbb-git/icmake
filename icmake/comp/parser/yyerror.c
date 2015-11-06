@@ -22,8 +22,8 @@ static char *err_msg[] =
 
 int yyerror(char *s)
 {
-    g_errcount++;
-    printf ("[%s] Line %d", g_sourceName, yylineno);
+    util_incError();
+    printf ("[%s] Line %d", util_sourceName(), yylineno);
 
     if (!yytext[0])
         puts (": Unexpected end of file.");

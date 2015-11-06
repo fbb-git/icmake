@@ -7,13 +7,13 @@ SemVal *incdec(PREPOST_ pp, OPCODE_ opcode, SemVal *e)
 
     if (test_operand(e, opcode))
     {
-        semantic(gp_illegalType, gp_opstring[opcode]);
+        util_semantic(gp_illegalType, gp_opstring[opcode]);
         return (e);
     }
 
     if (!test_type(e, e_var))
     {
-        semantic(gp_lvalueNeeded, gp_opstring[opcode]);
+        util_semantic(gp_lvalueNeeded, gp_opstring[opcode]);
         return (e);
     }
 

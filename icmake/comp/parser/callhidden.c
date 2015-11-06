@@ -7,13 +7,13 @@
 
 void callhidden(register int fun, SemVal *rarg)
 {
-    g_hidden_called = 1;              /* hidden function calls */
+    gp_hidden_called = 1;              /* hidden function calls */
 
-    g_hiddenFun[fun].this = 1;        /* this hidden function is called */
+    gp_hiddenFun[fun].this = 1;        /* this hidden function is called */
 
     gencode(rarg, op_call, -fun);     /* dummy, to be address of hidden */
 
-    gencode(rarg, op_asp, g_hiddenFun[fun].nargs); /* clear pushed arguments */
+    gencode(rarg, op_asp, gp_hiddenFun[fun].nargs); /* clear pushed arguments */
 
-    set_type(rarg, g_hiddenFun[fun].type);       /* set the returntype */
+    set_type(rarg, gp_hiddenFun[fun].type);       /* set the returntype */
 }

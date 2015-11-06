@@ -29,7 +29,7 @@ SemVal *optint_string(ExprType type, SemVal *larg, SemVal *rarg)
     }
     else
     {
-        semantic(gp_typeConflict, gp_funstring[type]);
+        util_semantic(gp_typeConflict, gp_funstring[type]);
         discard (rarg);
         return (larg);
     }

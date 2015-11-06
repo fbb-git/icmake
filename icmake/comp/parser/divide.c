@@ -19,7 +19,7 @@ SemVal *divide(SemVal *lval, SemVal *rval)
     {
         if (!rval->evalue)                  /* expression / 0: not allowed */
         {
-            semantic("division by 0: undefined");
+            util_semantic("division by 0: undefined");
             clearbin(lval, rval);
             return (lval);
         }

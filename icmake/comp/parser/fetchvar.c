@@ -24,23 +24,23 @@ SemVal *fetchvar()
 
     ret = *stackframe(e_null);
 
-    idx = symtab_varIdx();                   /* find the index of var.
-                                               g_lexstring */
+    VarIndex vi = symtab_findVar();      /* find the index of var.
+                                               util_string() */
 
-    if (idx == -1)                          
+    if (vi.idx == -1)                          
     {
-        semantic("%s undefined", g_lexstring);
+        util_semantic("%s undefined", util_string());
         return &ret;
     }
 
 
-    if (idx < gp_nParams)                   /* idx refers to a parameter */
+    if (vi.idx < gp_nParams)                   /* idx refers to a parameter */
         idx += 0xc002;
-    else
-        idx = 0xbfff - (idx - gp_nParams);  /* idx refers to a local var */
+    else                                    /* idx refers to a local var */
+        vi.idx = 0xbfff - (vi.idx - gp_nParams); 
 
-    ret.evalue = idx;
-    ret.type = symtab_varType(idx);
+    ret.evalue = vi.idx;
+    ret.type = symtab_varType(vi);
 
 //                                            /* not a local variable ? */
 //    if ((idx = looksym(&gp_local)) == gp_local.n_defined)
@@ -50,7 +50,7 @@ SemVal *fetchvar()
 //        else
 //        {
 //            idx = 0xffff;
-//            semantic("%s undefined", g_lexstring);
+//            util_semantic("%s undefined", util_string());
 //        }
 //    }
 //    else

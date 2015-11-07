@@ -6,6 +6,8 @@ size_t symtab_setFunctionInfo(size_t address)
                                 /* pointer to its FunInfo record */
     FunInfo *info = gs_functions.info + gs_functions.nFunctions - 1;
 
+fprintf(stderr, "Function starts at address %u (%x)\n", address, address);
+
     info->address = address;
 
     info->nParams = gs_vars.nParams;

@@ -4,9 +4,11 @@ static INT8 opret = op_ret;
 
 void close_fun(SemVal *funStmnt)
 {
-    last_stmnt(funStmnt);   /* patch funStmnnt's false list */
-
     make_frame();           /* make the frame, defining the local variables */
+                            /* and define the function's first address      */
+
+    last_stmnt(funStmnt);   /* add the function's statements, patching 
+                               funStmnnt's false list */
 
     if (!gp_dead[gp_dead_sp])
         util_out(gp_bin, &opret, sizeof(INT8));   /* add a 'ret' instruction */

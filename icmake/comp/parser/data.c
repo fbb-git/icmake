@@ -147,7 +147,6 @@ char *gp_opstring[] =
 char    gp_typeConflict[]   = "conflicting operand types for %s";
 char    gp_illegalType[]    = "illegal type for %s";
 char    gp_lvalueNeeded[]     = "lvalue needed for %s";
-char    gp_init_expr_not_const[] = "initialization expression must be const";
 char    gp_illegalArgCount[]  = "%s(): too few arguments";
 char    gp_illegalCast[]      = "illegal cast";
 

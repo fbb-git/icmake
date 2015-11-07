@@ -13,5 +13,7 @@ VarIndex symtab_defineVar(ExprType type)
     else        
         ret.idx = -1;                           /* already defined */
 
+//FBB fprintf(stderr, "symtab_defined\n");
+
     return ret;
 }

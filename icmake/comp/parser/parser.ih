@@ -87,7 +87,6 @@ extern char    *gp_funstring[];
 extern char     gp_illegalType[];
 extern char    *gp_opstring[];
 extern char     gp_lvalueNeeded[];
-extern char     gp_init_expr_not_const[];
 extern char     gp_illegalArgCount[];
 extern char     gp_illegalCast[];
 

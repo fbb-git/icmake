@@ -1,5 +1,11 @@
 #include "symtab.ih"
 
+/* 
+    Global variables are written like this:
+        1st byte: their type
+        next 2 bytes: their value
+*/
+    
 void symtab_writeGlobals(FILE *bin)
 {
     for (VarInfo *begin = gs_vars.varTab->info, 

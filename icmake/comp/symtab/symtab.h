@@ -66,6 +66,7 @@ ExprType    symtab_localType(size_t idx);   /* type of local variable idx, 1st
 void        symtab_writeGlobals(FILE *bin);
 
 void        symtab_setNparams(void);
+size_t      symtab_nParams();
 
 void        symtab_cleanup(void);       /* pop all local variables */
 

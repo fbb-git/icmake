@@ -1,20 +1,20 @@
 #include "icmun.h"
 
-void process ()
+void process()
 {
     register OPCODE_ op;
     register size_t i;
     INT32 oldoffs;
-    static char buf [200];
+    static char buf[200];
 
     printf ("Binary file statistics:\n"
-            "\tstrings           at offset\t%s\n" ,
+            "\tstrings           at offset\t0x%s\n" ,
                 hexstring((size_t)headerp->offset[0], 4 ));
-    printf ("\tvariables         at offset\t%s\n",
+    printf ("\tvariables         at offset\t0x%s\n",
                 hexstring((size_t)headerp->offset[1], 4 ));
-    printf ("\tfilenames         at offset\t%s\n",
+    printf ("\tfilenames         at offset\t0x%s\n",
                 hexstring((size_t)headerp->offset[2], 4 ));
-    printf ("\tfirst instruction at offset\t%s\n\n",
+    printf ("\tfirst instruction at offset\t0x%s\n\n",
                 hexstring((size_t)headerp->offset[3], 4 ));
 
     if (nvar)

@@ -5,6 +5,7 @@
         holds the number of its parameters, which are represented by the
         initial nParams elements of symtab's local variables array.
     */
+
 _partype:
     type_of_var
     enterid
@@ -26,6 +27,36 @@ _opt_parlist:
 |
     /* empty */
 ;
+
+_funvars:
+    openpar
+    _opt_parlist
+    ')'
+    openbrace
+    {
+        symtab_setNparams();
+    }
+;
+
+
+_funid:
+    IDENTIFIER
+    {
+        open_fun();
+    }
+;
+
+
+funcdef:
+    _funid                          /* name of the function */
+    _funvars                         /* returns init code */
+    statements
+    closebrace
+    {
+        close_fun(&$3);
+    }
+;
+
 
 /*    _local_list:
 /*        type_of_var
@@ -65,35 +96,4 @@ _opt_parlist:
 /*        }
 /*    ;
 /**/
-
-_funvars:
-    openpar
-    _opt_parlist
-    ')'
-    openbrace
-    {
-        symtab_setNparams();
-    }
-;
-
-_funid:
-    IDENTIFIER
-    {
-        open_fun();
-    }
-;
-
-
-funcdef:
-    _funid                          /* name of the function */
-    _funvars                         /* returns init code */
-    statements
-    closebrace
-    {
-        close_fun(&$3);
-    }
-;
-
-
-
 

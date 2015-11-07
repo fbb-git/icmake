@@ -20,29 +20,40 @@ static SemVal ret;
 
 SemVal *fetchvar()
 {
-    register size_t idx;
-
+    register int idx;
     ret = *stackframe(e_null);
 
     VarIndex vi = symtab_findVar();      /* find the index of var.
                                                util_string() */
 
-    if (vi.idx == -1)                          
+    if ((idx = vi.idx) == -1)                          
     {
         util_semantic("%s undefined", util_string());
         return &ret;
     }
 
+fprintf(stderr, "fetchvar: var %s at index %d, type %d\n", util_string(),
+idx, vi.type);
+
 //FBB fetchvar must distinguish between global vars, params, and local vars:
 
-    size_t nParams = 0;
 
-    if (vi.idx < nParams)                   /* idx refers to a parameter */
-        idx += 0xc002;
-    else                                    /* idx refers to a local var */
-        vi.idx = 0xbfff - (vi.idx - nParams); 
+    if (vi.type == st_global)
+    {
+    }
+    else
+    {
+        register size_t nParams = symtab_nParams();
 
-    ret.evalue = vi.idx;
+        if (idx < nParams)
+            idx += 0xc002;                  /* offset of a parameter */
+        else 
+            idx = 0xbfff - (idx - nParams); /* offset of a local var */
+    }
+
+fprintf(stderr, "fetchvar variable e-value = %x\n", idx);
+
+    ret.evalue = idx;
     ret.type = symtab_varType(vi);
 
 //                                            /* not a local variable ? */
@@ -50,11 +61,11 @@ SemVal *fetchvar()
 //    {                                       /* not a global variable ? */
 //        if ((idx = looksym(&g_globaltab)) != g_globaltab.n_defined)
 //            type = g_globaltab.symbol[idx].var.type;
-//        else
-//        {
-//            idx = 0xffff;
-//            util_semantic("%s undefined", util_string());
-//        }
+    //        else
+    //        {
+    //            idx = 0xffff;
+    //            util_semantic("%s undefined", util_string());
+    //        }
 //    }
 //    else
 //    {
@@ -71,5 +82,16 @@ SemVal *fetchvar()
 //        ret.type =  type;
 //    }
 
+fprintf(stderr, "fetchvar out\n");
+
     return &ret;                         /* return the frame */
 }
+
+
+
+
+
+
+
+
+

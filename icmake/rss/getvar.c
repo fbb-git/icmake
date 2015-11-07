@@ -66,21 +66,38 @@ UNS16 getvar (FILE *f, BIN_HEADER_ *headerp, VAR_ **var)
     INT32 curoffs;
 
     if (headerp->offset[1] == headerp->offset[2])
-        return (0);
+        return 0;
 
-    curoffs = ftell (f);
-    if (fseek (f, headerp->offset[1], SEEK_SET))
-        return ( (UNS16) -1);
+    curoffs = ftell(f);
+    if (fseek(f, headerp->offset[1], SEEK_SET))
+        return (UNS16)-1;
 
-    while (ftell (f) < headerp->offset[2])
+    while (ftell(f) < headerp->offset[2])
     {
+//FBB size_t offset = ftell(f);
+
         *var = xrealloc (*var, (nvar + 1) * sizeof (VAR_));
-        if (! fread (*var + nvar, sizeof (VAR_), 1, f) )
-            error ("cannot read in variables");
-        if ((*var) [nvar].type > e_list)
+
+        char type;
+        INT16 value;
+        if (
+            !fread(&type, sizeof(char), 1, f) 
+            ||
+            !fread(&value, sizeof(INT16), 1, f)
+        )
+            error ("cannot read the variable section");
+
+//FBB fprintf(stderr, "read type 0x%x, value %u at offset 0x%x\n",
+//FBB type, value, offset);
+
+        if (type > e_list)
             error ("bad variable type (var #%d)\n", nvar + 1);
-        initvar (&(*var)[nvar]);
-        nvar++;
+
+        (*var)[nvar].type = (ExprType)type;
+        (*var)[nvar].vu.intval = value;
+
+        initvar(*var + nvar);
+        ++nvar;
     }
 
     fseek (f, curoffs, SEEK_SET);

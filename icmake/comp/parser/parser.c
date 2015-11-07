@@ -21,8 +21,6 @@ void parser(char **argv)
     #if YYDEBUG
         yydebug = YYDEBUG;
     #endif
-
-    fprintf(stderr, "parser called\n");
 }
 
 

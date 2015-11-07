@@ -12,7 +12,9 @@ void make_frame()
     if (symtab_setFunctionInfo(ftell(gp_bin)))
     {
         SemVal e = *stackframe(0);         /* initialize empty frame */
+
         gencode(&e, op_frame);              /* generate frame instruction */
+
         util_out(gp_bin, e.code, e.codelen); /* write to gp_bin */
         free(e.code);
     }

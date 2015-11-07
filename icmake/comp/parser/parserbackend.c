@@ -48,10 +48,10 @@ int parser_backend()
                                             /* code                         */
     util_out(gp_bin, gp_init.code, gp_init.codelen);
 
-    util_out(gp_bin, &opcall, sizeof(INT8)); /* call main() at its offset */
+    util_out(gp_bin, &opcall, sizeof(INT8)); /* call opcode for main */
 
-    UNS16 addr = symtab_funAddress(idx);
-    util_out(gp_bin, &addr, sizeof(UNS16));
+    UNS16 addr = symtab_funAddress(idx);    /* get main's address   */
+    util_out(gp_bin, &addr, sizeof(UNS16)); /* write it out         */
 
     util_out(gp_bin, &opexit, sizeof(INT8)); /* generate op_ret at the end */
 

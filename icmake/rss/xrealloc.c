@@ -33,7 +33,7 @@ void *xrealloc (void *ptr, size_t size)
         return NULL;
     }
 
-    newprt = ptr != NULL ?
+    newptr = ptr != NULL ?
                     realloc(ptr, size)
                 :
                     malloc (size);

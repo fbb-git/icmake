@@ -7,3 +7,10 @@ void last_stmnt(SemVal *lval)
     util_out(gp_bin, lval->code, lval->codelen);
     discard(lval);
 }
+
+
+
+
+
+
+

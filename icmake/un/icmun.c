@@ -2,11 +2,9 @@
 
 int main (int argc, char **argv)
 {
-    register char
-        *progname,
-        *infname;
-    static char
-        bimext [] = ".bim";
+    register char *progname;
+    register char *infname;
+    static char bimext [] = ".bim";
 
     copyright ("ICMAKE Binary Make File Unassembler", version, release);
 
@@ -15,7 +13,7 @@ int main (int argc, char **argv)
         progname = program_name (argv [0]);
         printf ("Usage: %s bimfile\n"
                 "where: bimfile - binary makefile (default extension: %s)\n\n"
-            , progname, bimext);
+                , progname, bimext);
         return 2;
     }
 
@@ -26,10 +24,12 @@ int main (int argc, char **argv)
 
     headerp = readheader(infile, (size_t)version [0]);
 
-    if ((INT16)(nvar = getvar (infile, headerp, &var)) == -1 )
+    if ((INT16)(nvar = getvar(infile, headerp, &var)) == -1 )
         error ("invalid macro file, cannot read variable section");
 
-    process ();
+    process();
 
     return 0;
 }
+
+

@@ -51,21 +51,18 @@ char
         "trimright",
     };
 
-FILE
-    *infile;
+FILE *infile;
 
-INT8
-    *local_types;
+INT8 *local_types;
 
 size_t
     curoffs,
     nvar;
 
-VAR_
-    *var;
+VAR_ *var;
 
 void
-    (*procfun[])(void) =
+    (*p_procfun[])(void) =
     {
         fun_jmp,
         fun_jmp_false,

@@ -9,9 +9,6 @@
 _partype:
     type_of_var
     enterid
-    {
-        symtab_newParam();
-    }
 ;
 
 _pars:
@@ -34,10 +31,9 @@ _funvars:
     ')'
     openbrace
     {
-        symtab_setNparams();
+        symtab_setFunParams(); /* the # variables so far are the parameters */
     }
 ;
-
 
 _funid:
     IDENTIFIER

@@ -188,7 +188,8 @@ def_var_or_fun:
 enterid:
     IDENTIFIER
     {
-        defineVar();
+        defineVar();    /* the first n variables of a function, up to the
+                            end of the parameter list are the parameters. */
     }
 ;
 err_expression:
@@ -633,9 +634,6 @@ for_stat:
 _partype:
     type_of_var
     enterid
-    {
-        symtab_newParam();
-    }
 ;
 
 _pars:
@@ -658,10 +656,9 @@ _funvars:
     ')'
     openbrace
     {
-        symtab_setNparams();
+        symtab_setFunParams(); /* the # variables so far are the parameters */
     }
 ;
-
 
 _funid:
     IDENTIFIER
@@ -1155,7 +1152,6 @@ statement:
     }
 |
     varlist
-    semicol
 ;
 statements:
     statements
@@ -1226,8 +1222,6 @@ vardefs:
         $$ = $1;                    /* initialization code */
     }
 ;
-
-
 varlist:
     type_of_var
     vardefs

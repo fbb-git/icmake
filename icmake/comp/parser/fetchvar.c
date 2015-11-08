@@ -32,8 +32,8 @@ SemVal *fetchvar()
         return &ret;
     }
 
-fprintf(stderr, "fetchvar: var %s at index %d, type %d\n", util_string(),
-idx, vi.type);
+//FBB fprintf(stderr, "fetchvar: var %s at index %d, type %d\n", util_string(),
+//FBB idx, vi.type);
 
 //FBB fetchvar must distinguish between global vars, params, and local vars:
 
@@ -51,7 +51,7 @@ idx, vi.type);
             idx = 0xbfff - (idx - nParams); /* offset of a local var */
     }
 
-fprintf(stderr, "fetchvar variable e-value = %x\n", idx);
+//FBB fprintf(stderr, "fetchvar variable e-value = %x\n", idx);
 
     ret.evalue = idx;
     ret.type = symtab_varType(vi);
@@ -82,7 +82,7 @@ fprintf(stderr, "fetchvar variable e-value = %x\n", idx);
 //        ret.type =  type;
 //    }
 
-fprintf(stderr, "fetchvar out\n");
+//FBB fprintf(stderr, "fetchvar out\n");
 
     return &ret;                         /* return the frame */
 }

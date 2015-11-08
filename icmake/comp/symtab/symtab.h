@@ -43,6 +43,9 @@ void        symtab_writeFunAddress(FILE *bin, size_t funidx);
 
 size_t      symtab_lastFunction(void);  /* index of last defined function */
 
+void        symtab_setFunParams();      /* set nparams & types of the function
+                                            that's currently being defined */
+
 size_t      symtab_setFunctionInfo(size_t nParams); /* initializes the fields 
                                                  of the last defined function;
                                                  returns # local variables */

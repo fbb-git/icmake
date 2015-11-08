@@ -7,58 +7,58 @@ void process()
     INT32 oldoffs;
     static char buf[200];
 
-    printf ("Binary file statistics:\n"
+    printf("Binary file statistics:\n"
             "\tstrings           at offset\t0x%s\n" ,
                 hexstring((size_t)headerp->offset[0], 4 ));
-    printf ("\tvariables         at offset\t0x%s\n",
+    printf("\tvariables         at offset\t0x%s\n",
                 hexstring((size_t)headerp->offset[1], 4 ));
-    printf ("\tfilenames         at offset\t0x%s\n",
+    printf("\tfilenames         at offset\t0x%s\n",
                 hexstring((size_t)headerp->offset[2], 4 ));
-    printf ("\tfirst instruction at offset\t0x%s\n\n",
+    printf("\tfirst instruction at offset\t0x%s\n\n",
                 hexstring((size_t)headerp->offset[3], 4 ));
 
     if (nvar)
     {
-        puts ("Variable section dump:");
+        puts("Variable section dump:");
         for (i = 0; i < nvar; i++)
-            printf ("\tvariable %s: %s\n",
-                    hexstring (i, 4),
-                    varname (var [i].type));
-        putchar ('\n');
+            printf("\tvariable %s: %s\n",
+                    hexstring(i, 4),
+                    varname(var [i].type));
+        putchar('\n');
     }
 
     if (headerp->offset[0] < headerp->offset[1])
     {
-        oldoffs = ftell (infile);
-        puts ("String constants dump:");
-        fseek (infile, headerp->offset[0], SEEK_SET);
-        while (ftell (infile) < headerp->offset[1])
+        oldoffs = ftell(infile);
+        puts("String constants dump:");
+        fseek(infile, headerp->offset[0], SEEK_SET);
+        while (ftell(infile) < headerp->offset[1])
         {
-            fgetz (buf, 199, infile);
-            printf ("\t\"");
-            dumpstring (buf);
-            printf ("\"\n");
+            fgetz(buf, 199, infile);
+            printf("\t\"");
+            dumpstring(buf);
+            printf("\"\n");
         }
-        putchar ('\n');
-        fseek (infile, oldoffs, SEEK_SET);
+        putchar('\n');
+        fseek(infile, oldoffs, SEEK_SET);
     }
 
-    puts ("Disassembled code:");
-    while ( (curoffs = (size_t)ftell (infile)) < (size_t)headerp->offset[0] )
+    puts("Disassembled code:");
+    while ((curoffs =(size_t)ftell(infile)) <(size_t)headerp->offset[0] )
     {
-        if ( (op = getopcode (infile)) < op_hlt &&
+        if ((op = getopcode(infile)) < op_hlt &&
              op != (OPCODE_)-1
            )
         {
-            printf ("\t[%s] ", hexstring(curoffs, 4));
-            printf ("%s ", hexstring ((size_t)op, 2));
-            procfun [op] ();
+            printf("\t[%s] ", hexstring(curoffs, 4));
+            printf("%s ", hexstring((size_t)op, 2));
+            p_procfun[op]();
         }
         else
         {
-            fprintf (stderr, "bad opcode at %s", hexstring(curoffs, 4));
-            error ("(opcode %s)", hexstring((size_t)op, 2));
+            fprintf(stderr, "bad opcode at %s", hexstring(curoffs, 4));
+            error("(opcode %s)", hexstring((size_t)op, 2));
         }
     }
-    putchar ('\n');
+    putchar('\n');
 }

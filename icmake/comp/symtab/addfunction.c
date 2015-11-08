@@ -1,3 +1,7 @@
+/*
+#define msg
+*/
+
 #include "symtab.ih"
 
 int symtab_addFunction(ExprType type) /* 0: function added, -1: already def'd */
@@ -12,6 +16,8 @@ int symtab_addFunction(ExprType type) /* 0: function added, -1: already def'd */
     memset(next, 0, sizeof(FunInfo));
     next->name = xstrdup(util_string());
     next->returnType = type | e_reg;
+
+    msg("gs_vars.nParams is %u", gs_vars.nParams);
 
     return 0;
 }

@@ -4,6 +4,9 @@ static INT8 opret = op_ret;
 
 void close_fun(SemVal *funStmnt)
 {
+    gp_nestLevel = 0;       /* function completed: writing code to gp_bin 
+                                now OK */
+
     make_frame();           /* make the frame, defining the local variables */
                             /* and define the function's first address      */
 

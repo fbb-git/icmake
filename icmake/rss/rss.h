@@ -55,6 +55,11 @@ char     *try_source(char const *);         /* return allocated source[.im] */
 char     *xstrdup(char const *);
 char     *xstrcat (char *, char const *);
 
+void     msg_(char const *path, char *fmt, ...); /* prints a msg to stderr. 
+                                        Use it by doing #define msg before
+                                        reading rss.h, and then call msg(fmt,
+                                        ...) to specify a message
+                                    */
 void     error (char *, ...);
 void     spawn_err (char *);
 
@@ -71,5 +76,16 @@ OPCODE_  getopcode (FILE *);
 UNS16    getvar(FILE *, BIN_HEADER_ *, VAR_ **);
 
 void     initvar(VAR_ *);
+
+
+    /* to activate msg(...) calls do '#define msg' before reading rssh.h */
+
+#ifdef msg
+    #undef msg
+    #define msg(...)    msg_(__FILE__, __VA_ARGS__)
+#else
+    #undef msg
+    #define msg(...)
+#endif
 
 #endif

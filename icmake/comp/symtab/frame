@@ -1,3 +1,6 @@
+/*
+#define msg
+*/
 #include "symtab.ih"
 
 void st_

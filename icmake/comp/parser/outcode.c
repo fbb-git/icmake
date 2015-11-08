@@ -1,3 +1,7 @@
+/*
+#define msg
+*/
+
 #include "parser.ih"
 
 void outcode(SemVal *ep, int value, register size_t size)
@@ -23,6 +27,9 @@ void outcode(SemVal *ep, int value, register size_t size)
 
                                             /* make room for new code */
     ep->code = xrealloc(ep->code, (codelen + size) * sizeof(char));
+
+    msg("size = %u, buffer[0] = %x, [1] = %x", size, \
+                                            u.buffer[0], u.buffer[1]);
 
                                             /* append the new code */
     memcpy(ep->code + codelen, u.buffer, size);

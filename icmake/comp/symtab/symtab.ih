@@ -86,6 +86,8 @@ extern VarRef gs_vars;     /*
 size_t st_nextFunIdx(void);      /* idx of an uninitialized record of a 
                                     function */
 
+FunInfo *st_lastFunInfo();      /* ptr to the last FunInfo record */
+
 size_t       st_nestingOffset(void);
 
 VarIndices  *st_topLevel(void);
@@ -105,6 +107,8 @@ VarIndex st_addVar(ExprType type);   /* add variable to the topmost symbol
 size_t st_nextVarIdx(VarInfo **vi); /* return idx of next variable, and set
                                         a ptr to its record using RBA */
 
+ExprType st_paramType(size_t idx);  /* returns type of parameter idx */
+
 size_t *st_newIdxPtr(void);   /* pointer to the next available index[] */
 
 size_t st_newVarIdx(void);    /* idx of an uninitialized record of a new 
@@ -115,9 +119,4 @@ VarTab *st_varTab(size_t nesting); /* return the variable table matching the
 
 void st_deleteVars(VarTab *varTab); /* delete all info allocated by VarInfo
                                         objects */
-
-
-
-
-
 

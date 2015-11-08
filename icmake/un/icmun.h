@@ -10,7 +10,7 @@ extern char
     version [];
 
 extern void
-    (*procfun []) (void);
+    (*p_procfun []) (void);
 
 extern FILE
     *infile;

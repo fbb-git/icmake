@@ -1,9 +1,12 @@
+/*
+#define msg
+*/
+
 #include "parser.ih"
 
 SemVal *incdec(PREPOST_ pp, OPCODE_ opcode, SemVal *e)
 {
-    register size_t
-        varnr;
+    register size_t varnr;
 
     if (test_operand(e, opcode))
     {
@@ -18,15 +21,17 @@ SemVal *incdec(PREPOST_ pp, OPCODE_ opcode, SemVal *e)
     }
 
     varnr = e->evalue;
-    e->codelen = 0;                         /* INITIALIZED CODELEN HERE */
+    e->codelen = 0;                     /* INITIALIZED CODELEN HERE */
 
-    gencode(e, opcode, varnr);              /* Generate INC/DEC opcode */
+    msg("   inc/dec opcode BEGIN");
+    gencode(e, opcode, varnr);          /* Generate INC/DEC opcode */
+    msg("   inc/dec opcode END");
 
-    e->type =                               /* Indicate pre/post inc- decrement */
+    e->type =                           /* Indicate pre/post inc- decrement */
             (pp == pre_op) ?
                 e_code | e_int | e_pre_inc_dec
             :
                 e_code | e_int | e_post_inc_dec;
 
-    return (e);
+    return e;
 }

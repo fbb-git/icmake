@@ -37,7 +37,7 @@ void process ()
             fprintf(stderr, "bad opcode at %s ", hexstring(curoffs, 4));
             error("(opcode %s)", hexstring(op, 2));
         }
-        procfun[op]();
+        p_procfun[op]();
     }
     while (op != op_exit);
 }

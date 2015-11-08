@@ -1,7 +1,7 @@
 #ifndef _INCLUDED_LIST_H_
 #define _INCLUDED_LIST_H_
 
-#include "../../rss/icrss.h"
+#include "../../rss/rss.h"
 
 typedef VAR_    LISTVAR_;
 

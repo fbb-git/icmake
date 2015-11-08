@@ -1,7 +1,7 @@
 #ifndef _INCLUDED_VAR_H_
 #define _INCLUDED_VAR_H_
 
-#include "../../rss/icrss.h"
+#include "../../rss/rss.h"
 
 #define typeValue(varp) ((varp)->type & (e_list | e_str | e_int))
 #define typeIdx(varp) ((varp)->type & e_list ? 2 : (varp)->type & e_str ? 1 : 0)

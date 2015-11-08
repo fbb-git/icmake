@@ -1,6 +1,6 @@
 #include "opcodefun.ih"
 
-void (*procfun[])(void) =
+void (*p_procfun[])(void) =
      {
          fun_jmp,
          fun_jmp_false,

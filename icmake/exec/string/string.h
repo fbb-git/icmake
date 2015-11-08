@@ -1,7 +1,7 @@
 #ifndef _INCLUDED_STRING_H_
 #define _INCLUDED_STRING_H_
 
-#include "../../rss/icrss.h"
+#include "../../rss/rss.h"
 
 typedef VAR_    STRINGVAR_;
 

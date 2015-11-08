@@ -1,7 +1,7 @@
 #ifndef _INCLUDED_BUILTIN_H_
 #define _INCLUDED_BUILTIN_H_
 
-#include "../../rss/icrssdef.h"
+#include "../../rss/rss.h"
 
 #include "../var/var.h"
 

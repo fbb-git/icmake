@@ -1,14 +1,14 @@
 #include "builtin.h"
 
 #include <unistd.h>
-
+#include <ctype.h>
 #include <errno.h> 
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
  
-#include "../../rss/icrss.h"
+#include "../../rss/rss.h"
 
 #include "../global.h"
 

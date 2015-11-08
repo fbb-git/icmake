@@ -1,21 +1,10 @@
-#include "../rss/icrssdef.h"
-
-#ifdef MSDOS
-#   include <icce.h>
-#   include <conio.h>
-#   include <process.h>
-#   include <direct.h>
-#   include <io.h>
-#   include <dos.h>
-#else
-#   include <unistd.h>
-#endif
+#include <unistd.h>
  
 #include <signal.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "../rss/icrss.h"
+#include "../rss/rss.h"
 
 #include "global.h"
 

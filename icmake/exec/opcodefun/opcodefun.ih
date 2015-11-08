@@ -1,21 +1,9 @@
 #include "opcodefun.h"
 
-#ifdef MSDOS
-#   include <icce.h>
-#   include <conio.h>
-#   include <process.h>
-#   include <direct.h>
-#   include <io.h>
-#   include <dos.h>
-#else
-#   include <unistd.h>
-#endif
-
+#include <unistd.h>
 #include <stdlib.h>
 
-#include "../../rss/icm.h"
-#include "../../rss/icrss.h"
-
+#include "../../rss/rss.h"
 #include "../global.h"
 
 #include "../var/var.h"
@@ -27,7 +15,7 @@
 #include "../builtin/builtin.h"
 
 
-extern void       (*procfun[])(void);
+extern void       (*p_procfun[])(void);
 
 VAR_   *getdest(void);
 int     istrue(void);

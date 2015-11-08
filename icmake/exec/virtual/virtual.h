@@ -1,7 +1,7 @@
 #ifndef _INCLUDED_VIRTUAL_H_
 #define _INCLUDED_VIRTUAL_H_
 
-#include "../../rss/icrss.h"
+#include "../../rss/rss.h"
 
 VAR_    *constructor(ExprType type);          /* default cons. sets count */
 VAR_    *copyCons(VAR_ const *var);          /* increments count */    

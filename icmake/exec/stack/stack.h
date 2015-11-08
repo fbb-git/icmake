@@ -1,7 +1,7 @@
 #ifndef _INCLUDED_STACK_H_
 #define _INCLUDED_STACK_H_
 
-#include "../../rss/icrss.h"
+#include "../../rss/rss.h"
 
 void    push(VAR_ const *var);
 void    pushBP(void);

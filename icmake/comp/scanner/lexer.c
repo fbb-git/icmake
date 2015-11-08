@@ -1619,7 +1619,7 @@ case 88:
 case 89:
 YY_RULE_SETUP
 #line 323 "lexer"
-{                   /* P_CHECK: value in icm.h */
+{
                             util_setString("0");
                             return NUMBER;
                         }
@@ -1643,7 +1643,7 @@ case 94:
 case 95:
 YY_RULE_SETUP
 #line 335 "lexer"
-{                   /* O_DIR: value in icm.h */
+{
                             util_setString("2");
                             return NUMBER;
                         }
@@ -1653,7 +1653,7 @@ case 96:
 case 97:
 YY_RULE_SETUP
 #line 340 "lexer"
-{                   /* O_SUBDIR: value in icm.h */
+{
                             util_setString("4");
                             return NUMBER;
                         }
@@ -1663,7 +1663,7 @@ case 98:
 case 99:
 YY_RULE_SETUP
 #line 345 "lexer"
-{                   /* O_ALL: value in icm.h */
+{
                             util_setString("8");
                             return NUMBER;
                         }

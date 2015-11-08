@@ -77,6 +77,7 @@ UNS16    getvar(FILE *, BIN_HEADER_ *, VAR_ **);
 
 void     initvar(VAR_ *);
 
+BIN_HEADER_ *readheader(FILE *f, size_t v);
 
     /* to activate msg(...) calls do '#define msg' before reading rssh.h */
 

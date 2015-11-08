@@ -1,4 +1,4 @@
-#include "icmun.h"
+#include "icmun.ih"
 
 void dumpchar(int val)
 {

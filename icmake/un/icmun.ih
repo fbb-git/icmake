@@ -1,0 +1,86 @@
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+//#include "../rss/icrssdef.h"
+#include "../rss/rss.h"
+
+extern BIN_HEADER_ *headerp;
+
+extern char invalid_macro_file [];
+extern char *funname [];
+extern char release[];
+extern char version [];
+
+extern void (*p_procfun []) (void);
+
+extern FILE *infile;
+
+extern INT8 *local_types;
+
+extern size_t curoffs;
+extern size_t nvar;
+
+extern VAR_ *var;
+
+extern char *varname (ExprType);
+extern char *printvar (int);
+
+void dumpchar(int);
+void dumpint(int);
+void dumpstring(char *);
+void fun_jmp(void);
+void fun_jmp_false(void);
+void fun_jmp_true(void);
+void fun_push_1_jmp_end(void);
+void fun_push_0(void);
+void fun_push_imm(void);
+void fun_push_strconst(void);
+void fun_push_var(void);
+void fun_push_reg(void);
+void fun_pop_var(void);
+void fun_umin(void);
+void fun_atoi(void);
+void fun_itoa(void);
+void fun_atol(void);
+void fun_mul(void);
+void fun_div(void);
+void fun_mod(void);
+void fun_add(void);
+void fun_sub(void);
+void fun_eq(void);
+void fun_neq(void);
+void fun_sm(void);
+void fun_gr(void);
+void fun_younger(void);
+void fun_older(void);
+void fun_smeq(void);
+void fun_greq(void);
+void fun_exit(void);
+void fun_asp(void);
+void fun_ret(void);
+void fun_copy_var(void);
+void fun_inc(void);
+void fun_dec(void);
+void fun_call(void);
+void fun_call_rss(void);
+void fun_frame(void);
+void fun_ret(void);
+void fun_pop_reg(void);
+void fun_ascii(void);
+void process(void);
+void fun_band(void);
+void fun_bor(void);
+void fun_bnot(void);
+void fun_xor(void);
+void fun_shl(void);
+void fun_shr(void);
+
+
+
+
+
+
+
+
+

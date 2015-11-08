@@ -1,12 +1,10 @@
-#include "icmun.h"
+#include "icmun.ih"
 
-static char
-    buffer [10] = "[";
+static char buffer [10] = "[";
 
-char *printvar (int idx)
+char *printvar(int idx)
 {
-    register INT16       
-        i;
+    register INT16 i;
 
     if ((UNS16)idx < 0x8000 )            /* pure variable number */
         strcpy(buffer + 1, hexstring ((size_t)idx, 4));

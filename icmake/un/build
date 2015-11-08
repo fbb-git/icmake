@@ -401,7 +401,7 @@ void main(int argc, list argv)
 
     cpp_make
     (
-        "icmun.c",    // program source
+        "main.c",    // program source
         "icmun"       // static program library
     );
 

@@ -1,7 +1,6 @@
-#include "icmun.h"
+#include "icmun.ih"
 
-BIN_HEADER_
-    *headerp;
+BIN_HEADER_ *headerp;
 
 char
     *funname [] =

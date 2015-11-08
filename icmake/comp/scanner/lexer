@@ -320,29 +320,29 @@ younger                 {
                             return NUMBER;
                         }
 OFF         |
-P_CHECK                 {                   /* P_CHECK: value in icm.h */
+P_CHECK                 {
                             util_setString("0");
                             return NUMBER;
                         }
 S_IFDIR     |
-O_FILE      |                               /* O_FILE: value in icm.h */
+O_FILE      |
 ON                      {
                             util_setString("1");
                             return NUMBER;
                         }
 S_IFCHR     |
 P_NOCHECK   |
-O_DIR                   {                   /* O_DIR: value in icm.h */
+O_DIR                   {
                             util_setString("2");
                             return NUMBER;
                         }
 S_IFREG     |
-O_SUBDIR                {                   /* O_SUBDIR: value in icm.h */
+O_SUBDIR                {
                             util_setString("4");
                             return NUMBER;
                         }
 S_IREAD     |
-O_ALL                   {                   /* O_ALL: value in icm.h */
+O_ALL                   {
                             util_setString("8");
                             return NUMBER;
                         }

@@ -1,4 +1,4 @@
-#include "icmun.h"
+#include "icmun.ih"
 
 int main (int argc, char **argv)
 {

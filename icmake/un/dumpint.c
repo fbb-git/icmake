@@ -1,4 +1,4 @@
-#include "icmun.h"
+#include "icmun.ih"
 
 void dumpint (int val)
 {

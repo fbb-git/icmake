@@ -1,11 +1,11 @@
-#include "icmun.h"
+#include "icmun.ih"
 
 void dumpstring (s)
 char *s;
 {
     while (*s)
     {
-        putchar (iscntrl (*s) ? '.' : *s);
+        putchar(iscntrl(*s) ? '.' : *s);
         s++;
     }
 }

@@ -1,6 +1,10 @@
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include <ctype.h>
-#include "../rss/icrssdef.h"
-#include "../rss/icm.h"
+
+#include "../rss/rss.h"
+
 
 typedef enum
 {

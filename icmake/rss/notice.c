@@ -10,6 +10,6 @@ void msg(char *fmt, ...)
     va_list args;
 
     va_start (args, fmt);
-    vfprintf (stderr, fmt, args);
-    fputc ('\n', stderr);
+    vgr_fprintf (stderr, fmt, args);
+    gr_fputc ('\n', stderr);
 }

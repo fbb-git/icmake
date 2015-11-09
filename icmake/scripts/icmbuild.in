@@ -344,7 +344,7 @@ list inspect(string destDir,
         file  = srcList[idx];   
         source = srcDir + file;
         
-        ofile   = oprefix + change_ext(file, "o");    // make o-filename
+        ofile   = oprefix + rss_changeExt(file, "o");    // make o-filename
 
         // A file s must be recompiled if:
         //  the ofile exists and is older than ALL
@@ -387,7 +387,7 @@ void c_compile(int prefix, string destDir, string srcDir, list cfiles)
     for (idx = sizeof(cfiles); idx--; )
     {
         file = cfiles[idx];
-        system(compiler + change_ext(file, OBJ_EXT) + " " + srcDir + file);
+        system(compiler + rss_changeExt(file, OBJ_EXT) + " " + srcDir + file);
         g_compiled = 1;
     }
 }
@@ -667,7 +667,7 @@ void rmUSE_ALLfiles()
 void program(string strip)
 {
 #ifdef MAIN
-    string maino = change_ext(MAIN, OBJ_EXT);
+    string maino = rss_changeExt(MAIN, OBJ_EXT);
 
     md(TMP_DIR "/bin");
 
@@ -832,7 +832,7 @@ void main(int argc, list argv, list envp)
         exit(0);
     }
 
-    prog = change_ext(change_path(argv[0], ""), "");
+    prog = rss_changeExt(change_path(argv[0], ""), "");
 
     printf("Usage: ", prog, " [-c] cmd\n"
         "   -c              - Does 'tput clear' (clear screen) just before\n"

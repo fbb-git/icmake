@@ -14,7 +14,7 @@ char *try_source(char const *source)
     if (access(source, F_OK) == 0)      /* File exists as-is ?  */
         return xstrdup(source);         /* return it            */
 
-    ret = xstrdup(change_ext(source, "im"));     /* file.im */
+    ret = xstrdup(rss_changeExt(source, "im"));     /* file.im */
 
     return access(ret, F_OK) == 0 ?     /* File.im exists ?     */
         ret

@@ -55,10 +55,10 @@ int options (char **argv, int *argc)
                                             /* build pid-string */
                 sprintf(pid_string, "%d", getpid());
                                             /* destination with pid-extension */
-                dest_name = xstrdup(change_ext(cp, pid_string));
+                dest_name = xstrdup(rss_changeExt(cp, pid_string));
                                             
                 strcat(pid_string, "a");    /* temp. pim-file extension */
-                temporary = xstrdup(change_ext(cp, pid_string));
+                temporary = xstrdup(rss_changeExt(cp, pid_string));
 
                 source_name = argv[1];
             return getoptindex() + 1;       /* index of remaining args */

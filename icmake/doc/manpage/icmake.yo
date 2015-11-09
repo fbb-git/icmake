@@ -431,9 +431,9 @@ provided:
     itt(string change_base(string file, string newbase))nl()
         Changes the basename of tt(file), returns the changed name. E.g, 
         tt(change_base("/path/demo.im", "out")) returns tt("/path/out.im");
-    itt(string change_ext(string file, string newext))nl()
+    itt(string rss_changeExt(string file, string newext))nl()
         Changes the extension of tt(file), returns the changed name. E.g, 
-        tt(change_ext("source.cc", "o")) returns tt("source.o");
+        tt(rss_changeExt("source.cc", "o")) returns tt("source.o");
     itt(string change_path(string file, string newpath))nl()
          Changes the path specification of tt(file), returns the changed name.
         E.g, tt(change_path("tmp/binary", "/usr/bin")) returns 

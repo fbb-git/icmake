@@ -1,6 +1,6 @@
 #include "rss.ih"
 
-char *ic_strlwr (char *s)
+char *es_strLower (char *s)
 {
     register char *cp;
 

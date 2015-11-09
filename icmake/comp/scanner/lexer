@@ -67,7 +67,7 @@ change_base             {
                             yylval.type = f_c_base;
                             return C_BASE;
                         }
-change_ext              {
+rss_changeExt              {
                             yylval.type = f_c_ext;
                             return C_EXT;
                         }

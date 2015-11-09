@@ -11,7 +11,7 @@ void msg_(char const *path, char *fmt, ...)
 
     va_start (args, fmt);
 
-    fprintf(stderr, "%s: ", path);
-    vfprintf(stderr, fmt, args);
-    fputc ('\n', stderr);
+    gr_fprintf(stderr, "%s: ", path);
+    vgr_fprintf(stderr, fmt, args);
+    gr_fputc ('\n', stderr);
 }

@@ -20,7 +20,7 @@
 
 static char dot[] = ".";
 
-void ic_makepath(char * path,
+void rss_makePath(char * path,
     char const * drive, char const * dir, char const * fname, char const * ext)
 {
     path[0] = '\x0';                        /*  prepare for strcats */

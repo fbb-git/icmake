@@ -20,6 +20,6 @@
 void fun_c_base()
 {
     reg = *stringConstructor_cP(
-            change_base(stringStr(top()), stringStr(top() - 1))
+            rss_changeBase(stringStr(top()), stringStr(top() - 1))
                             );
 }

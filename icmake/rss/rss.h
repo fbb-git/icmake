@@ -8,19 +8,12 @@
 extern char version[];
 extern char release[];
 
-void        ic_makepath(char *, char const *, char const *,
+void        rss_makePath(char *, char const *, char const *,
                         char const *, char const *);
-void        ic_splitpath(char const *, char *, char *, char *, char *);
-size_t      ic_dos_findfirst(char const *, size_t, struct _find_t *);
-size_t      ic_dos_findnext(struct _find_t *);
+void        rss_splitPath(char const *, char *, char *, char *, char *);
 
-int         ic_spawnlp(int, char const *, char const *, ...);
-int         ic_spawnvp(int, char const *, char const **);
-char        *ic_strlwr(char *);
-char        *ic_strupr(char *);
-
-char const *change_ext (char const *, char const *);
-char const *change_base (char const *, char const *);
+char const *rss_changeExt(char const *, char const *);
+char const *rss_changeBase(char const *, char const *);
 char const *change_path (char const *, char const *);
 
 int      chesc(char *, int *);

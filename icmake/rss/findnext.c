@@ -9,7 +9,7 @@ char *findnext()
     char
         *cp;                                /* pointer to matched filename */
 
-    while (!ic_dos_findnext(&ifs.find))     /* find next entry */
+    while (!rsFindNext(&ifs.find))     /* find next entry */
     {
         if ( (cp = filefound()) )           /* file found ?    */
             return (cp);                    /* return its name */

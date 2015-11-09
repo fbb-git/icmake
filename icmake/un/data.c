@@ -11,7 +11,7 @@ char
         "ascii_str2int",
         "backtick",
         "change_base",
-        "change_ext",
+        "rss_changeExt",
         "change_path",
         "chdir",
         "cmdhead",

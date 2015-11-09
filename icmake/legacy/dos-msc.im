@@ -68,14 +68,14 @@ void makelib (string dir, string lib, string mainobj, list extraobj)
 
     chdir (dir);
 
-    mainobj = change_ext (mainobj, ".obj");
+    mainobj = rss_changeExt (mainobj, ".obj");
 
     printf ("Checking .c files against library ", lib, "\n");
     cfiles = makelist ("*.c");
     for (i = 0; i < sizeof (cfiles); i++)
     {
         cfile = element (i, cfiles);
-        ofile = change_ext (cfile, ".obj");
+        ofile = rss_changeExt (cfile, ".obj");
         if (cfile older lib ||
             (exists (ofile) && ofile younger cfile)
            )
@@ -99,7 +99,7 @@ void makelib (string dir, string lib, string mainobj, list extraobj)
     if (extraobj)
         execute (AR, lib, "-+", extraobj, "", ";");
 
-    system (RM + " " + change_ext(lib, "bak"));
+    system (RM + " " + rss_changeExt(lib, "bak"));
 
     chdir ("..");
 }
@@ -144,7 +144,7 @@ void makeprog (string dir, string lib, string prog)
             " and ", rsslib, "\n");
     if (lib younger exepacked_prog || rsslib younger exepacked_prog)
     {
-        exec (CC, change_ext (prog, ".obj"), lib, rsslib);
+        exec (CC, rss_changeExt (prog, ".obj"), lib, rsslib);
         exec ("exepack", prog, exepacked_prog);
         system("del " + prog);
     }
@@ -213,7 +213,7 @@ void clean (string dir, string lib, string prog)
 
     printf ("Cleaning ", dir, "\n");
 
-    lib = change_ext (lib, ".bak");
+    lib = rss_changeExt (lib, ".bak");
     if (exists (lib))
         system (RM + " " + lib);
     if (prog && exists (prog))

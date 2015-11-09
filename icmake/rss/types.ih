@@ -141,7 +141,7 @@ typedef enum                                /* names of rss-functions */
     f_exists,
     f_fgets,
     f_fields,
-    f_fprintf,
+    f_gr_fprintf,
     f_g_base,
     f_g_dext,
     f_g_ext,

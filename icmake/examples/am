@@ -50,7 +50,7 @@ void preamble(list argv, list envp)
     if (!home)
         kill("$HOME not found");
 
-    progname = change_ext(element(0, argv), "");
+    progname = rss_changeExt(element(0, argv), "");
 
     attic = home + ATTIC_DIR;                // set $HOME/.attic, change to
 }

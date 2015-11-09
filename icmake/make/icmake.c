@@ -74,7 +74,7 @@ int main (                         /* icmake source(txt) dest(bin) */
         dest_name = source_name;
 
     if (!(flags & f_tmpbim))                /* adapt extension of destination */
-        dest_name = xstrdup(change_ext(dest_name, bim)); /* if not tmp. bimfile */
+        dest_name = xstrdup(rss_changeExt(dest_name, bim)); /* if not tmp. bimfile */
 
     if
     (
@@ -85,11 +85,11 @@ int main (                         /* icmake source(txt) dest(bin) */
     {
                                             /* preprocessor filename */
         if (!(flags & f_tmpbim))            /* use .pim unless -t given */
-            temporary = xstrdup(change_ext(source_name, pim));
+            temporary = xstrdup(rss_changeExt(source_name, pim));
 
         signal(SIGINT, abnormal_exit);      /* abnormal exits process */
                                             /* do the preprocessing */
-        ret = ic_spawnlp(P_WAIT, icm_pp, icm_pp, source_name, temporary, NULL);
+        ret = spawnlp(P_WAIT, icm_pp, icm_pp, source_name, temporary, NULL);
         if (ret)
         {
             if (ret == -1)
@@ -102,7 +102,7 @@ int main (                         /* icmake source(txt) dest(bin) */
             return (0);
 
                                             /* do the compilation */
-        errors = ic_spawnlp(P_WAIT, icm_comp, icm_comp,
+        errors = spawnlp(P_WAIT, icm_comp, icm_comp,
                                   temporary, dest_name, NULL);
         cleanup();
 

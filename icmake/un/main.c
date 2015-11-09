@@ -17,7 +17,7 @@ int main (int argc, char **argv)
         return 2;
     }
 
-    infname = xstrdup(change_ext (argv [1], bimext));
+    infname = xstrdup(rss_changeExt (argv [1], bimext));
 
     if (! (infile = fopen (infname, READBINARY)) )
         error ("cannot open %s for reading", infname);
@@ -31,5 +31,7 @@ int main (int argc, char **argv)
 
     return 0;
 }
+
+
 
 

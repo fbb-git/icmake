@@ -1,6 +1,6 @@
 #include "rss.ih"
 
-int ic_spawnvp (int mode, char const *prog, char const **av)
+int es_spawnvp (int mode, char const *prog, char const **av)
 {
     char
         buf [_MAX_PATH * 4];

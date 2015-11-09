@@ -1,6 +1,6 @@
 #include "rss.ih"
 
-int ic_spawnlp (int mode, char const *prog, char const *av0, ...)
+int spawnlp (int mode, char const *prog, char const *av0, ...)
 {
     va_list
         marker;

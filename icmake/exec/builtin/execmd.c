@@ -58,7 +58,7 @@ int mode;
 #endif    
 
                         /* try to execute */
-    ret = ic_spawnvp (P_WAIT, cmd [0], (const char **) cmd);
+    ret = es_spawnvp (P_WAIT, cmd [0], (const char **) cmd);
     
                             /* if non-zero return and */
     if (ret && P_CHECKMODE (mode))      /* if checking requested.. */

@@ -20,6 +20,6 @@
 void fun_c_ext ()
 {
     reg = *stringConstructor_cP(
-                change_ext(stringStr(top()), stringStr(top() - 1))
+                rss_changeExt(stringStr(top()), stringStr(top() - 1))
                             );
 }

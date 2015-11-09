@@ -74,8 +74,6 @@ UNS16 getvar (FILE *f, BIN_HEADER_ *headerp, VAR_ **var)
 
     while (ftell(f) < headerp->offset[2])
     {
-//FBB size_t offset = ftell(f);
-
         *var = xrealloc (*var, (nvar + 1) * sizeof (VAR_));
 
         char type;
@@ -86,9 +84,6 @@ UNS16 getvar (FILE *f, BIN_HEADER_ *headerp, VAR_ **var)
             !fread(&value, sizeof(INT16), 1, f)
         )
             error ("cannot read the variable section");
-
-//FBB fprintf(stderr, "read type 0x%x, value %u at offset 0x%x\n",
-//FBB type, value, offset);
 
         if (type > e_list)
             error ("bad variable type (var #%d)\n", nvar + 1);

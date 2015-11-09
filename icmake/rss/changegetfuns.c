@@ -1,84 +1,47 @@
 #include "rss.ih"
 
-static char
-    name [_MAX_PATH],
-    drive [_MAX_PATH],
-    dir [_MAX_PATH],
-    fname [_MAX_PATH],
-    ext [_MAX_PATH];
-
-static void split (char const *n)
-{
-    ic_splitpath (n, drive, dir, fname, ext);
-}
-
-static void join (void)
-{
-    ic_makepath (name, drive, dir, fname, ext);
-}
-
-char const *change_ext (char const *n, char const *e)
-{
-    split (n);
-    *ext = 0;
-    if (e)
-        strcpy (ext, e);
-    join ();
-    return name;
-}
-
-char const *change_base (char const *n, char const *b)
-{
-    split (n);
-    *fname = 0;
-    if (b)
-        strcpy (fname, b);
-    join ();
-    return name;
-}
-
 char const *change_path (char const *n, char const *p)
 {
     register char
         *cp;
 
-    split (n);
+    rs_split(n);
 
     if (p)
     {
         if (DRIVESEP && (cp = strchr (p, DRIVESEP)))
         {
-            strcpy (drive, p);
-            *(strchr (drive, DRIVESEP) + 1) = '\0';
-            strcpy (dir, cp + 1);
+            strcpy (gr_drive, p);
+            *(strchr (gr_drive, DRIVESEP) + 1) = '\0';
+            strcpy (gr_dir, cp + 1);
         }
         else
-            strcpy (dir, p);
+            strcpy (gr_dir, p);
     }
 
-    join ();
+    rs_join();
 
-    return name;
+    return gr_name;
 }
 
 char const *get_ext(char const *n)
 {
-    split (n);
-    if (*ext == '.')
-        return (xstrdup (ext + 1));
-    return ext;
+    rs_split(n);
+    if (*gr_ext == '.')
+        return (xstrdup (gr_ext + 1));
+    return gr_ext;
 }
 
 char const *get_dext(char const *n)     /* including the dot */
 {
-    split (n);
-    return *ext == '.' ? xstrdup(ext) : ext;
+    rs_split(n);
+    return *gr_ext == '.' ? xstrdup(gr_ext) : gr_ext;
 }
 
 char const *get_base (char const *n)
 {
-    split (n);
-    return fname;
+    rs_split(n);
+    return gr_fname;
 }
 
 char const *get_path (char const *n)
@@ -86,14 +49,14 @@ char const *get_path (char const *n)
     register int
         last;
 
-    split (n);
-    strcat (drive, dir);
-    last = strlen (drive);
-    if (last && drive [last - 1] != DIRSEP && drive [last - 1] != DRIVESEP)
+    rs_split(n);
+    strcat (gr_drive, gr_dir);
+    last = strlen (gr_drive);
+    if (last && gr_drive [last - 1] != DIRSEP && gr_drive [last - 1] != DRIVESEP)
     {
-        drive[last] = DIRSEP;
-        drive[last + 1] = (char)0;
+        gr_drive[last] = DIRSEP;
+        gr_drive[last + 1] = (char)0;
     }
 
-    return drive;
+    return gr_drive;
 }

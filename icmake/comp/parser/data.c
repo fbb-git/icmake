@@ -16,7 +16,7 @@ char *gp_funstring[] =                          /* only one_arg  */
 
     "change_base",
     "chdir",
-    "change_ext",
+    "rss_changeExt",
     "cmdhead",
     "cmdtail",
     "change_path",

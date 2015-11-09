@@ -98,7 +98,7 @@ list objfiles(list files)
     for (i = 0; i < sizeof(files); i++)
     {
         file = element(i, files);           // determine element of the list
-        objfile = "./o/" + change_ext(file, "o");    // make obj-filename
+        objfile = "./o/" + rss_changeExt(file, "o");    // make obj-filename
         if (objfile younger file)           // objfile is younger
         {
             files -= (list)file;            // remove the file from the list
@@ -232,7 +232,7 @@ void c_compile(list cfiles)
                                         // compile all files separately
         for (i = 0; nextfile = element(i, cfiles); i++)
             exec(COMPILER,
-                "-c -o o/" + change_ext(nextfile, "o"),
+                "-c -o o/" + rss_changeExt(nextfile, "o"),
                 copt, nextfile);
 
         printf("\n");

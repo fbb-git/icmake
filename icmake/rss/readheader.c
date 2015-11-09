@@ -68,7 +68,7 @@ BIN_HEADER_ *readheader (FILE *f, size_t v)
         error ("The binary file was created with an older version of icmake.\n"
                "Remake the binary file.");
     else if ((size_t)header.version[0] < v )
-        fprintf(stderr, "The binary file was created with an older version "
+        gr_fprintf(stderr, "The binary file was created with an older version "
                 "of icmake.\n"
                 "It is advised to recompile the original script.\n");
     else if ((size_t)header.version[0] > v)

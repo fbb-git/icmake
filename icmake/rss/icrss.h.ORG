@@ -167,7 +167,7 @@
 
                 op_frame    2, e_int, e_str     (opcode and three INT8's)
 
-    Functions printf, fprintf
+    Functions printf, gr_fprintf
     -------------------------
     The variable number of arguments which are allowed for these functions
     are passed to the executor of icmake in the following manner:
@@ -200,7 +200,7 @@
     checking should or should not occur.
 
     The argument handling is, apart from the required first mode flag, similar
-    to that of the functions printf and fprintf.
+    to that of the functions printf and gr_fprintf.
 
 */
 
@@ -247,7 +247,7 @@ typedef enum                                /* names of rss-functions */
     f_exists,
     f_fgets,
     f_fields,
-    f_fprintf,
+    f_gr_fprintf,
     f_g_base,
     f_g_dext,
     f_g_ext,
@@ -403,18 +403,18 @@ extern char
     release[];
 
 
-void        ic_makepath(char *, char const *, char const *,
+void        rss_makePath(char *, char const *, char const *,
                       char const *, char const *);
 void        ic_splitpath(char const *, char *, char *, char *, char *);
-size_t      ic_dos_findfirst(char const *, size_t, struct _find_t *);
-size_t      ic_dos_findnext(struct _find_t *);
+size_t      rsFindFirst(char const *, size_t, struct _find_t *);
+size_t      rsFindNext(struct _find_t *);
 
 int         ic_spawnlp(int, char const *, char const *, ...);
 int         ic_spawnvp(int, char const *, char const **);
-char        *ic_strlwr(char *);
-char        *ic_strupr(char *);
+char        *es_strLower(char *);
+char        *es_strUpper(char *);
 
-char const *change_ext (char const *, char const *);
+char const *rss_changeExt (char const *, char const *);
 char const *change_base (char const *, char const *);
 char const *change_path (char const *, char const *);
 

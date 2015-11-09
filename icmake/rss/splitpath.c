@@ -19,7 +19,7 @@
 
 #include "rss.ih"
 
-void ic_splitpath(char const * path,
+void rss_splitPath(char const * path,
     char * drive, char * dir, char * fname, char * ext)
 {
 

@@ -32,8 +32,8 @@ void error(char *fmt, ...)
     fflush (stderr);
 
     va_start (args, fmt);
-    vfprintf (stderr, fmt, args);
-    fputc ('\n', stderr);
+    vgr_fprintf (stderr, fmt, args);
+    gr_fputc ('\n', stderr);
 
     if (! isatty (fileno (stdout)))
     {

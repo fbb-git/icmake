@@ -28,7 +28,7 @@
 
 #include "rss.ih"
 
-int older(char const *lval, char const *rval)
+int rss_older(char const *lval, char const *rval)
 {
     struct stat
         lbuf,

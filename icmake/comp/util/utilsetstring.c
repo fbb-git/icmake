@@ -3,5 +3,5 @@
 void util_setString(char const *txt)
 {
     free(gu_lexstring);
-    gu_lexstring = xstrdup(txt);
+    gu_lexstring = rss_strdup(txt);
 }

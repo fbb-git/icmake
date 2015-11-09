@@ -7,7 +7,7 @@
 
 void fun_strformat(void)
 {
-    char *ptr = xstrdup("");        // allocate empty string
+    char *ptr = rss_strdup("");        // allocate empty string
 
     p_destWrite = stringWrite;
     

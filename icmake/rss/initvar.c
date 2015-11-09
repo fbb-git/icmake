@@ -1,12 +1,12 @@
 /*
-\funcref{initvar}{VAR\_ initvar (\params)}
+\funcref{rss_initVar}{VAR\_ rss_initVar (\params)}
     {
         {VAR\_} {v} {variable to initialize}
     }
     {initialized variable}
-    {xrealloc()}
+    {rss_realloc()}
     {}
-    {initvar.c}
+    {rss_initVar.c}
     {
         This function initializes the variable, passed as argument, if
         necessary. Initialization may be necessary if the specified variable is
@@ -37,11 +37,11 @@
 
 #include "rss.ih"
 
-void initvar (VAR_ *v)
+void rss_initVar (VAR_ *v)
 {
     if ( (v->type & (e_str | e_list)) && ! v->vu.i )
     {
-        v->vu.i = xrealloc (NULL, sizeof (INTER_));
+        v->vu.i = rss_realloc (NULL, sizeof (INTER_));
         v->vu.i->count = 1;
         v->vu.i->ls.list.size = 0;
         v->vu.i->ls.list.element = NULL;

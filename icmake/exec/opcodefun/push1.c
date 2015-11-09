@@ -23,5 +23,5 @@ void fun_push_1_jmp_end ()
     push(&tmp);
     intDestructor(&tmp);
 
-    getopcode(infile);
+    rss_getOpcode(infile);
 }

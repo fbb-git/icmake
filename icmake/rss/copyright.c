@@ -1,8 +1,8 @@
-/*                       C O P Y R I G H . C
+/*
     ported to non-MSDOS systems pwp 93 07 15
 
     % 1 name
-\functoc {copyright}
+\functoc {rss_copyright}
     % 2 declaration
 {void \fname (\params\ )}
     % 3 arguments
@@ -31,7 +31,7 @@ the {\em All rights reserved\,} string is used.
 
 #include "rss.ih"
 
-void copyright(char *function, char *versionStr, char *years)
+void rss_copyright(char *function, char *versionStr, char *years)
 {
     printf("\n"
            "%s  Version %s\n"

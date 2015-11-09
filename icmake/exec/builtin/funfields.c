@@ -31,7 +31,7 @@ void fun_fields ()
 
     if (*str)
     {
-        char *string = xstrdup(str);
+        char *string = rss_strdup(str);
         char *cp;
 
         if (*sep)

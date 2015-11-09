@@ -6,7 +6,7 @@ SemVal *insertarg(SemVal *insert, SemVal *mult)
 
     count = ++mult->type;                   /* get/increase # of args */
                                             /* room for extra SemVal */
-    mult->code = xrealloc(mult->code, count * sizeof(SemVal));
+    mult->code = rss_realloc(mult->code, count * sizeof(SemVal));
 
     memmove(                                /* shift up for new firstarg */
          codestruc(mult, 1),

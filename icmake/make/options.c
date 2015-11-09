@@ -32,7 +32,7 @@ int options (char **argv, int *argc)
             case 'i':
                 flags |= f_icmake;          /* flag icmake taken literally  */
                 if (!(source_name = getoptval(argc, argv)))
-                    error("-i requires source-filename");
+                    rss_error("-i requires source-filename");
                 return getoptindex();       /* and return the index of args */
                                             /* to icm-exec */
             case 'p':
@@ -47,7 +47,7 @@ int options (char **argv, int *argc)
                 flags |= f_tmpbim | f_icmake; /* flag use temporary bimfile  */
 
                 if (!(cp = getoptval(argc, argv)))
-                    error("-t requires temporary bim-filename");
+                    rss_error("-t requires temporary bim-filename");
 
                 while (*cp == ' ')          /* skip initial blanks in optval*/
                     cp++;
@@ -55,10 +55,10 @@ int options (char **argv, int *argc)
                                             /* build pid-string */
                 sprintf(pid_string, "%d", getpid());
                                             /* destination with pid-extension */
-                dest_name = xstrdup(rss_changeExt(cp, pid_string));
+                dest_name = rss_strdup(rss_changeExt(cp, pid_string));
                                             
                 strcat(pid_string, "a");    /* temp. pim-file extension */
-                temporary = xstrdup(rss_changeExt(cp, pid_string));
+                temporary = rss_strdup(rss_changeExt(cp, pid_string));
 
                 source_name = argv[1];
             return getoptindex() + 1;       /* index of remaining args */

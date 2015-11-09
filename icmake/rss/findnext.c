@@ -1,17 +1,13 @@
-/*
-                            F I N D N E X T . C
-*/
-
 #include "rss.ih"
 
-char *findnext()
+char *rss_findNext()
 {
     char
         *cp;                                /* pointer to matched filename */
 
-    while (!rsFindNext(&ifs.find))     /* find next entry */
+    while (!rs_findNext(&gr_ifs.find))     /* find next entry */
     {
-        if ( (cp = filefound()) )           /* file found ?    */
+        if ( (cp = rs_fileFound()) )           /* file found ?    */
             return (cp);                    /* return its name */
     }
 

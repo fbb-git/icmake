@@ -1,6 +1,6 @@
 #include "var.ih"
 
-UNS16 varDecCount(VAR_ *var)
+uint16_t varDecCount(VAR_ *var)
 {
     return --var->vu.i->count;
 }

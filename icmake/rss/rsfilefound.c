@@ -1,6 +1,4 @@
 /*
-                            F I L E F O U N . C
-
     With the MS-DOS implementation the received attribute is compared
     to the request:
 
@@ -15,14 +13,14 @@
 
 #include "rss.ih"
 
-char *filefound()
+char *rs_fileFound()
 {
     register size_t
         request,
         received;
 
-    received = ifs.find.attrib;             /* use fast registers */
-    request = ifs.attrib;
+    received = gr_ifs.find.attrib;             /* use fast registers */
+    request = gr_ifs.attrib;
 
     /* First part: see if request */
     /* matches attribute of entry */
@@ -67,12 +65,12 @@ char *filefound()
         (request & O_SUBDIR)                /* clean subdir requested */
         &&                                  /* AND */
         (
-            !strcmp(ifs.find.name, ".")     /* . or .. found */
+            !strcmp(gr_ifs.find.name, ".")     /* . or .. found */
             ||
-            !strcmp(ifs.find.name, "..")
+            !strcmp(gr_ifs.find.name, "..")
         )
     )
         return (NULL);                      /* then reject the entry */
 
-    return (ifs.find.name);                 /* return found name */
+    return (gr_ifs.find.name);                 /* return found name */
 }

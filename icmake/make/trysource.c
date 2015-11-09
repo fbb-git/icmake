@@ -5,20 +5,20 @@
     fail, probably) 
 */
 
-#include "rss.ih"
+#include "icmake.h"
 
 char *try_source(char const *source)
 {
     char *ret;
 
     if (access(source, F_OK) == 0)      /* File exists as-is ?  */
-        return xstrdup(source);         /* return it            */
+        return rss_strdup(source);         /* return it            */
 
-    ret = xstrdup(rss_changeExt(source, "im"));     /* file.im */
+    ret = rss_strdup(rss_changeExt(source, "im"));     /* file.im */
 
     return access(ret, F_OK) == 0 ?     /* File.im exists ?     */
         ret
     :
-        xstrdup(source);                /* return original file     */
+        rss_strdup(source);                /* return original file     */
                                         /* but opening will fail    */     
 }

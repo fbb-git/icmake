@@ -4,7 +4,7 @@
         {char} {*idname} {identifier to remove from symbols table}
     }
     {}
-    {xrealloc()}
+    {rss_realloc()}
     {directive()}
     {remove.c}
     {
@@ -24,7 +24,7 @@ void undef(char *idname)
 {
     int idx = finddef(idname);
     if (idx == -1)
-        error("%s: #undef %s: no symbol %s defined", filestack[filesp].n,
+        rss_error("%s: #undef %s: no symbol %s defined", filestack[filesp].n,
                                                      idname, idname);
 /*
 fprintf(stderr, "Removed `%s'\n", defined[ndefined].ident);

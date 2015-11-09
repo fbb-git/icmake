@@ -2,7 +2,7 @@
 \funcref{lexer}{LEXER\_ lexer ()}
     {}
     {read token from the input}
-    {error(), directive(), getident()}
+    {rss_error(), directive(), getident()}
     {}
     {lexer.c}
     {
@@ -104,11 +104,11 @@ LEXER_ lexer()
                         case '\n':
                             if (string_continue(&lexbuf))
                                 break;
-                        error("%s: %d: unterminated string, \" expected",
+                        rss_error("%s: %d: unterminated string, \" expected",
                                filestack[filesp].n, filestack[filesp].l);
 
                         case EOF:
-                        error("%s: unterminated string at EOF",
+                        rss_error("%s: unterminated string at EOF",
                                filestack[filesp].n);
 
                         case '\\':
@@ -156,7 +156,7 @@ LEXER_ lexer()
                             fputc('\n', outfile);
                         }
                         else if (ch == EOF)
-                            error("%s: %d: unterminated comment block",
+                            rss_error("%s: %d: unterminated comment block",
                                    filestack[filesp].n, filestack[filesp].l);
 
                         switch (state)

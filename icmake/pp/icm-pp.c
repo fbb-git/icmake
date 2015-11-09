@@ -5,7 +5,7 @@
         {char} {**argv} {pointer to array of argument strings}
     }
     {}
-    {error(), pushfile(), lexer(), process()}
+    {rss_error(), pushfile(), lexer(), process()}
     {}
     {icm-pp.c}
     {
@@ -39,7 +39,7 @@ int main(int argc, char **argv)
     dump_symbols = 0,
     load_symbols = 1;
 
-    progname = program_name(argv[0]);
+    progname = rss_programName(argv[0]);
     
     while (argc > 1 && *argv[1] == '-')
     {
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
         else if (! strcmp(argv[1], "-define"))
         {
             if (argc < 3)
-            error("missing symbol after \"-define\"");
+            rss_error("missing symbol after \"-define\"");
             preload(argv[2], "1");
             argv++;
             argc--;
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
         else if (! strcmp(argv[1], "-dumpsymbols"))
             dump_symbols++;
         else 
-            error("no such flag \"%s\" recognized", argv[1]);
+            rss_error("no such flag \"%s\" recognized", argv[1]);
     
         argv++;
         argc--;
@@ -82,7 +82,7 @@ int main(int argc, char **argv)
     
     if (argc != 3)
     {
-        copyright("ICMAKE Preprocessor", version, release);
+        rss_copyright("ICMAKE Preprocessor", version, release);
 
         printf("%s%s%s%s",
             "This program is run as a child process of icmake.\n"
@@ -112,7 +112,7 @@ int main(int argc, char **argv)
         imdir = ".";
 
     if (!(outfile = fopen(argv[2], "w")) )
-        error("cannot write output file %s", argv[2]);
+        rss_error("cannot write output file %s", argv[2]);
 
     pushfile(argv[1]);
     construct_active();

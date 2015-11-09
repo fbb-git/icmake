@@ -10,13 +10,13 @@ _string:
     _string
     STRING
     {                                       /* catenate the new string */
-        gp_stringbuf = xstrcat(gp_stringbuf, util_string());
+        gp_stringbuf = rss_strcat(gp_stringbuf, util_string());
     }
 |
     STRING
     {
         free(gp_stringbuf);                  /* free former string */
-        gp_stringbuf = xstrdup(util_string()); /* duplicate initial string */
+        gp_stringbuf = rss_strdup(util_string()); /* duplicate initial string */
     }
 ;
 

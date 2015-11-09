@@ -13,7 +13,7 @@ void quote_blanks(char **args)
     {
         if (strchr(*args, ' '))             /* if the arg contains a blank */
         {                                   /* arg to become: "arg" */
-            arg = xrealloc(NULL, 2 + 1 + strlen(*args));
+            arg = rss_realloc(NULL, 2 + 1 + strlen(*args));
             arg[0] = '"';                   /* assign first " */
             strcpy(arg + 1, *args);         /* move in the argument */
             strcat(arg, "\"");              /* add trailing " */

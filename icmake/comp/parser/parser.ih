@@ -228,7 +228,7 @@ void    patchVariables(void);
     /* 'pos' == 0 means: jump back to the begin of the code,
         otherwise jump forward to the end of the code
     */
-void    patchup(INT8 *code, size_t len, unsigned *list, size_t listlen, int
+void    patchup(int8_t *code, size_t len, unsigned *list, size_t listlen, int
                 pos); 
 void    patchup_continue(SemVal *e, int pos);
 void    patchup_false(SemVal *e, int pos);

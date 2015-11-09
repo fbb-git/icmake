@@ -1,8 +1,8 @@
 #include "../icm-exec.h"
 
-BIN_HEADER_    *headerp;
+BinHeader    *headerp;
 FILE           *infile;
-UNS16           nvar;
+uint16_t           nvar;
 VAR_           *var;
 char            orgdir[_MAX_PATH];
 char           *bimname;

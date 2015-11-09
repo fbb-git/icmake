@@ -2,7 +2,7 @@
 \funcref{fun\_pop\_var}{void fun\_pop\_var ()}
     {}
     {}
-    {getint16(), pop()}
+    {rss_getInt16(), pop()}
     {fun\_copy\_var()}
     {funpopva.c}
     {

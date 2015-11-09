@@ -5,13 +5,13 @@
     rss.h, and then call msg(fmt, ...) to specify a message
 */
 
-void msg_(char const *path, char *fmt, ...)
+void rss_msg_(char const *path, char *fmt, ...)
 {
     va_list args;
 
-    va_start (args, fmt);
+    va_start(args, fmt);
 
-    gr_fprintf(stderr, "%s: ", path);
-    vgr_fprintf(stderr, fmt, args);
-    gr_fputc ('\n', stderr);
+    fprintf(stderr, "%s: ", path);
+    vfprintf(stderr, fmt, args);
+    fputc ('\n', stderr);
 }

@@ -2,11 +2,11 @@
 
 void patchcontinue(SemVal *e)
 {
-    e->continuelist = xrealloc(e->continuelist,   /* expand the continuelist */
+    e->continuelist = rss_realloc(e->continuelist,   /* expand the continuelist */
                             (e->continuelen + 1) * sizeof(size_t));
 
                                             /* room for the jump-backpatch */
-    e->code = xrealloc(e->code, e->codelen += sizeof(INT16));
+    e->code = rss_realloc(e->code, e->codelen += sizeof(int16_t));
                                             /* store jumpstart location */
 
     e->continuelist[e->continuelen++] = e->codelen;   

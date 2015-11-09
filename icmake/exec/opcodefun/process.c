@@ -2,7 +2,7 @@
 \funcref{process}{void process ()}
     {}
     {}
-    {getopcode()}
+    {rss_getOpcode()}
     {}
     {process.c}
     {
@@ -22,20 +22,20 @@ void process ()
 {
     register OPCODE_ op;
 
-    arghead = xstrdup("");
-    argtail = xstrdup("");
-    cmdhead = xstrdup("");
-    cmdtail = xstrdup("");
+    arghead = rss_strdup("");
+    argtail = rss_strdup("");
+    cmdhead = rss_strdup("");
+    cmdtail = rss_strdup("");
 
     do
     {
         curoffs = (size_t)ftell(infile);
-        op = getopcode(infile);
+        op = rss_getOpcode(infile);
 
         if (op >= op_hlt || op == (OPCODE_)-1)
         {
-            fprintf(stderr, "bad opcode at %s ", hexstring(curoffs, 4));
-            error("(opcode %s)", hexstring(op, 2));
+            fprintf(stderr, "bad opcode at %s ", rss_hexString(curoffs, 4));
+            rss_error("(opcode %s)", rss_hexString(op, 2));
         }
         p_procfun[op]();
     }

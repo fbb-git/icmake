@@ -2,10 +2,10 @@
 
 void patchfalse(SemVal *e)
 {
-    e->falselist = xrealloc(e->falselist,   /* expand the falselist */
+    e->falselist = rss_realloc(e->falselist,   /* expand the falselist */
                             (e->falselen + 1) * sizeof(size_t));
 
                                             /* room for the jump-backpatch */
-    e->code = xrealloc(e->code, e->codelen += sizeof(INT16));
+    e->code = rss_realloc(e->code, e->codelen += sizeof(int16_t));
     e->falselist[e->falselen++] = e->codelen;   /* store jumpstart location */
 }

@@ -32,7 +32,7 @@ void fun_system ()
         ret = system(cmd);                  /* do system call */
 
         if (ret && P_CHECKMODE(mode))       /* terminate upon failure? */
-            error ("system - failure of system call (status %d)", ret);
+            rss_error ("system - failure of system call (status %d)", ret);
 
         reg = *intConstructor_i(ret);        
     }

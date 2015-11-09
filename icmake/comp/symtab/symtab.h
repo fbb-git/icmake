@@ -33,7 +33,7 @@ void        symtab_newParam();  /* counts the number of params so far */
 
 char const *symtab_funName(size_t funIdx); 
 
-UNS16       symtab_funAddress(size_t funIdx); 
+uint16_t       symtab_funAddress(size_t funIdx); 
 
 ExprType    symtab_funType(size_t funIdx);
 

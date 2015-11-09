@@ -10,17 +10,17 @@ void hidden_functions(void)
 
     eof = ftell(gp_bin);                     /* remember the eof position */
                                             /* go to begin of code */
-    fseek(gp_bin, sizeof(BIN_HEADER_), SEEK_SET);
+    fseek(gp_bin, sizeof(BinHeader), SEEK_SET);
 
     while (ftell(gp_bin) < eof)            /* continue until code processed */
     {
         if (next_call())                  /* find function call */
         {
-            funIdx = -getint16(gp_bin);    /* get the address (toggled sign) */
+            funIdx = -rss_getInt16(gp_bin);    /* get the address (toggled sign) */
 
             if (funIdx >= 0)              /* hidden function */
             {                             /* reset to patchup */
-                fseek(gp_bin, -(long)sizeof(INT16), SEEK_CUR);
+                fseek(gp_bin, -(long)sizeof(int16_t), SEEK_CUR);
 
                 util_setString(gp_hiddenFun[funIdx].name);
 

@@ -20,6 +20,6 @@
 void fun_c_path ()
 {
     reg = *stringConstructor_cP(
-            change_path(stringStr(top()), stringStr(top() - 1))
+            rss_changePath(stringStr(top()), stringStr(top() - 1))
                             );
 }

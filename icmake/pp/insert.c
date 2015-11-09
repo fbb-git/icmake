@@ -4,7 +4,7 @@
         {char} {*idname} {identifier to insert in symbols table}
     }
     {}
-    {xrealloc()}
+    {rss_realloc()}
     {directive()}
     {insert.c}
     {
@@ -57,7 +57,7 @@ static char *replace_defines(char *txt)
         }
             
         if (++replacement > max_replacements)
-            error("%s: %d: too many replacements in #define definition",
+            rss_error("%s: %d: too many replacements in #define definition",
                filestack[filesp].n, filestack[filesp].l);
         
         newContents = 
@@ -88,10 +88,10 @@ static char *replace_defines(char *txt)
 
 void insert(char *idname)
 {
-    defined = xrealloc(defined, (ndefined + 1) * sizeof(DEFINED_));
-    defined[ndefined].ident = xstrdup(idname);
+    defined = rss_realloc(defined, (ndefined + 1) * sizeof(DEFINED_));
+    defined[ndefined].ident = rss_strdup(idname);
 
-    defined[ndefined].redef = replace_defines(xstrdup(lexbuf.data));
+    defined[ndefined].redef = replace_defines(rss_strdup(lexbuf.data));
 /*
 fprintf(stderr, "Inserted `%s' with definition `%s'\n",
         defined[ndefined].ident, 

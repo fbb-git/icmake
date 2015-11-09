@@ -7,5 +7,5 @@
 void abnormal_exit(int x)
 {
     errors++;
-    error("Abnormal ending");
+    rss_error("Abnormal ending");
 }

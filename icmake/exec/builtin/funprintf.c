@@ -2,7 +2,7 @@
 \funcref{fun\_print}{void fun\_print ()}
     {}
     {}
-    {print(), xrealloc()}
+    {print(), rss_realloc()}
     {fun\_exec()}
     {funprint.c}
     {

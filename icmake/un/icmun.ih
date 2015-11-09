@@ -5,7 +5,7 @@
 //#include "../rss/icrssdef.h"
 #include "../rss/rss.h"
 
-extern BIN_HEADER_ *headerp;
+extern BinHeader *headerp;
 
 extern char invalid_macro_file [];
 extern char *funname [];
@@ -16,7 +16,7 @@ extern void (*p_procfun []) (void);
 
 extern FILE *infile;
 
-extern INT8 *local_types;
+extern int8_t *local_types;
 
 extern size_t curoffs;
 extern size_t nvar;

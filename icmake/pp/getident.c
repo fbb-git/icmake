@@ -4,7 +4,7 @@
         {char} {*buf} {buffer to store identifier}
     }
     {}
-    {error()}
+    {rss_error()}
     {lexer()}
     {getident.c}
     {

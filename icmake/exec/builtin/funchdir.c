@@ -29,13 +29,13 @@ static char dirsep[2] = {DIRSEP};
 
 void fun_chdir ()
 {
-    register char *dir = xstrdup(stringStr(top() - 1)); /* duplicate dest */
+    register char *dir = rss_strdup(stringStr(top() - 1)); /* duplicate dest */
     register char *last;
     register int mode = intValue(top());    /* mode of operation */
     char newdir [_MAX_PATH];
         
     if (! *dir)                         /* empty dest: */
-        dir = xstrdup(orgdir);          /* change to org dir */
+        dir = rss_strdup(orgdir);          /* change to org dir */
 
     last = dir + strlen (dir) - 1;      /* remove dir */
     if 
@@ -47,7 +47,7 @@ void fun_chdir ()
         *last = 0;
 
     if (chdir(dir) && P_CHECKMODE(mode))                /* go to dir */
-        error ("chdir - can't change dir to %s", dir);  /* or quit if */
+        rss_error ("chdir - can't change dir to %s", dir);  /* or quit if */
                                                         /* P_CHECK is on */
     free(dir);
     

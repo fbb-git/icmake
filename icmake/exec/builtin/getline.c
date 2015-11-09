@@ -6,7 +6,7 @@
 
 char *getLine(FILE *file)
 {
-    char *dest = xstrdup("");
+    char *dest = rss_strdup("");
     char buffer[bufsize];
 
     while (1)
@@ -19,7 +19,7 @@ char *getLine(FILE *file)
         if (!fgets(buffer, buflast, file))  /* reading fails          */
             break;
 
-        dest = xstrcat(dest, buffer);       /* append the buffer        */
+        dest = rss_strcat(dest, buffer);       /* append the buffer        */
                                             /* EOLN encountered         */
         if (buffer[lastch] == '\n' || !buffer[lastch])
             break;                          /* end of line at then end  */

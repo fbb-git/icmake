@@ -1,4 +1,4 @@
-/*                       P R O G R A M N . C
+/*
     ported to non-MSDOS systems pwp 93 07 15
 
     % 1 name
@@ -34,7 +34,7 @@ the basename of the function.
 
 #include "rss.ih"
 
-char *program_name(char *argv)
+char *rss_programName(char *argv)
 {
     register char
         *d;

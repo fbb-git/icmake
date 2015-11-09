@@ -2,7 +2,7 @@
 \fucref{fun\_element}{void fun\_element ()}
     {}
     {}
-    {xstrdup(), newvar()}
+    {rss_strdup(), newvar()}
     {}
     {funeleme.c}
     {

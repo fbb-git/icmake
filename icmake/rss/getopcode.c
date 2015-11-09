@@ -1,14 +1,14 @@
 /*
-\funcref{getopcode}{OPCODE\_ getopcode (\params)}
+\funcref{rss_getOpcode}{OPCODE\_ rss_getOpcode (\params)}
     {
         {FILE} {*f} {binary {\em icmake} file}
     }
     {read opcode, or --1 when reading failed}
     {}
-    {getstring()}
+    {rss_getString()}
     {getopcod.c}
     {
-        Function {\em getopcode()} attempts to read an opcode from file {\em
+        Function {\em rss_getOpcode()} attempts to read an opcode from file {\em
         f}. This file must be opened in read/binary mode (see the constant {\em
         READBINARY} in file {\em icm.h}).
 
@@ -22,8 +22,8 @@ Example:
         OPCODE_
             op;
 
-        if ( (op = getopcode (f)) == -1 )
-            error ("invalid binary makefile");
+        if ( (op = rss_getOpcode (f)) == -1 )
+            rss_error ("invalid binary makefile");
         process (op);
     \end{verbatim}
 } % end footnotesize
@@ -31,7 +31,7 @@ Example:
 
 #include "rss.ih"
 
-OPCODE_ getopcode (FILE *f)
+OPCODE_ rss_getOpcode (FILE *f)
 {
     char
         op = 0;

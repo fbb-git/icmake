@@ -13,7 +13,7 @@ typedef struct                      /* see also display code in */
     size_t *falselist;
     size_t *continuelist;
 
-    INT8 *code;
+    int8_t *code;
 } SemVal;
 
 #define YYSTYPE SemVal

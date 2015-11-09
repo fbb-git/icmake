@@ -5,7 +5,7 @@
         {char} {*string} {string to add to {\em cmd}}
     }
     {resized {\em cmd} to which reference to {\em string} is added}
-    {xrealloc()}
+    {rss_realloc()}
     {}
     {addcmd.c}
     {
@@ -35,8 +35,8 @@ char **addcmd(char **cmd, char *string)
         for (i = 0; cmd [i]; i++)
             size++;
 
-    cmd = xrealloc (cmd, (size + 2) * sizeof (char *));
-    cmd [size] = xstrdup (string);
+    cmd = rss_realloc (cmd, (size + 2) * sizeof (char *));
+    cmd [size] = rss_strdup (string);
     cmd [size + 1] = NULL;
 
     return (cmd);

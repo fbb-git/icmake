@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void patchup(INT8 *code, size_t len, unsigned *list, size_t listlen, int pos)
+void patchup(int8_t *code, size_t len, unsigned *list, size_t listlen, int pos)
 {                                           /* list, listlen: list of */
     register size_t idx;                    /* offsets to patchup     */
     register size_t beyond_jump;
@@ -9,7 +9,7 @@ void patchup(INT8 *code, size_t len, unsigned *list, size_t listlen, int pos)
     union
     {
         char jumpsize[2];
-        INT16 int16;
+        int16_t int16;
     } u;
 
     if (!listlen)                           /* done if nothing to patchup */

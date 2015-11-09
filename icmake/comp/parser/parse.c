@@ -1777,7 +1777,7 @@ yyreduce:
   case 26:
 #line 221 "grammar" /* yacc.c:1646  */
     {                                       /* catenate the new string */
-        gp_stringbuf = xstrcat(gp_stringbuf, util_string());
+        gp_stringbuf = rss_strcat(gp_stringbuf, util_string());
     }
 #line 1783 "parse.c" /* yacc.c:1646  */
     break;
@@ -1786,7 +1786,7 @@ yyreduce:
 #line 226 "grammar" /* yacc.c:1646  */
     {
         free(gp_stringbuf);                  /* free former string */
-        gp_stringbuf = xstrdup(util_string()); /* duplicate initial string */
+        gp_stringbuf = rss_strdup(util_string()); /* duplicate initial string */
     }
 #line 1792 "parse.c" /* yacc.c:1646  */
     break;

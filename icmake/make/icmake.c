@@ -27,12 +27,12 @@ int main (                         /* icmake source(txt) dest(bin) */
                                             */
 
     if (!(flags & f_quiet))
-        copyright("Make Utility", version, release);
+        rss_copyright("Make Utility", version, release);
 
-    prog = program_name(argv[0]);
+    prog = rss_programName(argv[0]);
 
     if (!(flags & f_icmake) && argc2 == 1)  /* argv[1]: already for icm-exec */
-        error
+        rss_error
         (
             "%s%s%s%s%s",
 
@@ -74,7 +74,7 @@ int main (                         /* icmake source(txt) dest(bin) */
         dest_name = source_name;
 
     if (!(flags & f_tmpbim))                /* adapt extension of destination */
-        dest_name = xstrdup(rss_changeExt(dest_name, bim)); /* if not tmp. bimfile */
+        dest_name = rss_strdup(rss_changeExt(dest_name, bim)); /* if not tmp. bimfile */
 
     if
     (
@@ -85,7 +85,7 @@ int main (                         /* icmake source(txt) dest(bin) */
     {
                                             /* preprocessor filename */
         if (!(flags & f_tmpbim))            /* use .pim unless -t given */
-            temporary = xstrdup(rss_changeExt(source_name, pim));
+            temporary = rss_strdup(rss_changeExt(source_name, pim));
 
         signal(SIGINT, abnormal_exit);      /* abnormal exits process */
                                             /* do the preprocessing */
@@ -93,7 +93,7 @@ int main (                         /* icmake source(txt) dest(bin) */
         if (ret)
         {
             if (ret == -1)
-                spawn_err(icm_pp);
+                rss_spawnErr(icm_pp);
             cleanup();
             return (1);
         }
@@ -109,7 +109,7 @@ int main (                         /* icmake source(txt) dest(bin) */
         if (errors)
         {
             if (errors == -1)
-                spawn_err(icm_comp);
+                rss_spawnErr(icm_comp);
             return (1);
         }
 
@@ -133,7 +133,7 @@ int main (                         /* icmake source(txt) dest(bin) */
                                             /* do the making of the file */
     errors = _execvp(icm_exec, &argv[argc2]);
 
-    spawn_err(icm_exec);                    /* shouldn't get here ... */
+    rss_spawnErr(icm_exec);                    /* shouldn't get here ... */
 
     cleanup();                              /* remove tempfiles etc. */
     return (1);

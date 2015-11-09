@@ -38,3 +38,5 @@ void    abnormal_exit (int);           /* abnormal eop */
 void    about(void);                   /* about icmake */
 void    cleanup (void);                /* cleanup temp. info */
 void    quote_blanks(char **);         /* quote arguments with blanks */
+
+char     *try_source(char const *);         /* return allocated source[.im] */

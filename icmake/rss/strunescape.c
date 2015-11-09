@@ -5,7 +5,7 @@
 
 #include "rss.ih"
 
-char *stresc(char *source)  /* unescapes and returns source */
+char *rss_strUnescape(char *source)  /* unescapes and returns source */
 {
     register int c;
     int n;
@@ -14,7 +14,7 @@ char *stresc(char *source)  /* unescapes and returns source */
 
     while (1)
     {
-        if ((c = chesc(source, &n)) < 0)    /* error ? */
+        if ((c = rs_chesc(source, &n)) < 0)    /* error ? */
             return NULL;                    /* then ERROR out */
 
         *dest++ = c;                        /* Set destination */

@@ -4,7 +4,7 @@ int next_call(void)
 {
     register int opcode;
 
-    switch (opcode = getopcode(gp_bin))
+    switch (opcode = rss_getOpcode(gp_bin))
     {
         case op_push_imm:
         case op_jmp:
@@ -16,7 +16,7 @@ int next_call(void)
         case op_copy_var:
         case op_inc:
         case op_dec:
-            fseek(gp_bin, sizeof(INT16), SEEK_CUR);
+            fseek(gp_bin, sizeof(int16_t), SEEK_CUR);
         return 0;                         /* close, but no cigar */
 
         case op_push_1_jmp_end:
@@ -60,7 +60,7 @@ int next_call(void)
         return 1;                         /* cigar! check this argument */
 
         case op_frame:                  /* next byte: # bytes to skip */
-            fseek(gp_bin, (int)getopcode(gp_bin), SEEK_CUR);
+            fseek(gp_bin, (int)rss_getOpcode(gp_bin), SEEK_CUR);
         return 0;                         /* close, but no cigar */
 
         default:

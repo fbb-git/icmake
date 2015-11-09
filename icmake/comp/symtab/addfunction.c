@@ -14,7 +14,7 @@ int symtab_addFunction(ExprType type) /* 0: function added, -1: already def'd */
     FunInfo *next = gs_functions.info + idx;
 
     memset(next, 0, sizeof(FunInfo));
-    next->name = xstrdup(util_string());
+    next->name = rss_strdup(util_string());
     next->returnType = type | e_reg;
 
     msg("gs_vars.nParams is %u", gs_vars.nParams);

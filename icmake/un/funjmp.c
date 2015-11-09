@@ -2,11 +2,11 @@
 
 void fun_jmp ()
 {
-    INT16
+    int16_t
         offs;
 
-    offs = getint16 (infile);
-    dumpint ( (UNS16) offs);
+    offs = rss_getInt16 (infile);
+    dumpint ( (uint16_t) offs);
     printf ("jmp [%s]\n",
-            hexstring ((size_t)(ftell(infile) + offs), 4));
+            rss_hexString ((size_t)(ftell(infile) + offs), 4));
 }

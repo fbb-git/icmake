@@ -16,7 +16,7 @@
 #include "opcodefun/opcodefun.h"
 
 
-extern UNS16        nvar;
+extern uint16_t        nvar;
 extern char         release[];
 extern char         version[];
 extern char        *bimname;

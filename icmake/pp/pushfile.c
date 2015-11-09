@@ -4,7 +4,7 @@
         {char} {*name} {file name}
     }
     {}
-    {error(), xrealloc(), xstrdup()}
+    {rss_error(), rss_realloc(), rss_strdup()}
     {popfile()}
     {pushfile.c}
     {
@@ -37,7 +37,7 @@
         When {\em pushfile()} is called, {\em filesp} is increased by 1 and the
         filestack is reallocated to hold information about the input file.
         Next, the fields of the new stack element are assigned using {\em
-        xrealloc()} and {\em fopen()}. When the input file cannot be opened for
+        rss_realloc()} and {\em fopen()}. When the input file cannot be opened for
         reading, an error occurs.
     }
 */
@@ -49,10 +49,10 @@ char *name;
 {
     filesp++;
 
-    filestack = xrealloc(filestack, (filesp + 1) * sizeof(FILESTACK_));
-    filestack[filesp].n = xstrdup(name);
+    filestack = rss_realloc(filestack, (filesp + 1) * sizeof(FILESTACK_));
+    filestack[filesp].n = rss_strdup(name);
     if (! (filestack[filesp].f = fopen(name, "r")) )
-        error("cannot open #include file %s", name);
+        rss_error("cannot open #include file %s", name);
     filestack[filesp].l = 1;
 
     if (! nofileinfo)

@@ -116,7 +116,7 @@ void writeArgument(void *dest, size_t idx);
 void updateFgets(FILE *inf, char *dest);
 void fgetsStatus(char const *status);
 
-int         es_spawnvp(int, char const *, char const **);
-char        *es_strLower(char *);
-char        *es_strUpper(char *);
+int         eb_spawnvp(int mode, char const *prog, char const **argv);
+char       *eb_strLower(char *str);
+char       *eb_strUpper(char *str);
 

@@ -6,9 +6,9 @@
 
 void about()
 {
-    copyright("Make Utility", version, release);
+    rss_copyright("Make Utility", version, release);
 
-    error("%s%s",
+    rss_error("%s%s",
 
             "ICMAKE consists of a set of five programs. Together, they can\n"
             "be used for managing program development comparable to, e.g.,\n"

@@ -2,12 +2,12 @@
 \funcref{fun\_jmp}{void fun\_jmp ()}
     {}
     {}
-    {getint16()}
+    {rss_getInt16()}
     {fun\_jmp\_true(), fun\_jmp\_false()}
     {funjmp.c}
     {
         This function is executed when an {\em op\_jmp} opcode is read in the
-        binary makefile. Following the opcode, an {\em INT16} offset is
+        binary makefile. Following the opcode, an {\em int16_t} offset is
         expected. An unconditional jump is made relative to the current offset
         by repositioning the file pointer.
     }
@@ -17,6 +17,6 @@
 
 void fun_jmp ()
 {
-    INT16 offs = getint16(infile);
-    fseek(infile, (INT32) offs, SEEK_CUR);
+    int16_t offs = rss_getInt16(infile);
+    fseek(infile, (int32_t) offs, SEEK_CUR);
 }

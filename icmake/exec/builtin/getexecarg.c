@@ -5,7 +5,7 @@
         {int} {*increment} {address of counter increment}
     }
     {argument in string format}
-    {xstrdup(), getarg(), xrealloc()}
+    {rss_strdup(), getarg(), rss_realloc()}
     {}
     {getexeca.c}
     {
@@ -34,8 +34,8 @@ char *getexecarg (size_t n, int *flag)
 
     if (strlen (arghead))
     {
-        start = xstrdup(arghead);
-        start = xstrcat(start, arg);
+        start = rss_strdup(arghead);
+        start = rss_strcat(start, arg);
         free(arg);
     }
     else
@@ -43,7 +43,7 @@ char *getexecarg (size_t n, int *flag)
 
     if (strlen (argtail))
     {
-        ret = xstrcat (start, argtail);
+        ret = rss_strcat (start, argtail);
         free(start);
     }
     else

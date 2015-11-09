@@ -2,5 +2,5 @@
 
 char const *util_unescape()
 {
-    return stresc(gu_lexstring);
+    return rss_strUnescape(gu_lexstring);
 }

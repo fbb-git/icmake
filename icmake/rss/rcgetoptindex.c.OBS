@@ -46,7 +46,7 @@ void main(int argc, char **argv)
 extern int
     icce_next_option;
 
-int ic_getoptindex()
+int rs_getOptIndex()
 {
     return (icce_next_option);
 }

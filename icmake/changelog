@@ -220,8 +220,8 @@ icmake (7.14.0)
     (comp/callfun.c) 
 
   * Removed compiler warning about dangerous casts from comp/outcode.c and 
-    comp/patchup.c by defining a union for char[2] and INT16, rather than
-    casting the char[2] to INT16.
+    comp/patchup.c by defining a union for char[2] and int16_t, rather than
+    casting the char[2] to int16_t.
 
   * Defined icm_prepare, called from icm_bootstrap and rss/build to prepare
     the tmp/ directory

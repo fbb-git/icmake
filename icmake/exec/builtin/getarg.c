@@ -5,7 +5,7 @@
         {int} {*increment} {address of counter increment}
     }
     {argument in string format}
-    {xstrdup()}
+    {rss_strdup()}
     {}
     {getarg.c}
     {
@@ -43,24 +43,24 @@ char *getarg(size_t idx, int *flag)
     {
         listIndex = 0;
         sprintf (convbuf, "%d", intValue(base));
-        return (xstrdup (convbuf));
+        return (rss_strdup (convbuf));
     }
 
     if (typeValue(base) & e_str)            /* incase of a string.. */
     {
         listIndex = 0;
-        return xstrdup(stringStr(base));
+        return rss_strdup(stringStr(base));
     }
 
                                             /* incase of a list: */
     if (!listSize(base))
     {
         listIndex = 0;
-        ret = xstrdup("");
+        ret = rss_strdup("");
     }
     else
     {
-        ret = xstrdup(listAt(base, listIndex));
+        ret = rss_strdup(listAt(base, listIndex));
         ++listIndex;
         if (listIndex < listSize(base))
             *flag = 0;                      /* if more elements, not done */

@@ -4,7 +4,7 @@
         {char} {*s} {string to set}
     }
     {duplicate of last pushed string}
-    {xrealloc(), xstrdup()}
+    {rss_realloc(), rss_strdup()}
     {}
     {setstrin.c}
     {
@@ -24,6 +24,6 @@
 char *setstring (char *s)
 {
     free(s);
-    return s = xstrdup(stringStr(top()));
+    return s = rss_strdup(stringStr(top()));
 }
 

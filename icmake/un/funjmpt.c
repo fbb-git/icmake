@@ -2,9 +2,9 @@
 
 void fun_jmp_true ()
 {
-    INT16 offs = getint16 (infile);
+    int16_t offs = rss_getInt16 (infile);
 
-    dumpint ( (UNS16) offs);
+    dumpint ( (uint16_t) offs);
     printf ("jmp true [%s]\n",
-            hexstring ((size_t) (ftell (infile) + offs), 4));
+            rss_hexString ((size_t) (ftell (infile) + offs), 4));
 }

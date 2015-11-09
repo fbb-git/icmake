@@ -2,8 +2,8 @@
 
 void fun_call ()
 {
-    int offs = getint16 (infile);
+    int offs = rss_getInt16 (infile);
     dumpint(offs);
 
-    printf ("call [%s]\n", hexstring((size_t)offs, 4));
+    printf ("call [%s]\n", rss_hexString((size_t)offs, 4));
 }

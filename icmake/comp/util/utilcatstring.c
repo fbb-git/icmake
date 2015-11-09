@@ -2,5 +2,5 @@
 
 void util_catString(char const *txt)
 {
-    gu_lexstring = xstrcat(gu_lexstring, txt);
+    gu_lexstring = rss_strcat(gu_lexstring, txt);
 }

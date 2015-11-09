@@ -1,35 +1,20 @@
-/*
-                            F I N D F I R S . C
-
-    Note on the MSDOS platforms:
-
-    With file specifications terminating in a relative path (i.e.,
-    terminating in . or ..) rsFindFirst() fails, and findfirst() will
-    fail too.
-
-*/
-
 #include "rss.ih"
 
-ICMAKE_FIND_
-    ifs;                                    /* icmake find-struct */
-
-char *findfirst(char const *fspec, size_t attrib)
+char *rss_findFirst(char const *fspec, size_t attrib)
 {
-    char
-        *cp;                                /* pointer to matched filename */
+    char *cp;                                /* pointer to matched filename */
 
-    ifs.attrib = attrib;                    /* initialize ifs */
+    gr_ifs.attrib = attrib;                    /* initialize gr_ifs */
 
                                             /* find all entries */
-    if (rsFindFirst(fspec, (size_t)-1, &ifs.find))
-        return (NULL);                      /* failed already: return NULL */
+    if (rs_findFirst(fspec, (size_t)-1, &gr_ifs.find))
+        return NULL;                      /* failed already: return NULL */
+
+    cp = rs_fileFound();
 
     return
-    (
-        (cp = filefound()) ?                /* attrib/pattern ok: return */
-            cp
+        cp ?                                
+            cp                              /* attrib/pattern ok: return */
         :
-            findnext()                      /* or retry a match */
-    );
+            rss_findNext();                 /* or retry a match */
 }

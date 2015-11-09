@@ -2,7 +2,7 @@
 \funcref{fun\_shr}{void fun\_shr ()}
     {}
     {}
-    {pop(), push(), error()}
+    {pop(), push(), rss_error()}
     {}
     {funshr.c}
     {

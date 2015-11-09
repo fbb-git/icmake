@@ -28,7 +28,7 @@ void fun_putenv ()
             (
                 putenv
                 (
-                    xstrdup
+                    rss_strdup
                     (
                         stringStr(top())
                     )

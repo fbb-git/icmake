@@ -2,7 +2,7 @@
 \funcref{fun\_fprintf}{void fun\_fprintf ()}
     {}
     {}
-    {fprintf(), xrealloc()}
+    {fprintf(), rss_realloc()}
     {fun\_exec()}
     {funfprin.c}
     {
@@ -26,7 +26,7 @@ void fun_fprintf()
     FILE *outf;
 
     if (! (outf = fopen(filename, "a")) )
-        error("failure to open file \"%s\"", filename);
+        rss_error("failure to open file \"%s\"", filename);
 
     reg = *intConstructor_i(formattedFprintf(outf, 2));
 

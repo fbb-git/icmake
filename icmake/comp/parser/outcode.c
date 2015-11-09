@@ -11,7 +11,7 @@ void outcode(SemVal *ep, int value, register size_t size)
     union
     {
         char buffer[2];
-        INT16 int16;
+        int16_t int16;
     } u;
 
 
@@ -23,10 +23,10 @@ void outcode(SemVal *ep, int value, register size_t size)
     if (size == sizeof(char))               /* assign char to write */
         u.buffer[0] = (char)value;
     else                                    /* use char[2] as intermediate */
-        u.int16 = (INT16)value;             /* to store INT16 value        */
+        u.int16 = (int16_t)value;             /* to store int16_t value        */
 
                                             /* make room for new code */
-    ep->code = xrealloc(ep->code, (codelen + size) * sizeof(char));
+    ep->code = rss_realloc(ep->code, (codelen + size) * sizeof(char));
 
     msg("size = %u, buffer[0] = %x, [1] = %x", size, \
                                             u.buffer[0], u.buffer[1]);

@@ -11,7 +11,7 @@ SemVal *firstarg(SemVal *e)
 {
     etoc(e);                                /* argument is code now */
                                             /* code points to SemVal */
-    arr.code = xrealloc(NULL, sizeof(SemVal));
+    arr.code = rss_realloc(NULL, sizeof(SemVal));
 
     *(SemVal *)arr.code = *e;              /* arr->code contains e */
     arr.type = 1;                           /* type field: # of active e's */

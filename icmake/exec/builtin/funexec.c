@@ -2,7 +2,7 @@
 \funcref{fun\_exec}{void fun\_exec ()}
     {}
     {}
-    {xstrdup(), getexecarg(), execmd(), xrealloc()}
+    {rss_strdup(), getexecarg(), execmd(), rss_realloc()}
     {fun\_print()}
     {funexec.c}
     {
@@ -48,12 +48,12 @@ static char **initcmd (char **cmd)
             free(cmd[i]);
     free(cmd);
     
-    cmd = xrealloc (NULL, 3 * sizeof (char *));
-    cmd [0] = xstrdup(stringStr(top() - 2));
+    cmd = rss_realloc (NULL, 3 * sizeof (char *));
+    cmd [0] = rss_strdup(stringStr(top() - 2));
     
     if (strlen (cmdhead))
     {
-        cmd [1] = xstrdup (cmdhead);
+        cmd [1] = rss_strdup (cmdhead);
         cmd [2] = NULL;
     }
     else

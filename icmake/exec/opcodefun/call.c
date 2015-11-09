@@ -2,7 +2,7 @@
 \funcref{fun\_call}{void fun\_call ()}
     {}
     {}
-    {getint16(), push()}
+    {rss_getInt16(), push()}
     {fun\_ret()}
     {funcall.c}
     {
@@ -22,11 +22,11 @@
 
 void fun_call ()
 {
-    UNS16 offs = getint16(infile);
+    uint16_t offs = rss_getInt16(infile);
     VAR_ ra = *intConstructor_i(ftell(infile));
 
     push(&ra);
     pushBP();
 
-    fseek(infile, (INT32)offs, SEEK_SET);
+    fseek(infile, (int32_t)offs, SEEK_SET);
 }

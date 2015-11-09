@@ -38,7 +38,7 @@ void fun_stat ()
     if (stat (fname, &statbuf))                 /* do stat call */
     {                                           /* failure to stat? */
         if (P_CHECKMODE (mode))                 /* if mode indicates abort..*/
-            error ("stat - unable to stat file %s", fname);
+            rss_error ("stat - unable to stat file %s", fname);
 
         return;                                 /* no checking: return */
 

@@ -12,7 +12,7 @@
 //    last->var.vu.i->count = (size_t)ftell(gp_bin);
 //
 //    last->var.vu.i->ls.list.element =       /* room for type-bytes */
-//                                xrealloc(NULL, nParams * sizeof(char));
+//                                rss_realloc(NULL, nParams * sizeof(char));
 //
 //    last->var.vu.i->ls.list.size = nParams; /* store # of params */
 //

@@ -2,7 +2,7 @@
 \funcref{fun\_copy\_var}{void fun\_copy\_var ()}
     {}
     {}
-    {error()}
+    {rss_error()}
     {}
     {funcopyv.c}
     {

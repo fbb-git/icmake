@@ -2,7 +2,7 @@
 \funcref{getdest}{VAR\_ $*$getdest ()}
     {}
     {pointer to {\em VAR\_} structure}
-    {getint16()}
+    {rss_getInt16()}
     {}
     {getdest.c}
     {
@@ -19,7 +19,7 @@
 
 VAR_ *getdest()
 {
-    int index = getint16 (infile);
+    int index = rss_getInt16 (infile);
     return index >= 0 ? var + index : local(index);
 }
 

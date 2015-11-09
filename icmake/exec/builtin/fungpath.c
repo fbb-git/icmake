@@ -17,5 +17,5 @@
 
 void fun_g_path ()
 {
-    reg = *stringConstructor_cP(get_path(stringStr(top())));
+    reg = *stringConstructor_cP(rss_getPath(stringStr(top())));
 }

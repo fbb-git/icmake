@@ -4,7 +4,7 @@ STRINGVAR_ *stringConstructor_cP(char const *str)
 {
     static STRINGVAR_ ret = {e_str, {0}};
 
-    ret.vu.i = newstring(xstrdup(str));
+    ret.vu.i = newstring(rss_strdup(str));
     return &ret;
 }
 

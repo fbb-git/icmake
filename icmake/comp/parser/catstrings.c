@@ -10,7 +10,7 @@ void catstrings(SemVal *lval, SemVal *rval)
     l_len = strlen( gp_stringTable[ lval->evalue ].string );
     r_len = strlen( gp_stringTable[ rval->evalue ].string );
 
-    cp = xrealloc(NULL, l_len + r_len + 1); /* room for catenated string */
+    cp = rss_realloc(NULL, l_len + r_len + 1); /* room for catenated string */
     lval->evalue =
         lookstring
         (

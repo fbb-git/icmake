@@ -2,10 +2,10 @@
 
 /*
         version
-        offset of the string constant-area  (INT32)
-        offset of the variable area         (INT32)
-        offset of the strings area          (INT32)
-        offset of the first instruction     (INT32)
+        offset of the string constant-area  (int32_t)
+        offset of the variable area         (int32_t)
+        offset of the strings area          (int32_t)
+        offset of the first instruction     (int32_t)
 
         code                                (first byte is first instruction)
         ascii-z string constant area
@@ -13,8 +13,8 @@
         filenames
 */
 
-static INT8 opexit = op_exit;
-static INT8 opcall = op_call;
+static int8_t opexit = op_exit;
+static int8_t opcall = op_call;
 
 int parser_backend()
 {
@@ -25,7 +25,7 @@ int parser_backend()
     }
 
     register int idx;
-    BIN_HEADER_     hdr;
+    BinHeader     hdr;
 
     util_setString("main");
 
@@ -48,12 +48,12 @@ int parser_backend()
                                             /* code                         */
     util_out(gp_bin, gp_init.code, gp_init.codelen);
 
-    util_out(gp_bin, &opcall, sizeof(INT8)); /* call opcode for main */
+    util_out(gp_bin, &opcall, sizeof(int8_t)); /* call opcode for main */
 
-    UNS16 addr = symtab_funAddress(idx);    /* get main's address   */
-    util_out(gp_bin, &addr, sizeof(UNS16)); /* write it out         */
+    uint16_t addr = symtab_funAddress(idx);    /* get main's address   */
+    util_out(gp_bin, &addr, sizeof(uint16_t)); /* write it out         */
 
-    util_out(gp_bin, &opexit, sizeof(INT8)); /* generate op_ret at the end */
+    util_out(gp_bin, &opexit, sizeof(int8_t)); /* generate op_ret at the end */
 
     strncpy(hdr.version, version, sizeof(hdr.version)); /* set the version */
 
@@ -72,7 +72,7 @@ int parser_backend()
 
     rewind(gp_bin);
                                             /* write the offset info */
-    util_out(gp_bin, &hdr, sizeof(BIN_HEADER_));
+    util_out(gp_bin, &hdr, sizeof(BinHeader));
 
     return 0;
 }

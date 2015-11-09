@@ -2,7 +2,7 @@
 \funcref{directive}{void directive()}
     {}
     {}
-    {error(), pushfile(), insert()}
+    {rss_error(), pushfile(), insert()}
     {lexer()}
     {directiv.c}
     {
@@ -73,7 +73,7 @@ static int skipline(void)
 static void terminate_line(char const *what)
 {
     if (skipline() == EOF)
-        error("%s: #%s at end-of-file", filestack[filesp].n, what);
+        rss_error("%s: #%s at end-of-file", filestack[filesp].n, what);
 }
 
 static void fill_line(void)
@@ -103,7 +103,7 @@ void include_directive(void)
 
     ch = nextchar();
     if (ch != '\"' && ch != '<')
-        error("%s: %d: \" or < expected after #include directive",
+        rss_error("%s: %d: \" or < expected after #include directive",
                filestack[filesp].n, filestack[filesp].l);
 
     if (ch == '<')                  /* include <...> form? */
@@ -112,7 +112,7 @@ void include_directive(void)
     lexbuf.len = 0;
     while ( (ch = nextchar()) != '\"' && ch != '>')
         if (ch == '\n' || ch == EOF)
-            error("%s: %d: unterminated name after #include directive",
+            rss_error("%s: %d: unterminated name after #include directive",
                    filestack[filesp].n, filestack[filesp].l);
         else
             string_append(&lexbuf, ch);
@@ -127,7 +127,7 @@ void include_directive(void)
             static char dirsep[2] = { DIRSEP, '\0' };
             char filename[_MAX_PATH];
 
-            char *im = xstrdup(imdir);
+            char *im = rss_strdup(imdir);
             char *path = strtok(im, ":");   /* get the first path element */
             while (path)
             {
@@ -145,7 +145,7 @@ void include_directive(void)
             free(im);
 
             if (!path)
-                error("cannot find `%s' in `%s'", lexbuf, imdir);
+                rss_error("cannot find `%s' in `%s'", lexbuf, imdir);
         }
         else
             pushfile(lexbuf.data);
@@ -232,6 +232,6 @@ void directive(void)
     else if (!strncmp(lexbuf.data, "endif", 5))
         endif_directive();
     else
-        error("%s: %d: bad preprocessor directive `%s'",
+        rss_error("%s: %d: bad preprocessor directive `%s'",
                filestack[filesp].n, filestack[filesp].l, &lexbuf.data);
 }

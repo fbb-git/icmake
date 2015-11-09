@@ -8,6 +8,6 @@ extern char         orgdir[];
 extern FILE        *infile;
 extern VAR_        *var;
 extern int          retval;
-extern BIN_HEADER_ *headerp;
+extern BinHeader *headerp;
 
 #endif

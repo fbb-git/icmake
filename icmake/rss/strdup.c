@@ -1,14 +1,14 @@
 /*
-\funcref{xstrdup}{char $*$xstrdup (\params)}
+\funcref{rss_strdup}{char $*$rss_strdup (\params)}
     {
         {char} {*s} {string to duplicate}
     }
     {pointer to duplicated string}
-    {error()}
-    {xrealloc()}
-    {xstrdup.c}
+    {rss_error()}
+    {rss_realloc()}
+    {rss_strdup.c}
     {
-        {\em xstrdup()} behaves like {\em strdup()}, except that when memory is
+        {\em rss_strdup()} behaves like {\em strdup()}, except that when memory is
         exhausted (therefore, when the string cannot be duplicated) function
         {\em error()} is called to terminate the program.
 
@@ -19,7 +19,7 @@
 
 #include "rss.ih"
 
-char *xstrdup (s)
+char *rss_strdup (s)
 char const *s;
 {
     register char
@@ -29,7 +29,7 @@ char const *s;
         s = "";
 
     if (! (ret = strdup (s)) )
-        error ("out of memory");
+        rss_error ("out of memory");
 
     return (ret);
 }

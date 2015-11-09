@@ -14,10 +14,10 @@
     structure of the binary file:
 
         version                             e.g., "1.00", without ascii-z
-        offset of the string constant-area  (INT32)
-        offset of the variable area         (INT32)
-        offset of the filenames area        (INT32) (end of BIN_HEADER_)
-        offset of first instr. to execute   (INT32)
+        offset of the string constant-area  (int32_t)
+        offset of the variable area         (int32_t)
+        offset of the filenames area        (int32_t) (end of BinHeader)
+        offset of first instr. to execute   (int32_t)
 
         code                                (first byte is first instruction)
         ascii-z string constant area
@@ -94,10 +94,10 @@
                         stack[sp].intval to operating system
                         (auto generated as the last instruction)
     op_copy_var varnr   stackinfo of formerly popped stackelement to var varnr
-    op_inc              increment int variable, varnr is INT16 argument
-    op_dec              decrement int variable, varnr is INT16 argument
-    op_call INT16       call function at offset
-    op_frame INT8 ...   make function frame, for INT8 variables
+    op_inc              increment int variable, varnr is int16_t argument
+    op_dec              decrement int variable, varnr is int16_t argument
+    op_call int16_t       call function at offset
+    op_frame int8_t ...   make function frame, for int8_t variables
                         For each variable a byte follows, denoting the type
                         of the local variable. The first byte refers to the
                         first local variable following the position to where
@@ -165,7 +165,7 @@
     The op_frame instruction needed for the previous example, assuming
     loc1 of type int, and loc2 of type string, is:
 
-                op_frame    2, e_int, e_str     (opcode and three INT8's)
+                op_frame    2, e_int, e_str     (opcode and three int8_t's)
 
     Functions printf, gr_fprintf
     -------------------------
@@ -332,13 +332,13 @@ typedef struct
 {
     char
         version[4];
-    INT32
+    int32_t
         offset[4];
-} BIN_HEADER_;                              /* see header structure at BOF */
+} BinHeader;                              /* see header structure at BOF */
 
 typedef struct
 {
-    UNS16
+    uint16_t
         size;
     char
         **element;                          /* used as (char *) by icmcomp */
@@ -354,7 +354,7 @@ typedef union
 
 typedef struct
 {
-    UNS16
+    uint16_t
         count;                              /* allocation count */
     LS_UNION_
         ls;
@@ -362,7 +362,7 @@ typedef struct
 
 typedef union
 {
-    INT16
+    int16_t
         intval;                             /* value of an int */
     INTER_
         *i;                                 /* intermediate alloc. structure */
@@ -376,7 +376,7 @@ typedef struct                              /* defined variable */
         vu;                                 /* value of the element */
 } VAR_;
 
-struct _find_t                               /* abbreviated variant */
+struct find_t_                               /* abbreviated variant */
 {
     char
         name[_MAX_PATH];
@@ -388,14 +388,14 @@ typedef struct
 {
     unsigned
         attrib;                             /* requested attribute */
-    struct _find_t
+    struct find_t_
         find;                               /* _dos_find...()'s struct  */
-} ICMAKE_FIND_;
+} IcmakeFind;
 
 
-BIN_HEADER_ *readheader (FILE *, size_t);
+BinHeader *readheader (FILE *, size_t);
 
-extern ICMAKE_FIND_
+extern IcmakeFind
     ifs;                                    /* in: ./rss/findnext.c */
 
 extern char
@@ -406,8 +406,8 @@ extern char
 void        rss_makePath(char *, char const *, char const *,
                       char const *, char const *);
 void        ic_splitpath(char const *, char *, char *, char *, char *);
-size_t      rsFindFirst(char const *, size_t, struct _find_t *);
-size_t      rsFindNext(struct _find_t *);
+size_t      rs_findFirst(char const *, size_t, struct find_t_ *);
+size_t      rs_findNext(struct find_t_ *);
 
 int         ic_spawnlp(int, char const *, char const *, ...);
 int         ic_spawnvp(int, char const *, char const **);
@@ -418,9 +418,9 @@ char const *rss_changeExt (char const *, char const *);
 char const *change_base (char const *, char const *);
 char const *change_path (char const *, char const *);
 
-int      chesc(char *, int *);
+int      rs_chesc(char *, int *);
 void     copyright(char *, char *, char *);     /* copyright message */
-char     *filefound(void);                      /* test attrib/pattern  */
+char     *rs_fileFound(void);                      /* test attrib/pattern  */
 char     *findfirst(char const *, size_t);    /* first entry matching pattern */
 char     *findnext(void);                       /* remaining matching entries   */
 char     *fgetz (char *, size_t, FILE *);
@@ -430,15 +430,15 @@ char const *get_dext(char const *);
 char const *get_base(char const *);
 char const *get_path (char const *);
 
-int      ic_getoptindex(void);                  /*  ICCE getopt functions   */
+int      rs_getOptIndex(void);                  /*  ICCE getopt functions   */
 int      ic_getopt(int *, char **);
 char     *ic_getoptval(int *, char **);
 
-#define  getoptindex ic_getoptindex             /*  and their mappings      */
+#define  getoptindex rs_getOptIndex             /*  and their mappings      */
 #define  getopt      ic_getopt
 #define  getoptval   ic_getoptval
 
-char     *getstring (FILE *, INT32, size_t);
+char     *getstring (FILE *, int32_t, size_t);
 
 char     *hexstring (size_t, size_t);
 
@@ -459,11 +459,11 @@ int      exists  (char const *);
 int      older   (char const *, char const *);
 int      younger (char const *, char const *);
 
-INT16    getint16 (FILE *);
+int16_t    getint16 (FILE *);
 
 OPCODE_  getopcode (FILE *);
 
-UNS16    getvar(FILE *, BIN_HEADER_ *, VAR_ **);
+uint16_t    getvar(FILE *, BinHeader *, VAR_ **);
 
 void     initvar(VAR_ *);
 

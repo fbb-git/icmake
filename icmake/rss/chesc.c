@@ -55,7 +55,7 @@ static size_t atox(char *string, int *n)
     return hex;                             /* Returnvalue */
 }
 
-int chesc(char *string, int *n)
+int rs_chesc(char *string, int *n)
 {
     register int
         c;

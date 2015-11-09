@@ -49,7 +49,7 @@ int negate_active()             /* negate the current request */
 int pop_active()                /* returns previous output_active value */
 {
     if (!sp--)
-        error("%s: %d: too many lone #endif directives",
+        rss_error("%s: %d: too many lone #endif directives",
                 filestack[filesp].n, filestack[filesp].l);
 
     return stack[sp].d_active;
@@ -59,7 +59,7 @@ int push_active(int request)    /* actual activity request */
 {
     ++sp;
 
-    stack = xrealloc(stack, (sp + 1) * sizeof(ACTIVESTACK_));
+    stack = rss_realloc(stack, (sp + 1) * sizeof(ACTIVESTACK_));
     stack[sp].d_request = request;
     return active();
 }

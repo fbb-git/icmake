@@ -109,7 +109,7 @@ typedef struct                              /* see also display code in */
         *truelist,
         *falselist,
         *continuelist;
-    INT8
+    int8_t
         *code;
 } SemVal;
 
@@ -308,7 +308,7 @@ void    outcode (SemVal *, int,        /* append code to e->code */
 void    patchcontinue(SemVal *);      /* jmp_continue target */
 void    patchfalse (SemVal *);        /* jmp_false target */
 void    patchtrue (SemVal *);         /* jmp_true target */
-void    patchup (INT8 *, size_t,      /* patchup t/f list */
+void    patchup (int8_t *, size_t,      /* patchup t/f list */
                      unsigned *, size_t, int);
 void    patchup_true (SemVal *, int); /* batchpatch truelist */
 void    patchup_false (SemVal *, int);/* batchpatch truelist */

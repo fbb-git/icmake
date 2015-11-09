@@ -24,7 +24,7 @@ void fun_ret ()
     popBP();
 
     {
-        INT32 ra = (INT32)intValue(top());
+        int32_t ra = (int32_t)intValue(top());
         pop();
 
         fseek (infile, ra, SEEK_SET);

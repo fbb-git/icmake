@@ -12,7 +12,7 @@ static void patchadd(register size_t value, unsigned **dest,
         source[idx] += value;             /* icrement addresses of targets */
 
                                             /* expand the dest area */
-    *dest = xrealloc(*dest, (*dlen + slen) * sizeof(unsigned));
+    *dest = rss_realloc(*dest, (*dlen + slen) * sizeof(unsigned));
 
                                             /* append source list */
     memcpy(*dest + *dlen, source, slen * sizeof(unsigned));
@@ -27,11 +27,11 @@ SemVal *catcode(SemVal *lval, SemVal *rval)
     r = rval->codelen;                      /* sizeof rval code */
     l = lval->codelen;                      /* sizeof lval code */
 
-    lval->code = xrealloc(lval->code,       /* room for new code */
-                          (l + r) * sizeof(INT8));
+    lval->code = rss_realloc(lval->code,       /* room for new code */
+                          (l + r) * sizeof(int8_t));
 
                                             /* catenate the code */
-    memcpy(lval->code + l, rval->code, r * sizeof(INT8));
+    memcpy(lval->code + l, rval->code, r * sizeof(int8_t));
     lval->codelen += r;                     /* new size */
 
     patchadd(l, &lval->truelist, &lval->truelen,

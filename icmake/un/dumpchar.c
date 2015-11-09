@@ -2,5 +2,5 @@
 
 void dumpchar(int val)
 {
-    printf ("%s      ", hexstring ((size_t)(val & 0xff), 2));
+    printf ("%s      ", rss_hexString ((size_t)(val & 0xff), 2));
 }

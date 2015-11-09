@@ -20,12 +20,12 @@ void change_file(char *s)               /* name of source file to open */
     if (*s)                                 /* any filename ? */
     {
         if (!sp--)                          /* no more entries ? */
-            error("Over 10 included files");
+            rss_error("Over 10 included files");
 
-        stack[sp].fname = xstrdup(s);       /* save the name of the file */
+        stack[sp].fname = rss_strdup(s);       /* save the name of the file */
         stack[sp].former_linenr = yylineno; /* save the line number */
 
-        gs_filenames = xrealloc(gs_filenames,     /* room for new filename */
+        gs_filenames = rss_realloc(gs_filenames,     /* room for new filename */
                         filenames_len +
                         (slen = strlen(s)) +
                         2);
@@ -38,7 +38,7 @@ void change_file(char *s)               /* name of source file to open */
     else
     {
         if (sp == N_FILES - 1)
-            error("[%s] Line %d: Include file stack empty", util_sourceName(),
+            rss_error("[%s] Line %d: Include file stack empty", util_sourceName(),
                                                         yylineno);
         free(stack[sp].fname);
         yylineno = stack[sp].former_linenr - 1;

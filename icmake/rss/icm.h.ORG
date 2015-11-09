@@ -95,14 +95,14 @@
 #define _MAX_EXT                _MAX_PATH
 #define DIRSEP                  '/'
 #define DRIVESEP                0
-#define INT32                   signed int
-#define UNS32                   unsigned int
+#define int32_t                   signed int
+#define uint32_t                   unsigned int
 #define READBINARY              "r"
 #define WRITEBINARY             "w"
 #define _execvp                 execvp
 
-#define INT8  signed char
-#define INT16 signed short
-#define UNS16 unsigned short
+#define int8_t  signed char
+#define int16_t signed short
+#define uint16_t unsigned short
 
 #endif

@@ -1,6 +1,6 @@
 #include "icmun.ih"
 
-BIN_HEADER_ *headerp;
+BinHeader *headerp;
 
 char
     *funname [] =
@@ -52,7 +52,7 @@ char
 
 FILE *infile;
 
-INT8 *local_types;
+int8_t *local_types;
 
 size_t
     curoffs,

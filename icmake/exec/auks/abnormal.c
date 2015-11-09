@@ -24,5 +24,5 @@
 
 void abnormal (int sig, int subcode)
 {
-    error ("Abnormal termination.");
+    rss_error ("Abnormal termination.");
 }

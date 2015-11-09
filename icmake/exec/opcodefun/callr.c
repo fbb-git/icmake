@@ -2,7 +2,7 @@
 \funcref{fun\_call\_rss}{void fun\_call\_rss ()}
     {}
     {}
-    {error(), getopcode()}
+    {rss_error(), rss_getOpcode()}
     {}
     {funcallr.c}
     {
@@ -24,10 +24,10 @@
 
 void fun_call_rss ()
 {
-    size_t funnr = (size_t)getopcode (infile);
+    size_t funnr = (size_t)rss_getOpcode (infile);
 
     if (funnr >= f_hlt)
-        error ("unexisting rss function call at %s", hexstring(curoffs, 4));
+        rss_error ("unexisting rss function call at %s", rss_hexString(curoffs, 4));
 
     builtin(funnr);
 }

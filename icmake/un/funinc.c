@@ -6,20 +6,20 @@
 
 void fun_inc()
 {
-    INT16 idx;
+    int16_t idx;
 
-    idx = getint16(infile);
+    idx = rss_getInt16(infile);
 
     msg("op_inc argument = %x", idx);
 
     dumpint(idx);
 
-    if ((UNS16)idx < 0x8000)
+    if ((uint16_t)idx < 0x8000)
         printf ("inc global %s %s\n", varname(var[idx].type), printvar(idx));
-    else if (idx < (INT16)0xc000)
+    else if (idx < (int16_t)0xc000)
     {
         printf ("inc local %s %s\n",
-                   varname(local_types[(INT16)0xc000 - (INT16)1 - idx]),
+                   varname(local_types[(int16_t)0xc000 - (int16_t)1 - idx]),
                    printvar(idx));
     }
     else

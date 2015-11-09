@@ -14,69 +14,60 @@ void        rss_splitPath(char const *, char *, char *, char *, char *);
 
 char const *rss_changeExt(char const *, char const *);
 char const *rss_changeBase(char const *, char const *);
-char const *change_path (char const *, char const *);
+char const *rss_changePath (char const *, char const *);
 
-int      chesc(char *, int *);
-void     copyright(char *, char *, char *);     /* copyright message */
-char     *filefound(void);                      /* test attrib/pattern  */
-char     *findfirst(char const *, size_t);    /* first entry matching pattern */
-char     *findnext(void);                       /* remaining matching entries   */
-char     *fgetz (char *, size_t, FILE *);
+void    rss_copyright(char *, char *, char *);     /* copyright message */
 
-char const *get_ext(char const *);
-char const *get_dext(char const *);
-char const *get_base(char const *);
-char const *get_path (char const *);
+char   *rss_findFirst(char const *fspec, size_t attrib);
+char   *rss_findNext(void);             /* remaining matching entries   */
 
-int      ic_getoptindex(void);                  /*  ICCE getopt functions   */
-int      ic_getopt(int *, char **);
-char     *ic_getoptval(int *, char **);
+char   *rss_fgetz (char *, size_t, FILE *);
 
-// #define  getoptindex ic_getoptindex         /*  and their mappings      */
-// #define  getopt      ic_getopt
-// #define  getoptval   ic_getoptval
+char const *rss_getExt(char const *path);
+char const *rss_getDext(char const *path);
+char const *rss_getBase(char const *path);
+char const *rss_getPath (char const *path);
 
-char     *getstring (FILE *, INT32, size_t);
+char     *rss_getString(FILE *, int32_t, size_t);
 
-char     *hexstring (size_t, size_t);
+char     *rss_hexString (size_t, size_t);
 
-char     *program_name(char *);             /* make programname from argv[0] */
+char     *rss_programName(char *argv0);  /* make programname from argv[0] */
 
-char     *stresc(char *);
+char     *rss_strUnescape(char *);
 
-char     *try_source(char const *);         /* return allocated source[.im] */
-char     *xstrdup(char const *);
-char     *xstrcat (char *, char const *);
+char     *rss_strdup(char const *);
+char     *rss_strcat (char *, char const *);
 
-void     msg_(char const *path, char *fmt, ...); /* prints a msg to stderr. 
+void     rss_msg_(char const *path, char *fmt, ...); /* prints a msg to stderr. 
                                         Use it by doing #define msg before
                                         reading rss.h, and then call msg(fmt,
                                         ...) to specify a message
                                     */
-void     error (char *, ...);
-void     spawn_err (char *);
+void     rss_error(char *, ...);
+void     rss_spawnErr (char *);
 
-void     *xrealloc (void *, size_t);
+void     *rss_realloc (void *, size_t);
 
-int      exists  (char const *);
-int      older   (char const *, char const *);
-int      younger (char const *, char const *);
+int      rss_exists(char const *);
+int      rss_older(char const *, char const *);
+int      rss_younger(char const *, char const *);
 
-INT16    getint16 (FILE *);
+int16_t    rss_getInt16(FILE *);
 
-OPCODE_  getopcode (FILE *);
+OPCODE_  rss_getOpcode (FILE *);
 
-UNS16    getvar(FILE *, BIN_HEADER_ *, VAR_ **);
+uint16_t    rss_getVar(FILE *, BinHeader *, VAR_ **);
 
-void     initvar(VAR_ *);
+void     rss_initVar(VAR_ *);
 
-BIN_HEADER_ *readheader(FILE *f, size_t v);
+BinHeader *rss_readHeader(FILE *f, size_t v);
 
     /* to activate msg(...) calls do '#define msg' before reading rssh.h */
 
 #ifdef msg
     #undef msg
-    #define msg(...)    msg_(__FILE__, __VA_ARGS__)
+    #define msg(...)    rss_msg_(__FILE__, __VA_ARGS__)
 #else
     #undef msg
     #define msg(...)

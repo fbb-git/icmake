@@ -16,6 +16,6 @@ void symtab_writeGlobals(FILE *bin)
         char type = (char)begin->type & ~e_var;
         util_out(bin, &type, sizeof(char));
         
-        util_out(bin, &begin->value, sizeof(UNS16));
+        util_out(bin, &begin->value, sizeof(uint16_t));
     }
 }

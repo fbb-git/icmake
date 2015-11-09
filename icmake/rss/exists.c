@@ -16,7 +16,7 @@
 
 #include "rss.ih"
 
-int exists(char const *name)
+int rss_exists(char const *name)
 {
     struct stat buf;
 

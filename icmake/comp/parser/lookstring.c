@@ -15,11 +15,11 @@ size_t lookstring(char *s)
             return (idx);                      /* return string idx */
 
     if (n_allocated == gp_nStrings)           /* full table */
-        gp_stringTable = xrealloc(gp_stringTable,
+        gp_stringTable = rss_realloc(gp_stringTable,
                              (n_allocated += 20) * sizeof(StringTable));
 
                                              /* set the string in memory */
-    gp_stringTable[gp_nStrings].string = xstrdup(s);
+    gp_stringTable[gp_nStrings].string = rss_strdup(s);
     gp_stringTable[gp_nStrings].index = gp_stringsize;
 
     gp_stringsize += strlen(s) + 1;

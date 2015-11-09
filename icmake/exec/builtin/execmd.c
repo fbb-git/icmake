@@ -4,7 +4,7 @@
         {char} {**cmd} {{\em argv}-like array of command}
         {int} {mode} {execution mode}
     }
-    {spawn\_err(), error()}
+    {spawn\_err(), rss_error()}
     {fun\_exec()}
     {execmd.c}
     {
@@ -53,16 +53,12 @@ int mode;
     }
     fflush (stdout);
     
-#ifdef MSDOS    
-    _heapmin ();                /* max memory under DOS */
-#endif    
-
                         /* try to execute */
-    ret = es_spawnvp (P_WAIT, cmd [0], (const char **) cmd);
+    ret = eb_spawnvp (P_WAIT, cmd [0], (const char **) cmd);
     
                             /* if non-zero return and */
     if (ret && P_CHECKMODE (mode))      /* if checking requested.. */
-        error ("execute - program indicates failure (status %d)", ret);
+        rss_error ("execute - program indicates failure (status %d)", ret);
 
     reg = *intConstructor_i(ret);     /* return exit status */
     return (cmd);

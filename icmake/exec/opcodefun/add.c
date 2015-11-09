@@ -2,7 +2,7 @@
 \funcref{fun\_add}{void fun\_add ()}
     {}
     {}
-    {pop(), xstrdup(), copylist(), addtolist(), discard()}
+    {pop(), rss_strdup(), copylist(), addtolist(), discard()}
     {}
     {funadd.c}
     {

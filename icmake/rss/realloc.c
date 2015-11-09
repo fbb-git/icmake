@@ -1,20 +1,20 @@
 /*
-\funcref{xrealloc}{VOIDP xrealloc (\params)}
+\funcref{rss_realloc}{VOIDP rss_realloc (\params)}
     {
         {VOIDP} {ptr} {pointer to previously allocated memory, or NULL}
         {int} {size} {new requested size, or 0}
     }
     {pointer to reallocated memory}
-    {error()}
-    {xstrdup()}
-    {xrealloc.c}
+    {rss_error()}
+    {rss_strdup()}
+    {rss_realloc.c}
     {
-        {\em xrealloc()} attempts to reallocate the memory pointed to by {\em
-        ptr}. If {\em ptr} is NULL, {\em xrealloc()} simply behaves like {\em
+        {\em rss_realloc()} attempts to reallocate the memory pointed to by {\em
+        ptr}. If {\em ptr} is NULL, {\em rss_realloc()} simply behaves like {\em
         malloc()}. When allocation indicates failure, {\em error()} is called
         to terminate the program with an appropriate message.
 
-        The new requested size may be zero. In this case, {\em xrealloc()}
+        The new requested size may be zero. In this case, {\em rss_realloc()}
         frees the memory associated with {\em ptr}.
     }
 */
@@ -22,7 +22,7 @@
 
 #include "rss.ih"
 
-void *xrealloc (void *ptr, size_t size)
+void *rss_realloc (void *ptr, size_t size)
 {
     register void *newptr;
 
@@ -39,7 +39,7 @@ void *xrealloc (void *ptr, size_t size)
                     malloc (size);
 
     if (! newptr)
-        error ("out of memory");
+        rss_error ("out of memory");
 
     return newptr;
 }

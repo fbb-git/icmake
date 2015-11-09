@@ -4,7 +4,7 @@
         {char}{*progname}{program name}
     }
     {}
-    {error()}
+    {rss_error()}
     {}
     {spawnerr.c}
     {
@@ -20,7 +20,7 @@
 
 #include "rss.ih"
 
-void spawn_err (progname)
+void rss_spawnErr (progname)
 char *progname;
 {
     static char
@@ -29,18 +29,18 @@ char *progname;
     switch (errno)
     {
         case E2BIG:
-            error (errmsg, progname, "command line too big");
+            rss_error (errmsg, progname, "command line too big");
         case EACCES:
-            error (errmsg, progname, "access denied");
+            rss_error (errmsg, progname, "access denied");
         case EMFILE:
-            error (errmsg, progname, "too many open files");
+            rss_error (errmsg, progname, "too many open files");
         case ENOENT:
-            error (errmsg, progname, "no such file");
+            rss_error (errmsg, progname, "no such file");
         case ENOEXEC:
-            error (errmsg, progname, "exec file format");
+            rss_error (errmsg, progname, "exec file format");
         case ENOMEM:
-            error (errmsg, progname, "out of memory");
+            rss_error (errmsg, progname, "out of memory");
         default:
-            error (errmsg, progname, "unknown error");
+            rss_error (errmsg, progname, "unknown error");
     }
 }

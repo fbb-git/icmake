@@ -2,7 +2,7 @@
 \funcref{fun\_push\_var}{void fun\_push\_var ()}
     {}
     {}
-    {push(), getint16(), getdest(), initvar()}
+    {push(), rss_getInt16(), getdest(), rss_initVar()}
     {}
     {funpushv.c}
     {

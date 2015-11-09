@@ -5,7 +5,7 @@ size_t *st_newIdxPtr()        /* pointer to the next available index[] */
     VarIndices *indices = st_topLevel();
     
     if (indices->nVars == indices->capacity)
-       indices->index = xrealloc(indices->index, 
+       indices->index = rss_realloc(indices->index, 
                                     (indices->capacity += capacityInc) *
                                         sizeof(size_t));
 

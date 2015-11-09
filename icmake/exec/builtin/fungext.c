@@ -17,5 +17,5 @@
 
 void fun_g_ext ()
 {
-    reg = *stringConstructor_cP(get_ext(stringStr(top())));
+    reg = *stringConstructor_cP(eb_getExt(stringStr(top())));
 }

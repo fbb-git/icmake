@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 /*************************************************************************
     define MAXCMDLEN:  the max command line length
 */
@@ -86,16 +88,9 @@
 #define _MAX_EXT                _MAX_PATH
 #define DIRSEP                  '/'
 #define DRIVESEP                0
-#define INT32                   signed int
-#define UNS32                   unsigned int
 #define READBINARY              "r"
 #define WRITEBINARY             "w"
 #define _execvp                 execvp
-
-#define INT8  signed char
-#define INT16 signed short
-#define UNS16 unsigned short
-
 
 /*   The compiler uses E_TYPE 0 to indicate the void type.  */
 typedef enum
@@ -141,7 +136,7 @@ typedef enum                                /* names of rss-functions */
     f_exists,
     f_fgets,
     f_fields,
-    f_gr_fprintf,
+    f_fprintf,
     f_g_base,
     f_g_dext,
     f_g_ext,
@@ -221,15 +216,28 @@ typedef enum
     op_hlt = op_shr + 10/*     ..     */
 } OPCODE_;
 
-typedef struct
+struct find_t_                               /* abbreviated variant */
 {
-    char version[4];
-    INT32 offset[4];
-} BIN_HEADER_;                              /* see header structure at BOF */
+    char name[_MAX_PATH];
+    unsigned attrib;                             /* returned attribute */
+};
 
 typedef struct
 {
-    UNS16 size;
+    unsigned attrib;                             /* requested attribute */
+    struct find_t_ find;
+} IcmakeFind;
+
+
+typedef struct
+{
+    char version[4];
+    int32_t offset[4];
+} BinHeader;                              /* see header structure at BOF */
+
+typedef struct
+{
+    uint16_t size;
     char **element;                          /* used as (char *) by icmcomp */
 } LIST_;
 
@@ -241,7 +249,7 @@ typedef union
 
 typedef struct
 {
-    UNS16 count;                            /* allocation count, or 
+    uint16_t count;                            /* allocation count, or 
                                                1st address of a function */
                                             
     LS_UNION_ ls;
@@ -249,7 +257,7 @@ typedef struct
 
 typedef union
 {
-    INT16 intval;                         /* value of an int */
+    int16_t intval;                         /* value of an int */
     INTER_ *i;                            /* intermediate alloc. structure */
 } VAR_UNION_;
 
@@ -258,10 +266,4 @@ typedef struct                            /* defined variable */
     ExprType type;                         /* maybe stringconst, int, list */
     VAR_UNION_ vu;                        /* value of the element */
 } VAR_;
-
-struct _find_t                                /* abbreviated variant */
-{
-    char name[_MAX_PATH];
-    unsigned attrib;                          /* returned attribute */
-};
 

@@ -5,7 +5,7 @@ size_t rm_jmp_zero(register size_t codelen, unsigned *list,
 {
     return
         listlen && (list[listlen - 1] == codelen) ?
-            (sizeof(INT8) + sizeof(INT16))
+            (sizeof(int8_t) + sizeof(int16_t))
         :
             0
     ;

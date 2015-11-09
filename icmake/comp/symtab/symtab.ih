@@ -16,7 +16,7 @@ enum
 typedef struct
 {
     char        *name;
-    UNS16       address;
+    uint16_t       address;
     size_t      nParams;
     ExprType    *paramType;     /* nParams elements */
     ExprType    returnType;
@@ -36,7 +36,7 @@ int st_findFun(void const *key, void const *funInfo);
 typedef struct
 {
     char        *name;
-    UNS16       value;
+    uint16_t       value;
     ExprType    type;
 } VarInfo;
 

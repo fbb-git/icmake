@@ -20,7 +20,7 @@ void gencode(SemVal *e, OPCODE_ opcode, ...)
             switch ((JMP_COND_)va_arg(marker, JMP_COND_))
             {
                 case j_uncond:              /* absolute jumplocation */
-                    outcode(e, va_arg(marker, int), sizeof(INT16));
+                    outcode(e, va_arg(marker, int), sizeof(int16_t));
                 break;
 
                 case j_truelist:
@@ -47,7 +47,7 @@ void gencode(SemVal *e, OPCODE_ opcode, ...)
 
         case op_push_strconst:              /* write idx of the const */
             outcode(e, 
-                (int)gp_stringTable[va_arg(marker, int)].index, sizeof(INT16));
+                (int)gp_stringTable[va_arg(marker, int)].index, sizeof(int16_t));
         break;
 
         case op_frame:
@@ -73,7 +73,7 @@ void gencode(SemVal *e, OPCODE_ opcode, ...)
 
         case op_push_imm:                   /* write value of the int */
         case op_call:                       /* write offset of function */
-            outcode(e, va_arg(marker, int), sizeof(INT16));
+            outcode(e, va_arg(marker, int), sizeof(int16_t));
         break;
 
         case op_asp:                        /* write # of args to remove */

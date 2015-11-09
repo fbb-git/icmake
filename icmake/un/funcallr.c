@@ -5,11 +5,11 @@ void fun_call_rss ()
 {
     unsigned char funnr;
 
-    funnr = (unsigned char)getopcode(infile);
+    funnr = (unsigned char)rss_getOpcode(infile);
     dumpchar(funnr);
 
     if (funnr >= f_hlt)
-        error ("non-existing function call\n"
+        rss_error ("non-existing function call\n"
                "attempt to call function %x, %x are defined",
             funnr, f_hlt);
 

@@ -1,6 +1,4 @@
 /*
-                                L O A D S Y M . C
-
     Load platform specific defines.
 
     Modify this file to your taste before compiling icmake: new symbols can be
@@ -15,13 +13,6 @@
 
 void loadsym()
 {
-
-#ifdef MSDOS
-    preload("MSDOS", "1");
-#else
-    preload("MSDOS", "0");
-#endif
-
 #ifdef UNIX
     preload("UNIX", "1");
 #else

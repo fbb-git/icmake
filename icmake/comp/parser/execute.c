@@ -47,7 +47,7 @@ SemVal *execute(SemVal *arr)
     catcode(&e, specials(f_exec, arr));     /* catenate call-code */
 
     free(gp_stringbuf);                        /* make sure empty string */
-    gp_stringbuf = xstrdup("");              /* is pushed */
+    gp_stringbuf = rss_strdup("");              /* is pushed */
 
     tmp = *stackframe(e_str | e_const);     /* empty string argument */
 

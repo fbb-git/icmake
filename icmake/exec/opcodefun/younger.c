@@ -2,7 +2,7 @@
 \funcref{fun\_younger}{void fun\_younger ()}
     {}
     {}
-    {pop(), younger(), discard()}
+    {pop(), rss_younger(), discard()}
     {fun\_younger()}
     {funyoung.c}
     {
@@ -25,7 +25,7 @@ void fun_younger ()
 
     pop();
 
-    ret = younger(stringStr(top()), stringStr(&rval));
+    ret = rss_younger(stringStr(top()), stringStr(&rval));
     stringDestructor(top());
 
     *top() = *intConstructor_i(ret);

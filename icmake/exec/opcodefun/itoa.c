@@ -2,7 +2,7 @@
 \funcref{fun\_itoa}{void fun\_itoa ()}
     {}
     {}
-    {newvar(), xstrdup()}
+    {newvar(), rss_strdup()}
     {fun\_atoi(), etc.}
     {funitoa.c}
     {

@@ -2,7 +2,7 @@
 \funcref{fun\_asp} {void fun\_asp ()}
     {}
     {}
-    {getopcode(), pop(), discard()}
+    {rss_getOpcode(), pop(), discard()}
     {}
     {funasp.c}
     {
@@ -20,7 +20,7 @@
 
 void fun_asp ()
 {
-    register size_t idx = (size_t)getopcode(infile);
+    register size_t idx = (size_t)rss_getOpcode(infile);
 
     for ( ; idx--; )
         pop();

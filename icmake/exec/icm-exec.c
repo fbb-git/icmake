@@ -6,7 +6,7 @@
         {char} {**envp} {array of environment settings}
     }
     {}
-    {getvar(), process(), envp2list(), newvar()}
+    {rss_getVar(), process(), envp2list(), newvar()}
     {}
     {icm-exec.c}
     {
@@ -42,8 +42,8 @@ int main (int argc, char **argv)
 
     if (argc == 1)
     {
-        copyright("ICMAKE Binary Makefile Executor", version, release);
-        progname = program_name(argv[0]);
+        rss_copyright("ICMAKE Binary Makefile Executor", version, release);
+        progname = rss_programName(argv[0]);
         printf ("This program is run as a child process of icmake.\n"
                 "Usage: %s [-t] bimfile\n"
                 "where: -t      - option indicating that 'bimfile' must be\n"
@@ -62,13 +62,13 @@ int main (int argc, char **argv)
     }
 
     if (!(infile = fopen (argv [1], READBINARY)))
-        error("cannot open bimfile '%s' to read", argv[1]);
+        rss_error("cannot open bimfile '%s' to read", argv[1]);
 
-    headerp = readheader(infile, (size_t)version[0]);
+    headerp = rss_readHeader(infile, (size_t)version[0]);
 
                                         /* return array of global vars */
-    if ((INT16)(nvar = getvar(infile, headerp, &var)) == -1)
-        error("invalid macro file, cannot read variable section");
+    if ((int16_t)(nvar = rss_getVar(infile, headerp, &var)) == -1)
+        rss_error("invalid macro file, cannot read variable section");
 
         /* global strings haven't been initialized by the compiler yet, */
         /* so that's icm-exec's job                                     */

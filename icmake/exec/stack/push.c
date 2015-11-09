@@ -16,7 +16,7 @@ void push(VAR_ const *varEl)
     if (sp >= stackSize)
     {
         stackSize += 50;
-        stack = xrealloc(stack, stackSize * sizeof(VAR_));
+        stack = rss_realloc(stack, stackSize * sizeof(VAR_));
     }
     stack[sp++] = *copyCons(varEl);
 }

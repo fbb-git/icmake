@@ -2,7 +2,7 @@
 \funcref{fun\_frame}{void fun\_frame ()}
     {}
     {}
-    {push(), newvar(), getopcode()}
+    {push(), newvar(), rss_getOpcode()}
     {fun\_ret()}
     {funframe.c}
     {
@@ -26,12 +26,12 @@
 
 void fun_frame()
 {
-    size_t nlocals = getopcode(infile);
+    size_t nlocals = rss_getOpcode(infile);
     size_t idx;
 
     for (idx = 0; idx < nlocals; ++idx)
     {
-        VAR_ varFrame = *constructor((ExprType)getopcode(infile));
+        VAR_ varFrame = *constructor((ExprType)rss_getOpcode(infile));
         push(&varFrame);
         destructor(&varFrame);
     }

@@ -2,7 +2,7 @@
 \funcref{fun\_mod}{void fun\_mod ()}
     {}
     {}
-    {pop(), push(), error()}
+    {pop(), push(), rss_error()}
     {}
     {funmod.c}
     {
@@ -23,7 +23,7 @@ void fun_mod ()
     int value = intValue(top());
 
     if (!value)
-        error ("division by zero at %s", hexstring(curoffs, 4));
+        rss_error ("division by zero at %s", rss_hexString(curoffs, 4));
 
     pop();
     value = intValue(top()) % value;

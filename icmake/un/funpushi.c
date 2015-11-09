@@ -2,8 +2,8 @@
 
 void fun_push_imm ()
 {
-    INT16 val = getint16 (infile);
+    int16_t val = rss_getInt16 (infile);
 
-    dumpint ( (UNS16) val);
-    printf ("push int %s\n", hexstring ((size_t)val, 4));
+    dumpint ( (uint16_t) val);
+    printf ("push int %s\n", rss_hexString ((size_t)val, 4));
 }

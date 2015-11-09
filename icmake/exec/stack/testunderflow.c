@@ -3,5 +3,5 @@
 void stacktestunderflow()
 {
     if (sp == 0)
-        error("stack underflow at %s", hexstring(curoffs, 4));
+        rss_error("stack underflow at %s", rss_hexString(curoffs, 4));
 }

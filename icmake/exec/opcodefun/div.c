@@ -2,7 +2,7 @@
 \funcref{fun\_div}{void fun\_div ()}
     {}
     {}
-    {pop(), push(), error()}
+    {pop(), push(), rss_error()}
     {}
     {fundiv.c}
     {
@@ -12,7 +12,7 @@
 
         It is assumed that the left argument of the division was pushed first;
         therefore, the right argument is popped first. A division by zero leads
-        to an error.
+        to an rss_error.
     }
 */
 
@@ -23,7 +23,7 @@ void fun_div()
     int value = intValue(top());
 
     if (!value)
-        error ("division by zero at %s", hexstring(curoffs, 4));
+        rss_error ("division by zero at %s", rss_hexString(curoffs, 4));
 
     pop();
     value = intValue(top()) / value;

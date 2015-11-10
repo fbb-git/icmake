@@ -1,4 +1,4 @@
-#include "rss.ih"
+#include "builtin.ih"
 
 int eb_spawnvp (int mode, char const *prog, char const **av)
 {

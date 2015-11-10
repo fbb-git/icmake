@@ -21,16 +21,14 @@
 extern int echo;
 extern size_t listIndex;
 
-extern void (*builtinfun[])(void);
+extern void (*p_builtinfun[])(void);
 
-char *setstring(char *);
-char *findPercent(char *begin);
-size_t getNr(char **ptr);
-
-
+char *eb_setString(char *);
+char *eb_findPercent(char *begin);
+size_t eb_getNr(char **ptr);
 
 /*
-    From fun_push_reg():
+    From push_reg():
   
         This function is called when the return register is to be pushed. The
         return register is used to return information from built-in functions.
@@ -44,77 +42,76 @@ size_t getNr(char **ptr);
         memory when assigning a value to reg.
 */
 
-int getcmdlen(char **);
-int enterch(void);
+int eb_getCmdLen(char **);
+int eb_enterCh(void);
 
-char *getarg(size_t, int *);
-char **addcmd(char **, char *);
-char **execmd(char **, int);
-char *getexecarg(size_t, int *);
+char *eb_getArg(size_t, int *);
+char **eb_addCmd(char **, char *);
+char **eb_exeCmd(char **, int);
+char *eb_getExecArg(size_t, int *);
 
-char *getLine(FILE *file);
+char *eb_getLine(FILE *file);
 
-void fun_empty(void);
-void fun_arg_head(void);
-void fun_arg_tail(void);
-void fun_ascii_int(void);
-void fun_ascii_str(void);
-void fun_backtick(void);
-void fun_stat(void);
-void fun_putenv(void);
-void fun_chdir(void);
-void fun_getenv(void);
-void fun_cmd_head(void);
-void fun_cmd_tail(void);
-void fun_c_base(void);
-void fun_c_ext(void);
-void fun_c_path(void);
-void fun_fields(void);
-void fun_fgets(void);
-void fun_fprintf(void);
-void fun_g_base(void);
-void fun_getch(void);
-void fun_getpid (void);
-void fun_gets(void);
-void fun_g_dext(void);
-void fun_g_ext(void);
-void fun_g_path(void);
-void fun_echo(void);
-void fun_element(void);
-void fun_exec(void);
-void fun_exists(void);
-void fun_makelist(void);
-void fun_printf(void);
-void fun_sizeoflist(void);
-void fun_str_el(void);
-void fun_strfind(void);
-void fun_strformat(void);
-void fun_strlen(void);
-void fun_strlwr(void);
-void fun_strupr(void);
-void fun_substr(void);
-void fun_system(void);
-void fun_trim(void);
-void fun_trimleft(void);
-void fun_trimright(void);
-void fun_printarg(FILE *out, size_t i, int *newelement);
+void builtin_empty(void);
+void builtin_argHead(void);
+void builtin_argTail(void);
+void builtin_asciiInt(void);
+void builtin_asciiString(void);
+void builtin_backtick(void);
+void builtin_stat(void);
+void builtin_putEnv(void);
+void builtin_chDir(void);
+void builtin_getEnv(void);
+void builtin_cmdHead(void);
+void builtin_cmdTail(void);
+void builtin_changeBase(void);
+void builtin_changeExtension(void);
+void builtin_changePath(void);
+void builtin_fields(void);
+void builtin_fgets(void);
+void builtin_fprintf(void);
+void builtin_getBase(void);
+void builtin_getCh(void);
+void builtin_getPid(void);
+void builtin_gets(void);
+void builtin_dotExtension(void);
+void builtin_extension(void);
+void builtin_path(void);
+void builtin_echo(void);
+void builtin_element(void);
+void builtin_exec(void);
+void builtin_exists(void);
+void builtin_makeList(void);
+void builtin_printf(void);
+void builtin_sizeOfList(void);
+void builtin_strElement(void);
+void builtin_strFind(void);
+void builtin_strFormat(void);
+void builtin_strLength(void);
+void builtin_strLower(void);
+void builtin_strUpper(void);
+void builtin_subString(void);
+void builtin_system(void);
+void builtin_trim(void);
+void builtin_trimLeft(void);
+void builtin_trimRight(void);
 
-int termch(void);
+int eb_termCh(void);
 
-size_t formattedFprintf(FILE *f, size_t start);
+size_t eb_formattedFprintf(FILE *f, size_t start);
 
 extern void (*p_destWrite)(void *dest, char const *begin, char const *end);
 
-void fileWrite(void *dest, char const *begin, char const *end);
-void stringWrite(void *dest, char const *begin, char const *end);
+void eb_fileWrite(void *dest, char const *begin, char const *end);
+void eb_stringWrite(void *dest, char const *begin, char const *end);
 
-size_t formatter(void *dest, size_t start);
-size_t noFormatting(void *dest, size_t start, size_t lastIdx);
-void writeArgument(void *dest, size_t idx);
+size_t eb_formatter(void *dest, size_t start);
+size_t eb_noFormatting(void *dest, size_t start, size_t lastIdx);
+void eb_writeArgument(void *dest, size_t idx);
 
 
-void updateFgets(FILE *inf, char *dest);
-void fgetsStatus(char const *status);
+void eb_updateFgets(FILE *inf, char *dest);
+void eb_fgetsStatus(char const *status);
 
 int         eb_spawnvp(int mode, char const *prog, char const **argv);
 char       *eb_strLower(char *str);

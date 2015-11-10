@@ -1,4 +1,4 @@
-#include "rss.ih"
+#include "builtin.ih"
 
 char *eb_strLower (char *s)
 {

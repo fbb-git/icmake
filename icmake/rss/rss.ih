@@ -18,6 +18,8 @@ extern char gr_dir[];
 extern char gr_fname[];
 extern char gr_ext[];
 
+extern char gr_hexDigits[];
+
 extern  IcmakeFind gr_ifs;                /* icmake find-struct */
 
 size_t  rs_findFirst(char const *, size_t, struct find_t_ *);
@@ -27,8 +29,10 @@ char   *rs_filename(char *fname);       /* return pointer into frame, just
 int     rs_makeAttribute(char *fname);  /* make DOS attribs */
 int     rs_globerr(char const *path, int errnr); 
 
-void rs_split(char const *n);   /* calls rss_split */
-void rs_join(void);             /* calls rss_makePath */
-int  rs_chesc(char *, int *);
+void    rs_split(char const *n);   /* calls rss_split */
+void    rs_join(void);             /* calls rss_makePath */
+int     rs_chesc(char *string, int *);
+size_t  rs_atox(char *string, int *n);
+
 char     *rs_fileFound(void);              /* test attrib/pattern  */
 

@@ -18,7 +18,7 @@
                         }
 <str>\"                 {
                             BEGIN 0;
-                            if (util_unescape())
+                            if (! util_unescape())
                                 util_semantic(
                                         "illegal escape sequence in string");
                             return STRING;

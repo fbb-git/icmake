@@ -1,27 +1,32 @@
-
-/*                              S T R E S C . C
-
+/*
+#define msg
 */
 
 #include "rss.ih"
 
 char *rss_strUnescape(char *source)  /* unescapes and returns source */
 {
-    register int c;
-    int n;
+    register int convRet;
+    int nProcessed;
+
     char *ret = source;                    /* Set return pointer */
     char *dest = source;                   /* Initially: target is source */
 
+    msg("source = %s", source);
+
     while (1)
     {
-        if ((c = rs_chesc(source, &n)) < 0)    /* error ? */
+        convRet = rs_chesc(source, &nProcessed);
+        msg("returning: %d", convRet);
+        
+        if (convRet  == -1)                 /* error ? */
             return NULL;                    /* then ERROR out */
 
-        *dest++ = c;                        /* Set destination */
+        *dest++ = convRet;                        /* Set destination */
 
-        if (c == 0)                         /* terminating 0 ? */
+        if (convRet == 0)                         /* terminating 0 ? */
             return ret;                     /* then OK out */
 
-        source += n;                        /* Skip to next char to convert */
+        source += nProcessed;               /* Skip to next char to convert */
     }
 }

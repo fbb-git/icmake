@@ -986,7 +986,7 @@ YY_RULE_SETUP
 #line 19 "lexer"
 {
                             BEGIN 0;
-                            if (util_unescape())
+                            if (! util_unescape())
                                 util_semantic(
                                         "illegal escape sequence in string");
                             return STRING;

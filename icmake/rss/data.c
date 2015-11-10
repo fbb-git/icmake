@@ -11,3 +11,4 @@ char gr_ext[_MAX_PATH];
 
 IcmakeFind gr_ifs;                            /* icmake find-struct */
 
+char gr_hexDigits[] = "0123456789abcdef";

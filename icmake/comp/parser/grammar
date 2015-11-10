@@ -164,6 +164,11 @@ compound:
         $$ = $2;
     }
 ;
+condition:
+    err_expression
+|
+    typed_condition
+;
 continue_stat:
     CONTINUE
     {
@@ -185,27 +190,28 @@ def_var_or_fun:
     funcdef
 ;
 
-embedded_expression:
-    err_expression
-|
-    embedded_var
-;
-embedded_var:
-    type_of_var
-    vardef
-    {
-        $$ = $2;
-    }
-;
-
-embedded_varlist:
-    type_of_var
-    vardefs
-    {
-        $$ = $2;
-    }
-;
-
+/*embedded_expression:
+/*    err_expression
+/*|
+/*    embedded_var
+/*;
+/**/
+/*embedded_var:
+/*    type_of_var
+/*    vardef
+/*    {
+/*        $$ = $2;
+/*    }
+/*;
+/**/
+/*embedded_varlist:
+/*    type_of_var
+/*    vardefs
+/*    {
+/*        $$ = $2;
+/*    }
+/*;
+/**/
 enterid:
     IDENTIFIER
     {
@@ -213,6 +219,13 @@ enterid:
                             end of the parameter list are the parameters. */
     }
 ;
+enter_varid:
+    enterid
+    {
+        $$ = *fetchvar();
+    }
+;
+
 err_expression:
     {
         gp_parse_error = err_in_expression;
@@ -606,7 +619,7 @@ _expr_list:
 _opt_init_expression:
     _expr_list
 |
-    embedded_varlist
+    typed_varlist
 |
     zeroframe
 ;
@@ -919,7 +932,7 @@ _else:
 if_stat:
     _if
     openpar
-    embedded_expression
+    condition
     closepar
     statement
     popdead
@@ -1148,7 +1161,8 @@ statement:
         util_resetSemErr();
     }
 |
-    varlist
+    typed_varlist
+    semicol
 ;
 statements:
     statements
@@ -1159,6 +1173,21 @@ statements:
 |
     zeroframe
 ;
+typed_condition:
+    type_of_var
+    var_condition
+    {
+        $$ = $2;
+    }
+;
+typed_varlist:
+    type_of_var
+    var_expr_list
+    {
+        $$ = $2;
+    }
+;
+
 _varType:
         INT
     |
@@ -1174,11 +1203,59 @@ type_of_var:
         gp_varType = $1.type;
     }
 ;
-vardef:
+var_condition:
+    enter_varid
+    {
+        gencode(&$1, op_push_imm, 0);
+        $$ = $1;
+    }
+|
+    enter_varid
+    '='
+    expression
+    {
+        $$ = *assign(&$1, &$3);    /* explicit initialization */
+    }        
+;
+/*vardef:
+/*    enterid
+/*    zeroframe                           /* no explicit initialization */
+/*|
+/*    enter_varid
+/*    '='
+/*    expression
+/*    {
+/*        /*
+/*        $$ = *expr_stmnt(assign(&$1, &$3));    /* explicit initialization */
+/*
+/*        $$ = *assign(&$1, &$3);    /* explicit initialization */
+/*    }        
+/*;
+/**/
+/*vardefs:
+/*    vardefs
+/*    comma
+/*    vardef
+/*    {
+/*        $$ = *catcode(&$1, &$3);    /* catenate variable    */
+/*                                    /* initialization code  */
+/*    }            
+/*|
+/*    vardef
+/*|
+/*    error
+/*    ok
+/*    zeroframe                       /* Empty stmnt  */
+/*    {
+/*        $$ = $3;
+/*    }
+/*;
+/**/
+var_expr:
     enterid
     zeroframe                           /* no explicit initialization */
 |
-    _entervarid
+    enter_varid
     '='
     expression
     {
@@ -1186,23 +1263,16 @@ vardef:
     }        
 ;
 
-_entervarid:
-    enterid
-    {
-        $$ = *fetchvar();
-    }
-;
-
-vardefs:
-    vardefs
+var_expr_list:
+    var_expr_list
     comma
-    vardef
+    var_expr
     {
         $$ = *catcode(&$1, &$3);    /* catenate variable    */
                                     /* initialization code  */
     }            
 |
-    vardef
+    var_expr
 |
     error
     ok
@@ -1212,12 +1282,14 @@ vardefs:
     }
 ;
 
-varlist:
-    embedded_varlist
-    semicol
-;
+/*varlist:
+/*    embedded_varlist
+/*    semicol
+/*;
+/**/
 var_or_fun:
-    varlist
+    typed_varlist
+    semicol
     {
         gp_init = *catcode(&gp_init, &$1);
     }
@@ -1232,7 +1304,7 @@ _while:
 while_stat:
     _while
     openpar
-    embedded_expression
+    condition
     closepar
     break_ok
     statement

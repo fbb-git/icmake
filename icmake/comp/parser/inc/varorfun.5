@@ -1,5 +1,6 @@
 var_or_fun:
-    varlist
+    typed_varlist
+    semicol
     {
         gp_init = *catcode(&gp_init, &$1);
     }

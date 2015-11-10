@@ -1,20 +1,13 @@
-_entervarid:
-    enterid
-    {
-        $$ = *fetchvar();
-    }
-;
-
-vardefs:
-    vardefs
+var_expr_list:
+    var_expr_list
     comma
-    vardef
+    var_expr
     {
         $$ = *catcode(&$1, &$3);    /* catenate variable    */
                                     /* initialization code  */
     }            
 |
-    vardef
+    var_expr
 |
     error
     ok

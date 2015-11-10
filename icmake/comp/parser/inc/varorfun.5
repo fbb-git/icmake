@@ -1,9 +1,8 @@
 var_or_fun:
-        vardefs
-        semicol
-        {
-            gp_init = *catcode(&gp_init, &$1);
-        }
-    |
-        funcdef
-    ;
+    varlist
+    {
+        gp_init = *catcode(&gp_init, &$1);
+    }
+|
+    funcdef
+;

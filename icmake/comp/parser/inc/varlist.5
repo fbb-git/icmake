@@ -1,8 +1,12 @@
-varlist:
+embedded_varlist:
     type_of_var
     vardefs
-    semicol
     {
         $$ = $2;
     }
+;
+
+varlist:
+    embedded_varlist
+    semicol
 ;

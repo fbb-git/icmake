@@ -677,47 +677,6 @@ funcdef:
         close_fun(&$3);
     }
 ;
-
-
-/*    _local_list:
-/*        type_of_var
-/*        vardefs                         /* + semicol, initialization code */
-/*        {
-/*            $$ = $2;
-/*        }
-/*    ;
-/*    
-/*    _locals:
-/*        _locals
-/*        _local_list                         /* type + variables */
-/*        {
-/*            $$ = *catcode(&$1, &$2);        /* cat initialization code */
-/*        }            
-/*    |
-/*        _local_list                         /* initialization code of 1st var */
-/*    ;
-/*                                                /* M */
-/*    
-/*    _opt_locals:
-/*         _locals                             /* initialization code */
-/*     |
-/*         zeroframe                           /* empty init. code */
-/*     ;
-/*
-/*
-/*    _funvars:
-/*        openpar
-/*        _opt_parlist
-/*        ')'
-/*        openbrace
-/*        _opt_locals
-/*        {
-/*            make_frame();
-/*            outbin($5.code, $5.codelen);
-/*        }
-/*    ;
-/**/
-
 _zero_arg_funs:
     GETCH
 |
@@ -1196,8 +1155,8 @@ _idexpr:
     }        
 ;
 
-_varnames:
-    _varnames
+vardefs:
+    vardefs
     comma
     _idexpr
     {
@@ -1214,29 +1173,26 @@ _varnames:
         $$ = $3;
     }
 ;
-
-vardefs:
-    _varnames
-    semicol
-    {
-        $$ = $1;                    /* initialization code */
-    }
-;
-varlist:
+embedded_varlist:
     type_of_var
     vardefs
     {
         $$ = $2;
     }
 ;
+
+varlist:
+    embedded_varlist
+    semicol
+;
 var_or_fun:
-        vardefs
-        {
-            gp_init = *catcode(&gp_init, &$1);
-        }
-    |
-        funcdef
-    ;
+    varlist
+    {
+        gp_init = *catcode(&gp_init, &$1);
+    }
+|
+    funcdef
+;
 _while:
     WHILE
     nesting

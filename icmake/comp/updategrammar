@@ -2,7 +2,7 @@
 
 cd parser/inc
 
-files=`ls -X | grep -v build`
+files=`ls -X | grep -v 'build\|OBS'`
 
 for file in $files
 do

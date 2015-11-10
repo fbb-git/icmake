@@ -880,6 +880,9 @@ function:
 _if:
     IF
     nesting
+    {
+        symtab_push();
+    }
 ;
 
 _else:
@@ -904,8 +907,15 @@ if_stat:
     popdead
     {
         $$ = *if_stmnt(&$3, &$5, &$8);
+        symtab_pop();
     }
 ;
+
+
+
+
+
+
 
 _makelist_expr:
     MAKELIST

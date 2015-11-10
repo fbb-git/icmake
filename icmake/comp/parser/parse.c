@@ -2606,7 +2606,7 @@ yyreduce:
   case 203:
 #line 1228 "grammar" /* yacc.c:1646  */
     {
-        (yyval) = (yyvsp[-1]);
+        (yyval) = (yyvsp[0]);
     }
 #line 2612 "parse.c" /* yacc.c:1646  */
     break;

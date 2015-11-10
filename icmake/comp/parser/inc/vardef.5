@@ -1,0 +1,12 @@
+vardef:
+    enterid
+    zeroframe                           /* no explicit initialization */
+|
+    _entervarid
+    '='
+    expression
+    {
+        $$ = *expr_stmnt(assign(&$1, &$3));    /* explicit initialization */
+    }        
+;
+

@@ -185,6 +185,27 @@ def_var_or_fun:
     funcdef
 ;
 
+embedded_expression:
+    err_expression
+|
+    embedded_var
+;
+embedded_var:
+    type_of_var
+    vardef
+    {
+        $$ = $2;
+    }
+;
+
+embedded_varlist:
+    type_of_var
+    vardefs
+    {
+        $$ = $2;
+    }
+;
+
 enterid:
     IDENTIFIER
     {
@@ -898,7 +919,7 @@ _else:
 if_stat:
     _if
     openpar
-    err_expression
+    embedded_expression
     closepar
     statement
     popdead
@@ -1153,14 +1174,7 @@ type_of_var:
         gp_varType = $1.type;
     }
 ;
-_entervarid:
-    enterid
-    {
-        $$ = *fetchvar();
-    }
-;
-
-_idexpr:
+vardef:
     enterid
     zeroframe                           /* no explicit initialization */
 |
@@ -1172,29 +1186,29 @@ _idexpr:
     }        
 ;
 
+_entervarid:
+    enterid
+    {
+        $$ = *fetchvar();
+    }
+;
+
 vardefs:
     vardefs
     comma
-    _idexpr
+    vardef
     {
         $$ = *catcode(&$1, &$3);    /* catenate variable    */
                                     /* initialization code  */
     }            
 |
-    _idexpr
+    vardef
 |
     error
     ok
     zeroframe                       /* Empty stmnt  */
     {
         $$ = $3;
-    }
-;
-embedded_varlist:
-    type_of_var
-    vardefs
-    {
-        $$ = $2;
     }
 ;
 
@@ -1218,7 +1232,7 @@ _while:
 while_stat:
     _while
     openpar
-    err_expression
+    embedded_expression
     closepar
     break_ok
     statement

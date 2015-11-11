@@ -1,9 +1,0 @@
-var_or_fun:
-    typed_varlist
-    semicol
-    {
-        gp_init = *catcode(&gp_init, &$1);
-    }
-|
-    funcdef
-;

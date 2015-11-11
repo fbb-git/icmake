@@ -50,7 +50,7 @@ typedef enum
     err_openbrace_expected,
     err_closebrace_expected,
     err_semicol_expected,
-    err_assign_expected,
+    err_p_assign_expected,
     err_in_expression,
     err_comma_expected,
     err_statements_expected,
@@ -114,127 +114,122 @@ extern int yydebug;
 
 /* ================================================================== */
 
-SemVal *addition (SemVal *, SemVal *);       /* + code */
-SemVal *and_boolean (SemVal *, SemVal *);/* && code */
-SemVal *assign  (SemVal *, SemVal *);        /*  = code (shell) */
-SemVal *band (SemVal *, SemVal *);           /* & (binary) code */
-SemVal *bnot (SemVal *);                      /* ~ code */
-SemVal *bor  (SemVal *, SemVal *);           /* | (binary) code */
-SemVal *break_stmnt (void);                /* process break stmnt */
-SemVal *callfun(int funIdx, SemVal *);       /* call a function */
-SemVal *cast (ExprType, SemVal *);         /* perform cast */
-SemVal *catcode (SemVal *, SemVal *);    /* write info rval behind lval */
+SemVal *p_addition (SemVal *, SemVal *);       /* + code */
+SemVal *p_andBoolean (SemVal *, SemVal *);/* && code */
+SemVal *p_assign  (SemVal *, SemVal *);        /*  = code (shell) */
+SemVal *p_and (SemVal *, SemVal *);           /* & (binary) code */
+SemVal *p_not (SemVal *);                      /* ~ code */
+SemVal *p_or  (SemVal *, SemVal *);           /* | (binary) code */
+SemVal *p_break (void);                /* process break stmnt */
+SemVal *p_callFunction(int funIdx, SemVal *);       /* call a function */
+SemVal *p_cast (ExprType, SemVal *);         /* perform p_cast */
+SemVal *p_catCode (SemVal *, SemVal *);    /* write info rval behind lval */
 SemVal *cat_expr (SemVal *, SemVal *);   /* ,-separated expressions */
-SemVal *cat_stmnt (SemVal *, SemVal *);  /* catenate/write stmnts */
-SemVal *continue_stmnt (void);             /* process continue stmnt */
-SemVal *divide (SemVal *, SemVal *);     /* / code */
-SemVal *equal (SemVal *, SemVal *);      /* == code */
-SemVal *exec_fprintf (ExprType, SemVal *); /* exec() and fprintf() */
-SemVal *execute (SemVal *);               /* execute() (full arglist) */
-SemVal *expr_stmnt (SemVal *);            /* expr ; code */
-SemVal *fetchvar (void);                   /* fetch variable */
-SemVal *firstarg (SemVal *);              /* (arg   code */
-SemVal *first_stmnt (SemVal *);           /* catenate/write stmnts */
-SemVal *for_stmnt (SemVal *, SemVal *,   /* for statement */
+SemVal *p_catStmnts (SemVal *, SemVal *);  /* catenate/write stmnts */
+SemVal *p_continue (void);             /* process continue stmnt */
+SemVal *p_divide (SemVal *, SemVal *);     /* / code */
+SemVal *p_equal (SemVal *, SemVal *);      /* == code */
+SemVal *p_fprintf (ExprType, SemVal *); /* exec() and fprintf() */
+SemVal *p_execute (SemVal *);               /* execute() (full arglist) */
+SemVal *p_expression (SemVal *);            /* expr ; code */
+SemVal *p_fetchVar (void);                   /* fetch variable */
+SemVal *p_firstArg (SemVal *);              /* (arg   code */
+SemVal *p_firstStmnt (SemVal *);           /* catenate/write stmnts */
+SemVal *p_for (SemVal *, SemVal *,   /* for statement */
                        SemVal *, SemVal *);
-SemVal *greater (SemVal *, SemVal *);   /* > code */
-SemVal *gr_equal (SemVal *, SemVal *);  /* >= code */
-SemVal *if_stmnt (SemVal *, SemVal *,    /* if code */
+SemVal *p_greater (SemVal *, SemVal *);   /* > code */
+SemVal *p_grEqual (SemVal *, SemVal *);  /* >= code */
+SemVal *p_if (SemVal *, SemVal *,    /* if code */
                                SemVal *);
-SemVal *incdec (PREPOST_, OPCODE_,         /* E.g., c++ */
+SemVal *p_incDec (PREPOST_, OPCODE_,         /* E.g., c++ */
                                SemVal *);
-SemVal *indexOp  (SemVal *, SemVal *);     /*  [] operator */
-SemVal *makelist (SemVal *, ExprType);         /* makelist() */
-SemVal *math_ass (SemVal *, SemVal *,    /* shell for math-asgnmt */
+SemVal *p_indexOp  (SemVal *, SemVal *);     /*  [] operator */
+SemVal *p_makeList (SemVal *, ExprType);         /* p_makeList() */
+SemVal *p_compoundAss (SemVal *, SemVal *,    /* shell for math-asgnmt */
                        SemVal *(*)(SemVal *, SemVal *),
                        char *);
-SemVal *modulo (SemVal *, SemVal *);    /* % code */
-SemVal *multargs (SemVal *, SemVal *);  /* (arg1, arg2, ... code */
-SemVal *multiply (SemVal *, SemVal *);  /* * code */
-SemVal *negate (SemVal *);               /* - (unary) code */
-SemVal *not_boolean (SemVal *);          /* ! code */
-SemVal *old (SemVal *, SemVal *);       /* older code */
-SemVal *onearg (ExprType, SemVal *);      /* fun(x)  code */
-SemVal *optint_special (ExprType,           /* fun([int,] ...) */
+SemVal *p_modulo (SemVal *, SemVal *);    /* % code */
+SemVal *p_multipleArgs (SemVal *, SemVal *);  /* (arg1, arg2, ... code */
+SemVal *p_multiply (SemVal *, SemVal *);  /* * code */
+SemVal *p_negate (SemVal *);               /* - (unary) code */
+SemVal *p_not (SemVal *);          /* ! code */
+SemVal *p_old (SemVal *, SemVal *);       /* older code */
+SemVal *p_oneArg (ExprType, SemVal *);      /* fun(x)  code */
+SemVal *p_optIntSpecial (ExprType,           /* fun([int,] ...) */
                       SemVal *, SemVal *);
-SemVal *optint_string (ExprType,        /* chdir(), system() */
+SemVal *p_optIntString (ExprType,        /* chdir(), system() */
                       SemVal *, SemVal *);
-SemVal *or_boolean (SemVal *, SemVal *);/* || code */
-SemVal *return_stmnt (ExprType, SemVal *);/* exit(), return(); */
-SemVal *specials (ExprType, SemVal *);    /* fun(x, y, ...)  code */
-SemVal *shl (SemVal *, SemVal *);            /* << (binary) code */
-SemVal *shr (SemVal *, SemVal *);            /* >> (binary) code */
-SemVal *smaller (SemVal *, SemVal *);   /* < code */
-SemVal *sm_equal (SemVal *, SemVal *);  /* <= code */
-SemVal *stackframe (ExprType);              /* initialize a stack-element */
-SemVal *subtract (SemVal *, SemVal *);  /* - (binary) code */
-SemVal *ternary(SemVal *cond, SemVal *iftrue, SemVal *iffalse);
-SemVal *threeargs (ExprType, SemVal *,         /* fun(x, y, z)  code */
+SemVal *p_orBool (SemVal *, SemVal *);/* || code */
+SemVal *p_return (ExprType, SemVal *);/* exit(), return(); */
+SemVal *p_specials (ExprType, SemVal *);    /* fun(x, y, ...)  code */
+SemVal *p_shl (SemVal *, SemVal *);            /* << (binary) code */
+SemVal *p_shr (SemVal *, SemVal *);            /* >> (binary) code */
+SemVal *p_smaller (SemVal *, SemVal *);   /* < code */
+SemVal *p_smEqual (SemVal *, SemVal *);  /* <= code */
+SemVal *p_stackFrame (ExprType);              /* initialize a stack-element */
+SemVal *p_subtract (SemVal *, SemVal *);  /* - (binary) code */
+SemVal *p_ternary(SemVal *cond, SemVal *iftrue, SemVal *iffalse);
+SemVal *p_threeArgs (ExprType, SemVal *,         /* fun(x, y, z)  code */
                         SemVal *, SemVal *);
-SemVal *twoargs (ExprType, SemVal *,           /* fun(x, y)  code */
+SemVal *p_twoArgs (ExprType, SemVal *,           /* fun(x, y)  code */
                                SemVal *);
-SemVal *unequal (SemVal *, SemVal *);   /* != code */
-SemVal *while_stmnt (SemVal *, SemVal *, int pureWhile);/* while code */
-SemVal *young (SemVal *, SemVal *);     /* younger code */
-SemVal *xor  (SemVal *, SemVal *);           /* ^ (binary) code */
-SemVal *zeroargs (ExprType);               /* fun()  code */
+SemVal *p_unequal (SemVal *, SemVal *);   /* != code */
+SemVal *p_while (SemVal *, SemVal *, int pureWhile);/* while code */
+SemVal *p_young (SemVal *, SemVal *);     /* younger code */
+SemVal *p_xor  (SemVal *, SemVal *);           /* ^ (binary) code */
+SemVal *p_zeroArgs (ExprType);               /* fun()  code */
 
-void    close_fun (SemVal *);         /* close a function def. */
-void    make_frame (void);             /* generate op_frame */
-void    pop_dead(void);                 /* restore dead-level */
-void    push_dead(void);                /* new dead-level */
+void    p_endFunction (SemVal *);         /* close a function def. */
+void    p_makeFrame (void);             /* generate op_frame */
+void    p_popDead(void);                 /* restore dead-level */
+void    p_pushDead(void);                /* new dead-level */
 
 
-SemVal *assignment(SemVal *lval, SemVal *rval, char *opstr);
-SemVal *execute(SemVal *arr);
-SemVal *icast(SemVal *e);
-SemVal *insertarg(SemVal *insert, SemVal *mult);
-SemVal *lcast(SemVal *e);
-SemVal *nullframe(SemVal *e);
-SemVal *scast(SemVal *e);
-int     conflict(SemVal *lval, SemVal *rval, OPCODE_ opcode);
-int     test_binop(OPCODE_ opcode, SemVal *lval, SemVal *rval);
-int     test_operand(SemVal *e, OPCODE_ opcode);
+SemVal *p_assignment(SemVal *lval, SemVal *rval, char *opstr);
+SemVal *p_execute(SemVal *arr);
+SemVal *p_iCast(SemVal *e);
+SemVal *p_insertArg(SemVal *insert, SemVal *mult);
+SemVal *p_lCast(SemVal *e);
+SemVal *p_nullFrame(SemVal *e);
+SemVal *p_sCast(SemVal *e);
+int     p_conflict(SemVal *lval, SemVal *rval, OPCODE_ opcode);
+int     p_testBinOp(OPCODE_ opcode, SemVal *lval, SemVal *rval);
+int     p_testOperand(SemVal *e, OPCODE_ opcode);
 int     yyerror(char *s);
-size_t  lookstring(char *s);
-size_t  rm_jmp_zero(register size_t codelen, unsigned *list, register size_t listlen);
-void    addpatch(unsigned *list, size_t len, register size_t value);
-void    btoi(SemVal *e);
-void    callhidden(register int fun, SemVal *rarg);
-void    callrss(SemVal *e, FUNNR_ funnr, ...);
-void    catargs(SemVal *arr);
-void    catstrings(SemVal *lval, SemVal *rval);
-void    clearbin(SemVal *lval, SemVal *rval);
-void    copy_to_pop(SemVal *e);
-void    defcode(SemVal *lval, SemVal *rval, OPCODE_ opcode);
-void    defineVar(void);        /* parameter or local var */
-void    discard(SemVal *e);
-
-//FBB void    enter();
-//void    entervar();
-
-void    etob(SemVal *e);
-void    eToStack(SemVal *e);
-void    fetob(SemVal *e);
-void    gencode(SemVal *e, OPCODE_ opcode, ...);
-void    last_stmnt(SemVal *lval);
-void    open_fun(void);
-void    outcode(SemVal *ep, int value, register size_t size);
-void    patchcontinue(SemVal *e);
-void    patchfalse(SemVal *e);
-void    patchtrue(SemVal *e);
-void    patchVariables(void);
+size_t  p_findString(char *s);
+size_t  p_rmJmpZero(register size_t codelen, unsigned *list, register size_t listlen);
+void    p_addPatch(unsigned *list, size_t len, register size_t value);
+void    p_bool2int(SemVal *e);
+void    p_callHidden(register int fun, SemVal *rarg);
+void    p_callRss(SemVal *e, FUNNR_ funnr, ...);
+void    p_catArgs(SemVal *arr);
+void    p_catStrings(SemVal *lval, SemVal *rval);
+void    p_clearOperands(SemVal *lval, SemVal *rval);
+void    p_popVar(SemVal *e);
+void    p_binOp(SemVal *lval, SemVal *rval, OPCODE_ opcode);
+void    p_defineVar(void);        /* parameter or local var */
+void    p_discard(SemVal *e);
+void    p_expr2bool(SemVal *e);
+void    p_expr2stack(SemVal *e);
+void    p_forceExpr2Bool(SemVal *e);
+void    p_generateCode(SemVal *e, OPCODE_ opcode, ...);
+void    p_lastStmnt(SemVal *lval);
+void    p_beginFunction(void);
+void    p_outCode(SemVal *ep, int value, register size_t size);
+void    p_patchContinue(SemVal *e);
+void    p_patchFalse(SemVal *e);
+void    p_patchTrue(SemVal *e);
 
     /* 'pos' == 0 means: jump back to the begin of the code,
         otherwise jump forward to the end of the code
     */
-void    patchup(int8_t *code, size_t len, unsigned *list, size_t listlen, int
+void    p_patchup(int8_t *code, size_t len, unsigned *list, size_t listlen, int
                 pos); 
-void    patchup_continue(SemVal *e, int pos);
-void    patchup_false(SemVal *e, int pos);
-void    patchup_true(SemVal *e, int pos);
+void    p_patchupContinue(SemVal *e, int pos);
+void    p_patchupFalse(SemVal *e, int pos);
+void    p_patchupTrue(SemVal *e, int pos);
 
-int     functionIdx(void);
-void    checkArgumentTypes(size_t nParams, size_t funIdx, SemVal *a);
-void    hidden_functions(void);
-int     next_call(void);
+int     p_functionIdx(void);
+void    p_checkArgumentTypes(size_t nParams, size_t funIdx, SemVal *a);
+void    p_hiddenFunctions(void);
+int     p_nextCall(void);

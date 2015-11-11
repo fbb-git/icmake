@@ -3,7 +3,7 @@ var_expr_list:
     comma
     var_expr
     {
-        $$ = *catcode(&$1, &$3);    /* catenate variable    */
+        $$ = *p_catCode(&$1, &$3);    /* catenate variable    */
                                     /* initialization code  */
     }            
 |

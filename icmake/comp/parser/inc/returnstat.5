@@ -14,7 +14,7 @@ return_stat:
     _leave
     _return_tail
     {
-        $$ = *return_stmnt($1.type, &$2);
+        $$ = *p_return($1.type, &$2);
     }
 ;
 

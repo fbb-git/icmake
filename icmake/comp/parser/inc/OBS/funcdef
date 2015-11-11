@@ -10,7 +10,7 @@
 /*        _locals
 /*        _local_list                         /* type + variables */
 /*        {
-/*            $$ = *catcode(&$1, &$2);        /* cat initialization code */
+/*            $$ = *p_catCode(&$1, &$2);        /* cat initialization code */
 /*        }            
 /*    |
 /*        _local_list                         /* initialization code of 1st var */
@@ -31,7 +31,7 @@
 /*        openbrace
 /*        _opt_locals
 /*        {
-/*            make_frame();
+/*            p_makeFrame();
 /*            outbin($5.code, $5.codelen);
 /*        }
 /*    ;

@@ -1,4 +1,4 @@
-_makelist_expr:
+_p_makeList_expr:
     MAKELIST
     openpar
     err_expression
@@ -7,9 +7,9 @@ _makelist_expr:
     }
 ;
 
-_makelist_normal:
+_p_makeList_normal:
     {
-        $$ = *stackframe(e_int | e_const);
+        $$ = *p_stackFrame(e_int | e_const);
         $$.evalue = O_FILE;
     }
 ;
@@ -30,51 +30,51 @@ _older_younger:
     }
 ;
 
-makelist:
-    _makelist_expr                  /* makelist(expr) */
-    _makelist_normal                /* returns O_FILE expression */
+p_makeList:
+    _p_makeList_expr                  /* p_makeList(expr) */
+    _p_makeList_normal                /* returns O_FILE expression */
     {
-        $$ = *makelist
+        $$ = *p_makeList
              (
-                 multargs
+                 p_multipleArgs
                  (
-                     firstarg(&$2),     /* O_FILE is passed */
+                     p_firstArg(&$2),     /* O_FILE is passed */
                      &$1                /* expression is passed */
                  ),
                  op_hlt                 /* not op_younger or op_older */
              );
     }
 |
-                                        /* makelist(expr, expr) */
-    _makelist_expr
+                                        /* p_makeList(expr, expr) */
+    _p_makeList_expr
     comma
     err_expression
     {
-        $$ = *makelist
+        $$ = *p_makeList
              (
-                 multargs
+                 p_multipleArgs
                  (
-                     firstarg(&$1),     /* fileattribute is passed */
+                     p_firstArg(&$1),     /* fileattribute is passed */
                      &$3                /* expression is passed */
                  ),
                  op_hlt                 /* not op_younger or op_older */
              );
     }
 |
-    _makelist_expr                       /* makelist(expr, older, expr) */
+    _p_makeList_expr                       /* p_makeList(expr, older, expr) */
     comma
     _older_younger
     comma
     err_expression
-    _makelist_normal
+    _p_makeList_normal
     {
-        $$ = *makelist
+        $$ = *p_makeList
              (
-                multargs
+                p_multipleArgs
                 (
-                    multargs
+                    p_multipleArgs
                     (
-                        firstarg(&$6),  /* O_FILE   is passed */
+                        p_firstArg(&$6),  /* O_FILE   is passed */
                         &$1             /* 1st expression is passed */
                     ),
                     &$5                 /* 2nd expression is passed */
@@ -83,7 +83,7 @@ makelist:
              );
     }
 |
-    _makelist_expr                 /* makelist(expr, expr, older, expr) */
+    _p_makeList_expr                 /* p_makeList(expr, expr, older, expr) */
     comma
     err_expression
     comma
@@ -91,13 +91,13 @@ makelist:
     comma
     err_expression
     {
-        $$ = *makelist
+        $$ = *p_makeList
              (
-                multargs
+                p_multipleArgs
                 (
-                    multargs
+                    p_multipleArgs
                     (
-                        firstarg(&$1),  /* attribute is passed */
+                        p_firstArg(&$1),  /* attribute is passed */
                         &$3             /* 2nd expression is passed */
                     ),
                     &$7                 /* 3rd expression is passed */

@@ -6,7 +6,7 @@ var_expr:
     '='
     expression
     {
-        $$ = *expr_stmnt(assign(&$1, &$3));    /* explicit initialization */
+        $$ = *p_expression(p_assign(&$1, &$3));    /* explicit initialization */
     }        
 ;
 

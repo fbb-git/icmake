@@ -2,7 +2,7 @@ statements:
     statements
     statement
     {
-        $$ = *cat_stmnt(&$1, &$2);
+        $$ = *p_catStmnts(&$1, &$2);
     }
 |
     zeroframe

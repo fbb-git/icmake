@@ -11,7 +11,7 @@ _expr_list:
     ','
     expr_code
     {
-        $$ = *catcode(&$1, &$3);
+        $$ = *p_catCode(&$1, &$3);
     }
 |
     expr_code
@@ -30,7 +30,7 @@ _opt_cond_expression:
     err_expression
 |
     {
-        $$ = *stackframe(e_int | e_const);
+        $$ = *p_stackFrame(e_int | e_const);
         $$.evalue = 1;
     }
 ;
@@ -54,7 +54,7 @@ for_stat:
     statement               /* $10 stmnt    */
     popdead
     {
-        $$ = *for_stmnt(&$3, &$5, &$7, &$10);
+        $$ = *p_for(&$3, &$5, &$7, &$10);
     }
 ;
 

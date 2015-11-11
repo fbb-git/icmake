@@ -3,11 +3,11 @@ args:
     comma
     err_expression
     {
-        $$ = *multargs(&$1, &$3);
+        $$ = *p_multipleArgs(&$1, &$3);
     }
 |
     err_expression
     {
-        $$ = *firstarg(&$1);
+        $$ = *p_firstArg(&$1);
     }
 ;

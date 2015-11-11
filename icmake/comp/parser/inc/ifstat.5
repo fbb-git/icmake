@@ -27,7 +27,7 @@ if_stat:
     _else
     popdead
     {
-        $$ = *if_stmnt(&$3, &$5, &$8);
+        $$ = *p_if(&$3, &$5, &$8);
         symtab_pop();
     }
 ;

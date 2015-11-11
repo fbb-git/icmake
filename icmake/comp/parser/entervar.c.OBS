@@ -1,8 +1,0 @@
-#include "parser.ih"
-
-    /* enter a local variable in the topmost symbol table */
-void entervar()
-{
-    enter();
-    g_entertab->symbol[g_entertab->n_defined - 1].var.type |= e_var;
-}

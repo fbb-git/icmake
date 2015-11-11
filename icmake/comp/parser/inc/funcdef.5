@@ -38,7 +38,7 @@ _funvars:
 _funid:
     IDENTIFIER
     {
-        open_fun();
+        p_beginFunction();
     }
 ;
 
@@ -49,6 +49,6 @@ funcdef:
     statements
     closebrace
     {
-        close_fun(&$3);
+        p_endFunction(&$3);
     }
 ;

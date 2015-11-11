@@ -12,6 +12,6 @@ while_stat:
     statement
     popdead
     {
-        $$ = *while_stmnt(&$3, &$6, 1);
+        $$ = *p_while(&$3, &$6, 1);
     }
 ;

@@ -1007,7 +1007,7 @@ case 6:
 YY_RULE_SETUP
 #line 28 "lexer"
 {
-                            change_file(yytext + 1);
+                            sc_changeFile(yytext + 1);
                         }
 	YY_BREAK
 case 7:

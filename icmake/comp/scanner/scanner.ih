@@ -33,4 +33,4 @@ extern FILE *yyin;
 extern FILE *yyout;
 
 
-void change_file(char *s);               /* name of source file to open */
+void sc_changeFile(char *s);               /* name of source file to open */

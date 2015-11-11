@@ -1,7 +1,7 @@
 var_condition:
     enter_varid
     {
-        gencode(&$1, op_push_imm, 0);
+        p_generateCode(&$1, op_push_imm, 0);
         $$ = $1;
     }
 |
@@ -9,6 +9,6 @@ var_condition:
     '='
     expression
     {
-        $$ = *assign(&$1, &$3);    /* explicit initialization */
+        $$ = *p_assign(&$1, &$3);    /* explicit initialization */
     }        
 ;

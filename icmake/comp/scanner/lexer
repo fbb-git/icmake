@@ -26,7 +26,7 @@
 [ \t]                   ;
 \n                      yylineno++;
 ^#.*                    {
-                            change_file(yytext + 1);
+                            sc_changeFile(yytext + 1);
                         }
 \"                      {
                             util_setString(""); BEGIN str;

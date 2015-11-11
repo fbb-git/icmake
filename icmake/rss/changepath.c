@@ -8,6 +8,7 @@ char const *rss_changePath(char const *n, char const *p)
 
     if (p)
     {
+/*
         if (DRIVESEP && (cp = strchr(p, DRIVESEP)))
         {
             strcpy(gr_drive, p);
@@ -15,6 +16,7 @@ char const *rss_changePath(char const *n, char const *p)
             strcpy(gr_dir, cp + 1);
         }
         else
+*/
             strcpy(gr_dir, p);
     }
 

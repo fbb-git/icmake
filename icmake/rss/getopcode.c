@@ -10,7 +10,7 @@
     {
         Function {\em rss_getOpcode()} attempts to read an opcode from file {\em
         f}. This file must be opened in read/binary mode (see the constant {\em
-        READBINARY} in file {\em icm.h}).
+        "r"} in file {\em icm.h}).
 
         When the reading operation fails, --1 is returned.
     }

@@ -19,7 +19,7 @@ int main (int argc, char **argv)
 
     infname = rss_strdup(rss_changeExt (argv [1], bimext));
 
-    if (! (infile = fopen (infname, READBINARY)) )
+    if (! (infile = fopen (infname, "r")) )
         rss_error ("cannot open %s for reading", infname);
 
     headerp = rss_readHeader(infile, (size_t)version [0]);

@@ -95,11 +95,11 @@ int main (                         /* icmake source(txt) dest(bin) */
             if (ret == -1)
                 rss_spawnErr(icm_pp);
             cleanup();
-            return (1);
+            return 1;
         }
 
         if (flags & f_preprocessor)
-            return (0);
+            return 0;
 
                                             /* do the compilation */
         errors = spawnlp(P_WAIT, icm_comp, icm_comp,
@@ -110,11 +110,11 @@ int main (                         /* icmake source(txt) dest(bin) */
         {
             if (errors == -1)
                 rss_spawnErr(icm_comp);
-            return (1);
+            return 1;
         }
 
         if (flags & f_compiler)
-            return (0);
+            return 0;
     }
 
     if (flags & f_tmpbim)                       /* -t used */
@@ -130,11 +130,10 @@ int main (                         /* icmake source(txt) dest(bin) */
     }
     argv[argc2] = icm_exec;                     /* store executor's name */
 
-                                            /* do the making of the file */
-    errors = _execvp(icm_exec, &argv[argc2]);
+    errors = execvp(icm_exec, &argv[argc2]);    /* make the file */
 
     rss_spawnErr(icm_exec);                    /* shouldn't get here ... */
 
     cleanup();                              /* remove tempfiles etc. */
-    return (1);
+    return 1;
 }

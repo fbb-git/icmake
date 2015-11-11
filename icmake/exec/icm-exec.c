@@ -61,7 +61,7 @@ int main (int argc, char **argv)
         bimname = argv[1];              /* define temporary name */
     }
 
-    if (!(infile = fopen (argv [1], READBINARY)))
+    if (!(infile = fopen (argv [1], "r")))
         rss_error("cannot open bimfile '%s' to read", argv[1]);
 
     headerp = rss_readHeader(infile, (size_t)version[0]);

@@ -88,9 +88,6 @@
 #define _MAX_EXT                _MAX_PATH
 #define DIRSEP                  '/'
 #define DRIVESEP                0
-#define READBINARY              "r"
-#define WRITEBINARY             "w"
-#define _execvp                 execvp
 
 /*   The compiler uses E_TYPE 0 to indicate the void type.  */
 typedef enum

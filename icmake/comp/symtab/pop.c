@@ -1,5 +1,5 @@
-#define msg
 /*
+#define msg
 */
 
 #include "symtab.ih"

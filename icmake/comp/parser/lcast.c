@@ -10,9 +10,9 @@ SemVal *lcast(SemVal *e)
     }
     else if (test_type(e, e_str))         /* (string)int ok */
     {
-        etoc(e);                          /* convert to code */
+        eToStack(e);                          /* convert to code */
         gencode(e, op_atol);
-        set_type(e, e_code | e_list);
+        set_type(e, e_stack | e_list);
     }
     return (e);
 }

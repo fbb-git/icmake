@@ -214,7 +214,7 @@ void    discard(SemVal *e);
 //void    entervar();
 
 void    etob(SemVal *e);
-void    etoc(SemVal *e);
+void    eToStack(SemVal *e);
 void    fetob(SemVal *e);
 void    gencode(SemVal *e, OPCODE_ opcode, ...);
 void    last_stmnt(SemVal *lval);

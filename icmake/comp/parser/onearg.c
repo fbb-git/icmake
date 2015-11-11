@@ -4,7 +4,7 @@ SemVal *onearg(ExprType type, SemVal *arg)
 {
     register int ok;
 
-    etoc(arg);                               /* arg to stack */
+    eToStack(arg);                               /* arg to stack */
 
     switch ((FUNNR_)type)
     {

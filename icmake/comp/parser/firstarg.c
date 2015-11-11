@@ -9,7 +9,7 @@ static SemVal
 
 SemVal *firstarg(SemVal *e)
 {
-    etoc(e);                                /* argument is code now */
+    eToStack(e);                                /* argument is code now */
                                             /* code points to SemVal */
     arr.code = rss_realloc(NULL, sizeof(SemVal));
 

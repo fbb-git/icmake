@@ -29,7 +29,7 @@ SemVal *incdec(PREPOST_ pp, OPCODE_ opcode, SemVal *e)
 
     e->type =                           /* Indicate pre/post inc- decrement */
             (pp == pre_op) ?
-                e_int | e_pre_inc_dec       /* NB: no e_code yet: push the  */
+                e_int | e_pre_inc_dec       /* NB: no e_stack yet: push the  */
             :                               /*     value on the stack when  */
                 e_int | e_post_inc_dec;     /*     required                 */
 

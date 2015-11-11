@@ -12,7 +12,7 @@ SemVal *negate(SemVal *e)                  /* expression so far */
         e->evalue = -(int)e->evalue;
     else
     {
-        etoc(e);                            /* convert to code */
+        eToStack(e);                            /* convert to code */
         gencode(e, op_umin);                /* generate instruction */
     }
 

@@ -18,9 +18,9 @@ SemVal *icast(SemVal *e)
         }
         else
         {
-            etoc(e);                        /* convert to code */
+            eToStack(e);                        /* convert to code */
             gencode(e, op_atoi);            /* runtime conversion needed */
-            set_type(e, e_int | e_code);
+            set_type(e, e_int | e_stack);
         }
     }
     return e;

@@ -22,7 +22,7 @@ SemVal *and_boolean(SemVal *lexp, SemVal *rexp)
         patchup_true(lexp, 1);
         lexp->truelen = 0;
         lexp = catcode(lexp, rexp);
-        set_type(lexp, e_bool | e_code);
+        set_type(lexp, e_bool | e_stack);
     }
 
     return lexp;

@@ -7,7 +7,7 @@ SemVal *multargs(SemVal *left, SemVal *right)
     count = ++left->type;                   /* get/increase # of args */
                                             /* room for extra SemVal */
     left->code = rss_realloc(left->code, count * sizeof(SemVal));
-    etoc(right);                            /* argument is code now */
+    eToStack(right);                            /* argument is code now */
                                             /* right expression in array */
 
     *codestruc(left, count - 1) = *right;

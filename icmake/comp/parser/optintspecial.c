@@ -4,7 +4,7 @@ SemVal *optint_special(ExprType type, SemVal *larg, SemVal *rarg)
 {
     SemVal tmp;
 
-    etoc(larg);                             /* arg to stack */
+    eToStack(larg);                             /* arg to stack */
 
     if (!test_type(larg, e_int))            /* no first int arg */
     {                                       /* prefix the first argument */

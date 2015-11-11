@@ -15,7 +15,7 @@ SemVal *break_stmnt()
     else
     {
         gencode(&e, op_jmp, j_truelist);
-        e.type = e_bool | e_code;
+        e.type = e_bool | e_stack;
         ++gp_dead[gp_dead_sp];                    /* next code is gp_dead */
     }
     return &e;

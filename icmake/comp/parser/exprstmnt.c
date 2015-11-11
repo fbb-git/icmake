@@ -8,7 +8,7 @@ SemVal *expr_stmnt(SemVal *e)
         copy_to_pop(e);
     else if
     (
-        test_type(e, e_code)
+        test_type(e, e_stack)
         &&
         !test_type(e, e_pre_inc_dec | e_post_inc_dec)
     )

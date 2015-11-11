@@ -20,7 +20,7 @@ SemVal *subtract(SemVal *lval, SemVal *rval)
     else
     {
         defcode(lval, rval, op_sub);
-        set_type(lval, type & (e_typeMask | e_code));
+        set_type(lval, type & (e_typeMask | e_stack));
     }
 
     return (lval);                          /* return new expression */

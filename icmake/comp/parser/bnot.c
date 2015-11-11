@@ -16,7 +16,7 @@ SemVal *bnot(SemVal *e)                   /* expression so far */
         e->evalue = ~e->evalue;
     else
     {
-        etoc(e);                            /* convert to code */
+        eToStack(e);                            /* convert to code */
         gencode(e, op_bnot);                /* generate instruction */
     }
 

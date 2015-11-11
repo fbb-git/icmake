@@ -2,8 +2,8 @@
 
 SemVal *return_stmnt(ExprType op, SemVal *e)
 {
-    if (!test_type(e, e_code))
-        etoc(e);
+    if (!test_type(e, e_stack))
+        eToStack(e);
 
     size_t funIdx = symtab_lastFunction();
 

@@ -51,7 +51,7 @@ SemVal *execute(SemVal *arr)
 
     tmp = *stackframe(e_str | e_const);     /* empty string argument */
 
-    etoc(&tmp);
+    eToStack(&tmp);
     catcode(&e, &tmp);                      /* empty string on the stack */
 
     gencode(&e, op_call_rss, f_cmd_tail);   /* used with cmd_tail..cmd_head */

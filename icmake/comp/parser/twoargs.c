@@ -4,8 +4,8 @@ SemVal *twoargs(ExprType type, SemVal *larg, SemVal *rarg)
 {
     register int ok;
 
-    etoc(larg);                             /* arg to stack */
-    etoc(rarg);                             /* arg to stack */
+    eToStack(larg);                             /* arg to stack */
+    eToStack(rarg);                             /* arg to stack */
 
     switch ((FUNNR_)type)
     {

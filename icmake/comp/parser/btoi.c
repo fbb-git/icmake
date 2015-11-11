@@ -15,5 +15,5 @@ void btoi(SemVal *e)
 
     gencode(e, op_push_0);                  /* falselist target */
 
-    set_type(e, e_int | e_code);            /* set int code type */
+    set_type(e, e_int | e_stack);            /* set int code type */
 }

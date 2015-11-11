@@ -12,7 +12,7 @@ SemVal *continue_stmnt()
     {
         gencode(&e, op_jmp, j_continuelist);/* jump to the continue dest  */
 
-        e.type = e_bool | e_code;
+        e.type = e_bool | e_stack;
         ++gp_dead[gp_dead_sp];                    /* next code is gp_dead */
     }
     return &e;

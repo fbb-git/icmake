@@ -31,9 +31,9 @@ void etob(SemVal *e)
         case e_bool:
             return;
     }
-    etoc(e);                                /* convert to code */
+    eToStack(e);                                /* convert to code */
 
     gencode (e, op_jmp_true);
     gencode (e, op_jmp, j_falselist);
-    set_type(e, e_code | e_bool);
+    set_type(e, e_stack | e_bool);
 }

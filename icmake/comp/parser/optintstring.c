@@ -2,7 +2,7 @@
 
 SemVal *optint_string(ExprType type, SemVal *larg, SemVal *rarg)
 {
-    etoc(larg);                             /* argument to stack */
+    eToStack(larg);                             /* argument to stack */
 
     if
     (
@@ -13,7 +13,7 @@ SemVal *optint_string(ExprType type, SemVal *larg, SemVal *rarg)
     {
         rarg->type = e_int | e_const;       /* indicate constant */
         rarg->evalue = P_CHECK;             /* indicate P_CHECK  */
-        etoc(rarg);                         /* right arg now code */
+        eToStack(rarg);                         /* right arg now code */
         catcode(larg, rarg);                /* catenate code */
     }
     else if
@@ -23,7 +23,7 @@ SemVal *optint_string(ExprType type, SemVal *larg, SemVal *rarg)
         test_type(rarg, e_str)              /* right must be string */
     )
     {
-        etoc(rarg);                         /* right arg to code */
+        eToStack(rarg);                         /* right arg to code */
         catcode(rarg, larg);
         larg = rarg;
     }

@@ -110,7 +110,7 @@ typedef enum
     e_const         = (1 << 4),             /* immediate value */
     e_var           = (1 << 5),             /* variable */
     e_reg           = (1 << 6),             /* register */
-    e_code          = (1 << 7),             /* code */
+    e_stack         = (1 << 7),             /* value available on the stack */
 
     e_pre_inc_dec   = (1 << 8),             /* pre-inc or pre-dec        */
     e_post_inc_dec  = (1 << 9)              /* post-inc or post-dec      */

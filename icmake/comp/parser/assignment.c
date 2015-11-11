@@ -13,7 +13,7 @@ SemVal *assignment(SemVal *lval, SemVal *rval, char *opstr)
         return lval;
     }
 
-    etoc(rval);                             /* convert rval to code */
+    eToStack(rval);                             /* convert rval to code */
 
                                             /* same types */
     if (lval->type & rval->type & (e_int | e_str | e_list))

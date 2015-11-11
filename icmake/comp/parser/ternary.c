@@ -16,18 +16,18 @@ SemVal *ternary(SemVal *cond, SemVal *ifTrue, SemVal *ifFalse)
         if (cond->evalue)
         {
             discard(ifFalse);
-            etoc(ifTrue);
+            eToStack(ifTrue);
             return ifTrue;
         }
 
         discard(ifTrue);
-        etoc(ifFalse);
+        eToStack(ifFalse);
         return ifFalse;
     }
 
 
-    etoc(ifTrue);                   /* convert the expressions to code */
-    etoc(ifFalse);
+    eToStack(ifTrue);                   /* convert the expressions to code */
+    eToStack(ifFalse);
 
     gencode(cond, op_jmp_false, j_falselist); /* jmp around the ifTrue code */
     patchup_true(cond, 1);          /* destination for the ifTrue code */

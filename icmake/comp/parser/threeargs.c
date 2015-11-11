@@ -4,9 +4,9 @@ SemVal *threeargs(ExprType type, SemVal *larg, SemVal *marg, SemVal *rarg)
 {
     register int ok;
 
-    etoc(larg);                             /* arg to stack */
-    etoc(marg);                             /* arg to stack */
-    etoc(rarg);                             /* arg to stack */
+    eToStack(larg);                             /* arg to stack */
+    eToStack(marg);                             /* arg to stack */
+    eToStack(rarg);                             /* arg to stack */
 
     switch ((FUNNR_)type)
     {

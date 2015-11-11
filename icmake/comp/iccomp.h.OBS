@@ -289,11 +289,11 @@ void    clearbin (SemVal *,            /* clear and init 2 SemVals */
                       SemVal *);
 void    clear_hidden(void);                 /* clear hidden function-names */
 void    copy_to_pop (SemVal *);       /* op_copy_var to op_pop_var */
-void    defcode (SemVal *, SemVal *,  /* generate default e_int|e_code */
+void    defcode (SemVal *, SemVal *,  /* generate default e_int|e_stack */
                   OPCODE_);
 void    discard (SemVal *);           /* free memory used by SemVal */
 void    etob (SemVal *);              /* expr. prepare for boolean */
-void    etoc (SemVal *);              /* convert E to code */
+void    eToStack(SemVal *);              /* convert E to code */
 void    enter (void);                  /* enter somthing in a symtab */
 void    entervar (void);               /* enter variable in l/g-tab */
 void    fetob (SemVal *);             /* forced e conversion to boolean */

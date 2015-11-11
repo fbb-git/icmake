@@ -13,7 +13,7 @@ SemVal *insertarg(SemVal *insert, SemVal *mult)
          codestruc(mult, 0),
          (count - 1) * sizeof(SemVal));
 
-    etoc(insert);                           /* argument is code now */
+    eToStack(insert);                           /* argument is code now */
     *codestruc(mult, 0) = *insert;          /* insert expression in array */
     return mult;                            /* done */
 }

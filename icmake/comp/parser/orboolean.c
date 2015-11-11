@@ -19,7 +19,7 @@ SemVal *or_boolean(SemVal *lexp, SemVal *rexp)
                                     lexp->falselen);
         patchup_false(lexp, 1);
         lexp = catcode(lexp, rexp);
-        set_type(lexp, e_bool | e_code);
+        set_type(lexp, e_bool | e_stack);
     }
 
     return (lexp);

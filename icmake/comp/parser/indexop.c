@@ -7,8 +7,8 @@ SemVal *indexOp(SemVal *larg, SemVal *rarg)
     SemVal *tmp;
 
 
-    etoc(larg);                             /* arg to stack */
-    etoc(rarg);                             /* arg to stack */
+    eToStack(larg);                             /* arg to stack */
+    eToStack(rarg);                             /* arg to stack */
 
     /* This follows the code of `twoargs.c' to compute a list/string    */
     /* element                                                          */

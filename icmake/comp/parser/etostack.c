@@ -1,10 +1,10 @@
 /*
-                   Convert expression to pure code
+                   Push an expression value on the stack
 */
 
 #include "parser.ih"
 
-void etoc(SemVal *e)
+void eToStack(SemVal *e)
 {
     SemVal pre;
 
@@ -56,5 +56,5 @@ void etoc(SemVal *e)
     }
     down_type(e, e_const | e_var | e_bool | e_reg |
                  e_pre_inc_dec | e_post_inc_dec);
-    up_type(e, e_code);
+    up_type(e, e_stack);
 }

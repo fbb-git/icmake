@@ -6,8 +6,6 @@
     Arguments:
         path:   buffer to contain the combined name; length _MAX_PATH
                 this is NOT checked
-
-        drive:  pointer to drive specifier; ignored
         dir:    directory string, can be NULL or empty ("");
                 if not-empty, may have a trailing DIRSEP character
         fname:  basename string, can be NULL or empty ("")
@@ -20,8 +18,8 @@
 
 static char dot[] = ".";
 
-void rss_makePath(char * path,
-    char const * drive, char const * dir, char const * fname, char const * ext)
+void rss_makePath(char *path, char const *dir, char const *fname, 
+                                                char const *ext)
 {
     path[0] = '\x0';                        /*  prepare for strcats */
 

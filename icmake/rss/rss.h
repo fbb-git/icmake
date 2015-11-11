@@ -8,9 +8,9 @@
 extern char version[];
 extern char release[];
 
-void        rss_makePath(char *, char const *, char const *,
-                        char const *, char const *);
-void        rss_splitPath(char const *, char *, char *, char *, char *);
+void rss_makePath(char *path, char const *dir, char const *fname, 
+                                                char const *ext);
+void rss_splitPath(char const *path, char *dir, char *fname, char *ext);
 
 char const *rss_changeExt(char const *, char const *);
 char const *rss_changeBase(char const *, char const *);

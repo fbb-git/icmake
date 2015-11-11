@@ -82,12 +82,10 @@
 #endif
 
 #define _MAX_PATH               260
-#define _MAX_DRIVE              2
 #define _MAX_DIR                _MAX_PATH
 #define _MAX_FNAME              _MAX_PATH
 #define _MAX_EXT                _MAX_PATH
 #define DIRSEP                  '/'
-#define DRIVESEP                0
 
 /*   The compiler uses E_TYPE 0 to indicate the void type.  */
 typedef enum

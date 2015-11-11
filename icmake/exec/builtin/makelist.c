@@ -1,12 +1,4 @@
 /*
-\funcref{fun\_builtin_makeList}{void fun\_builtin_makeList ()}
-    {}
-    {}
-    {newvar(), sortlist()}
-    {}
-    {funmakel.c}
-    {
-
         This function converts the last pushed string into a listvariable
         holding expanded filenames. The {\em reg} register is set to hold the
         list.  The list is alphabetically sorted.
@@ -15,7 +7,6 @@
         attribute mask. In this case, the mask is used in a
         {\em findfirst() / findnext ()} loop. By default the
         attribute {\em \_A\_NORMAL} is used.
-    }
 */
 
 #include "builtin.ih"
@@ -29,7 +20,6 @@ void builtin_makeList()
     if (*name)                          /* if valid name.. */
     {
         char
-            drive[_MAX_DRIVE],          /* strings to create full */
             dir[_MAX_DIR],              /* filename, incl. path */
             fname[_MAX_FNAME],
             ext[_MAX_EXT],
@@ -40,12 +30,12 @@ void builtin_makeList()
                                         /* find a first name */
         char *namefound = rss_findFirst (name, attrib);
 
-        rss_splitPath (name, drive, dir, fname, ext);
+        rss_splitPath (name, dir, fname, ext);
 
         while (namefound)               /* as long as that succeeds */
         {
                                         /* make a new path */
-            rss_makePath (newname, drive, dir, namefound, "");
+            rss_makePath (newname, dir, namefound, "");
 
                                         /* add entry to the list */
             listAdd_cP(&reg, newname);

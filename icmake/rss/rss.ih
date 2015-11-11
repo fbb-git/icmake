@@ -13,7 +13,6 @@ extern glob_t gr_globData;                        /* globbing struct */
 extern size_t gr_nextGlob;                     /* next name in list */
 
 extern char gr_name[];
-extern char gr_drive[];
 extern char gr_dir[];
 extern char gr_fname[];
 extern char gr_ext[];

@@ -9,7 +9,6 @@
     The drive, dir fname, ext parameters are buffers provided by the
         caller; they should be large enough; this is NOT checked
 
-        drive:  drive part of path, will be set to empty string
         dir:    directory part of path;
                 if found, contains the leading DIRSEP
         fname:  the base file name without extensions
@@ -19,19 +18,13 @@
 
 #include "rss.ih"
 
-void rss_splitPath(char const * path,
-    char * drive, char * dir, char * fname, char * ext)
+void rss_splitPath(char const *path, char *dir, char *fname, char *ext)
 {
-
-    char
-        * p;
-
-    drive[0] = '\x0';
+    char *p;
 
     if ( (p = strrchr(path, DIRSEP)) )
     {
-        char
-            fname_first;
+        char fname_first;
 
         fname_first = *(++p);
         *p = '\x0';

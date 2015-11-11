@@ -1,13 +1,17 @@
 icmake (8.00.00)
 
-  * Added trim, trimleft, trimright, length, get_dext (see icmake(1) for
-    details).
-
-  * The 16 bit offset limit was removed from fgets. See icmake(1) for details.
-
   * This release adds several new builtin functions, which required a
     redefinition of the builtin function codes. Because of this existing .bim
-    files should be recompiled from their .im source files
+    files must be recompiled from their .im source files
+
+  * Added get_dext, length, strformat, trim, trimleft, trimright (see
+    icmake(1) for details).
+
+  * The functions fprintf and printf now support a format string as their
+    first argument, in which %-notations refer to subsequent argument numbers
+    (see icmake(1) for details). 
+
+  * The 16 bit offset limit was removed from fgets. See icmake(1) for details.
 
   * Added the 'continue' statement/keyword to the flow constrol statements. It
     can be used inside while and for statements.
@@ -17,10 +21,32 @@ icmake (8.00.00)
   * Global variable initialization can now use expression statements, not just
     constant expressions.
 
+  * Local variables can be defined and immediately initialized anywhere inside
+    functions. Multiple local variables (of the same type) can be defined in
+    the initialization section of a for-statement, A single variable can be
+    defined in the condition phrase of an if- and while-statement. Unless
+    initialized such variables represent a `false' condition.
+
   * Fixed a bug in the printf family of functions: these functions now return
     the number of printed arguments (as documented in icmake(1)'s man-page).
 
+  * Fixed a bug in handling decrement and increment operators: previously
+    their resulting wasn't pushed on the stack when used in return statements,
+    causing a stack underflow.
 
+  * The internal code organization was significantly changed. Code belonging
+    together is now collected in its own subdirectory, where the subdir-name
+    is used as first part of the name of `public' functions (while their
+    source names do not start with the subdir name (e.g. symtab_push is found
+    in symtab/push.c), while their own support functions start with an
+    abbreviated subdir-name, both in their names and in their source filenames
+    (e.g., st_addVar is found in symtab/staddvar.c). Also, within
+    subdirectories 'dirname.ih' files contain all declarations that are
+    required only by the sources in that directory, while 'dirname.h' files
+    contain all declarations required by other parts of icmake programs that
+    use the subdirectory's `public' functions. Because of this reorganization
+    several old files (like  rss/ic*h files) became obsolete and were
+    removed. 
 
 icmake (7.23.02)
 

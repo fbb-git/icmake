@@ -216,12 +216,17 @@ manpagesection(DATA TYPES)
     )
     
     Variables may be defined both at the global level as well as locally to
-functions. Variables are strongly typed. A variable cannot have the type 
+functions. When defined inside functions, the standard bf(C) scoping  and
+visibility rules apply. E.g., local variables can only be used in their own or
+in more deeply nested blocks, their visibility is masked in more deeply nested
+blocks by defining an identically named variable inside those more deeply
+nested blocks. Variables are strongly typed. A variable cannot have type 
 tt(void).
 
-    Variables may be initialized when they are defined. The initialization can
-use return values of functions, but cannot use variables. Consider
-initializations as being constructed from constant values.
+    Variables may be initialized once they are defined. The initialization can
+use expressions, using predefined functions, constant values and values of
+variables that are visible at the point of definition. 
+
 
 manpagesection(PREDEFINED SYMBOLS)
 
@@ -267,8 +272,8 @@ manpagesection(PREDEFINED SYMBOLS)
     )
 manpagesection(OPERATORS)
 
-    All bf(C) operators are supported, operating like their bf(C) counterparts
-on tt(int) variables and/or values.
+    All bf(C) operators are supported, operating like their bf(C)
+counterparts on tt(int) expressions.
 
     Additionally, for tt(string) type variables and/or values the following
 operators are available:
@@ -375,7 +380,10 @@ used as in the bf(C) programming language.
         functions. 
     itt(break)nl()
         To leave tt(for) and tt(while) statements, overruling the statement's
-        condition. bf(C)'s tt(continue) is not available.
+        condition.
+    itt(continue)nl()
+        To continue with the next iteration of a tt(for) or tt(while)
+        statement.
     itt(exit(expression))nl()
         To terminate the icm()-script. The tt(expression) must evaluate to an
         tt(int) value, which becomes the script's exit value.

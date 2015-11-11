@@ -2,7 +2,7 @@
                                 Q U O T E B L A . C
 */
 
-#include "icmake.h"
+#include "icmake.ih"
 
 void quote_blanks(char **args)
 {

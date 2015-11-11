@@ -2,7 +2,7 @@
                                 D A T A . C
 */
 
-#include "icmake.h"
+#include "icmake.ih"
 
 char
     cant_read[] = "Can't read %s",

@@ -1,27 +1,24 @@
-#include "rss.ih"
+#include "icmake.ih"
 
-int spawnlp (int mode, char const *prog, char const *av0, ...)
+int spawnlp(int mode, char const *prog, char const *av0, ...)
 {
-    va_list
-        marker;
-    register char
-    *nextarg;
-    char
-        buf [_MAX_PATH * 4];
+    va_list marker;
+    register char *nextarg;
+    char buf[_MAX_PATH * 4];
 
-    strcpy (buf, prog);
+    strcpy(buf, prog);
 
-    va_start (marker, av0);
+    va_start(marker, av0);
     nextarg = va_arg (marker, char*);
 
     while (nextarg)
     {
-        strcat (buf, " ");
-        strcat (buf, nextarg);
-        nextarg = va_arg (marker, char*);
+        strcat(buf, " ");
+        strcat(buf, nextarg);
+        nextarg = va_arg(marker, char*);
     }
 
-    return (system (buf));
+    return system(buf);
 }
 
 #ifdef DEBUG

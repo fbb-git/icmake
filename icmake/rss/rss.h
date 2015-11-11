@@ -16,7 +16,7 @@ char const *rss_changeExt(char const *, char const *);
 char const *rss_changeBase(char const *, char const *);
 char const *rss_changePath (char const *, char const *);
 
-void    rss_copyright(char *, char *, char *);     /* copyright message */
+void    rss_copyright(char const *program);     /* copyright message */
 
 char   *rss_findFirst(char const *fspec, size_t attrib);
 char   *rss_findNext(void);             /* remaining matching entries   */

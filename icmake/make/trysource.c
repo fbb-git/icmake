@@ -5,7 +5,7 @@
     fail, probably) 
 */
 
-#include "icmake.h"
+#include "icmake.ih"
 
 char *try_source(char const *source)
 {

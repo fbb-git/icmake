@@ -3,7 +3,7 @@
 */
 
 
-#include "icmake.h"
+#include "icmake.ih"
 
 void cleanup()
 {

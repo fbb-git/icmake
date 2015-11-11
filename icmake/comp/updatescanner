@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd scanner
+flex -o lexer.c lexer       || exit 1
+
+echo generated new scanner 

@@ -2,7 +2,7 @@
                           C O M P I L E T . C
 */
 
-#include "icmake.h"
+#include "icmake.ih"
 
 int compile_test()
 {
@@ -21,7 +21,7 @@ int compile_test()
         rss_error(cant_read, dest_name);
 
     if (rss_younger(source_name, dest_name))
-        return(1);
+        return 1;
 
     hdr = *rss_readHeader(fdest, (size_t)version[0]);
 
@@ -31,8 +31,12 @@ int compile_test()
     {
         buffer[strlen(buffer) - 1] = 0;     /* remove \n */
         if (rss_younger(buffer, dest_name))     /* source name is younger */
-            return (1);                     /* recompilation needed */
+            return 1;                     /* recompilation needed */
     }
 
-    return (0);                             /* binary file up to date */
+    return 0;                             /* binary file up to date */
 }
+
+
+
+

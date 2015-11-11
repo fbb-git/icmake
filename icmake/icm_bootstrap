@@ -1,18 +1,11 @@
 #!/bin/bash
 
-GLB=-DHAVE_GLOB
-
 if [ "$#" == "0" ] ; then
 echo "
     Usage: bootstrap root-directory
 
     root-directory: directory under which all icmake files will be
     installed. For a normal system-installation use, e.g., /
-
-    This script assumes that the GCC compiler is available, and that
-    the function glob() is available in the gcc-runtime library.
-    If that's not the case, remove the -DHAVE_GLOB define from the 
-    gcc flags at the top of $0.
 
     Furthermore, it assumes that the parser files parser.c and parser.h have
     already been generated from the file parser and that the file lexer.c has
@@ -21,66 +14,79 @@ echo "
     exit 1
 fi
 
+
 try()
 {
     echo $*
     $* || exit 1
 }
 
-. icm_prepare
+build()
+{
+    try cd $1
+    shift
+
+    program=$1
+    shift
+
+    for x in $* ; do
+        try cd $x
+
+        try ${CC} ${GLB} ${CFLAGS} -c *.c
+        for file in *.o
+        do
+            try mv $x ${NR}$x
+        done
+        try cd ..
+        let NR=${NR}+1
+
+        cd ..
+    done
+
+    try ${CC} -o ../tmp/${LIBDIR}/${program} *.o \ */*.o ../tmp/libicrss.a \
+                                                                ${LDFLAGS}
+    rm *.o */*.o
+
+    cd ..
+}
+
+./icm_prepare
 
 if [ "${CFLAGS}" == "" ] ; then CFLAGS="-Wall -O2"; fi
 if [ "${CC}" == "" ] ; then CC="gcc"; fi
   
 echo Creating tmp/libicrss.a
 
-try cd rss
-try ${CC} -c ${CFLAGS} ${GLB} *.c
-try ar rs ../tmp/libicrss.a *.o
-rm *.o
-cd ..
+# try cd rss
+# try ${CC} -c ${CFLAGS} *.c
+# try ar rs ../tmp/libicrss.a *.o
+# rm *.o
+# cd ..
 
 echo Creating tmp/${BINDIR}/icmake
 try cd make
-try ${CC}  ${CFLAGS} ${GLB} \
-        -o ../tmp/${BINDIR}/icmake *.c ../tmp/libicrss.a \
-        ${LDFLAGS}
+try ${CC}  ${CFLAGS} -o ../tmp/${BINDIR}/icmake *.c ../tmp/libicrss.a \
+                                                                ${LDFLAGS}
 cd ..
 
 echo Creating tmp/${BINDIR}/icmun
 try cd un
-try ${CC} ${GLB}  ${CFLAGS} \
-        -o ../tmp/${BINDIR}/icmun *.c ../tmp/libicrss.a \
-        ${LDFLAGS}
+try ${CC} ${CFLAGS} -o ../tmp/${BINDIR}/icmun *.c ../tmp/libicrss.a \
+                                                                ${LDFLAGS}
 cd ..  
 
 echo Creating tmp/${LIBDIR}/icm-pp
 try cd pp
-try ${CC} ${GLB} ${CFLAGS} \
-        -o ../tmp/${LIBDIR}/icm-pp *.c ../tmp/libicrss.a \
-        ${LDFLAGS}
+try ${CC} ${CFLAGS} -o ../tmp/${LIBDIR}/icm-pp *.c ../tmp/libicrss.a \
+                                                                ${LDFLAGS}
 cd ..
 
 echo Creating tmp/${LIBDIR}/icm-comp
-try cd comp
-try ${CC} ${GLB} ${CFLAGS} \
-        -o ../tmp/${LIBDIR}/icm-comp *.c ../tmp/libicrss.a \
-        ${LDFLAGS}
-cd ..
+compile comp icm-comp util symtab parser scanner 
 
 echo Creating tmp/${LIBDIR}/icm-exec
-try cd exec
-try ${CC} ${CFLAGS} ${GLB} -c *.c 
-for x in auks var virtual int list string stack opcodefun builtin
-do
-    try cd $x
-    try ${CC} ${GLB} ${CFLAGS} -c *.c
-    try cd ..
-done
-try ${CC} -o ../tmp/${LIBDIR}/icm-exec *.o \
-            */*.o ../tmp/libicrss.a ${LDFLAGS}
-rm *.o */*.o
-cd ..
+compile exec icm-exec aux var virtual int list string stack opcodefun builtin
+
 
 echo Copying icmbuild/icmstart from scripts to tmp
 cp scripts/icmbuild.in scripts/icmstart.in tmp/
@@ -100,7 +106,8 @@ try mkdir -p tmp/${DOCDIR}/
 try cp changelog tmp/${DOCDIR}/
 
 echo Copying additional documentation to doc-doc/
-try cp -r examples doc/icmake.doc doc/icmake.ps doc/README.icmbuild tmp/${DOCDOCDIR}
+try cp -r examples doc/icmake.doc doc/icmake.ps \
+                                doc/README.icmbuild tmp/${DOCDOCDIR}
 
 echo Copying etc files to etc/
 try cp -r etc  tmp/

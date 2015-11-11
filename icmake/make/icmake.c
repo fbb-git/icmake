@@ -1,8 +1,6 @@
-/*
-                         I C M A K E . C
-*/
+#define msg
 
-#include "icmake.h"
+#include "icmake.ih"
 
 static char
     bim[]       = "bim",
@@ -11,58 +9,26 @@ static char
     icm_pp[]    = LIBDIR "/icm-pp",
     pim[]       = "pim";
 
-int main (                         /* icmake source(txt) dest(bin) */
-    int argc,
-    char **argv)
+                                         /* icmake source(txt) dest(bin) */
+int main(int argc, char **argv)
 {
-    register int
-        argc2,
-        ret;
-    char
-        *prog;
+    char *program = rss_programName(argv[0]);
 
-    argc2 = options(argv, &argc);           /* process options */
-                                            /* argc2 is index of args to
-                                               icm-exec
-                                            */
+    size_t optRet = options(argc, argv);
 
-    if (!(flags & f_quiet))
-        rss_copyright("Make Utility", version, release);
+    if (argc == optind)                 /* no arguments provided: usage */
+        usage(program);
 
-    prog = rss_programName(argv[0]);
+    msg("optind: %u, optRet: %u", optind, optRet);
+    for (int idx = 0; idx != argc; ++idx)
+    printf("%s ", argv[idx]);
+    printf("\n");
+return 0;
 
-    if (!(flags & f_icmake) && argc2 == 1)  /* argv[1]: already for icm-exec */
-        rss_error
-        (
-            "%s%s%s%s%s",
+    copyright(program);
 
-            "Icmake by Frank B. Brokken (and Karel Kubat until V 6.30).\n"
-            "\n"
-            "Usage: ",
-                prog,
-            " [flags] source[.im] [dest[.bim]] [-- [args]]\n"
-            "where:\n"
-            "\tflags:  optional flags:\n"
-            "\t\t-a     : information about ",
-                prog,
-            "\n"
-            "\t\t-b     : blunt execution of the destinationfile\n"
-            "\t\t-c     : the destination file is compiled\n"
-            "\t\t-i file: 'file': name of source, argument processing stops\n"
-            "\t\t-p     : only the preprocessor is activated\n"
-            "\t\t-q     : quiet mode: copyright banner not displayed\n"
-            "\t\t-t file: 'file' is used as a temporary bim-file, to be "
-                                                                "removed\n",
 
-            "\t\t         on exit. Argument processing stops.\n"
-            "\tsource: make description source file (default extension: .im)\n"
-            "\tdest:   binary make file             (default:    source.bim)\n"
-            "\t        (not used with the -t option)\n"
-            "\t-- :   optional icmake-file arguments separator\n"
-            "\targs:  optional arguments following -- received by\n"
-            "\t       the icmake file in its argv-list"
-        );
-
+#if 0
     if (!(flags & f_icmake))                /* do not take source literally */
     {
         source_name = try_source(argv[1]);  /* determine source */
@@ -74,7 +40,8 @@ int main (                         /* icmake source(txt) dest(bin) */
         dest_name = source_name;
 
     if (!(flags & f_tmpbim))                /* adapt extension of destination */
-        dest_name = rss_strdup(rss_changeExt(dest_name, bim)); /* if not tmp. bimfile */
+        dest_name =                         /* if not tmp. bimfile */
+                rss_strdup(rss_changeExt(dest_name, bim)); 
 
     if
     (
@@ -89,6 +56,9 @@ int main (                         /* icmake source(txt) dest(bin) */
 
         signal(SIGINT, abnormal_exit);      /* abnormal exits process */
                                             /* do the preprocessing */
+
+        msg("calling icm_pp with %s and %s", source_name, temporary);
+/*
         ret = spawnlp(P_WAIT, icm_pp, icm_pp, source_name, temporary, NULL);
         if (ret)
         {
@@ -97,9 +67,10 @@ int main (                         /* icmake source(txt) dest(bin) */
             cleanup();
             return 1;
         }
-
+*/
         if (flags & f_preprocessor)
             return 0;
+
 
                                             /* do the compilation */
         errors = spawnlp(P_WAIT, icm_comp, icm_comp,
@@ -115,6 +86,8 @@ int main (                         /* icmake source(txt) dest(bin) */
 
         if (flags & f_compiler)
             return 0;
+
+
     }
 
     if (flags & f_tmpbim)                       /* -t used */
@@ -136,4 +109,15 @@ int main (                         /* icmake source(txt) dest(bin) */
 
     cleanup();                              /* remove tempfiles etc. */
     return 1;
+#endif
 }
+
+
+
+
+
+
+
+
+
+

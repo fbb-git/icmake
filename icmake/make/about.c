@@ -2,7 +2,7 @@
                                 A B O U T . C
 */
 
-#include "icmake.h"
+#include "icmake.ih"
 
 void about()
 {
@@ -18,13 +18,12 @@ void about()
                                                             "Karel Kubat\n"
             "and Frank Brokken.\n"
             "\n"
-            "ICMAKE is available for several UNIX-platforms. MS-DOS is not\n"
-            "directly supported anymore\n"
+            "ICMAKE is available for several UNIX-platforms.\n"
             "\n",
 
-            "ICMAKE can be obtained by anonymous ftp at:\n"
-            "    http://icmake/sourceforge.net\n"
-            "Also, ICMAKE is part of the Debian distribution\n"
+            "ICMAKE's home page is:\n"
+            "    http://fbb-git.github.io/icmake/\n"
+            "Also, ICMAKE is included in the Debian Linux distribution\n"
             "\n"
             "Questions, remarks, etc. about ICMAKE can be sent to:\n"
             "\n"

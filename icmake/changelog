@@ -36,6 +36,8 @@ icmake (8.00.00)
 
   * Drive specifiers are not supported anymore
 
+  * The function glob() is now assumed available.
+
   * The internal code organization was significantly changed. Code belonging
     together is now collected in its own subdirectory, where the subdir-name
     is used as first part of the name of `public' functions (while their

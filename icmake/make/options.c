@@ -1,22 +1,26 @@
-/*
-                                O P T I O N S . C
-*/
+#include "icmake.ih"
 
-#include "icmake.h"
-
-int options (char **argv, int *argc)
+size_t options(int argc, char **argv)
 {
-    register int
-        c;
-    char
-        *cp;
-    char
-        pid_string[30];                     /* used with -x */
+    register int c;
+    char *cp;
+    char pid_string[30];                     /* used with -x */
 
-    while ((c = getopt(argc, argv)) != -1)
+    while ((c = getopt(argc, argv, "abci:pqt-")) != -1)
     {
         switch (c)
         {
+            case '?':       /* error: unknown option char or missing arg */
+                switch (optopt)
+                {
+                    case 'i':
+                    rss_error("-i requires source-filename");
+
+                    case 't':
+                    rss_error("-t requires temporary bim-filename");
+                }
+            rss_error("option -%c not supported", getopt);
+
             case 'a':
                 about();
             break;
@@ -29,12 +33,14 @@ int options (char **argv, int *argc)
                 flags |= f_compiler;
             break;
 
+            case 'h':
+                flags |= f_help;
+            return optind;
+
             case 'i':
-                flags |= f_icmake;          /* flag icmake taken literally  */
-                if (!(source_name = getoptval(argc, argv)))
-                    rss_error("-i requires source-filename");
-                return getoptindex();       /* and return the index of args */
-                                            /* to icm-exec */
+                flags |= f_icmake;      /* flag icmake taken literally  */
+            return optind;              /* return the index of argv */
+
             case 'p':
                 flags |= f_preprocessor;
             break;
@@ -46,8 +52,7 @@ int options (char **argv, int *argc)
             case 't':
                 flags |= f_tmpbim | f_icmake; /* flag use temporary bimfile  */
 
-                if (!(cp = getoptval(argc, argv)))
-                    rss_error("-t requires temporary bim-filename");
+                cp = optarg;
 
                 while (*cp == ' ')          /* skip initial blanks in optval*/
                     cp++;
@@ -57,30 +62,39 @@ int options (char **argv, int *argc)
                                             /* destination with pid-extension */
                 dest_name = rss_strdup(rss_changeExt(cp, pid_string));
                                             
-                strcat(pid_string, "a");    /* temp. pim-file extension */
+                rss_strcat(pid_string, "a");    /* temp. pim-file extension */
                 temporary = rss_strdup(rss_changeExt(cp, pid_string));
 
                 source_name = argv[1];
-            return getoptindex() + 1;       /* index of remaining args */
+            return optind + 1;              /* index of remaining args */
                                             /* + 1 for the extra arg on the */
                                             /* #!/...-x... line */
 
             case '-':
-                return getoptindex();       /* return index of args to icm-exec
-                                            */
+                return optind;        /* return index of args to icm-exec */
         }
     }
-    return *argc;
-                                            /* return index of args to icm-exec
-                                            */
+    return argc;                    /* return index of args to icm-exec */
 }
 
-/*
-int flags;
+
+/*************************************
+
+void about()
+{
+    puts("about icmake\n");
+}
+
+
+FLAGS_ flags;
+
+char *temporary;
+char *source_name;
+char *dest_name;
 
 void main(int argc, char **argv)
 {
-    options(argv, &argc);
+    options(argc, argv);
 
     printf("flags: %x\n"
             "arguments:\n"
@@ -89,4 +103,9 @@ void main(int argc, char **argv)
     while (argc--)
         puts(*argv++);
 }
-*/
+
+**************************************/
+
+
+
+

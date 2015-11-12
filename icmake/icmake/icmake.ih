@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include <signal.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "../tmp/INSTALL.im"
 
@@ -18,37 +19,52 @@ typedef enum
     f_compile       =   (1 << 1),
     f_about         =   (1 << 2),
     f_redirected    =   (1 << 3),
-    f_icmexec         =   (1 << 4),
-    f_imByOption        =   (1 << 5),
-    f_tmpbim        =   (1 << 6),
-    f_help          =   (1 << 7)
+    f_icmexec       =   (1 << 4),
+    f_im            =   (1 << 5),
+    f_tmpBim        =   (1 << 6),
+    f_help          =   (1 << 7),
+
+    f_rmBim         =   (1 << 8),
+    f_rmPim         =   (1 << 9)
 } FLAGS_;
 
 extern char const icm_comp[];
 extern char const icm_exec[];
 extern char const icm_pp[];
 
+extern char const *imFile;
+extern char const *pimFile;
+extern char const *bimFile;
 
-extern char *temporary;
-extern char *source;
-extern char *destination;
 extern FILE *fdest;
 extern FLAGS_ flags;
-extern int errors;
 
-int     compile_test(void);             /* test if compilation is needed */
-size_t  options(int argc,  char **argv);    /* process flags */
-void    abnormal_exit(int);                 /* abnormal eop */
-void    about(char const *program);         /* about icmake */
-void    cleanup(void);                      /* cleanup temp. info */
-void    quote_blanks(char **);              /* quote arguments with blanks */
-
-char     *trySoource(char const *);         /* return allocated source[.im] */
-int     spawnlp(int mode, char const *prog, char const *av0, ...);
-void    usage(char const *progname);
-void    copyright(char const *program);
-void literalSource(int argc, char **argv);
-
+size_t      options(int argc,  char **argv);    /* process flags */
+void        cleanup(void);                      /* cleanup temp. info */
+void        usage(char const *progname);
+void        about(char const *program);         /* about icmake */
+void        execute(int temporary, char const *source, char **argv);
+void        preProcess(char const *argv2);
+void        compile(void);
 char const *tryFile(char const *file, char const *ext);
-void execute(int temporary, char *bimName, char const **argv);
+int         doCompile(void);              /* 1 if compilation is needed */
+int         spawnlp(int mode, char const *prog, char const *av0, ...);
+
+
+//void        copyright(char const *program);
+//void    abnormal_exit(int);                 /* abnormal eop */
+//void    quote_blanks(char **);              /* quote arguments with blanks */
+
+//char     *trySoource(char const *);         /* return allocated source[.im] */
+//void literalSource(int argc, char **argv);
+
+
+
+
+
+
+
+
+
+
 

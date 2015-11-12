@@ -2,18 +2,22 @@
 
                                     /* argv is passed to bim-name, if       */
                                     /* temporary == 1 also pass -t          */
-void execute(int temporary, char const **argv)  
+void execute(int tempBim, char const *source, char **argv)  
 {                                                   /* bim-name             */
-    *argv = tryFile(*argv, "bim");
+    bimFile = tryFile(source, "bim");
 
-    argv -= (temporary + 1);        /* room for icm-exec [-t] */
+    argv -= (tempBim + 1);          /* room for icm-exec [-t] */
 
-    *argv = icm_exec;
+    *argv = (char *)icm_exec;
 
-    if (temporary)
+    if (tempBim)
+    {
+        flags |= f_rmBim;
         argv[1] = "-t";
+    }
 
-    execvp(*argv, argv);
+    execvp(*argv, (char *const *)argv);
+
     rss_spawnErr(icm_exec);
 }
 

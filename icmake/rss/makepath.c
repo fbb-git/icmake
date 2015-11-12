@@ -21,7 +21,7 @@ static char dot[] = ".";
 void rss_makePath(char *path, char const *dir, char const *fname, 
                                                 char const *ext)
 {
-    path[0] = '\x0';                        /*  prepare for strcats */
+    path[0] = 0;                            /*  prepare for strcats */
 
     if (dir && dir[0])
     {
@@ -32,7 +32,7 @@ void rss_makePath(char *path, char const *dir, char const *fname,
             size_t l;
 
             path[l = strlen(path)] = DIRSEP;
-            path[++l] = '\x0';              /*  make it an asciiz   */
+            path[++l] = 0;              /*  make it an asciiz   */
         }
     }
 
@@ -47,3 +47,8 @@ void rss_makePath(char *path, char const *dir, char const *fname,
         strcat(path, ext);
     }
 }
+
+
+
+
+

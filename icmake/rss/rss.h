@@ -12,7 +12,7 @@ void rss_makePath(char *path, char const *dir, char const *fname,
                                                 char const *ext);
 void rss_splitPath(char const *path, char *dir, char *fname, char *ext);
 
-char const *rss_changeExt(char const *, char const *);
+char *rss_changeExt(char const *, char const *);
 char const *rss_changeBase(char const *, char const *);
 char const *rss_changePath (char const *, char const *);
 
@@ -44,8 +44,8 @@ void     rss_msg_(char const *path, char *fmt, ...); /* prints a msg to stderr.
                                         reading rss.h, and then call msg(fmt,
                                         ...) to specify a message
                                     */
-void     rss_error(char *, ...);
-void     rss_spawnErr (char *);
+void     rss_error(char const *fmt, ...);
+void     rss_spawnErr(char const *program);
 
 void     *rss_realloc (void *, size_t);
 

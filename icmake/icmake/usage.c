@@ -8,8 +8,6 @@ void usage(char const *program)
     (
         "%s%s%s%s%s",
 
-        "Icmake by Frank B. Brokken (and Karel Kubat until V 6.30).\n"
-        "\n"
         "Usage: ",
             program,
         " [options] source [dest] [-- [args]]\n"
@@ -21,13 +19,16 @@ void usage(char const *program)
         "      -b     : blunt execution of the destinationfile, which is\n"
         "               provided as `source'\n"
         "      -c     : the destination file is compiled\n"
-        "      -i source: 'source' is the icmake source file to process\n"
-        "               (default extension: .im); remaining arguments are\n"
+        "      -i     : the first argument is the icmake source file to\n"
+        "               process (default extension: .im), the default\n"
+        "               .bim-filename is used; remaining arguments are\n"
         "               passed to icm-exec\n"
         "      -p     : only the preprocessor is activated\n"
-        "      -q     : quiet mode: copyright banner not displayed\n"
-        "      -t file: 'file' is used as a temporary bim-file, removed\n"
-        "               on exit, argument processing stops.\n"
+        "      -t     : the first argument is the icmake source file to\n"
+        "               process (default extension: .im), the compiled\n"
+        "               .bim-file is removed on exit. Remaining arguments\n"
+        "               are passed to icm-exec\n"
+
         "\n"
         "    source: icmake source file to process (default extension: .im,\n"
         "            with -b the default extension is .bim)\n"

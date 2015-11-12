@@ -1,6 +1,6 @@
 #include "rss.ih"
 
-void rs_split(char const *n)
+void rs_split(char const *path)
 {
-    rss_splitPath(n, gr_dir, gr_fname, gr_ext);
+    rss_splitPath(path, gr_dir, gr_fname, gr_ext);
 }

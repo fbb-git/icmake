@@ -1,8 +1,3 @@
-/*
-                            C L E A N U P . C
-*/
-
-
 #include "icmake.ih"
 
 void cleanup()
@@ -10,8 +5,9 @@ void cleanup()
     fflush(stdout);
     fflush(stderr);
 
-    unlink(temporary);
+    if (flags & f_rmPim)
+        unlink(pimFile);
 
-    if (errors)
-        unlink(dest_name);
+    if (flags & f_rmBim)
+        unlink(bimFile);
 }

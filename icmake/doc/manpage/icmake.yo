@@ -112,15 +112,16 @@ options, the tt(-a) option overrules all other options except for tt(-h). Of
 the remaining options only one can be specified:
     itemization(
     sop(a)()(show information about icm(), overruled by tt(-h))
-    sop(b)()(blunt execution of the icm() .bim file, given as first arg.)
-    sop(c)()(the icm() source file is only compiled)
-    sop(i)(file)(tt(file): name of the icm() source file, all remaining
+    sop(b)()(blunt execution of the icm() .bim file, given as first argument)
+    sop(c)()(the icm() source file is compiled)
+    sop(i)()(the first argument is the icm() source file, the default
+        binary file is constructed if necessary and all additional
                 arguments are passed to tt(icm-exec) `as is'.)
     sop(p)()(the icm() source file is only preprocessed, output is the
                 preprocessed only the preprocessor is activated)
-    sop(t)(file)(tt(file) is used as a temporary bim-file, to be
-                        removed on exit; all remaining arguments are 
-                arguments are passed to tt(icm-exec) `as is'.)
+    sop(t)()(the .bim file is a temporary file, which is removed on exit; 
+                the first argument is the .im source file, 
+                all additional arguments are passed to tt(icm-exec) `as is'.)
     )
 
     bf(Icmun):

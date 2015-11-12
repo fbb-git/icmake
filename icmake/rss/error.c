@@ -1,6 +1,6 @@
 #include "rss.ih"
 
-void rss_error(char *fmt, ...)
+void rss_error(char const *fmt, ...)
 {
     va_list args;
 

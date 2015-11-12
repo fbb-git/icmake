@@ -94,29 +94,33 @@ manpagesection(ADDITONS SINCE VERSION 7.00)
 
 manpageoptions()
 
-    Icm():
-
-    tt(source): icm() script source file (default extension: tt(.im)).
-
-    tt(dest):   binary icm() script file (default:  tt(`source'.bim)).
-
-    tt(--):  icm()/icm()-script arguments separator
-
-    tt(args):  arguments following tt(--) are entered into the icm() scipt 
-            tt(main()) function's tt(argv)-list (see below at section
-            bf(USER DEFINED FUNCTIONS)).
+    Icm() uses the following files and options:
 
     itemization(
-    sop(a)()(information about icm())
-    sop(b)()(blunt execution of the destinationfile)
-    sop(c)()(the destination file is only compiled)
-    sop(i)(file)(tt(file): name of source.  Icm() argument processing stops.)
-    sop(o)(file)(all icm() output is written to tt(file) (Not
-                        implemented on unix platforms))
-    sop(p)()(only the preprocessor is activated)
-    sop(q)()(quiet mode: copyright banner not displayed)
+    itt(source): icm() script source file (default extension: tt(.im)).
+    itt(dest):  binary icm() script file (default:  tt(`source'.bim)).
+    itt(--):  icm() arguments separator for arguments passed to
+            tt(icm-exec)nl() 
+        tt(args):  arguments following tt(--) are passed to tt(icm-exec) as-is
+        as its arguments, and are available from icm()-sctipt's 
+            tt(main()) function's tt(list argv) parameter (see below at
+            section bf(USER DEFINED FUNCTIONS)).
+    )
+
+    the following options are defined. The tt(-h) option overrules all other
+options, the tt(-a) option overrules all other options except for tt(-h). Of
+the remaining options only one can be specified:
+    itemization(
+    sop(a)()(show information about icm(), overruled by tt(-h))
+    sop(b)()(blunt execution of the icm() .bim file, given as first arg.)
+    sop(c)()(the icm() source file is only compiled)
+    sop(i)(file)(tt(file): name of the icm() source file, all remaining
+                arguments are passed to tt(icm-exec) `as is'.)
+    sop(p)()(the icm() source file is only preprocessed, output is the
+                preprocessed only the preprocessor is activated)
     sop(t)(file)(tt(file) is used as a temporary bim-file, to be
-                        removed on exit. Icm() argument processing stops.)
+                        removed on exit; all remaining arguments are 
+                arguments are passed to tt(icm-exec) `as is'.)
     )
 
     bf(Icmun):

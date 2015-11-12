@@ -7,7 +7,7 @@
 
 #include "icmake.ih"
 
-char *try_source(char const *source)
+char *trySource(char const *source)
 {
     char *ret;
 

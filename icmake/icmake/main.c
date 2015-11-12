@@ -2,34 +2,42 @@
 
 #include "icmake.ih"
 
-static char
-    bim[]       = "bim",
-    icm_comp[]  = LIBDIR "/icm-comp",
-    icm_exec[]  = LIBDIR "/icm-exec",
-    icm_pp[]    = LIBDIR "/icm-pp",
-    pim[]       = "pim";
 
                                          /* icmake source(txt) dest(bin) */
 int main(int argc, char **argv)
 {
     char *program = rss_programName(argv[0]);
 
-    size_t optRet = options(argc, argv);
+    size_t idx = options(argc, argv);
 
-    if (argc == optind)                 /* no arguments provided: usage */
+    if (argc == 1 || flags & f_usage)   /* no arguments provided or     */
+        usage(program);                 /* usage requested: provide help */
+
+    if (flags & f_about)                    /* -a specified: about info */
         usage(program);
 
-    msg("optind: %u, optRet: %u", optind, optRet);
-    for (int idx = 0; idx != argc; ++idx)
-    printf("%s ", argv[idx]);
-    printf("\n");
-return 0;
+    if (flags & f_execute)                  /* direct execute the bim-file */
+        execute(0, argv + idx);             /* ends icmake  */
 
-    copyright(program);
+    source = tryFile(argv[1], "im");        /* see if there is a source */
 
+    preprocess();                           /* f_preprocess ends icmake */
 
+    compile();                              /* f_compile ends icmake    */
+
+    execute(flags & f_tmpbim, argv + idx);  /* execute the bim file     */
+    
 #if 0
-    if (!(flags & f_icmake))                /* do not take source literally */
+   
+    msg("optind: %u, optRet: %u, first non-option arg: %s",  optind, \
+                                                optRet, argv[optRet]);
+
+    if (flags & f_imByOption)               /* literal source via -i */
+        literalSource(argc, argv);          /* remaining args for icm-exec */
+    else
+        sourceByArgument(argc, argv);
+
+    if (!(flags & f_imByOption))                /* do not take the source via -i */
     {
         source_name = try_source(argv[1]);  /* determine source */
 
@@ -45,7 +53,7 @@ return 0;
 
     if
     (
-        !(flags & f_blunt)                  /* no forced execution */
+        !(flags & f_execute)                  /* no forced execution */
         &&
         compile_test()                      /* compilation needed */
     )
@@ -73,20 +81,6 @@ return 0;
 
 
                                             /* do the compilation */
-        errors = spawnlp(P_WAIT, icm_comp, icm_comp,
-                                  temporary, dest_name, NULL);
-        cleanup();
-
-        if (errors)
-        {
-            if (errors == -1)
-                rss_spawnErr(icm_comp);
-            return 1;
-        }
-
-        if (flags & f_compiler)
-            return 0;
-
 
     }
 

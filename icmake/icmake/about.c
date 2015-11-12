@@ -4,11 +4,11 @@
 
 #include "icmake.ih"
 
-void about()
+void about(char const *program)
 {
-    rss_copyright("Make Utility", version, release);
+    rss_copyright(program);
 
-    rss_error("%s%s",
+    printf("%s%s",
 
             "ICMAKE consists of a set of five programs. Together, they can\n"
             "be used for managing program development comparable to, e.g.,\n"
@@ -34,7 +34,12 @@ void about()
                                                 "University of Groningen\n"
             "              P.O. Box 11044,  9700 CA Groningen, "
                                                 "the Netherlands");
+        exit(0);
 }
+
+
+
+
 
 
 

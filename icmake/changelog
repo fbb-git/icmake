@@ -52,6 +52,9 @@ icmake (8.00.00)
     several old files (like  rss/ic*h files) became obsolete and were
     removed. 
 
+ *  The -q options is not supported anymore
+
+
 icmake (7.23.02)
 
   * Wow! After > 20 years being used, Martin Dorwig found a bug in icm_pp's

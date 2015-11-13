@@ -1,6 +1,6 @@
 #include "string.ih"
 
-void stringCompare(STRINGVAR_ *lhs, STRINGVAR_ const *rhs)
+void stringCompare(String *lhs, String const *rhs)
 {
     int ret = strcmp(stringStr(lhs), stringStr(rhs));
 

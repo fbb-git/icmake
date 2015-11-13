@@ -1,6 +1,6 @@
 #include "string.ih"
 
-STRINGVAR_  *stringTrimLeft(STRINGVAR_ const *param)
+String  *stringTrimLeft(String const *param)
 {
     char *cp = str(param);
     

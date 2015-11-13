@@ -1,6 +1,6 @@
 #include "string.ih"
 
-char *stringStr(STRINGVAR_ const *lhs)
+char *stringStr(String const *lhs)
 {
     return  str(lhs);
 }

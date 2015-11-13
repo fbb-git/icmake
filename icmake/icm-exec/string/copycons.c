@@ -1,8 +1,8 @@
 #include "string.ih"
 
-STRINGVAR_ *stringCopyCons(STRINGVAR_ const *str)
+String *stringCopyCons(String const *str)
 {
-    static STRINGVAR_ ret;
+    static String ret;
 
     ret = *str;
 

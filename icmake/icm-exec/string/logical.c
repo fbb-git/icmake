@@ -1,6 +1,6 @@
 #include "string.ih"
 
-int stringLogical(STRINGVAR_ const *lhs)
+int stringLogical(String const *lhs)
 {
     return *str(lhs);
 }

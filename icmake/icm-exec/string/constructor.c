@@ -1,8 +1,8 @@
 #include "string.ih"
 
-STRINGVAR_ *stringConstructor()
+String *stringConstructor()
 {
-    static STRINGVAR_ ret = {e_str, {0}};
+    static String ret = {e_str, {0}};
 
     ret.vu.i = newstring(rss_strdup(""));
 

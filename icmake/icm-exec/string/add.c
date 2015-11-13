@@ -1,6 +1,6 @@
 #include "string.ih"
 
-void stringAdd(STRINGVAR_ *lhs, STRINGVAR_ const *rhs)
+void stringAdd(String *lhs, String const *rhs)
 {
     char *catstr = rss_strcat(rss_strdup(stringStr(lhs)), stringStr(rhs));
 

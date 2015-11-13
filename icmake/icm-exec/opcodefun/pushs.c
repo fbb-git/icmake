@@ -30,7 +30,7 @@ void fun_push_strconst()
 
     {
                                         /* str is allocated by getstring() */
-        STRINGVAR_ tmp = *stringConstructor_cP(str);
+        String tmp = *stringConstructor_cP(str);
         push(&tmp);
         stringDestructor(&tmp);
         free(str);

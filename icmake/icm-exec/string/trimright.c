@@ -1,12 +1,12 @@
 #include "string.ih"
 
-STRINGVAR_  *stringTrimRight(STRINGVAR_ const *param)
+String  *stringTrimRight(String const *param)
 {
     char *begin = str(param);
     char *cp = begin + strlen(begin);
 
     char org;
-    STRINGVAR_ *ret;
+    String *ret;
                                         /* find the last non-ws char. pos */
     for (; cp-- != begin && isspace(*cp); ) 
         ;

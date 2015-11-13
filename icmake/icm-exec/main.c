@@ -23,7 +23,6 @@ int main(int argc, char **argv)
     atexit(cleanup);
     signal(SIGINT, (void (*)(int))abnormal);
 
-
     if (argc == 1)
     {
         register char *program = rss_programName(argv[0]);

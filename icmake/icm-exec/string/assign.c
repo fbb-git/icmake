@@ -1,6 +1,6 @@
 #include "string.ih"
 
-void stringAssign(STRINGVAR_ *lhs, STRINGVAR_ const *rhs)
+void stringAssign(String *lhs, String const *rhs)
 {
     if (lhs != rhs)
     {

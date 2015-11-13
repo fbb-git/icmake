@@ -3,21 +3,21 @@
 
 #include "../../rss/rss.h"
 
-typedef VAR_    STRINGVAR_;
+typedef VAR_    String;
 
-STRINGVAR_  *stringConstructor(void);
-STRINGVAR_  *stringConstructor_cP(char const *str);
-void        stringDestructor(STRINGVAR_ *var);
-STRINGVAR_  *stringCopyCons(STRINGVAR_ const *var);
+String  *stringConstructor(void);
+String  *stringConstructor_cP(char const *str);
+void        stringDestructor(String *var);
+String  *stringCopyCons(String const *var);
 
-void        stringAssign(STRINGVAR_ *lhs, STRINGVAR_ const *rhs);
+void        stringAssign(String *lhs, String const *rhs);
 
-void        stringAdd(STRINGVAR_ *lhs, STRINGVAR_ const *rhs);
-int         stringLogical(STRINGVAR_ const *lhs);
+void        stringAdd(String *lhs, String const *rhs);
+int         stringLogical(String const *lhs);
 
-char        *stringStr(STRINGVAR_ const *lhs);  /* const removed */
+char        *stringStr(String const *lhs);  /* const removed */
 
-STRINGVAR_  *stringTrimLeft(STRINGVAR_ const *str);
-STRINGVAR_  *stringTrimRight(STRINGVAR_ const *str);
+String  *stringTrimLeft(String const *str);
+String  *stringTrimRight(String const *str);
 
 #endif

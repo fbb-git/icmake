@@ -1232,16 +1232,6 @@ var_expr_list:
     }
 ;
 
-/*var_or_fun:
-/*    typed_varlist
-/*    semicol
-/*    {
-/*        gp_init = *p_catCode(&gp_init, &$1);
-/*    }
-/*|
-/*    type_of_var
-/*    funcdef
-/**/;
 _while:
     WHILE
     nesting

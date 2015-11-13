@@ -39,16 +39,16 @@ extern char const *bimFile;
 extern FILE *fdest;
 extern FLAGS_ flags;
 
-size_t      options(int argc,  char **argv);    /* process flags */
-void        cleanup(void);                      /* cleanup temp. info */
-void        usage(char const *progname);
-void        about(char const *program);         /* about icmake */
-void        execute(int temporary, char const *source, char **argv);
-void        preProcess(char const *argv2);
-void        compile(void);
-char const *tryFile(char const *file, char const *ext);
-int         doCompile(void);              /* 1 if compilation is needed */
-int         spawnlp(int mode, char const *prog, char const *av0, ...);
+size_t  options(int argc,  char **argv);    /* process flags */
+void    cleanup(void);                      /* cleanup temp. info */
+void    usage(char const *progname);
+void    about(char const *program);         /* about icmake */
+void    execute(int temporary, char const *source, char **argv);
+void    preProcess(char const *argv2);
+void    compile(void);
+char   *tryFile(char const *file, char const *ext);
+int     doCompile(void);              /* 1 if compilation is needed */
+int     spawnlp(int mode, char const *prog, char const *av0, ...);
 
 
 //void        copyright(char const *program);

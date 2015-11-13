@@ -1,16 +1,4 @@
 /*
-\funcref{main}{void main (\params)}
-    {
-        {int} {argc} {argument count}
-        {char} {**argv} {array of arguments}
-        {char} {**envp} {array of environment settings}
-    }
-    {}
-    {rss_getVar(), process(), envp2list(), newvar()}
-    {}
-    {icm-exec.c}
-    {
-
         The {\em main()} function opens the binary makefile, reads the offsets
         of the variables and strings sections, calls {\em getvar()} to retrieve
         the variables, pushes {\em argc}, {\em argv} and {\em envp}
@@ -23,33 +11,32 @@
         Function {\em cleanup()} is attached to the `at-exit' list for DOS
         systems. This is necessary so that the startup working directory is
         restored. For UNIX systems, no {\em atexit()} list is created.
-
-    }
 */
 
 #include "icm-exec.h"
 #include "var/var.h"
 
-int main (int argc, char **argv)
+int main(int argc, char **argv)
 {
     int idx;
-    register char *progname;
 
-    atexit (cleanup);
-    signal (SIGINT, (void (*)(int))abnormal);
-    progname = getcwd (orgdir, _MAX_PATH - 1);  /* keeps the compiler happy */
+    atexit(cleanup);
+    signal(SIGINT, (void (*)(int))abnormal);
 
 
     if (argc == 1)
     {
-        rss_copyright("ICMAKE Binary Makefile Executor", version, release);
-        progname = rss_programName(argv[0]);
+        register char *program = rss_programName(argv[0]);
+
+        rss_copyright(program);
+
         printf ("This program is run as a child process of icmake.\n"
                 "Usage: %s [-t] bimfile\n"
                 "where: -t      - option indicating that 'bimfile' must be\n"
                 "                 removed on exit.\n"
                 "       bimfile - binary makefile to execute.\n\n"
-            , progname);
+            , program);
+
         return 1;
     }
 

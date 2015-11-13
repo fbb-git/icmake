@@ -523,7 +523,7 @@ static const yytype_uint16 yyrline[] =
     1093,  1097,  1106,  1106,  1112,  1114,  1120,  1123,  1125,  1127,
     1129,  1132,  1135,  1138,  1143,  1148,  1152,  1158,  1161,  1168,
     1176,  1178,  1180,  1184,  1191,  1197,  1205,  1208,  1217,  1225,
-    1227,  1246,  1251,  1263
+    1227,  1236,  1241,  1253
 };
 #endif
 
@@ -557,8 +557,8 @@ static const char *const yytname[] =
   "_optint_string", "_comma_expr", "_optint_special", "_comma_arglist",
   "_opt_arglist", "_funname", "function", "_if", "_else", "if_stat",
   "_p_makeList_expr", "_p_makeList_normal", "_old_young", "_older_younger",
-  "$@6", "p_makeList", "nesting", "ok", "openbrace", "$@7", "openpar", "$@8",
-  "popdead", "pushdead", "_return_tail", "_leave", "return_stat",
+  "$@6", "p_makeList", "nesting", "ok", "openbrace", "$@7", "openpar",
+  "$@8", "popdead", "pushdead", "_return_tail", "_leave", "return_stat",
   "semicol", "$@9", "_stm", "statement", "statements", "typed_condition",
   "typed_varlist", "_varType", "type_of_var", "var_condition", "var_expr",
   "var_expr_list", "_while", "while_stat", "zeroframe", YY_NULLPTR
@@ -2657,7 +2657,7 @@ yyreduce:
     break;
 
   case 212:
-#line 1258 "grammar" /* yacc.c:1646  */
+#line 1248 "grammar" /* yacc.c:1646  */
     {
         (yyval) = *p_while(&(yyvsp[-4]), &(yyvsp[-1]), 1);
     }
@@ -2665,7 +2665,7 @@ yyreduce:
     break;
 
   case 213:
-#line 1263 "grammar" /* yacc.c:1646  */
+#line 1253 "grammar" /* yacc.c:1646  */
     {
         (yyval) = *p_stackFrame(0);   /* by default initializes a variable to 0 */
     }
@@ -2763,7 +2763,7 @@ yyerrlab:
   if (yyerrstatus == 3)
     {
       /* If just tried and failed to reuse lookahead token after an
-         error, p_discard it.  */
+         error, discard it.  */
 
       if (yychar <= YYEOF)
         {
@@ -2773,7 +2773,7 @@ yyerrlab:
         }
       else
         {
-          yydestruct ("Error: p_discarding",
+          yydestruct ("Error: discarding",
                       yytoken, &yylval);
           yychar = YYEMPTY;
         }
@@ -2878,7 +2878,7 @@ yyreturn:
       /* Make sure we have latest lookahead translation.  See comments at
          user semantic actions for why this is necessary.  */
       yytoken = YYTRANSLATE (yychar);
-      yydestruct ("Cleanup: p_discarding lookahead",
+      yydestruct ("Cleanup: discarding lookahead",
                   yytoken, &yylval);
     }
   /* Do not reclaim the symbols of the rule whose action triggered
@@ -2901,7 +2901,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 1268 "grammar" /* yacc.c:1906  */
+#line 1258 "grammar" /* yacc.c:1906  */
 
 
 int yywrap(void)

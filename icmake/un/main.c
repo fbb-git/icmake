@@ -17,7 +17,7 @@ int main (int argc, char **argv)
         return 2;
     }
 
-    infname = rss_strdup(rss_changeExt (argv [1], bimext));
+    infname = rss_changeExt (argv [1], bimext);
 
     if (! (infile = fopen (infname, "r")) )
         rss_error ("cannot open %s for reading", infname);

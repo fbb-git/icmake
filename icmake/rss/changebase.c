@@ -1,11 +1,11 @@
 #include "rss.ih"
 
-char const *rss_changeBase(char const *n, char const *b)
+char *rss_changeBase(char const *path, char const *base)
 {
-    rs_split(n);
+    rs_split(path);
     *gr_fname = 0;
-    if (b)
-        strcpy (gr_fname, b);
+    if (base)
+        strcpy(gr_fname, base);
     rs_join();
-    return gr_name;
+    return rss_strdup(gr_name);
 }

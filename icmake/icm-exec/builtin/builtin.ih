@@ -109,7 +109,6 @@ size_t eb_formatter(void *dest, size_t start);
 size_t eb_noFormatting(void *dest, size_t start, size_t lastIdx);
 void eb_writeArgument(void *dest, size_t idx);
 
-
 void eb_updateFgets(FILE *inf, char *dest);
 void eb_fgetsStatus(char const *status);
 

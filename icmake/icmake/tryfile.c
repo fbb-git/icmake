@@ -6,12 +6,12 @@
 
 #include "icmake.ih"
 
-char const *tryFile(char const *file, char const *ext)
+char *tryFile(char const *file, char const *ext)
 {
-    char const *ret;
+    char *ret;
 
     if (access(file, R_OK) == 0)        /* File exists as-is ?  */
-        return file;                    /* return it            */
+        return rss_strdup(file);        /* return it            */
 
     ret = rss_changeExt(file, ext);     /* file.ext */
 

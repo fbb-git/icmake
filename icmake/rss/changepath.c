@@ -1,13 +1,13 @@
 #include "rss.ih"
 
-char const *rss_changePath(char const *n, char const *p)
+char *rss_changePath(char const *path, char const *newDirs)
 {
-    rs_split(n);
+    rs_split(path);
 
-    if (p)
-        strcpy(gr_dir, p);
+    if (newDirs)
+        strcpy(gr_dir, newDirs);
 
     rs_join();
 
-    return gr_name;
+    return rss_strdup(gr_name);
 }

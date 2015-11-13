@@ -4,7 +4,7 @@ int main (int argc, char **argv)            /* icm-comp source(txt) dest(bin) */
 {
     if (argc != 3)
     {
-        rss_copyright("Make Optimizing Compiler", version, release);
+        rss_copyright(rss_programName(argv[0]));
         printf("Usage: %s source dest\n"
               "where:\n"
               "\tsource: source file to compile\n"

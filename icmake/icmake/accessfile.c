@@ -6,7 +6,7 @@
 
 #include "icmake.ih"
 
-char *tryFile(char const *file, char const *ext)
+char *accessFile(char const *file, char const *ext)
 {
     char *ret;
 

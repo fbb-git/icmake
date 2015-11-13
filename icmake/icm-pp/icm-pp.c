@@ -1,14 +1,4 @@
 /*
-\funcref{main}{void main (\params)}
-    {
-        {int} {argc} {argument count}
-        {char} {**argv} {pointer to array of argument strings}
-    }
-    {}
-    {rss_error(), pushfile(), lexer(), process()}
-    {}
-    {icm-pp.c}
-    {
         Function {\em main()} checks if two arguments are present on the
         invoking command line. If not, an error occurs.
 
@@ -24,7 +14,6 @@
         value is passed to {\em process()}. This is repeated until the
         filestack pointer {\em filesp}(increased by {\em pushfile()},
         decreased by {\em popfile()}) indicates that the file stack is empty.
-    }
 */
 
 
@@ -32,12 +21,11 @@
 
 int main(int argc, char **argv)
 {
-    register char
-        *progname;
+    register char *progname;
     register int
-    i,
-    dump_symbols = 0,
-    load_symbols = 1;
+        i,
+        dump_symbols = 0,
+        load_symbols = 1;
 
     progname = rss_programName(argv[0]);
     
@@ -82,7 +70,7 @@ int main(int argc, char **argv)
     
     if (argc != 3)
     {
-        rss_copyright("ICMAKE Preprocessor", version, release);
+        rss_copyright(progname);
 
         printf("%s%s%s%s",
             "This program is run as a child process of icmake.\n"

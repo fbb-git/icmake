@@ -33,7 +33,9 @@ void about(char const *program)
             "surface mail: Center of Information Technology, "
                                                 "University of Groningen\n"
             "              P.O. Box 11044,  9700 CA Groningen, "
-                                                "the Netherlands");
+                                                "the Netherlands"
+            "\n");
+
         exit(0);
 }
 

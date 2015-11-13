@@ -1,11 +1,10 @@
+#define msg
+
 #include "icmake.ih"
 
 void compile()
 {
     bimFile = rss_changeExt(imFile, "bim");
-
-    if (!doCompile())
-        return;
 
     int ret = spawnlp(P_WAIT, icm_comp, icm_comp, pimFile, bimFile, NULL);
 

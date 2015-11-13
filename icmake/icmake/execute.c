@@ -1,11 +1,11 @@
+#define msg
+
 #include "icmake.ih"
 
                                     /* argv is passed to bim-name, if       */
                                     /* temporary == 1 also pass -t          */
 void execute(int tempBim, char const *source, char **argv)  
 {                                                   /* bim-name             */
-    bimFile = tryFile(source, "bim");
-
     argv -= (tempBim + 1);          /* room for icm-exec [-t] */
 
     *argv = (char *)icm_exec;
@@ -16,8 +16,14 @@ void execute(int tempBim, char const *source, char **argv)
         argv[1] = "-t";
     }
 
+    for (char **cp = argv; *cp; ++cp)
+        printf("%s ", *cp);
+    putchar('\n');
+
     execvp(*argv, (char *const *)argv);
 
     rss_spawnErr(icm_exec);
 }
+
+
 

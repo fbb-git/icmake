@@ -2,15 +2,14 @@
 
 int main (int argc, char **argv)
 {
-    register char *progname;
+    register char *progname = rss_programName(argv[0]);
     register char *infname;
     static char bimext [] = ".bim";
 
-    rss_copyright ("ICMAKE Binary Make File Unassembler", version, release);
+    rss_copyright (progname);
 
     if (argc != 2)
     {
-        progname = rss_programName (argv [0]);
         printf ("Usage: %s bimfile\n"
                 "where: bimfile - binary makefile (default extension: %s)\n\n"
                 , progname, bimext);

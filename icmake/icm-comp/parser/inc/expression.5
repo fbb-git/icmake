@@ -317,7 +317,7 @@ expression:
         '!'
         expression
         {
-            $$ = *p_not(&$2);
+            $$ = *p_notBoolean(&$2);
         }
     |
         '('

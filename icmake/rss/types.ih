@@ -111,6 +111,11 @@ typedef enum
     e_post_inc_dec  = (1 << 9)              /* post-inc or post-dec      */
 } ExprType;
 
+    /* when the ordering or entries of the following enum changes, update
+        icmun/data.c and icm-exec/builtin/data.c as well en rebuild all
+        programs. It will also change the contents of the .bim file, so it
+        also requires at least a minor version upgrade.
+    */
 typedef enum                                /* names of rss-functions */
 {
     f_arg_head,
@@ -126,6 +131,7 @@ typedef enum                                /* names of rss-functions */
     f_cmd_tail,
     f_echo,
     f_element,
+    f_eval,
     f_exec,
     f_execute,                              /* only used by the compiler */
     f_exists,
@@ -140,10 +146,10 @@ typedef enum                                /* names of rss-functions */
     f_getenv,
     f_getpid,                               /* used by several programs  */
     f_gets,
+    f_listlen,
     f_makelist,
     f_printf,
     f_putenv,
-    f_sizeoflist,
     f_stat,
     f_str_el,
     f_strfind,                              /* IDEM */

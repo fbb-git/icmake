@@ -114,15 +114,16 @@ extern int yydebug;
 
 /* ================================================================== */
 
-SemVal *p_addition (SemVal *, SemVal *);       /* + code */
-SemVal *p_andBoolean (SemVal *, SemVal *);/* && code */
-SemVal *p_assign  (SemVal *, SemVal *);        /*  = code (shell) */
-SemVal *p_and (SemVal *, SemVal *);           /* & (binary) code */
-SemVal *p_not (SemVal *);                      /* ~ code */
-SemVal *p_or  (SemVal *, SemVal *);           /* | (binary) code */
-SemVal *p_break (void);                /* process break stmnt */
-SemVal *p_callFunction(int funIdx, SemVal *);       /* call a function */
-SemVal *p_cast (ExprType, SemVal *);         /* perform p_cast */
+SemVal *p_addition (SemVal *, SemVal *);        /* + code */
+SemVal *p_andBoolean (SemVal *, SemVal *);      /* && code */
+SemVal *p_assign  (SemVal *, SemVal *);         /*  = code (shell) */
+SemVal *p_and (SemVal *, SemVal *);             /* & (binary) code */
+SemVal *p_not (SemVal *);                       /* ~ code */
+SemVal *p_notBoolean (SemVal *);                /* ! code */
+SemVal *p_or  (SemVal *, SemVal *);             /* | (binary) code */
+SemVal *p_break (void);                         /* break stmnt */
+SemVal *p_callFunction(int funIdx, SemVal *);   /* call a function */
+SemVal *p_cast (ExprType, SemVal *);            /* perform p_cast */
 SemVal *p_catCode (SemVal *, SemVal *);    /* write info rval behind lval */
 SemVal *cat_expr (SemVal *, SemVal *);   /* ,-separated expressions */
 SemVal *p_catStmnts (SemVal *, SemVal *);  /* catenate/write stmnts */

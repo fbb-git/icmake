@@ -75,7 +75,8 @@ manpagesection(ADDITONS SINCE VERSION 7.00)
     itt(#ifdef), tt(#ifndef), tt(#else) and tt(#endif) directives can be
         nested. 
     it() The `backtick' operator is defined, executing a program in a shell
-        and collecting its standard output in a list (see below).
+        and collecting its standard output in a list (see below; a synonym for
+        the backtick operator is the function tt(eval)).
     it() The index operator (tt([])) is defined as an alternative to the
         pre-defined function tt(element()), and can be used on lists and
         strings. 
@@ -437,6 +438,13 @@ provided:
         printf(`s`);        // prints the elements in the current
                             // directory
             )
+    itt(list eval(string str))nl()
+       This function acts identically to the backtick operator. The above
+        example could also have been written like this:
+            verb(
+        printf(eval("ls")); // prints the elements in the current
+                            // directory
+            )
     )
 
     Filename modifiers:
@@ -719,23 +727,18 @@ provided:
 
     List information:
     itemization(        
-    itt(int length(list l))nl()
-        Returns the number of elements in tt(list) (tt(length) may also be
-        used for tt(string) objects.
+    itt(int listlen(list l))nl()
+        Returns the number of elements in tt(list).
     itt(int sizeof(list l))nl()
-        Deprecated: use tt(length).
+        Deprecated: use tt(listlen).
     itt(int sizeoflist(list l))nl()
-        Deprecated: use tt(length).
+        Deprecated: use tt(listlen).
     )
 
     String support:
     itemization(
-    itt(int length(string s))nl()
-        Returns the number of characters in tt(s) (not counting the final 0).
-        The function tt(length) can also be used to
-        determine the number of elements in a tt(list). 
     itt(int strlen(string s))nl()
-        Synonym of tt(length). 
+        Returns the number of characters in tt(s) (not counting the final 0).
     itt(int strfind(string haystack, string needle))nl()
         Returns index in tt(haystack) where tt(needle) is found, or -1 if 
         tt(needle) is not contained in tt(haystack).nl()

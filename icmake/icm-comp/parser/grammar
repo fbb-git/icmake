@@ -20,6 +20,7 @@
     G_PATH
     ELEMENT
     ELSE
+    EVAL
     EXEC
     EXECUTE
     EXISTS
@@ -36,13 +37,13 @@
     IF
     INT
     LIST
+    LISTLEN
     MAKELIST
     M_ECHO
     NUMBER
     PRINTF
     PUTENV
     RETURN
-    SIZEOFLIST
     STAT
     STRING
     STRINGTYPE
@@ -544,7 +545,7 @@ expression:
         '!'
         expression
         {
-            $$ = *p_not(&$2);
+            $$ = *p_notBoolean(&$2);
         }
     |
         '('
@@ -713,9 +714,11 @@ _zero_arg_funs:
 _one_arg_funs:
     ASCII
 |
-    SIZEOFLIST
+    EVAL
 |
     EXISTS
+|
+    LISTLEN
 |
     M_ECHO
 |

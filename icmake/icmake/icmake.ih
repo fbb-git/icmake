@@ -31,7 +31,7 @@ typedef enum
     f_rmPim         =   (1 << 8),
 
     f_doPreProcess  =   (1 <<  9),      /* action flags         */
-    f_doCompile    =   (1 << 10),
+    f_doCompile     =   (1 << 10),
     f_doExec        =   (1 << 11)
 
 } FLAGS_;

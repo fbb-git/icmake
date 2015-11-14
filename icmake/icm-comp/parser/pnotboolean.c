@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-SemVal *p_not(SemVal *e)
+SemVal *p_notBoolean(SemVal *e)
 {
     size_t len;
     unsigned *list;

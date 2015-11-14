@@ -37,7 +37,8 @@ void p_callRss(SemVal *e, FUNNR_ funnr, ...)
             type = e_str | e_reg;
         break;
 
-        case f_getenv:                      /* 1 arg, returning list */
+        case f_eval:                        /* 1 arg, returning list */
+        case f_getenv:
         case f_backtick:
             type = e_list | e_reg;
         break;
@@ -99,7 +100,7 @@ void p_callRss(SemVal *e, FUNNR_ funnr, ...)
             case f_cmd_tail:
             case f_echo:
             case f_exists:
-            case f_sizeoflist:
+            case f_listlen:
             case f_strlen:
         */
         break;

@@ -17,8 +17,8 @@ SemVal *p_oneArg(ExprType type, SemVal *arg)
 
         break;
 
-        case f_sizeoflist:
-            ok = test_type(arg, e_list | e_str);
+        case f_listlen:
+            ok = test_type(arg, e_list);
         break;
 
         case f_echo:
@@ -30,6 +30,7 @@ SemVal *p_oneArg(ExprType type, SemVal *arg)
             case f_backtick:
             case f_getenv:
             case f_putenv:
+            case f_eval:
             case f_exists:
             case f_cmd_head:
             case f_cmd_tail:

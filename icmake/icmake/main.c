@@ -1,5 +1,5 @@
-/*
 #define msg
+/*
 */
 
 #include "icmake.ih"
@@ -35,15 +35,12 @@ int main(int argc, char **argv)
 
     atexit(cleanup);
 
-    if (flags & f_doExec)                   /* direct execute the bim-file */
+    if (flags & f_icmexec)                  /* direct execute the bim-file */
         execute(argv + execArgIdx);         /* ends icmake  */
 
     preProcess();                           
-
     compile();                              /* f_compile ends icmake    */
-
     execute(argv + execArgIdx);             /* ends icmake  */
-
 }
 
 

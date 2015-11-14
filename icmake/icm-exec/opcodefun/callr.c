@@ -1,12 +1,4 @@
 /*
-\funcref{fun\_call\_rss}{void fun\_call\_rss ()}
-    {}
-    {}
-    {rss_error(), rss_getOpcode()}
-    {}
-    {funcallr.c}
-    {
-
         This function is executed when an {\em op\_call\_rss} opcode is
         encountered in the binary makefile. Following this opcode a function
         index is expected (an {\em char} value), indicating the function number
@@ -17,17 +9,17 @@
         exceeds or equals {\em f\_hlt}, an error occurs. Else, the indicated
         built in function is called (see the {\em builtinfun} array of function
         pointers, files {\em opcodefun.ih} and {\em data.c}).
-    }
 */
 
 #include "opcodefun.ih"
 
-void fun_call_rss ()
+void fun_call_rss()
 {
     size_t funnr = (size_t)rss_getOpcode (infile);
 
     if (funnr >= f_hlt)
-        rss_error ("unexisting rss function call at %s", rss_hexString(curoffs, 4));
+        rss_error ("unknown rss function call at %s", 
+                                                rss_hexString(curoffs, 4));
 
     builtin(funnr);
 }

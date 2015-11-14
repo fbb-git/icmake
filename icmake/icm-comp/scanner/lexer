@@ -1,7 +1,4 @@
 %{
-/*
-                                   L E X E R
-*/
 
 #include "scanner.ih"
 #define YY_NO_INPUT
@@ -121,6 +118,10 @@ element                 {
 else                    {
                             return ELSE;
                         }
+eval                    {
+                            yylval.type = f_eval;
+                            return EVAL;
+                        }
 exec                    {
                             yylval.type = f_exec;
                             return EXEC;
@@ -139,7 +140,7 @@ exit                    {
                         }
 fgets                   {
                             yylval.type = f_fgets;
-                            return (FGETS);
+                            return FGETS;
                         }
 for                     {
                             return FOR;
@@ -153,7 +154,7 @@ if                      {
                         }
 void                    {
                             yylval.type = 0;    /* 0 == void */
-                            return (VOID);
+                            return VOID;
                         }
 int                     {
                             yylval.type = e_int;
@@ -177,21 +178,21 @@ printf                  {
                         }
 putenv                  {
                             yylval.type = f_putenv;
-                            return (PUTENV);
+                            return PUTENV;
                         }
 return                  {
                             yylval.type = op_ret;
                             return RETURN;
                         }
-length          |
+listlen         |
 sizeof          |
 sizeoflist              {
-                            yylval.type = f_sizeoflist;
-                            return SIZEOFLIST;
+                            yylval.type = f_listlen;
+                            return LISTLEN;
                         }
 stat                    {
                             yylval.type = f_stat;
-                            return (STAT);
+                            return STAT;
                         }
 string                  {
                             yylval.type = e_str;

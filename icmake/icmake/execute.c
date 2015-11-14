@@ -2,24 +2,24 @@
 
 #include "icmake.ih"
 
-                                    /* argv is passed to bim-name, if       */
-                                    /* temporary == 1 also pass -t          */
-void execute(int tempBim, char const *source, char **argv)  
-{                                                   /* bim-name             */
-    argv -= (tempBim + 1);          /* room for icm-exec [-t] */
+void execute(char **argv)  
+{
+    if (!(flags & f_doExec))        /* no exec is requested: leave */
+        return;
 
-    *argv = (char *)icm_exec;
+    if (execArgIdx == 0)            /* icm-exec only receives arguemtns if */
+        *argv = 0;                  /* execArgIdx refers to the first one  */
 
-    if (tempBim)
+    *--argv = bimFile;              /* set the bim-file to use */
+
+    if (flags & f_rmBim)
     {
-        flags |= f_rmBim;
-        argv[1] = "-t";
+        *--argv = "-t";             /* set -t flag for icm-exec */
+        flags &= ~f_rmBim;          /* icmake itself doesn't remove bim */
     }
 
-    for (char **cp = argv; *cp; ++cp)
-        printf("%s ", *cp);
-    putchar('\n');
-
+    *--argv = icm_exec;             /* icm-exec is called */
+        
     execvp(*argv, (char *const *)argv);
 
     rss_spawnErr(icm_exec);

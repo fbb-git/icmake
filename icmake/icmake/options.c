@@ -25,6 +25,10 @@ void options(int argc, char **argv)
         {
             inspectFlags(program);
             execArgIdx = argPtr - argv + 1;
+
+            if (flags == 0)
+                noOptions(argv);
+
             return;
         }
                                         /* remove the -x option argument */

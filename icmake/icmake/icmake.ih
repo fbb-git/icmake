@@ -36,13 +36,13 @@ typedef enum
 
 } FLAGS_;
 
-extern char const icm_comp[];
-extern char const icm_exec[];
-extern char const icm_pp[];
+extern char icm_comp[];
+extern char icm_exec[];
+extern char icm_pp[];
 
-extern char const *imFile;
-extern char const *pimFile;
-extern char const *bimFile;
+extern char *imFile;
+extern char *pimFile;
+extern char *bimFile;
 
 extern FILE *fdest;
 extern FLAGS_ flags;
@@ -62,11 +62,14 @@ void noOptions(char **argv);
 void    cleanup(void);                      /* cleanup temp. info */
 void    usage(char const *progname);
 void    about(char const *program);         /* about icmake */
-void    execute(int temporary, char const *source, char **argv);
-void    preProcess(char const *argv2);
+
+void    execute(char **argv);
+void    preProcess(void);
 void    compile(void);
+
 char   *accessFile(char const *file, char const *ext); /* file must exist */
 void    testCompile(void);
+
 int     spawnlp(int mode, char const *prog, char const *av0, ...);
 void    inspectFlags(char const *program);
 char   *useFile(char const *argv2, char const *ext);

@@ -8,7 +8,10 @@ void noOptions(char **argv)
 
     imFile = accessFile(argv[1], "im");
     pimFile = rss_changeExt(imFile, "pim");
-    bimFile = useFile(argv[2], "bim");
+
+    bimFile = useFile(          /* -- may be 2nd arg: use default bim name */
+                argv[2] && strcmp(argv[2], "--") == 0 ? NULL : argv[2], 
+                "bim");
 
     testCompile();
 }

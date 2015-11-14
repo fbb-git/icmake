@@ -1,4 +1,6 @@
+/*
 #define msg
+*/
 
 #include "icmake.ih"
                                          /* icmake source(txt) dest(bin) */
@@ -30,21 +32,18 @@ int main(int argc, char **argv)
         pimFile,                                \
         bimFile);                               
 
-//
-//    atexit(cleanup);
-//
-//    if (flags & f_icmexec)                  /* direct execute the bim-file */
-//        execute(0, argv[1], argv + execArgIdx);    /* ends icmake  */
-//
-//    imFile = tryFile(argv[1], "im");        /* see if there is a source */
-//
-//    preProcess(argv[2]);                    /* f_preProcess ends icmake */
-//
-//    compile();                              /* f_compile ends icmake    */
-//
-//    execute(flags & f_tmpBim, bimFile,      /* execute the bim file  */
-//                                argv + execArgIdx);  
-//
+
+    atexit(cleanup);
+
+    if (flags & f_doExec)                   /* direct execute the bim-file */
+        execute(argv + execArgIdx);         /* ends icmake  */
+
+    preProcess();                           
+
+    compile();                              /* f_compile ends icmake    */
+
+    execute(argv + execArgIdx);             /* ends icmake  */
+
 }
 
 

@@ -7,7 +7,7 @@ void preProcess()
     if (!(flags & f_doPreProcess))  /* no preprocessing requested: leave */
         return;
 
-    int ret = spawnlp(P_WAIT, icm_pp, icm_pp, imFile, pimFile, NULL);
+    int ret = spawnlp(WAIT, icm_pp, icm_pp, imFile, pimFile, NULL);
 
     if (ret)
     {

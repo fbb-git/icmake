@@ -21,7 +21,7 @@ extern int8_t *local_types;
 extern size_t curoffs;
 extern size_t nvar;
 
-extern VAR_ *var;
+extern Variable *var;
 
 extern char *varname (ExprType);
 extern char *printvar (int);

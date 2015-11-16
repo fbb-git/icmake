@@ -1,13 +1,13 @@
 #include "list.ih"
 
-void listAdd_L(LISTVAR_ *dest, LISTVAR_ const *rhs)
+void listAdd_L(ListVariable *dest, ListVariable const *rhs)
 {
     size_t idx;
     size_t nRhs = size(rhs);
 
     if (nRhs)                      /* something to add   */
     {
-        LISTVAR_ copy = *listCopyCons(dest);
+        ListVariable copy = *listCopyCons(dest);
 
         for (idx = 0; idx < nRhs; ++idx)
         {

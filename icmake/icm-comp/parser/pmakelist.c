@@ -3,7 +3,7 @@
         1- p_makeList(int, string)
         2- p_makeList(int, string, older, string)     -- younger ok too
 
-    The parser may have inserted the int-argument as int O_FILE
+    The parser may have inserted the int-argument as int IS_FILE
 
 */
 
@@ -30,8 +30,8 @@ SemVal *p_makeList(SemVal *args, ExprType type)
 
     p_catArgs(args);                          /* catenate all arguments */
 
-    if ((OPCODE_)type != op_hlt)            /* hidden function called */
-        p_callHidden((OPCODE_)type == op_younger, args);
+    if ((Opcode)type != op_hlt)            /* hidden function called */
+        p_callHidden((Opcode)type == op_younger, args);
     else
         p_callRss(args, f_makelist);
 

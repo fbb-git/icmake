@@ -35,7 +35,7 @@ Example:
         uint16_t
             nvar,
             i;
-        VAR_
+        Variable
             *var = NULL;
         BinHeader
             *headerp;
@@ -60,7 +60,7 @@ Example:
 
 #include "rss.ih"
 
-uint16_t rss_getVar (FILE *f, BinHeader *headerp, VAR_ **var)
+uint16_t rss_getVar (FILE *f, BinHeader *headerp, Variable **var)
 {
     register size_t nvar = 0;
     int32_t curoffs;
@@ -74,7 +74,7 @@ uint16_t rss_getVar (FILE *f, BinHeader *headerp, VAR_ **var)
 
     while (ftell(f) < headerp->offset[2])
     {
-        *var = rss_realloc (*var, (nvar + 1) * sizeof (VAR_));
+        *var = rss_realloc (*var, (nvar + 1) * sizeof (Variable));
 
         char type;
         int16_t value;

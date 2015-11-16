@@ -1,8 +1,8 @@
 #include "list.ih"
 
-LISTVAR_ *listConstructor()
+ListVariable *listConstructor()
 {
-    static LISTVAR_ ret = {e_list, {0}};
+    static ListVariable ret = {e_list, {0}};
 
     ret.vu.i = newlist();
 

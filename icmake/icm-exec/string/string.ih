@@ -8,6 +8,6 @@
 #include "../virtual/virtual.h"
 #include "../int/int.h"
 
-INTER_ *newstring(char *cp);    /* cp must be free-able */
+TextData *newstring(char *cp);    /* cp must be free-able */
 
 #define str(pstring)    ((pstring)->vu.i->ls.str)

@@ -8,6 +8,11 @@
 extern char version[];
 extern char release[];
 
+inline int rss_checkMode(int mode)
+{
+    return !(mode & NOT_CHECKED);
+}
+
 void rss_makePath(char *path, char const *dir, char const *fname, 
                                                 char const *ext);
 void rss_splitPath(char const *path, char *dir, char *fname, char *ext);
@@ -61,11 +66,11 @@ int      rss_younger(char const *, char const *);
 
 int16_t    rss_getInt16(FILE *);
 
-OPCODE_  rss_getOpcode (FILE *);
+Opcode  rss_getOpcode (FILE *);
 
-uint16_t    rss_getVar(FILE *, BinHeader *, VAR_ **);
+uint16_t    rss_getVar(FILE *, BinHeader *, Variable **);
 
-void     rss_initVar(VAR_ *);
+void     rss_initVar(Variable *);
 
 BinHeader *rss_readHeader(FILE *f, size_t v);
 

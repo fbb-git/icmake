@@ -1,6 +1,6 @@
 #include "list.ih"
 
-void listAssign(LISTVAR_ *lhs, LISTVAR_ const *rhs)
+void listAssign(ListVariable *lhs, ListVariable const *rhs)
 {
     if (lhs != rhs)
     {

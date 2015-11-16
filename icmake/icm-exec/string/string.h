@@ -3,7 +3,7 @@
 
 #include "../../rss/rss.h"
 
-typedef VAR_    String;
+typedef Variable    String;
 
 String  *stringConstructor(void);
 String  *stringConstructor_cP(char const *str);

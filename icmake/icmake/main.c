@@ -1,7 +1,6 @@
 /*
-#define msg
 */
-
+#define msg
 #include "icmake.ih"
                                          /* icmake source(txt) dest(bin) */
 int main(int argc, char **argv)
@@ -16,7 +15,7 @@ int main(int argc, char **argv)
         "do exec:       %d\n"                   \
         "remove pim:    %d\n"                   \
         "remove bim:    %d\n"                   \
-                                                \
+        "force compile: %d\n"                   \
         "imfile:        %s\n"                   \
         "pimfile:       %s\n"                   \
         "bimfile:       %s\n",                  \
@@ -28,6 +27,7 @@ int main(int argc, char **argv)
         (flags & f_doExec) != 0,                \
         (flags & f_rmPim) != 0,                 \
         (flags & f_rmBim) != 0,                 \
+        (flags & f_force) != 0,                 \
         imFile,                                 \
         pimFile,                                \
         bimFile);                               

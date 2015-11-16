@@ -4,7 +4,7 @@
     for NON-MSDOS systems ONLY
 
     Arguments:
-        path:   buffer to contain the combined name; length _MAX_PATH
+        path:   buffer to contain the combined name; length MAX_PATHLEN
                 this is NOT checked
         dir:    directory string, can be NULL or empty ("");
                 if not-empty, may have a trailing DIRSEP character

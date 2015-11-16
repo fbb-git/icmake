@@ -31,7 +31,7 @@ void fun_frame()
 
     for (idx = 0; idx < nlocals; ++idx)
     {
-        VAR_ varFrame = *constructor((ExprType)rss_getOpcode(infile));
+        Variable varFrame = *constructor((ExprType)rss_getOpcode(infile));
         push(&varFrame);
         destructor(&varFrame);
     }

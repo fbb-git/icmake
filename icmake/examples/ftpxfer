@@ -111,9 +111,9 @@ void process ()					// purpose: do the actual
     	direction, " ", file, " ", foreignfile, "\n",
     	"quit\n");
     
-    exec (P_NOCHECK, "ftp", VERBATIM, 		// do the ftp transfer
+    exec (NOT_CHECKED, "ftp", VERBATIM, 		// do the ftp transfer
         "-n -i", "< ", tmpfile);
-    exec (P_NOCHECK, "rm", tmpfile);		// remove temp file
+    exec (NOT_CHECKED, "rm", tmpfile);		// remove temp file
 }    
     
 void usage ()					// purpose: print usage info

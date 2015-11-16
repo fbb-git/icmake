@@ -1,6 +1,6 @@
 #include "int.h"
 
-int intValue(INTVAR_ const *lhs)
+int intValue(IntVariable const *lhs)
 {
     return lhs->vu.intval;
 }

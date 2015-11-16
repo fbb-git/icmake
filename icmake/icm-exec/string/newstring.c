@@ -1,8 +1,8 @@
 #include "string.ih"
 
-INTER_ *newstring(char *cp)
+TextData *newstring(char *cp)
 {
-    INTER_ *ret = malloc(sizeof(INTER_));
+    TextData *ret = malloc(sizeof(TextData));
     ret->count = 1;
     ret->ls.str = cp;
 

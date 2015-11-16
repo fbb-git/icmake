@@ -1,6 +1,6 @@
 #include "list.ih"
 
-int listLogical(LISTVAR_ const *lhs)
+int listLogical(ListVariable const *lhs)
 {
     return size(lhs);
 }

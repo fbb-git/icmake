@@ -26,7 +26,7 @@ void builtin_chDir()
                                         /* copy the destination */
     register char *dir = rss_strdup(stringStr(top() - 1)); 
     register int mode = intValue(top());    /* obtain the mode of operation */
-    char newdir[_MAX_PATH];
+    char newdir[MAX_PATHLEN];
         
     if (!*dir)                          /* destination is an empty string:  */
     {
@@ -34,13 +34,13 @@ void builtin_chDir()
         dir = rss_strdup(orgdir);       /* change to the startup dir        */
     }
 
-    if (chdir(dir) && P_CHECKMODE(mode))    /* cd to the directory          */
+    if (chdir(dir) && rss_checkMode(mode))    /* cd to the directory          */
         rss_error ("builtin_chDir - can't change dir to %s", dir);  
 
     free(dir);
     
                                         /* at the new destination: obtain   */
-    getcwd(newdir, _MAX_PATH);   /* its absolute pathname            */
+    getcwd(newdir, MAX_PATHLEN);   /* its absolute pathname            */
 
     if (newdir[strlen(newdir) - 1] != DIRSEP)   /* and append a DIRSEP      */
         strcat(newdir, dirsep);

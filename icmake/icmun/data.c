@@ -82,7 +82,7 @@ size_t
     curoffs,
     nvar;
 
-VAR_ *var;
+Variable *var;
 
 void
     (*p_procfun[])(void) =

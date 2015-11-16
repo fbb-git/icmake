@@ -36,7 +36,7 @@
     code of the if/while statement is placed beyond the truelist (possibly
     followed by the code of the 'else' part of an if-stmnt).
 
-    The runtime stack contains elements of type VAR_. When a element is popped,
+    The runtime stack contains elements of type Variable. When a element is popped,
     the type of the value and its descriptor are therefor available. push
     instructions must make sure that type and descriptors are pushed
 
@@ -87,7 +87,7 @@
     op_younger          younger
     op_older            older
 
-    op_call funnr       funnr is a byte (see enum FUNNR_)
+    op_call funnr       funnr is a byte (see enum FunNr)
     op_asp  #args       #args is a byte (asp: add stack pointer, clean stack)
                         ( NOTE on function execute: see below )
     op_exit             terminate command list processing, return
@@ -276,7 +276,7 @@ typedef enum                                /* names of rss-functions */
     /* 20 left for new opcodes until f_hlt */
 
     f_hlt = f_trimright + 21                /* dummy marker for non-existing */
-} FUNNR_;
+} FunNr;
 
                       /* reserved rss function opcodes for subreleases */
 
@@ -326,7 +326,7 @@ typedef enum
     op_shl,             /*     29     */
     op_shr,             /*     2a     */
     op_hlt = op_shr + 10/*     ..     */
-} OPCODE_;
+} Opcode;
 
 typedef struct
 {
@@ -342,44 +342,44 @@ typedef struct
         size;
     char
         **element;                          /* used as (char *) by icmcomp */
-} LIST_;
+} List;
 
 typedef union
 {
     char
         *str;                               /* address of allocated string */
-    LIST_
+    List
         list;                               /* list info of a list */
-} LS_UNION_;
+} TextFields;
 
 typedef struct
 {
     uint16_t
         count;                              /* allocation count */
-    LS_UNION_
+    TextFields
         ls;
-} INTER_;
+} TextData;
 
 typedef union
 {
     int16_t
         intval;                             /* value of an int */
-    INTER_
+    TextData
         *i;                                 /* intermediate alloc. structure */
-} VAR_UNION_;
+} VarValue;
 
 typedef struct                              /* defined variable */
 {
     ExprType
         type;                               /* maybe stringconst, int, list */
-    VAR_UNION_
+    VarValue
         vu;                                 /* value of the element */
-} VAR_;
+} Variable;
 
 struct find_t_                               /* abbreviated variant */
 {
     char
-        name[_MAX_PATH];
+        name[MAX_PATHLEN];
     unsigned
         attrib;                             /* returned attribute */
 };
@@ -461,11 +461,11 @@ int      younger (char const *, char const *);
 
 int16_t    getint16 (FILE *);
 
-OPCODE_  getopcode (FILE *);
+Opcode  getopcode (FILE *);
 
-uint16_t    getvar(FILE *, BinHeader *, VAR_ **);
+uint16_t    getvar(FILE *, BinHeader *, Variable **);
 
-void     initvar(VAR_ *);
+void     initvar(Variable *);
 
 void     msg_(char const *path, char *fmt, ...); /* prints a msg to stderr. 
                                         Use it by doing #define msg before

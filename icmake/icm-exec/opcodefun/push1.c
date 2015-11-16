@@ -11,7 +11,7 @@
 
 void fun_push_1_jmp_end ()
 {
-    INTVAR_ tmp = *intConstructor_i(1);
+    IntVariable tmp = *intConstructor_i(1);
     push(&tmp);
     intDestructor(&tmp);
 

@@ -4,11 +4,12 @@
 
 void testCompile()
 {
-    char buffer[_MAX_PATH];
+    char buffer[MAX_PATHLEN];
     BinHeader hdr;
-
-    if (!rss_exists(bimFile))           /* no bimfile yet       */
-        return;                         /* so compilation is required */
+                                    /* forced compilation or no bimfile yet */
+                                    /* then compilation is required         */
+    if (flags & f_force || !rss_exists(bimFile)) 
+        return;
 
     if (!(fdest = fopen(bimFile, "rb")))    /* bimfile exists: open it */
         rss_error("Can't read `%s'", bimFile);
@@ -20,7 +21,7 @@ void testCompile()
 
     fseek(fdest, hdr.offset[2], SEEK_SET);  /* go to filenames area */
 
-    while (fgets(buffer, _MAX_PATH, fdest)) /* read the next filename */
+    while (fgets(buffer, MAX_PATHLEN, fdest)) /* read the next filename */
     {
         buffer[strlen(buffer) - 1] = 0;     /* remove \n */
         if (rss_younger(buffer, bimFile))   /* a source name is younger */

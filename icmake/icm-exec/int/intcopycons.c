@@ -1,8 +1,8 @@
 #include "int.h"
 
-INTVAR_ *intCopyCons(INTVAR_ const *other)
+IntVariable *intCopyCons(IntVariable const *other)
 {
-    static INTVAR_ ret = {e_int, {0}};
+    static IntVariable ret = {e_int, {0}};
 
     intSetValue(&ret, intValue(other));
 

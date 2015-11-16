@@ -1,6 +1,6 @@
 #include "int.h"
 
-int intLogical(INTVAR_ const *lhs)
+int intLogical(IntVariable const *lhs)
 {
     return lhs->vu.intval;
 }

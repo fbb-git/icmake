@@ -25,4 +25,4 @@ extern char        *bimname;
 
 void    abnormal(int sig, int subcode);
 void    cleanup(void);
-void    environ2list(LISTVAR_ *list);
+void    environ2list(ListVariable *list);

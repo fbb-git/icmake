@@ -1,6 +1,6 @@
 #include "list.ih"
 
-void listCompare(LISTVAR_ *lhs, LISTVAR_ const *rhs)
+void listCompare(ListVariable *lhs, ListVariable const *rhs)
 {
     int ret = 0;
 

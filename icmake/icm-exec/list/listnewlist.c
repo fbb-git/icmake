@@ -1,10 +1,10 @@
 #include "list.ih"
 
-INTER_ *newlist()
+TextData *newlist()
 {
-    INTER_ *ret = malloc(sizeof(INTER_));
+    TextData *ret = malloc(sizeof(TextData));
     ret->count = 1;
-    memset(&ret->ls, 0, sizeof(LIST_));
+    memset(&ret->ls, 0, sizeof(List));
 
     return ret;
 }

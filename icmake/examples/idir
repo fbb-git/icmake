@@ -78,7 +78,7 @@ void show (string filemask)
     	i;
     	
     printf ("\n", filemask, ": "); 
-    if (! (files = makelist (O_ALL, filemask)) )
+    if (! (files = makelist (IS_ALL, filemask)) )
     {
     	printf ("not found\n");
     	return;
@@ -88,7 +88,7 @@ void show (string filemask)
     for (i = 0; i < sizeof (files); i++)
     {
     	file = element (i, files);
-    	if (! (statbuf = stat (P_NOCHECK, file)))
+    	if (! (statbuf = stat (NOT_CHECKED, file)))
     	    printf ("    can't stat ", file, "\n");
     	else
     	    showatt (file, statbuf);

@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-int p_testBinOp(OPCODE_ opcode, SemVal *lval, SemVal *rval)
+int p_testBinOp(Opcode opcode, SemVal *lval, SemVal *rval)
 {
     register int ret;
 

@@ -4,7 +4,7 @@ SemVal *p_specials(ExprType type, SemVal *marg)  /* array of arguments */
 {
     register size_t count;
 
-    if ((FUNNR_)type == f_execute)
+    if ((FunNr)type == f_execute)
         return(p_execute(marg));              /* full list of arguments */
 
     count = marg->type;                     /* count # of arguments */

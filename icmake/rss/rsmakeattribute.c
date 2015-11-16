@@ -9,16 +9,16 @@ int rs_makeAttribute(char *fname)            /* make DOS attribs */
         return 0xdead;                        /* dead flag return */
 
     if (S_ISDIR(statbuf.st_mode))               /* directory entry */
-        ret |= A_SUBDIR;
+        ret |= SUBDIR;
 
     if (!(statbuf.st_mode & S_IWUSR))           /* S_IWRITE: not POSIX */
-        ret |= A_RDONLY;                        /* non-writable entry */
+        ret |= READONLY_FILE;                        /* non-writable entry */
 
     if (*fname == '.' &&                        /* .file */
         strcmp(fname, ".") &&
         strcmp(fname, "..")
        )
-        ret |= A_HIDDEN;
+        ret |= HIDDEN_FILE;
 
     return ret;                               /* return attrib */
 }

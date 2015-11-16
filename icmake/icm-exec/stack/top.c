@@ -1,6 +1,6 @@
 #include "stack.ih"
 
-VAR_ *top()
+Variable *top()
 {
     stacktestunderflow();
     return stack + sp - 1;

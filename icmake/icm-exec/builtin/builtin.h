@@ -10,7 +10,7 @@ extern char        *argtail;
 extern char        *cmdhead;
 extern char        *cmdtail;
 
-extern VAR_         reg;
+extern Variable         reg;
 
 void builtin(size_t funnr);
 

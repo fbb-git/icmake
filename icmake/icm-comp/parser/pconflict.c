@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-int p_conflict(SemVal *lval, SemVal *rval, OPCODE_ opcode) 
+int p_conflict(SemVal *lval, SemVal *rval, Opcode opcode) 
 {
     register int ret;
 

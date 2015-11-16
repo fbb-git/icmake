@@ -13,7 +13,7 @@ SemVal *p_fprintf(ExprType type, SemVal *args)
 
     e0 = codestruc(args, 0);                /* pointer to first arg */
 
-    switch ((FUNNR_)type)
+    switch ((FunNr)type)
     {
         case f_fprintf:                     /* first arg must be string */
             ok = test_type(e0, e_str);

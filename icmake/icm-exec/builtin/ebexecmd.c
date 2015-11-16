@@ -54,10 +54,10 @@ int mode;
     fflush(stdout);
     
                         /* try to builtin_execute */
-    ret = eb_spawnvp(P_WAIT, cmd [0], (char const **)cmd);
+    ret = eb_spawnvp(WAIT, cmd [0], (char const **)cmd);
     
                             /* if non-zero return and */
-    if (ret && P_CHECKMODE(mode))      /* if checking requested.. */
+    if (ret && rss_checkMode(mode))      /* if checking requested.. */
         rss_error("builtin_execute - program indicates failure (status %d)", 
                                                                         ret);
 

@@ -3,7 +3,7 @@
 
 #include "parser.ih"
 
-SemVal *p_incDec(PREPOST_ pp, OPCODE_ opcode, SemVal *e)
+SemVal *p_incDec(PREPOST_ pp, Opcode opcode, SemVal *e)
 {
     register size_t varnr;
 

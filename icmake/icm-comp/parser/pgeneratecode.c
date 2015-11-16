@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void p_generateCode(SemVal *e, OPCODE_ opcode, ...)
+void p_generateCode(SemVal *e, Opcode opcode, ...)
 {
     register size_t idx;
     int marker_value;

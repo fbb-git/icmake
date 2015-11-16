@@ -22,7 +22,7 @@ void fun_itoa()
     sprintf(buffer, "%d", intValue(top()));
 
     {
-        VAR_ str = *stringConstructor_cP(buffer);
+        Variable str = *stringConstructor_cP(buffer);
         assign(top(), &str);
         stringDestructor(&str);
     }

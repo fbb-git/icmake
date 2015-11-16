@@ -23,7 +23,7 @@
 void fun_call ()
 {
     uint16_t offs = rss_getInt16(infile);
-    VAR_ ra = *intConstructor_i(ftell(infile));
+    Variable ra = *intConstructor_i(ftell(infile));
 
     push(&ra);
     pushBP();

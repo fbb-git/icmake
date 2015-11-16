@@ -11,7 +11,7 @@
 
 #include "rss.ih"
 
-OPCODE_ rss_getOpcode (FILE *f)
+Opcode rss_getOpcode (FILE *f)
 {
     char op = 0;
 
@@ -20,5 +20,5 @@ OPCODE_ rss_getOpcode (FILE *f)
 
     msg("next opcode: 0x%x", op);
 
-    return (OPCODE_) op;
+    return (Opcode) op;
 }

@@ -1,6 +1,6 @@
 #include "list.ih"
 
-int listContains(LISTVAR_ *lhs, char const *str)
+int listContains(ListVariable *lhs, char const *str)
 {
     size_t idx;
 

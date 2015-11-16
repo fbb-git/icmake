@@ -30,7 +30,7 @@
 
         {\em fun\_builtin_exec()} initializes an array of command strings and
         retrieves arguments. When the length of the command list is about to
-        exceed {\em MAXCMDLEN} (see {\em icm.h}), the command is flushed by
+        exceed {\em MAX_CMDLEN} (see {\em icm.h}), the command is flushed by
         calling {\em eb_exeCmd()}.
 
     }
@@ -86,7 +86,7 @@ void builtin_exec ()
 
         nextarglen = strlen(nextarg);
         cmdlen = eb_getCmdLen(cmd);
-        if (cmdlen + nextarglen + strlen(cmdtail) >= MAXCMDLEN)
+        if (cmdlen + nextarglen + strlen(cmdtail) >= MAX_CMDLEN)
         {
             cmd = eb_exeCmd (cmd, mode);
             cmd = initcmd (cmd);

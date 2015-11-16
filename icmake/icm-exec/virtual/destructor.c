@@ -1,6 +1,6 @@
 #include "virtual.ih"
 
-void destructor(VAR_ *lhs)
+void destructor(Variable *lhs)
 {
     p_destructor[typeIdx(lhs)](lhs);
 }

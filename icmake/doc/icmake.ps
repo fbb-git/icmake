@@ -3227,7 +3227,7 @@ h(c)o(ommand)g(line)f(t)o(o)h(pr)o(e)o(v)o(ent)h(the)e(libr)o(ar)o(y)
 (name)g(et)o(c..)154 937 y Fe(list)225 977 y(objfiles;)154
 1055 y(//)18 b(objfiles)e(is)h(set)g(to)g(a)h(list)f(of)g(all)g
 (objects)154 1095 y(objfiles)f(=)i(makelist)e(\("*.obj"\);)154
-1174 y(execute)g(\(0,)195 b(//)18 b(P_CHECK)314 1213
+1174 y(execute)g(\(0,)195 b(//)18 b(REQUIRE_ZERO)314 1213
 y("lib",)123 b(//)18 b(the)f(program)f(name)314 1253
 y("prog.lib",)33 b(//)18 b(the)f(command)f(head)314 1292
 y("-+",)141 b(//)18 b(the)f(argument)f(head:)g(replacement)314
@@ -3457,7 +3457,7 @@ g(")p Fo(\003)p Fq(")f(under)g(UNIX)g(will)g(fail)f(t)o(o)j(\014nd)d
 (a)h(dot.)-18 89 y(Ex)o(ample:)154 155 y Fe(list)225
 194 y(l;)154 273 y(l)18 b(=)f(makelist)f(\("*.c"\);)154
 313 y(printf)h(\("All)f(found)h(*.c)g(files)g(are:)g(",)314
-352 y(l,)h("\\n"\);)154 391 y(l)g(=)f(makelist)f(\(O_SUBDIR,)g
+352 y(l,)h("\\n"\);)154 391 y(l)g(=)f(makelist)f(\(IS_SUBDIR,)g
 ("*.*"\);)154 431 y(printf)h(\("All)f(found)h(subdirectories)e(are:)i
 (",)314 470 y(l,)h("\\n"\);)-59 615 y Fn(makelist)-59
 691 y Fq(The)13 b(function)f Fp(mak)o(elist\(\))i Fq(furthermor)o(e)h

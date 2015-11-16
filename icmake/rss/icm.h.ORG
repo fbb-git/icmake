@@ -8,34 +8,34 @@
 */
 
 /*************************************************************************
-    define MAXCMDLEN:  the max command line length
+    define MAX_CMDLEN:  the max command line length
 */
 
-#define MAXCMDLEN   500
+#define MAX_CMDLEN   500
 
 /*************************************************************************
-    P_CHECK value for implied function argument of system, chdir, etc
-    P_NOCHECK when not checking
-    P_CHECKMODE(int mode) is true when mode indicates checking
+    REQUIRE_ZERO value for implied function argument of system, chdir, etc
+    NOT_CHECKED when not checking
+    rss_checkMode(int mode) is true when mode indicates checking
 */
-#ifndef P_CHECK
-#    define P_CHECK                 0
+#ifndef REQUIRE_ZERO
+#    define REQUIRE_ZERO                 0
 #endif
-#ifndef P_NOCHECK
-#    define P_NOCHECK               2
+#ifndef NOT_CHECKED
+#    define NOT_CHECKED               2
 #endif
-#ifndef P_CHECKMODE
-#    define P_CHECKMODE(x)          (! ((x) & P_NOCHECK) )
+#ifndef rss_checkMode
+#    define rss_checkMode(x)          (! ((x) & NOT_CHECKED) )
 #endif
 
 /*************************************************************************
      directory objects
 */
 
-#define O_FILE                      1
-#define O_DIR                       2
-#define O_SUBDIR                    4
-#define O_ALL                       8
+#define IS_FILE                      1
+#define IS_DIR                       2
+#define IS_SUBDIR                    4
+#define IS_ALL                       8
 
 /*************************************************************************
      IS_ attributes
@@ -52,47 +52,47 @@
      file attributes
 */
 
-#ifndef A_NORMAL
-#    define A_NORMAL                0x00
+#ifndef NORMAL_FILE
+#    define NORMAL_FILE                0x00
 #endif
 
-#ifndef A_RDONLY
-#    define A_RDONLY                0x01
+#ifndef READONLY_FILE
+#    define READONLY_FILE                0x01
 #endif
 
-#ifndef A_HIDDEN
-#    define A_HIDDEN                0x02
+#ifndef HIDDEN_FILE
+#    define HIDDEN_FILE                0x02
 #endif
 
-#ifndef A_SYSTEM
-#    define A_SYSTEM                0x04
+#ifndef SYSTEM_FILE
+#    define SYSTEM_FILE                0x04
 #endif
 
-#ifndef A_VOLID
-#    define A_VOLID                 0x08
+#ifndef VOLUME_ID
+#    define VOLUME_ID                 0x08
 #endif
 
-#ifndef A_SUBDIR
-#    define A_SUBDIR                0x10
+#ifndef SUBDIR
+#    define SUBDIR                0x10
 #endif
 
-#ifndef A_ARCH
-#    define A_ARCH                  0x20
+#ifndef ARCHIVED
+#    define ARCHIVED                  0x20
 #endif
 
 /**************************************************************************
     UNIX specific macros
 */
 
-#ifndef P_WAIT
-#define P_WAIT                      0
+#ifndef WAIT
+#define WAIT                      0
 #endif
 
-#define _MAX_PATH               260
+#define MAX_PATHLEN               260
 #define _MAX_DRIVE              2
-#define _MAX_DIR                _MAX_PATH
-#define _MAX_FNAME              _MAX_PATH
-#define _MAX_EXT                _MAX_PATH
+#define MAX_PATHLEN                MAX_PATHLEN
+#define MAX_PATHLEN              MAX_PATHLEN
+#define MAX_PATHLEN                MAX_PATHLEN
 #define DIRSEP                  '/'
 #define DRIVESEP                0
 #define int32_t                   signed int

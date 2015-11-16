@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-int p_testOperand(SemVal *e, OPCODE_ opcode)
+int p_testOperand(SemVal *e, Opcode opcode)
 {
     register int ret;
 

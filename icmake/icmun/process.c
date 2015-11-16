@@ -2,7 +2,7 @@
 
 void process()
 {
-    register OPCODE_ op;
+    register Opcode op;
     register size_t i;
     int32_t oldoffs;
     static char buf[200];
@@ -47,7 +47,7 @@ void process()
     while ((curoffs =(size_t)ftell(infile)) <(size_t)headerp->offset[0] )
     {
         if ((op = rss_getOpcode(infile)) < op_hlt &&
-             op != (OPCODE_)-1
+             op != (Opcode)-1
            )
         {
             printf("\t[%s] ", rss_hexString(curoffs, 4));

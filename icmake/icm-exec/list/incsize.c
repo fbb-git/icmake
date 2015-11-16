@@ -1,6 +1,6 @@
 #include "list.ih"
 
-void incsize(LISTVAR_ *list)
+void incsize(ListVariable *list)
 {
     ++size(list);
 }

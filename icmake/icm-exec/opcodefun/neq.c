@@ -17,7 +17,7 @@
 
 void fun_neq ()
 {
-    VAR_ rval = *copyCons(top());
+    Variable rval = *copyCons(top());
 
     pop();
 

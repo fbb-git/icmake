@@ -4,7 +4,7 @@ int spawnlp(int mode, char const *prog, char const *av0, ...)
 {
     va_list marker;
     register char *nextarg;
-    char buf[_MAX_PATH * 4];
+    char buf[MAX_PATHLEN * 4];
 
     strcpy(buf, prog);
 

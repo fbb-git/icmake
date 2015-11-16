@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void p_binOp(SemVal *lval, SemVal *rval, OPCODE_ opcode)
+void p_binOp(SemVal *lval, SemVal *rval, Opcode opcode)
 {
     p_expr2stack(lval);                     /* convert to code */
     p_expr2stack(rval);

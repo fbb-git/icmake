@@ -328,29 +328,29 @@ younger                 {
                             return NUMBER;
                         }
 OFF         |
-P_CHECK                 {
+REQUIRE_ZERO                 {
                             util_setString("0");
                             return NUMBER;
                         }
 S_IFDIR     |
-O_FILE      |
+IS_FILE      |
 ON                      {
                             util_setString("1");
                             return NUMBER;
                         }
 S_IFCHR     |
-P_NOCHECK   |
-O_DIR                   {
+NOT_CHECKED   |
+IS_DIR                   {
                             util_setString("2");
                             return NUMBER;
                         }
 S_IFREG     |
-O_SUBDIR                {
+IS_SUBDIR                {
                             util_setString("4");
                             return NUMBER;
                         }
 S_IREAD     |
-O_ALL                   {
+IS_ALL                   {
                             util_setString("8");
                             return NUMBER;
                         }

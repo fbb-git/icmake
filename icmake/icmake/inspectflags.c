@@ -12,7 +12,7 @@ void inspectFlags(char const *program, char **argv)
     if ((test & (test - 1)))    /* not a power of 2 -> multiple options */
         rss_error("multiple options are not supported");
 
-    if (flags == 0)
+    if (flags == 0 || flags == f_force)
         noOptions(argv);
 }
 

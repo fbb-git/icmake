@@ -37,11 +37,11 @@
 
 #include "rss.ih"
 
-void rss_initVar (VAR_ *v)
+void rss_initVar (Variable *v)
 {
     if ( (v->type & (e_str | e_list)) && ! v->vu.i )
     {
-        v->vu.i = rss_realloc (NULL, sizeof (INTER_));
+        v->vu.i = rss_realloc (NULL, sizeof (TextData));
         v->vu.i->count = 1;
         v->vu.i->ls.list.size = 0;
         v->vu.i->ls.list.element = NULL;

@@ -1,7 +1,7 @@
 #include "int.h"
 
-INTVAR_ *intConstructor()
+IntVariable *intConstructor()
 {
-    static INTVAR_ ret = {e_int, {0}};
+    static IntVariable ret = {e_int, {0}};
     return &ret;
 }

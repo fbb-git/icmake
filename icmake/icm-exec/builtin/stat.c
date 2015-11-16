@@ -37,7 +37,7 @@ void builtin_stat()
 
     if (stat (fname, &statbuf))                 /* do stat call */
     {                                           /* failure to stat? */
-        if (P_CHECKMODE (mode))                 /* if mode indicates abort..*/
+        if (rss_checkMode (mode))                 /* if mode indicates abort..*/
             rss_error ("stat - unable to stat file %s", fname);
 
         return;                                 /* no checking: return */

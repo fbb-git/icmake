@@ -1,6 +1,6 @@
 #include "int.ih"
 
-void intAdd(VAR_ *lhs, VAR_ const *rhs)
+void intAdd(Variable *lhs, Variable const *rhs)
 {
     intSetValue(lhs, intValue(lhs) + intValue(rhs));
 }

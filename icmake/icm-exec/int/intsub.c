@@ -1,6 +1,6 @@
 #include "int.ih"
 
-void intSub(VAR_ *lhs, VAR_ const *rhs)
+void intSub(Variable *lhs, Variable const *rhs)
 {
     intSetValue(lhs, intValue(lhs) - intValue(rhs));
 }

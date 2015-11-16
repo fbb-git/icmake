@@ -6,7 +6,7 @@
 extern size_t     curoffs;
 extern char         orgdir[];
 extern FILE        *infile;
-extern VAR_        *var;
+extern Variable        *var;
 extern int          retval;
 extern BinHeader *headerp;
 

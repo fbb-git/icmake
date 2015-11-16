@@ -1,6 +1,6 @@
 #include "builtin.ih"
 
-VAR_            reg;
+Variable            reg;
 
 int echo = 1;
 size_t listIndex;           /* eb_getArg.c, noformatting.c */

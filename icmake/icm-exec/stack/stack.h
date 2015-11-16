@@ -3,13 +3,13 @@
 
 #include "../../rss/rss.h"
 
-void    push(VAR_ const *var);
+void    push(Variable const *var);
 void    pushBP(void);
 
 void    pop(void);
 void    popBP(void);
-VAR_   *top(void);
+Variable   *top(void);
 
-VAR_   *local(int index);
+Variable   *local(int index);
 
 #endif

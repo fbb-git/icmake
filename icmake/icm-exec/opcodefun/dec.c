@@ -18,7 +18,7 @@
 
 void fun_dec ()
 {
-    register VAR_ *dest = getdest();
+    register Variable *dest = getdest();
 
     intSetValue(dest, intValue(dest) - 1);
 }

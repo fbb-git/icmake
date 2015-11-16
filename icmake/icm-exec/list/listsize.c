@@ -1,6 +1,6 @@
 #include "list.ih"
 
-size_t listSize(LISTVAR_ const *list)
+size_t listSize(ListVariable const *list)
 {
     return size(list);
 }

@@ -15,7 +15,7 @@
 
 extern void       (*p_procfun[])(void);
 
-VAR_   *getdest(void);
+Variable   *getdest(void);
 int     istrue(void);
 
 void fun_call(void);

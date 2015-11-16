@@ -10,7 +10,7 @@
 
 #include "opcodefun.ih"
 
-VAR_ *getdest()
+Variable *getdest()
 {
     int index = rss_getInt16(infile);
 

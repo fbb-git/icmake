@@ -257,16 +257,16 @@ manpagesection(PREDEFINED SYMBOLS)
         rowline()
         row(cell(symbol)cell(value)cell(intended for))
         rowline()
-        row(cell(O_ALL)cell(8)cell(makelist))
-        row(cell(O_DIR)cell(2)cell(makelist))
-        row(cell(O_FILE)cell(1)cell(makelist))
-        row(cell(O_SUBDIR)cell(4)cell(makelist))
+        row(cell(IS_ALL)cell(8)cell(makelist))
+        row(cell(IS_DIR)cell(2)cell(makelist))
+        row(cell(IS_FILE)cell(1)cell(makelist))
+        row(cell(IS_SUBDIR)cell(4)cell(makelist))
         rowline()
         row(cell(OFF)cell(0)cell(echo))
         row(cell(ON)cell(1)cell(echo))
         rowline()
-        row(cell(P_CHECK)cell(0)cell(system calls))
-        row(cell(P_NOCHECK)cell(1)cell(system calls))
+        row(cell(REQUIRE_ZERO)cell(0)cell(system calls))
+        row(cell(NOT_CHECKED)cell(1)cell(system calls))
         rowline()
         row(cell(S_IEXEC)cell(32)cell(stat))
         row(cell(S_IFCHR)cell(1)cell(stat))
@@ -489,7 +489,7 @@ provided:
         specified tt(newdir) does not exist.
     itt(string chdir(int checking, string newdir))nl()
         Same functionality as the previous function, but by specifying
-        tt(checking) as tt(P_NOCHECK) the function won't terminate the
+        tt(checking) as tt(NOT_CHECKED) the function won't terminate the
         script. Rather, it will return the script's current working
         directory. 
     )
@@ -538,7 +538,7 @@ provided:
         tt(cmd). 0 is returned.
     itt(exec(int checkcmd, string cmd, ...))nl()
         Same functionality as the previous function, but by specifying
-        tt(checking) as tt(P_NOCHECK) the function won't terminate the
+        tt(checking) as tt(NOT_CHECKED) the function won't terminate the
         script. Rather, it will return the called command's exit status, or
         tt(0x7f00) if the command wasn't found.
     itt(execute(string cmd, string cmdhd,
@@ -552,7 +552,7 @@ provided:
     itt(execute(int checking, string cmd, string cmdhd,
             string arghd, ..., string argtl, string cmdtl))nl()
         Same functionality as the previous function, but by specifying
-        tt(checking) as tt(P_NOCHECK) the function won't terminate the
+        tt(checking) as tt(NOT_CHECKED) the function won't terminate the
         script. Rather, it will return the called command's exit status, or
         tt(0x7f00) if the command wasn't found.
     itt(int system(string command))nl()
@@ -561,7 +561,7 @@ provided:
         and/or piping characters.
     itt(int system(int checking, string command))nl()
         Same functionality as the previous function, but by specifying
-        tt(checking) as tt(P_NOCHECK) the function won't terminate the
+        tt(checking) as tt(NOT_CHECKED) the function won't terminate the
         script. Rather, it will return the called command's exit status, or
         tt(0x7f00) if the command wasn't found.
     )
@@ -697,7 +697,7 @@ provided:
         See the bf(stat)(2) manual page for the meanings of these constants.
     itt(list stat(checking, string entry))nl()
        Same as the previous function, but by specifying tt(checking) as
-        tt(P_NOCHECK) the function won't terminate the script. Rather, it will
+        tt(NOT_CHECKED) the function won't terminate the script. Rather, it will
         rturn bf(stat)(2)'s return value.
     )
 
@@ -715,10 +715,10 @@ provided:
         rowline()
         row(cell(symbol)cell(meaning))
         rowline()
-        row(cell(O_ALL)cell(obtain all directory entries))
-        row(cell(O_DIR)cell(obtain all directories, including . and ..))
-        row(cell(O_FILE)cell(obtain a list of files))
-        row(cell(O_SUBDIR)cell(obtain all subdirectories))
+        row(cell(IS_ALL)cell(obtain all directory entries))
+        row(cell(IS_DIR)cell(obtain all directories, including . and ..))
+        row(cell(IS_FILE)cell(obtain a list of files))
+        row(cell(IS_SUBDIR)cell(obtain all subdirectories))
         rowline()
     )
     Note that the pattern tt(*) will not match hidden entries under Unix-type
@@ -728,7 +728,7 @@ provided:
         than a provided comparefile. Operator tt(younger) may be used instead
         of tt(newer). Note that tt(newer) and tt(younger) are operators, not
         strings. 
-    itt(list makelist([int = O_FILE,] string mask, newer,
+    itt(list makelist([int = IS_FILE,] string mask, newer,
              string comparefile))nl()
         Same as the previous function, but tt(type) may be specified as in
         tt(list makelist(type, string mask)).

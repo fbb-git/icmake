@@ -39,7 +39,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    getcwd(orgdir, _MAX_PATH);          /* initialize the CWD */
+    getcwd(orgdir, MAX_PATHLEN);          /* initialize the CWD */
 
     if (!strcmp(argv[1], "-t"))           /* -t option found */
     {
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
     fseek(infile, headerp->offset[3], SEEK_SET);
 
     {
-        LISTVAR_ env = *listConstructor();
+        ListVariable env = *listConstructor();
 
         environ2list(&env);
         push(&env);             /* envp: 3rd arg of main() */
@@ -85,13 +85,13 @@ int main(int argc, char **argv)
     }
 
     {
-        LISTVAR_ args = *listConstructor_s_cPP((size_t)argc, argv);
+        ListVariable args = *listConstructor_s_cPP((size_t)argc, argv);
         push(&args);            /* argv: 2nd arg of main() */
         listDestructor(&args);
     }
 
     {
-        INTVAR_ nArgs = *intConstructor_i(argc - 1);
+        IntVariable nArgs = *intConstructor_i(argc - 1);
         push(&nArgs);           /* argc: 1st arg of main() */
     }
 

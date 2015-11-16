@@ -2,12 +2,12 @@
     With the MS-DOS implementation the received attribute is compared
     to the request:
 
-    O_FILE:     accepts only A_NORMAL, A_ARCH/A_READ with A_NORMAL accepted
-    O_DIR:      accepts only A_SUBDIR
-    O_SUBDIR:   accepts only A_SUBDIR, but not the . and ..
-    O_ALL:      accepts all
+    IS_FILE:     accepts only NORMAL_FILE, ARCHIVED/A_READ with NORMAL_FILE accepted
+    IS_DIR:      accepts only SUBDIR
+    IS_SUBDIR:   accepts only SUBDIR, but not the . and ..
+    IS_ALL:      accepts all
 
-    Not yet supported: O_VOLID:    accepts A_VOLID
+    Not yet supported: O_VOLID:    accepts VOLUME_ID
 
 */
 
@@ -30,39 +30,39 @@ char *rs_fileFound()
         !                                   /* if not: */
         (
             (
-             (request & O_FILE)             /* FILE requested, and */
+             (request & IS_FILE)             /* FILE requested, and */
              &&                             /* an attribute received  */
              !                              /* indicating that it's no file */
              (
                  received &
-                 (A_SUBDIR | A_HIDDEN | A_SYSTEM | A_VOLID)
+                 (SUBDIR | HIDDEN_FILE | SYSTEM_FILE | VOLUME_ID)
              )
             )
             ||
             (
-             (request & (O_SUBDIR | O_DIR)) /* OR: any subdir requested */
-             &&                             /* and A_SUBDIR received */
-             (received & A_SUBDIR)
+             (request & (IS_SUBDIR | IS_DIR)) /* OR: any subdir requested */
+             &&                             /* and SUBDIR received */
+             (received & SUBDIR)
             )
             ||
             (
-             (request & O_ALL)              /* OR: ALL requested */
+             (request & IS_ALL)              /* OR: ALL requested */
              &&                             /* and not volume label received */
-             !(received & A_VOLID)
+             !(received & VOLUME_ID)
             )
         )
     )
         return (NULL);                      /* then reject the entry */
 
 
-    /* Second part: O_SUBDIR (overruled by O_ALL / O_DIR)   */
+    /* Second part: IS_SUBDIR (overruled by IS_ALL / IS_DIR)   */
     /*              entries '.' and '..' are rejected       */
 
     if
     (
-        !(request & (O_DIR | O_ALL))        /* not O_DIR / O_ALL requested, */
+        !(request & (IS_DIR | IS_ALL))        /* not IS_DIR / IS_ALL requested, */
         &&                                  /* AND */
-        (request & O_SUBDIR)                /* clean subdir requested */
+        (request & IS_SUBDIR)                /* clean subdir requested */
         &&                                  /* AND */
         (
             !strcmp(gr_ifs.find.name, ".")     /* . or .. found */

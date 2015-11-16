@@ -126,7 +126,7 @@ void process(int argc, list argv)
                                             " 2>/dev/null"; 
 
     if (!debug)
-        system(P_NOCHECK, cmd);
+        system(NOT_CHECKED, cmd);
     else
         printf(cmd, "\n");
 }

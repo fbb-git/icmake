@@ -17,7 +17,7 @@
 
 void fun_push_0 ()
 {
-    INTVAR_ tmp = *intConstructor_i(0);
+    IntVariable tmp = *intConstructor_i(0);
     push(&tmp);
     intDestructor(&tmp);
 }

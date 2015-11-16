@@ -21,7 +21,7 @@
 void fun_younger ()
 {
     int ret;
-    VAR_ rval = *copyCons(top());
+    Variable rval = *copyCons(top());
 
     pop();
 

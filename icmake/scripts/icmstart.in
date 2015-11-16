@@ -52,12 +52,12 @@ void die(string s)
 
 int isFileOrDir(string s)
 {
-    return (int)stat(P_NOCHECK, s)[0] & (S_IFREG | S_IFDIR);
+    return (int)stat(NOT_CHECKED, s)[0] & (S_IFREG | S_IFDIR);
 }
 
 int isFile(string s)
 {
-    return (int)stat(P_NOCHECK, s)[0] & S_IFREG;
+    return (int)stat(NOT_CHECKED, s)[0] & S_IFREG;
 }
 
 void syscall(string command)
@@ -339,7 +339,7 @@ void install_version()
 
     if (install(str))
     {
-        system(P_NOCHECK, "rm -f " + g_destpath + "VERSION");
+        system(NOT_CHECKED, "rm -f " + g_destpath + "VERSION");
         install_conf("AUTHOR",  "");
         install_conf("VERSION", "0.00.00");
 

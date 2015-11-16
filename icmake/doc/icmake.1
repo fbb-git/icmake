@@ -318,14 +318,14 @@ lll
 ---
 c.
 symbol~value~intended for
-O_ALL~8~makelist
-O_DIR~2~makelist
-O_FILE~1~makelist
-O_SUBDIR~4~makelist
+IS_ALL~8~makelist
+IS_DIR~2~makelist
+IS_FILE~1~makelist
+IS_SUBDIR~4~makelist
 OFF~0~echo
 ON~1~echo
-P_CHECK~0~system calls
-P_NOCHECK~1~system calls
+REQUIRE_ZERO~0~system calls
+NOT_CHECKED~1~system calls
 S_IEXEC~32~stat
 S_IFCHR~1~stat
 S_IFDIR~2~stat        
@@ -617,7 +617,7 @@ specified \fInewdir\fP does not exist\&.
 \fIstring chdir(int checking, string newdir)\fP
 .br 
 Same functionality as the previous function, but by specifying
-\fIchecking\fP as \fIP_NOCHECK\fP the function won\(cq\&t terminate the
+\fIchecking\fP as \fINOT_CHECKED\fP the function won\(cq\&t terminate the
 script\&. Rather, it will return the script\(cq\&s current working
 directory\&. 
 
@@ -676,7 +676,7 @@ blanks) and \fIcmdtail()\fP\(cq\&s contents are appended to the arguments
 \fIexec(int checkcmd, string cmd, \&.\&.\&.)\fP
 .br 
 Same functionality as the previous function, but by specifying
-\fIchecking\fP as \fIP_NOCHECK\fP the function won\(cq\&t terminate the
+\fIchecking\fP as \fINOT_CHECKED\fP the function won\(cq\&t terminate the
 script\&. Rather, it will return the called command\(cq\&s exit status, or
 \fI0x7f00\fP if the command wasn\(cq\&t found\&.
 .IP o 
@@ -694,7 +694,7 @@ with \fIcmdtl\fP\&. 0 is returned
 string arghd, \&.\&.\&., string argtl, string cmdtl)\fP
 .br 
 Same functionality as the previous function, but by specifying
-\fIchecking\fP as \fIP_NOCHECK\fP the function won\(cq\&t terminate the
+\fIchecking\fP as \fINOT_CHECKED\fP the function won\(cq\&t terminate the
 script\&. Rather, it will return the called command\(cq\&s exit status, or
 \fI0x7f00\fP if the command wasn\(cq\&t found\&.
 )
@@ -855,10 +855,10 @@ ll
 
 c.
 symbol~meaning~
-O_ALL~obtain all directory entries~
-O_DIR~obtain all directories, including \&. and \&.\&.~
-O_FILE~obtain a list of files~
-O_SUBDIR~obtain all subdirectories~
+IS_ALL~obtain all directory entries~
+IS_DIR~obtain all directories, including \&. and \&.\&.~
+IS_FILE~obtain a list of files~
+IS_SUBDIR~obtain all subdirectories~
 
 .TE 
 Note that the pattern \fI*\fP will not match hidden entries under Unix\-type
@@ -871,7 +871,7 @@ than a provided comparefile\&. Operator \fIyounger\fP may be used instead
 of \fInewer\fP\&. Note that \fInewer\fP and \fIyounger\fP are operators, not
 strings\&. 
 .IP o 
-\fIlist makelist([int = O_FILE,] string mask, newer,
+\fIlist makelist([int = IS_FILE,] string mask, newer,
 string comparefile)\fP
 .br 
 Same as the previous function, but \fItype\fP may be specified as in
@@ -932,7 +932,7 @@ See the \fBstat\fP(2) manual page for the meanings of these constants\&.
 \fIlist stat(checking, string entry)\fP
 .br 
 Same as the previous function, but by specifying \fIchecking\fP as
-\fIP_NOCHECK\fP the function won\(cq\&t terminate the script\&. Rather, it will
+\fINOT_CHECKED\fP the function won\(cq\&t terminate the script\&. Rather, it will
 rturn \fBstat\fP(2)\(cq\&s return value\&.
 
 .PP 
@@ -983,7 +983,7 @@ and/or piping characters\&.
 \fIint system(int checking, string command)\fP
 .br 
 Same functionality as the previous function, but by specifying
-\fIchecking\fP as \fIP_NOCHECK\fP the function won\(cq\&t terminate the
+\fIchecking\fP as \fINOT_CHECKED\fP the function won\(cq\&t terminate the
 script\&. Rather, it will return the called command\(cq\&s exit status, or
 \fI0x7f00\fP if the command wasn\(cq\&t found\&.
 )

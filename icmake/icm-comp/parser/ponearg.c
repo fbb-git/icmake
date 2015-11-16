@@ -8,7 +8,7 @@ SemVal *p_oneArg(ExprType type, SemVal *arg)
 
     p_expr2stack(arg);                               /* arg to stack */
 
-    switch ((FUNNR_)type)
+    switch ((FunNr)type)
     {
         case f_ascii_int:
             if ( (ok = test_type(arg, e_str | e_int)) )

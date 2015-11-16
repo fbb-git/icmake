@@ -10,7 +10,7 @@
 
 void fun_push_imm ()
 {
-    INTVAR_ tmp = *intConstructor_i(rss_getInt16(infile));
+    IntVariable tmp = *intConstructor_i(rss_getInt16(infile));
 
     push(&tmp);
     intDestructor(&tmp);

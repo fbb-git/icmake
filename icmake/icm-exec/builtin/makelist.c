@@ -20,10 +20,10 @@ void builtin_makeList()
     if (*name)                          /* if valid name.. */
     {
         char
-            dir[_MAX_DIR],              /* filename, incl. path */
-            fname[_MAX_FNAME],
-            ext[_MAX_EXT],
-            newname[_MAX_PATH];
+            dir[MAX_PATHLEN],              /* filename, incl. path */
+            fname[MAX_PATHLEN],
+            ext[MAX_PATHLEN],
+            newname[MAX_PATHLEN];
 
         size_t attrib = intValue(top());   /* attribute to scan for */
 

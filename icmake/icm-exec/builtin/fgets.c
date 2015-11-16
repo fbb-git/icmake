@@ -18,7 +18,7 @@
 void builtin_fgets()
 {
     char const *filename = stringStr(top());
-    VAR_ *list = top() - 1;
+    Variable *list = top() - 1;
     FILE *inf;
 
     reg = *listConstructor();

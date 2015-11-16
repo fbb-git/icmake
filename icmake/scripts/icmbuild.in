@@ -473,7 +473,7 @@ void precompileHeaders()
     list classes;
     string class;
 
-    classes = makelist(O_SUBDIR, "*");
+    classes = makelist(IS_SUBDIR, "*");
 
     for (idx = sizeof(g_classes); idx--; )
     {

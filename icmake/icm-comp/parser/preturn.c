@@ -11,7 +11,7 @@ SemVal *p_return(ExprType op, SemVal *e)
 
     size_t funIdx = symtab_lastFunction();
 
-    if ((OPCODE_)op == op_ret)              /* return opcode received */
+    if ((Opcode)op == op_ret)              /* return opcode received */
     {
         ExprType funType = symtab_funType(funIdx);
 

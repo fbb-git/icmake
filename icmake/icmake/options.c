@@ -17,7 +17,7 @@ void options(int argc, char **argv)
 
     while (1)
     {
-        int c = getopt(argc, argv, "ac:e:hi:t:p:v");
+        int c = getopt(argc, argv, "ac:e:fhi:t:p:v");
 
         switch (c)
         {
@@ -35,6 +35,10 @@ void options(int argc, char **argv)
 
             case 'h':
             usage(program);
+
+            case 'f':
+                flags |= f_force;
+            break;
 
             case 'i':
                 optIm(argv);

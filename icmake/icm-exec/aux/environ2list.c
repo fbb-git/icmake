@@ -2,7 +2,7 @@
 
 extern char       **environ;
 
-void environ2list(LISTVAR_ *ret)
+void environ2list(ListVariable *ret)
 {
     char **env = environ;
 

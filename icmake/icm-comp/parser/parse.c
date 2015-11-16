@@ -2406,7 +2406,7 @@ yyreduce:
 #line 954 "grammar" /* yacc.c:1646  */
     {
         (yyval) = *p_stackFrame(e_int | e_const);
-        (yyval).evalue = O_FILE;
+        (yyval).evalue = IS_FILE;
     }
 #line 2412 "parse.c" /* yacc.c:1646  */
     break;
@@ -2434,7 +2434,7 @@ yyreduce:
              (
                  p_multipleArgs
                  (
-                     p_firstArg(&(yyvsp[0])),     /* O_FILE is passed */
+                     p_firstArg(&(yyvsp[0])),     /* IS_FILE is passed */
                      &(yyvsp[-1])                /* expression is passed */
                  ),
                  op_hlt                 /* not op_younger or op_older */
@@ -2468,7 +2468,7 @@ yyreduce:
                 (
                     p_multipleArgs
                     (
-                        p_firstArg(&(yyvsp[0])),  /* O_FILE   is passed */
+                        p_firstArg(&(yyvsp[0])),  /* IS_FILE   is passed */
                         &(yyvsp[-5])             /* 1st expression is passed */
                     ),
                     &(yyvsp[-1])                 /* 2nd expression is passed */

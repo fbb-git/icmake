@@ -1,6 +1,6 @@
 #include "int.ih"
 
-void intAssign(VAR_ *lhs, VAR_ const *rhs)
+void intAssign(Variable *lhs, Variable const *rhs)
 {
     destructor(lhs);
     *lhs = *rhs;

@@ -3,9 +3,9 @@
 
 #include "list.ih"
 
-LISTVAR_ *listCopyCons(LISTVAR_ const *other)
+ListVariable *listCopyCons(ListVariable const *other)
 {
-    static LISTVAR_ dest;
+    static ListVariable dest;
 
     dest = *other;
     dest.type = e_list;

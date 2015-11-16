@@ -27,8 +27,8 @@ int kill (string prog)
     	psline = strtok (element (0, readstat), " \n\t");
     	if (element (12, psline) == prog)
     	{
-    	    exec (P_NOCHECK, "kill", "-1", element (2, psline));
-    	    exec (P_NOCHECK, "kill", "-9", element (2, psline));
+    	    exec (NOT_CHECKED, "kill", "-1", element (2, psline));
+    	    exec (NOT_CHECKED, "kill", "-9", element (2, psline));
     	    nkilled++;
     	}
     }

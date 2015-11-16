@@ -35,7 +35,7 @@ char *eb_getArg(size_t idx, int *flag)
     char convbuf [50];
 
     register char *ret;
-    VAR_ *base = top() - idx;
+    Variable *base = top() - idx;
 
     *flag = 1;                              /* assume that done with args */
 

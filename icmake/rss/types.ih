@@ -1,93 +1,49 @@
 #include <stdint.h>
 
-/*************************************************************************
-    define MAXCMDLEN:  the max command line length
-*/
+typedef enum
+{
+    WAIT        =   0,    /* wait for child processes to return   */
+    MAX_PATHLEN = 260,
+    MAX_CMDLEN  = 500,    /* the max command line length *       */
+    DIRSEP = '/',
+} Varia;
 
-#define MAXCMDLEN   500
+typedef enum
+{
+    REQUIRE_ZERO    = 0,
+    NOT_CHECKED     = 2
+} ReturnCheck;
 
-/*************************************************************************
-    P_CHECK value for implied function argument of system, chdir, etc
-    P_NOCHECK when not checking
-    P_CHECKMODE(int mode) is true when mode indicates checking
-*/
-#ifndef P_CHECK
-#    define P_CHECK                 0
-#endif
-#ifndef P_NOCHECK
-#    define P_NOCHECK               2
-#endif
-#ifndef P_CHECKMODE
-#    define P_CHECKMODE(x)          (! ((x) & P_NOCHECK) )
-#endif
+typedef enum
+{
+    IS_FILE   = 1,
+    IS_DIR    = 2,
+    IS_SUBDIR = 4,
+    IS_ALL    = 8
+} Dir_attributes;
 
-/*************************************************************************
-     directory objects
-*/
+typedef enum
+{
+    IS_IFDIR  = 1,
+    IS_IFCHR  = 2,
+    IS_IFREG  = 4,
+    IS_IREAD  = 8,
+    IS_IWRITE = 16,
+    IS_IEXEC  = 32
+} IS_attributes;
 
-#define O_FILE                      1
-#define O_DIR                       2
-#define O_SUBDIR                    4
-#define O_ALL                       8
 
-/*************************************************************************
-     IS_ attributes
-*/
+typedef enum
+{
+    NORMAL_FILE     = 0x00,
+    READONLY_FILE   = 0x01,
+    HIDDEN_FILE     = 0x02,
+    SYSTEM_FILE     = 0x04,
+    VOLUME_ID       = 0x08,
+    SUBDIR          = 0x10,
+    ARCHIVED        = 0x20
+} File_attributes;
 
-#define IS_IFDIR                    1
-#define IS_IFCHR                    2
-#define IS_IFREG                    4
-#define IS_IREAD                    8
-#define IS_IWRITE                   16
-#define IS_IEXEC                    32
-
-/*************************************************************************
-     file attributes
-*/
-
-#ifndef A_NORMAL
-#    define A_NORMAL                0x00
-#endif
-
-#ifndef A_RDONLY
-#    define A_RDONLY                0x01
-#endif
-
-#ifndef A_HIDDEN
-#    define A_HIDDEN                0x02
-#endif
-
-#ifndef A_SYSTEM
-#    define A_SYSTEM                0x04
-#endif
-
-#ifndef A_VOLID
-#    define A_VOLID                 0x08
-#endif
-
-#ifndef A_SUBDIR
-#    define A_SUBDIR                0x10
-#endif
-
-#ifndef A_ARCH
-#    define A_ARCH                  0x20
-#endif
-
-/**************************************************************************
-    UNIX specific macros
-*/
-
-#ifndef P_WAIT
-#define P_WAIT                      0
-#endif
-
-#define _MAX_PATH               260
-#define _MAX_DIR                _MAX_PATH
-#define _MAX_FNAME              _MAX_PATH
-#define _MAX_EXT                _MAX_PATH
-#define DIRSEP                  '/'
-
-/*   The compiler uses E_TYPE 0 to indicate the void type.  */
 typedef enum
 {
     e_null          = 0,
@@ -189,7 +145,7 @@ typedef enum                                /* names of rss-functions */
     /* 20 left for new opcodes until f_hlt */
 
     f_hlt = f_trimright + 21                /* dummy marker for non-existing */
-} FUNNR_;
+} FunNr;
 
 typedef enum
 {                       /* hexnr:     */
@@ -238,11 +194,11 @@ typedef enum
     op_shr,             /*     2a     */
 
     op_hlt = op_shr + 10/*     ..     */
-} OPCODE_;
+} Opcode;
 
 struct find_t_                               /* abbreviated variant */
 {
-    char name[_MAX_PATH];
+    char name[MAX_PATHLEN];
     unsigned attrib;                             /* returned attribute */
 };
 
@@ -263,31 +219,32 @@ typedef struct
 {
     uint16_t size;
     char **element;                          /* used as (char *) by icmcomp */
-} LIST_;
+} List;
 
 typedef union
 {
     char *str;                               /* address of allocated string */
-    LIST_ list;                               /* list info of a list */
-} LS_UNION_;
+    List list;                               /* list info of a list */
+} TextFields;
 
 typedef struct
 {
     uint16_t count;                            /* allocation count, or 
                                                1st address of a function */
-                                            
-    LS_UNION_ ls;
-} INTER_;
+    TextFields ls;
+} TextData;
 
 typedef union
 {
     int16_t intval;                       /* value of an int */
-    INTER_ *i;                            /* intermediate alloc. structure */
-} VAR_UNION_;
+    TextData *i;                          /* intermediate alloc. structure */
+} VarValue;
 
 typedef struct                            /* defined variable */
 {
     ExprType type;                         /* maybe stringconst, int, list */
-    VAR_UNION_ vu;                        /* value of the element */
-} VAR_;
+    VarValue vu;                        /* value of the element */
+} Variable;
+
+
 

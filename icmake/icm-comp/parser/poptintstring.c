@@ -9,10 +9,10 @@ SemVal *p_optIntString(ExprType type, SemVal *larg, SemVal *rarg)
         test_type(larg, e_str)              /* left is string */
         &&
         !rarg->type                         /* right is zeroframe */
-    )                                       /* -> P_CHECK implied */
+    )                                       /* -> REQUIRE_ZERO implied */
     {
         rarg->type = e_int | e_const;       /* indicate constant */
-        rarg->evalue = P_CHECK;             /* indicate P_CHECK  */
+        rarg->evalue = REQUIRE_ZERO;             /* indicate REQUIRE_ZERO  */
         p_expr2stack(rarg);                         /* right arg now code */
         p_catCode(larg, rarg);                /* catenate code */
     }

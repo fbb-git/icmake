@@ -8,7 +8,7 @@ SemVal *p_threeArgs(ExprType type, SemVal *larg, SemVal *marg, SemVal *rarg)
     p_expr2stack(marg);                             /* arg to stack */
     p_expr2stack(rarg);                             /* arg to stack */
 
-    switch ((FUNNR_)type)
+    switch ((FunNr)type)
     {
         case f_substr:
             ok = test_type(larg, e_str) && 

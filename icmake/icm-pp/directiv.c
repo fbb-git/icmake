@@ -125,7 +125,7 @@ void include_directive(void)
         if (imdir_used)
         {
             static char dirsep[2] = { DIRSEP, '\0' };
-            char filename[_MAX_PATH];
+            char filename[MAX_PATHLEN];
 
             char *im = rss_strdup(imdir);
             char *path = strtok(im, ":");   /* get the first path element */

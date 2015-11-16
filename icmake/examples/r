@@ -65,10 +65,10 @@ void process (list cmd)
     {
         printf ("==== r: directory ", cwd,	// print this dir
         " ====\n");
-        system (P_NOCHECK, sys);                // run the cmd
+        system (NOT_CHECKED, sys);                // run the cmd
     }
     
-    if (dirs = makelist (O_SUBDIR, "*"))	// get list of subdirs
+    if (dirs = makelist (IS_SUBDIR, "*"))	// get list of subdirs
     {
 	for (i = 0; i < sizeof (dirs); i++)	// for each one:
 	{

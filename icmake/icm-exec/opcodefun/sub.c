@@ -22,7 +22,7 @@
 
 void fun_sub ()
 {
-    VAR_ rval = *copyCons(top());    /* make a copy              */
+    Variable rval = *copyCons(top());    /* make a copy              */
     pop();                          /* remove the r-operand     */
 
     subtract(top(), &rval);         /* subtract the rval to the top  */

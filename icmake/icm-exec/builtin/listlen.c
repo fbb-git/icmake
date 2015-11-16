@@ -7,7 +7,7 @@
 
 void builtin_listlen()
 {
-    VAR_ *base = top();
+    Variable *base = top();
 
     reg = *intConstructor_i(
                 typeValue(base) == e_str ? 

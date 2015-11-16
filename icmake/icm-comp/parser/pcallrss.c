@@ -3,7 +3,7 @@
 
 #include "parser.ih"
 
-void p_callRss(SemVal *e, FUNNR_ funnr, ...)
+void p_callRss(SemVal *e, FunNr funnr, ...)
 {
     register ExprType type = e_reg | e_int; /* default return type: intreg */
     register size_t args = 1;              /* most f()s having 1 argument */

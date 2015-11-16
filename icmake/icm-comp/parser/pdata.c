@@ -153,7 +153,7 @@ char    gp_illegalCast[]      = "illegal p_cast";
 
 ExprType gp_varType;
 
-OPCODE_ gp_lastOp = op_hlt;
+Opcode gp_lastOp = op_hlt;
 
 size_t  gp_dead_sp;
 size_t *gp_dead;

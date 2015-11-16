@@ -7,7 +7,7 @@ SemVal *p_twoArgs(ExprType type, SemVal *larg, SemVal *rarg)
     p_expr2stack(larg);                             /* arg to stack */
     p_expr2stack(rarg);                             /* arg to stack */
 
-    switch ((FUNNR_)type)
+    switch ((FunNr)type)
     {
         case f_fgets:
             ok = test_type(larg, e_str) && test_type(rarg, e_list);

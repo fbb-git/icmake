@@ -1,6 +1,6 @@
 #include "var.ih"
 
-uint16_t varCount(VAR_ *var)
+uint16_t varCount(Variable *var)
 {
     return var->vu.i->count;
 }

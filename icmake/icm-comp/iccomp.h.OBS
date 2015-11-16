@@ -82,7 +82,7 @@ typedef struct
 
 typedef struct                              /* symtab used with the compiler */
 {
-    VAR_ var;
+    Variable var;
     char *name;
 } SYMBOL_;
 
@@ -215,7 +215,7 @@ extern ExprType
 extern FILE
     *gp_bin;
 
-extern OPCODE_
+extern Opcode
     lastop;
 
 extern StringTable
@@ -246,10 +246,10 @@ unsigned *gp_dead;
 extern SemVal global_init;             /* code for initializing globals */
 
 int conflict (SemVal *, SemVal *,     /* conflicting binary types */
-                  OPCODE_);
-int test_binop (OPCODE_, SemVal *,     /* test binop legality */
+                  Opcode);
+int test_binop (Opcode, SemVal *,     /* test binop legality */
                       SemVal *);
-int test_operand (SemVal *, OPCODE_);  /* test legality of operand */
+int test_operand (SemVal *, Opcode);  /* test legality of operand */
 int yylex_file(char *, int);            /* read yylex input from yyin */
 int yylex_hidden(char *, int);          /* read yylex input from buffer */
 
@@ -278,7 +278,7 @@ void    addpatch (unsigned *, size_t,     /* add value to patch-list */
                                size_t);
 void    backend (void);                /* finish gp_bin construction */
 void    btoi (SemVal *);              /* boolean to int */
-void    callrss (SemVal *, FUNNR_,     /* call rss function */
+void    callrss (SemVal *, FunNr,     /* call rss function */
                                 ...);   /* and add asp, xxx instruction */
 void    callhidden(int, SemVal *);         /* call hidden function */
 void    catargs (SemVal *);           /* arguments to code */
@@ -290,7 +290,7 @@ void    clearbin (SemVal *,            /* clear and init 2 SemVals */
 void    clear_hidden(void);                 /* clear hidden function-names */
 void    copy_to_pop (SemVal *);       /* op_copy_var to op_pop_var */
 void    defcode (SemVal *, SemVal *,  /* generate default e_int|e_stack */
-                  OPCODE_);
+                  Opcode);
 void    discard (SemVal *);           /* free memory used by SemVal */
 void    etob (SemVal *);              /* expr. prepare for boolean */
 void    eToStack(SemVal *);              /* convert E to code */
@@ -299,7 +299,7 @@ void    entervar (void);               /* enter variable in l/g-tab */
 void    fetob (SemVal *);             /* forced e conversion to boolean */
 void    hidden_functions (void);            /* patchup/generate hidden funs */
 void    last_stmnt (SemVal *);        /* write last stmnt */
-void    gencode (SemVal *, OPCODE_,    /* append new code */
+void    gencode (SemVal *, Opcode,    /* append new code */
                                    ...);
 void    open_fun (void);               /* open a function */
 

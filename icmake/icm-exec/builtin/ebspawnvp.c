@@ -3,7 +3,7 @@
 int eb_spawnvp (int mode, char const *prog, char const **av)
 {
     char
-        buf [_MAX_PATH * 4];
+        buf [MAX_PATHLEN * 4];
 
     strcpy (buf, prog);
     av++;

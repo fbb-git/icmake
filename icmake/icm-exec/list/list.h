@@ -1,28 +1,28 @@
-#ifndef _INCLUDED_LIST_H_
-#define _INCLUDED_LIST_H_
+#ifndef _INCLUDED_ListH_
+#define _INCLUDED_ListH_
 
 #include "../../rss/rss.h"
 
-typedef VAR_    LISTVAR_;
+typedef Variable    ListVariable;
 
-LISTVAR_    *listConstructor(void);
-LISTVAR_    *listConstructor_s_cPP(size_t argc, char **argv);
-LISTVAR_    *listConstructor_cP(char const *argv);
+ListVariable    *listConstructor(void);
+ListVariable    *listConstructor_s_cPP(size_t argc, char **argv);
+ListVariable    *listConstructor_cP(char const *argv);
 
-LISTVAR_    *listCopyCons(LISTVAR_ const *var);
-void        listDestructor(LISTVAR_ *var);
+ListVariable    *listCopyCons(ListVariable const *var);
+void        listDestructor(ListVariable *var);
 
-void        listAssign(LISTVAR_ *lhs, LISTVAR_ const *rhs);
+void        listAssign(ListVariable *lhs, ListVariable const *rhs);
 
-void        listAdd_cP(LISTVAR_ *list, char const *txt);
-void        listAdd_swallow_cP(LISTVAR_ *list, char *txt);
-void        listAdd_L(LISTVAR_ *lhs, LISTVAR_ const *rhs);
+void        listAdd_cP(ListVariable *list, char const *txt);
+void        listAdd_swallow_cP(ListVariable *list, char *txt);
+void        listAdd_L(ListVariable *lhs, ListVariable const *rhs);
 
-void        listSub(LISTVAR_ *lhs, LISTVAR_ const *rhs);
-int         listLogical(LISTVAR_ const *lhs);
-int         listContains(LISTVAR_ *lhs, char const *str);
-size_t      listSize(LISTVAR_ const *list);
-char const *listAt(LISTVAR_ const *list, size_t idx);
-void        listSort(LISTVAR_ *list);
+void        listSub(ListVariable *lhs, ListVariable const *rhs);
+int         listLogical(ListVariable const *lhs);
+int         listContains(ListVariable *lhs, char const *str);
+size_t      listSize(ListVariable const *list);
+char const *listAt(ListVariable const *list, size_t idx);
+void        listSort(ListVariable *list);
 
 #endif

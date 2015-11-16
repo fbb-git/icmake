@@ -1,6 +1,6 @@
 #include "list.ih"
 
-void listDestructor(LISTVAR_ *var)
+void listDestructor(ListVariable *var)
 {
     size_t idx;
 

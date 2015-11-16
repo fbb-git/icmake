@@ -1,36 +1,22 @@
 /*
-\funcref{rss_getVar}{uint16_t rss_getVar (\params)}
-    {
-        {FILE} {*f} {binary makefile to read from}
-        {BIN\_HEADER\_} {*headerp} {pointer to header information}
-        {VAR\_} {**var} {address of pointer to {\em VAR\_} structs}
-    }
-    {number of read variables, or --1 upon failure}
-    {rss_realloc(), rss_error(), rss_initVar()}
-    {rss_getString(), rss_readHeader()}
-    {getvar.c}
-    {
-        Function {\em rss_getVar()} attempts to read the variables defined in a
-        binary makefile. Argument {\em headerp} is expected to point to a {\em
-        BIN\_HEADER\_} struct filled with header information.
+    Function {\em rss_getVar()} attempts to read the variables defined in a
+    binary makefile. Argument {\em headerp} is expected to point to a {\em
+    BIN\_HEADER\_} struct filled with header information.
 
-        {\em var} is the address of a pointer to {\em VAR\_} structures. {\em
-        rss_getVar()} reallocates the pointer as necessary; therefore, {\em $*$var}
-        must point to allocated memory or must be {\em NULL}. For each created
-        variable of the type {\bf list} or {\bf string}, the {\em vu.i} field
-        is set to {\em NULL} to reflect that the variable is not (yet) in use.
-        The {\em count} field is set to 1, reflecting one user of the attached
-        memory block.
+    {\em var} is the address of a pointer to {\em VAR\_} structures. {\em
+    rss_getVar()} reallocates the pointer as necessary; therefore, {\em $*$var}
+    must point to allocated memory or must be {\em NULL}. For each created
+    variable of the type {\bf list} or {\bf string}, the {\em vu.i} field
+    is set to {\em NULL} to reflect that the variable is not (yet) in use.
+    The {\em count} field is set to 1, reflecting one user of the attached
+    memory block.
 
-        When no error occurs, {\em rss_getVar()} returns the number of read
-        variables and restores the file pointer {\em f} to the location prior
-        to reading. When an error occurs, {\em --1} is returned and the file
-        pointer is not repositioned.
-    }
+    When no error occurs, {\em rss_getVar()} returns the number of read
+    variables and restores the file pointer {\em f} to the location prior
+    to reading. When an error occurs, {\em --1} is returned and the file
+    pointer is not repositioned.
 
 Example:
-{\footnotesize
-    \begin{verbatim}
         // 'f' is assumed to be the opened file,
         uint16_t
             nvar,
@@ -54,13 +40,11 @@ Example:
             .. etcetera
             .
         }
-    \end{verbatim}
-} % end footnotesize
 */
 
 #include "rss.ih"
 
-uint16_t rss_getVar (FILE *f, BinHeader *headerp, Variable **var)
+uint16_t rss_getVar(FILE *f, BinHeader *headerp, Variable **var)
 {
     register size_t nvar = 0;
     int32_t curoffs;

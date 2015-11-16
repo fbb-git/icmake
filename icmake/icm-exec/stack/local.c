@@ -1,6 +1,6 @@
 #include "stack.ih"
 
-Variable *local(int index)
+Variable *stack_local(int index)
 {
-    return stack + (int)bp + (int16_t)0xc000 - index;
+    return gs_stack + (int)gs_bp + (int16_t)0xc000 - index;
 }

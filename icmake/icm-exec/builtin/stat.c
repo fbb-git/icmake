@@ -30,10 +30,10 @@ void builtin_stat()
     struct stat statbuf;                        /* file stat buffer */
     int fileatt = 0;                            /* file attributes */
 
-    int mode = intValue(top());                 /* get mode arg */
-    char const *fname = stringStr(top() - 1);   /* get file name */
+    int mode = int_value(stack_top());                 /* get mode arg */
+    char const *fname = string_charp(stack_top() - 1);   /* get file name */
 
-    reg = *listConstructor();                    /* return result as list */
+    reg = *listcons();                    /* return result as list */
 
     if (stat (fname, &statbuf))                 /* do stat call */
     {                                           /* failure to stat? */
@@ -60,12 +60,12 @@ void builtin_stat()
     {
         char buf [80];                          /* conversion buf */
         sprintf (buf, "%u", fileatt);           /* file attr --> string */
-        listAdd_cP(&reg, buf);                     /* = builtin_element #0 */
+        list_add_charPtr(&reg, buf);                     /* = builtin_element #0 */
 
         sprintf(buf, "%ld",                     /* file size --> string */
                     (long)statbuf.st_size);     /* = builtin_element #1 */
 
-        listAdd_cP(&reg, buf);
+        list_add_charPtr(&reg, buf);
     }
 }
 

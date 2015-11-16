@@ -7,7 +7,7 @@
 
 void builtin_strLower()
 {
-    char *cp = eb_strLower(rss_strdup(stringStr(top())));
-    reg = *stringConstructor_cP(cp);
+    char *cp = eb_strLower(rss_strdup(string_charp(stack_top())));
+    reg = *stringcons_charPtr(cp);
     free(cp);
 }

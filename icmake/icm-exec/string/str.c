@@ -1,6 +1,6 @@
 #include "string.ih"
 
-char *stringStr(String const *lhs)
+char *string_charp(String const *lhs)
 {
-    return  str(lhs);
+    return s_str(lhs);
 }

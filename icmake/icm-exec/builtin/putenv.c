@@ -24,13 +24,13 @@
 
 void builtin_putEnv()
 {
-    reg = *intConstructor_i
+    reg = *intcons_int
             (
                 putenv
                 (
                     rss_strdup
                     (
-                        stringStr(top())
+                        string_charp(stack_top())
                     )
                 )
             );

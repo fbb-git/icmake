@@ -1,11 +1,11 @@
 #include "stack.ih"
 
 
-void popBP()
+void stack_popBP()
 {
-    while (sp - 1 != bp)
-        pop();
+    while (gs_sp - 1 != gs_bp)
+        stack_pop();
 
-    bp = intValue(top());            /* restore old bp   */
-    pop();
+    gs_bp = int_value(stack_top());            /* restore old gs_bp   */
+    stack_pop();
 }

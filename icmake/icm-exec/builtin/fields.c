@@ -24,10 +24,10 @@ static char buf[2];
 
 void builtin_fields ()
 {
-    char const *str = stringStr(top());
-    char const *sep = stringStr(top() - 1);
+    char const *str = string_charp(stack_top());
+    char const *sep = string_charp(stack_top() - 1);
 
-    reg = *listConstructor();
+    reg = *listcons();
 
     if (*str)
     {
@@ -40,7 +40,7 @@ void builtin_fields ()
             {
                 do
                 {
-                    listAdd_cP(&reg, cp);
+                    list_add_charPtr(&reg, cp);
                     cp = strtok(NULL, sep);
                 }
                 while (cp);
@@ -52,7 +52,7 @@ void builtin_fields ()
             while (*cp)
             {
                 buf[0] = *cp++;
-                listAdd_cP(&reg, buf);
+                list_add_charPtr(&reg, buf);
             }
         }
         free(string);

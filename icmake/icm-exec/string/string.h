@@ -5,19 +5,19 @@
 
 typedef Variable    String;
 
-String  *stringConstructor(void);
-String  *stringConstructor_cP(char const *str);
+String      *stringcons(void);
+String      *stringcons_charPtr(char const *str);
 void        stringDestructor(String *var);
-String  *stringCopyCons(String const *var);
+String      *stringcopycons(String const *var);
 
-void        stringAssign(String *lhs, String const *rhs);
+void        string_assign(String *lhs, String const *rhs);
 
-void        stringAdd(String *lhs, String const *rhs);
-int         stringLogical(String const *lhs);
+void        string_add(String *lhs, String const *rhs);
+int         string_bool(String const *lhs);      /* returns 0 if empty */
 
-char        *stringStr(String const *lhs);  /* const removed */
+char        *string_charp(String const *lhs);    /* const removed */
 
-String  *stringTrimLeft(String const *str);
-String  *stringTrimRight(String const *str);
+String      *string_trimLeft(String const *str);
+String      *string_trimRight(String const *str);
 
 #endif

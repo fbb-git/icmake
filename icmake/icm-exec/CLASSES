@@ -10,12 +10,13 @@
 
 # sources in the current (i.e., this) directory are also compiled.
 
-var
-virtual
-int
-list
-string
-stack
+
 opcodefun
 builtin
+stack
+list
+string
+int
+virtual
+var
 aux

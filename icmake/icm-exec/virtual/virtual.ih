@@ -4,23 +4,23 @@
 
 #include <stdlib.h>
 
-Variable *intConstructor(void);
-Variable *stringConstructor(void);
-Variable *listConstructor(void);
+Variable *intcons(void);
+Variable *stringcons(void);
+Variable *listcons(void);
 
-void intAssign(Variable *lhs, Variable const *rhs);
-void stringAssign(Variable *lhs, Variable const *rhs);
-void listAssign(Variable *lhs, Variable const *rhs);
+void int_assign(Variable *lhs, Variable const *rhs);
+void string_assign(Variable *lhs, Variable const *rhs);
+void list_assign(Variable *lhs, Variable const *rhs);
 
-void intAdd(Variable *lhs, Variable const *rhs);
-void stringAdd(Variable *lhs, Variable const *rhs);
-void listAdd_L(Variable *lhs, Variable const *rhs);
+void int_add(Variable *lhs, Variable const *rhs);
+void string_add(Variable *lhs, Variable const *rhs);
+void list_add(Variable *lhs, Variable const *rhs);
 
-void intSub(Variable *lhs, Variable const *rhs);
+void int_sub(Variable *lhs, Variable const *rhs);
 void stringSub(Variable *lhs, Variable const *rhs);
-void listSub(Variable *lhs, Variable const *rhs);
+void list_sub(Variable *lhs, Variable const *rhs);
 
-/* intCompare(void) is intSub() */
+/* intCompare(void) is int_sub() */
 void stringCompare(Variable *lhs, Variable const *rhs);
 void listCompare(Variable *lhs, Variable const *rhs);
 
@@ -28,13 +28,13 @@ void intDestructor(Variable *var);
 void stringDestructor(Variable *var);
 void listDestructor(Variable *var);
 
-int intLogical(Variable const *var);
-int stringLogical(Variable const *var);
-int listLogical(Variable const *var);
+int int_bool(Variable const *var);
+int string_bool(Variable const *var);
+int list_bool(Variable const *var);
 
-Variable *intCopyCons(Variable const *var);
-Variable *stringCopyCons(Variable const *var);
-Variable *listCopyCons(Variable const *var);
+Variable *intcopycons(Variable const *var);
+Variable *stringcopycons(Variable const *var);
+Variable *listcopycons(Variable const *var);
 
 
 extern void (*p_assign[])(Variable *lhs, Variable const *rhs);

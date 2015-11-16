@@ -19,7 +19,7 @@
 
 void builtin_asciiInt ()
 {
-    reg = *intConstructor_i(*stringStr(top()));
+    reg = *intcons_int(*string_charp(stack_top()));
 }
 
 

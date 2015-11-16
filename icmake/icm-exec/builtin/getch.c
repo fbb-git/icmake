@@ -25,7 +25,7 @@ void builtin_getCh()
 #else
     buf[0] = eb_enterCh();
 #endif
-    reg = *stringConstructor_cP(buf);
+    reg = *stringcons_charPtr(buf);
 }
 
 

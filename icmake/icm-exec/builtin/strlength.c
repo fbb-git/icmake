@@ -14,5 +14,5 @@
 
 void builtin_strLength()
 {
-    reg = *intConstructor_i((int)strlen(stringStr(top())));
+    reg = *intcons_int((int)strlen(string_charp(stack_top())));
 }

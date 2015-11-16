@@ -3,6 +3,9 @@
 
 #include "../../rss/rss.h"
 
-void    opcodefun_process(void);
+int     opcodefun_process(void);
+void    opcodefun_setGlobalVariables();
+void    opcodefun_setInfile(char const *arg);
+
 
 #endif

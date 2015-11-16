@@ -1,5 +1,6 @@
 #include "builtin.h"
 
+#include <stdio.h>
 #include <unistd.h>
 #include <ctype.h>
 #include <errno.h> 
@@ -9,15 +10,21 @@
 #include <sys/stat.h>
  
 #include "../../rss/rss.h"
-
-#include "../global.h"
-
+#include "../var/var.h"
 #include "../stack/stack.h"
 #include "../list/list.h"
 #include "../string/string.h"
 #include "../virtual/virtual.h"
 #include "../int/int.h"
-#include "../opcodefun/opcodefun.h"
+
+extern char         gb_orgDir[];
+
+extern char        *arghead;
+extern char        *argtail;
+extern char        *cmdhead;
+extern char        *cmdtail;
+
+extern Variable         reg;
 
 extern int echo;
 extern size_t listIndex;

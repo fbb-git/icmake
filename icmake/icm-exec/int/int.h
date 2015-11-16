@@ -5,19 +5,19 @@
 
 typedef Variable    IntVariable;
 
-IntVariable     *intConstructor(void);
-IntVariable     *intConstructor_i(int value);
-IntVariable     *intCopyCons(IntVariable const *other);
+IntVariable     *intcons(void);
+IntVariable     *intcons_int(int value);
+IntVariable     *intcopycons(IntVariable const *other);
 
 void        intDestructor(Variable *lhs);
-void        intAssign(Variable *lhs, Variable const *rhs);
+void        int_assign(Variable *lhs, Variable const *rhs);
 
-void        intAdd(Variable *lhs, Variable const *rhs);
-void        intSub(Variable *lhs, Variable const *rhs);     /* same as intCompare */
-int         intLogical(IntVariable const *lhs);
+void        int_add(Variable *lhs, Variable const *rhs);
+void        int_sub(Variable *lhs, Variable const *rhs);     /* same as intCompare */
+int         int_bool(IntVariable const *lhs);
 
-void        intSetValue(IntVariable *lhs, int value);
+void        int_assignInt(IntVariable *lhs, int value);
 
-int         intValue(IntVariable const *lhs);   /* return the stored int */
+int         int_value(IntVariable const *lhs);   /* return the stored int */
 
 #endif

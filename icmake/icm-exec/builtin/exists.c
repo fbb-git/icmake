@@ -11,6 +11,6 @@
 
 void builtin_exists()
 {
-    reg = *intConstructor_i(rss_exists(stringStr(top())));
+    reg = *intcons_int(rss_exists(string_charp(stack_top())));
 }
 

@@ -1,5 +1,7 @@
 #include "builtin.ih"
 
+char         gb_orgDir[MAX_PATHLEN];
+
 Variable            reg;
 
 int echo = 1;

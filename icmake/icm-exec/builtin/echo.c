@@ -18,5 +18,5 @@
 
 void builtin_echo()
 {
-    echo = intValue(top());
+    echo = int_value(stack_top());
 }

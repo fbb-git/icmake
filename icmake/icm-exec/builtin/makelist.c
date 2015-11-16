@@ -13,9 +13,9 @@
 
 void builtin_makeList()
 {
-    char  const *name = stringStr(top() - 1);   /* filemask string */
+    char  const *name = string_charp(stack_top() - 1);   /* filemask string */
 
-    reg = *listConstructor();
+    reg = *listcons();
 
     if (*name)                          /* if valid name.. */
     {
@@ -25,7 +25,7 @@ void builtin_makeList()
             ext[MAX_PATHLEN],
             newname[MAX_PATHLEN];
 
-        size_t attrib = intValue(top());   /* attribute to scan for */
+        size_t attrib = int_value(stack_top());   /* attribute to scan for */
 
                                         /* find a first name */
         char *namefound = rss_findFirst (name, attrib);
@@ -38,10 +38,10 @@ void builtin_makeList()
             rss_makePath (newname, dir, namefound, "");
 
                                         /* add entry to the list */
-            listAdd_cP(&reg, newname);
+            list_add_charPtr(&reg, newname);
 
             namefound = rss_findNext();     /* determine new name */
         }
-        listSort(&reg);
+        list_sort(&reg);
     }
 }

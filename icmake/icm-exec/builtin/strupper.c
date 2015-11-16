@@ -7,7 +7,7 @@
 
 void builtin_strUpper()
 {
-    char *cp = eb_strUpper(rss_strdup(stringStr(top())));
-    reg = *stringConstructor_cP(cp);
+    char *cp = eb_strUpper(rss_strdup(string_charp(stack_top())));
+    reg = *stringcons_charPtr(cp);
     free(cp);
 }

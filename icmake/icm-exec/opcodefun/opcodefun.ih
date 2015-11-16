@@ -3,8 +3,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "../global.h"
-
 #include "../var/var.h"
 #include "../stack/stack.h"
 #include "../virtual/virtual.h"
@@ -13,59 +11,60 @@
 #include "../string/string.h"
 #include "../builtin/builtin.h"
 
-extern void       (*p_procfun[])(void);
+extern FILE         *go_infile;
+extern BinHeader    *go_header;
+extern void         (*p_procfun[])(void);
 
-Variable   *getdest(void);
-int     istrue(void);
+Variable   *o_getdest(void);
+int     o_isTrue(void);
 
-void fun_call(void);
-void fun_exit(void);
-void fun_ret(void);
-void fun_pop_reg(void);
-void fun_push_imm(void);
-void fun_call_rss(void);
-void fun_push_strconst(void);
-void fun_push_var(void);
-void fun_pop_var(void);
-void fun_frame(void);
-void fun_asp(void);
-void fun_add(void);
-void fun_shl(void);
-void fun_shr(void);
-void fun_empty(void);
-void fun_jmp(void);
-void fun_jmp_true(void);
-void fun_push_reg(void);
-void fun_older(void);
-void fun_younger(void);
+void o_call(void);
+void o_exit(void);
+void o_ret(void);
+void o_pop_reg(void);
+void o_push_imm(void);
+void o_call_rss(void);
+void o_push_strconst(void);
+void o_push_var(void);
+void o_pop_var(void);
+void o_frame(void);
+void o_asp(void);
+void o_add(void);
+void o_shl(void);
+void o_shr(void);
+void o_empty(void);
+void o_jmp(void);
+void o_jmp_true(void);
+void o_push_reg(void);
+void o_older(void);
+void o_younger(void);
+void o_atoi(void);
+void o_atol(void);
+void o_band (void);
+void o_bnot(void);
+void o_bor(void);
+void o_dec(void);
+void o_div(void);
+void o_eq(void);
+void o_gr(void);
+void o_greq(void);
+void o_inc(void);
+void o_itoa(void);
+void o_jmp_false(void);
+void o_mod(void);
+void o_mul(void);
+void o_neq(void);
 
-void fun_atoi(void);
-void fun_atol(void);
-void fun_band (void);
-void fun_bnot(void);
-void fun_bor(void);
-void fun_dec(void);
-void fun_div(void);
-void fun_eq(void);
-void fun_gr(void);
-void fun_greq(void);
-void fun_inc(void);
-void fun_itoa(void);
-void fun_jmp_false(void);
-void fun_mod(void);
-void fun_mul(void);
-void fun_neq(void);
 
+void o_push_0(void);
+void o_push_1_jmp_end(void);
 
-void fun_push_0(void);
-void fun_push_1_jmp_end(void);
-
-void fun_sm(void);
-void fun_smeq(void);
-void fun_sub(void);
-void fun_umin(void);
-void fun_xor(void);
-void fun_copy_var(void);
+void o_sm(void);
+void o_smeq(void);
+void o_sub(void);
+void o_umin(void);
+void o_xor(void);
+void o_copy_var(void);
 
 
 

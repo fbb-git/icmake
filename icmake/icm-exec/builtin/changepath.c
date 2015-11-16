@@ -9,7 +9,7 @@
 
 void builtin_changePath()
 {
-    char *cp = rss_changePath(stringStr(top()), stringStr(top() - 1));
-    reg = *stringConstructor_cP(cp);
+    char *cp = rss_changePath(string_charp(stack_top()), string_charp(stack_top() - 1));
+    reg = *stringcons_charPtr(cp);
     free(cp);
 }

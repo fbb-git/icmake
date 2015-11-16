@@ -1,10 +1,10 @@
 #include "stack.ih"
 
 
-void pushBP()
+void stack_pushBP()
 {
-    Variable idx = *intConstructor_i((int)bp);
+    Variable idx = *intcons_int((int)gs_bp);
 
-    bp = sp;
-    push(&idx);
+    gs_bp = gs_sp;
+    stack_push(&idx);
 }

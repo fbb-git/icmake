@@ -1,10 +1,5 @@
-#include "../icm-exec.h"
+#include "aux.ih"
 
-BinHeader    *headerp;
-FILE           *infile;
-uint16_t           nvar;
-Variable           *var;
-char            orgdir[MAX_PATHLEN];
-char           *bimname;
-int             retval;
-size_t          curoffs;
+char        *ga_bimname;
+// int          retval;
+size_t      ga_offset;

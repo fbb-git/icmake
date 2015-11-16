@@ -3,11 +3,10 @@
 
 #include "../rss/rss.h"
 
-extern size_t     curoffs;
-extern char         orgdir[];
+extern char         gb_orgDir[];
 extern FILE        *infile;
 extern Variable        *var;
 extern int          retval;
-extern BinHeader *headerp;
+extern BinHeader *go_header;
 
 #endif

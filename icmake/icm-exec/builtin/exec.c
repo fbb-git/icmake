@@ -49,7 +49,7 @@ static char **initcmd (char **cmd)
     free(cmd);
     
     cmd = rss_realloc (NULL, 3 * sizeof (char *));
-    cmd [0] = rss_strdup(stringStr(top() - 2));
+    cmd [0] = rss_strdup(string_charp(stack_top() - 2));
     
     if (strlen (cmdhead))
     {
@@ -72,8 +72,8 @@ void builtin_exec ()
     size_t cmdlen;
 
     size_t i = 3;
-    size_t nargs = intValue(top());
-    int mode = intValue(top() - 1);
+    size_t nargs = int_value(stack_top());
+    int mode = int_value(stack_top() - 1);
 
     while (i <= nargs)
     {

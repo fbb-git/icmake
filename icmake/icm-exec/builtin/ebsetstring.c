@@ -24,6 +24,6 @@
 char *eb_setString (char *s)
 {
     free(s);
-    return s = rss_strdup(stringStr(top()));
+    return s = rss_strdup(string_charp(stack_top()));
 }
 

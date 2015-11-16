@@ -1,12 +1,12 @@
 #include "string.ih"
 
-void stringAssign(String *lhs, String const *rhs)
+void string_assign(String *lhs, String const *rhs)
 {
     if (lhs != rhs)
     {
         destructor(lhs);
         *lhs = *rhs;
-        varIncCount(lhs);
+        var_incCount(lhs);
     }
 }
 

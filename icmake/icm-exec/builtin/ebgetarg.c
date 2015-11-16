@@ -35,34 +35,34 @@ char *eb_getArg(size_t idx, int *flag)
     char convbuf [50];
 
     register char *ret;
-    Variable *base = top() - idx;
+    Variable *base = stack_top() - idx;
 
     *flag = 1;                              /* assume that done with args */
 
-    if (typeValue(base) & e_int)            /* incase of an int.. */
+    if (var_type(base) & e_int)            /* incase of an int.. */
     {
         listIndex = 0;
-        sprintf (convbuf, "%d", intValue(base));
+        sprintf (convbuf, "%d", int_value(base));
         return (rss_strdup (convbuf));
     }
 
-    if (typeValue(base) & e_str)            /* incase of a string.. */
+    if (var_type(base) & e_str)            /* incase of a string.. */
     {
         listIndex = 0;
-        return rss_strdup(stringStr(base));
+        return rss_strdup(string_charp(base));
     }
 
                                             /* incase of a list: */
-    if (!listSize(base))
+    if (!list_size(base))
     {
         listIndex = 0;
         ret = rss_strdup("");
     }
     else
     {
-        ret = rss_strdup(listAt(base, listIndex));
+        ret = rss_strdup(list_at(base, listIndex));
         ++listIndex;
-        if (listIndex < listSize(base))
+        if (listIndex < list_size(base))
             *flag = 0;                      /* if more builtin_elements, not done */
         else                                /* with args.. */
             listIndex = 0;                  /* otherwise: returnflag = 1, */

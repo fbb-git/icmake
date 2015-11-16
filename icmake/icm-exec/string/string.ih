@@ -8,6 +8,9 @@
 #include "../virtual/virtual.h"
 #include "../int/int.h"
 
-TextData *newstring(char *cp);    /* cp must be free-able */
+TextData *s_new(char *cp);    /* cp must be free-able */
 
-#define str(pstring)    ((pstring)->vu.i->ls.str)
+inline char *s_str(String const *arg)
+{
+    return arg->vu.i->ls.str;
+}

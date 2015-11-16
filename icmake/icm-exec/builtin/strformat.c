@@ -13,7 +13,7 @@ void builtin_strFormat(void)
     
     eb_formatter(&ptr, 1);
 
-    reg = *stringConstructor_cP(ptr);
+    reg = *stringcons_charPtr(ptr);
     free(ptr);
 }
 

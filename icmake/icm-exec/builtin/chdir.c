@@ -24,14 +24,14 @@ static char dirsep[2] = {DIRSEP};
 void builtin_chDir()
 {
                                         /* copy the destination */
-    register char *dir = rss_strdup(stringStr(top() - 1)); 
-    register int mode = intValue(top());    /* obtain the mode of operation */
+    register char *dir = rss_strdup(string_charp(stack_top() - 1)); 
+    register int mode = int_value(stack_top());    /* obtain the mode of operation */
     char newdir[MAX_PATHLEN];
         
     if (!*dir)                          /* destination is an empty string:  */
     {
         free(dir);
-        dir = rss_strdup(orgdir);       /* change to the startup dir        */
+        dir = rss_strdup(gb_orgDir);       /* change to the startup dir        */
     }
 
     if (chdir(dir) && rss_checkMode(mode))    /* cd to the directory          */
@@ -45,7 +45,7 @@ void builtin_chDir()
     if (newdir[strlen(newdir) - 1] != DIRSEP)   /* and append a DIRSEP      */
         strcat(newdir, dirsep);
 
-    reg = *stringConstructor_cP(newdir);    /* set the return value in reg  */
+    reg = *stringcons_charPtr(newdir);    /* set the return value in reg  */
 }
 
 

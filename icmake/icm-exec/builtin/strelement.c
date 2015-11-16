@@ -25,10 +25,10 @@ static char buf[2];
 
 void builtin_strElement ()
 {
-    size_t idx = intValue(top());
-    char const *str = stringStr(top() - 1);
+    size_t idx = int_value(stack_top());
+    char const *str = string_charp(stack_top() - 1);
 
     buf[0] = idx >= strlen(str) ? 0 : str[idx];
 
-    reg = *stringConstructor_cP(buf);;
+    reg = *stringcons_charPtr(buf);;
 }

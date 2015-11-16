@@ -1,0 +1,10 @@
+#include "aux.h"
+
+#include <unistd.h>
+
+#include "../../rss/rss.h"
+
+extern char         *ga_bimname;
+extern size_t       ga_offset;
+
+

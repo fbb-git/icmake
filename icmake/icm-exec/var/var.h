@@ -3,11 +3,20 @@
 
 #include "../../rss/rss.h"
 
-#define typeValue(varp) ((varp)->type & (e_list | e_str | e_int))
-#define typeIdx(varp) ((varp)->type & e_list ? 2 : (varp)->type & e_str ? 1 : 0)
+inline ExprType var_type(Variable const *varp)
+{
+    return varp->type & e_typeMask;
+}
 
-uint16_t  varCount(Variable *var);
-void   varIncCount(Variable *var);     
-uint16_t  varDecCount(Variable *var);  /* returns count following the reduction */
+inline int var_typeValue(Variable const *varp)
+{
+    return varp->type & e_list ? 2 : 
+           varp->type & e_str  ? 1 : 
+                                 0;
+}
+
+uint16_t  var_count(Variable const *var);
+void   var_incCount(Variable *var);     
+uint16_t  var_decCount(Variable *var);  /* returns count following the reduction */
 
 #endif

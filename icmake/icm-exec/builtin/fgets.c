@@ -17,25 +17,25 @@
 
 void builtin_fgets()
 {
-    char const *filename = stringStr(top());
-    Variable *list = top() - 1;
+    char const *filename = string_charp(stack_top());
+    Variable *list = stack_top() - 1;
     FILE *inf;
 
-    reg = *listConstructor();
+    reg = *listcons();
 
     char const *status;
 
                                                 /* input not OK */
-    if (listSize(list) >= 4 && strcmp(status = listAt(list, 2), "OK") != 0)
+    if (list_size(list) >= 4 && strcmp(status = list_at(list, 2), "OK") != 0)
     {
         eb_fgetsStatus(status);
         return;
     }
 
-    long offset = listSize(list) == 0 ? 
+    long offset = list_size(list) == 0 ? 
                         0 
                     : 
-                        strtol(listAt(list, 3), 0, 10);
+                        strtol(list_at(list, 3), 0, 10);
     if 
     (                                       
         (inf = fopen(filename, "r"))

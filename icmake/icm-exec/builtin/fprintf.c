@@ -22,13 +22,13 @@
 
 void builtin_fprintf()
 {
-    char const *filename = stringStr(top() - 1);
+    char const *filename = string_charp(stack_top() - 1);
     FILE *outf;
 
     if (! (outf = fopen(filename, "a")) )
         rss_error("failure to open file \"%s\"", filename);
 
-    reg = *intConstructor_i(eb_formattedFprintf(outf, 2));
+    reg = *intcons_int(eb_formattedFprintf(outf, 2));
 
     fclose (outf);
 }

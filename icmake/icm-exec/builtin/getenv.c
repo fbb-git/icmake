@@ -5,18 +5,18 @@
 
 void builtin_getEnv()
 {
-    char *env = getenv(stringStr(top()));
+    char *env = getenv(string_charp(stack_top()));
 
-    reg = *listConstructor();
+    reg = *listcons();
     
     if (!env)
     {
-        listAdd_cP(&reg, "0");
-        listAdd_cP(&reg, "");
+        list_add_charPtr(&reg, "0");
+        list_add_charPtr(&reg, "");
     }
     else    
     {        
-        listAdd_cP(&reg, "1");
-        listAdd_cP(&reg, env);
+        list_add_charPtr(&reg, "1");
+        list_add_charPtr(&reg, env);
     }
 }

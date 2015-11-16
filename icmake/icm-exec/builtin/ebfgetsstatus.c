@@ -2,9 +2,9 @@
 
 void eb_fgetsStatus(char const *status)
 {
-    listAdd_cP(&reg, "");
-    listAdd_cP(&reg, "");
-    listAdd_cP(&reg, status);
+    list_add_charPtr(&reg, "");
+    list_add_charPtr(&reg, "");
+    list_add_charPtr(&reg, status);
 }
 
     

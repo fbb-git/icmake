@@ -21,7 +21,7 @@ void builtin_gets()
     char *dest = eb_getLine(stdin);
     if (!dest)
     {
-        reg = *listConstructor();
+        reg = *listcons();
         return;
     }
 
@@ -29,7 +29,7 @@ void builtin_gets()
     if (dest[last] == '\n')
         dest[last] = 0;
 
-    reg = *stringConstructor_cP(dest);
+    reg = *stringcons_charPtr(dest);
     free(dest);
 }
 

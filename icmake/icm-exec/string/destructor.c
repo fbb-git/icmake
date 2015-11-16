@@ -2,7 +2,7 @@
 
 void stringDestructor(Variable *var)
 {
-    if (varDecCount(var) == 0)
+    if (var_decCount(var) == 0)
         free (var->vu.i->ls.str);
 }
 

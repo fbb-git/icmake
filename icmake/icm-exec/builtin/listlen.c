@@ -7,12 +7,12 @@
 
 void builtin_listlen()
 {
-    Variable *base = top();
+    Variable *base = stack_top();
 
-    reg = *intConstructor_i(
-                typeValue(base) == e_str ? 
-                    (int)strlen(stringStr(base))
+    reg = *intcons_int(
+                var_type(base) == e_str ? 
+                    (int)strlen(string_charp(base))
                 :
-                    (int)listSize(base)
+                    (int)list_size(base)
         );
 }

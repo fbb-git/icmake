@@ -2,6 +2,6 @@
 
 void destructor(Variable *lhs)
 {
-    p_destructor[typeIdx(lhs)](lhs);
+    p_destructor[var_typeValue(lhs)](lhs);
 }
 

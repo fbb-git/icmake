@@ -13,90 +13,60 @@
     restored. For UNIX systems, no {\em atexit()} list is created.
 */
 
-#include "icm-exec.h"
-#include "var/var.h"
+#include "icm-exec.ih"
 
 int main(int argc, char **argv)
 {
-    int idx;
+    if (argc == 1)
+        usage(argv[0]);
+
+    argv = aux_testRmBim(&argc, argv);
+
+    builtin_getCwd();
+
+    opcodefun_setInfile(argv[1]);
 
     atexit(cleanup);
-    signal(SIGINT, (void (*)(int))abnormal);
 
-    if (argc == 1)
-    {
-        register char *program = rss_programName(argv[0]);
+    signal(SIGINT, (void (*)(int))aux_abnormal);
 
-        rss_copyright(program);
+    opcodefun_setGlobalVariables();
 
-        printf ("This program is run as a child process of icmake.\n"
-                "Usage: %s [-t] bimfile\n"
-                "where: -t      - option indicating that 'bimfile' must be\n"
-                "                 removed on exit.\n"
-                "       bimfile - binary makefile to execute.\n\n"
-            , program);
+            // third main arg: environ
+    ListVariable *list = listcons_charPtrPtr(environ);
+    stack_push(list);
+    listDestructor(list);
 
-        return 1;
-    }
+// FBB    {
+// FBB        ListVariable env = *listcons();
+// FBB
+// FBB        aux_environ2list(&env);
+// FBB        stack_push(&env);             /* envp: 3rd arg of main() */
+// FBB        listDestructor(&env);
+// FBB    }
 
-    getcwd(orgdir, MAX_PATHLEN);          /* initialize the CWD */
+            // second main arg: argv
+    list = listcons_size_charPtrPtr(argc, argv);
+    stack_push(list);
+    listDestructor(list);
 
-    if (!strcmp(argv[1], "-t"))           /* -t option found */
-    {
-        argv[1] = argv[0];                /* remove the -t argument */
-        argv++; 
-        argc--; 
-        bimname = argv[1];              /* define temporary name */
-    }
+// FBB     {
+// FBB         ListVariable args = *listcons_size_charPtrPtr((size_t)argc, argv);
+// FBB         stack_push(&args);            /* argv: 2nd arg of main() */
+// FBB         listDestructor(&args);
+// FBB     }
 
-    if (!(infile = fopen (argv [1], "r")))
-        rss_error("cannot open bimfile '%s' to read", argv[1]);
+                // first main arg: argc
+    IntVariable *nArgs = intcons_int(argc - 1);
+    stack_push(nArgs);
+    intDestructor(nArgs);
 
-    headerp = rss_readHeader(infile, (size_t)version[0]);
+//    {
+//        IntVariable nArgs = *intcons_int(argc - 1);
+//        stack_push(&nArgs);           /* argc: 1st arg of main() */
+//    }
 
-                                        /* return array of global vars */
-    if ((int16_t)(nvar = rss_getVar(infile, headerp, &var)) == -1)
-        rss_error("invalid macro file, cannot read variable section");
-
-        /* global string/list variables haven't been initialized by */
-        /*  the compiler, so that's icm-exec's job                  */
-    for (idx = 0; idx != nvar; ++idx)
-    {
-        switch (typeValue(var + idx))
-        {
-            case e_str:
-                var[idx] = *stringConstructor();
-            break;
-
-            case e_list:
-                var[idx] = *listConstructor();
-            break;
-        }
-    }
-
-    fseek(infile, headerp->offset[3], SEEK_SET);
-
-    {
-        ListVariable env = *listConstructor();
-
-        environ2list(&env);
-        push(&env);             /* envp: 3rd arg of main() */
-        listDestructor(&env);
-    }
-
-    {
-        ListVariable args = *listConstructor_s_cPP((size_t)argc, argv);
-        push(&args);            /* argv: 2nd arg of main() */
-        listDestructor(&args);
-    }
-
-    {
-        IntVariable nArgs = *intConstructor_i(argc - 1);
-        push(&nArgs);           /* argc: 1st arg of main() */
-    }
-
-    opcodefun_process();
-
-    return retval;
+    return opcodefun_process();
+//    return retval;
 }
 

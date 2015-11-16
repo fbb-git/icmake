@@ -14,12 +14,12 @@ void eb_updateFgets(FILE *inf, char *dest)
         nl = "\n";
     }
 
-    listAdd_swallow_cP(&reg, dest);
-    listAdd_cP(&reg, nl);
-    listAdd_cP(&reg, "OK");
+    list_add_grab_charPtr(&reg, dest);
+    list_add_charPtr(&reg, nl);
+    list_add_charPtr(&reg, "OK");
     
     char buffer[50];
     sprintf (buffer, "%ld", (long)ftell(inf));
 
-    listAdd_cP(&reg, buffer);
+    list_add_charPtr(&reg, buffer);
 }

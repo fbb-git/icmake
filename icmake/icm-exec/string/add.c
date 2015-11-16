@@ -1,11 +1,11 @@
 #include "string.ih"
 
-void stringAdd(String *lhs, String const *rhs)
+void string_add(String *lhs, String const *rhs)
 {
-    char *catstr = rss_strcat(rss_strdup(stringStr(lhs)), stringStr(rhs));
+    char *catstr = rss_strcat(rss_strdup(string_charp(lhs)), string_charp(rhs));
 
     destructor(lhs);
-    *lhs = *stringConstructor_cP(catstr);
+    *lhs = *stringcons_charPtr(catstr);
 
     free(catstr);
 }

@@ -3,10 +3,10 @@
 #include "../int/int.h"
 #include "../string/string.h"
 
-void pop()
+void stack_pop()
 {
-    stacktestunderflow();
-    destructor(stack + --sp);
+    s_testUnderflow();
+    destructor(gs_stack + --gs_sp);
 }
 
 

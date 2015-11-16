@@ -1,12 +1,12 @@
 #include "string.ih"
 
-String *stringCopyCons(String const *str)
+String *stringcopycons(String const *str)
 {
     static String ret;
 
     ret = *str;
 
-    varIncCount(&ret);
+    var_incCount(&ret);
     ret.type = e_str;
 
     return &ret;

@@ -7,16 +7,42 @@
 #include "../virtual/virtual.h"
 #include "../int/int.h"
 
-TextData *newlist(void);
+TextData *l_newList(void);
 
-void    incsize(ListVariable *list);
-void    addtxt(ListVariable *list, char *txt);
+void    l_incSize(ListVariable *list);
+void    l_addText(ListVariable *list, char *txt);
 
-size_t  listremove(ListVariable *list, char const *txt);
-void    listcleanup(ListVariable *list, size_t toRemove);
+size_t  l_remove(ListVariable *list, char const *txt);
+void    l_cleanup(ListVariable *list, size_t toRemove);
 
-#define list(plist)     ((plist)->vu.i->ls.list)
-#define size(plist)     (list(plist).size)
-#define element(plist)  (list(plist).element)
+//FBB #define list(plist)     ((plist)->vu.i->ls.list)
+inline List *l_listPtr(Variable *var)
+{
+    return &var->vu.i->ls.list;
+}
+
+// #define size(plist)     (list(plist).size)
+inline uint16_t *l_sizePtr(Variable *var)
+{
+    return &l_listPtr(var)->size;
+}
+
+inline List const *l_listConstPtr(Variable const *var)
+{
+    return &var->vu.i->ls.list;
+}
+
+inline uint16_t l_size(Variable const *var)
+{
+    return l_listConstPtr(var)->size;
+}
+
+// #define element(plist)  (list(plist).element)
+inline char const**l_element(Variable const *var)
+{
+    return (char const **)l_listConstPtr(var)->element;
+}
+
+
 
 

@@ -1,17 +1,9 @@
 #ifndef _INCLUDED_BUILTIN_H_
 #define _INCLUDED_BUILTIN_H_
 
-#include "../../rss/rss.h"
+//FBB void builtin(size_t funnr);
+//FBB char const *builtin_orgDir(void);
 
-#include "../var/var.h"
-
-extern char        *arghead;
-extern char        *argtail;
-extern char        *cmdhead;
-extern char        *cmdtail;
-
-extern Variable         reg;
-
-void builtin(size_t funnr);
+void builtin_getCwd();
 
 #endif

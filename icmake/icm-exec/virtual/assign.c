@@ -1,7 +1,7 @@
 #include "virtual.ih"
 
-void assign(Variable *lhs, Variable const *rhs)
+void virtual_assign(Variable *lhs, Variable const *rhs)
 {
-    p_assign[typeIdx(rhs)](lhs, rhs);
+    p_assign[var_typeValue(rhs)](lhs, rhs);
 }
 

@@ -22,12 +22,12 @@
 
 void builtin_element ()
 {
-    size_t idx = intValue(top());
+    size_t idx = int_value(stack_top());
 
-    reg = *stringConstructor_cP
+    reg = *stringcons_charPtr
             (
-                idx < listSize(top() - 1) ? 
-                    listAt(top() - 1, idx)
+                idx < list_size(stack_top() - 1) ? 
+                    list_at(stack_top() - 1, idx)
                 : 
                     ""
             );

@@ -1,7 +1,7 @@
 #include "stack.ih"
 
-Variable *top()
+Variable *stack_top()
 {
-    stacktestunderflow();
-    return stack + sp - 1;
+    s_testUnderflow();
+    return gs_stack + gs_sp - 1;
 }

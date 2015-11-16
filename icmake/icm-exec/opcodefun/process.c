@@ -10,7 +10,7 @@
 
 #include "opcodefun.ih"
 
-void opcodefun_process()
+int opcodefun_process()
 {
     register Opcode opcode;
 
@@ -21,8 +21,8 @@ void opcodefun_process()
 
     do
     {
-        curoffs = (size_t)ftell(infile);
-        opcode = rss_getOpcode(infile);
+        curoffs = (size_t)ftell(go_infile);
+        opcode = rss_getOpcode(go_infile);
 
         if (opcode >= op_hlt || opcode == (Opcode)-1)
         {
@@ -32,6 +32,8 @@ void opcodefun_process()
         p_procfun[opcode]();
     }
     while (opcode != op_exit);
+
+    return 0;
 }
 
 

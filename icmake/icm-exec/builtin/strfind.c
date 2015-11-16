@@ -15,8 +15,8 @@
 
 void builtin_strFind()
 {
-    char const *haystack = stringStr(top());
-    char const *ret = strstr(haystack, stringStr(top() - 1));
+    char const *haystack = string_charp(stack_top());
+    char const *ret = strstr(haystack, string_charp(stack_top() - 1));
     
-    reg = *intConstructor_i(ret ? ret - haystack : -1);
+    reg = *intcons_int(ret ? ret - haystack : -1);
 }

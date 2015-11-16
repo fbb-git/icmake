@@ -2,5 +2,5 @@
 
 void builtin_trimLeft()
 {
-    reg = *stringTrimLeft(top());
+    reg = *string_trimLeft(stack_top());
 }

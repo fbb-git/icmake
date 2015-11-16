@@ -1,6 +1,6 @@
 #include "var.ih"
 
-void varIncCount(Variable *var)
+void var_incCount(Variable *var)
 {
     ++var->vu.i->count;
 }

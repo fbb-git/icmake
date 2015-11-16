@@ -2,7 +2,7 @@
 
 size_t eb_formatter(void *dest, size_t start)
 {
-    size_t lastIdx = start + intValue(top());   /* get the last arg idx */
+    size_t lastIdx = start + int_value(stack_top());   /* get the last arg idx */
 
     int notUsed;
     char *fmt = eb_getArg(start, &notUsed);        /* get the fmt string  */

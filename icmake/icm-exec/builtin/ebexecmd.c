@@ -61,6 +61,6 @@ int mode;
         rss_error("builtin_execute - program indicates failure (status %d)", 
                                                                         ret);
 
-    reg = *intConstructor_i(ret);     /* return exit status */
+    reg = *intcons_int(ret);     /* return exit status */
     return cmd;
 }

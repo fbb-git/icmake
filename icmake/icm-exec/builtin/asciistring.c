@@ -24,6 +24,6 @@ static char buf[2];
 
 void builtin_asciiString ()
 {
-    buf[0] = intValue(top());
-    reg = *stringConstructor_cP(buf);
+    buf[0] = int_value(stack_top());
+    reg = *stringcons_charPtr(buf);
 }

@@ -2,16 +2,16 @@
 
 Variable *(*p_constructor[3])(void) = 
 {
-    intConstructor,
-    stringConstructor,
-    listConstructor,
+    intcons,
+    stringcons,
+    listcons,
 };
 
 Variable *(*p_copycons[3])(Variable const *) = 
 {
-    intCopyCons,
-    stringCopyCons,
-    listCopyCons,
+    intcopycons,
+    stringcopycons,
+    listcopycons,
 };
 
 void (*p_destructor[3])(Variable *var) = 
@@ -23,35 +23,35 @@ void (*p_destructor[3])(Variable *var) =
 
 void (*p_assign[3])(Variable *lhs, Variable const *rhs) =
 {
-    intAssign,
-    stringAssign,
-    listAssign,
+    int_assign,
+    string_assign,
+    list_assign,
 };
 
 int (*p_logical[3])(Variable const *var) = 
 {
-    intLogical, 
-    stringLogical, 
-    listLogical,
+    int_bool, 
+    string_bool, 
+    list_bool,
 };
 
 void (*p_add[3])(Variable *lhs, Variable const *rhs) =
 {
-    intAdd,
-    stringAdd,
-    listAdd_L,
+    int_add,
+    string_add,
+    list_add,
 };
 
 void (*p_sub[3])(Variable *lhs, Variable const *rhs) =
 {
-    intSub,
+    int_sub,
     NULL,
-    listSub,
+    list_sub,
 };
 
 void (*p_compare[3])(Variable *lhs, Variable const *rhs) =
 {
-    intSub,
+    int_sub,
     stringCompare,
     listCompare,
 };

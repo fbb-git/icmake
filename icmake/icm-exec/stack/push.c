@@ -8,19 +8,13 @@
 
 static  size_t stackSize;
 
-Variable   *stack;
-
-size_t  sp;
-size_t  bp;
-
-
-void push(Variable const *varEl)
+void stack_push(Variable const *varEl)
 {
-    if (sp >= stackSize)
+    if (gs_sp >= stackSize)
     {
         stackSize += 50;
-        stack = rss_realloc(stack, stackSize * sizeof(Variable));
+        gs_stack = rss_realloc(gs_stack, stackSize * sizeof(Variable));
     }
 
-    stack[sp++] = *copyCons(varEl);
+    gs_stack[gs_sp++] = *copycons(varEl);
 }

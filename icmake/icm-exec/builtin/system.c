@@ -18,8 +18,8 @@
 
 void builtin_system()
 {
-    int  mode = intValue(top());            /* get mode arg */
-    char const *cmd = stringStr(top() - 1); /* get cmd string */
+    int  mode = int_value(stack_top());            /* get mode arg */
+    char const *cmd = string_charp(stack_top() - 1); /* get cmd string */
 
     if (echo)                               /* re-builtin_echo if requested */
         puts(cmd);
@@ -31,5 +31,5 @@ void builtin_system()
     if (ret && rss_checkMode(mode))       /* terminate upon failure? */
         rss_error ("system - failure of system call (status %d)", ret);
 
-    reg = *intConstructor_i(ret);        
+    reg = *intcons_int(ret);        
 }

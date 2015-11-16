@@ -17,5 +17,5 @@
 
 void builtin_extension ()
 {
-    reg = *stringConstructor_cP(rss_getExt(stringStr(top())));
+    reg = *stringcons_charPtr(rss_getExt(string_charp(stack_top())));
 }

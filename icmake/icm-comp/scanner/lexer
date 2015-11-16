@@ -21,9 +21,16 @@
                             return STRING;
                         }
 [ \t]                   ;
-\n                      yylineno++;
+\n                      ++yylineno;
 ^#.*                    {
                             sc_changeFile(yytext + 1);
+                        }
+'[^\\]'              |
+'\\.'               |
+'\\0[0-8]{2}'       |
+'\\x[[:xdigit:]]{2}     {   
+                            util_charString(yyleng, yytext); 
+                            return STRING;
                         }
 \"                      {
                             util_setString(""); BEGIN str;

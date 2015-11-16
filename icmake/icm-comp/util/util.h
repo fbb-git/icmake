@@ -19,6 +19,7 @@ void        util_semantic(char const *s, ...);
 void        util_setSemErr(size_t value);
 void        util_setSourceName(char const *txt);
 void        util_setString(char const *txt);
+void        util_charString(size_t length, char const *txt);
 
 #endif
 

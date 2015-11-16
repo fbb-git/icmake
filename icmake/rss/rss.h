@@ -39,7 +39,8 @@ char     *rss_programName(char *argv0);  /* make programname from argv[0] */
 
 char     *rss_strUnescape(char *);
 
-char     *rss_strdup(char const *);
+char     *rss_strdup(char const *str);      /* duplicates 'str ? str : ""'  */
+
 char     *rss_strcat (char *, char const *);
 
 void     rss_msg_(char const *path, char *fmt, ...); /* prints a msg to stderr. 
@@ -52,7 +53,9 @@ void     rss_spawnErr(char const *program);
 
 void     *rss_realloc (void *, size_t);
 
-int      rss_exists(char const *);
+int      rss_exists(char const *path);  /* 0 is returned if path exists.
+                                            path can be NULL */
+
 int      rss_older(char const *, char const *);
 int      rss_younger(char const *, char const *);
 

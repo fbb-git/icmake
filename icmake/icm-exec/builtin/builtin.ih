@@ -17,6 +17,7 @@
 #include "../string/string.h"
 #include "../virtual/virtual.h"
 #include "../int/int.h"
+#include "../opcodefun/opcodefun.h"
 
 extern int echo;
 extern size_t listIndex;
@@ -78,6 +79,7 @@ void builtin_dotExtension(void);
 void builtin_extension(void);
 void builtin_path(void);
 void builtin_echo(void);
+//FBB void builtin_exit(void);
 void builtin_element(void);
 void builtin_exec(void);
 void builtin_exists(void);

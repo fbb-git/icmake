@@ -2,7 +2,7 @@
 
 #include "icmake.ih"
 
-void inspectFlags(char const *program)
+void inspectFlags(char const *program, char **argv)
 {
     if (flags & f_about)                    /* -a specified: about info */
         about(program);
@@ -11,6 +11,9 @@ void inspectFlags(char const *program)
 
     if ((test & (test - 1)))    /* not a power of 2 -> multiple options */
         rss_error("multiple options are not supported");
+
+    if (flags == 0)
+        noOptions(argv);
 }
 
 

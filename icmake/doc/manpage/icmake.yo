@@ -113,16 +113,31 @@ options, the tt(-a) option overrules all other options except for tt(-h). Of
 the remaining options only one can be specified:
     itemization(
     sop(a)()(show information about icm(), overruled by tt(-h))
-    sop(b)()(blunt execution of the icm() .bim file, given as first argument)
     sop(c)()(the icm() source file is compiled)
+    sop(e)()(execute the icm() .bim file, given as first argument)
     sop(i)()(the first argument is the icm() source file, the default
         binary file is constructed if necessary and all additional
-                arguments are passed to tt(icm-exec) `as is'.)
+        arguments are passed to tt(icm-exec) `as is'.)
     sop(p)()(the icm() source file is only preprocessed, output is the
                 preprocessed only the preprocessor is activated)
-    sop(t)()(the .bim file is a temporary file, which is removed on exit; 
-                the first argument is the .im source file, 
-                all additional arguments are passed to tt(icm-exec) `as is'.)
+    sop(t)()(the argument following tt(-t) is the name of a temporary tt(.bim)
+        file, which is removed after icm()'s call. The next argument is the
+        name of the icm() script, and all additional arguments are passed as
+        arguments to the icm() script. After making an icm()-script executable
+        (tt(chmod +x script)), and providing it with an initial line like
+        this: 
+            verb(
+    #!/usr/bin/icmake -t /tmp/script
+            )
+        the script can directly be called:
+            verb(
+    script arg1 arg2 
+            )
+        in which case the icm() script tt(`script') is executed while it
+        received the three arguments tt(script arg1 arg2).
+        ) 
+    sop(v)()(displays icm()'s version number, and ends icm(), 
+            overruled by tt(-h))
     )
 
     bf(Icmun):
@@ -568,12 +583,12 @@ provided:
 
         The next line found at offet tt(offset) is read from tt(file).  It
         returns a list tt(retlist) containing as its first element the
-        contents of the read line, as its second element the line's tt(\n) (if
-        encountered), and as its third element the string tt(OK) if a line was
-        successfully read, tt(FAIL) if reading from file failed, and tt(EOF)
-        if reading failed because of an end-of-file condition.  The list may
-        contain additional elements, which are internally used by
-        tt(fgets).nl()
+        contents of the read line (without the tt(\n) line terminator), as its
+        second element the line's terminator `tt(\n)' (if encountered), and as
+        its third element the string tt(OK) if a line was successfully read,
+        tt(FAIL) if reading from file failed. At EOF an empty list is
+        returned. The list may contain additional elements, which are
+        internally used by tt(fgets).nl()
 
         To read multiple lines, start by passing an empty list as tt(gets's)
         second argument. To read subsequent lines, pass the previously

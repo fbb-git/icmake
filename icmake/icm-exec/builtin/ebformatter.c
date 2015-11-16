@@ -7,7 +7,7 @@ size_t eb_formatter(void *dest, size_t start)
     int notUsed;
     char *fmt = eb_getArg(start, &notUsed);        /* get the fmt string  */
 
-    char *end = eb_findPercent(fmt);               /* 'end' at 0 or %<nr>      */
+    char *end = eb_findPercent(fmt);               /* 'end' at 0 or %<nr> */
 
     size_t ret;
 

@@ -11,6 +11,8 @@
     // define the name of the source containing main():
 #define MAIN                "main.c"
 
+#define REFRESH
+
     // #defines used for compilation and linking:
     // ==========================================
 

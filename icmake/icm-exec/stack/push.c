@@ -1,3 +1,6 @@
+/*#define msg
+*/
+
 #include "stack.ih"
 
 #include "../int/int.h"
@@ -18,5 +21,6 @@ void push(VAR_ const *varEl)
         stackSize += 50;
         stack = rss_realloc(stack, stackSize * sizeof(VAR_));
     }
+
     stack[sp++] = *copyCons(varEl);
 }

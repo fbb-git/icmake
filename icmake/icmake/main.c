@@ -1,5 +1,5 @@
-#define msg
 /*
+#define msg
 */
 
 #include "icmake.ih"
@@ -32,7 +32,6 @@ int main(int argc, char **argv)
         pimFile,                                \
         bimFile);                               
 
-
     atexit(cleanup);
 
     if (flags & f_icmexec)                  /* direct execute the bim-file */
@@ -42,13 +41,3 @@ int main(int argc, char **argv)
     compile();                              /* f_compile ends icmake    */
     execute(argv + execArgIdx);             /* ends icmake  */
 }
-
-
-
-
-
-
-
-
-
-

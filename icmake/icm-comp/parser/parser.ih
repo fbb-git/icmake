@@ -140,7 +140,7 @@ SemVal *p_for (SemVal *, SemVal *,   /* for statement */
                        SemVal *, SemVal *);
 SemVal *p_greater (SemVal *, SemVal *);   /* > code */
 SemVal *p_grEqual (SemVal *, SemVal *);  /* >= code */
-SemVal *p_if (SemVal *, SemVal *,    /* if code */
+SemVal *p_if(SemVal *, SemVal *,    /* if code */
                                SemVal *);
 SemVal *p_incDec (PREPOST_, OPCODE_,         /* E.g., c++ */
                                SemVal *);
@@ -161,7 +161,7 @@ SemVal *p_optIntSpecial (ExprType,           /* fun([int,] ...) */
 SemVal *p_optIntString (ExprType,        /* chdir(), system() */
                       SemVal *, SemVal *);
 SemVal *p_orBool (SemVal *, SemVal *);/* || code */
-SemVal *p_return (ExprType, SemVal *);/* exit(), return(); */
+SemVal *p_return(ExprType, SemVal *);/* exit(), return(); */
 SemVal *p_specials (ExprType, SemVal *);    /* fun(x, y, ...)  code */
 SemVal *p_shl (SemVal *, SemVal *);            /* << (binary) code */
 SemVal *p_shr (SemVal *, SemVal *);            /* >> (binary) code */

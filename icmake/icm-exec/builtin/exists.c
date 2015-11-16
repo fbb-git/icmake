@@ -4,6 +4,9 @@
     Else, the return register indicates 0.
 */
 
+/*#define msg
+*/
+
 #include "builtin.ih"
 
 void builtin_exists()

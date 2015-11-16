@@ -144,7 +144,7 @@ char *gp_opstring[] =
     ">>",                               /* op_shr */
 };
 
-char    gp_typeConflict[]   = "p_conflicting operand types for %s";
+char    gp_typeConflict[]   = "conflicting operand types for %s";
 char    gp_illegalType[]    = "illegal type for %s";
 char    gp_lvalueNeeded[]     = "lvalue needed for %s";
 char    gp_illegalArgCount[]  = "%s(): too few arguments";

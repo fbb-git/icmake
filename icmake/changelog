@@ -27,6 +27,9 @@ icmake (8.00.00)
     defined in the condition phrase of an if- and while-statement. Unless
     initialized such variables represent a `false' condition.
 
+  * Character constants are supported and are converted to single-character
+    string constants.
+
   * Fixed a bug in the printf family of functions: these functions now return
     the number of printed arguments (as documented in icmake(1)'s man-page).
 
@@ -52,7 +55,13 @@ icmake (8.00.00)
     several old files (like  rss/ic*h files) became obsolete and were
     removed. 
 
- *  The -q options is not supported anymore
+ *  The -q and -b options are not supported anymore.
+
+ *  The -e option replaces the previously defined -b option.
+
+ *  The -v option writes icmake's version to the standard output stream
+    (terminating icmake).
+
 
 
 icmake (7.23.02)

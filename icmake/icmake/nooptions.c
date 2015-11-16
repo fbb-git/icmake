@@ -1,18 +1,27 @@
+/*
 #define msg
+*/
 
 #include "icmake.ih"
 
 void noOptions(char **argv)
 {
+    msg("starting");
     flags |= f_doPreProcess  | f_rmPim | f_doCompile | f_doExec;
 
-    imFile = accessFile(argv[1], "im");
+    if (optind == execArgIdx)
+        rss_error("first argument must be icmake-script");
+
+    imFile = accessFile(argv[optind], "im");
     pimFile = rss_changeExt(imFile, "pim");
 
-    bimFile = useFile(          /* -- may be 2nd arg: use default bim name */
-                argv[2] && strcmp(argv[2], "--") == 0 ? NULL : argv[2], 
-                "bim");
+
+    bimFile = execArgIdx > optind + 1 ?
+                rss_strdup(argv[optind + 1])
+            :
+                rss_changeExt(imFile, "bim");
 
     testCompile();
 }
     
+

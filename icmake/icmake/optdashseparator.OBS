@@ -1,0 +1,27 @@
+#define msg
+
+#include "icmake.ih"
+
+void optDashSeparator(char **argv)
+{
+    msg("optind = %u", optind);
+
+    flags |= f_doPreProcess  | f_rmPim | f_doCompile | f_doExec;
+
+    if (optind == 1)
+        rss_error("Icmake-script filename missing before --");
+
+    imFile = accessFile(argv[1], "im");
+    pimFile = rss_changeExt(imFile, "pim");
+
+    bimFile =  optind > 2 ?
+                    accessFile(argv[2], "bim")
+                : 
+                    rss_changeExt(imFile, "bim");
+
+    execArgIdx = optind;
+
+    testCompile();
+}
+    
+

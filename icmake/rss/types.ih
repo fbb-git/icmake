@@ -118,49 +118,73 @@ typedef enum
     */
 typedef enum                                /* names of rss-functions */
 {
+    /* 0 */
     f_arg_head,
     f_arg_tail,
     f_ascii_int,                            /* return int */
     f_ascii_str,                            /* return str */
+
+    /* 4 */
     f_backtick,                             
     f_c_base,
     f_c_ext,
     f_c_path,
+
+    /* 8 */
     f_chdir,
     f_cmd_head,
     f_cmd_tail,
     f_echo,
+
+    /* c */
     f_element,
     f_eval,
     f_exec,
     f_execute,                              /* only used by the compiler */
+
+    /* 10 */
     f_exists,
+    f_exitNotUsed,
     f_fgets,
     f_fields,
+
+    /* 14 */
     f_fprintf,
     f_g_base,
     f_g_dext,
     f_g_ext,
+
+    /* 18 */
     f_g_path,
     f_getch,
     f_getenv,
     f_getpid,                               /* used by several programs  */
+
+    /* 1c */
     f_gets,
     f_listlen,
     f_makelist,
     f_printf,
+
+    /* 20 */
     f_putenv,
     f_stat,
     f_str_el,
     f_strfind,                              /* IDEM */
+
+    /* 24 */
     f_strformat,
     f_strlen,                               /* only used by the compiler */
     f_strlwr,                               /* only used by the compiler */
     f_strupr,                               /* only used by the compiler */
+
+    /* 28 */
     f_substr,
     f_system,
     f_trim,
     f_trimleft,
+
+    /* 2c */
     f_trimright,
 
     /* 20 left for new opcodes until f_hlt */
@@ -258,7 +282,7 @@ typedef struct
 
 typedef union
 {
-    int16_t intval;                         /* value of an int */
+    int16_t intval;                       /* value of an int */
     INTER_ *i;                            /* intermediate alloc. structure */
 } VAR_UNION_;
 

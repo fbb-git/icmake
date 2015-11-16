@@ -1,16 +1,16 @@
 /*
-        The {\em main()} function opens the binary makefile, reads the offsets
-        of the variables and strings sections, calls {\em getvar()} to retrieve
-        the variables, pushes {\em argc}, {\em argv} and {\em envp}
-        onto the {\em icmake}
-        stack and then calls {\em process()} to execute the makefile.
+    The {\em main()} function opens the binary makefile, reads the offsets
+    of the variables and strings sections, calls {\em getvar()} to retrieve
+    the variables, pushes {\em argc}, {\em argv} and {\em envp}
+    onto the {\em icmake}
+    stack and then calls {\em process()} to execute the makefile.
 
-        The exit value of {\em main()} is held in the global variable {\em
-        retval} (see also {\em fun\_ret()}).
+    The exit value of {\em main()} is held in the global variable {\em
+    retval} (see also {\em fun\_ret()}).
 
-        Function {\em cleanup()} is attached to the `at-exit' list for DOS
-        systems. This is necessary so that the startup working directory is
-        restored. For UNIX systems, no {\em atexit()} list is created.
+    Function {\em cleanup()} is attached to the `at-exit' list for DOS
+    systems. This is necessary so that the startup working directory is
+    restored. For UNIX systems, no {\em atexit()} list is created.
 */
 
 #include "icm-exec.h"
@@ -39,6 +39,8 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    getcwd(orgdir, _MAX_PATH);          /* initialize the CWD */
+
     if (!strcmp(argv[1], "-t"))           /* -t option found */
     {
         argv[1] = argv[0];                /* remove the -t argument */
@@ -56,12 +58,20 @@ int main(int argc, char **argv)
     if ((int16_t)(nvar = rss_getVar(infile, headerp, &var)) == -1)
         rss_error("invalid macro file, cannot read variable section");
 
-        /* global strings haven't been initialized by the compiler yet, */
-        /* so that's icm-exec's job                                     */
-    for (idx = 0; idx < nvar; ++idx)
+        /* global string/list variables haven't been initialized by */
+        /*  the compiler, so that's icm-exec's job                  */
+    for (idx = 0; idx != nvar; ++idx)
     {
-        if (typeValue(var + idx) == e_str)
-            var[idx] = *stringConstructor();
+        switch (typeValue(var + idx))
+        {
+            case e_str:
+                var[idx] = *stringConstructor();
+            break;
+
+            case e_list:
+                var[idx] = *listConstructor();
+            break;
+        }
     }
 
     fseek(infile, headerp->offset[3], SEEK_SET);
@@ -85,7 +95,8 @@ int main(int argc, char **argv)
         push(&nArgs);           /* argc: 1st arg of main() */
     }
 
-    process();
+    opcodefun_process();
 
     return retval;
 }
+

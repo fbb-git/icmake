@@ -1,4 +1,7 @@
 %{
+    /*
+    #define msg
+    */
     #include "parser.ih"
 %}
 
@@ -1117,7 +1120,7 @@ _stm:
     ';'
     zeroframe
     {
-        $$ = $1;
+        $$ = $2;
     }
 |
     expr_code
@@ -1160,6 +1163,11 @@ statements:
 |
     zeroframe
 ;
+
+
+
+
+
 typed_condition:
     type_of_var
     var_condition

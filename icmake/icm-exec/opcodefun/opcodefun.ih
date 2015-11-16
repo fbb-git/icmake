@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "../../rss/rss.h"
 #include "../global.h"
 
 #include "../var/var.h"
@@ -13,7 +12,6 @@
 #include "../list/list.h"
 #include "../string/string.h"
 #include "../builtin/builtin.h"
-
 
 extern void       (*p_procfun[])(void);
 

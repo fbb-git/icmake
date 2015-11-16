@@ -1,3 +1,6 @@
+/* #define msg
+*/
+
 #include "list.ih"
 
 LISTVAR_ *listCopyCons(LISTVAR_ const *other)
@@ -8,5 +11,6 @@ LISTVAR_ *listCopyCons(LISTVAR_ const *other)
     dest.type = e_list;
     varIncCount(&dest);
 
+    msg("done");
     return &dest;
 }

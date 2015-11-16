@@ -2,8 +2,11 @@
 
 #include "icmake.ih"
 
-char *useFile(char const *argv2, char const *ext)
+char *useFile(char const *firstChoice, char const *fallback, char const *ext)
 {
-    return argv2 ? rss_strdup(argv2) : rss_changeExt(imFile, ext);
+    return firstChoice != NULL ?
+                rss_strdup(firstChoice)
+            :
+                rss_changeExt(fallback, ext);
 }
 

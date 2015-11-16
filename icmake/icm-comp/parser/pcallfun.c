@@ -2,6 +2,8 @@
 
 SemVal *p_callFunction(int funIdx, SemVal *e)
 {
+    msg("calling function 0x%x", funIdx);
+
     register size_t nParams;
 
 /*

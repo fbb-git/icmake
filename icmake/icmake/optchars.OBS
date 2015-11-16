@@ -24,15 +24,15 @@ int optChars(char const *program, char const *options, char **argv)
             break;
 
             case 'b':
-                directExecuteOpt(argv[2]);
+                optExecute(argv[2]);
             break;
 
             case 'c':
-                compileOpt(argv + 1);
+                optCompile(argv + 1);
             break;
 
             case 'i':
-                imOpt(argv + 1);
+                optIm(argv + 1);
             break;
 
             case 't':
@@ -40,7 +40,7 @@ int optChars(char const *program, char const *options, char **argv)
             break;
 
             case 'p':
-                preProcessOpt(argv + 1);
+                optPreProcess(argv + 1);
             break;
 
             default:
@@ -48,3 +48,7 @@ int optChars(char const *program, char const *options, char **argv)
         }
     }
 }
+
+
+
+

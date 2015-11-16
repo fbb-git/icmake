@@ -5,49 +5,73 @@ BinHeader *headerp;
 char
     *funname [] =
     {
+        /* 0 */
         "arghead",
         "argtail",
         "ascii_int2str",
         "ascii_str2int",
+
+        /* 4 */
         "backtick",
         "change_base",
         "change_ext",
         "change_path",
+
+        /* 8 */
         "chdir",
         "cmdhead",
         "cmdtail",
         "echo",
+
+        /* c */
         "list_element",
         "eval",
         "exec",
         "execute",
+
+        /* 10 */
         "exists",
+        "NOT CALLED",       //FBB "exit",
         "fgets",
         "fields",
+
+        /* 14 */
         "fprintf",
         "get_base",
         "get_dext",
         "get_ext",
+
+        /* 18 */
         "get_path",
         "getch",
         "getenv",
         "getpid",
+
+        /* 1c */
         "gets",
         "listlen",
         "makelist",
         "printf",
+
+        /* 20 */
         "putenv",
         "stat",
         "string_element",
         "strfind",
+
+        /* 24 */
         "strformat",
         "strlen",
         "strlwr",
         "strupr",
+
+        /* 28 */
         "substr",
         "system",
         "trim",
         "trimleft",
+
+        /* 2c */
         "trimright",
     };
 

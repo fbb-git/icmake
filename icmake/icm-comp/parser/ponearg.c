@@ -2,6 +2,8 @@
 
 SemVal *p_oneArg(ExprType type, SemVal *arg)
 {
+    msg("calling function 0x%x", type);
+
     register int ok;
 
     p_expr2stack(arg);                               /* arg to stack */
@@ -22,6 +24,7 @@ SemVal *p_oneArg(ExprType type, SemVal *arg)
         break;
 
         case f_echo:
+//FBB        case f_exit:
             ok = test_type(arg, e_int);
         break;
 

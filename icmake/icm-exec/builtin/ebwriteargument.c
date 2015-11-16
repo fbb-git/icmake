@@ -1,3 +1,6 @@
+/*#define msg
+*/
+
 #include "builtin.ih"
 
 static char separator[] = {' ', 0};

@@ -1,24 +1,16 @@
 /*
-\funcref{fun\_fgets}{void fun\_fgets ()}
-    {}
-    {}
-    {}
-    {fun\_gets(), fun\_printf(), fun\_fprintf()}
-    {funfgets.c}
-    {
+    This function reads in a string from a file and returns it in the {\em
+    reg} return register as an {\em e\_str} value. The arguments on the
+    stack are: the filename and an {\em int offset}, where the read
+    operation should start.
 
-        This function reads in a string from a file and returns it in the {\em
-        reg} return register as an {\em e\_str} value. The arguments on the
-        stack are: the filename and an {\em int offset}, where the read
-        operation should start.
+    The return value is a list, holding as the first list the just read line,
+    as the second element the final \n (if available), as its third
+    element the string OK, or FAIL, and as its fourth
+    builtin_element the (long) offset value from where the next string must be
+    read. This long value is stored as binary value using the host byte order.
 
-        The return value is a list, holding as the first list builtin_element the read
-        string, as the second builtin_element the final \n (if available), as its
-        third builtin_element the string OK, EOF or FAIL, and as its fourth builtin_element
-        the (long) offset value from where the next string must be read. This
-        long value is stored as binary value using the host byte order.
-
-    }
+    On EOF an empty list is returned.
 */
 
 #include "builtin.ih"
@@ -55,11 +47,11 @@ void builtin_fgets()
         
         if (dest)                               /* anything read?           */
             eb_updateFgets(inf, dest);
-        else 
-            eb_fgetsStatus(feof(inf) ? "EOF" : "FAIL");
+        else if (!feof(inf))                    /* no, and not EOF: fail    */
+            eb_fgetsStatus("FAIL");
 
         fclose (inf);
-        return;
+        return;                                 /* empty list at EOF        */
     }
 
     eb_fgetsStatus("FAIL");

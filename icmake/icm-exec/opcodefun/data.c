@@ -48,3 +48,4 @@ void (*p_procfun[])(void) =
      
          /* fun_hlt does not exist, op_hlt is a dummy... */
      };
+

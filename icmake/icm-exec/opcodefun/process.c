@@ -10,9 +10,9 @@
 
 #include "opcodefun.ih"
 
-void process()
+void opcodefun_process()
 {
-    register OPCODE_ op;
+    register OPCODE_ opcode;
 
     arghead = rss_strdup("");
     argtail = rss_strdup("");
@@ -22,16 +22,16 @@ void process()
     do
     {
         curoffs = (size_t)ftell(infile);
-        op = rss_getOpcode(infile);
+        opcode = rss_getOpcode(infile);
 
-        if (op >= op_hlt || op == (OPCODE_)-1)
+        if (opcode >= op_hlt || opcode == (OPCODE_)-1)
         {
             fprintf(stderr, "bad opcode at %s ", rss_hexString(curoffs, 4));
-            rss_error("(opcode %s)", rss_hexString(op, 2));
+            rss_error("(opcode %s)", rss_hexString(opcode, 2));
         }
-        p_procfun[op]();
+        p_procfun[opcode]();
     }
-    while (op != op_exit);
+    while (opcode != op_exit);
 }
 
 

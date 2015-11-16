@@ -47,17 +47,17 @@ extern char *bimFile;
 extern FILE *fdest;
 extern FLAGS_ flags;
 extern size_t execArgIdx;
-
                                                 
-void options(int argc, char **argv);        /* process flags */
-int  optChars(char const *program, char const *options, char **argv);
-void directExecuteOpt(char const *argv1);
-void compileOpt(char **argv);
-void imOpt(char **argv);
-void tmpBimOpt(char **argv);
-void preProcessOpt(char **argv);
-void stdFiles(char **argv);                 /* also calls testCompile */
 void noOptions(char **argv);
+size_t dashesIndex(char **begin, char **end);
+
+void optCompile(char **argv);
+void optExecute();
+void optIm(char **argv);
+void optPreProcess(char **argv);
+void optTmpBim(char **argv);
+
+void options(int argc, char **argv);
 
 void    cleanup(void);                      /* cleanup temp. info */
 void    usage(char const *progname);
@@ -67,28 +67,20 @@ void    execute(char **argv);
 void    preProcess(void);
 void    compile(void);
 
-char   *accessFile(char const *file, char const *ext); /* file must exist */
+char   *accessFile(char const *file, char const *ext); /* returns copy of file
+                                                or file.ext, or error if 
+                                                neither exists */
+
+                                /* if existing, use firstChoice, else use
+                                   fallback, using the specified extension */
+char   *useFile(char const *firstChoice,        
+                char const *fallback, char const *ext);  
+
 void    testCompile(void);
 
 int     spawnlp(int mode, char const *prog, char const *av0, ...);
-void    inspectFlags(char const *program);
-char   *useFile(char const *argv2, char const *ext);
+void    inspectFlags(char const *program, char **argv);
 
-//void    setFiles(char **argv);
-//void        copyright(char const *program);
-//void    abnormal_exit(int);                 /* abnormal eop */
-//void    quote_blanks(char **);              /* quote arguments with blanks */
-
-//char     *trySoource(char const *);         /* return allocated source[.im] */
-//void literalSource(int argc, char **argv);
-
-
-
-
-
-
-
-
-
-
-
+// int  optChars(char const *program, char const *options, char **argv);
+//void stdFiles(char **argv);                 /* also calls testCompile */
+//void optDashSeparator(char **argv);

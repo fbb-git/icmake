@@ -1,10 +1,9 @@
 #include "stack.h"
 
+#include "../aux/aux.h"
 #include "../var/var.h"
 #include "../virtual/virtual.h"
 #include "../int/int.h"
-
-#include "../global.h"
 
 void s_testUnderflow(void);
 

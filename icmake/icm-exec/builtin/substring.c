@@ -14,12 +14,12 @@ void builtin_subString()
         offset = 0;
 
     if ((size_t)offset >= str_len || count <= 0)
-        reg = *stringcons();
+        gb_reg = *stringcons();
     else
     {
-        reg = *stringcons_charPtr(str + offset);
+        gb_reg = *stringcons_charPtr(str + offset);
         if (count < (int)(str_len - (size_t)offset))
-            ((char *)string_charp(&reg))[count] = 0;
+            ((char *)string_charp(&gb_reg))[count] = 0;
     }    
 }
 

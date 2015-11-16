@@ -8,7 +8,7 @@
     {
 
         This function is called when an {\em op\_arg\_head} opcode is read in
-        the binary makefile. The {\em arghead} variable is set to a duplicate
+        the binary makefile. The {\em gb_argHead} variable is set to a duplicate
         of the string in the last pushed variable. The last pushed variable is
         then discarded.
 
@@ -19,5 +19,5 @@
 
 void builtin_argHead ()
 {
-    arghead = eb_setString (arghead);
+    gb_argHead = eb_setString (gb_argHead);
 }

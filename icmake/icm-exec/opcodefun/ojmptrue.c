@@ -18,7 +18,7 @@
 
 #include "opcodefun.ih"
 
-void o_jmp_true ()
+void o_jmpTrue ()
 {
     register int16_t offs = rss_getInt16 (go_infile);
 

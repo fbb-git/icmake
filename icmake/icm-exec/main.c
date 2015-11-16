@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 
     argv = aux_testRmBim(&argc, argv);
 
-    builtin_getCwd();
+    builtin();                  /* prepare builtin data */
 
     opcodefun_setInfile(argv[1]);
 

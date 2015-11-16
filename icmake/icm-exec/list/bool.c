@@ -2,5 +2,5 @@
 
 int list_bool(ListVariable const *lhs)
 {
-    return *l_sizePtr(lhs);
+    return l_size(lhs);
 }

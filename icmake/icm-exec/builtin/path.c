@@ -17,5 +17,5 @@
 
 void builtin_path ()
 {
-    reg = *stringcons_charPtr(rss_getPath(string_charp(stack_top())));
+    gb_reg = *stringcons_charPtr(rss_getPath(string_charp(stack_top())));
 }

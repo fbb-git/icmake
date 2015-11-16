@@ -11,8 +11,8 @@
     {
 
         This function performs a similar function as {\em eb_getArg()} but
-        prefixes the retrieved argument with the string {\em arghead} and
-        postfixes the argument with the string {\em argtail}. {\bf Note that}
+        prefixes the retrieved argument with the string {\em gb_argHead} and
+        postfixes the argument with the string {\em gb_argTail}. {\bf Note that}
         the return value always points to allocated memory which should be
         freed when no longer required.
 
@@ -32,18 +32,18 @@ char *eb_getExecArg (size_t n, int *flag)
 
     arg = eb_getArg (n, flag);
 
-    if (strlen (arghead))
+    if (strlen (gb_argHead))
     {
-        start = rss_strdup(arghead);
+        start = rss_strdup(gb_argHead);
         start = rss_strcat(start, arg);
         free(arg);
     }
     else
         start = arg;
 
-    if (strlen (argtail))
+    if (strlen (gb_argTail))
     {
-        ret = rss_strcat (start, argtail);
+        ret = rss_strcat (start, gb_argTail);
         free(start);
     }
     else

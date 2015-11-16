@@ -17,5 +17,5 @@
 
 void builtin_extension ()
 {
-    reg = *stringcons_charPtr(rss_getExt(string_charp(stack_top())));
+    gb_reg = *stringcons_charPtr(rss_getExt(string_charp(stack_top())));
 }

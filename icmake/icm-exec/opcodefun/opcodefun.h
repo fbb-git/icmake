@@ -6,6 +6,7 @@
 int     opcodefun_process(void);
 void    opcodefun_setGlobalVariables();
 void    opcodefun_setInfile(char const *arg);
+void    opcodefun_close();
 
 
 #endif

@@ -7,5 +7,5 @@
 
 void o_exit()
 {
-    retval = int_value(&reg);
+    go_retVal = int_value(builtin_regPtr());
 }

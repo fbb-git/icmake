@@ -15,7 +15,7 @@ void builtin_makeList()
 {
     char  const *name = string_charp(stack_top() - 1);   /* filemask string */
 
-    reg = *listcons();
+    gb_reg = *listcons();
 
     if (*name)                          /* if valid name.. */
     {
@@ -38,10 +38,10 @@ void builtin_makeList()
             rss_makePath (newname, dir, namefound, "");
 
                                         /* add entry to the list */
-            list_add_charPtr(&reg, newname);
+            list_add_charPtr(&gb_reg, newname);
 
             namefound = rss_findNext();     /* determine new name */
         }
-        list_sort(&reg);
+        list_sort(&gb_reg);
     }
 }

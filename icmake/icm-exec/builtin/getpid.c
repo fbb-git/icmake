@@ -2,6 +2,6 @@
 
 void builtin_getPid()
 {
-    reg.type = e_int;
-    reg.vu.intval = (int16_t)getpid();
+    gb_reg.type = e_int;
+    gb_reg.vu.intval = (int16_t)getpid();
 }

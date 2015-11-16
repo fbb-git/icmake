@@ -9,10 +9,10 @@
 
 #include "opcodefun.ih"
 
-void o_push_var()
+void o_pushVar()
 {
-    stack_push(o_getDest());    /* A global var's address is returned, push() will  */
-                        /* increment its count. Since it's a var,           */
+    stack_push(o_getDest()); /* A global var's address is returned,     */
+                        /* Since it's a var,           */
                         /* getDest()'s return variable shouldn't be         */
                         /* destroyed                                        */
 }

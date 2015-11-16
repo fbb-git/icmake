@@ -45,7 +45,7 @@ void builtin_chDir()
     if (newdir[strlen(newdir) - 1] != DIRSEP)   /* and append a DIRSEP      */
         strcat(newdir, dirsep);
 
-    reg = *stringcons_charPtr(newdir);    /* set the return value in reg  */
+    gb_reg = *stringcons_charPtr(newdir);    /* set the return value in reg  */
 }
 
 

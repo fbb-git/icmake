@@ -8,7 +8,7 @@
     {
 
         This function is called when an {\em op\_arg\_tail} opcode is read in
-        the binary makefile. The {\em argtail} variable is set to a duplicate
+        the binary makefile. The {\em gb_argTail} variable is set to a duplicate
         of the string in the last pushed variable. The last pushed variable is
         then discarded.
 
@@ -19,5 +19,5 @@
 
 void builtin_argTail()
 {
-    argtail = eb_setString(argtail);
+    gb_argTail = eb_setString(gb_argTail);
 }

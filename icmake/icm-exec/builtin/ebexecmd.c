@@ -42,10 +42,10 @@ int mode;
         i,
         ret;                    /* exit status */
  
-    if (strlen(cmdtail))           /* add cmd tail */
-        cmd = eb_addCmd(cmd, cmdtail);
+    if (strlen(gb_cmdTail))           /* add cmd tail */
+        cmd = eb_addCmd(cmd, gb_cmdTail);
 
-    if (echo)                   /* re-builtin_echo if requested */
+    if (gb_echo)                   /* re-builtin_echo if requested */
     {
         for (i = 0; cmd [i]; ++i)
             printf("%s ", cmd[i]);
@@ -61,6 +61,6 @@ int mode;
         rss_error("builtin_execute - program indicates failure (status %d)", 
                                                                         ret);
 
-    reg = *intcons_int(ret);     /* return exit status */
+    gb_reg = *intcons_int(ret);     /* return exit status */
     return cmd;
 }

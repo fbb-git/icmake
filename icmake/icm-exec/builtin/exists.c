@@ -11,6 +11,6 @@
 
 void builtin_exists()
 {
-    reg = *intcons_int(rss_exists(string_charp(stack_top())));
+    gb_reg = *intcons_int(rss_exists(string_charp(stack_top())));
 }
 

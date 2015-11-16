@@ -14,26 +14,21 @@ int opcodefun_process()
 {
     register Opcode opcode;
 
-    arghead = rss_strdup("");
-    argtail = rss_strdup("");
-    cmdhead = rss_strdup("");
-    cmdtail = rss_strdup("");
-
     do
     {
-        curoffs = (size_t)ftell(go_infile);
+        aux_set(ftell(go_infile));
         opcode = rss_getOpcode(go_infile);
 
         if (opcode >= op_hlt || opcode == (Opcode)-1)
         {
-            fprintf(stderr, "bad opcode at %s ", rss_hexString(curoffs, 4));
+            fprintf(stderr, "bad opcode at %s ", aux_offset());
             rss_error("(opcode %s)", rss_hexString(opcode, 2));
         }
         p_procfun[opcode]();
     }
     while (opcode != op_exit);
 
-    return 0;
+    return go_retVal;
 }
 
 

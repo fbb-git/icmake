@@ -8,7 +8,7 @@
     {
 
         This function is called when an {\em op\_cmd\_head} opcode is read in
-        the binary makefile. The {\em cmdhead} variable is set to a duplicate
+        the binary makefile. The {\em gb_cmdHead} variable is set to a duplicate
         of the string in the last pushed variable. The last pushed variable is
         then discarded.
 
@@ -19,5 +19,5 @@
 
 void builtin_cmdHead()
 {
-    cmdhead = eb_setString(cmdhead);
+    gb_cmdHead = eb_setString(gb_cmdHead);
 }

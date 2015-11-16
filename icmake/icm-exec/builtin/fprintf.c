@@ -28,7 +28,7 @@ void builtin_fprintf()
     if (! (outf = fopen(filename, "a")) )
         rss_error("failure to open file \"%s\"", filename);
 
-    reg = *intcons_int(eb_formattedFprintf(outf, 2));
+    gb_reg = *intcons_int(eb_formattedFprintf(outf, 2));
 
     fclose (outf);
 }

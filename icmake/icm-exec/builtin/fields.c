@@ -27,7 +27,7 @@ void builtin_fields ()
     char const *str = string_charp(stack_top());
     char const *sep = string_charp(stack_top() - 1);
 
-    reg = *listcons();
+    gb_reg = *listcons();
 
     if (*str)
     {
@@ -40,7 +40,7 @@ void builtin_fields ()
             {
                 do
                 {
-                    list_add_charPtr(&reg, cp);
+                    list_add_charPtr(&gb_reg, cp);
                     cp = strtok(NULL, sep);
                 }
                 while (cp);
@@ -52,7 +52,7 @@ void builtin_fields ()
             while (*cp)
             {
                 buf[0] = *cp++;
-                list_add_charPtr(&reg, buf);
+                list_add_charPtr(&gb_reg, buf);
             }
         }
         free(string);

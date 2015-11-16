@@ -14,6 +14,6 @@ Variable *o_getDest()
 {
     int index = rss_getInt16(go_infile);
 
-    return index >= 0 ? var + index : stack_local(index);
+    return index >= 0 ? go_globalVar + index : stack_local(index);
 }
 

@@ -14,5 +14,5 @@
 
 void builtin_strLength()
 {
-    reg = *intcons_int((int)strlen(string_charp(stack_top())));
+    gb_reg = *intcons_int((int)strlen(string_charp(stack_top())));
 }

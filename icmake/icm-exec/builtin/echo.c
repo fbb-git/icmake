@@ -18,5 +18,5 @@
 
 void builtin_echo()
 {
-    echo = int_value(stack_top());
+    gb_echo = int_value(stack_top());
 }

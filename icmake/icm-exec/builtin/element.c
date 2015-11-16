@@ -24,7 +24,7 @@ void builtin_element ()
 {
     size_t idx = int_value(stack_top());
 
-    reg = *stringcons_charPtr
+    gb_reg = *stringcons_charPtr
             (
                 idx < list_size(stack_top() - 1) ? 
                     list_at(stack_top() - 1, idx)

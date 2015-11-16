@@ -2,5 +2,5 @@
 
 void builtin_trimLeft()
 {
-    reg = *string_trimLeft(stack_top());
+    gb_reg = *string_trimLeft(stack_top());
 }

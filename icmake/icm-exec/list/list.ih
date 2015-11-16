@@ -38,7 +38,12 @@ inline uint16_t l_size(Variable const *var)
 }
 
 // #define element(plist)  (list(plist).element)
-inline char const**l_element(Variable const *var)
+inline char **l_element(Variable *var)
+{
+    return l_listPtr(var)->element;
+}
+
+inline char const **l_constElement(Variable const *var)
 {
     return (char const **)l_listConstPtr(var)->element;
 }

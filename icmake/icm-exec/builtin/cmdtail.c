@@ -8,7 +8,7 @@
     {
 
         This function is called when an {\em op\_cmd\_tail} opcode is read in
-        the binary makefile. The {\em cmdtail} variable is set to a duplicate
+        the binary makefile. The {\em gb_cmdTail} variable is set to a duplicate
         of the string in the last pushed variable. The last pushed variable is
         then discarded.
 
@@ -19,5 +19,5 @@
 
 void builtin_cmdTail()
 {
-    cmdtail = eb_setString(cmdtail);
+    gb_cmdTail = eb_setString(gb_cmdTail);
 }

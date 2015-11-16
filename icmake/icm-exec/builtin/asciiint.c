@@ -19,7 +19,7 @@
 
 void builtin_asciiInt ()
 {
-    reg = *intcons_int(*string_charp(stack_top()));
+    gb_reg = *intcons_int(*string_charp(stack_top()));
 }
 
 

@@ -8,7 +8,7 @@
 
 void builtin_printf(void)
 {
-    reg = *intcons_int(eb_formattedFprintf(stdout, 1));
+    gb_reg = *intcons_int(eb_formattedFprintf(stdout, 1));
 }
 
 

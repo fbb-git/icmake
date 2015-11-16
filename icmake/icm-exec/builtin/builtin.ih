@@ -9,7 +9,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
  
-#include "../../rss/rss.h"
 #include "../var/var.h"
 #include "../stack/stack.h"
 #include "../list/list.h"
@@ -19,17 +18,17 @@
 
 extern char         gb_orgDir[];
 
-extern char        *arghead;
-extern char        *argtail;
-extern char        *cmdhead;
-extern char        *cmdtail;
+extern char        *gb_argHead;
+extern char        *gb_argTail;
+extern char        *gb_cmdHead;
+extern char        *gb_cmdTail;
 
-extern Variable         reg;
+extern Variable         gb_reg;
 
-extern int echo;
-extern size_t listIndex;
+extern int gb_echo;
+extern size_t gb_listIndex;
 
-extern void (*p_builtinfun[])(void);
+extern void (*gb_pBuiltinFun[])(void);
 
 char *eb_setString(char *);
 char *eb_findPercent(char *begin);

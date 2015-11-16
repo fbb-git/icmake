@@ -9,7 +9,7 @@ void builtin_listlen()
 {
     Variable *base = stack_top();
 
-    reg = *intcons_int(
+    gb_reg = *intcons_int(
                 var_type(base) == e_str ? 
                     (int)strlen(string_charp(base))
                 :

@@ -2,6 +2,6 @@
 
 void builtin(size_t funnr)
 {
-    p_builtinfun[funnr]();
+    gb_pBuiltinFun[funnr]();
 }
 

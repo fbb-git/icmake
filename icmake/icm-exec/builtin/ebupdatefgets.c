@@ -14,12 +14,12 @@ void eb_updateFgets(FILE *inf, char *dest)
         nl = "\n";
     }
 
-    list_add_grab_charPtr(&reg, dest);
-    list_add_charPtr(&reg, nl);
-    list_add_charPtr(&reg, "OK");
+    list_add_grab_charPtr(&gb_reg, dest);
+    list_add_charPtr(&gb_reg, nl);
+    list_add_charPtr(&gb_reg, "OK");
     
     char buffer[50];
     sprintf (buffer, "%ld", (long)ftell(inf));
 
-    list_add_charPtr(&reg, buffer);
+    list_add_charPtr(&gb_reg, buffer);
 }

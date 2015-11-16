@@ -17,5 +17,5 @@
 
 void builtin_getBase ()
 {
-    reg = *stringcons_charPtr(rss_getBase(string_charp(stack_top())));
+    gb_reg = *stringcons_charPtr(rss_getBase(string_charp(stack_top())));
 }

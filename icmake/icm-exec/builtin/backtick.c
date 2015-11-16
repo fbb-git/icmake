@@ -15,10 +15,10 @@ void builtin_backtick()
     char const *cmd = string_charp(stack_top());     /* get cmd string */
     FILE *fpipe = popen(cmd, "r");           /* and open a pipe */
 
-    if (echo)                               /* re-echo if requested */
+    if (gb_echo)                               /* re-echo if requested */
         printf("`%s`\n", cmd);
 
-    reg = *listcons();
+    gb_reg = *listcons();
 
     if (!fpipe)                          /* command failed */
         return;                         /* then empty list return */
@@ -26,7 +26,7 @@ void builtin_backtick()
     char *line;
 
     while ((line = eb_getLine(fpipe)))
-        list_add_grab_charPtr(&reg, line);
+        list_add_grab_charPtr(&gb_reg, line);
 
     pclose(fpipe);
 }

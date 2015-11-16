@@ -24,7 +24,7 @@
 
 void builtin_putEnv()
 {
-    reg = *intcons_int
+    gb_reg = *intcons_int
             (
                 putenv
                 (

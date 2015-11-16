@@ -30,5 +30,5 @@ void builtin_strElement ()
 
     buf[0] = idx >= strlen(str) ? 0 : str[idx];
 
-    reg = *stringcons_charPtr(buf);;
+    gb_reg = *stringcons_charPtr(buf);;
 }

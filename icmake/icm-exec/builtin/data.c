@@ -2,17 +2,17 @@
 
 char         gb_orgDir[MAX_PATHLEN];
 
-Variable            reg;
+Variable            gb_reg;
 
-int echo = 1;
-size_t listIndex;           /* eb_getArg.c, noformatting.c */
+int gb_echo = 1;
+size_t gb_listIndex;           /* eb_getArg.c, noformatting.c */
 
-char           *arghead;
-char           *argtail;
-char           *cmdhead;
-char           *cmdtail;
+char           *gb_argHead;
+char           *gb_argTail;
+char           *gb_cmdHead;
+char           *gb_cmdTail;
 
-void (*p_builtinfun[])(void) =
+void (*gb_pBuiltinFun[])(void) =
 {
     /* 0 */
     builtin_argHead,

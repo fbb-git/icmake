@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#include "../aux/aux.h"
 #include "../var/var.h"
 #include "../stack/stack.h"
 #include "../virtual/virtual.h"
@@ -11,22 +12,24 @@
 #include "../string/string.h"
 #include "../builtin/builtin.h"
 
+extern int          go_retVal;
 extern FILE         *go_infile;
 extern BinHeader    *go_header;
+extern Variable     *go_globalVar;
 extern void         (*p_procfun[])(void);
 
-Variable   *o_getdest(void);
+Variable   *o_getDest(void);
 int     o_isTrue(void);
 
 void o_call(void);
 void o_exit(void);
 void o_ret(void);
-void o_pop_reg(void);
+void o_popReg(void);
 void o_push_imm(void);
-void o_call_rss(void);
+void o_callBuiltinFun(void);
 void o_push_strconst(void);
-void o_push_var(void);
-void o_pop_var(void);
+void o_pushVar(void);
+void o_popVar(void);
 void o_frame(void);
 void o_asp(void);
 void o_add(void);
@@ -34,7 +37,7 @@ void o_shl(void);
 void o_shr(void);
 void o_empty(void);
 void o_jmp(void);
-void o_jmp_true(void);
+void o_jmpTrue(void);
 void o_push_reg(void);
 void o_older(void);
 void o_younger(void);
@@ -50,7 +53,7 @@ void o_gr(void);
 void o_greq(void);
 void o_inc(void);
 void o_itoa(void);
-void o_jmp_false(void);
+void o_jmpFalse(void);
 void o_mod(void);
 void o_mul(void);
 void o_neq(void);
@@ -64,7 +67,7 @@ void o_smeq(void);
 void o_sub(void);
 void o_umin(void);
 void o_xor(void);
-void o_copy_var(void);
+void o_copyVar(void);
 
 
 

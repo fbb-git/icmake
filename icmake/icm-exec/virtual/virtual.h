@@ -3,14 +3,14 @@
 
 #include "../../rss/rss.h"
 
-//FBB
-// Variable    *constructor(ExprType type);          /* default cons. sets count */
-Variable    *copycons(Variable const *var);          /* increments count */    
-void    destructor(Variable *var);              /* decrements count */
+Variable    *constructor(ExprType type);    /* default cons. sets count */
+Variable    *copycons(Variable const *var); /* increments count */    
+void    destructor(Variable *var);          /* decrements count */
 
-void   virtual_assign(Variable *lhs, Variable const *rhs); /* increments count */
+                                            /* increments count */
+void   virtual_assign(Variable *lhs, Variable const *rhs); 
 
-// int     logical(Variable const *var);           /* convert var to logical value */
+// int     logical(Variable const *var);    /* convert var to logical value */
 
 void   virtual_add(Variable *lhs, Variable const *rhs);
 void   virtual_subtract(Variable *lhs, Variable const *rhs);

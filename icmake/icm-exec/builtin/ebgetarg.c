@@ -41,31 +41,31 @@ char *eb_getArg(size_t idx, int *flag)
 
     if (var_type(base) & e_int)            /* incase of an int.. */
     {
-        listIndex = 0;
+        gb_listIndex = 0;
         sprintf (convbuf, "%d", int_value(base));
         return (rss_strdup (convbuf));
     }
 
     if (var_type(base) & e_str)            /* incase of a string.. */
     {
-        listIndex = 0;
+        gb_listIndex = 0;
         return rss_strdup(string_charp(base));
     }
 
                                             /* incase of a list: */
     if (!list_size(base))
     {
-        listIndex = 0;
+        gb_listIndex = 0;
         ret = rss_strdup("");
     }
     else
     {
-        ret = rss_strdup(list_at(base, listIndex));
-        ++listIndex;
-        if (listIndex < list_size(base))
+        ret = rss_strdup(list_at(base, gb_listIndex));
+        ++gb_listIndex;
+        if (gb_listIndex < list_size(base))
             *flag = 0;                      /* if more builtin_elements, not done */
         else                                /* with args.. */
-            listIndex = 0;                  /* otherwise: returnflag = 1, */
+            gb_listIndex = 0;                  /* otherwise: returnflag = 1, */
     }                                       /* no next builtin_elements to get */
 
     return (ret);

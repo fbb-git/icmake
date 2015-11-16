@@ -1,6 +1,6 @@
 /*
     This function reads in a string from a file and returns it in the {\em
-    reg} return register as an {\em e\_str} value. The arguments on the
+    gb_reg} return register as an {\em e\_str} value. The arguments on the
     stack are: the filename and an {\em int offset}, where the read
     operation should start.
 
@@ -21,7 +21,7 @@ void builtin_fgets()
     Variable *list = stack_top() - 1;
     FILE *inf;
 
-    reg = *listcons();
+    gb_reg = *listcons();
 
     char const *status;
 

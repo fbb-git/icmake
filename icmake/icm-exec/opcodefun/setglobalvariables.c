@@ -2,16 +2,15 @@
 
 void opcodefun_setGlobalVariables()
 {
-    size_t  nvars;
-    Variable *var;
+    size_t nvars = rss_getVar(go_infile, go_header, &go_globalVar);
 
                                         /* return array of global vars */
-    if ((nvars = rss_getVar(go_infile, go_header, &var)) == (int16_t)-1)
+    if (nvars == (int16_t)-1)
         rss_error("invalid bim-file, cannot read variable section");
 
         /* global string/list variables haven't been initialized by */
         /*  the compiler, so that's icm-exec's job                  */
-    for (size_t idx = 0; idx != nvars; ++idx, ++var)
+    for (Variable *var = go_globalVar, *end = var + nvars; var != end; ++var)
     {
         switch (var_type(var))
         {
@@ -22,12 +21,15 @@ void opcodefun_setGlobalVariables()
             case e_list:
                 *var = *listcons();
             break;
+
+            default:
+            // not handled
+            break;
         }
     }
 
     fseek(go_infile, go_header->offset[3], SEEK_SET);
 }
-
 
 
 

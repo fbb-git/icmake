@@ -25,5 +25,5 @@ static char buf[2];
 void builtin_asciiString ()
 {
     buf[0] = int_value(stack_top());
-    reg = *stringcons_charPtr(buf);
+    gb_reg = *stringcons_charPtr(buf);
 }

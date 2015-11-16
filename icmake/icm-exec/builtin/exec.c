@@ -51,9 +51,9 @@ static char **initcmd (char **cmd)
     cmd = rss_realloc (NULL, 3 * sizeof (char *));
     cmd [0] = rss_strdup(string_charp(stack_top() - 2));
     
-    if (strlen (cmdhead))
+    if (strlen (gb_cmdHead))
     {
-        cmd [1] = rss_strdup (cmdhead);
+        cmd [1] = rss_strdup (gb_cmdHead);
         cmd [2] = NULL;
     }
     else
@@ -86,7 +86,7 @@ void builtin_exec ()
 
         nextarglen = strlen(nextarg);
         cmdlen = eb_getCmdLen(cmd);
-        if (cmdlen + nextarglen + strlen(cmdtail) >= MAX_CMDLEN)
+        if (cmdlen + nextarglen + strlen(gb_cmdTail) >= MAX_CMDLEN)
         {
             cmd = eb_exeCmd (cmd, mode);
             cmd = initcmd (cmd);

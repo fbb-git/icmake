@@ -32,16 +32,7 @@ SemVal *p_fetchVar()
         return &ret;
     }
 
-//FBB fprintf(stderr, "p_fetchVar: var %s at index %d, type %d\n", util_string(),
-//FBB idx, vi.type);
-
-//FBB p_fetchVar must distinguish between global vars, params, and local vars:
-
-
-    if (vi.type == st_global)
-    {
-    }
-    else
+    if (vi.type != st_global)
     {
         register size_t nParams = symtab_nParams();
 
@@ -51,38 +42,8 @@ SemVal *p_fetchVar()
             idx = 0xbfff - (idx - nParams); /* offset of a local var */
     }
 
-//FBB fprintf(stderr, "p_fetchVar variable e-value = %x\n", idx);
-
     ret.evalue = idx;
     ret.type = symtab_varType(vi);
-
-//                                            /* not a local variable ? */
-//    if ((idx = looksym(&gp_local)) == gp_local.n_defined)
-//    {                                       /* not a global variable ? */
-//        if ((idx = looksym(&g_globaltab)) != g_globaltab.n_defined)
-//            type = g_globaltab.symbol[idx].var.type;
-    //        else
-    //        {
-    //            idx = 0xffff;
-    //            util_semantic("%s undefined", util_string());
-    //        }
-//    }
-//    else
-//    {
-//        type = gp_local.symbol[idx].var.type;
-//        if (idx < gp_nParams)               /* Parameters: */
-//            idx += 0xc002;
-//        else                                /* Locals: */
-//            idx = 0xbfff - (idx - gp_nParams);
-//    }
-//
-//    if (idx != 0xffff)
-//    {
-//        ret.evalue = idx;                /* set idx and type */
-//        ret.type =  type;
-//    }
-
-//FBB fprintf(stderr, "p_fetchVar out\n");
 
     return &ret;                         /* return the frame */
 }

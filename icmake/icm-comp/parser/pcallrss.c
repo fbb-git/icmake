@@ -29,10 +29,6 @@ void p_callRss(SemVal *e, FUNNR_ funnr, ...)
             type = e_int | e_reg;
         break;
 
-//FBB        case f_exit:                        /* 1 arg, void return */
-//FBB            type = e_null;
-//FBB        break;
-        
                                             /* 1 arg, returning string */
         case f_strupr:
         case f_strlwr:

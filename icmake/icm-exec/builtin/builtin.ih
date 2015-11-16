@@ -79,7 +79,6 @@ void builtin_dotExtension(void);
 void builtin_extension(void);
 void builtin_path(void);
 void builtin_echo(void);
-//FBB void builtin_exit(void);
 void builtin_element(void);
 void builtin_exec(void);
 void builtin_exists(void);

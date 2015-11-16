@@ -31,48 +31,47 @@ char
 
         /* 10 */
         "exists",
-        "NOT CALLED",       //FBB "exit",
         "fgets",
         "fields",
+        "fprintf",
 
         /* 14 */
-        "fprintf",
         "get_base",
         "get_dext",
         "get_ext",
+        "get_path",
 
         /* 18 */
-        "get_path",
         "getch",
         "getenv",
         "getpid",
+        "gets",
 
         /* 1c */
-        "gets",
         "listlen",
         "makelist",
         "printf",
+        "putenv",
 
         /* 20 */
-        "putenv",
         "stat",
         "string_element",
         "strfind",
+        "strformat",
 
         /* 24 */
-        "strformat",
         "strlen",
         "strlwr",
         "strupr",
+        "substr",
 
         /* 28 */
-        "substr",
         "system",
         "trim",
         "trimleft",
+        "trimright",
 
         /* 2c */
-        "trimright",
     };
 
 FILE *infile;

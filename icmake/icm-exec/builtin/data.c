@@ -38,48 +38,47 @@ void (*p_builtinfun[])(void) =
 
     /* 10 */
     builtin_exists,
-    builtin_empty,      /* FBB: was   builtin_exit, */
     builtin_fgets,
     builtin_fields,
+    builtin_fprintf,
 
     /* 14 */
-    builtin_fprintf,
     builtin_getBase,
     builtin_dotExtension,
     builtin_extension,
+    builtin_path,
 
     /* 18 */
-    builtin_path,
     builtin_getCh,
     builtin_getEnv,
     builtin_getPid,
+    builtin_gets,
 
     /* 1c */
-    builtin_gets,
     builtin_listlen,
     builtin_makeList,
     builtin_printf,
+    builtin_putEnv,
 
     /* 20 */
-    builtin_putEnv,
     builtin_stat,
     builtin_strElement,
     builtin_strFind,
+    builtin_strFormat,
 
     /* 24 */
-    builtin_strFormat,
     builtin_strLength,
     builtin_strLower,
     builtin_strUpper,
+    builtin_subString,
 
     /* 28 */
-    builtin_subString,
     builtin_system,
     builtin_trim,
     builtin_trimLeft,
+    builtin_trimRight,
 
     /* 2c */
-    builtin_trimRight,
 
        /* placeholders for functions that can be   */
        /* added later without having to change the */

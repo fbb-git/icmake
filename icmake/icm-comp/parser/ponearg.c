@@ -24,7 +24,6 @@ SemVal *p_oneArg(ExprType type, SemVal *arg)
         break;
 
         case f_echo:
-//FBB        case f_exit:
             ok = test_type(arg, e_int);
         break;
 

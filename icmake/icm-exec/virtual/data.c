@@ -14,7 +14,7 @@ Variable const *(*p_copycons[3])(Variable const *) =
     listcopycons,
 };
 
-void (*p_destructor[3])(Variable *var) = 
+void (*p_destructor[3])(Variable const *var) = 
 {
     intDestructor, 
     stringDestructor, 

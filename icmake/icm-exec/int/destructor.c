@@ -1,5 +1,5 @@
 #include "int.h"
 
-void intDestructor(Variable *var)
+void intDestructor(Variable const *var)
 {}
 

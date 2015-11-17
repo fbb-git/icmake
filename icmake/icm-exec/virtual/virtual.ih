@@ -24,9 +24,9 @@ void list_sub(Variable *lhs, Variable const *rhs);
 void stringCompare(Variable *lhs, Variable const *rhs);
 void listCompare(Variable *lhs, Variable const *rhs);
 
-void intDestructor(Variable *var);
-void stringDestructor(Variable *var);
-void listDestructor(Variable *var);
+void intDestructor(Variable const *var);
+void stringDestructor(Variable const *var);
+void listDestructor(Variable const *var);
 
 int int_bool(Variable const *var);
 int string_bool(Variable const *var);
@@ -42,5 +42,5 @@ extern void (*p_sub[])(Variable *lhs, Variable const *rhs);
 extern void (*p_compare[])(Variable *lhs, Variable const *rhs);
 extern Variable const *(*p_constructor[])(void);
 extern Variable const *(*p_copycons[])(Variable const *lhs);
-extern void (*p_destructor[])(Variable *var);
+extern void (*p_destructor[])(Variable const *var);
 extern int  (*p_bool[])(Variable const *var);

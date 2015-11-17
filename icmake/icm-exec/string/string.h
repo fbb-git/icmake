@@ -14,7 +14,7 @@ String const *stringcons(void);
 String const *stringcons_charPtr(char const *str);
 String const *stringcopycons(String const *var);
 
-void        stringDestructor(String *var);
+void        stringDestructor(String const *var);
 
 void        string_assign(String *lhs, String const *rhs);
 

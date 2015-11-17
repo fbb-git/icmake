@@ -9,11 +9,11 @@
 
 #include "opcodefun.ih"
 
-void o_push_1_jmp_end ()
+void o_push_1_jmp_end()
 {
-    IntVariable tmp = *intcons_int(1);
-    stack_push(&tmp);
-    intDestructor(&tmp);
+    IntVariable const *tmp = intcons_int(1);
+    stack_push(tmp);
+    intDestructor(tmp);
 
     rss_getOpcode(go_infile);
 }

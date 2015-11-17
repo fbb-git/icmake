@@ -1,6 +1,6 @@
 #include "string.ih"
 
-void stringDestructor(Variable *var)
+void stringDestructor(Variable const *var)
 {
     if (var_decCount(var) == 0)
     {

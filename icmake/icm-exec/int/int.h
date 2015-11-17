@@ -14,7 +14,7 @@ IntVariable const *intcons(void);
 IntVariable const *intcons_int(int value);
 IntVariable const *intcopycons(IntVariable const *other);
 
-void    intDestructor(Variable *lhs);
+void    intDestructor(Variable const *lhs);
 
 void    int_assign(Variable *lhs, Variable const *rhs);
 

@@ -8,12 +8,12 @@
 
 #include "opcodefun.ih"
 
-void o_push_imm ()
+void o_push_imm()
 {
-    IntVariable tmp = *intcons_int(rss_getInt16(go_infile));
+    IntVariable const *tmp = intcons_int(rss_getInt16(go_infile));
 
-    stack_push(&tmp);
-    intDestructor(&tmp);
+    stack_push(tmp);
+    intDestructor(tmp);
 }
 
 

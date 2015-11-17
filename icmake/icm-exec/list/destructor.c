@@ -17,17 +17,17 @@
 
 #include "list.ih"
 
-void listDestructor(ListVariable *var)
+void listDestructor(ListVariable const *var)
 {
     size_t idx;
 
     if (var_decCount(var) == 0)
     {
-        for (idx = *l_sizePtr(var); idx--; )
-            free(l_element(var)[idx]);
+        for (idx = l_size(var); idx--; )
+            free(l_element((Variable *)var)[idx]);
     
-        free(l_element(var));
-        free(var->vu.i);
+        free(l_element((Variable *)var));
+        free(((Variable *)var)->vu.i);
     }
 }
 

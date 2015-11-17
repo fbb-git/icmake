@@ -38,7 +38,7 @@ ListVariable const *listcons_charPtr(char const *argv);
 ListVariable const *listcons_charPtrPtr(char **args);
 ListVariable const *listcopycons(ListVariable const *other);
 
-void        listDestructor(ListVariable *var);
+void        listDestructor(ListVariable const *var);
 
 void        list_assign(ListVariable *lhs, ListVariable const *rhs);
 

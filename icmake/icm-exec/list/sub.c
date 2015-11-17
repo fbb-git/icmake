@@ -12,7 +12,7 @@ void list_sub(ListVariable *dest, ListVariable const *rhs)
 
         for (idx = 0; idx < nRhs; ++idx)
         {
-            char const *cp = l_element(rhs)[idx];
+            char const *cp = l_constElement(rhs)[idx];
             nRemoved += l_remove(&copy, cp);
         }
 

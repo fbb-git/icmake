@@ -1,7 +1,7 @@
 #include "virtual.ih"
 
-int     logical(Variable const *lhs)
+int virtual_bool(Variable const *lhs)
 {
-    return p_logical[var_typeValue(lhs)](lhs);
+    return p_bool[var_typeValue(lhs)](lhs);
 }
 

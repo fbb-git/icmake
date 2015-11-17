@@ -5,16 +5,13 @@
 
 Variable    *constructor(ExprType type);    /* default cons. sets count */
 Variable    *copycons(Variable const *var); /* increments count */    
-void    destructor(Variable *var);          /* decrements count */
-
-                                            /* increments count */
-void   virtual_assign(Variable *lhs, Variable const *rhs); 
-
-// int     logical(Variable const *var);    /* convert var to logical value */
-
-void   virtual_add(Variable *lhs, Variable const *rhs);
-void   virtual_subtract(Variable *lhs, Variable const *rhs);
-void   virtual_compare(Variable *lhs, Variable const *rhs);
+void        destructor(Variable *var);      /* decrements count */
+                                            /* assigns, updating count */
+void        virtual_assign(Variable *lhs, Variable const *rhs); 
+int         virtual_bool(Variable const *var);  /* var to bool value */
+void        virtual_add(Variable *lhs, Variable const *rhs);
+void        virtual_sub(Variable *lhs, Variable const *rhs);
+void        virtual_compare(Variable *lhs, Variable const *rhs);
 
 
 #endif

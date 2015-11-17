@@ -28,7 +28,7 @@ void (*p_assign[3])(Variable *lhs, Variable const *rhs) =
     list_assign,
 };
 
-int (*p_logical[3])(Variable const *var) = 
+int (*p_bool[3])(Variable const *var) = 
 {
     int_bool, 
     string_bool, 

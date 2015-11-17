@@ -14,9 +14,12 @@ void listCompare(ListVariable *lhs, ListVariable const *rhs)
         return;
     }
 
-    for (idx = 0; idx < size; ++idx)
+    for (idx = 0; idx != size; ++idx)
     {
-        if ((ret = strcmp(l_element(lhs)[idx], l_element(rhs)[idx])) != 0)
+        if (
+            (ret = strcmp(l_constElement(lhs)[idx], 
+                          l_constElement(rhs)[idx])) != 0
+        )
             break;
     }
                                 /* Can't use the return value as-is, since  */

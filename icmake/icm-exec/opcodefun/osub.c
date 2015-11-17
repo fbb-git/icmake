@@ -16,6 +16,6 @@ void o_sub ()
     Variable *rval = copycons(stack_top());    /* make a copy              */
     stack_pop();                          /* remove the r-operand     */
 
-    virtual_subtract(stack_top(), rval); /* subtract the rval to the top  */
+    virtual_sub(stack_top(), rval); /* subtract the rval to the top  */
     destructor(rval);              /* remove the local var     */
 }

@@ -44,4 +44,4 @@ extern void (*p_compare[])(Variable *lhs, Variable const *rhs);
 extern Variable *(*p_constructor[])(void);
 extern Variable *(*p_copycons[])(Variable const *lhs);
 extern void (*p_destructor[])(Variable *var);
-extern int  (*p_logical[])(Variable const *var);
+extern int  (*p_bool[])(Variable const *var);

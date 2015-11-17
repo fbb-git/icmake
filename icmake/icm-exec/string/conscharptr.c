@@ -1,6 +1,6 @@
 #include "string.ih"
 
-String *stringcons_charPtr(char const *str)
+String const *stringcons_charPtr(char const *str)
 {
     static String ret = {e_str, {0}};
 

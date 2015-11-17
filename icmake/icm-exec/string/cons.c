@@ -1,6 +1,6 @@
 #include "string.ih"
 
-String *stringcons()
+String const *stringcons()
 {
     static String ret = {e_str, {0}};
 

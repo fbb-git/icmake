@@ -1,6 +1,6 @@
 #include "int.h"
 
-IntVariable *intcopycons(IntVariable const *other)
+IntVariable const *intcopycons(IntVariable const *other)
 {
     static IntVariable ret = {e_int, {0}};
 

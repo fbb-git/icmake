@@ -1,6 +1,6 @@
 #include "list.ih"
 
-ListVariable *listcons_charPtrPtr(char **args)
+ListVariable const *listcons_charPtrPtr(char **args)
 {
     static ListVariable ret = {e_list, {0}};
 

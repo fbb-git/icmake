@@ -3,8 +3,13 @@
 
 #include "../../rss/rss.h"
 
-Variable    *constructor(ExprType type);    /* default cons. sets count */
-Variable    *copycons(Variable const *var); /* increments count */    
+    /* all constructors return a pointer to a statically allocated data
+        struct. In order to use the returned data it needs to be copied
+        to a locally defined variable
+    */
+Variable const *constructor(ExprType type);  /* default cons. sets count */
+Variable const *copycons(Variable const *var); /* increments count */    
+
 void        destructor(Variable *var);      /* decrements count */
                                             /* assigns, updating count */
 void        virtual_assign(Variable *lhs, Variable const *rhs); 

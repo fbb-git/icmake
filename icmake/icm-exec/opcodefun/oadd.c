@@ -13,9 +13,9 @@
 
 void o_add()
 {
-    Variable *rval = copycons(stack_top());   /* make a copy              */
+    Variable rval = *copycons(stack_top());   /* make a copy              */
     stack_pop();                          /* remove the r-operand     */
 
-    virtual_add(stack_top(), rval); /* add the rval to the top  */
-    destructor(rval);               /* remove the local var     */
+    virtual_add(stack_top(), &rval); /* add the rval to the top  */
+    destructor(&rval);               /* remove the local var     */
 }

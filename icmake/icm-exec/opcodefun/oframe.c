@@ -21,8 +21,9 @@ void o_frame()
 
     for (idx = 0; idx != nlocals; ++idx)
     {
-        Variable *frame = constructor((ExprType)rss_getOpcode(go_infile));
-        stack_push(frame);
-        destructor(frame);
+        Variable frame = *constructor((ExprType)rss_getOpcode(go_infile));
+        stack_push(&frame);
+        destructor(&frame);
     }
 }
+

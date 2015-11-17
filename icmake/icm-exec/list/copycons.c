@@ -3,7 +3,7 @@
 
 #include "list.ih"
 
-ListVariable *listcopycons(ListVariable const *other)
+ListVariable const *listcopycons(ListVariable const *other)
 {
     static ListVariable dest;
 
@@ -11,6 +11,5 @@ ListVariable *listcopycons(ListVariable const *other)
     dest.type = e_list;
     var_incCount(&dest);
 
-    msg("done");
     return &dest;
 }

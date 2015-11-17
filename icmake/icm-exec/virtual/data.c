@@ -1,13 +1,13 @@
 #include "virtual.ih"
 
-Variable *(*p_constructor[3])(void) = 
+Variable const *(*p_constructor[3])(void) = 
 {
     intcons,
     stringcons,
     listcons,
 };
 
-Variable *(*p_copycons[3])(Variable const *) = 
+Variable const *(*p_copycons[3])(Variable const *) = 
 {
     intcopycons,
     stringcopycons,

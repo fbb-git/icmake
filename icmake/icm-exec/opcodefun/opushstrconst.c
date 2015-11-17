@@ -19,9 +19,9 @@ void o_push_strconst()
         rss_error ("cannot get string, opcode at %s", aux_offset());
 
                                         /* str is allocated by getstring() */
-    String *tmp = stringcons_charPtr(str);
-    stack_push(tmp);
-    stringDestructor(tmp);
+    String tmp = *stringcons_charPtr(str);
+    stack_push(&tmp);
+    stringDestructor(&tmp);
 
     free(str);
 }

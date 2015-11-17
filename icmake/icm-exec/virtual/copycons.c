@@ -1,6 +1,6 @@
 #include "virtual.ih"
 
-Variable *copycons(Variable const *other)
+Variable const *copycons(Variable const *other)
 {
     return p_copycons[var_typeValue(other)](other);
 }

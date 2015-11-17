@@ -37,9 +37,9 @@ int main(int argc, char **argv)
     opcodefun_setGlobalVariables();
 
             // third main arg: environ
-    ListVariable *list = listcons_charPtrPtr(environ);
-    stack_push(list);
-    listDestructor(list);
+    ListVariable list = *listcons_charPtrPtr(environ);
+    stack_push(&list);
+    listDestructor(&list);
 
 // FBB    {
 // FBB        ListVariable env = *listcons();
@@ -50,9 +50,9 @@ int main(int argc, char **argv)
 // FBB    }
 
             // second main arg: argv
-    list = listcons_size_charPtrPtr(argc, argv);
-    stack_push(list);
-    listDestructor(list);
+    list = *listcons_size_charPtrPtr(argc, argv);
+    stack_push(&list);
+    listDestructor(&list);
 
 // FBB     {
 // FBB         ListVariable args = *listcons_size_charPtrPtr((size_t)argc, argv);
@@ -61,9 +61,9 @@ int main(int argc, char **argv)
 // FBB     }
 
                 // first main arg: argc
-    IntVariable *nArgs = intcons_int(argc - 1);
-    stack_push(nArgs);
-    intDestructor(nArgs);
+    IntVariable nArgs = *intcons_int(argc - 1);
+    stack_push(&nArgs);
+    intDestructor(&nArgs);
 
 //    {
 //        IntVariable nArgs = *intcons_int(argc - 1);

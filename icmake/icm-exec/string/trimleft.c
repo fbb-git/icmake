@@ -1,6 +1,6 @@
 #include "string.ih"
 
-String  *string_trimLeft(String const *param)
+String const *string_trimLeft(String const *param)
 {
     char *cp = s_str(param);
     

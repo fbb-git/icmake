@@ -3,7 +3,7 @@
 
 #include "int.ih"
 
-IntVariable *intcons_int(int value)
+IntVariable const *intcons_int(int value)
 {
     static IntVariable ret = {e_int, {0}};
 

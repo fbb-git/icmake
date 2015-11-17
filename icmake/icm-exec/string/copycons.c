@@ -1,6 +1,6 @@
 #include "string.ih"
 
-String *stringcopycons(String const *str)
+String const *stringcopycons(String const *str)
 {
     static String ret;
 

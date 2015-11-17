@@ -1,6 +1,6 @@
 #include "list.ih"
 
-ListVariable *listcons_size_charPtrPtr(size_t argc, char **argv)
+ListVariable const *listcons_size_charPtrPtr(size_t argc, char **argv)
 {
     static ListVariable ret = {e_list, {0}};
 

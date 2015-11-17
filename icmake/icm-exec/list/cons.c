@@ -1,6 +1,6 @@
 #include "list.ih"
 
-ListVariable *listcons()
+ListVariable const *listcons()
 {
     static ListVariable ret = {e_list, {0}};
 

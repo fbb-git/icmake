@@ -6,15 +6,39 @@
 typedef Variable    ListVariable;
 
 
-ListVariable    *listcons(void);
-ListVariable    *listcons_size_charPtrPtr(size_t argc, char **argv);
-ListVariable    *listcons_charPtr(char const *argv);
-ListVariable    *listcons_charPtrPtr(char **args);
+    /* all constructors return ptr to a static ListVariable,
+        with its share-count initialized to 1 
 
-ListVariable    *listcopycons(ListVariable const *var);
-void            listDestructor(ListVariable *var);
+        A ListVariable has a
+            ExprType type (e_list)
+            TextData *vu.i: a pointer to a allocated TextData, containing
+                  count:    the share-count
+                  TextFields ls.list:  the information about the text fields, 
+                                being:
+                          size: the number of strings, stored in the list
+                          char **element: a pointer to pointers to allocated 
+                                          NTBSs
+        When the share count is 1 and the destructor is called, then
+            ls.list.size pointers at ls.list.element are freed
+            ls.list.element is freed
+            vu.i is freed.
 
-// FBB void aux_environ2list(ListVariable *ret);
+        A ListVariable itself is normally reached via a pointer, which
+        is not dynamically allocated and therefore not deleted (at program
+        startup the required number of ListVariables are dynamically
+        allocated, but they are not deallocated by List functions).
+
+        all constructors return a pointer to a statically allocated data
+        struct. In order to use the returned data it needs to be copied
+        to a locally defined variable
+    */
+ListVariable const *listcons(void);        
+ListVariable const *listcons_size_charPtrPtr(size_t argc, char **argv);
+ListVariable const *listcons_charPtr(char const *argv);
+ListVariable const *listcons_charPtrPtr(char **args);
+ListVariable const *listcopycons(ListVariable const *other);
+
+void        listDestructor(ListVariable *var);
 
 void        list_assign(ListVariable *lhs, ListVariable const *rhs);
 

@@ -12,6 +12,9 @@ char           *gb_argTail;
 char           *gb_cmdHead;
 char           *gb_cmdTail;
 
+        /* when the next initialization changes, verify that this is 
+            in line with changes in rss/types.ih
+        */
 void (*gb_pBuiltinFun[])(void) =
 {
     /* 0 */

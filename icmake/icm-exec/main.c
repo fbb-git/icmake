@@ -13,6 +13,10 @@
     restored. For UNIX systems, no {\em atexit()} list is created.
 */
 
+#define msg
+/* 
+*/
+
 #include "icm-exec.ih"
 
 int main(int argc, char **argv)
@@ -67,6 +71,5 @@ int main(int argc, char **argv)
 //    }
 
     return opcodefun_process();
-//    return retval;
 }
 

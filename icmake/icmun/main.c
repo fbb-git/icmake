@@ -2,7 +2,7 @@
 
 int main (int argc, char **argv)
 {
-    register char *progname = rss_programName(argv[0]);
+    register char const *progname = rss_programName(argv[0]);
     register char *infname;
     static char bimext [] = ".bim";
 

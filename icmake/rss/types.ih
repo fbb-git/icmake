@@ -147,6 +147,7 @@ typedef enum                                /* names of rss-functions */
     f_hlt = f_trimright + 21                /* dummy marker for non-existing */
 } FunNr;
 
+    /* update icm-exec and icmun's data files if the next enum changes */
 typedef enum
 {                       /* hexnr:     */
     op_jmp,             /*     00     */

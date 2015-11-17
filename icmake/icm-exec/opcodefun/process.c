@@ -8,6 +8,10 @@
         is taken until an {\em op\_ret} opcode is encountered.
 */
 
+#define msg
+/* 
+*/
+
 #include "opcodefun.ih"
 
 int opcodefun_process()
@@ -19,12 +23,15 @@ int opcodefun_process()
         aux_set(ftell(go_infile));
         opcode = rss_getOpcode(go_infile);
 
+        msg("opcode: 0x%x", opcode);
+
         if (opcode >= op_hlt || opcode == (Opcode)-1)
         {
             fprintf(stderr, "bad opcode at %s ", aux_offset());
             rss_error("(opcode %s)", rss_hexString(opcode, 2));
         }
-        p_procfun[opcode]();
+
+        go_pRssFun[opcode]();
     }
     while (opcode != op_exit);
 

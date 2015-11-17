@@ -9,7 +9,7 @@
     // ===============================================
 
     // define the name of the source containing main():
-#define MAIN                "icm-pp.c"
+#define MAIN                "main.c"
 
     // #defines used for compilation and linking:
     // ==========================================

@@ -2,6 +2,6 @@
 
 void aux_unlinkBim()
 {
-    if (ga_bimname[0])
+    if (ga_bimname)
         unlink(ga_bimname);
 }

@@ -16,7 +16,7 @@ extern int          go_retVal;
 extern FILE         *go_infile;
 extern BinHeader    *go_header;
 extern Variable     *go_globalVar;
-extern void         (*p_procfun[])(void);
+extern void         (*go_pRssFun[])(void);
 
 Variable   *o_getDest(void);
 int     o_isTrue(void);
@@ -26,7 +26,7 @@ void o_exit(void);
 void o_ret(void);
 void o_popReg(void);
 void o_push_imm(void);
-void o_callBuiltinFun(void);
+void o_callRss(void);
 void o_push_strconst(void);
 void o_pushVar(void);
 void o_popVar(void);

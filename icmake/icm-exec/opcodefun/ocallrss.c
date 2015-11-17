@@ -13,7 +13,7 @@
 
 #include "opcodefun.ih"
 
-void o_callBuiltinFun()
+void o_callRss()
 {
     size_t funnr = (size_t)rss_getOpcode(go_infile);
 

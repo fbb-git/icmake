@@ -8,7 +8,7 @@
     */
 void options(int argc, char **argv)
 {
-    char *program = rss_programName(argv[0]);
+    char const *program = rss_programName(argv[0]);
     
     if (argc == 1)
         usage(program);

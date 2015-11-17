@@ -21,7 +21,7 @@
 
 int main(int argc, char **argv)
 {
-    register char *progname;
+    register char const *progname;
     register int
         i,
         dump_symbols = 0,

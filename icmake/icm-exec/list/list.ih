@@ -15,13 +15,11 @@ void    l_addText(ListVariable *list, char *txt);
 size_t  l_remove(ListVariable *list, char const *txt);
 void    l_cleanup(ListVariable *list, size_t toRemove);
 
-//FBB #define list(plist)     ((plist)->vu.i->ls.list)
 inline List *l_listPtr(Variable *var)
 {
     return &var->vu.i->ls.list;
 }
 
-// #define size(plist)     (list(plist).size)
 inline uint16_t *l_sizePtr(Variable *var)
 {
     return &l_listPtr(var)->size;
@@ -37,7 +35,6 @@ inline uint16_t l_size(Variable const *var)
     return l_listConstPtr(var)->size;
 }
 
-// #define element(plist)  (list(plist).element)
 inline char **l_element(Variable *var)
 {
     return l_listPtr(var)->element;

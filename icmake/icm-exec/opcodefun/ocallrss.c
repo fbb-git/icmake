@@ -11,14 +11,19 @@
     pointers, files {\em opcodefun.ih} and {\em data.c}).
 */
 
+/* #define msg
+*/
+
 #include "opcodefun.ih"
 
 void o_callRss()
 {
-    size_t funnr = (size_t)rss_getOpcode(go_infile);
+    size_t funIdx = (size_t)rss_getOpcode(go_infile);
 
-    if (funnr >= f_hlt)
+    if (funIdx >= f_hlt)
         rss_error("unknown rss function call at %s", aux_offset());
 
-    builtin(funnr);
+    msg("calling builtin function 0x%x", funIdx);
+
+    builtin_call(funIdx);
 }

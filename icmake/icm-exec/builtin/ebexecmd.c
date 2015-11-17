@@ -9,7 +9,7 @@
     {eb_exeCmd.c}
     {
 
-        This function is called from {\em fun\_builtin_exec()} to builtin_execute a command.
+        This function is called from {\em fun\_builtin_exec()} to b_execute a command.
         The command is held in the {\em argv}-like array {\em cmd}. The same
         array is returned, since {\em eb_exeCmd()} may have to resize it to add a
         command tail.
@@ -20,10 +20,10 @@
 
         \begin{itemize}
 
-            \item the indicated program cannot not be builtin_executed,
+            \item the indicated program cannot not be b_executed,
 
-            \item the indicated program can be builtin_executed but returns a
-            non-zero exit status while the builtin_execution mode allows checking.
+            \item the indicated program can be b_executed but returns a
+            non-zero exit status while the b_execution mode allows checking.
 
         \end{itemize}
 
@@ -53,7 +53,7 @@ int mode;
     }
     fflush(stdout);
     
-                        /* try to builtin_execute */
+                        /* try to b_execute */
     ret = eb_spawnvp(WAIT, cmd [0], (char const **)cmd);
     
                             /* if non-zero return and */

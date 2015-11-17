@@ -18,70 +18,70 @@ char           *gb_cmdTail;
 void (*gb_pBuiltinFun[])(void) =
 {
     /* 0 */
-    builtin_argHead,
-    builtin_argTail,
-    builtin_asciiInt,
-    builtin_asciiString,
+    b_argHead,
+    b_argTail,
+    b_asciiInt,
+    b_asciiString,
 
     /* 4 */
-    builtin_backtick,
-    builtin_changeBase,
-    builtin_changeExtension,
-    builtin_changePath,
+    b_backtick,
+    b_changeBase,
+    b_changeExtension,
+    b_changePath,
 
     /* 8 */
-    builtin_chDir,
-    builtin_cmdHead,
-    builtin_cmdTail,
-    builtin_echo,
+    b_chDir,
+    b_cmdHead,
+    b_cmdTail,
+    b_echo,
 
     /* c */
-    builtin_element,
-    builtin_backtick,
-    builtin_exec,                       /* dummy for compiler-used */
-    builtin_exec,                       /*     builtin_execute         */
+    b_element,
+    b_backtick,
+    b_exec,                       /* dummy for compiler-used */
+    b_exec,                       /*     b_execute         */
 
     /* 10 */
-    builtin_exists,
-    builtin_fgets,
-    builtin_fields,
-    builtin_fprintf,
+    b_exists,
+    b_fgets,
+    b_fields,
+    b_fprintf,
 
     /* 14 */
-    builtin_getBase,
-    builtin_dotExtension,
-    builtin_extension,
-    builtin_path,
+    b_getBase,
+    b_dotExtension,
+    b_extension,
+    b_path,
 
     /* 18 */
-    builtin_getCh,
-    builtin_getEnv,
-    builtin_getPid,
-    builtin_gets,
+    b_getCh,
+    b_getEnv,
+    b_getPid,
+    b_gets,
 
     /* 1c */
-    builtin_listlen,
-    builtin_makeList,
-    builtin_printf,
-    builtin_putEnv,
+    b_listlen,
+    b_makeList,
+    b_printf,
+    b_putEnv,
 
     /* 20 */
-    builtin_stat,
-    builtin_strElement,
-    builtin_strFind,
-    builtin_strFormat,
+    b_stat,
+    b_strElement,
+    b_strFind,
+    b_strFormat,
 
     /* 24 */
-    builtin_strLength,
-    builtin_strLower,
-    builtin_strUpper,
-    builtin_subString,
+    b_strLength,
+    b_strLower,
+    b_strUpper,
+    b_subString,
 
     /* 28 */
-    builtin_system,
-    builtin_trim,
-    builtin_trimLeft,
-    builtin_trimRight,
+    b_system,
+    b_trim,
+    b_trimLeft,
+    b_trimRight,
 
     /* 2c */
 
@@ -89,27 +89,27 @@ void (*gb_pBuiltinFun[])(void) =
        /* added later without having to change the */
        /* binary code                              */
 
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
-    builtin_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
+    b_empty,
 
     /* hlt is non-existent.. */
     /* f_hlt used to mark non-existing functions */

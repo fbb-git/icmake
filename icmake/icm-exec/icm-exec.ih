@@ -1,16 +1,8 @@
-// #include <unistd.h>
- 
 #include <signal.h>
 #include <stdlib.h>
-// #include <string.h>
-
-//FBB #include "global.h"
-
-// #include "var/var.h"
-// #include "string/string.h"
-// #include "virtual/virtual.h"
 
 #include "../rss/rss.h"
+
 #include "aux/aux.h"
 #include "builtin/builtin.h"
 #include "int/int.h"
@@ -20,18 +12,5 @@
 
 extern char **environ;
 
-
-// 
-// 
-// extern uint16_t        nvar;
-// extern char         release[];
-// extern char         version[];
-// extern char        *bimname;
-// extern char        *bimname;
-
-
-void usage(char const *argv0);
+void    usage(char const *argv0);
 void    cleanup(void);
-
-//void    abnormal(int sig, int subcode);
-//void    environ2list(ListVariable *list);

@@ -115,7 +115,7 @@ void (*gb_pBuiltinFun[])(void) =
     /* f_hlt used to mark non-existing functions */
 };
 
-void (*p_destWrite)(void *dest, char const *begin, char const *end);
+void (*gb_pDestWrite)(void *dest, char const *begin, char const *end);
 
 
 

@@ -9,7 +9,7 @@ void b_strFormat(void)
 {
     char *ptr = rss_strdup("");        // allocate empty string
 
-    p_destWrite = eb_stringWrite;
+    gb_pDestWrite = eb_stringWrite;
     
     eb_formatter(&ptr, 1);
 

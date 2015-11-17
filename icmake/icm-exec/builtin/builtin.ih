@@ -16,23 +16,22 @@
 #include "../virtual/virtual.h"
 #include "../int/int.h"
 
-extern char         gb_orgDir[];
+extern Variable gb_reg;
 
-extern char        *gb_argHead;
-extern char        *gb_argTail;
-extern char        *gb_cmdHead;
-extern char        *gb_cmdTail;
+extern char      gb_orgDir[];
 
-extern Variable         gb_reg;
+extern char     *gb_argHead;
+extern char     *gb_argTail;
+extern char     *gb_cmdHead;
+extern char     *gb_cmdTail;
 
-extern int gb_echo;
-extern size_t gb_listIndex;
+extern int      gb_echo;
+
+extern size_t   gb_listIndex;
 
 extern void (*gb_pBuiltinFun[])(void);
 
-char *eb_setString(char *);
-char *eb_findPercent(char *begin);
-size_t eb_getNr(char **ptr);
+extern void (*gb_pDestWrite)(void *dest, char const *begin, char const *end);
 
 /*
     From push_reg():
@@ -45,20 +44,40 @@ size_t eb_getNr(char **ptr);
         assigned by internal functions and may be freed by subsequent {\em
         pop}-instructions.
   
-        Therefore, also the builtin functions do not have to free the reg's
+        Therefore, the builtin functions do not have to free the reg's
         memory when assigning a value to reg.
 */
 
-int eb_getCmdLen(char **);
-int eb_enterCh(void);
+char    **eb_addCmd(char **, char *);
+char    **eb_exeCmd(char **, int);
 
-char *eb_getArg(size_t, int *);
-char **eb_addCmd(char **, char *);
-char **eb_exeCmd(char **, int);
-char *eb_getExecArg(size_t, int *);
+char    *eb_findPercent(char *begin);
+char    *eb_getArg(size_t, int *);
+char    *eb_getExecArg(size_t, int *);
+char    *eb_getLine(FILE *file);
+char    *eb_setString(char *);
+char    *eb_strLower(char *str);
+char    *eb_strUpper(char *str);
 
-char *eb_getLine(FILE *file);
+int     eb_enterCh(void);
+int     eb_getCmdLen(char **);
+int     eb_spawnvp(int mode, char const *prog, char const **argv);
+int     eb_termCh(void);
 
+size_t  eb_formattedFprintf(FILE *f, size_t start);
+size_t  eb_formatter(void *dest, size_t start);
+size_t  eb_getNr(char **ptr);
+size_t  eb_noFormatting(void *dest, size_t start, size_t lastIdx);
+
+void    eb_fgetsStatus(char const *status);
+void    eb_fileWrite(void *dest, char const *begin, char const *end);
+void    eb_stringWrite(void *dest, char const *begin, char const *end);
+void    eb_updateFgets(FILE *inf, char *dest);
+void    eb_writeArgument(void *dest, size_t idx);
+
+    /* remaining b_ named functions are builtin functions that can be
+        used by icmake scripts 
+    */
 void b_empty(void);
 void b_argHead(void);
 void b_argTail(void);
@@ -103,23 +122,4 @@ void b_trim(void);
 void b_trimLeft(void);
 void b_trimRight(void);
 
-int eb_termCh(void);
-
-size_t eb_formattedFprintf(FILE *f, size_t start);
-
-extern void (*p_destWrite)(void *dest, char const *begin, char const *end);
-
-void eb_fileWrite(void *dest, char const *begin, char const *end);
-void eb_stringWrite(void *dest, char const *begin, char const *end);
-
-size_t eb_formatter(void *dest, size_t start);
-size_t eb_noFormatting(void *dest, size_t start, size_t lastIdx);
-void eb_writeArgument(void *dest, size_t idx);
-
-void eb_updateFgets(FILE *inf, char *dest);
-void eb_fgetsStatus(char const *status);
-
-int         eb_spawnvp(int mode, char const *prog, char const **argv);
-char       *eb_strLower(char *str);
-char       *eb_strUpper(char *str);
 

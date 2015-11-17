@@ -25,7 +25,7 @@ size_t eb_formatter(void *dest, size_t start)
     {
         size_t idx;                             /* idx of a requested arg   */
 
-        (*p_destWrite)(dest, begin, end);       /* write begin .. end       */
+        (*gb_pDestWrite)(dest, begin, end);       /* write begin .. end       */
 
         if (*end == 0)                          /* at end of string         */
             break;                              /* then done                */
@@ -40,7 +40,7 @@ size_t eb_formatter(void *dest, size_t start)
             eb_writeArgument(dest, start + idx);   /* write argument st + idx  */
         }
         else
-            (*p_destWrite)(dest, begin, end);   /* or write the %<nr> as-is */
+            (*gb_pDestWrite)(dest, begin, end);   /* or write the %<nr> as-is */
 
         begin = end;                            /* ready for the next part  */
 

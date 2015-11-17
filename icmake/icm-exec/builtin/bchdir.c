@@ -25,16 +25,16 @@ void b_chDir()
 {
                                         /* copy the destination */
     register char *dir = rss_strdup(string_charp(stack_top() - 1)); 
-    register int mode = int_value(stack_top());    /* obtain the mode of operation */
+    register int mode = int_value(stack_top());  /* mode of operation */
     char newdir[MAX_PATHLEN];
         
     if (!*dir)                          /* destination is an empty string:  */
     {
         free(dir);
-        dir = rss_strdup(gb_orgDir);       /* change to the startup dir        */
+        dir = rss_strdup(gb_orgDir);       /* change to the startup dir     */
     }
 
-    if (chdir(dir) && rss_checkMode(mode))    /* cd to the directory          */
+    if (chdir(dir) && rss_checkMode(mode))    /* cd to the directory        */
         rss_error ("builtin_chDir - can't change dir to %s", dir);  
 
     free(dir);

@@ -1,3 +1,6 @@
+
+/* #define msg
+*/
 #include "symtab.ih"
 
 int st_findVar(size_t nesting)   /* find util_string() via gs_vars[nesting] */

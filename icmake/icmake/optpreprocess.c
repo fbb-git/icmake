@@ -7,6 +7,6 @@ void optPreProcess(char **argv)
     flags |= f_preProcess | f_doPreProcess;
 
     imFile = accessFile(optarg, "im");
-    pimFile = useFile(argv[1], imFile, "pim");
+    pimFile = useFile(argv[optind], imFile, "pim");
 }
     

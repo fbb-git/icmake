@@ -16,7 +16,7 @@ enum
 typedef struct
 {
     char        *name;
-    uint16_t       address;
+    uint16_t    address;
     size_t      nParams;
     ExprType    *paramType;     /* nParams elements */
     ExprType    returnType;

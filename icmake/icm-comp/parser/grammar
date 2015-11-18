@@ -1,6 +1,6 @@
 %{
-    /*
     #define msg
+    /*
     */
     #include "parser.ih"
 %}
@@ -655,7 +655,7 @@ for_stat:
     /*
         parameters are defined as local variables of the current function,
         while counting the number of parameters. 
-        At the end of a function definition head it's symtab nParams fields
+        At the end of a function definition head its symtab nParams fields
         holds the number of its parameters, which are represented by the
         initial nParams elements of symtab's local variables array.
     */
@@ -1095,6 +1095,9 @@ _return_tail:
 
 _leave:
     RETURN
+    {
+        msg("saw return");
+    }
 |
     EXIT
 ;
@@ -1104,6 +1107,7 @@ return_stat:
     _return_tail
     {
         $$ = *p_return($1.type, &$2);
+        msg("SAW return stmt");
     }
 ;
 
@@ -1148,6 +1152,7 @@ _stm:
 statement:
     _stm
     {
+        msg("saw statement(.5)");
         util_resetSemErr();
     }
 |

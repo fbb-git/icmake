@@ -71,7 +71,7 @@ change_base             {
                             yylval.type = f_c_base;
                             return C_BASE;
                         }
-rss_changeExt              {
+change_ext              {
                             yylval.type = f_c_ext;
                             return C_EXT;
                         }
@@ -328,29 +328,29 @@ younger                 {
                             return NUMBER;
                         }
 OFF         |
-REQUIRE_ZERO                 {
+P_CHECK                 {
                             util_setString("0");
                             return NUMBER;
                         }
 S_IFDIR     |
-IS_FILE      |
+O_FILE      |
 ON                      {
                             util_setString("1");
                             return NUMBER;
                         }
 S_IFCHR     |
-NOT_CHECKED   |
-IS_DIR                   {
+P_NOCHECK   |
+O_DIR                   {
                             util_setString("2");
                             return NUMBER;
                         }
 S_IFREG     |
-IS_SUBDIR                {
+O_SUBDIR                {
                             util_setString("4");
                             return NUMBER;
                         }
 S_IREAD     |
-IS_ALL                   {
+O_ALL                   {
                             util_setString("8");
                             return NUMBER;
                         }

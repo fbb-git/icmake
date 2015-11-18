@@ -1,42 +1,33 @@
 /*
-\funcref{directive}{void directive()}
-    {}
-    {}
-    {rss_error(), pushfile(), insert()}
-    {lexer()}
-    {directiv.c}
-    {
-        {\em directive()} is called from {\em lexer()} when a `\#' character is
-        read in the input file. {\em directive()} does not expect to read the
-        `\#' character. Three directives are recognized:
+    {\em directive()} is called from {\em lexer()} when a `\#' character is
+    read in the input file. {\em directive()} does not expect to read the
+    `\#' character. Three directives are recognized:
 
-        \begin{itemize}
+    \begin{itemize}
 
-            \item {\bf \#} {\em[spaces]} {\bf include} {\em[spaces]} {\bf
-            "}{\em filename}{\bf "}. When this directive is read, {\em
-            pushfile()} is called to start processing the included file.
+        \item {\bf \#} {\em[spaces]} {\bf include} {\em[spaces]} {\bf
+        "}{\em filename}{\bf "}. When this directive is read, {\em
+        pushfile()} is called to start processing the included file.
 
-            Analogous to {\bf C}, an {\bf \#include} $<$...$>$ form is
-            supported.
+        Analogous to {\bf C}, an {\bf \#include} $<$...$>$ form is
+        supported.
 
-            \item {\bf \#} {\em[spaces]} {\bf define} {\em[spaces]} {\em name}
-            {\em[spaces]} {\em[redefinition]}. When this directive is read,
-            {\em insert()} is called to insert the definition in the symbol
-            table. The defined {\em name} is passed to {\em insert()} as
-            argument; the redefinition is stored in the lexical buffer {\em
-            lexbuf}.
+        \item {\bf \#} {\em[spaces]} {\bf define} {\em[spaces]} {\em name}
+        {\em[spaces]} {\em[redefinition]}. When this directive is read,
+        {\em insert()} is called to insert the definition in the symbol
+        table. The defined {\em name} is passed to {\em insert()} as
+        argument; the redefinition is stored in the lexical buffer {\em
+        lexbuf}.
 
-            \item {\bf \#\!} \ldots
+        \item {\bf \#\!} \ldots
 
-            The line containing this directive is skipped. The directive is
-            intended to be used on {\sc unix} platforms, where it can be used
-            to execute an icmake script.
+        The line containing this directive is skipped. The directive is
+        intended to be used on {\sc unix} platforms, where it can be used
+        to execute an icmake script.
 
-        \end{itemize}
+    \end{itemize}
 
-        Other directives following the `\#' character lead to an error.
-
-    }
+    Other directives following the `\#' character lead to an error.
 */
 
 #include "icm-pp.h"

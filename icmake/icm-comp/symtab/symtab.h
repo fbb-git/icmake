@@ -13,7 +13,7 @@ typedef enum
     
 typedef struct 
 {
-    short idx;          /* if -1 global is undetermined */
+    short idx;          /* if -1 variable does not exist */
     VarType type;
 } VarIndex;
 

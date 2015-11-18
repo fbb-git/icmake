@@ -64,8 +64,8 @@
 /* Copy the first part of user declarations.  */
 #line 1 "grammar" /* yacc.c:339  */
 
-    /*
     #define msg
+    /*
     */
     #include "parser.ih"
 
@@ -524,10 +524,10 @@ static const yytype_uint16 yyrline[] =
      866,   874,   881,   888,   895,   902,   905,   913,   919,   923,
      945,   954,   961,   963,   967,   967,   977,   992,  1007,  1029,
     1053,  1059,  1065,  1065,  1075,  1075,  1081,  1086,  1091,  1093,
-    1097,  1099,  1103,  1112,  1112,  1118,  1120,  1126,  1129,  1131,
-    1133,  1135,  1138,  1141,  1144,  1149,  1154,  1158,  1164,  1172,
-    1179,  1187,  1189,  1191,  1195,  1202,  1208,  1216,  1219,  1228,
-    1236,  1238,  1247,  1252,  1264
+    1097,  1102,  1106,  1116,  1116,  1122,  1124,  1130,  1133,  1135,
+    1137,  1139,  1142,  1145,  1148,  1153,  1159,  1163,  1169,  1177,
+    1184,  1192,  1194,  1196,  1200,  1207,  1213,  1221,  1224,  1233,
+    1241,  1243,  1252,  1257,  1269
 };
 #endif
 
@@ -2555,131 +2555,141 @@ yyreduce:
 #line 2556 "parse.c" /* yacc.c:1646  */
     break;
 
-  case 182:
-#line 1105 "grammar" /* yacc.c:1646  */
+  case 180:
+#line 1098 "grammar" /* yacc.c:1646  */
     {
-        (yyval) = *p_return((yyvsp[-1]).type, &(yyvsp[0]));
+        msg("saw return");
     }
 #line 2564 "parse.c" /* yacc.c:1646  */
     break;
 
+  case 182:
+#line 1108 "grammar" /* yacc.c:1646  */
+    {
+        (yyval) = *p_return((yyvsp[-1]).type, &(yyvsp[0]));
+        msg("SAW return stmt");
+    }
+#line 2573 "parse.c" /* yacc.c:1646  */
+    break;
+
   case 183:
-#line 1112 "grammar" /* yacc.c:1646  */
+#line 1116 "grammar" /* yacc.c:1646  */
     {
         gp_parse_error = err_semicol_expected; 
     }
-#line 2572 "parse.c" /* yacc.c:1646  */
+#line 2581 "parse.c" /* yacc.c:1646  */
     break;
 
   case 186:
-#line 1122 "grammar" /* yacc.c:1646  */
+#line 1126 "grammar" /* yacc.c:1646  */
     {
         (yyval) = (yyvsp[0]);
     }
-#line 2580 "parse.c" /* yacc.c:1646  */
+#line 2589 "parse.c" /* yacc.c:1646  */
     break;
 
   case 195:
-#line 1150 "grammar" /* yacc.c:1646  */
+#line 1154 "grammar" /* yacc.c:1646  */
     {
+        msg("saw statement(.5)");
         util_resetSemErr();
     }
-#line 2588 "parse.c" /* yacc.c:1646  */
+#line 2598 "parse.c" /* yacc.c:1646  */
     break;
 
   case 197:
-#line 1160 "grammar" /* yacc.c:1646  */
+#line 1165 "grammar" /* yacc.c:1646  */
     {
         (yyval) = *p_catStmnts(&(yyvsp[-1]), &(yyvsp[0]));
     }
-#line 2596 "parse.c" /* yacc.c:1646  */
+#line 2606 "parse.c" /* yacc.c:1646  */
     break;
 
   case 199:
-#line 1174 "grammar" /* yacc.c:1646  */
+#line 1179 "grammar" /* yacc.c:1646  */
     {
         (yyval) = (yyvsp[0]);
     }
-#line 2604 "parse.c" /* yacc.c:1646  */
+#line 2614 "parse.c" /* yacc.c:1646  */
     break;
 
   case 200:
-#line 1181 "grammar" /* yacc.c:1646  */
+#line 1186 "grammar" /* yacc.c:1646  */
     {
         (yyval) = (yyvsp[0]);
     }
-#line 2612 "parse.c" /* yacc.c:1646  */
+#line 2622 "parse.c" /* yacc.c:1646  */
     break;
 
   case 204:
-#line 1196 "grammar" /* yacc.c:1646  */
+#line 1201 "grammar" /* yacc.c:1646  */
     {
         gp_parse_error = err_identifier_expected;
         gp_varType = (yyvsp[0]).type;
     }
-#line 2621 "parse.c" /* yacc.c:1646  */
+#line 2631 "parse.c" /* yacc.c:1646  */
     break;
 
   case 205:
-#line 1203 "grammar" /* yacc.c:1646  */
+#line 1208 "grammar" /* yacc.c:1646  */
     {
         p_generateCode(&(yyvsp[0]), op_push_imm, 0);
         (yyval) = (yyvsp[0]);
     }
-#line 2630 "parse.c" /* yacc.c:1646  */
+#line 2640 "parse.c" /* yacc.c:1646  */
     break;
 
   case 206:
-#line 1211 "grammar" /* yacc.c:1646  */
+#line 1216 "grammar" /* yacc.c:1646  */
     {
         (yyval) = *p_assign(&(yyvsp[-2]), &(yyvsp[0]));    /* explicit initialization */
     }
-#line 2638 "parse.c" /* yacc.c:1646  */
+#line 2648 "parse.c" /* yacc.c:1646  */
     break;
 
   case 208:
-#line 1222 "grammar" /* yacc.c:1646  */
+#line 1227 "grammar" /* yacc.c:1646  */
     {
         (yyval) = *p_expression(p_assign(&(yyvsp[-2]), &(yyvsp[0])));    /* explicit initialization */
     }
-#line 2646 "parse.c" /* yacc.c:1646  */
+#line 2656 "parse.c" /* yacc.c:1646  */
     break;
 
   case 209:
-#line 1231 "grammar" /* yacc.c:1646  */
+#line 1236 "grammar" /* yacc.c:1646  */
     {
         (yyval) = *p_catCode(&(yyvsp[-2]), &(yyvsp[0]));    /* catenate variable    */
                                     /* initialization code  */
     }
-#line 2655 "parse.c" /* yacc.c:1646  */
+#line 2665 "parse.c" /* yacc.c:1646  */
     break;
 
   case 211:
-#line 1241 "grammar" /* yacc.c:1646  */
+#line 1246 "grammar" /* yacc.c:1646  */
     {
         (yyval) = (yyvsp[0]);
     }
-#line 2663 "parse.c" /* yacc.c:1646  */
+#line 2673 "parse.c" /* yacc.c:1646  */
     break;
 
   case 213:
-#line 1259 "grammar" /* yacc.c:1646  */
+#line 1264 "grammar" /* yacc.c:1646  */
     {
         (yyval) = *p_while(&(yyvsp[-4]), &(yyvsp[-1]), 1);
     }
-#line 2671 "parse.c" /* yacc.c:1646  */
+#line 2681 "parse.c" /* yacc.c:1646  */
     break;
 
   case 214:
-#line 1264 "grammar" /* yacc.c:1646  */
+#line 1269 "grammar" /* yacc.c:1646  */
     {
         (yyval) = *p_stackFrame(0);   /* by default initializes a variable to 0 */
     }
-#line 2679 "parse.c" /* yacc.c:1646  */
+#line 2689 "parse.c" /* yacc.c:1646  */
     break;
 
 
-#line 2683 "parse.c" /* yacc.c:1646  */
+#line 2693 "parse.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2907,7 +2917,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 1269 "grammar" /* yacc.c:1906  */
+#line 1274 "grammar" /* yacc.c:1906  */
 
 
 int yywrap(void)

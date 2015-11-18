@@ -1,3 +1,7 @@
+
+/* #define msg
+*/
+
 #include "parser.ih"
 
 void p_defineVar()

@@ -6,6 +6,9 @@ _return_tail:
 
 _leave:
     RETURN
+    {
+        msg("saw return");
+    }
 |
     EXIT
 ;
@@ -15,6 +18,7 @@ return_stat:
     _return_tail
     {
         $$ = *p_return($1.type, &$2);
+        msg("SAW return stmt");
     }
 ;
 

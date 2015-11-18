@@ -1,10 +1,13 @@
-/*#define msg
+
+#define msg
+/* 
 */
 
 #include "parser.ih"
 
 SemVal *p_return(ExprType op, SemVal *e)
 {
+    msg("BEGIN");
 
     if (!test_type(e, e_stack))
         p_expr2stack(e);
@@ -27,6 +30,8 @@ SemVal *p_return(ExprType op, SemVal *e)
             msg("void function, generate 'ret' opcode");
 
             p_generateCode(e, op);          /* generate the 'ret' opcode */
+
+            msg("END");
             return e;                       /* done */
         }
 

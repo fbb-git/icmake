@@ -1,3 +1,7 @@
+
+/* #define msg 
+*/
+
 #include "parser.ih"
 
 void p_beginFunction()
@@ -15,4 +19,6 @@ void p_beginFunction()
     gp_dead_sp = 0;             /* allow code generation */
     gp_dead[0] = 0;
     ++gp_nestLevel;             /* no code-writes to gp_bin in functions */
+
+    msg("END");
 }

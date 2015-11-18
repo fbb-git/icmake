@@ -18,7 +18,7 @@
 #define COMPILER            "gcc"
 
     // define the compiler options to use:
-#define COMPILER_OPTIONS    "-Wall -O2 -fdiagnostics-color=never"
+#define COMPILER_OPTIONS    "-Wall -Werror -O2 -fdiagnostics-color=never"
 
     // define the pattern to locate sources in a directory:
 #define SOURCES             "*.c"

@@ -1,3 +1,7 @@
+
+/* #define msg
+*/
+
 #include "symtab.ih"
 
 VarIndex st_addVar(ExprType type)

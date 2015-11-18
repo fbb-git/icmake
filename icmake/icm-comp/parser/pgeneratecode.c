@@ -1,18 +1,32 @@
+
+
+/* #define msg
+*/
+
 #include "parser.ih"
 
 void p_generateCode(SemVal *e, Opcode opcode, ...)
 {
+    msg("BEGIN");
+
     register size_t idx;
     int marker_value;
     va_list marker;
 
     if (gp_dead[gp_dead_sp])
+    {
+        msg("DEAD");
         return;
+    }
+
+    msg("WITHIN: codelen = %u", e->codelen);
 
     va_start(marker, opcode);
 
     gp_lastOp = opcode;                        /* remember last opcode */
     p_outCode(e, (int)opcode, sizeof(char));
+
+    msg("OUTCODE, opcode = 0x%x", opcode);
 
     switch (opcode)
     {
@@ -94,34 +108,42 @@ void p_generateCode(SemVal *e, Opcode opcode, ...)
         break;
 
         default:
-/*
-        The default switch entry is inserted to prvent a long compiler
-        warning about a not-handled enum value
-
-        following opcodes already out:
-
-        op_pop_reg
-        op_push_reg
-        op_push_1_jmp_end
-        op_push_0
-        op_umin
-        op_atoi
-        op_itoa
-        op_atol
-        op_mul
-        op_div
-        op_mod
-        op_add
-        op_sub
-        op_eq
-        op_neq
-        op_sm
-        op_gr
-        op_younger
-        op_older
-        op_smeq
-        op_greq
-*/
-break;
+        /*
+            The default switch entry is inserted to prvent 
+            a long compiler warning about a not-handled enum value
+        
+            following opcodes already out:
+        
+            op_pop_reg
+            op_push_reg
+            op_push_1_jmp_end
+            op_push_0
+            op_umin
+            op_atoi
+            op_itoa
+            op_atol
+            op_mul
+            op_div
+            op_mod
+            op_add
+            op_sub
+            op_eq
+            op_neq
+            op_sm
+            op_gr
+            op_younger
+            op_older
+            op_smeq
+            op_greq
+        */
+        break;
     }
+
+    msg("END");
 }
+
+
+
+
+
+

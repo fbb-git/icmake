@@ -1,4 +1,5 @@
-#define msg
+/* #define msg
+*/
 
 #include "main.ih"
 
@@ -22,9 +23,7 @@ int main (int argc, char **argv)            /* icm-comp source(txt) dest(bin) */
 
     yyparse();                              /* parse the source */
 
-    msg("Parsing completed");
-
-//    return parser_backend();
+    return parser_backend();
 }
 
 

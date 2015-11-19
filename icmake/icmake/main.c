@@ -5,6 +5,10 @@
                                          /* icmake source(txt) dest(bin) */
 int main(int argc, char **argv)
 {
+    for (int idx = 0; idx != argc; ++idx)
+        printf("%s ", argv[idx]);
+    putchar('\n');
+
     options(argc, argv);
 
     msg("first icm-exec Arg Idx = %u: %s\n"     \

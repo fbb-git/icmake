@@ -1,6 +1,6 @@
 
-#define msg
-/* 
+
+/* #define msg
 */
 
 #include "parser.ih"

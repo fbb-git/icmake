@@ -9,6 +9,8 @@ void optTmpBim(char **argv)
 
     bimFile = rss_strdup(optarg);
 
+    msg("optarg = `%s', bimfile = `%s'", optarg, bimFile);
+
     if (argv[optind] == NULL)    
         rss_error("icmake-script filename missing after `-t bimFile'");
 

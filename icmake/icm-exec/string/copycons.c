@@ -1,14 +1,9 @@
 #include "string.ih"
 
-String const *stringcopycons(String const *str)
+void stringcopycons(String *str, String const *other)
 {
-    static String ret;
-
-    ret = *str;
-
-    var_incCount(&ret);
-    ret.type = e_str;
-
-    return &ret;
+    *str = *other;
+    str->type = e_str;
+    var_incShared(str);
 }
 

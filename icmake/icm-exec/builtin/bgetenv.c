@@ -7,7 +7,7 @@ void b_getEnv()
 {
     char *env = getenv(string_charp(stack_top()));
 
-    gb_reg = *listcons();
+    listcons(eb_releaseReg());
     
     if (!env)
     {

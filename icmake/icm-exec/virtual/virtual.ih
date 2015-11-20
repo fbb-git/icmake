@@ -4,9 +4,9 @@
 
 #include <stdlib.h>
 
-Variable const *intcons(void);
-Variable const *stringcons(void);
-Variable const *listcons(void);
+void intcons(Variable *var);
+void stringcons(Variable *var);
+void listcons(Variable *var);
 
 void int_assign(Variable *lhs, Variable const *rhs);
 void string_assign(Variable *lhs, Variable const *rhs);
@@ -32,15 +32,16 @@ int int_bool(Variable const *var);
 int string_bool(Variable const *var);
 int list_bool(Variable const *var);
 
-Variable const *intcopycons(Variable const *var);
-Variable const *stringcopycons(Variable const *var);
-Variable const *listcopycons(Variable const *var);
+void intcopycons(Variable *var, Variable const *other);
+void stringcopycons(Variable *var, Variable const *other);
+void listcopycons(Variable *var, Variable const *other);
 
 extern void (*p_assign[])(Variable *lhs, Variable const *rhs);
 extern void (*p_add[])(Variable *lhs, Variable const *rhs);
 extern void (*p_sub[])(Variable *lhs, Variable const *rhs);
 extern void (*p_compare[])(Variable *lhs, Variable const *rhs);
-extern Variable const *(*p_constructor[])(void);
-extern Variable const *(*p_copycons[])(Variable const *lhs);
+
+extern void (*p_constructor[])(Variable *var);
+extern void (*p_copycons[])(Variable *lhs, Variable const *other);
 extern void (*p_destructor[])(Variable const *var);
 extern int  (*p_bool[])(Variable const *var);

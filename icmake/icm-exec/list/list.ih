@@ -7,7 +7,7 @@
 #include "../virtual/virtual.h"
 #include "../int/int.h"
 
-TextData *l_newList(void);
+TextData *l_new(void);
 
 void    l_incSize(ListVariable *list);
 void    l_addText(ListVariable *list, char *txt);
@@ -17,7 +17,7 @@ void    l_cleanup(ListVariable *list, size_t toRemove);
 
 inline List *l_listPtr(Variable *var)
 {
-    return &var->vu.i->ls.list;
+    return &var->data->list;
 }
 
 inline uint16_t *l_sizePtr(Variable *var)
@@ -27,7 +27,7 @@ inline uint16_t *l_sizePtr(Variable *var)
 
 inline List const *l_listConstPtr(Variable const *var)
 {
-    return &var->vu.i->ls.list;
+    return &var->data->list;
 }
 
 inline uint16_t l_size(Variable const *var)

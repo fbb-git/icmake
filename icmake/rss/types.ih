@@ -67,10 +67,11 @@ typedef enum
     e_post_inc_dec  = (1 << 9)              /* post-inc or post-dec      */
 } ExprType;
 
+
     /* when the ordering or entries of the following enum changes, update
-        icmun/data.c and icm-exec/builtin/data.c as well en rebuild all
-        programs. It will also change the contents of the .bim file, so it
-        also requires at least a minor version upgrade.
+        icmun/data.c, icm-comp/parser/data.c and icm-exec/builtin/data.c as
+        well en rebuild all programs. It will also change the contents of the
+        .bim file, so it also requires at least a minor version upgrade.
     */
 typedef enum                                /* names of rss-functions */
 {
@@ -101,36 +102,36 @@ typedef enum                                /* names of rss-functions */
     /* 10 */
     f_exists,
     f_fgets,
-    f_fields,
     f_fprintf,
+    f_g_base,
 
     /* 14 */
-    f_g_base,
     f_g_dext,
     f_g_ext,
     f_g_path,
+    f_getch,
 
     /* 18 */
-    f_getch,
     f_getenv,
     f_getpid,                               /* used by several programs  */
     f_gets,
+    f_listlen,
 
     /* 1c */
-    f_listlen,
     f_makelist,
     f_printf,
     f_putenv,
+    f_stat,
 
     /* 20 */
-    f_stat,
     f_str_el,
     f_strfind,                              /* IDEM */
     f_strformat,
+    f_strlen,                               /* only used by the compiler */
 
     /* 24 */
-    f_strlen,                               /* only used by the compiler */
     f_strlwr,                               /* only used by the compiler */
+    f_strtok,
     f_strupr,                               /* only used by the compiler */
     f_substr,
 
@@ -222,29 +223,29 @@ typedef struct
     char **element;                          /* used as (char *) by icmcomp */
 } List;
 
-typedef union
-{
-    char *str;                               /* address of allocated string */
-    List list;                               /* list info of a list */
-} TextFields;
-
 typedef struct
 {
-    uint16_t count;                            /* allocation count, or 
-                                               1st address of a function */
-    TextFields ls;
+    union
+    {
+        uint16_t nShared;              /* allocation count */
+        uint16_t address;            /* addr. of 1st byte of a function */
+    };
+
+    union
+    {
+        char *str;
+        List list;
+    };
 } TextData;
 
-typedef union
+typedef struct                          /* defined variable */
 {
-    int16_t intval;                       /* value of an int */
-    TextData *i;                          /* intermediate alloc. structure */
-} VarValue;
-
-typedef struct                            /* defined variable */
-{
-    ExprType type;                         /* maybe stringconst, int, list */
-    VarValue vu;                        /* value of the element */
+    ExprType type;                      /* maybe stringconst, int, list */
+    union
+    {
+        int16_t intValue;               /* value of an int */
+        TextData *data;                 /* intermediate alloc. structure */
+    };      
 } Variable;
 
 

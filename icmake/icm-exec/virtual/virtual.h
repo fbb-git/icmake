@@ -11,12 +11,13 @@
         const and non-const objects. The destructor, as the object ceases to
         exist, casts away the const.
     */
-Variable const *constructor(ExprType type);  /* default cons. sets count */
-Variable const *copycons(Variable const *var); /* increments count */    
+void constructor(Variable *var, ExprType type);  /* default constructors */
+void copycons(Variable *var, Variable const *other); /* increments count */    
+void destructor(Variable const *var);           /* decrements count */
 
-void        destructor(Variable const *var);    /* decrements count */
                                                 /* assigns, updating count */
 void        virtual_assign(Variable *lhs, Variable const *rhs); 
+
 int         virtual_bool(Variable const *var);  /* var to bool value */
 void        virtual_add(Variable *lhs, Variable const *rhs);
 void        virtual_sub(Variable *lhs, Variable const *rhs);

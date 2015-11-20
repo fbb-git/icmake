@@ -1,4 +1,5 @@
 #!/bin/bash
 
 ./updategrammar
-icmbuild
+icmbuild $1
+

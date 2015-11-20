@@ -1,0 +1,24 @@
+/*
+    This function initializes the variable, passed as its argument to a
+variable of the 
+*/
+
+//#include "rss.i"
+//
+//void rss_initVar(Variable *var, ExprType type)
+//{
+//    
+//    if ( (v->type & (e_str | e_list)) && ! v->value.i )
+//    {
+//        v->value.i = rss_realloc (NULL, sizeof (TextData));
+//        v->data->nShared = 1;
+//        v->data->list.size = 0;
+//        v->data->list.element = NULL;
+//        v->data->str = NULL;
+//    }
+//}
+
+
+
+
+

@@ -1,6 +1,6 @@
 /*
     This function pops two variables and pushes the quotient of the {\em
-    vu.intval} fields of these variables. The resulting pushed variable is
+    intValue} fields of these variables. The resulting pushed variable is
     of type {\em e\_int}.
 
     It is assumed that the left argument of the division was pushed first;

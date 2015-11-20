@@ -44,36 +44,36 @@ void (*gb_pBuiltinFun[])(void) =
     /* 10 */
     b_exists,
     b_fgets,
-    b_fields,
     b_fprintf,
+    b_getBase,
 
     /* 14 */
-    b_getBase,
     b_dotExtension,
     b_extension,
     b_path,
+    b_getCh,
 
     /* 18 */
-    b_getCh,
     b_getEnv,
     b_getPid,
     b_gets,
+    b_listlen,
 
     /* 1c */
-    b_listlen,
     b_makeList,
     b_printf,
     b_putEnv,
+    b_stat,
 
     /* 20 */
-    b_stat,
     b_strElement,
     b_strFind,
     b_strFormat,
+    b_strLength,
 
     /* 24 */
-    b_strLength,
     b_strLower,
+    b_strtok,
     b_strUpper,
     b_subString,
 

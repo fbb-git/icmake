@@ -2,6 +2,9 @@
 
 void destructor(Variable const *lhs)
 {
-    p_destructor[var_typeValue(lhs)](lhs);
+    register ExprType type = var_typeValue(lhs);
+
+    if (type & e_typeMask)
+        p_destructor[type](lhs);
 }
 

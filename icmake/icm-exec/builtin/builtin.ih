@@ -75,6 +75,9 @@ void    eb_stringWrite(void *dest, char const *begin, char const *end);
 void    eb_updateFgets(FILE *inf, char *dest);
 void    eb_writeArgument(void *dest, size_t idx);
 
+Variable *eb_releaseReg(void);
+void eb_rawReg(void);       // FBB TMP
+    
     /* remaining b_ named functions are builtin functions that can be
         used by icmake scripts 
     */
@@ -93,7 +96,7 @@ void b_cmdTail(void);
 void b_changeBase(void);
 void b_changeExtension(void);
 void b_changePath(void);
-void b_fields(void);
+void b_strtok(void);
 void b_fgets(void);
 void b_fprintf(void);
 void b_getBase(void);

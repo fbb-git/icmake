@@ -7,7 +7,7 @@
     {funinc.c}
     {
 
-        This function decrements the {\em vu.intval} field of a variable. The
+        This function decrements the {\em intValue} field of a variable. The
         The number of the variable (a 16-bits unsigned number) is assumed to
         follow the {\em op\_dec} opcode.
 

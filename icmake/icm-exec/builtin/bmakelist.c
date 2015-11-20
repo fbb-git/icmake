@@ -15,7 +15,7 @@ void b_makeList()
 {
     char  const *name = string_charp(stack_top() - 1);   /* filemask string */
 
-    gb_reg = *listcons();
+    listcons(eb_releaseReg());
 
     if (*name)                          /* if valid name.. */
     {
@@ -30,7 +30,7 @@ void b_makeList()
                                         /* find a first name */
         char *namefound = rss_findFirst (name, attrib);
 
-        rss_splitPath (name, dir, fname, ext);
+        rss_splitPath(name, dir, fname, ext);
 
         while (namefound)               /* as long as that succeeds */
         {
@@ -45,3 +45,4 @@ void b_makeList()
         list_sort(&gb_reg);
     }
 }
+

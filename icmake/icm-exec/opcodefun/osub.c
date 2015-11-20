@@ -11,9 +11,11 @@
 
 #include "opcodefun.ih"
 
-void o_sub ()
+void o_sub()
 {
-    Variable rval = *copycons(stack_top()); /* make a copy              */
+    Variable rval;
+
+    copycons(&rval, stack_top());           /* make a copy              */
     stack_pop();                            /* remove the r-operand     */
 
     virtual_sub(stack_top(), &rval); /* subtract the rval to the top  */

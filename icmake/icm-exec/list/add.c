@@ -1,4 +1,6 @@
-#define msg
+
+/* #define msg
+*/
 
 #include "list.ih"
 
@@ -9,7 +11,8 @@ void list_add(ListVariable *dest, ListVariable const *rhs)
 
     if (nRhs)                      /* something to add   */
     {
-        ListVariable copy = *listcopycons(dest);
+        ListVariable copy;
+        listcopycons(&copy, dest);
 
         for (idx = 0; idx < nRhs; ++idx)
         {
@@ -25,4 +28,5 @@ void list_add(ListVariable *dest, ListVariable const *rhs)
         listDestructor(&copy);
     }
 }
+
 

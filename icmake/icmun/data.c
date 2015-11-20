@@ -32,36 +32,36 @@ char
         /* 10 */
         "exists",
         "fgets",
-        "fields",
         "fprintf",
+        "get_base",
 
         /* 14 */
-        "get_base",
         "get_dext",
         "get_ext",
         "get_path",
+        "getch",
 
         /* 18 */
-        "getch",
         "getenv",
         "getpid",
         "gets",
+        "listlen",
 
         /* 1c */
-        "listlen",
         "makelist",
         "printf",
         "putenv",
+        "stat",
 
         /* 20 */
-        "stat",
         "string_element",
         "strfind",
         "strformat",
+        "strlen",
 
         /* 24 */
-        "strlen",
         "strlwr",
+        "strtok",
         "strupr",
         "substr",
 

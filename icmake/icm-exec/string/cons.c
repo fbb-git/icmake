@@ -1,11 +1,9 @@
 #include "string.ih"
 
-String const *stringcons()
+void stringcons(String *str)
 {
-    static String ret = {e_str, {0}};
+    str->type = e_str;
 
-    ret.vu.i = s_new(rss_strdup(""));
-
-    return &ret;
+    str->data = s_new(rss_strdup(""));
 }
 

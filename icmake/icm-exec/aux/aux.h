@@ -1,10 +1,7 @@
 #ifndef INCLUDED_AUX_H_
 #define INCLUDED_AUX_H_
 
-#include <string.h>
-
-#include "../../rss/rss.h"
-#include "../list/list.h"
+#include <stddef.h>
 
 void aux_abnormal(int sig, int subcode);
 void aux_cleanup();

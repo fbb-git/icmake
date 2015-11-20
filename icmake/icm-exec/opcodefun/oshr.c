@@ -7,7 +7,7 @@
     {funshr.c}
     {
         This function pops two variables and pushes the shift-right result of 
-        the {\em vu.intval} fields of these variables.  The resulting pushed 
+        the {\em intValue} fields of these variables.  The resulting pushed 
         variable is of type {\em e\_int}.  
 
         It is assumed that the left argument of the expression was pushed 

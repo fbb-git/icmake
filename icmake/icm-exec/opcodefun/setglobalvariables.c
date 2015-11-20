@@ -2,7 +2,7 @@
 
 void opcodefun_setGlobalVariables()
 {
-    size_t nvars = rss_getVar(go_infile, go_header, &go_globalVar);
+    size_t nvars = rss_getVar(&go_globalVar, go_infile, go_header);
 
                                         /* return array of global vars */
     if (nvars == (int16_t)-1)
@@ -15,11 +15,11 @@ void opcodefun_setGlobalVariables()
         switch (var_type(var))
         {
             case e_str:
-                *var = *stringcons();
+                stringcons(var);
             break;
 
             case e_list:
-                *var = *listcons();
+                listcons(var);
             break;
 
             default:

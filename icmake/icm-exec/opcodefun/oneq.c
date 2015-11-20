@@ -9,7 +9,9 @@
 
 void o_neq()
 {
-    Variable rval = *copycons(stack_top());
+    Variable rval;
+
+    copycons(&rval, stack_top());
 
     stack_pop();
 

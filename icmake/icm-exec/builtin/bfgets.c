@@ -21,10 +21,9 @@ void b_fgets()
     Variable *list = stack_top() - 1;
     FILE *inf;
 
-    gb_reg = *listcons();
+    listcons(eb_releaseReg());
 
     char const *status;
-
                                                 /* input not OK */
     if (list_size(list) >= 4 && strcmp(status = list_at(list, 2), "OK") != 0)
     {

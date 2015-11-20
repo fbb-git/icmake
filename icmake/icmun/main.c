@@ -16,15 +16,15 @@ int main (int argc, char **argv)
         return 2;
     }
 
-    infname = rss_changeExt (argv [1], bimext);
+    infname = rss_changeExt(argv [1], bimext);
 
-    if (! (infile = fopen (infname, "r")) )
-        rss_error ("cannot open %s for reading", infname);
+    if (! (infile = fopen(infname, "r")) )
+        rss_error("cannot open %s for reading", infname);
 
     headerp = rss_readHeader(infile, (size_t)version [0]);
 
-    if ((int16_t)(nvar = rss_getVar(infile, headerp, &var)) == -1 )
-        rss_error ("invalid macro file, cannot read variable section");
+    if ((int16_t)(nvar = rss_getVar(&var, infile, headerp)) == -1 )
+        rss_error("invalid macro file, cannot read variable section");
 
     process();
 

@@ -1,16 +1,6 @@
 /*
-\funcref{fun\_getch}{void fun\_getch ()}
-    {}
-    {}
-    {}
-    {fun\_gets()}
-    {fungetch.c}
-    {
-
         This function reads in one key and returns it in the {\em reg} return
         register as an {\em e\_str} value.
-
-    }
 */
 
 #include "builtin.ih"
@@ -20,12 +10,9 @@ static char buf[2];
 
 void b_getCh()
 {
-#ifdef unix
     buf[0] = eb_termCh();
-#else
-    buf[0] = eb_enterCh();
-#endif
-    gb_reg = *stringcons_charPtr(buf);
+
+    stringcons_charPtr(eb_releaseReg(), buf);
 }
 
 

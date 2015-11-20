@@ -1413,7 +1413,7 @@ case 60:
 YY_RULE_SETUP
 #line 220 "lexer"
 {
-                            yylval.type = f_fields;
+                            yylval.type = f_strtok;
                             return FIELDS;
                         }
 	YY_BREAK

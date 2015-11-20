@@ -6,7 +6,7 @@ void string_assign(String *lhs, String const *rhs)
     {
         destructor(lhs);
         *lhs = *rhs;
-        var_incCount(lhs);
+        var_incShared(lhs);
     }
 }
 

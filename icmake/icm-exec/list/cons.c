@@ -1,10 +1,7 @@
 #include "list.ih"
 
-ListVariable const *listcons()
+void listcons(ListVariable *list)
 {
-    static ListVariable ret = {e_list, {0}};
-
-    ret.vu.i = l_newList();
-
-    return &ret;
+    list->type = e_list;
+    list->data = l_new();
 }

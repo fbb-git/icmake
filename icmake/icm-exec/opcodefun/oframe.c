@@ -6,10 +6,13 @@
 
     The function imitates the assembler opcodes {\em push bp; mov bp, sp}
     by pushing an {\em e\_int} variable with the value of {\em bp} as {\em
-    vu.intval} field. If local variables should be created, then {\em
+    intValue} field. If local variables should be created, then {\em
     newvar()} is called to create a variable (the variable type is read
     from the binary makefile) and {\em push()} is called to make room for
     the variable.
+*/
+
+/* #define msg
 */
 
 #include "opcodefun.ih"
@@ -17,15 +20,16 @@
 void o_frame()
 {
     size_t nlocals = rss_getOpcode(go_infile);
-    size_t idx;
 
+    size_t idx;
     for (idx = 0; idx != nlocals; ++idx)
     {
-        Variable const *frame = constructor((ExprType)rss_getOpcode(go_infile));
-        stack_push(frame);
-        destructor((Variable *)frame);
+        Variable frame;
+
+        constructor(&frame, (ExprType)rss_getOpcode(go_infile));
+
+        stack_push(&frame);                  /* push a local variable 
+                                                on the stack */
+        destructor(&frame);
     }
 }
-
-
-

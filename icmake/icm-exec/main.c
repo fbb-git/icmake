@@ -37,20 +37,25 @@ int main(int argc, char **argv)
     opcodefun_setGlobalVariables();
 
             // third main arg: environ
-    ListVariable const *list = listcons_charPtrPtr(environ);
-    stack_push(list);
-    listDestructor(list);
+    ListVariable list;
+
+    listcons_charPtrPtr(&list, environ);
+    stack_push(&list);
+    listDestructor(&list);
 
             // second main arg: argv
-    list = listcons_size_charPtrPtr(argc, argv);
-    stack_push(list);
-    listDestructor(list);
+    listcons_size_charPtrPtr(&list, argc, argv);
+    stack_push(&list);
+    listDestructor(&list);
 
                 // first main arg: argc
-    IntVariable const *nArgs = intcons_int(argc - 1);
-    stack_push(nArgs);
-    intDestructor(nArgs);
+    IntVariable nArgs;
+    intcons_int(&nArgs, argc - 1);
+    stack_push(&nArgs);
+    intDestructor(&nArgs);
 
     return opcodefun_process();
 }
+
+
 

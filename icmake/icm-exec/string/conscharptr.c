@@ -1,10 +1,9 @@
 #include "string.ih"
 
-String const *stringcons_charPtr(char const *str)
+void stringcons_charPtr(String *str, char const *ntbs)
 {
-    static String ret = {e_str, {0}};
+    str->type = e_str;
 
-    ret.vu.i = s_new(rss_strdup(str));
-    return &ret;
+    str->data = s_new(rss_strdup(ntbs));
 }
 

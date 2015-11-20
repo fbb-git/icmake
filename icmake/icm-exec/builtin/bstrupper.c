@@ -8,6 +8,8 @@
 void b_strUpper()
 {
     char *cp = eb_strUpper(rss_strdup(string_charp(stack_top())));
-    gb_reg = *stringcons_charPtr(cp);
+
+    stringcons_charPtr(eb_releaseReg(), cp);
+
     free(cp);
 }

@@ -2,5 +2,11 @@
 
 void b_trim()
 {
-    gb_reg = *string_trimLeft(string_trimRight(stack_top()));
+    String str;
+    stringcons(&str);
+    
+    string_trimRight(&str, stack_top());
+    string_trimLeft(eb_releaseReg(), &str);
+
+    stringDestructor(&str);
 }

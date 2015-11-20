@@ -9,8 +9,10 @@
 
 void o_atol()
 {
-    Variable const *tmp = listcons_charPtr(string_charp(stack_top()));
-    virtual_assign(stack_top(), tmp);
-    listDestructor(tmp);
+    Variable tmp;
+
+    listcons_charPtr(&tmp, string_charp(stack_top()));
+    virtual_assign(stack_top(), &tmp);
+    listDestructor(&tmp);
 }
 

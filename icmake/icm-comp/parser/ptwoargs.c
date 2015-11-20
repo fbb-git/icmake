@@ -27,7 +27,7 @@ SemVal *p_twoArgs(ExprType type, SemVal *larg, SemVal *rarg)
 
         default:
             /*
-                case f_fields:
+                case f_strtok:
                 case f_c_ext:
                 case f_c_base:
                 case f_c_path:

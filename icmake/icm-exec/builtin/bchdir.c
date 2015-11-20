@@ -26,6 +26,7 @@ void b_chDir()
                                         /* copy the destination */
     register char *dir = rss_strdup(string_charp(stack_top() - 1)); 
     register int mode = int_value(stack_top());  /* mode of operation */
+
     char newdir[MAX_PATHLEN];
         
     if (!*dir)                          /* destination is an empty string:  */
@@ -45,7 +46,7 @@ void b_chDir()
     if (newdir[strlen(newdir) - 1] != DIRSEP)   /* and append a DIRSEP      */
         strcat(newdir, dirsep);
 
-    gb_reg = *stringcons_charPtr(newdir);    /* set the return value in reg  */
+    stringcons_charPtr(eb_releaseReg(), newdir); /* return reg  */
 }
 
 

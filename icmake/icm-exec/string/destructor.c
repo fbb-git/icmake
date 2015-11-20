@@ -1,11 +1,13 @@
+#define msg
+
 #include "string.ih"
 
 void stringDestructor(Variable const *var)
 {
-    if (var_decCount(var) == 0)
+    if (var_decShared(var) == 0)
     {
-        free(var->vu.i->ls.str);
-        free(var->vu.i);
+        free(var->data->str);
+        free(var->data);
     }
 }
 

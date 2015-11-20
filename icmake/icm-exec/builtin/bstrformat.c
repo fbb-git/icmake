@@ -3,17 +3,21 @@
   placeholders  found in the first arg 
 */
 
+/* #define msg
+*/
+
 #include "builtin.ih"
 
 void b_strFormat(void)
 {
-    char *ptr = rss_strdup("");        // allocate empty string
+    char *ptr = rss_strdup("");        /* allocate empty string */
 
-    gb_pDestWrite = eb_stringWrite;
+    gb_pDestWrite = eb_stringWrite;     /* write to a string */
     
     eb_formatter(&ptr, 1);
 
-    gb_reg = *stringcons_charPtr(ptr);
+    stringcons_charPtr(eb_releaseReg(), ptr);
+
     free(ptr);
 }
 

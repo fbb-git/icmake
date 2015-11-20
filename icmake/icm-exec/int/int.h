@@ -10,9 +10,9 @@ typedef Variable    IntVariable;
         to a locally defined variable
     */
 
-IntVariable const *intcons(void);
-IntVariable const *intcons_int(int value);
-IntVariable const *intcopycons(IntVariable const *other);
+void intcons(IntVariable *var);
+void intcons_int(IntVariable *var, int value);
+void intcopycons(IntVariable *var, IntVariable const *other);
 
 void    intDestructor(Variable const *lhs);
 

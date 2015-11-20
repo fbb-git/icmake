@@ -10,21 +10,22 @@ typedef Variable    String;
         to a locally defined variable
     */
 
-String const *stringcons(void);
-String const *stringcons_charPtr(char const *str);
-String const *stringcopycons(String const *var);
+void stringcons(String *str);
+void stringcons_charPtr(String *str, char const *ntbs);
+void stringcopycons(String *str, String const *var);
 
-void        stringDestructor(String const *var);
+void stringDestructor(String const *var);
 
-void        string_assign(String *lhs, String const *rhs);
+void string_assign(String *lhs, String const *rhs);
 
 void        string_add(String *lhs, String const *rhs);
 int         string_bool(String const *lhs);      /* returns 0 if empty */
 
-char        *string_charp(String const *lhs);    /* const removed */
+char const *string_charp(String const *lhs);
+void    string_reduce(String *str, size_t length);  /* reduce length */
 
-String const *string_trimLeft(String const *str);
-String const *string_trimRight(String const *str);
+void string_trimLeft(String *lhs, String const *str);
+void string_trimRight(String *lhs, String const *str);
 
 #endif
 

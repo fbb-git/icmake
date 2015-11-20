@@ -5,7 +5,7 @@ void l_cleanup(ListVariable *list, size_t toRemove)
     if (l_size(list) == toRemove) /* remove all ? */
     {
         listDestructor(list);   /* then wipe out the list */
-        *list = *listcons();  /* and return a new, empty one */
+        listcons(list);         /* and return a new, empty one */
         return;
     }
 

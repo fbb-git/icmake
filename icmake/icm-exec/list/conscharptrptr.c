@@ -1,13 +1,10 @@
 #include "list.ih"
 
-ListVariable const *listcons_charPtrPtr(char **args)
+void listcons_charPtrPtr(ListVariable *list, char **args)
 {
-    static ListVariable ret = {e_list, {0}};
-
-    ret.vu.i = l_newList();
+    list->type = e_list;
+    list->data = l_new();
 
     while (*args)
-        list_add_charPtr(&ret, *args++);
-    
-    return &ret;
+        list_add_charPtr(list, *args++);
 }

@@ -1,12 +1,13 @@
 #include "string.ih"
 
-String const *string_trimLeft(String const *param)
+void string_trimLeft(String *lhs, String const *rhs)
 {
-    char *cp = s_str(param);
+    char const *cp = s_str(rhs);
     
     while (isspace(*cp))    /* skip initial blanks: final \0 always ends */
         ++cp;
 
-    return stringcons_charPtr(cp);
+    stringDestructor(lhs);
+    stringcons_charPtr(lhs, cp);
 }
 

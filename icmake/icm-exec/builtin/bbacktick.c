@@ -18,7 +18,7 @@ void b_backtick()
     if (gb_echo)                               /* re-echo if requested */
         printf("`%s`\n", cmd);
 
-    gb_reg = *listcons();
+    listcons(eb_releaseReg());
 
     if (!fpipe)                          /* command failed */
         return;                         /* then empty list return */

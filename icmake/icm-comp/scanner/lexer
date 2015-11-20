@@ -218,7 +218,7 @@ strupr                  {
                             return STRUPR;
                         }
 strtok                  {
-                            yylval.type = f_fields;
+                            yylval.type = f_strtok;
                             return FIELDS;
                         }
 strfind                 {

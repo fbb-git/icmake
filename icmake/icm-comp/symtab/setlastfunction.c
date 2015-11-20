@@ -9,12 +9,12 @@
 //    Symbol *last = gs_functions[gs_functions->nSymbols - 1].symbol;
 //
 //                                            /* set offset of 1st byte       */
-//    last->var.vu.i->count = (size_t)ftell(gp_bin);
+//    last->var.text->address = (size_t)ftell(gp_bin);
 //
-//    last->var.vu.i->ls.list.element =       /* room for type-bytes */
+//    last->var.text->list.element =       /* room for type-bytes */
 //                                rss_realloc(NULL, nParams * sizeof(char));
 //
-//    last->var.vu.i->ls.list.size = nParams; /* store # of params */
+//    last->var.text->list.size = nParams; /* store # of params */
 //
 //    st_setParamTypes(last, nParams);        /* assign param. types */
 //

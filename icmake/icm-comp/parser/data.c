@@ -9,45 +9,71 @@ HiddenFunction gp_hiddenFun[he_];
 
 char *gp_funstring[] =                          /* only one_arg  */
 {
+    /* 0 */
     "arghead",
     "argtail",
     "ascii",
     "ascii",
 
+    /* 4 */
+    "backtick-operator",
     "change_base",
-    "chdir",
     "change_ext",
-    "cmdhead",
-    "cmdtail",
     "change_path",
 
+    /* 8 */
+    "chdir",
+    "cmdhead",
+    "cmdtail",
     "echo",
+
+    /* c */
     "element",
+    "eval",
     "exec",
     "execute",
-    "exists",
 
-    "strtok",
+    /* 10 */
+    "exists",
     "fgets",
     "fprintf",
-
     "get_base",
-    "getch",
-    "gets",
+
+    /* 14 */
+    "get_dext",
     "get_ext",
     "get_path",
+    "getch",
 
-    "p_makeList",
+    /* 18 */
+    "getenv",
+    "getpid",
+    "gets",
+    "listlen",
 
+    /* 1c */
+    "makelist",
     "printf",
     "putenv",
-
-    "sizeoflist",
     "stat",
+
+    /* 20 */
     "element",                          /* f_str_el */
+    "strfind",
+    "strfmt",
+    "strlen",
+
+    /* 24 */
     "strlwr",
+    "strtok",
     "strupr",
+    "substr",
+
+    /* 28 */
     "system",
+    "trim",
+    "trimleft",
+    "trimright",
 };
 
 ExprType gp_opType[] =

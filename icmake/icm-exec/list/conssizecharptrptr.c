@@ -1,13 +1,10 @@
 #include "list.ih"
 
-ListVariable const *listcons_size_charPtrPtr(size_t argc, char **argv)
+void listcons_size_charPtrPtr(ListVariable *list, size_t argc, char **argv)
 {
-    static ListVariable ret = {e_list, {0}};
-
-    ret.vu.i = l_newList();
+    list->type = e_list;
+    list->data = l_new();
 
     for (; argc--; )
-        list_add_charPtr(&ret, *++argv);
-    
-    return &ret;
+        list_add_charPtr(list, *++argv);
 }

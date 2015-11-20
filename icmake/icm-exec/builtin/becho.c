@@ -8,7 +8,7 @@
     {
 
         This function is b_executed when an {\em op\_builtin_echo} opcode is encountered.
-        The global variable {\em b_echo} is set to the {\em vu.intval} value of
+        The global variable {\em b_echo} is set to the {\em intValue} value of
         the last pushed variable.
 
     }

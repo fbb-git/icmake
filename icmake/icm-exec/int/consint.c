@@ -3,11 +3,8 @@
 
 #include "int.ih"
 
-IntVariable const *intcons_int(int value)
+void intcons_int(IntVariable *intVar, int value)
 {
-    static IntVariable ret = {e_int, {0}};
-
-    ret.vu.intval = value;
-
-    return &ret;
+    intVar->type = e_int;
+    intVar->intValue = value;
 }

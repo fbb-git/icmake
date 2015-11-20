@@ -7,6 +7,5 @@
 
 void o_popReg()
 {
-    virtual_assign(builtin_regPtr(), stack_top());
-    stack_pop();
+    builtin_popReg();
 }

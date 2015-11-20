@@ -2,5 +2,8 @@
 
 void b_dotExtension()
 {
-    gb_reg = *stringcons_charPtr(rss_getDext(string_charp(stack_top())));
+    stringcons_charPtr(
+        eb_releaseReg(),
+        rss_getDext(string_charp(stack_top()))
+    );
 }

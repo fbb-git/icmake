@@ -1,4 +1,5 @@
-/*#define msg
+
+/* #define msg
 */
 
 #include "stack.ih"
@@ -16,5 +17,9 @@ void stack_push(Variable const *varEl)
         gs_stack = rss_realloc(gs_stack, stackSize * sizeof(Variable));
     }
 
-    gs_stack[gs_sp++] = *copycons(varEl);
+    copycons(gs_stack + gs_sp++, varEl);
 }
+
+
+
+

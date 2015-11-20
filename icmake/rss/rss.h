@@ -57,7 +57,7 @@ void     rss_msg_(char const *path, char *fmt, ...); /* prints a msg to stderr.
 void     rss_error(char const *fmt, ...);
 void     rss_spawnErr(char const *program);
 
-void     *rss_realloc (void *, size_t);
+void     *rss_realloc(void *oldPtr, size_t size_in_bytes);
 
 int      rss_exists(char const *path);  /* 0 is returned if path exists.
                                             path can be NULL */
@@ -69,9 +69,9 @@ int16_t    rss_getInt16(FILE *);
 
 Opcode  rss_getOpcode (FILE *);
 
-uint16_t    rss_getVar(FILE *, BinHeader *, Variable **);
+uint16_t    rss_getVar(Variable **varVector, FILE *bimFile, BinHeader *hdr);
 
-void     rss_initVar(Variable *);
+// FBB void     rss_initVar(Variable *);
 
 BinHeader *rss_readHeader(FILE *f, size_t v);
 

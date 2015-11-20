@@ -1,6 +1,6 @@
 #include "builtin.ih"
 
-Variable *builtin_regPtr()
+Variable const *builtin_regPtr()
 {
     return &gb_reg;
 }

@@ -8,9 +8,10 @@ void list_sub(ListVariable *dest, ListVariable const *rhs)
 
     if (nRhs)                      /* something to add   */
     {
-        ListVariable copy = *listcopycons(dest);
+        ListVariable copy;
+        listcopycons(&copy, dest);
 
-        for (idx = 0; idx < nRhs; ++idx)
+        for (idx = 0; idx != nRhs; ++idx)
         {
             char const *cp = l_constElement(rhs)[idx];
             nRemoved += l_remove(&copy, cp);
@@ -25,4 +26,6 @@ void list_sub(ListVariable *dest, ListVariable const *rhs)
         listDestructor(&copy);
     }
 }
+
+
 

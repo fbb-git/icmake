@@ -1,6 +1,7 @@
 #include "aux.h"
 
 #include <unistd.h>
+#include <string.h>
 
 #include "../../rss/rss.h"
 

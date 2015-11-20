@@ -15,11 +15,11 @@ inline int var_typeValue(Variable const *varp)
                                  0;
 }
 
-uint16_t  var_count(Variable const *var);
-void   var_incCount(Variable *var);     
+uint16_t  var_nShared(Variable const *var);
+void   var_incShared(Variable *var);     
 
                             /* returns count following the reduction    */
                             /* (ignores the const                       */
-uint16_t  var_decCount(Variable const *var);  
+uint16_t  var_decShared(Variable const *var);  
 
 #endif

@@ -5,6 +5,8 @@
 
 void        builtin(void);     /* prepare initial data, call only once */
 void        builtin_call(size_t funIdx);
-Variable    *builtin_regPtr();
+void        builtin_popReg(void);
+
+Variable const *builtin_regPtr();
 
 #endif

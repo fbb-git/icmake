@@ -4,8 +4,11 @@
     section of the binary makefile, is expected to follow the opcode. This
     relative offset is an {\em uint16_t} variable.
 
-    A variable of type {\em e\_str} and with field {\em vu.str} set to
+    A variable of type {\em e\_str} and with field {\em valuestr} set to
     a duplicate of the string constant is pushed.
+*/
+
+/* #define msg
 */
 
 #include "opcodefun.ih"
@@ -19,14 +22,13 @@ void o_push_strconst()
         rss_error ("cannot get string, opcode at %s", aux_offset());
 
                                         /* str is allocated by getstring() */
-    String const *tmp = stringcons_charPtr(str);
-    stack_push(tmp);
-    stringDestructor(tmp);
+    String tmp;
+    stringcons_charPtr(&tmp, str);
+    stack_push(&tmp);
+    stringDestructor(&tmp);
 
     free(str);
 }
-
-
 
 
 

@@ -7,7 +7,7 @@
     {funmul.c}
     {
         This function pops two variables and pushes the product of the {\em
-        vu.intval} fields of these variables. The resulting pushed variable is
+        intValue} fields of these variables. The resulting pushed variable is
         of type {\em e\_int}.
     }
 */

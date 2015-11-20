@@ -1,10 +1,6 @@
 #include "int.h"
 
-IntVariable const *intcopycons(IntVariable const *other)
+void intcopycons(IntVariable *var, IntVariable const *other)
 {
-    static IntVariable ret = {e_int, {0}};
-
-    int_assignInt(&ret, int_value(other));
-
-    return &ret;
+    *var = *other;
 }

@@ -15,5 +15,5 @@
 
 void o_umin()
 {
-    stack_top()->vu.intval = -stack_top()->vu.intval;
+    stack_top()->intValue = -stack_top()->intValue;
 }

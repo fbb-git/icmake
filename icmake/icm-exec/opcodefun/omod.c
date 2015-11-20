@@ -1,6 +1,6 @@
 /*
     This function pops two variables and pushes the modulo value of the
-    {\em vu.intval} fields of these variables. The resulting pushed
+    {\em intValue} fields of these variables. The resulting pushed
     variable is of type {\em e\_int}.
 
     It is assumed that the left argument of the modision was pushed first;

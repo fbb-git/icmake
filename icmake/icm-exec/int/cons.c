@@ -1,7 +1,7 @@
 #include "int.h"
 
-IntVariable const *intcons()
+void intcons(IntVariable *var)
 {
-    static IntVariable ret = {e_int, {0}};
-    return &ret;
+    var->type = e_int;
+    var->intValue = 0;
 }

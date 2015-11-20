@@ -1,4 +1,4 @@
 #!/bin/bash
 
-icmbuild
-cp tmp/libicrss.a ../tmp/
+icmbuild $1
+[ "$1" == "" ] && cp tmp/libicrss.a ../tmp/

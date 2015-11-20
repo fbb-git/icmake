@@ -11,9 +11,9 @@ typedef Variable    ListVariable;
 
         A ListVariable has a
             ExprType type (e_list)
-            TextData *vu.i: a pointer to a allocated TextData, containing
+            TextData *data: a pointer to a allocated TextData, containing
                   count:    the share-count
-                  TextFields ls.list:  the information about the text fields, 
+                  TextUnion ls.list:  the information about the text fields, 
                                 being:
                           size: the number of strings, stored in the list
                           char **element: a pointer to pointers to allocated 
@@ -21,7 +21,7 @@ typedef Variable    ListVariable;
         When the share count is 1 and the destructor is called, then
             ls.list.size pointers at ls.list.element are freed
             ls.list.element is freed
-            vu.i is freed.
+            data is freed.
 
         A ListVariable itself is normally reached via a pointer, which
         is not dynamically allocated and therefore not deleted (at program
@@ -32,13 +32,14 @@ typedef Variable    ListVariable;
         struct. In order to use the returned data it needs to be copied
         to a locally defined variable
     */
-ListVariable const *listcons(void);        
-ListVariable const *listcons_size_charPtrPtr(size_t argc, char **argv);
-ListVariable const *listcons_charPtr(char const *argv);
-ListVariable const *listcons_charPtrPtr(char **args);
-ListVariable const *listcopycons(ListVariable const *other);
 
-void        listDestructor(ListVariable const *var);
+void listcons(ListVariable *list);        
+void listcons_size_charPtrPtr(ListVariable *list, size_t argc, char **argv);
+void listcons_charPtr(ListVariable *list, char const *argv);
+void listcons_charPtrPtr(ListVariable *list, char **args);
+void listcopycons(ListVariable *list, ListVariable const *other);
+
+void listDestructor(ListVariable const *var);
 
 void        list_assign(ListVariable *lhs, ListVariable const *rhs);
 
@@ -54,3 +55,13 @@ char const *list_at(ListVariable const *list, size_t idx);
 void        list_sort(ListVariable *list);
 
 #endif
+
+
+
+
+
+
+
+
+
+

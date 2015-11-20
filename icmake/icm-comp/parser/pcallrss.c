@@ -73,7 +73,7 @@ void p_callRss(SemVal *e, FunNr funnr, ...)
                                             /* 2 args, returning list */
         case f_stat:
         case f_fgets:                       /* list fgets(string, int) */
-        case f_fields:                      /* list fields(string, string) */
+        case f_strtok:                      /* list strtok(string, string) */
         case f_makelist:                    /* list p_makeList(int, string)  */
             args++;
             type = e_list | e_reg;

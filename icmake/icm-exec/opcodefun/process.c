@@ -8,7 +8,6 @@
         is taken until an {\em op\_ret} opcode is encountered.
 */
 
-
 /* #define msg
 */
 
@@ -23,7 +22,7 @@ int opcodefun_process()
         aux_set(ftell(go_infile));
         opcode = rss_getOpcode(go_infile);
 
-        msg("opcode: 0x%x", opcode);
+        msg("opcode: 0x%x at %s", opcode, aux_offset());
 
         if (opcode >= op_hlt || opcode == (Opcode)-1)
         {

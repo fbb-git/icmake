@@ -2,5 +2,5 @@
 
 int int_value(IntVariable const *lhs)
 {
-    return lhs->vu.intval;
+    return lhs->intValue;
 }

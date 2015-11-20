@@ -30,6 +30,8 @@ icmake (8.00.00)
   * Character constants are supported and are converted to single-character
     string constants.
 
+  * Icmake scripts main() functions now by default return 0.
+
   * Fixed a bug in the printf family of functions: these functions now return
     the number of printed arguments (as documented in icmake(1)'s man-page).
 

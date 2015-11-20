@@ -13,7 +13,7 @@
         filenames
 */
 
-static int8_t opexit = op_exit;
+static int8_t opexit[] = {op_push_0, op_pop_reg, op_exit};
 static int8_t opcall = op_call;
 
 int parser_backend()
@@ -53,7 +53,7 @@ int parser_backend()
     uint16_t addr = symtab_funAddress(idx);    /* get main's address   */
     util_out(gp_bin, &addr, sizeof(uint16_t)); /* write it out         */
 
-    util_out(gp_bin, &opexit, sizeof(int8_t)); /* generate op_ret at the end */
+    util_out(gp_bin, &opexit, sizeof(opexit));
 
     strncpy(hdr.version, version, sizeof(hdr.version)); /* set the version */
 

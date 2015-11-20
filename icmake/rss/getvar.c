@@ -46,16 +46,11 @@ uint16_t rss_getVar(Variable **varDest, FILE *f, BinHeader *headerp)
         var = rss_realloc(var, nVars * sizeof(Variable));
 
         char type;
-//        int16_t value;
 
-        if (
-            ! fread(&type, sizeof(char), 1, f) 
-//            ||
-//            ! fread(&value, sizeof(int16_t), 1, f)
-        )
+        if (! fread(&type, sizeof(char), 1, f))
             rss_error("cannot read the variable section");
 
-    msg("read variable %u, offset at: %x", nVars, ftell(f));
+        msg("read variable %u, offset at: %x", nVars, ftell(f));
 
                         /*  Need to receive one single standard type. 
                             One type is 1 bit, so if no bits are set or
@@ -68,9 +63,6 @@ uint16_t rss_getVar(Variable **varDest, FILE *f, BinHeader *headerp)
         memset(var + varIdx, 0, sizeof(Variable));
 
         var[varIdx].type = type;
-//
-//        if (var[varIdx].type == e_int)
-//            var[varIdx].intValue = value;
 
         ++varIdx;
     }

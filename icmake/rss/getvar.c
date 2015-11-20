@@ -13,31 +13,9 @@
     variables and restores the file pointer {\em f} to the location prior
     to reading. When an error occurs, {\em --1} is returned and the file
     pointer is not repositioned.
+*/
 
-Example:
-        // 'f' is assumed to be the opened file,
-        uint16_t
-            nvar,
-            i;
-        Variable
-            *var = NULL;
-        BinHeader
-            *headerp;
-
-        headerp = rss_readHeader (f);
-        if ( (nvar = rss_getVar (f, headerp, &var)) == -1 )
-            rss_error ("cannot get variables from binary makefile");
-        for (i = 0; i < nvar; i++)
-        {
-            printf ("Variable %d is a ", i);
-            if (var [i].type & e_str)
-                puts ("string");
-            else if (var [i].type & e_int)
-                puts ("integer);
-            .
-            .. etcetera
-            .
-        }
+/* #define msg
 */
 
 #include "rss.ih"
@@ -55,22 +33,29 @@ uint16_t rss_getVar(Variable **varDest, FILE *f, BinHeader *headerp)
     if (fseek(f, headerp->offset[1], SEEK_SET))
         return (uint16_t)-1;
 
-    size_t nVars = 1;
+    size_t nVars = 0;
+
+    msg("begin offset: %x, end offset: %x", headerp->offset[1], \
+                                        headerp->offset[2]);
 
     while (ftell(f) < headerp->offset[2])
     {
+        ++nVars;
+
                                 /* make room for the next variable record */
         var = rss_realloc(var, nVars * sizeof(Variable));
 
         char type;
-        int16_t value;
+//        int16_t value;
 
         if (
             ! fread(&type, sizeof(char), 1, f) 
-            ||
-            ! fread(&value, sizeof(int16_t), 1, f)
+//            ||
+//            ! fread(&value, sizeof(int16_t), 1, f)
         )
             rss_error("cannot read the variable section");
+
+    msg("read variable %u, offset at: %x", nVars, ftell(f));
 
                         /*  Need to receive one single standard type. 
                             One type is 1 bit, so if no bits are set or
@@ -82,10 +67,11 @@ uint16_t rss_getVar(Variable **varDest, FILE *f, BinHeader *headerp)
                         /* initialize the new variable to 0 */
         memset(var + varIdx, 0, sizeof(Variable));
 
-        if (var[varIdx].type == e_int)
-            var[varIdx].intValue = value;
+        var[varIdx].type = type;
+//
+//        if (var[varIdx].type == e_int)
+//            var[varIdx].intValue = value;
 
-        ++nVars;
         ++varIdx;
     }
 

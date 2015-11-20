@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ "$1" == "clean" ] ; then
+
+    rm -f icmake/tmp/lib* icmake/tmp/main.o
+    for dir in rss icm-comp icm-exec icm-pp icmun
+    do
+        cd $dir
+        build clean
+        cd ..
+    done
+    exit 0
+fi
+
+for dir in rss icm-comp icm-exec icm-pp icmun
+do
+    cd $dir
+    build || exit 1
+    cd ..
+done

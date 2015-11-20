@@ -9,7 +9,6 @@ int main()
 
     for (int idx = 0; idx != 10; ++idx)
         listDestructor(&arr[idx]);
-
                                             // initializing with static text
     listcons_charPtr(&arr[0], "hello world");
                                             

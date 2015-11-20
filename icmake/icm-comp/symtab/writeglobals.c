@@ -3,7 +3,7 @@
 /* 
     Global variables are written like this:
         1st byte: their type
-        next 2 bytes: their value
+//        next 2 bytes: their value     now by initialization code
 */
     
 void symtab_writeGlobals(FILE *bin)
@@ -16,6 +16,6 @@ void symtab_writeGlobals(FILE *bin)
         char type = (char)begin->type & ~e_var;
         util_out(bin, &type, sizeof(char));
         
-        util_out(bin, &begin->value, sizeof(uint16_t));
+//FBB        util_out(bin, &begin->value, sizeof(uint16_t));
     }
 }

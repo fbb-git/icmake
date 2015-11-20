@@ -12,14 +12,13 @@
         position.
 */
 
-#define msg
+/* #define msg
+*/
 
 #include "rss.ih"
 
 char *rss_getString(FILE *f, int32_t stringsec, size_t stringofs)
 {
-    msg("BEGIN");
-
     int32_t curoffs;
     char buf [80];
     register char *ret = NULL;

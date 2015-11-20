@@ -1,8 +1,13 @@
+/* #define msg
+*/
+
 #include "opcodefun.ih"
 
 void opcodefun_setGlobalVariables()
 {
     size_t nvars = rss_getVar(&go_globalVar, go_infile, go_header);
+
+    msg("N global vars: %u", nvars);
 
                                         /* return array of global vars */
     if (nvars == (int16_t)-1)

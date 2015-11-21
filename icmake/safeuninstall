@@ -1,0 +1,18 @@
+#!/bin/bash
+
+cd /usr/bin
+if [ -h icmake ] ; then
+    rm icmake
+    mv icmake.org icmake 
+fi
+
+cd /usr/lib/icmake
+
+for x in icm-pp icm-comp icm-exec
+do
+    if [ -h $x ] ; then
+        rm $x
+        mv $x.org $x 
+    fi
+done
+

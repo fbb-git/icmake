@@ -467,7 +467,7 @@ void install_line(string confline)
 int last(string haystack, string needle)
 {
     list entry = strtok(haystack, " \t\n");
-    return entry[sizeof(entry) - 1] == needle;
+    return entry[listlen(entry) - 1] == needle;
 }
 
 void install_rc()

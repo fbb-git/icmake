@@ -17,7 +17,7 @@ void options(int argc, char **argv)
 
     while (1)
     {
-        int c = getopt(argc, argv, "ac:e:fhi:t:p:v");
+        int c = getopt(argc, argv, "ac:e:fhi:t:p:qv");
 
         switch (c)
         {
@@ -50,6 +50,10 @@ void options(int argc, char **argv)
 
             case 'p':
                 optPreProcess(argv);
+            break;
+
+            case 'q':
+                /* ignored, but kept to prevent breaking existing scripts */
             break;
 
             case 'v':

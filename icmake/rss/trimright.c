@@ -1,4 +1,6 @@
-#define msg
+/* #define msg
+*/
+
 #include "rss.ih"
 
 char *rss_trimRight(char const *begin)

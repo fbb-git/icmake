@@ -1,21 +1,8 @@
 /*
-\funcref{rss_strcat}{char $*$rss_strcat (\params)}
-    {
-        {char} {*s1} {reallocatable string to cat to}
-        {char} {*s2} {string to cat to {\em s1}}
-    }
-    {reallocated string {\em s1} with {\em s2} concatenated to it}
-    {rss_realloc()}
-    {rss_strdup()}
-    {rss_strcat.c}
-    {
-
-        Function {\em rss_strcat()} reallocates the string {\em s1} and then
-        concatenates {\em s2} to it. Therefore, the first argument of the
-        function must point to allocated memory. The second argument may be any
-        string, and can possibly be freed after the call.
-
-    }
+    Function {\em rss_strcat()} reallocates the string {\em s1} and then
+    concatenates {\em s2} to it. Therefore, the first argument of the
+    function must point to allocated memory. The second argument may be any
+    string, and can possibly be freed after the call.
 */
 
 #include "rss.ih"

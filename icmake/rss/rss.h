@@ -20,7 +20,10 @@ void rss_splitPath(char const *path, char *dir, char *fname, char *ext);
 
                                     /* The rss_change* functions return
                                        dynamically allocated NTBSs */
-char *rss_changeExt(char const *path, char const *ext);
+
+char *rss_changeExt(char const *path, char const *ext); /* adds . unless 
+                                                           already in ext */
+
 char *rss_changeBase(char const *path, char const *base);
 char *rss_changePath(char const *path, char const *newDirs);
 

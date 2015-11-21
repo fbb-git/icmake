@@ -1,4 +1,4 @@
-#!@BINDIR@/icmake -qt/tmp/icmbuild
+#!@BINDIR@/icmake -t/tmp/icmbuild
 
 #include "icmconf"
 
@@ -49,17 +49,9 @@ void showCd(string dir)
 
 string setOpt(string install_im, string envvar)
 {
-    list optvar;
-    string ret;
+    list optvar = getenv(envvar);    
 
-    optvar = getenv(envvar);    
-
-    if (optvar[0] == "1")
-        ret = optvar[1];
-    else 
-        ret = install_im;
-
-    return ret;
+    return optvar[0] == "1" ? optvar[1] : install_im;
 }
 
 void setGcompiler()
@@ -67,29 +59,32 @@ void setGcompiler()
     // try a C++ compiler; if not found: try a C compiler; if not found
     // try COMPILER. 
     // Same for matching options.
+
 #ifdef CXX
     g_compiler = setOpt(CXX, "CXX") + " " + setOpt(CXXFLAGS, "CXXFLAGS");
 #else
+
     #ifdef CC
         g_compiler = setOpt(CC, "CC") + " " + setOpt(CFLAGS, "CFLAGS");
     #else
         #ifdef COMPILER
-        #ifdef COMPILER_OPTIONS
-            g_compiler = COMPILER + " " + COMPILER_OPTIONS;
-        #endif
-        #endif
-    #endif
-#endif
+
+            #ifdef COMPILER_OPTIONS
+                g_compiler = COMPILER + " " + COMPILER_OPTIONS;
+            #endif
+
+        #endif // COMPILER
+    #endif // CC
+#endif // CXX
 }
 
 list patternList(string pattern)
 {
-    list in;
     list ret;
-    int idx;
 
-    in = strtok(pattern, " \t");
-    for (idx = sizeof(in); idx--; )
+    list in = strtok(pattern, " \t");
+
+    for (int idx = listlen(in); idx--; )
         ret += makelist(in[idx]);
 
     return ret;
@@ -97,12 +92,9 @@ list patternList(string pattern)
 
 void parser()
 {
-    list gramfiles;
-    int idx;
-
     chdir(PARSER_DIR);
 
-    gramfiles = makelist(PARSSPEC);
+    list gramfiles = makelist(PARSSPEC);
 
 #ifdef PARSFILES
     gramfiles += makelist(PARSFILES);
@@ -116,7 +108,7 @@ void parser()
     #endif
 #endif
 
-    for (idx = sizeof(gramfiles); idx--; )
+    for (int idx = listlen(gramfiles); idx--; )
     {
         if (gramfiles[idx] younger PARSOUT)    // need new parser
         {
@@ -127,29 +119,25 @@ void parser()
             break;
         }
     }
-
     chdir("..");
 }
 
 void scanner()
 {
-    list scanfiles;
-    int idx;
-    int rerun;
-
     chdir(SCANNER_DIR);
 
-    rerun = PARSER_DIR != "" && "../"PARSER_DIR"/"PARSOUT  younger SCANOUT;
+    int rerun = PARSER_DIR != "" && 
+                "../"PARSER_DIR"/"PARSOUT  younger SCANOUT;
 
     if (!rerun)
     {
-        scanfiles = makelist(PARSSPEC) + makelist(SCANSPEC);
+        list scanfiles = makelist(PARSSPEC) + makelist(SCANSPEC);
     
         #ifdef SCANFILES
             scanfiles += makelist(SCANFILES);
         #endif
     
-        for (idx = sizeof(scanfiles); idx--; )
+        for (int idx = listlen(scanfiles); idx--; )
         {
             if (scanfiles[idx]  younger SCANOUT)
             {
@@ -170,8 +158,7 @@ void scanner()
 
 int find(string needle, list haystack)
 {
-    int idx;
-    for (idx = sizeof(haystack); idx--; )
+    for (int idx = listlen(haystack); idx--; )
     {
         if (needle == haystack[idx])
             break;
@@ -182,8 +169,10 @@ int find(string needle, list haystack)
 void touch(string dir)
 {
     echo(OFF);
+
     if (!exists(dir + "/" USE_ALL))
         system("touch " + dir + "/" USE_ALL);
+
     echo(USE_ECHO);
 }
             
@@ -193,10 +182,6 @@ void touch(string dir)
     //  file and inspect their dependencies.
 void dependenciesOf(string thisClass)
 {
-    int ret;
-    int idx;
-    list hit;
-
     if (find(thisClass, g_inspected) != -1) // this class already inspected
         return;                             // then done with this class
 
@@ -206,9 +191,9 @@ void dependenciesOf(string thisClass)
     g_inspected += (list)thisClass;         // now inspected
 
         // find all classes depending on thisClass
-    for (idx = 0; idx != g_nClasses; ++idx)
+    for (int idx = 0; idx != g_nClasses; ++idx)
     {
-        hit = strtok(g_classLines[idx], " \t");
+        list hit = strtok(g_classLines[idx], " \t");
 
         if (find(thisClass, hit) > 0)
         {
@@ -220,12 +205,9 @@ void dependenciesOf(string thisClass)
     
 void checkALL()
 {
-    int idx;
-    string all;
-
-    for (idx = 0; idx != g_nClasses; ++idx)
+    for (int idx = 0; idx != g_nClasses; ++idx)
     {
-        all = g_classes[idx] + "/" USE_ALL;
+        string all = g_classes[idx] + "/" USE_ALL;
 
         if (exists(all))
             dependenciesOf(g_classes[idx]);
@@ -235,15 +217,13 @@ void checkALL()
         touch(".");
 }
     
-#endif
+#endif  // USE_ALL
 
 int isEmpty(string line)
 {
-    list parts;
-
-    parts = strtok(line, " \t");
+    list parts = strtok(line, " \t");
     
-    return (int)(sizeof(parts) == 0 ||
+    return (int)(listlen(parts) == 0 ||
                 parts[0][0] == "#" || strfind(parts[0], "//") == 0);
 }
 
@@ -251,13 +231,10 @@ int isEmpty(string line)
 list nextCLASSESline()
 {
     string ret;
-    string line;
-    int last;
-    int backslash;
 
-    while (sizeof(g_classLine = fgets("CLASSES", (int)g_classLine[1])))
+    while (listlen(g_classLine = fgets("CLASSES", g_classLine)))
     {
-        line = strtok(g_classLine[0], "\n")[0];     // get the string
+        string line = strtok(g_classLine[0], "\n")[0];     // get the string
 
         if (isEmpty(line))
         {
@@ -266,8 +243,8 @@ list nextCLASSESline()
         }
         else 
         {
-            last = strlen(line) - 1;
-            backslash = line[last] == "\\";
+            int last = strlen(line) - 1;
+            int backslash = line[last] == "\\";
 
             if (backslash)
                 line = substr(line, 0, last);
@@ -287,8 +264,6 @@ list nextCLASSESline()
     
 void setClasses()
 {
-    string dir;
-    list class;
                                         // make sure that scanner/parser
                                         // directories come first, so they
                                         // don't get reordered
@@ -298,9 +273,10 @@ void setClasses()
     if (PARSER_DIR != "")
         g_classes += (list)PARSER_DIR;
 
-    while (sizeof(class = nextCLASSESline()))
+    list class;
+    while (listlen(class = nextCLASSESline()))
     {
-        dir = class[0];
+        string dir = class[0];
 
         if 
         (
@@ -314,7 +290,7 @@ void setClasses()
     // classLines contains the full lines of the CLASSES file, and thus
     // stores its dependencies.
 
-    g_nClasses = sizeof(g_classes);
+    g_nClasses = listlen(g_classes);
 
     // g_classes has been defined. checkALL creates the file ALL in all 
     // directories depending on classes containing the file ALL
@@ -326,25 +302,18 @@ void setClasses()
 list inspect(string destDir, 
              int prefix, string srcDir, list srcList, string library)
 {
-    int idx;
-    string ofile;
-    string oprefix;
-    string file;
-    string source;
-    string all;
-
-    oprefix = destDir + "/" + (string)prefix;
-    srcDir += "/";
 #ifdef USE_ALL
-    all = srcDir + USE_ALL;
+    string all = srcDir + USE_ALL;
 #endif
 
-    for (idx = sizeof(srcList); idx--; )
+    string oprefix = destDir + "/" + (string)prefix;
+    srcDir += "/";
+
+    for (int idx = listlen(srcList); idx--; )
     {
-        file  = srcList[idx];   
-        source = srcDir + file;
-        
-        ofile   = oprefix + rss_changeExt(file, "o");    // make o-filename
+        string file  = srcList[idx];   
+        string source = srcDir + file;
+        string ofile = oprefix + change_ext(file, "o");    // make o-filename
 
         // A file s must be recompiled if:
         //  the ofile exists and is older than ALL
@@ -373,21 +342,17 @@ list inspect(string destDir,
 
 void c_compile(int prefix, string destDir, string srcDir, list cfiles)
 {
-    int idx;
-    string compiler;
-    string file;
-
     showCd(srcDir);
 
     if (srcDir != "")
         srcDir += "/";
 
-    compiler = g_compiler + " -c -o " + destDir + "/" + (string)prefix;
+    string compiler = g_compiler + " -c -o " + destDir + "/" + (string)prefix;
 
-    for (idx = sizeof(cfiles); idx--; )
+    for (int idx = listlen(cfiles); idx--; )
     {
-        file = cfiles[idx];
-        system(compiler + rss_changeExt(file, OBJ_EXT) + " " + srcDir + file);
+        string file = cfiles[idx];
+        system(compiler + change_ext(file, OBJ_EXT) + " " + srcDir + file);
         g_compiled = 1;
     }
 }
@@ -395,31 +360,30 @@ void c_compile(int prefix, string destDir, string srcDir, list cfiles)
 void std_cpp(int ignoreMain, string destDir, 
             int prefix, string srcDir, string library)
 {
-    list files;
-
     chdir("");
                                                     // make list of all files
     md(destDir);
     chdir(srcDir);
-    files = makelist(g_sources);
+    list files = makelist(g_sources);
+
 #ifdef MAIN
     if (ignoreMain)
         files -= (list)MAIN;
 #endif
+
     chdir("");
 
     files = inspect(destDir, prefix, srcDir, files, library);  
 
-    if (sizeof(files))
+    if (listlen(files))
         c_compile(prefix, destDir, srcDir, files);  // compile files
 }
 
 void static_library()
 {
 #ifdef LIBRARY
-
     chdir(TMP_DIR "/o");
-    if (sizeof(makelist("*" OBJ_EXT)))
+    if (listlen(makelist("*" OBJ_EXT)))
     {
         showCd(TMP_DIR "/o");
 
@@ -428,17 +392,14 @@ void static_library()
         system("rm *" OBJ_EXT);
     }
     chdir("");
-
 #endif
 }
 
 void shared_library(string libso, string libsoshared)
 {
-    string libsomajor;
-
-    if (sizeof(makelist("*/o/*.o")))
+    if (listlen(makelist("*/o/*.o")))
     {
-        libsomajor  = libso + "." + element(0, strtok(g_version, "."));
+        string libsomajor  = libso + "." + element(0, strtok(g_version, "."));
 
         system(g_compiler + " -shared -Wl,--as-needed,-z,defs,-soname," + 
                 libsomajor + 
@@ -459,9 +420,7 @@ void shared_library(string libso, string libsoshared)
 void precompile(string class)
 {
 #ifdef PRECOMP
-    string classIH;
-
-    classIH = class + IH;
+    string classIH = class + IH;
     if (classIH younger class + IH ".gch")
         system(g_compiler + " " PRECOMP " " + classIH);
 #endif
@@ -469,15 +428,11 @@ void precompile(string class)
 
 void precompileHeaders()
 {
-    int idx;
-    list classes;
-    string class;
+    list classes = makelist(O_SUBDIR, "*");
 
-    classes = makelist(IS_SUBDIR, "*");
-
-    for (idx = sizeof(g_classes); idx--; )
+    for (int idx = listlen(g_classes); idx--; )
     {
-        class = g_classes[idx];
+        string class = g_classes[idx];
 
         chdir(class);
         precompile(class);        
@@ -487,13 +442,6 @@ void precompileHeaders()
 
 void build_libraries()
 {
-    int idx;
-    string class;
-
-    string libso;
-    string libsoshared;
-    string staticLib;
-
     setClasses();
 
 #ifdef PRECOMP
@@ -501,23 +449,18 @@ void build_libraries()
 
     if (DEFCOM == "program")
         precompile(get_base(MAIN));
-    
 #endif
 
     md(TMP_DIR);
+
+    g_sources = SOURCES;
+    g_compiled = 0;
 
     if (PARSER_DIR != "")
         parser();
 
     if (SCANNER_DIR != "")
         scanner();
-
-#ifdef LIBRARY
-    staticLib = g_cwd + TMP_DIR "/lib" LIBRARY ".a";
-#endif
-
-    g_sources = SOURCES;
-    g_compiled = 0;
 
     if 
     (
@@ -533,8 +476,14 @@ void build_libraries()
     )
         system("touch version.cc");
 
+
+    string staticLib;
+#ifdef LIBRARY
+    staticLib = g_cwd + TMP_DIR "/lib" LIBRARY ".a";
+#endif
+
                                             // compile all files in subdirs
-    for (idx = g_nClasses; idx--; )
+    for (int idx = g_nClasses; idx--; )
         std_cpp(0, TMP_DIR "/o", idx + 1, g_classes[idx], staticLib);
         
                                             // compile all files in g_cwd
@@ -544,12 +493,12 @@ void build_libraries()
 
     #ifdef SHARED
     #ifdef LIBRARY
-        libso = "lib" LIBRARY ".so";
-        libsoshared = libso + "." + g_version;
+        string libso = "lib" LIBRARY ".so";
+        string libsoshared = libso + "." + g_version;
                                             // add option for shared lib
         g_compiler += " -fPIC "; 
 
-        for (idx = g_nClasses; idx--; )
+        for (int idx = g_nClasses; idx--; )
             std_cpp(0, TMP_DIR "/o", idx + 1, g_classes[idx], 
                                             libsoshared);
         
@@ -557,44 +506,38 @@ void build_libraries()
         std_cpp(1, TMP_DIR "/o", 0, ".", libsoshared);  
 
         shared_library(libso, libsoshared);// make a shared library
-    #endif
-    #endif
+    #endif  // LIBRARY
+    #endif  // SHARED
 
     chdir("");
 }
 
 void setLibs()
 {
-    int n;
-    int index;
-    list cut;
-        
-    cut = strtok(ADD_LIBRARIES, " ");        // cut op libraries
-    n = sizeof(cut);
-    for (index = 0; index < n; index++)
+    list cut = strtok(ADD_LIBRARIES, " ");        // cut op libraries
+    int n = listlen(cut);
+    for (int index = 0; index != n; ++index)
         g_libs += " -l" + cut[index];
 
     cut = strtok(ADD_LIBRARY_PATHS, " ");     // cut up the paths
-    n = sizeof(cut);
-    for (index = 0; index < n; index++)
+    n = listlen(cut);
+    for (int index = 0; index != n; ++index)
         g_libpath += " -L" + cut[index];
 }
 
 void link(string maino, string strip)
 {
-    string compiler;
-
     if (g_command != "program")
         return;
 
     chdir(TMP_DIR);
 
-    compiler = g_compiler + " -o bin/binary " + maino;
+    string compiler = g_compiler + " -o bin/binary " + maino;
 
 #ifdef LIBRARY
     compiler += " -l" LIBRARY " -L.";
 #else
-    if (sizeof(makelist("o/*" OBJ_EXT)))
+    if (listlen(makelist("o/*" OBJ_EXT)))
         compiler += " o/*" OBJ_EXT;
 #endif
 
@@ -635,9 +578,7 @@ void link(string maino, string strip)
 void strip_shared()
 {
 #ifdef LIBRARY
-    string libsoshared;
-
-    libsoshared = "lib" LIBRARY ".so." + g_version;
+    string libsoshared = "lib" LIBRARY ".so." + g_version;
 
     chdir(TMP_DIR);
 
@@ -651,13 +592,11 @@ void strip_shared()
 #ifdef USE_ALL
 void rmUSE_ALLfiles()
 {
-    int idx;
-
     echo(OFF);
 
-    for (idx = sizeof(g_inspected); idx--; )
+    for (int idx = listlen(g_inspected); idx--; )
         system("rm -f " + g_inspected[idx] + "/" USE_ALL);
-    if (sizeof(g_inspected))
+    if (listlen(g_inspected))
         system("rm -f " USE_ALL);
 
     echo(USE_ECHO);
@@ -667,7 +606,7 @@ void rmUSE_ALLfiles()
 void program(string strip)
 {
 #ifdef MAIN
-    string maino = rss_changeExt(MAIN, OBJ_EXT);
+    string maino = change_ext(MAIN, OBJ_EXT);
 
     md(TMP_DIR "/bin");
 
@@ -713,11 +652,9 @@ void clean()
 
 void install(string what, string path)
 {
-    string dir;
-
     if (what == "program")
     {
-        dir = get_path(path);
+        string dir = get_path(path);
         if (dir != "")    
             md(dir);
             
@@ -735,8 +672,8 @@ void install(string what, string path)
         md(path);
         system("cp -d " TMP_DIR "/lib/lib" LIBRARY ".so.* " + path);
     }
-#endif
-#endif
+#endif      // SHARED
+#endif      // LIBRARY
 
     exit(0);
 }
@@ -749,16 +686,13 @@ void clearScreen(int cls)
 
 void main(int argc, list argv, list envp)
 {
-    int cls;
-    string prog;
-    string option;
-
     echo(USE_ECHO);
 
     setGcompiler();
 
     g_command = argv[1];
 
+    int cls;
     if (g_command == "-c")
     {
         cls = 1;
@@ -804,6 +738,8 @@ void main(int argc, list argv, list envp)
     if (g_command == "install")
         install(argv[2], argv[3]);
 
+    string option;
+
     if (g_command == "program")
     {
         clearScreen(cls);
@@ -812,7 +748,7 @@ void main(int argc, list argv, list envp)
         else
             option = "";
 
-        program(option);
+        program(option);        // exits
     }
 
     if (g_command == "library")
@@ -821,7 +757,7 @@ void main(int argc, list argv, list envp)
         build_libraries();      
 
 #ifdef USE_ALL
-    rmUSE_ALLfiles();
+        rmUSE_ALLfiles();
 #endif
         exit(0);
     }
@@ -832,7 +768,7 @@ void main(int argc, list argv, list envp)
         exit(0);
     }
 
-    prog = rss_changeExt(change_path(argv[0], ""), "");
+    string prog = change_ext(change_path(argv[0], ""), "");
 
     printf("Usage: ", prog, " [-c] cmd\n"
         "   -c              - Does 'tput clear' (clear screen) just before\n"
@@ -863,5 +799,5 @@ void main(int argc, list argv, list envp)
                                                                 "`base'\n"
     );
 
-    exit(1);
+    exit(0);
 }

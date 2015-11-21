@@ -12,6 +12,7 @@ typedef Variable    String;
 
 void stringcons(String *str);
 void stringcons_charPtr(String *str, char const *ntbs);
+void stringcons_swallowCharPtr(String *str, char *ntbs);
 void stringcopycons(String *str, String const *var);
 
 void stringDestructor(String const *var);

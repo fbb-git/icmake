@@ -8,7 +8,7 @@ void rss_error(char const *fmt, ...)
     fflush(stderr);
 
     va_start(args, fmt);
-    vfprintf (stderr, fmt, args);
+    vfprintf(stderr, fmt, args);
     fputc('\n', stderr);
 
     if (!isatty(fileno (stdout)))
@@ -18,5 +18,5 @@ void rss_error(char const *fmt, ...)
         putchar('\n');
     }
 
-    exit (1);
+    exit(1);
 }

@@ -1,4 +1,6 @@
-#define msg
+
+/* #define msg
+*/
 
 #include "icmake.ih"
 
@@ -7,7 +9,9 @@ void optTmpBim(char **argv)
     flags |= f_tmpBim | f_doPreProcess | f_doCompile | f_doExec | 
                         f_rmPim | f_rmBim;
 
-    bimFile = rss_strdup(optarg);
+    char *rhs = rss_trimRight(optarg);
+    bimFile = rss_trimLeft(rhs);
+    free(rhs);
 
     msg("optarg = `%s', bimfile = `%s'", optarg, bimFile);
 

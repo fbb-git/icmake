@@ -49,6 +49,9 @@ char     *rss_strdup(char const *str);      /* duplicates 'str ? str : ""'  */
 
 char     *rss_strcat (char *, char const *);
 
+char     *rss_trimLeft(char const *begin);  /* returns newly allocated ntbs */
+char     *rss_trimRight(char const *begin);
+
 void     rss_msg_(char const *path, char *fmt, ...); /* prints a msg to stderr. 
                                         Use it by doing #define msg before
                                         reading rss.h, and then call msg(fmt,
@@ -71,8 +74,6 @@ Opcode  rss_getOpcode (FILE *);
 
 uint16_t    rss_getVar(Variable **varVector, FILE *bimFile, BinHeader *hdr);
 
-// FBB void     rss_initVar(Variable *);
-
 BinHeader *rss_readHeader(FILE *f, size_t v);
 
     /* to activate msg(...) calls do '#define msg' before reading rssh.h */
@@ -86,3 +87,9 @@ BinHeader *rss_readHeader(FILE *f, size_t v);
 #endif
 
 #endif
+
+
+
+
+
+

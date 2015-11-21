@@ -1,20 +1,14 @@
+#define msg
 #include "string.ih"
 
 void string_trimRight(String *lhs, String const *rhs)
 {
-    char *begin = s_str(rhs);
-    char *cp = begin + strlen(begin);
-    char org;
-                                        /* find the last non-ws char. pos */
-    for (; cp-- != begin && isspace(*cp); ) 
-        ;
+    char *trimmed = rss_trimRight(s_str(rhs));
 
-    org = *++cp;                        /* save the 1st RHS tail's ws char */
-    *cp = 0;                            /* cut off the RHS tail */
+    msg("TRIMMED `%s'", trimmed);
 
-    stringDestructor(lhs);
-    stringcons_charPtr(lhs, cp);
+    stringcons_swallowCharPtr(lhs, trimmed);
 
-    *cp = org;                          /* restore the RHS tail */
+    msg("DONE");
 }
 

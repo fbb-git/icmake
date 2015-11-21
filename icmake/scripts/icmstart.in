@@ -1,14 +1,14 @@
-#!@BINDIR@/icmake -qt /tmp/icmstart
+#!@BINDIR@/icmake -t/tmp/icmstart
 
 string g_confpath;
-string g_home;
-string g_userHome;
+string g_userHome = getenv("HOME")[1];
+string g_home = g_userHome + "/.icmake";
 string g_skelpath = "@SKELDIR@";
 string g_program;
 string g_defaultcommand = "";
 string g_defaultcommandArg;
 string g_destpath;
-string g_cwd;
+string g_cwd = chdir("");
 list   g_mkdir;
 
 int g_confirminstall = 0;
@@ -41,7 +41,7 @@ void usage()
                                                                     "script\n"
         "\n");
 
-    exit(1);
+    exit(0);
 }
 
 void die(string s)
@@ -52,12 +52,12 @@ void die(string s)
 
 int isFileOrDir(string s)
 {
-    return (int)stat(NOT_CHECKED, s)[0] & (S_IFREG | S_IFDIR);
+    return (int)stat(P_NOCHECK, s)[0] & (S_IFREG | S_IFDIR);
 }
 
 int isFile(string s)
 {
-    return (int)stat(NOT_CHECKED, s)[0] & S_IFREG;
+    return (int)stat(P_NOCHECK, s)[0] & S_IFREG;
 }
 
 void syscall(string command)
@@ -70,13 +70,15 @@ void syscall(string command)
 
 void md(string dir)
 {
-    int idx;
-    for (idx = 0; idx < sizeof(g_mkdir); ++idx)
+        // skip dir if it has already been handled
+    for (int idx = 0; idx < listlen(g_mkdir); ++idx)
     {
         if (g_mkdir[idx] == dir)
             return;
     }
+
     syscall("mkdir -p " + dir);    
+
     g_mkdir += (list)dir;
 }
 
@@ -84,26 +86,24 @@ string absPath(string arg)
 {
     if (arg[0] != "/")
         arg = g_cwd + arg;
+
     if (arg[strlen(arg) - 1] != "/")
         arg += "/";
+
     return arg;
 }
 
 void arguments(int argc, list argv)
 {
-    int cmdidx = 1;
-    string arg;
-    list icm;
-    int length;
-
-    icm = getenv("ICM");                // ICM environment var defined?
+    list icm = getenv("ICM");           // ICM environment var defined?
 
     if ((int)icm[0] == 1)                
         g_skelpath = icm[1];            // then re-assign skelpath
 
+    int cmdidx = 1;
     while (cmdidx < argc)
     {
-        arg = argv[cmdidx];
+        string arg = argv[cmdidx];
 
         if (arg[0] != "-")              // no (more) options
             break;
@@ -158,7 +158,10 @@ void arguments(int argc, list argv)
     g_destpath = argv[cmdidx];
     if (g_destpath[strlen(g_destpath) - 1] != "/")
         g_destpath += "/";
+
     md(g_destpath);                       // install the target dir
+
+
 
     if (!g_debug)
         g_destpath = chdir(g_destpath);
@@ -186,31 +189,29 @@ void arguments(int argc, list argv)
 
 int replace(string target)
 {
-    string ret;
-
     while (g_askreplace)
     {
         printf("`", target, "' exists.\n"
                "Replace [?akNy] ? ");
-        ret = getch();
+        string answer = getch();
 
-        if (ret == "a")
+        if (answer == "a")
         {
             g_replace = 1;
             g_askreplace = 0;
             break;
         }
 
-        if (ret == "k")
+        if (answer == "k")
         {
             g_askreplace = 0;
             break;
         }
 
-        if (ret == "y")
+        if (answer == "y")
             return 1;
 
-        if (ret == "n" || ret == "\n")
+        if (answer == "n" || answer == "\n")
             return 0;
 
         printf("Press `a' to replace all,\n"
@@ -228,8 +229,6 @@ int install(string target)
 
 int install_dest(string source, string dest)
 {
-    int idx;
-
     if (!isFileOrDir(source))
         die("Can't find `" + source + "'\n");
 
@@ -238,7 +237,7 @@ int install_dest(string source, string dest)
     else    
         dest = g_destpath + dest;
 
-    idx = strlen(dest) - 1;
+    int idx = strlen(dest) - 1;
 
     if (dest[idx] == "/")
         dest = substr(dest, 0, idx);
@@ -249,6 +248,7 @@ int install_dest(string source, string dest)
         syscall("cp -rd " + source + " " + dest);
         return 1;
     }
+
     return 0;
 }
 
@@ -270,14 +270,11 @@ int install_dest(string source, string dest)
     // in which case the installation must be confirmed by the user
 int install_file(string source, string dest)
 {
-    int idx;
-    string rawDest;
-    
     if (source[0] == ".")
         source = g_cwd + source;
     else
     {
-        idx = strfind(source, "/");
+        int idx = strfind(source, "/");
 
         if (idx == -1)
             source = g_skelpath + source;
@@ -289,9 +286,8 @@ int install_file(string source, string dest)
 
 string find(string path, string file)
 {
-    string ret;
+    string ret = path + "/" + file;
 
-    ret = path + "/" + file;
     if (exists(ret))
         return ret;
 
@@ -309,18 +305,17 @@ string findFile(string file)
         ret = find(g_home, file);
 
     if (ret == "")                          // not found, locate in CONFDIR
-        ret = find("@CONFDIR@", file);
+        ret = find("/etc/icmake", file);
 
     return ret;
 }
 
 void install_conf(string file, string default)
 {
-    string ret;
-    ret = findFile(file);
-
     if (g_skeletons)
     {
+        string ret = findFile(file);
+
         if (ret != "")
             system("cat " + ret + " >> " + g_destpath + "VERSION");
         else
@@ -331,15 +326,14 @@ void install_conf(string file, string default)
 
 void install_version()
 {
-    string str;
-    str = g_destpath + "VERSION";
-
     if (!g_version)
         return;
 
+    string str = g_destpath + "VERSION";
+
     if (install(str))
     {
-        system(NOT_CHECKED, "rm -f " + g_destpath + "VERSION");
+        system(P_NOCHECK, "rm -f " + g_destpath + "VERSION");
         install_conf("AUTHOR",  "");
         install_conf("VERSION", "0.00.00");
 
@@ -397,9 +391,8 @@ string check_home(string source)
 list shift(list source)     // shift away the first element
 {
     list ret;
-    int idx;
 
-    for (idx = 1; idx != sizeof(source); ++idx)
+    for (int idx = 1; idx != listlen(source); ++idx)
         ret += (list)source[idx];
 
     return ret;
@@ -425,21 +418,14 @@ list shift(list source)     // shift away the first element
 
 void install_line(string confline)
 {
-    int idx;
-    list fields;
-    string source;
-    string dest;
-    string plFlag;
-    string install;
-
-    fields = strtok(confline, " \t\n");
-    source = fields[0];
+    list fields = strtok(confline, " \t\n");
+    string source = fields[0];
 
                                             // empty line or comment
-    if (sizeof(fields) == 0 || source[0] == "#")
+    if (listlen(fields) == 0 || source[0] == "#")
         return;
 
-    install = source;
+    string install = source;
     if (install == "P" || install == "L")
     {
         fields = shift(fields);             // rm the P/L-flag
@@ -464,11 +450,7 @@ void install_line(string confline)
     )
         return;                             // no P with libs, no L with progs
 
-
-    if (sizeof(fields) > 1)
-        dest = fields[1];
-    else
-        dest = source;
+    string dest = listlen(fields) > 1 ? fields[1] : source;
 
     source = check_home(source);
     dest   = check_home(dest);
@@ -484,30 +466,20 @@ void install_line(string confline)
 
 int last(string haystack, string needle)
 {
-    list entry;
-    
-    entry = strtok(haystack, " \t\n");
+    list entry = strtok(haystack, " \t\n");
     return entry[sizeof(entry) - 1] == needle;
 }
 
 void install_rc()
 {
-    list line;
-    string conffile;
-    string file;
-
-    conffile = findFile("icmstart.rc");
+    string conffile = findFile("icmstart.rc");
 
     if (!isFile(conffile))
         die("Can't find configuration file `icmstart.rc'");
     
-    while (1)
+    while (list line = fgets(conffile, line))
     {
-        line = fgets(conffile, (int)line[1]);
-        if (!line)
-            break;
-
-        file = line[0];
+        string file = line[0];
 
         if
         (
@@ -525,21 +497,17 @@ int main(int argc, list argv)
     echo(OFF);
 
     g_program = get_base(argv[0]);
-    g_userHome = getenv("HOME")[1];
-    g_home = g_userHome + "/.icmake";
 
     if (argc == 1)
         usage();
 
-    g_cwd = chdir("");
-
     arguments(argc, argv);
 
     install_std();              // install CLASSES VERSION and icmconf
+
     install_rc();               // install .rc file elements
 
     printf("Done. Don't forget to inspect the #defines in\n"
             "'", g_destpath, "icmconf'\n");
-
-    return 0;
 }
+

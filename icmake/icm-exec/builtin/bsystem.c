@@ -19,7 +19,7 @@ void b_system()
     int ret = system(cmd);                  /* do system call */
 
     if (ret && rss_checkMode(mode))       /* terminate upon failure? */
-        rss_error ("system - failure of system call (status %d)", ret);
+        rss_error("system - failure of system call (status %d)", ret);
 
     intcons_int(eb_releaseReg(), ret);        
 }

@@ -41,7 +41,7 @@
     LIST
     LISTLEN
     MAKELIST
-    M_ECHO
+    ECHO_TOKEN
     NUMBER
     PRINTF
     PUTENV
@@ -722,7 +722,7 @@ _one_arg_funs:
 |
     LISTLEN
 |
-    M_ECHO
+    ECHO_TOKEN
 |
     CMD_TAIL
 |

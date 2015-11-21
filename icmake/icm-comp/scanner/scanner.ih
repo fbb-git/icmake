@@ -26,6 +26,8 @@
 #endif
 
 extern char *gs_filenames;
+extern char *gs_savedText;
+extern size_t   gs_savedLineNr;
 
 extern size_t   yyleng;
 
@@ -34,3 +36,4 @@ extern FILE *yyout;
 
 
 void sc_changeFile(char *s);               /* name of source file to open */
+void sc_saveInfo(void);                 /* saves yylineno and yytext */    

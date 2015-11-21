@@ -27,7 +27,7 @@ SemVal *p_cast(ExprType target, SemVal *e)
             default is entered in the switch to prevent a long compiler
             warning
         */
-break;
+        break;
     }
-    return (e);
+    return e;
 }

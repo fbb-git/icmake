@@ -89,6 +89,7 @@ extern char    *gp_opstring[];
 extern char     gp_lvalueNeeded[];
 extern char     gp_illegalArgCount[];
 extern char     gp_illegalCast[];
+extern char    *gp_listlen;
 
 extern ExprType  gp_varType;
 
@@ -234,3 +235,4 @@ int     p_functionIdx(void);
 void    p_checkArgumentTypes(size_t nParams, size_t funIdx, SemVal *a);
 void    p_hiddenFunctions(void);
 int     p_nextCall(void);
+void    p_listlen(void);

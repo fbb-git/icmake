@@ -192,3 +192,5 @@ StringTable *gp_stringTable;
 SemVal gp_init;                     /* code initializing globals */
 
 char *gp_stringbuf;
+char *gp_listlen;
+

@@ -20,6 +20,12 @@ SemVal *p_oneArg(ExprType type, SemVal *arg)
         break;
 
         case f_listlen:
+            if (strcmp(scanner_savedText(), "listlen") != 0)
+                fprintf(stderr, "[%s] Line %d: Warning: `%s' is deprecated. "
+                                    "Use `listlen'\n", 
+                            util_sourceName(), 
+                            scanner_savedLineNr(), scanner_savedText());
+
             ok = test_type(arg, e_list);
         break;
 

@@ -1,7 +1,0 @@
-#include "builtin.ih"
-
-void builtin(size_t funnr)
-{
-    gb_pBuiltinFun[funnr]();
-}
-

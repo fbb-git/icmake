@@ -116,7 +116,7 @@ gets                    {
                         }
 echo                    {
                             yylval.type = f_echo;
-                            return M_ECHO;
+                            return ECHO_TOKEN;
                         }
 element                 {
                             yylval.type = f_element;
@@ -194,6 +194,7 @@ return                  {
 listlen         |
 sizeof          |
 sizeoflist              {
+                            sc_saveInfo();
                             yylval.type = f_listlen;
                             return LISTLEN;
                         }

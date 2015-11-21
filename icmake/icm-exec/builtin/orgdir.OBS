@@ -1,6 +1,0 @@
-#include "builtin.ih"
-
-char const *builtin_orgDir()
-{
-    return gb_orgDir;
-}

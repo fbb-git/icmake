@@ -81,7 +81,7 @@ extern int yydebug;
     LIST = 291,
     LISTLEN = 292,
     MAKELIST = 293,
-    M_ECHO = 294,
+    ECHO_TOKEN = 294,
     NUMBER = 295,
     PRINTF = 296,
     PUTENV = 297,

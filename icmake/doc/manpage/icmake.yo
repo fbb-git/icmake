@@ -624,7 +624,7 @@ provided:
         Appends all (comma separated) arguments to the file
         tt(filename). Returns the number of printed arguments.nl()
         If tt(format) contains placeholders %1 .. %n the output is
-            formatted (see also tt(strformat).
+            formatted (see also tt(strformat)).
     itt(int printf(...))nl()
         Shows all (comma separated) arguments to screen (i.e., the standard
         output stream). Returns the number of printed arguments.

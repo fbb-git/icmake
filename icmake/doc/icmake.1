@@ -1,4 +1,4 @@
-.TH "icmake" "1" "1992\-2015" "icmake\&.7\&.23\&.02\&.tar\&.gz" "A program maintenance utility"
+.TH "icmake" "1" "1992\-2015" "icmake\&.8\&.00\&.00\&.tar\&.gz" "A program maintenance utility"
 
 .PP 
 .SH "NAME"
@@ -57,7 +57,8 @@ separated from each other by colons (\fI:\fP)\&.
 nested\&. 
 .IP o 
 The `backtick\(cq\& operator is defined, executing a program in a shell
-and collecting its standard output in a list (see below)\&.
+and collecting its standard output in a list (see below; a synonym for
+the backtick operator is the function \fIeval\fP)\&.
 .IP o 
 The index operator (\fI[]\fP) is defined as an alternative to the
 pre\-defined function \fIelement()\fP, and can be used on lists and
@@ -80,52 +81,76 @@ into `strfind\(cq\& should bring your older scripts up\-to\-date again\&.\fP
 .SH "OPTIONS"
 
 .PP 
-\fBIcmake\fP:
+\fBIcmake\fP uses the following files and options:
 .PP 
+.IP o 
 \fIsource\fP: \fBicmake\fP script source file (default extension: \fI\&.im\fP)\&.
+.IP o 
+\fIdest\fP:  binary \fBicmake\fP script file (default:  \fI`source\(cq\&\&.bim\fP)\&.
+.IP o 
+\fI\-\-\fP:  \fBicmake\fP arguments separator for arguments passed to
+\fIicm\-exec\fP
+.br 
+\fIargs\fP:  arguments following \fI\-\-\fP are passed to \fIicm\-exec\fP as\-is
+as its arguments, and are available from \fBicmake\fP\-sctipt\(cq\&s 
+\fImain()\fP function\(cq\&s \fIlist argv\fP parameter (see below at
+section \fBUSER DEFINED FUNCTIONS\fP)\&.
+
 .PP 
-\fIdest\fP:   binary \fBicmake\fP script file (default:  \fI`source\(cq\&\&.bim\fP)\&.
-.PP 
-\fI\-\-\fP:  \fBicmake\fP/\fBicmake\fP\-script arguments separator
-.PP 
-\fIargs\fP:  arguments following \fI\-\-\fP are entered into the \fBicmake\fP scipt 
-\fImain()\fP function\(cq\&s \fIargv\fP\-list (see below at section
-\fBUSER DEFINED FUNCTIONS\fP)\&.
-.PP 
+the following options are defined\&. The \fI\-h\fP option overrules all other
+options, the \fI\-a\fP option overrules all other options except for \fI\-h\fP\&. Of
+the remaining options only one can be specified:
 .IP o 
 \fB\-a\fP  
 .br 
-information about \fBicmake\fP
-.IP o 
-\fB\-b\fP  
-.br 
-blunt execution of the destinationfile
+show information about \fBicmake\fP, overruled by \fI\-h\fP
 .IP o 
 \fB\-c\fP  
 .br 
-the destination file is only compiled
+the \fBicmake\fP source file is compiled
 .IP o 
-\fB\-i\fP file 
+\fB\-e\fP  
 .br 
-\fIfile\fP: name of source\&.  \fBIcmake\fP argument processing stops\&.
+execute the \fBicmake\fP \&.bim file, given as first argument
 .IP o 
-\fB\-o\fP file 
+\fB\-i\fP  
 .br 
-all \fBicmake\fP output is written to \fIfile\fP (Not
-implemented on unix platforms)
+the first argument is the \fBicmake\fP source file, the default
+binary file is constructed if necessary and all additional
+arguments are passed to \fIicm\-exec\fP `as is\(cq\&\&.
 .IP o 
 \fB\-p\fP  
 .br 
-only the preprocessor is activated
+the \fBicmake\fP source file is only preprocessed, output is the
+preprocessed only the preprocessor is activated
 .IP o 
-\fB\-q\fP  
+\fB\-t\fP  
 .br 
-quiet mode: copyright banner not displayed
+the argument following \fI\-t\fP is the name of a temporary \fI\&.bim\fP
+file, which is removed after \fBicmake\fP\(cq\&s call\&. The next argument is the
+name of the \fBicmake\fP script, and all additional arguments are passed as
+arguments to the \fBicmake\fP script\&. After making an \fBicmake\fP\-script executable
+(\fIchmod +x script\fP), and providing it with an initial line like
+this: 
+.nf 
+
+    #!/usr/bin/icmake \-t /tmp/script
+            
+.fi 
+the script can directly be called:
+.nf 
+
+    script arg1 arg2 
+            
+.fi 
+in which case the \fBicmake\fP script \fI`script\(cq\&\fP is executed while it
+received the three arguments \fIscript arg1 arg2\fP\&.
+.IP 
 .IP o 
-\fB\-t\fP file 
+\fB\-v\fP  
 .br 
-\fIfile\fP is used as a temporary bim\-file, to be
-removed on exit\&. \fBIcmake\fP argument processing stops\&.
+displays \fBicmake\fP\(cq\&s version number, and ends \fBicmake\fP, 
+overruled by \fI\-h\fP
 
 .PP 
 \fBIcmun\fP:
@@ -259,12 +284,16 @@ return a value\&.
 
 .PP 
 Variables may be defined both at the global level as well as locally to
-functions\&. Variables are strongly typed\&. A variable cannot have the type 
+functions\&. When defined inside functions, the standard \fBC\fP scoping  and
+visibility rules apply\&. E\&.g\&., local variables can only be used in their own or
+in more deeply nested blocks, their visibility is masked in more deeply nested
+blocks by defining an identically named variable inside those more deeply
+nested blocks\&. Variables are strongly typed\&. A variable cannot have type 
 \fIvoid\fP\&.
 .PP 
-Variables may be initialized when they are defined\&. The initialization can
-use return values of functions, but cannot use variables\&. Consider
-initializations as being constructed from constant values\&.
+Variables may be initialized once they are defined\&. The initialization can
+use expressions, using predefined functions, constant values and values of
+variables that are visible at the point of definition\&. 
 .PP 
 .SH "PREDEFINED SYMBOLS"
 
@@ -374,8 +403,8 @@ __hpux~HP\-UX, with the native HP compiler
 .SH "OPERATORS"
 
 .PP 
-All \fBC\fP operators, except for the ternary operator, are supported,
-operating like their \fBC\fP counterparts on \fIint\fP variables and/or values\&.
+All \fBC\fP operators are supported, operating like their \fBC\fP
+counterparts on \fIint\fP expressions\&.
 .PP 
 Additionally, for \fIstring\fP type variables and/or values the following
 operators are available:
@@ -518,7 +547,12 @@ functions\&.
 \fIbreak\fP
 .br 
 To leave \fIfor\fP and \fIwhile\fP statements, overruling the statement\(cq\&s
-condition\&. \fBC\fP\(cq\&s \fIcontinue\fP is not available\&.
+condition\&.
+.IP o 
+\fIcontinue\fP
+.br 
+To continue with the next iteration of a \fIfor\fP or \fIwhile\fP
+statement\&.
 .IP o 
 \fIexit(expression)\fP
 .br 
@@ -576,6 +610,17 @@ collect the standard error stream\(cq\&s output as well\&. Example:
 
         string s = \(dq\&ls\(dq\&;
         printf(`s`);        // prints the elements in the current
+                            // directory
+            
+.fi 
+.IP o 
+\fIlist eval(string str)\fP
+.br 
+This function acts identically to the backtick operator\&. The above
+example could also have been written like this:
+.nf 
+
+        printf(eval(\(dq\&ls\(dq\&)); // prints the elements in the current
                             // directory
             
 .fi 
@@ -697,6 +742,19 @@ Same functionality as the previous function, but by specifying
 \fIchecking\fP as \fINOT_CHECKED\fP the function won\(cq\&t terminate the
 script\&. Rather, it will return the called command\(cq\&s exit status, or
 \fI0x7f00\fP if the command wasn\(cq\&t found\&.
+.IP o 
+\fIint system(string command)\fP
+.br 
+Executes \fIcommand\fP\&. The return value indicates the executed
+command\(cq\&s exit value\&. The string \fIcommand\fP) may contain redirection
+and/or piping characters\&.
+.IP o 
+\fIint system(int checking, string command)\fP
+.br 
+Same functionality as the previous function, but by specifying
+\fIchecking\fP as \fINOT_CHECKED\fP the function won\(cq\&t terminate the
+script\&. Rather, it will return the called command\(cq\&s exit status, or
+\fI0x7f00\fP if the command wasn\(cq\&t found\&.
 )
 .PP 
 System interface:
@@ -708,35 +766,57 @@ Returns a non\-zero value if \fIfile\fP exists, otherwise 0 is returned\&.
 .PP 
 Input interface:
 .IP o 
-\fIlist fgets(string file, int offset)\fP
-.br 
-The next line found at offet \fIoffset\fP is read from \fIfile\fP\&. 
-It returns a list \fIretlist\fP containing two elements:
-.br 
-\fIelement(0, retlist)\fP is the string that was read 
-(including the \fI\en\fP, if found)
-.br 
-\fIelement(1, retlist)\fP is the next offset to read\&.
+\fIlist fgets(string file, list offset)\fP
 .br 
 
 .IP 
-An empty return list signifies \fIEOF\fP\&. Since an empty list\(cq\&s `first\(cq\&
-eement is an empty string, which is converted to the value 0, a file
-may be read and processed as follows:
+\fBNOTE:\fP the prototype of this function changed from 
+\fIfgets(string file, int offset)\fP to \fIfgets(string file, list
+offset)\fP at version 8\&.00\&.00\&.
+.br 
+
+.IP 
+The next line found at offet \fIoffset\fP is read from \fIfile\fP\&.  It
+returns a list \fIretlist\fP containing as its first element the
+contents of the read line (without the \fI\en\fP line terminator), as its
+second element the line\(cq\&s terminator `\fI\en\fP\(cq\& (if encountered), and as
+its third element the string \fIOK\fP if a line was successfully read,
+\fIFAIL\fP if reading from file failed\&. At EOF an empty list is
+returned\&. The list may contain additional elements, which are
+internally used by \fIfgets\fP\&.
+.br 
+
+.IP 
+To read multiple lines, start by passing an empty list as \fIgets\(cq\&s\fP
+second argument\&. To read subsequent lines, pass the previously
+returned list to \fIfgets\(cq\&s\fP second argument\&.
+.IP 
+Here is an example showing how to read a complete file:
 .nf 
 
-        list line;
+        list ret;
         while (1)
         {
-            line = fgets(\(dq\&filename\(dq\&, (int)line[1]);
-            if (!line)
+            ret = fgets(\(dq\&filename\(dq\&, ret);
+            if (!ret)
                 break;
-            process(line[0]);
+            process(ret[0], ret[1]);
         }
             
 .fi 
-Note that the function \fIfgets\fP cannot read files beyond offset
-65536\&.
+
+.IP 
+.IP o 
+\fIstring getch()\fP
+.br 
+Returns the next pressed key as a string (no `Enter\(cq\& required for
+ms\-dos and unix (incl\&. linux) systems)\&.
+.IP o 
+\fIstring gets()\fP
+.br 
+Returns the next line read from the keyboard as a \fIstring\fP\&. The line
+entered on the keyboard must be terminated by an `Enter\(cq\& key, which is
+not stored in the returned string\&.
 
 .PP 
 Output interface:
@@ -745,18 +825,64 @@ Output interface:
 .br 
 Appends all (comma separated) arguments to the file
 \fIfilename\fP\&. Returns the number of printed arguments\&.
+.IP o 
+\fIint fprintf(string filename, string format, \&.\&.\&.)\fP
+.br 
+Appends all (comma separated) arguments to the file
+\fIfilename\fP\&. Returns the number of printed arguments\&.
+.br 
+If \fIformat\fP contains placeholders %1 \&.\&. %n the output is
+formatted (see also \fIstrformat\fP)\&.
+.IP o 
+\fIint printf(\&.\&.\&.)\fP
+.br 
+Shows all (comma separated) arguments to screen (i\&.e\&., the standard
+output stream)\&. Returns the number of printed arguments\&.
+.IP o 
+\fIint printf(string format, \&.\&.\&.)\fP
+.br 
+Shows all (comma separated) arguments to screen (i\&.e\&., the standard
+output stream)\&. Returns the number of printed arguments (the
+\fIformat\fP string counts as one argument)\&.
+.br 
+If \fIformat\fP contains placeholders %1 \&.\&. %n the output is 
+formatted (see also \fIstrformat\fP)\&.
 
 .PP 
-Filename modifier:
+Filename modifiers:
 .IP o 
 \fIstring get_base(string file)\fP
 .br 
 Returns the base name of \fIfile\fP\&. The base name is the file without
 its path prefix and without its extension\&. The extension is all
 information starting at the final dot in the filename\&. If no final dot
-is found, the file name is the base name\&. Eg\&., the base name of
+is found, the file name is the base name\&. E\&.g\&., the base name of
 \fIa\&.b\fP equals \fIa\fP, the base name of \fIa\&.b\&.c\fP equals \fIa\&.b\fP, the
 base name of \fIa/b/c\fP equals \fIc\fP\&. 
+.IP o 
+\fIstring get_ext(string file)\fP
+.br 
+Returns the extension of \fIfile\fP, except for the separating dot\&. The
+extension is all information starting at the final dot
+in the filename\&. 
+.IP 
+If no final dot is found, an empty string is returned\&.
+.IP o 
+\fIstring get_dext(string file)\fP
+.br 
+Returns the extension of \fIfile\fP, including the separating dot\&. The
+extension is all information starting at the final dot
+in the filename\&. 
+.IP 
+If no final dot is found, an empty string is returned\&.
+.IP o 
+\fIstring get_path(string file)\fP
+.br 
+Returns the path\-prefix of \fIfile\fP\&. The path prefix is all information
+up to (and including) the final directory separator (which is,
+depending on the operating system, a forward\- or backslash)\&.
+.IP 
+If no path is found, an empty strring is returned\&.
 
 .PP 
 System interface:
@@ -774,52 +900,38 @@ the second element indicates the value of the environment variable\&.
 Enivironment variables are of the form \fIvariable=value\fP, and if
 defined the list\(cq\&s second element contains \fIvalue\fP\&. If the value is
 empty, the variable is defined, but has no text associated with it\&.
-
-.PP 
-Filename modifier:
-.IP o 
-\fIstring get_ext(string file)\fP
-.br 
-Returns the extension of \fIfile\fP, except for the separating dot\&. The
-extension is all information starting at the final dot
-in the filename\&. If no final dot is found, the extension is an empty
-string\&. 
-
-.PP 
-Input interface:
-.IP o 
-\fIstring getch()\fP
-.br 
-Returns the next pressed key as a string (no `Enter\(cq\& required for
-ms\-dos and unix (incl\&. linux) systems)\&.
-
-.PP 
-Filename modifier:
-.IP o 
-\fIstring get_path(string file)\fP
-.br 
-Returns the path\-prefix of \fIfile\fP\&. The path prefix is all information
-up to (and including) the final directory separator (which is,
-depending on the operating system, a forward\- or backslash)\&.
-.IP 
-If no path is found, an empty strring is returned\&.
-
-.PP 
-System interface:
 .IP o 
 \fIint getpid()\fP
 .br 
-Returns the process\-id (UNIX) or PSP\-paragraph (DOS) of the icmake byte
+Returns the process\-id (UNIX) of the icmake byte
 code interpreter \fBicm\-exec\fP\&.
-
-.PP 
-Input interface:
 .IP o 
-\fIstring gets()\fP
+\fIint putenv(string envvar)\fP
 .br 
-Returns the next line read from the keyboard as a \fIstring\fP\&. The line
-entered on the keyboard must be terminated by an `Enter\(cq\& key, which is
-not stored in the returned string\&.
+Adds \fIenvvar\fP to the current (\fBicmake\fP) environment
+Use the format: \(dq\&VAR=value\(dq\&\&. Returns 0\&.
+.IP o 
+\fIlist stat(string entry)\fP
+.br 
+Returns \fBstat\fP(2) information of directory entry \fIentry\fP as 
+a list\&. The returned list has two elements: element 0 is the
+\fIattribute value\fP, element 1 contains the size of the file\&.
+.IP 
+Attributes are  returned as bit\-flags, composed from the
+following predefined constants: 
+.nf 
+
+            S_IFCHR     S_IFDIR     S_IFREG
+            S_IREAD     S_IWRITE    S_IEXEC
+        
+.fi 
+See the \fBstat\fP(2) manual page for the meanings of these constants\&.
+.IP o 
+\fIlist stat(checking, string entry)\fP
+.br 
+Same as the previous function, but by specifying \fIchecking\fP as
+\fINOT_CHECKED\fP the function won\(cq\&t terminate the script\&. Rather, it will
+rturn \fBstat\fP(2)\(cq\&s return value\&.
 
 .PP 
 Functions creating lists of files:
@@ -888,52 +1000,19 @@ Same as the previous function, but \fItype\fP may be specified as in
 \fIlist makelist(type, string mask)\fP\&.
 
 .PP 
-Output interface:
-.IP o 
-\fIint printf(\&.\&.\&.)\fP
-.br 
-Shows all (comma separated) arguments to screen (i\&.e\&., the standard
-output stream)\&. Returns the number of printed arguments\&.
-
-.PP 
-System interface:
-.IP o 
-\fIint putenv(string envvar)\fP
-.br 
-Adds \fIenvvar\fP to the current (\fBicmake\fP) environment
-Use the format: \(dq\&VAR=value\(dq\&\&. Returns 0\&.
-
-.PP 
 List information:
+.IP o 
+\fIint listlen(list l)\fP
+.br 
+Returns the number of elements in \fIlist\fP\&.
 .IP o 
 \fIint sizeof(list l)\fP
 .br 
-Returns the number of elements in \fIlist\fP
-
-.PP 
-System information:
+Deprecated: use \fIlistlen\fP\&.
 .IP o 
-\fIlist stat(string entry)\fP
+\fIint sizeoflist(list l)\fP
 .br 
-Returns \fBstat\fP(2) information of directory entry \fIentry\fP as 
-a list\&. The returned list has two elements: element 0 is the
-\fIattribute value\fP, element 1 contains the size of the file\&.
-.IP 
-Attributes are  returned as bit\-flags, composed from the
-following predefined constants: 
-.nf 
-
-            S_IFCHR     S_IFDIR     S_IFREG
-            S_IREAD     S_IWRITE    S_IEXEC
-        
-.fi 
-See the \fBstat\fP(2) manual page for the meanings of these constants\&.
-.IP o 
-\fIlist stat(checking, string entry)\fP
-.br 
-Same as the previous function, but by specifying \fIchecking\fP as
-\fINOT_CHECKED\fP the function won\(cq\&t terminate the script\&. Rather, it will
-rturn \fBstat\fP(2)\(cq\&s return value\&.
+Deprecated: use \fIlistlen\fP\&.
 
 .PP 
 String support:
@@ -944,10 +1023,32 @@ Returns the number of characters in \fIs\fP (not counting the final 0)\&.
 .IP o 
 \fIint strfind(string haystack, string needle)\fP
 .br 
-returns index in \fIhaystack\fP where \fIneedle\fP is found, or \-1 if 
+Returns index in \fIhaystack\fP where \fIneedle\fP is found, or \-1 if 
 \fIneedle\fP is not contained in \fIhaystack\fP\&.
 .br 
 \fBThis function was called strstr() in versions before 7\&.00\fP\&.
+.IP o 
+\fIint strformat(string format,\&.\&.\&.)\fP
+.br 
+Returns a formatted string using placeholders %1 \&.\&. %2 to address
+arguments following format\&.
+.br 
+Example:
+.br 
+.nf 
+
+    void main()
+    {
+      int i = 10;
+      int j = 20;
+      string s1;
+      string s2;
+      s1 = (string)i + \(dq\& \(dq\& + (string)j + \(dq\& \(dq\& + (string)i;  // the old way
+      s2 = strformat(\(dq\&%1 %2 %1\(dq\&, i, j);                    // the new way
+      printf(\(dq\&s1 = %1, s2 = %2\en\(dq\&, s1, s2);
+    }
+        
+.fi 
 .IP o 
 \fIstring strlwr(string s)\fP
 .br 
@@ -969,24 +1070,20 @@ Returns an upper\-case duplicate of \fIs\fP\&.
 Returns a substring of \fItext\fP, starting at \fIoffset\fP, consisting of
 \fIcount\fP characters\&. If \fIoffset\fP exceeds (or equals) the string\(cq\&s
 size or if \fIcount <= 0\fP, then an empty string is returned\&. If
-\fIoffset\fP is less than 0 then 0 is used\&.
+\fIoffset\fP is less than 0 then 0 is used\&. 
+.IP o 
+\fIstring trim(string s)\fP
+.br 
+Returns a copy of \fIs\fP without leading and trailing white spaces\&.
+.IP o 
+\fIstring trimleft(string str)\fP
+.br 
+Returns a copy of \fIs\fP without leading white spaces\&.
+.IP o 
+\fIstring trim(string s)\fP
+.br 
+Returns a copy of \fIs\fP without trailing white spaces\&.
 
-.PP 
-System calls:
-.IP o 
-\fIint system(string command)\fP
-.br 
-Executes \fIcommand\fP\&. The return value indicates the executed
-command\(cq\&s exit value\&. The string \fIcommand\fP may contain redirection
-and/or piping characters\&.
-.IP o 
-\fIint system(int checking, string command)\fP
-.br 
-Same functionality as the previous function, but by specifying
-\fIchecking\fP as \fINOT_CHECKED\fP the function won\(cq\&t terminate the
-script\&. Rather, it will return the called command\(cq\&s exit status, or
-\fI0x7f00\fP if the command wasn\(cq\&t found\&.
-)
 .PP 
 .SH "USER DEFINED FUNCTIONS"
 
@@ -1037,7 +1134,7 @@ In \fImain()\fP,
 \fIargv\fP contains the arguments, with element 0 the compiled \fBicmake\fP script
 (the `\fI\&.bim\fP\(cq\& file);
 .IP o 
-\fIenvp\fP containts the `environment\(cq\& variables\&. The function \fIsizeof()\fP
+\fIenvp\fP containts the `environment\(cq\& variables\&. The function \fIlength()\fP
 (see below) may be used to determine its elements\&. Elements in \fIenvp\fP have
 the form \fIvariable=value\fP\&. Alternatively, the function \fIgetenv()\fP (see
 below) can be used to retrieve a specific environment variable immediately\&.
@@ -1054,7 +1151,7 @@ Example:
 
         if (toCompile = altered(\(dq\&*\&.cc\(dq\&))
         {
-            for (idx = sizeof(toCompile); idx\-\-; )
+            for (idx = length(toCompile); idx\-\-; )
                 compile(element(idx, toCompile));
 
             if (getenv(\(dq\&dryrun\(dq\&)[0] == \(dq\&0\(dq\&)

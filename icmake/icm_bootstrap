@@ -29,19 +29,20 @@ build()
     program=$1
     shift
 
+    NR=1
     for x in $* ; do
         try cd $x
 
-        try ${CC} ${GLB} ${CFLAGS} -c *.c
+        try ${CC} ${CFLAGS} -c *.c
         for file in *.o
         do
-            try mv $x ${NR}$x
+            try mv $file ${NR}$file
         done
         try cd ..
         let NR=${NR}+1
-
-        cd ..
     done
+
+    try ${CC} ${CFLAGS} -c *.c
 
     try ${CC} -o ../tmp/${LIBDIR}/${program} *.o \ */*.o ../tmp/libicrss.a \
                                                                 ${LDFLAGS}
@@ -52,40 +53,42 @@ build()
 
 ./icm_prepare
 
+. tmp/INSTALL.sh
+
 if [ "${CFLAGS}" == "" ] ; then CFLAGS="-Wall -O2"; fi
 if [ "${CC}" == "" ] ; then CC="gcc"; fi
   
 echo Creating tmp/libicrss.a
 
-# try cd rss
-# try ${CC} -c ${CFLAGS} *.c
-# try ar rs ../tmp/libicrss.a *.o
-# rm *.o
-# cd ..
+try cd rss
+try ${CC} -c ${CFLAGS} *.c
+try ar rs ../tmp/libicrss.a *.o
+rm *.o
+cd ..
 
 echo Creating tmp/${BINDIR}/icmake
-try cd make
+try cd icmake
 try ${CC}  ${CFLAGS} -o ../tmp/${BINDIR}/icmake *.c ../tmp/libicrss.a \
                                                                 ${LDFLAGS}
 cd ..
 
 echo Creating tmp/${BINDIR}/icmun
-try cd un
+try cd icmun
 try ${CC} ${CFLAGS} -o ../tmp/${BINDIR}/icmun *.c ../tmp/libicrss.a \
                                                                 ${LDFLAGS}
 cd ..  
 
 echo Creating tmp/${LIBDIR}/icm-pp
-try cd pp
+try cd icm-pp
 try ${CC} ${CFLAGS} -o ../tmp/${LIBDIR}/icm-pp *.c ../tmp/libicrss.a \
                                                                 ${LDFLAGS}
 cd ..
 
 echo Creating tmp/${LIBDIR}/icm-comp
-compile comp icm-comp util symtab parser scanner 
+build icm-comp icm-comp util symtab parser scanner 
 
 echo Creating tmp/${LIBDIR}/icm-exec
-compile exec icm-exec aux var virtual int list string stack opcodefun builtin
+build icm-exec icm-exec aux var virtual int list string stack opcodefun builtin
 
 
 echo Copying icmbuild/icmstart from scripts to tmp
@@ -113,3 +116,6 @@ echo Copying etc files to etc/
 try cp -r etc  tmp/
 
 echo Done.
+
+
+

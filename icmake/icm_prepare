@@ -7,7 +7,8 @@ try()
 }
 
 echo Creating the intermediate destination directory ./tmp
-try rm -rf tmp
+try rm -rf tmp icmake/tmp icmun/tmp/ icm-*/tmp
+
 try mkdir -p tmp
 
 echo    Writing tmp/ROOT
@@ -27,7 +28,17 @@ echo "
 #define YEARS       \"${YEARS}\"
 " > tmp/INSTALL.im
 
-cat tmp/INSTALL.im
+echo "
+BINDIR=\"${BINDIR}\"
+SKELDIR=\"${SKELDIR}\"
+MANDIR=\"${MANDIR}\"
+LIBDIR=\"${LIBDIR}\"
+CONFDIR=\"${CONFDIR}\"
+DOCDIR=\"${DOCDIR}\"
+DOCDOCDIR=\"${DOCDOCDIR}\"
+VERSION=\"${VERSION}\"
+YEARS=\"${YEARS}\"
+" > tmp/INSTALL.sh
 
 echo Creating remaining intermediate destination directories
 try  mkdir -p tmp/${BINDIR}  tmp/${LIBDIR}      tmp/${SKELDIR}  \

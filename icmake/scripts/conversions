@@ -10,18 +10,27 @@ EXTENSION=`grep '^#' $CONFIG | grep "#define[[:space:]]\+EXTENSION" | \
 
 BINDIR=`grep "#define[[:space:]]\+BINDIR" $CONFIG | \
             sed 's,.*BINDIR[[:space:]]\+\"\([^"]\+\)".*,'${ROOT}'\1,'`
+
 SKELDIR=`grep "#define[[:space:]]\+SKELDIR" $CONFIG | \
             sed 's,.*SKELDIR[[:space:]]\+\"\([^"]\+\)".*,'${ROOT}'\1,'`
+
 MANDIR=`grep "#define[[:space:]]\+MANDIR" $CONFIG | \
             sed 's,.*MANDIR[[:space:]]\+\"\([^"]\+\)".*,'${ROOT}'\1,'`
+
 LIBDIR=`grep "#define[[:space:]]\+LIBDIR" $CONFIG | \
             sed 's,.*LIBDIR[[:space:]]\+\"\([^"]\+\)".*,'${ROOT}'\1,'`
+
 CONFDIR=`grep "#define[[:space:]]\+CONFDIR" $CONFIG | \
             sed 's,.*CONFDIR[[:space:]]\+\"\([^"]\+\)".*,'${ROOT}'\1,'`
+
 DOCDIR=`grep "#define[[:space:]]\+DOCDIR" $CONFIG | \
             sed 's,.*DOCDIR[[:space:]]\+\"\([^"]\+\)".*,'${ROOT}'\1,'`
+
 DOCDOCDIR=`grep "#define[[:space:]]\+DOCDOCDIR" $CONFIG | \
             sed 's,.*DOCDOCDIR[[:space:]]\+\"\([^"]\+\)".*,'${ROOT}'\1,'`
 
 # CPPFLAGS=`grep "#define[[:space:]]\+CPPFLAGS" $CONFIG | sed 's,^.[^"]*,,'`
+
 # LDFLAGS=`grep "#define[[:space:]]\+LDFLAGS" $CONFIG | sed 's,^.[^"]*,,'`
+
+

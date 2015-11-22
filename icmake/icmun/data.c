@@ -61,17 +61,18 @@ char
 
         /* 24 */
         "strlwr",
+        "resize",
         "strtok",
         "strupr",
-        "substr",
 
         /* 28 */
+        "substr",
         "system",
         "trim",
         "trimleft",
-        "trimright",
 
         /* 2c */
+        "trimright",
     };
 
 FILE *infile;

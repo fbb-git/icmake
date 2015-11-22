@@ -59,7 +59,7 @@ int main(int argc, char **argv)
     }
 
     if (load_symbols)
-    loadsym();                          /* platform specific #define's */
+        loadsym();                      /* platform specific #define's */
 
     if (dump_symbols)
     {

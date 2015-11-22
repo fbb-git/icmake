@@ -17,7 +17,7 @@ fi
 
 try()
 {
-    echo $*
+    # echo $*
     $* || exit 1
 }
 
@@ -65,6 +65,7 @@ try ${CC} -c ${CFLAGS} *.c
 try ar rs ../tmp/libicrss.a *.o
 rm *.o
 cd ..
+
 
 echo Creating tmp/${BINDIR}/icmake
 try cd icmake
@@ -115,7 +116,7 @@ try cp -r examples doc/icmake.doc doc/icmake.ps \
 echo Copying etc files to etc/
 try cp -r etc  tmp/
 
-echo Done.
+echo Done. All files under ./tmp
 
 
 

@@ -27,7 +27,7 @@ fi
 
 try()
 {
-    echo $*
+    # echo $*
     $* || exit 1
 }
 

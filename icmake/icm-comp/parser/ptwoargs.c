@@ -25,6 +25,10 @@ SemVal *p_twoArgs(ExprType type, SemVal *larg, SemVal *rarg)
             }
         break;
 
+        case f_resize:
+            ok = test_type(larg, e_str) && test_type(rarg, e_int);
+        break;
+
         default:
             /*
                 case f_strtok:

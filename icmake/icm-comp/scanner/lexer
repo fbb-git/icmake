@@ -22,7 +22,10 @@
                         }
 [ \t]                   ;
 \n                      ++yylineno;
-^#.*                    {
+^#[0-9]+\n              {
+                            sc_setLineNr();
+                        }
+^#.*                   {
                             sc_changeFile(yytext + 1);
                         }
 '[^\\]'              |
@@ -187,6 +190,11 @@ putenv                  {
                             yylval.type = f_putenv;
                             return PUTENV;
                         }
+resize                  {
+                            yylval.type = f_resize;
+                            return RESIZE;
+                        }
+                            
 return                  {
                             yylval.type = op_ret;
                             return RETURN;

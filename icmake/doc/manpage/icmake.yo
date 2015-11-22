@@ -752,6 +752,11 @@ provided:
 
     String support:
     itemization(
+    itt(string resize(string str, int newlength))
+        Returns a copy of string tt(str), resized to tt(newlength) characters.
+        If tt(newlength) is negative then an empty string is returned, if
+        tt(newlength) exceeds tt(str's) length then the newly added characters
+        are initialized to blank spaces.
     itt(int strlen(string s))nl()
         Returns the number of characters in tt(s) (not counting the final 0).
     itt(int strfind(string haystack, string needle))nl()

@@ -1,3 +1,6 @@
+8\&.00\&.00
+1992\-2015
+.PP 
 .TH "icmake" "1" "1992\-2015" "icmake\&.8\&.00\&.00\&.tar\&.gz" "A program maintenance utility"
 
 .PP 
@@ -1016,6 +1019,12 @@ Deprecated: use \fIlistlen\fP\&.
 
 .PP 
 String support:
+.IP o 
+\fIstring resize(string str, int newlength)\fP
+Returns a copy of string \fIstr\fP, resized to \fInewlength\fP characters\&.
+If \fInewlength\fP is negative then an empty string is returned, if
+\fInewlength\fP exceeds \fIstr\(cq\&s\fP length then the newly added characters
+are initialized to blank spaces\&.
 .IP o 
 \fIint strlen(string s)\fP
 .br 

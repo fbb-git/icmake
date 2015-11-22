@@ -113,7 +113,7 @@ typedef enum                                /* names of rss-functions */
 
     /* 18 */
     f_getenv,
-    f_getpid,                               /* used by several programs  */
+    f_getpid,
     f_gets,
     f_listlen,
 
@@ -125,23 +125,24 @@ typedef enum                                /* names of rss-functions */
 
     /* 20 */
     f_str_el,
-    f_strfind,                              /* IDEM */
+    f_strfind,
     f_strformat,
-    f_strlen,                               /* only used by the compiler */
+    f_strlen,
 
     /* 24 */
-    f_strlwr,                               /* only used by the compiler */
+    f_strlwr,
+    f_resize,
     f_strtok,
-    f_strupr,                               /* only used by the compiler */
-    f_substr,
+    f_strupr,
 
     /* 28 */
+    f_substr,
     f_system,
     f_trim,
     f_trimleft,
-    f_trimright,
 
     /* 2c */
+    f_trimright,
 
     /* 20 left for new opcodes until f_hlt */
 

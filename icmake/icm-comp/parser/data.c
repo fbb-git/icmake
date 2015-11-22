@@ -65,14 +65,17 @@ char *gp_funstring[] =                          /* only one_arg  */
 
     /* 24 */
     "strlwr",
+    "resize",
     "strtok",
     "strupr",
-    "substr",
 
     /* 28 */
+    "substr",
     "system",
     "trim",
     "trimleft",
+
+    /* 2c */
     "trimright",
 };
 

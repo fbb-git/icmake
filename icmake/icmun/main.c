@@ -3,7 +3,6 @@
 int main (int argc, char **argv)
 {
     register char const *progname = rss_programName(argv[0]);
-    register char *infname;
     static char bimext [] = ".bim";
 
     rss_copyright (progname);
@@ -16,7 +15,11 @@ int main (int argc, char **argv)
         return 2;
     }
 
-    infname = rss_changeExt(argv [1], bimext);
+    register char *infname = 
+                    rss_exists(argv[1]) ? 
+                        argv[1] 
+                    :
+                        rss_changeExt(argv[1], bimext);
 
     if (! (infile = fopen(infname, "r")) )
         rss_error("cannot open %s for reading", infname);

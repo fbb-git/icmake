@@ -2,5 +2,5 @@
 
 void pushback(int ch)
 {
-    ungetc(ch, filestack[filesp].f);
+    ungetc(ch, filestack[filesp].file);
 }

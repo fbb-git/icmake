@@ -4,8 +4,8 @@
     Modify this file to your taste before compiling icmake: new symbols can be
     added by adding a macro block, as the ones defined below, using the name of
     your symbol. If your modification is useful outside of your local computing
-    environment, please e-mail frank@icce.rug.nl or karel@icce.rug.nl, and
-    we'll be glad to add your suggestion into the next release of icmake.
+    environment, please e-mail f.b.brokken@rug.nl so your suggestion can be
+    handled in icmake's  next release.
 
 */
 

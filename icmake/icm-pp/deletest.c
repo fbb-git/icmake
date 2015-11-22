@@ -13,7 +13,7 @@ void delete_std_comment(char *cp)
 
     if (!(eoc = strstr(cp, "*/")))          /* can't find it ? */
         rss_error("%s: %d: unterminated std-comment in #define",
-                filestack[filesp].n, filestack[filesp].l);
+                filestack[filesp].filename, filestack[filesp].lineNr);
     else                                    /* copy the trailer to cp */
     {
         strcpy(cp, eoc + 2);                /* thus killing the std-comment */

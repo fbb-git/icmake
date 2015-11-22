@@ -228,30 +228,38 @@ int isEmpty(string line)
 }
 
     
-list nextCLASSESline()
+int lineRead()
+{
+    g_classLine = fgets("CLASSES", g_classLine);
+    return (int)(listlen(g_classLine) && g_classLine[2] == "OK");
+}
+
+list nextCLASSESline() // return entries of CLASSES as a list
 {
     string ret;
 
-    while (listlen(g_classLine = fgets("CLASSES", g_classLine)))
+            // get the next line from CLASSES:
+    while (lineRead())
     {
-        string line = strtok(g_classLine[0], "\n")[0];     // get the string
+        string line = trim(g_classLine[0]);     // remove blanks
 
-        if (isEmpty(line))
+        if (isEmpty(line))                      // nothing there
         {
-            if (strlen(ret) != 0)
-                break;
+            if (strlen(ret) != 0)               // ret already contains txt
+                break;                          // so we're done
         }
-        else 
+        else                                    // the next line isn't empty
         {
             int last = strlen(line) - 1;
             int backslash = line[last] == "\\";
 
-            if (backslash)
-                line = substr(line, 0, last);
+            if (backslash)                      // its last char is backsl.
+                line = trimright(resize(line, last));    // remove it and
+                                                // trim rhs blanks
 
-            ret += line + " ";
+            ret += line + " ";                  // append line
 
-            if (!backslash)
+            if (! backslash)                    // done unless backslash
                 break;
         }
     }

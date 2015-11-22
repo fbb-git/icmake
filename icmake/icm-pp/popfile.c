@@ -1,11 +1,4 @@
 /*
-\funcref{popfile}{void popfile ()}
-    {}
-    {}
-    {}
-    {pushfile()}
-    {popfile.c}
-    {
         Function {\em popfile()} is called from {\em process()} when the
         currently processed file is at end-of-file. This is indicated
         by the {\em lexer()} return value {\em l\_eof}.
@@ -19,14 +12,13 @@
         signals the next pass of {\em icmake}, the compiler, that an included
         file ends. If the filestack is empty; i.e., when the processed file is
         the main file, no `\#' is written to the output file.
-    }
 */
 
 #include "icm-pp.h"
 
 void popfile()
 {
-    fclose(filestack[filesp].f);
+    fclose(filestack[filesp].file);
     filesp--;
 
     if (! nofileinfo && filesp != -1)

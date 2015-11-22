@@ -18,12 +18,9 @@ typedef enum
 
 typedef struct
 {
-    char
-        *n;
-    FILE
-        *f;
-    int
-        l;
+    char *filename;
+    FILE *file;
+    int lineNr;
 } FILESTACK_;
 
 typedef struct

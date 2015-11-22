@@ -58,7 +58,7 @@ static char *replace_defines(char *txt)
             
         if (++replacement > max_replacements)
             rss_error("%s: %d: too many replacements in #define definition",
-               filestack[filesp].n, filestack[filesp].l);
+               filestack[filesp].filename, filestack[filesp].lineNr);
         
         newContents = 
                 malloc(

@@ -2,13 +2,14 @@
 
 try()
 {
-    echo $*
+    # echo $*
     $* || exit 1
 }
 
 echo Creating the intermediate destination directory ./tmp
+echo and removing any old files
 try rm -rf tmp icmake/tmp icmun/tmp/ icm-*/tmp
-
+try find -name '*.o' -exec rm -f '{}' \;
 try mkdir -p tmp
 
 echo    Writing tmp/ROOT

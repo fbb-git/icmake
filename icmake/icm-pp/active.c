@@ -50,7 +50,7 @@ int pop_active()                /* returns previous output_active value */
 {
     if (!sp--)
         rss_error("%s: %d: too many lone #endif directives",
-                filestack[filesp].n, filestack[filesp].l);
+                filestack[filesp].filename, filestack[filesp].lineNr);
 
     return stack[sp].d_active;
 }

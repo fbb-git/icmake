@@ -2,5 +2,5 @@
 
 int nextchar()
 {
-    return fgetc(filestack[filesp].f);
+    return fgetc(filestack[filesp].file);
 }

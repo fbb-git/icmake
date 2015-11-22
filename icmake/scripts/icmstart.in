@@ -240,7 +240,7 @@ int install_dest(string source, string dest)
     int idx = strlen(dest) - 1;
 
     if (dest[idx] == "/")
-        dest = substr(dest, 0, idx);
+        dest = resize(dest, idx);
 
     if (install(dest))
     {
@@ -339,7 +339,7 @@ void install_version()
 
         str = "date '+%Y'";
         str = `str`[0];
-        install_conf("YEARS", substr(str, 0, strlen(str) - 1));
+        install_conf("YEARS", resize(str, strlen(str) - 1));
     }
 }
 

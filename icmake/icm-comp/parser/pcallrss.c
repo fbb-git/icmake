@@ -60,6 +60,7 @@ void p_callRss(SemVal *e, FunNr funnr, ...)
         case f_c_path:
         case f_str_el:
         case f_element:
+        case f_resize:
             args++;                         /* two arguments */
             type = e_str | e_reg;           /* returning string */
         break;

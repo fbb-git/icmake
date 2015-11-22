@@ -80,6 +80,8 @@ Variable *eb_releaseReg(void);
     /* remaining b_ named functions are builtin functions that can be
         used by icmake scripts 
     */
+
+void b_resize(void);
 void b_empty(void);
 void b_argHead(void);
 void b_argTail(void);

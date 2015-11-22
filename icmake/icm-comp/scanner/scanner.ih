@@ -35,5 +35,6 @@ extern FILE *yyin;
 extern FILE *yyout;
 
 
-void sc_changeFile(char *s);               /* name of source file to open */
-void sc_saveInfo(void);                 /* saves yylineno and yytext */    
+void sc_changeFile(char *s);        /* name of source file to open */
+void sc_saveInfo(void);             /* saves yylineno and yytext */    
+void sc_setLineNr();                /* updates yylineno at #<nr>\n lines */

@@ -73,17 +73,18 @@ void (*gb_pBuiltinFun[])(void) =
 
     /* 24 */
     b_strLower,
+    b_resize,
     b_strtok,
     b_strUpper,
-    b_subString,
 
     /* 28 */
+    b_subString,
     b_system,
     b_trim,
     b_trimLeft,
-    b_trimRight,
 
     /* 2c */
+    b_trimRight,
 
        /* placeholders for functions that can be   */
        /* added later without having to change the */

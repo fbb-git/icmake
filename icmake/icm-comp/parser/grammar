@@ -51,6 +51,7 @@
     STRINGTYPE
     STRLEN
     STRLWR
+    RESIZE
     STRUPR
     STRFIND
     STRFORMAT
@@ -771,6 +772,8 @@ _two_arg_funs:
     FIELDS                              /* string, string */
 |
     STRFIND                              /* string, string */
+|
+    RESIZE                           /* string, int */
 ;
 
 _optint_string:

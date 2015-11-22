@@ -78,17 +78,17 @@ void show (string filemask)
     	i;
     	
     printf ("\n", filemask, ": "); 
-    if (! (files = makelist (IS_ALL, filemask)) )
+    if (! (files = makelist (O_ALL, filemask)) )
     {
     	printf ("not found\n");
     	return;
     }
     printf ("\n");
     
-    for (i = 0; i < sizeof (files); i++)
+    for (i = 0; i < listlen (files); i++)
     {
     	file = element (i, files);
-    	if (! (statbuf = stat (NOT_CHECKED, file)))
+    	if (! (statbuf = stat (P_NOCHECK, file)))
     	    printf ("    can't stat ", file, "\n");
     	else
     	    showatt (file, statbuf);
@@ -103,7 +103,7 @@ void main (int argc, list argv)
     if (argc == 1)
     	show ("*");
     else
-    	for (i = 1; i < sizeof (argv); i++)
+    	for (i = 1; i < listlen (argv); i++)
     	    show (element (i, argv));
     	    
     exit (0);

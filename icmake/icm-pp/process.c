@@ -26,28 +26,37 @@
 
 #include "icm-pp.h"
 
-static size_t nlCount = 0;
+static int nblanks;
+static int ntabs;
+static int nlCount;
 
-static void newLines()
+static size_t putch(size_t count, int ch)
 {
-/*
+    for (; count--; )
+        fputc(ch, outfile);
+    return 0;
+}
+
+static void whiteSpace()
+{
     if (nlCount != 0)
     {
-        fputc('\n', outfile);
-
         if (nlCount >= 5)
-            fprintf(outfile, "\n#%u\n", filestack[filesp].lineNr);
-        else
         {
-            while (nlCount--)
-                fputc('\n', outfile);
+            fprintf(outfile, "\n#%u\n", filestack[filesp].lineNr);
+            nlCount = 0;
         }
-    
-        nlCount = 0;
+        else
+            nlCount = putch(nlCount, '\n');
+        nblanks = 0;
+        ntabs = 0;
     }
-*/
+    else
+    {
+        nblanks = putch(nblanks, ' ');
+        ntabs = putch(ntabs, '\t');
+    }
 }    
-
 
 void process(LEXER_ token)
 {
@@ -64,26 +73,28 @@ void process(LEXER_ token)
         break;
 
         case l_space:
-            fputc(lexbuf.data[0], outfile);
-/*    
         {
-            int ch = lexbuf.data[0];
-
-            if (ch == '\n')
-                ++nlCount;
-            else
+            switch (lexbuf.data[0])
             {
-                newLines();
-                fputc(ch, outfile);
+                case ' ':
+                    ++nblanks;
+                break;
+                case '\t':
+                    ++ntabs;
+                break;
+                case '\n':
+                    nblanks = 0;
+                    ntabs = 0;
+                    ++nlCount;
+                break;
             }
         }
-*/
         break;
 
         case l_string:
             if (output_active)
             {
-                newLines();
+                whiteSpace();
                 fputc('\"', outfile);
                 fputs(lexbuf.data, outfile);
                 fputc('\"', outfile);
@@ -93,7 +104,7 @@ void process(LEXER_ token)
         case l_single:
             if (output_active)
             {
-                newLines();
+                whiteSpace();
                 fputc(lexbuf.data[0], outfile);
             }
         break;
@@ -101,7 +112,7 @@ void process(LEXER_ token)
         case l_ident:
             if (output_active)
             {
-                newLines();
+                whiteSpace();
                 if ( (i = finddef(lexbuf.data)) != -1 )
                     fputs(defined[i].redef, outfile);
                 else
@@ -112,11 +123,16 @@ void process(LEXER_ token)
         case l_other:
             if (output_active)
             {
-                newLines();
+                whiteSpace();
                 fputs(lexbuf.data, outfile);
             }
         break;
     }
 }
+
+
+
+
+
 
 

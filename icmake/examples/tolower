@@ -42,7 +42,7 @@ void process (string file)
     	
     lower = strlwr (file);
     if (lower != file)
-    	if (exec (NOT_CHECKED, "mv", file, lower))
+    	if (exec (P_NOCHECK, "mv", file, lower))
     	    printf ("tolower: can't rename ", file, " to ", lower, "\n");
 }
 
@@ -67,7 +67,7 @@ void main (int argc, list argv)
 	exit (1);
     }
     
-    for (i = 1; i < sizeof (argv); i++)
+    for (i = 1; i < listlen (argv); i++)
     	process (element (i, argv));
     exit (0);
 }

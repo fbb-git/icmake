@@ -30,6 +30,8 @@
     Other directives following the `\#' character lead to an error.
 */
 
+#define msg
+
 #include "icm-pp.h"
 
 static int isdefd(STRING_ *str)

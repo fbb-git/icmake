@@ -12,7 +12,6 @@ icm_install     installation script
 icm_prepare     script installing path-definitions: also called by 
                 icm_bootstrap
 
-    def.OBS            defines programs used when constructing icmake
 doc/            documentation and man-pages (including Yodl manpage sources)
 icm-comp/       sources of the icm-comp icmake compiler    
 icm-exec/       sources of the icm-exec interpreter
@@ -27,5 +26,8 @@ examples/       various examples of icmake scripts
 
 usr/            default skeletons in share/icmake
 etc/            icmake/ contains default icmstart.rc, VERSION, AUTHOR, YEARS
+
+iuo/            internal use only: files used by my when working towards the
+                next release 
 
 where-is-what   this file

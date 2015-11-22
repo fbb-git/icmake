@@ -152,7 +152,8 @@ The following preprocessor directives are available:
     it() comment:nl()
        standard bf(C) comment (all between tt(/*) and tt(*/)) as well as
         comment-to-end-of-line (all line contents following tt(//)) are
-        ignored.
+        ignored. 
+        
     it() Shell startup: The first line of the icm()-script may start with
         tt(#!path), where tt(path) defines the absolute location of the icm()
         program. By making the script executable, it can be called without
@@ -257,16 +258,16 @@ manpagesection(PREDEFINED SYMBOLS)
         rowline()
         row(cell(symbol)cell(value)cell(intended for))
         rowline()
-        row(cell(IS_ALL)cell(8)cell(makelist))
-        row(cell(IS_DIR)cell(2)cell(makelist))
-        row(cell(IS_FILE)cell(1)cell(makelist))
-        row(cell(IS_SUBDIR)cell(4)cell(makelist))
+        row(cell(O_ALL)cell(8)cell(makelist))
+        row(cell(O_DIR)cell(2)cell(makelist))
+        row(cell(O_FILE)cell(1)cell(makelist))
+        row(cell(O_SUBDIR)cell(4)cell(makelist))
         rowline()
         row(cell(OFF)cell(0)cell(echo))
         row(cell(ON)cell(1)cell(echo))
         rowline()
-        row(cell(REQUIRE_ZERO)cell(0)cell(system calls))
-        row(cell(NOT_CHECKED)cell(1)cell(system calls))
+        row(cell(P_CHECK)cell(0)cell(system calls))
+        row(cell(P_NOCHECK)cell(1)cell(system calls))
         rowline()
         row(cell(S_IEXEC)cell(32)cell(stat))
         row(cell(S_IFCHR)cell(1)cell(stat))
@@ -282,7 +283,6 @@ manpagesection(PREDEFINED SYMBOLS)
         rowline()
         row(cell(symbol)cell(1 when defined on the platform, otherwise 0))
         rowline()
-        row(cell(MSDOS) cell(MS-DOS platform (with MSC 7.00 compiler)))
         row(cell(unix)  cell(Unix, usually with GNU's gcc compiler))
         row(cell(linux) cell(x86 running Linux (usually with gcc)))
         row(cell(M_SYSV, M_UNIX)
@@ -894,6 +894,7 @@ manpageseealso()
     bf(icmstart)(1), bf(icmstart.rc)(7), bf(make)(1)
 
 manpagebugs()
-    None reported
+    Standard comment starting  on lines containing preprocessor directives
+        may not extend over multiple lines.
 
 includefile(trailer.inc)

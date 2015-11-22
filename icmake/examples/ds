@@ -126,7 +126,7 @@ void process(int argc, list argv)
                                             " 2>/dev/null"; 
 
     if (!debug)
-        system(NOT_CHECKED, cmd);
+        system(P_NOCHECK, cmd);
     else
         printf(cmd, "\n");
 }
@@ -135,7 +135,7 @@ int main(int argc, list argv)
 {
     preamble(argv);                         // preamble: determine progname etc.
     argv = options(argc, argv);             // process options
-    argc = sizeof(argv);
+    argc = listlen(argv);
 
     if (argc == 1)                          // no arguments ?
         usage();                            // give help

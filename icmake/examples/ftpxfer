@@ -52,19 +52,8 @@ string
     dir,					// foreign directory
     file,					// local file
     direction;					// "get" or "put" file?
-    
-string getenv (string varname)    		// purpose: returns setting
-{						// of environment variable
-    int						// 'varname'
-    	i;
-    	
-    for (i = 0; i < sizeof (envp); i += 2)	// loop thru envp...
-    	if (element (i, envp) == varname)	// found varname?
-    	    return (element (i + 1, envp));	// yes -- return setting
-    	    
-    return ("");				// no -- return empty string
-}
-
+  
+  
 void inittmp ()					// purpose: initialize temp
 {						// file
 
@@ -78,10 +67,7 @@ void inittmp ()					// purpose: initialize temp
 void process ()					// purpose: do the actual 
 {						// ftp transfer
 
-    string
-    	user,					// user name on foreign host
-    	password,				// password
-    	foreignfile;				// full name of foreign file
+    string foreignfile;				// full name of foreign file
     	
     inittmp ();					// make new temp file
 
@@ -93,12 +79,19 @@ void process ()					// purpose: do the actual
     	foreignfile = change_path (file, 	// directory as dest dir
     	    chdir ("."));
     	    
-    if (! (user = getenv ("FTPUSER")) )		// get username from envp
+    string user;
+    string password;
+
+    if (list xuser = getenv ("FTPUSER") )		// get username from envp
+        user = xuser[1];
+    else
     {						// or prompt for it
     	printf ("User name: ");
     	user = gets ();
     }
-    if (! (password = getenv ("FTPASS")) )	// get passwd from envp
+    if (list xpassword = getenv ("FTPASS") )	// get passwd from envp
+        password = xpassword[1];
+    else
     {						// or prompt for it
     	printf ("Password : ");
     	password = gets ();
@@ -111,9 +104,9 @@ void process ()					// purpose: do the actual
     	direction, " ", file, " ", foreignfile, "\n",
     	"quit\n");
     
-    exec (NOT_CHECKED, "ftp", VERBATIM, 		// do the ftp transfer
+    exec (P_NOCHECK, "ftp", VERBATIM, 		// do the ftp transfer
         "-n -i", "< ", tmpfile);
-    exec (NOT_CHECKED, "rm", tmpfile);		// remove temp file
+    exec (P_NOCHECK, "rm", tmpfile);		// remove temp file
 }    
     
 void usage ()					// purpose: print usage info

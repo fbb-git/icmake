@@ -1,3 +1,5 @@
+#define msg
+
 #include "icm-pp.h"
 
 void skipblanks()

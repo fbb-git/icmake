@@ -46,5 +46,5 @@ char *name;
     filestack[filesp].lineNr = 1;
 
     if (! nofileinfo)
-        fprintf(outfile, "#%s\n", name);
+        fprintf(outfile, "#>%s\n", name);
 }

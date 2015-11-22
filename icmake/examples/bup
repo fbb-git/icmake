@@ -39,7 +39,7 @@ void usage ()
     	    "       volume-number: number of volume to show/run\n"
     	    "\n"
     	    "Volumes may be:\n");
-    for (i = 2; i < sizeof (volumes); i += 2)
+    for (i = 2; i < listlen (volumes); i += 2)
     	printf (i / 2, ":    ", element (i + 1, volumes), " (", 
     		element (i, volumes), ")\n");
     printf ("\n"
@@ -64,7 +64,7 @@ void main (int argc, list argv)		// start of program
     	
     volstring = element (1, argv);
     volnum = (int) volstring * 2;
-    if (volnum < 2 || volnum >= sizeof (volumes))
+    if (volnum < 2 || volnum >= listlen (volumes))
     	usage ();
     	
     excludefile = ETCDIR + "/" + "bup." + volstring + ".exclude";

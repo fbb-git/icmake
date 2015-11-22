@@ -31,6 +31,8 @@ void no_comment()
         
                 if (*(cp + 1) == '*')       /* we have std comment    */
                     delete_std_comment(cp); /* delete the std comment */
+                else
+                    ++cp;                   /* or cont. at next char    */
             break;
 
             case '"':                       /* keep strings in the #define */

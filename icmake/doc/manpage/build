@@ -26,7 +26,7 @@ void main(int argc, list argv)
 
     rmrelease();
 
-    while (sizeof(line = fgets(versionFile, line)))
+    while (listlen(line = fgets(versionFile, line)))
     {
         cut = strtok(line[0], "= \t\n");
         key = cut[0];
@@ -38,7 +38,7 @@ void main(int argc, list argv)
             fprintf("release.yo", "SUBST(_CurYrs_)(", value, ")\n");
     }
 
-    yodl("../icmake.1", "icmake.yo");
+    yodl("../icmake.1", "-r 20000 icmake.yo");
     yodl("../icmstart.1", "icmstart.yo");
     yodl("../icmbuild.1", "icmbuild.yo");
     yodl("../icmstart.rc.7", "icmstart.rc.yo");

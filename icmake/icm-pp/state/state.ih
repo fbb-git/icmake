@@ -2,7 +2,15 @@
 
 #include "../../rss/rss.h"
 
-extern int *st_stack;
+#include "../filestack/filestack.h"
+
+typedef struct
+{
+    int active;
+    int elseCount;
+} State;
+
+extern State *st_stack;
 extern size_t st_size;
 extern size_t st_capacity;
 

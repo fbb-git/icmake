@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 
 #include "../tmp/INSTALL.im"
 
@@ -34,7 +35,8 @@ typedef enum
     f_doPreProcess  =   (1 <<  9),      /* action flags         */
     f_doCompile     =   (1 << 10),
     f_doExec        =   (1 << 11),
-    f_force         =   (1 << 12)
+    f_force         =   (1 << 12),
+    f_showFlags     =   (1 << 13)
 
 } FLAGS_;
 
@@ -42,6 +44,7 @@ extern char icm_comp[];
 extern char icm_exec[];
 extern char icm_pp[];
 
+extern char *tmpDir;
 extern char *imFile;
 extern char *pimFile;
 extern char *bimFile;
@@ -58,6 +61,7 @@ void optExecute();
 void optIm(char **argv);
 void optPreProcess(char **argv);
 void optTmpBim(char **argv);
+void optTmpDir(void);
 
 void options(int argc, char **argv);
 
@@ -82,6 +86,9 @@ void    testCompile(void);
 
 int     spawnlp(int mode, char const *prog, char const *av0, ...);
 void    inspectFlags(char const *program, char **argv);
+
+void    setTmpDir(void);
+void    showFlags(char **argv);
 
 // int  optChars(char const *program, char const *options, char **argv);
 //void stdFiles(char **argv);                 /* also calls testCompile */

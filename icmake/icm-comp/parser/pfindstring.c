@@ -25,5 +25,5 @@ size_t p_findString(char *s)
     gp_stringsize += strlen(s) + 1;
 
     gp_nStrings++;                            /* next free */
-    return (idx);                         /* return string idx */
+    return idx;                               /* return string idx */
 }

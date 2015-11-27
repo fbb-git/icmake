@@ -4,7 +4,7 @@
 
 void p_else()
 {
-    state_negate();
+    state_negate(scanner_lineNr() - 1);
 
     msg("active: %u", state_active());
 }

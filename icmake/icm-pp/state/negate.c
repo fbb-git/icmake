@@ -1,7 +1,15 @@
 #include "state.ih"
 
-void state_negate()
+void state_negate(size_t linenr)
 {
-    if (st_stack[st_size - 2] != 0)         /* previous state is active */
-        st_stack[st_size - 1] = !st_stack[st_size - 1]; /* then negate */
+    State *sp = st_stack + st_size - 1;
+
+    if (sp->elseCount++)
+        rss_error(
+            "[%s, line %u] multiple #else directives of #if(n)def "
+                                                                "encountered", 
+            filestack_tos()->filename, linenr);
+        
+    if ((sp - 1)->active)                   /* previous state is active */
+        sp->active = !sp->active;           /* then negate */
 }

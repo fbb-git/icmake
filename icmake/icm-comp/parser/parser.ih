@@ -236,3 +236,6 @@ void    p_checkArgumentTypes(size_t nParams, size_t funIdx, SemVal *a);
 void    p_hiddenFunctions(void);
 int     p_nextCall(void);
 void    p_listlen(void);
+int     p_trySIconvert(SemVal *lval, SemVal *rval); /* convert single char 
+                                                const. string (rval) to int if
+                                                lval is an int */

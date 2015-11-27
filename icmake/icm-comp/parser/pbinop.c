@@ -1,3 +1,4 @@
+#define msg
 #include "parser.ih"
 
 void p_binOp(SemVal *lval, SemVal *rval, Opcode opcode)

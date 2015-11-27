@@ -1,9 +1,12 @@
-#define msg
+#define msgx
 
 #include "icmake.ih"
 
 void inspectFlags(char const *program, char **argv)
 {
+    if (flags & f_showFlags)
+        showFlags(argv);
+
     if (flags & f_about)                    /* -a specified: about info */
         about(program);
 

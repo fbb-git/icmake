@@ -1,7 +1,4 @@
-
-
-/* #define msg
-*/
+#define msgx
 
 #include "scanner.ih"
 
@@ -12,7 +9,4 @@ void scanner(char const *infile, void (*ptr)(void))
 
     sc_ptr = ptr;                   /* function called at EOF, when popping 
                                         a previous file */
-
-    msg("Scanner readiing %s", infile);
-
 }

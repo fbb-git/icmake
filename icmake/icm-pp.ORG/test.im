@@ -1,0 +1,30 @@
+#define A
+#undef A
+#define A
+#define B
+#define C
+#ifdef A
+#define HOM identifier \
+covering multiple lines
+
+    #ifdef B
+        #define MACRO "This is \
+a macro ${HOM}"
+    #else
+        #define MACRO "unused"
+    #endif
+#else
+    #ifdef C
+        #define MACRO "At C"
+    #else
+        #define MACRO "at not C"
+    #endif
+#endif
+
+    #define BLAB main()
+
+BLAB
+{
+    printf ("blabla\n");
+    printf (MACRO);
+}    

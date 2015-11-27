@@ -50,7 +50,8 @@ char     *rss_strUnescape(char *);
 
 char     *rss_strdup(char const *str);      /* duplicates 'str ? str : ""'  */
 
-char     *rss_strcat (char *, char const *);
+char     *rss_strcat(char *s1, char const *s2); /* resizes and returns s1 */
+char     *rss_strjoin(char const *s1, char const *s2); /* new s1|s2 */
 
 char     *rss_trimLeft(char const *begin);  /* returns newly allocated ntbs */
 char     *rss_trimRight(char const *begin);

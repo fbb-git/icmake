@@ -13,6 +13,8 @@ SemVal *p_assignment(SemVal *lval, SemVal *rval, char *opstr)
         return lval;
     }
 
+    p_trySIconvert(lval, rval);
+
     p_expr2stack(rval);                             /* convert rval to code */
 
                                             /* same types */

@@ -1,4 +1,4 @@
-#define msg
+#define msgx
 
 #include "icmake.ih"
 

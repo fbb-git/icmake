@@ -4,8 +4,8 @@ icmake (8.00.00)
     redefinition of the builtin function codes. Because of this existing .bim
     files must be recompiled from their .im source files
 
-  * Added get_dext, length, strformat, trim, trimleft, trimright (see
-    icmake(1) for details).
+  * Added built-in functions get_dext, length, resize, strformat, trim,
+    trimleft, trimright (see icmake(1) for details.
 
   * The functions fprintf and printf now support a format string as their
     first argument, in which %-notations refer to subsequent argument numbers
@@ -28,7 +28,9 @@ icmake (8.00.00)
     initialized such variables represent a `false' condition.
 
   * Character constants are supported and are converted to single-character
-    string constants.
+    string constants. Conversely, single-character string constants can be
+    used in int-expressions. In that case their values are equal to the values
+    of their (first) characters.
 
   * Icmake scripts main() functions now by default return 0.
 
@@ -43,27 +45,33 @@ icmake (8.00.00)
 
   * The function glob() is now assumed available.
 
-  * The internal code organization was significantly changed. Code belonging
-    together is now collected in its own subdirectory, where the subdir-name
-    is used as first part of the name of `public' functions (while their
-    source names do not start with the subdir name (e.g. symtab_push is found
-    in symtab/push.c), while their own support functions start with an
+  * The internal code organization in the rss, icm-pp, icm-comp, and icm-exec
+    directories was significantly changed. Code belonging together is now
+    collected in their own subdirectory, where the subdir-name is used as
+    first part of the name of `public' functions (but their source names do
+    not start with the subdir name. E.g. symtab_push is found in
+    symtab/push.c). Support functions within a directory start with an
     abbreviated subdir-name, both in their names and in their source filenames
     (e.g., st_addVar is found in symtab/staddvar.c). Also, within
     subdirectories 'dirname.ih' files contain all declarations that are
     required only by the sources in that directory, while 'dirname.h' files
     contain all declarations required by other parts of icmake programs that
     use the subdirectory's `public' functions. Because of this reorganization
-    several old files (like  rss/ic*h files) became obsolete and were
-    removed. 
+    several old files (like rss/ic*h files) became obsolete and were removed.
 
  *  The -q and -b options are not supported anymore.
 
  *  The -e option replaces the previously defined -b option.
 
- *  The -v option writes icmake's version to the standard output stream
+ *  The -v option shows icmake's version to the standard output stream
     (terminating icmake).
 
+ *  The -F flag shows which files, and flags are used by icmake, and which 
+    actions are going to be performed.
+
+ *  The -T flag can be used to specify a non-default destination directory for
+    temporary files (by default /tmp or $HOME is used).
+    actions are going to be performed.
 
 
 icmake (7.23.02)

@@ -538,7 +538,6 @@ static int yy_more_len = 0;
 char *yytext;
 #line 1 "lexer"
 #line 2 "lexer"
-
 #define msgx
 
 #include "scanner.ih"
@@ -548,7 +547,7 @@ char *yytext;
 #include "scpopfile.f"
 
 
-#line 552 "lexer.c"
+#line 551 "lexer.c"
 
 #define INITIAL 0
 #define string 1
@@ -768,10 +767,10 @@ YY_DECL
 		}
 
 	{
-#line 19 "lexer"
+#line 18 "lexer"
 
 
-#line 775 "lexer.c"
+#line 774 "lexer.c"
 
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
@@ -847,37 +846,37 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 21 "lexer"
+#line 20 "lexer"
 /* ignore eoln comment  */
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 22 "lexer"
+#line 21 "lexer"
 /* ignore #! lines      */
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
-#line 25 "lexer"
+#line 24 "lexer"
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 25 "lexer"
+#line 24 "lexer"
 return ' ';
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 27 "lexer"
+#line 26 "lexer"
 BEGIN comment; 
 	YY_BREAK
 case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
-#line 29 "lexer"
+#line 28 "lexer"
 /* ignore chars inside comment */
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 31 "lexer"
+#line 30 "lexer"
 {
                             BEGIN INITIAL;
                             return ' ';
@@ -885,7 +884,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 36 "lexer"
+#line 35 "lexer"
 {   
                             yymore();
                             BEGIN string;
@@ -893,7 +892,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 40 "lexer"
+#line 39 "lexer"
 {
                             BEGIN INITIAL;
                             return STRING;
@@ -901,71 +900,71 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 44 "lexer"
+#line 43 "lexer"
 yymore();
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 46 "lexer"
+#line 45 "lexer"
 return DEFINE;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 47 "lexer"
+#line 46 "lexer"
 return ELSE;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 48 "lexer"
+#line 47 "lexer"
 return ENDIF;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 49 "lexer"
+#line 48 "lexer"
 return IFDEF;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 50 "lexer"
+#line 49 "lexer"
 return IFNDEF;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 51 "lexer"
+#line 50 "lexer"
 return INCLUDE;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 52 "lexer"
+#line 51 "lexer"
 return UNDEF;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 54 "lexer"
+#line 53 "lexer"
 return IDENT;
 	YY_BREAK
 case 19:
-#line 57 "lexer"
+#line 56 "lexer"
 case 20:
-#line 58 "lexer"
+#line 57 "lexer"
 case 21:
-#line 59 "lexer"
+#line 58 "lexer"
 case 22:
 YY_RULE_SETUP
-#line 59 "lexer"
+#line 58 "lexer"
 return WORD;
 	YY_BREAK
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 61 "lexer"
+#line 60 "lexer"
 return '\n';
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(string):
 case YY_STATE_EOF(comment):
 case YY_STATE_EOF(pointed):
-#line 63 "lexer"
+#line 62 "lexer"
 {
                             if (!sc_popFile())
                                 yyterminate();
@@ -973,10 +972,10 @@ case YY_STATE_EOF(pointed):
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 77 "lexer"
+#line 76 "lexer"
 ECHO;
 	YY_BREAK
-#line 980 "lexer.c"
+#line 979 "lexer.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1983,4 +1982,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 76 "lexer"
+#line 75 "lexer"

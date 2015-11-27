@@ -16,7 +16,7 @@ void usage(char const *argv0)
         "           -define SYM      : defines SYM having value \"1\"\n"
         "           -nostdsymbols    : don't load predefined symbols "
                             "(UNIX etc.)\n",
-        "           -dumpsymbols     : show loaded symbols\n"
+        "           -dumpsymbols     : show predefined symbols\n"
         "       inputfile   - icmake file\n"
         "       outputfile  - result of preprocessing\n"
         "\n");

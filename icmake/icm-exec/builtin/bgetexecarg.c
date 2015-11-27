@@ -17,24 +17,23 @@ char *eb_getExecArg (size_t n, int *flag)
         *start,
         *ret;
 
-    arg = eb_getArg (n, flag);
+    arg = eb_getArg(n, flag);
 
-    if (strlen (gb_argHead))
+    if (strlen(gb_argHead))
     {
-        start = rss_strdup(gb_argHead);
-        start = rss_strcat(start, arg);
+        start = rss_strjoin(gb_argHead, arg);
         free(arg);
     }
     else
         start = arg;
 
-    if (strlen (gb_argTail))
+    if (strlen(gb_argTail))
     {
-        ret = rss_strcat (start, gb_argTail);
+        ret = rss_strjoin(start, gb_argTail);
         free(start);
     }
     else
         ret = start;
 
-    return (ret);
+    return ret;
 }

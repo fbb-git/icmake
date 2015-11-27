@@ -2,12 +2,12 @@
     Function {\em rss_strcat()} reallocates the string {\em s1} and then
     concatenates {\em s2} to it. Therefore, the first argument of the
     function must point to allocated memory. The second argument may be any
-    string, and can possibly be freed after the call.
+    string, and can be freed after the call. 
 */
 
 #include "rss.ih"
 
-char *rss_strcat (char *s1, char const *s2)
+char *rss_strcat(char *s1, char const *s2)
 {
     if (!s1 || !*s1)
         return rss_strdup(s2);

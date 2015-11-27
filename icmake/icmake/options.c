@@ -15,9 +15,11 @@ void options(int argc, char **argv)
     
     execArgIdx = dashesIndex(argv, argv + argc);
 
+    setTmpDir();
+    
     while (1)
     {
-        int c = getopt(argc, argv, "ac:e:fhi:t:p:qv");
+        int c = getopt(argc, argv, "ac:e:fFhi:t:T:p:qv");
 
         switch (c)
         {
@@ -40,8 +42,16 @@ void options(int argc, char **argv)
                 flags |= f_force;
             break;
 
+            case 'F':
+                flags |= f_showFlags;
+            break;
+
             case 'i':
                 optIm(argv);
+            break;
+
+            case 'T':
+                optTmpDir();
             break;
 
             case 't':

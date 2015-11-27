@@ -2,6 +2,8 @@
 
 int sc_popFile()
 {
+    state_eof();
+
     yypop_buffer_state();
     yylineno = filestack_tos()->popLineNr;
     filestack_pop();

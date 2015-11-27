@@ -2,5 +2,5 @@
 
 int state_active()
 {
-    return st_stack[st_size - 1];
+    return st_stack[st_size - 1].active;
 }

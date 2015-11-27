@@ -22,7 +22,7 @@ char *l_updateDefinition(char *def, char **begin, char *end, char const *repl)
 {
                                             /* append what's beyond ${...} to 
                                                definition of ${...}         */
-    char *new = rss_strcat(rss_strdup(repl), end + 1);
+    char *new = rss_strjoin(repl, end + 1);
 
 
     **begin = 0;                        /* end curr. def. at ${...}     */

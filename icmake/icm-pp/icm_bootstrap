@@ -1,0 +1,17 @@
+#!/bin/bash
+
+. ../bootstrap/functions
+. ../bootstrap/flags
+
+echo Creating tmp/${LIBDIR}/icm-pp
+build icm-pp filestack state scanner out linear parser
+
+
+
+
+
+
+
+
+
+

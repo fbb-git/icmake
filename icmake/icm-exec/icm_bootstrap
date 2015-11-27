@@ -1,0 +1,14 @@
+#!/bin/bash
+
+. ../bootstrap/functions
+. ../bootstrap/flags
+
+echo Creating tmp/${LIBDIR}/icm-exec
+build icm-exec aux var virtual int list string stack builtin opcodefun 
+
+
+
+
+
+
+

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+. ../bootstrap/functions
+. ../bootstrap/flags
+
+echo Creating tmp/${BINDIR}/icmun
+
+echo -n .
+try ${CC}  ${CFLAGS} -o ../tmp/${BINDIR}/icmun *.c ../tmp/libicrss.a \
+                                                                ${LDFLAGS}
+echo .
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+# sourced by the various bootstrap functions
+
+if [ ! -e ../tmp/INSTALL.sh ] ; then
+    echo ../tmp/INSTALL.sh does not exist. Try running the icm_prepare script
+    exit 1
+fi
+
+. ../tmp/INSTALL.sh
+
+if [ "${CFLAGS}" == "" ] ; then 
+    CFLAGS="-Wall -O2"
+fi
+
+if [ "${CC}" == "" ] ; then 
+    CC="gcc"
+fi

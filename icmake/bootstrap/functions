@@ -1,0 +1,40 @@
+# sourced by the various icm_bootstrap shell scripts
+
+try()
+{
+    # echo $*
+    $* || exit 1
+}
+
+build()
+{
+    program=$1
+    shift
+
+    rm -f *.o */*.o
+
+    NR=1
+    for x in $* ; do
+        try cd $x
+
+        echo -n .
+
+        try ${CC} ${CFLAGS} -c *.c
+        for file in *.o
+        do
+            try mv $file ${NR}$file
+        done
+        try cd ..
+        let NR=${NR}+1
+    done
+
+    echo -n .
+
+    try ${CC} ${CFLAGS} -c *.c
+
+    try ${CC} -o ../tmp/${LIBDIR}/${program} *.o \ */*.o ../tmp/libicrss.a \
+                                                                ${LDFLAGS}
+    rm *.o */*.o
+    echo .
+}
+

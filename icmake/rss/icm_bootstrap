@@ -1,0 +1,24 @@
+#!/bin/bash
+
+. ../bootstrap/functions
+. ../bootstrap/flags
+
+echo Creating tmp/libicrss.a
+
+echo -n .
+try ${CC} -c ${CFLAGS} *.c
+echo -n .
+try ar rs ../tmp/libicrss.a *.o
+echo -n .
+rm *.o
+echo .
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+. ../bootstrap/functions
+. ../bootstrap/flags
+
+echo Creating tmp/${BINDIR}/icmake
+
+echo -n .
+try ${CC}  ${CFLAGS} -o ../tmp/${BINDIR}/icmake *.c ../tmp/libicrss.a \
+                                                                ${LDFLAGS}
+echo .
+
+
+
+
+
+
+
+

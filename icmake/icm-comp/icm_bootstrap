@@ -1,0 +1,17 @@
+#!/bin/bash
+
+. ../bootstrap/functions
+. ../bootstrap/flags
+
+echo Creating tmp/${LIBDIR}/icm-comp
+build icm-comp util symtab scanner parser 
+
+
+
+
+
+
+
+
+
+

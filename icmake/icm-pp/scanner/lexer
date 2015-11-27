@@ -1,0 +1,76 @@
+%{
+
+#define msgx
+
+#include "scanner.ih"
+#define YY_NO_INPUT
+
+#include "pushfile.f"
+#include "scpopfile.f"
+
+%}
+
+%option 8bit  yylineno
+
+%x string comment pointed
+
+ident       [[:alpha:]_][[:alnum:]_]*   
+
+%%
+
+"//".*                      /* ignore eoln comment  */
+^[ \t]*"#"[ \t]*"!".*       /* ignore #! lines      */
+
+"\\"\n  |
+[ \t]+                  return ' ';
+
+"/*"                    BEGIN comment; 
+
+<comment>.|\n           /* ignore chars inside comment */
+
+<comment>"*/"           {
+                            BEGIN INITIAL;
+                            return ' ';
+                        }
+
+"\""                    {   
+                            yymore();
+                            BEGIN string;
+                        }
+<string>\"              {
+                            BEGIN INITIAL;
+                            return STRING;
+                        }
+<string>"\\".|.         yymore();
+
+#define                 return DEFINE;
+#else                   return ELSE;
+#endif                  return ENDIF;
+#ifdef                  return IFDEF;
+#ifndef                 return IFNDEF;
+#include                return INCLUDE;
+#undef                  return UNDEF;
+
+{ident}                 return IDENT;
+
+[[:digit:]]+    |
+0x[[:xdigit:]]+ |
+"\\".           |
+.                       return WORD;
+
+\n                      return '\n';
+
+<<EOF>>                 {
+                            if (!sc_popFile())
+                                yyterminate();
+                        }
+
+
+
+
+
+
+
+
+
+

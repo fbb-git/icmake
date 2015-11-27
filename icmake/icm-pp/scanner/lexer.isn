@@ -1,0 +1,53 @@
+%{
+
+#include "scanner.ih"
+#define YY_NO_INPUT
+
+%}
+
+%x string comment pointed
+
+%%
+
+"//".*                              /* ignore eoln comment */
+
+"/*"                                BEGIN comment;
+
+"\\"\n                              return '\n';
+
+<comment>"*/"                       {
+                                        BEGIN INITIAL;
+                                        return '\n';
+                                    }
+
+<comment>.|\n                       /* ignore chars inside comment */
+
+<[^>]+>                             return POINTED;
+
+"\""                                BEGIN string;
+
+<string>'"'                         {
+                                        BEGIN INITIAL;
+                                        return STRING;
+                                    }
+
+<string>"\\".  |
+<string>.                           yymore();
+
+
+[ \t]+                              return ' ';
+
+[[:alpha:]_][[:alnum:]_]*           return IDENT;
+
+^[ \t]*#define[ \t]+    			return DEFINE;
+^[ \t]*#undef[ \t]+     			return UNDEF;
+^[ \t]*#ifndef[ \t]+    			return IFNDEF;
+^[ \t]*#else[ \t]+      			return IFNDEF;
+^[ \t]*#endif[ \t]+     			return ENDIF;
+
+([[:isprint:]{-}[[:isspace:]])+     return WORD;
+
+<<EOF>>                             return sc_popfile();
+
+
+

@@ -1,0 +1,11 @@
+#include <stdlib.h>
+#include <string.h>
+
+#include "../rss/rss.h"
+
+#include "linear/linear.h"
+#include "parser/parser.h"
+
+void options(int argc, char **argv);
+void usage(char const *progname);
+void loadSymbols();

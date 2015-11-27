@@ -1,0 +1,7 @@
+#include "filestack.h"
+
+#include <stdlib.h>
+#include "../../rss/rss.h"
+
+extern FileStack *fs_stack;
+extern int fs_size; 

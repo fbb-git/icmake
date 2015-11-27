@@ -1,0 +1,165 @@
+%{
+#define msg
+    /* 
+    */
+    #include "parser.ih"
+%}
+
+%token
+    DEFINE
+    ELSE
+    ENDIF
+    IFDEF
+    IFNDEF
+    INCLUDE
+    STRING
+    UNDEF
+    IDENT
+    WORD
+    
+%%
+
+input:
+    input
+    line
+|
+    line
+;
+
+ws:
+    ws
+    ' '
+|
+    ' '
+;
+
+optWs:
+    ws
+|
+    /* empty */
+;
+
+line:
+    content
+    optWs
+    '\n'
+;
+
+define:
+    DEFINE
+    ws
+    IDENT
+;
+
+undef:
+    UNDEF
+    ws
+    IDENT
+;
+
+textElement:
+    WORD
+|
+    IDENT
+|
+    STRING
+;
+
+text:
+    text
+    ws
+    textElement
+|
+    textElement
+;
+
+content:
+    /* empty */
+|
+    define
+|
+    ELSE
+|
+    ENDIF
+|
+    IFDEF
+|
+    IFNDEF
+|
+    INCLUDE
+|
+    undef
+|
+    text
+;
+
+
+element:
+    UNDEF
+    IDENT
+    {
+        p_undef();
+    }
+|
+    IFDEF
+    IDENT
+    {
+        p_ifdef();
+    }
+|
+    IFNDEF
+    IDENT
+    {
+        p_ifndef();
+    }
+|
+    ELSE
+    {
+        p_else();
+    }
+|
+    ENDIF
+    {
+        state_pop();
+    }
+|
+    DEFINE
+    {
+        msg("DEFINE: %s", scanner_definition());
+    }
+    /*
+        WORD
+        {
+            p_addDefinition();
+        }
+    */
+|
+    IDENT
+    {
+        p_inspectIdent();
+    }
+|
+    out
+    {
+        out(scanner_text());
+    }
+|
+    ' '
+    {
+        out_space();
+    }
+|
+    '\n'
+    {
+        out_nl();
+    }
+|
+    error
+;
+
+%%
+
+int yywrap(void)
+{
+    return 1;
+}

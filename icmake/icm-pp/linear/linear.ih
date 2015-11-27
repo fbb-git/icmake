@@ -1,0 +1,23 @@
+#include "linear.h"
+
+#include "stdlib.h"
+#include <string.h>
+#include <search.h>
+
+#include "../../rss/rss.h"
+#include "../filestack/filestack.h"
+#include "../scanner/scanner.h"
+
+enum
+{
+    maxReplacements = 100
+};
+
+extern Linear  *l_table;
+extern size_t   l_size; 
+extern size_t   l_capacity;
+
+int l_compare(const void *ident, const void *item);
+char *l_replaceDefines(char *definition);
+char *l_updateDefinition(char *def, char **begin, char *end, 
+                                                        char const *repl);

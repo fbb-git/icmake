@@ -1,0 +1,169 @@
+%{
+
+    #define msg
+    #include "parser.ih"
+%}
+
+%token
+    DEFINE
+    ELSE
+    ENDIF
+    IFDEF
+    IFNDEF
+    INCLUDE
+    STRING
+    UNDEF
+    IDENT
+    WORD
+    POINTED
+
+%%
+
+input:
+    input 
+    line
+| 
+    line
+;
+
+line:
+    optWs
+    content 
+;
+
+wsTail:
+    optWs
+    '\n'
+    {
+        out_nl();
+    }
+;
+    
+identToken:
+    IDENT
+    {
+        p_saveYYtext();
+    }
+;
+
+ident:
+    ws
+    identToken
+    wsTail
+;
+
+filenameToken:
+    STRING
+|
+    WORD
+;
+
+includeFile:
+    filenameToken
+    {
+        p_pushFile();
+    }
+;
+
+content:
+    '\n'
+    {
+        out_nl();
+    }
+|
+    text
+    {
+        p_textLine($1);
+    }
+|
+    DEFINE
+    ws
+    IDENT
+    {
+        p_define();
+    }
+|
+    ELSE 
+    wsTail
+    {
+        p_else();
+    }
+| 
+    ENDIF 
+    wsTail
+    {
+        p_endif();
+    }
+| 
+    IFDEF 
+    ident
+    {
+        p_ifdef();
+    }
+| 
+    UNDEF 
+    ident
+    {
+        p_undef();
+    }
+| 
+    IFNDEF 
+    ident
+    {
+        p_ifndef();
+    }
+| 
+    INCLUDE
+    ws
+    includeFile
+    wsTail
+| 
+    error
+;
+
+ws:
+    ws 
+    ' ' 
+| 
+    ' '
+    {
+        out_space();
+    }
+;
+
+optWs:  
+    ws 
+| 
+    /* empty */
+;
+
+text:    
+    WORD 
+    {
+        $$ = WORD;
+    }
+| 
+    IDENT 
+    {
+        $$ = IDENT;
+    }
+| 
+    STRING
+    {
+        $$ = STRING;
+    }
+;
+
+%%
+
+int yywrap(void)
+{
+    return 1;
+}
+
+
+
+
+
+
+

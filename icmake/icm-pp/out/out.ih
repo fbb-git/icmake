@@ -1,0 +1,17 @@
+#include "out.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "../../rss/rss.h"
+#include "../state/state.h"
+#include "../scanner/scanner.h"
+
+extern FILE    *o_file;
+extern int      o_space;
+extern size_t   o_nl;   
+extern int      o_atBOL;
+
+void o_newLines(void);
+void o_close(void);
+void o_eof(void);

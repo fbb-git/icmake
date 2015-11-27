@@ -1,0 +1,46 @@
+#include "parser.h"
+
+#include <string.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <unistd.h>
+
+#include "../../rss/rss.h"
+
+#include "../filestack/filestack.h"
+#include "../scanner/scanner.h"
+#include "../state/state.h"
+#include "../linear/linear.h"
+#include "../out/out.h"
+
+#include "tokens.h"
+
+extern int yynerrs;
+extern char *p_text;
+extern char *p_im;
+extern char p_dirsep[];
+
+void p_saveYYtext(void);
+void p_define(void);
+void p_addDef(char const *ident, char const *definition);
+void p_semantic(char const *s, ...);
+void p_ifdef(void);
+void p_ifndef(void);
+void p_undef(void);
+void p_else(void);
+void p_endif(void);
+void p_inspectIdent(void);
+void p_textFile(void);
+void p_textLine(int token);
+void p_pushIMfile(void);
+void p_pushFile(void);
+char *p_nextFile(void);
+char *p_quotedName(char const *name);
+char *p_IMfile(void);
+char *p_getIMname(void);
+
+int yyerror(char *s);
+
+
+
+

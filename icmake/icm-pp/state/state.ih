@@ -1,0 +1,10 @@
+#include "state.h"
+
+#include "../../rss/rss.h"
+
+extern int *st_stack;
+extern size_t st_size;
+extern size_t st_capacity;
+
+void st_available();            /* make sure there's enough room available */
+

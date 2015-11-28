@@ -4,8 +4,6 @@
 
 void state_push(int active)
 {
-    msg("push in: %u, next active = %u", state_active(), active);
-
     st_available();     /* make room if necessary */
 
     State *sp = st_stack + st_size++;
@@ -17,5 +15,5 @@ void state_push(int active)
 
     sp->elseCount = 0;
 
-    msg("push out: %u", state_active());
+    msg("%s size = %u", filestack_tos()->filename, st_size);
 }

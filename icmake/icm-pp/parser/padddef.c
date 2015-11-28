@@ -8,7 +8,8 @@ void p_addDef(char const *ident, char const *definition)
 
     if (linear_search(ident) != NULL)
     {
-        p_semantic("%s multiply defined", ident);
+        rss_error(filestack_tos()->filename, scanner_lineNr(), 
+                  "%s multiply defined", ident);
         return;
     }
 

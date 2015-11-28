@@ -972,7 +972,7 @@ case YY_STATE_EOF(pointed):
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 76 "lexer"
+#line 66 "lexer"
 ECHO;
 	YY_BREAK
 #line 979 "lexer.c"
@@ -1982,4 +1982,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 75 "lexer"
+#line 65 "lexer"

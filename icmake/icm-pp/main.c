@@ -27,6 +27,6 @@ int main(int argc, char **argv)
     parser(argv);
     parser_parse();
 
-    return 0;
+    return rss_nErrors() != 0;
 }
 

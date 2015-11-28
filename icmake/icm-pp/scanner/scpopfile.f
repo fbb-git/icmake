@@ -2,8 +2,6 @@
 
 int sc_popFile()
 {
-    state_eof(yylineno);
-
     yypop_buffer_state();
     yylineno = filestack_tos()->popLineNr;
     filestack_pop();
@@ -13,7 +11,10 @@ int sc_popFile()
     if (size)
         (*sc_ptr)();
     else
+    {
+        state_eof();
         sc_eof = 1;
+    }
 
     return size;
 }

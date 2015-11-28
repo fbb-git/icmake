@@ -63,13 +63,3 @@ ident       [[:alpha:]_][[:alnum:]_]*
                             if (!sc_popFile())
                                 yyterminate();
                         }
-
-
-
-
-
-
-
-
-
-

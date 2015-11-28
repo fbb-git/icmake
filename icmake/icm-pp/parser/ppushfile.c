@@ -4,7 +4,10 @@
 
 void p_pushFile()       /* switch to another file */
 {
-    char *filename = p_nextFile();
+    char const *filename = p_nextFile();
+
+    msg("%s", filename);
+
 
     if (state_active())
     {
@@ -14,7 +17,5 @@ void p_pushFile()       /* switch to another file */
     
         scanner_pushFile(filename);
     }
-
-    free(filename);
 }
 

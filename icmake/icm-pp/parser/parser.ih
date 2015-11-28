@@ -34,10 +34,10 @@ void p_textFile(void);
 void p_textLine(int token);
 void p_pushIMfile(void);
 void p_pushFile(void);
-char *p_nextFile(void);
-char *p_quotedName(char const *name);
-char *p_IMfile(void);
-char *p_getIMname(void);
+char const *p_nextFile(void);
+char const *p_quotedName(char *name);
+char const *p_IMfile(void);
+char const *p_getIMname(void);
 
 int yyerror(char *s);
 

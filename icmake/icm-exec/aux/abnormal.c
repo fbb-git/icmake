@@ -11,5 +11,5 @@
 
 void aux_abnormal(int sig, int subcode)
 {
-    rss_error("Abnormal termination.");
+    rss_fatal(0, 0, "Abnormal termination.");
 }

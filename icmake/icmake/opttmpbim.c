@@ -14,7 +14,7 @@ void optTmpBim(char **argv)
     msg("optarg = `%s', bimfile = `%s'", optarg, bimFile);
 
     if (argv[optind] == NULL)    
-        rss_error("icmake-script filename missing after `-t bimFile'");
+        rss_fatal(0, 0, "icmake-script filename missing after `-t bimFile'");
 
     imFile = accessFile(argv[optind], "im");
     pimFile = rss_strjoin(tmpDir, ".pim");

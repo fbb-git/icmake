@@ -15,7 +15,7 @@ char *skip_until(char *cp)
             ++cp;
 
         if (!*cp)           /* no more chars is an error */
-            rss_error("%s: %d: unterminated %s-constant in #define",
+            rss_fatal("%s: %d: unterminated %s-constant in #define",
                 filestack[filesp].filename, 
                 filestack[filesp].lineNr,
                 end == '"' ? "string" : "character");   

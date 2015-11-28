@@ -55,10 +55,9 @@ void process()
             p_procfun[op]();
         }
         else
-        {
-            fprintf(stderr, "bad opcode at %s", rss_hexString(curoffs, 4));
-            rss_error("(opcode %s)", rss_hexString((size_t)op, 2));
-        }
+            rss_fatal(0, 0, "At offset %s: opcode %s not defined", 
+                                rss_hexString(curoffs, 4),
+                                rss_hexString((size_t)op, 2));
     }
     putchar('\n');
 }

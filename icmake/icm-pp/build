@@ -1,4 +1,9 @@
 #!/bin/bash
 
+if [ scanner/pushfile.f -nt scanner/lexer \
+     -o scanner/scpopfile.f -nt scanner/lexer ] ; then
+    touch scanner/lexer
+fi
+
 icmbuild $1
 

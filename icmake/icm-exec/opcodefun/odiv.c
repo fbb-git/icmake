@@ -5,7 +5,7 @@
 
     It is assumed that the left argument of the division was pushed first;
     therefore, the right argument is popped first. A division by zero leads
-    to an rss_error.
+    to an rss_fatal.
 */
 
 #include "opcodefun.ih"
@@ -15,7 +15,7 @@ void o_div()
     int value = int_value(stack_top());
 
     if (!value)
-        rss_error ("division by zero at %s", aux_offset());
+        rss_fatal(0, 0, "division by zero at %s", aux_offset());
 
     stack_pop();
     value = int_value(stack_top()) / value;

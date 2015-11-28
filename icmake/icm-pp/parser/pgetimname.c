@@ -2,21 +2,21 @@
 
 static char buffer[MAX_PATHLEN];
 
-char *p_getIMname()
+char const *p_getIMname()
 {
     strcpy(buffer, p_dirsep);   /* not an absolute path: IM paths are 
                                     prepended to dest */
     while (1)
     {
-        switch (yylex())
+        switch (yylex())        /* already saw the initial '<'  */
         {
             case 0:
             case '\n':
-            rss_error("#include file specification not ending in >");
+            rss_fatal(0, 0, "#include file specification not ending in >");
 
             case WORD:
                 if (scanner_text()[0] == '>')
-                    return rss_strdup(buffer);
+                    return buffer;
 
             // FALLING THRU
             default:

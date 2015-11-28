@@ -15,18 +15,18 @@ void rss_spawnErr(char const *progname)
     switch (errno)
     {
         case E2BIG:
-            rss_error(errmsg, progname, "command line too big");
+            rss_fatal(0, 0, errmsg, progname, "command line too big");
         case EACCES:
-            rss_error(errmsg, progname, "access denied");
+            rss_fatal(0, 0, errmsg, progname, "access denied");
         case EMFILE:
-            rss_error(errmsg, progname, "too many open files");
+            rss_fatal(0, 0, errmsg, progname, "too many open files");
         case ENOENT:
-            rss_error(errmsg, progname, "no such file");
+            rss_fatal(0, 0, errmsg, progname, "no such file");
         case ENOEXEC:
-            rss_error(errmsg, progname, "exec file format");
+            rss_fatal(0, 0, errmsg, progname, "exec file format");
         case ENOMEM:
-            rss_error(errmsg, progname, "out of memory");
+            rss_fatal(0, 0, errmsg, progname, "out of memory");
         default:
-            rss_error(errmsg, progname, "unknown error");
+            rss_fatal(0, 0, errmsg, progname, "unknown error");
     }
 }

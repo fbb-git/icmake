@@ -7,7 +7,6 @@
 
 #include "../global.h"
 
-extern size_t  gu_errcount;
 extern size_t  gu_sem_err;
 extern char *gu_sourceName;
 extern char *gu_lexstring;

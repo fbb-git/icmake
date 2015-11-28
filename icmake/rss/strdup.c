@@ -14,7 +14,7 @@ char *rss_strdup(char const *str)
     register char *ret;
 
     if (!(ret = strdup(str ? str : "")))
-        rss_error("out of memory");
+        rss_fatal(0, 0, "out of memory");
 
     return ret;
 }

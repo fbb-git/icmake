@@ -60,7 +60,7 @@ filenameToken:
 includeFile:
     filenameToken
     {
-        p_pushFile();
+        p_saveYYtext();
     }
 ;
 
@@ -116,6 +116,9 @@ content:
     ws
     includeFile
     wsTail
+    {
+        p_pushFile();
+    }
 | 
     error
 ;

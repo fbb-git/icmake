@@ -12,7 +12,7 @@ void delete_std_comment(char *cp)
         *eoc;                               /* end of comment */
 
     if (!(eoc = strstr(cp, "*/")))          /* can't find it ? */
-        rss_error("%s: %d: unterminated std-comment in #define",
+        rss_fatal("%s: %d: unterminated std-comment in #define",
                 filestack[filesp].filename, filestack[filesp].lineNr);
     else                                    /* copy the trailer to cp */
     {

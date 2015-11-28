@@ -26,7 +26,7 @@ void b_stat()
     if (stat(fname, &statbuf))                  /* do stat call */
     {                                           /* failure to stat? */
         if (rss_checkMode (mode))                 /* if mode indicates abort..*/
-            rss_error("stat - unable to stat file %s", fname);
+            rss_fatal(0, 0, "stat - unable to stat file %s", fname);
 
         return;                                 /* no checking: return */
     }                                           /* empty list */

@@ -96,11 +96,11 @@ LEXER_ lexer()
                         case '\n':
                             if (string_continue(&lexbuf))
                                 break;
-                        rss_error("%s: %d: unterminated string, \" expected",
+                        rss_fatal("%s: %d: unterminated string, \" expected",
                                filestack[filesp].filename, filestack[filesp].lineNr);
 
                         case EOF:
-                        rss_error("%s: unterminated string at EOF",
+                        rss_fatal("%s: unterminated string at EOF",
                                filestack[filesp].filename);
 
                         case '\\':
@@ -148,7 +148,7 @@ LEXER_ lexer()
                             fputc('\n', outfile);
                         }
                         else if (ch == EOF)
-                            rss_error("%s: %d: unterminated comment block",
+                            rss_fatal("%s: %d: unterminated comment block",
                                    filestack[filesp].filename, filestack[filesp].lineNr);
 
                         switch (state)

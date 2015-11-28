@@ -18,9 +18,11 @@ static int8_t opcall = op_call;
 
 int parser_backend()
 {
-    if (yynerrs)                            /* backend if no errors */
+    size_t nErrors = rss_nErrors();
+
+    if (nErrors)                            /* backend if no errors */
     {
-        printf("\n%u error(s) detected\n", util_nErrors());
+        printf("\n%u error(s) detected\n", nErrors);
         return 1;
     }
 

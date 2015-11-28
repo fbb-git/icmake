@@ -66,7 +66,7 @@ static int skipline(void)
 static void terminate_line(char const *what)
 {
     if (skipline() == EOF)
-        rss_error("%s: #%s at end-of-file", filestack[filesp].filename, what);
+        rss_fatal("%s: #%s at end-of-file", filestack[filesp].filename, what);
 }
 
 static void fill_line(void)
@@ -96,7 +96,7 @@ void include_directive(void)
 
     ch = nextchar();
     if (ch != '\"' && ch != '<')
-        rss_error("%s: %d: \" or < expected after #include directive",
+        rss_fatal("%s: %d: \" or < expected after #include directive",
                filestack[filesp].filename, filestack[filesp].lineNr);
 
     if (ch == '<')                  /* include <...> form? */
@@ -105,7 +105,7 @@ void include_directive(void)
     lexbuf.len = 0;
     while ( (ch = nextchar()) != '\"' && ch != '>')
         if (ch == '\n' || ch == EOF)
-            rss_error("%s: %d: unterminated name after #include directive",
+            rss_fatal("%s: %d: unterminated name after #include directive",
                    filestack[filesp].filename, filestack[filesp].lineNr);
         else
             string_append(&lexbuf, ch);
@@ -138,7 +138,7 @@ void include_directive(void)
             free(im);
 
             if (!path)
-                rss_error("cannot find `%s' in `%s'", lexbuf, imdir);
+                rss_fatal("cannot find `%s' in `%s'", lexbuf, imdir);
         }
         else
             pushfile(lexbuf.data);
@@ -225,7 +225,7 @@ void directive(void)
     else if (!strncmp(lexbuf.data, "endif", 5))
         endif_directive();
     else
-        rss_error("%s: %d: bad preprocessor directive `%s'",
+        rss_fatal("%s: %d: bad preprocessor directive `%s'",
                     filestack[filesp].filename, 
                     filestack[filesp].lineNr, 
                     &lexbuf.data);

@@ -75,7 +75,7 @@ void options(int argc, char **argv)
             return;
 
             case '?':
-            rss_error("option -%c not supported", optopt);
+            rss_fatal(0, 0, "option -%c not supported", optopt);
 
         } /* switch */
     } /* while */

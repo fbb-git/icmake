@@ -1,3 +1,4 @@
+#define msgx
 #include "util.ih"
 
 void util_setSourceName(char const *txt)

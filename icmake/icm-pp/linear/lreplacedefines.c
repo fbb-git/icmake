@@ -25,9 +25,8 @@ char *l_replaceDefines(char *definition)
         }
             
         if (++replacement > maxReplacements)
-            rss_error("%s: %d: too many replacements in #define definition",
-               filestack_tos()->filename, scanner_lineNr());
-
+            rss_fatal(filestack_tos()->filename, scanner_lineNr(), 
+                        "too many replacements in #define definition");
 
         definition = l_updateDefinition(definition, &begin, end,
                                                         item->definition); 

@@ -9,9 +9,9 @@ void fun_call_rss ()
     dumpchar(funnr);
 
     if (funnr >= f_hlt)
-        rss_error ("non-existing function call\n"
+        rss_fatal(0, 0, "non-existing function call\n"
                "attempt to call function %x, %x are defined",
-            funnr, f_hlt);
+                funnr, f_hlt);
 
     printf ("callrss %u (%s)\n", (unsigned int)funnr, funname [ (int) funnr]);
 }

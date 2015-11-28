@@ -1,11 +1,9 @@
 #include "parser.ih"
 
-char *p_nextFile()
+char const *p_nextFile()
 {
-    char const *text = scanner_text();
-
-    return *text == '"' ?
-                p_quotedName(text + 1)
+    return *p_text == '"' ?
+                p_quotedName(p_text + 1)
             :
                 p_IMfile();
 }

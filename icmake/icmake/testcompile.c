@@ -12,7 +12,7 @@ void testCompile()
         return;
 
     if (!(fdest = fopen(bimFile, "rb")))    /* bimfile exists: open it */
-        rss_error("Can't read `%s'", bimFile);
+        rss_fatal(0, 0, "Can't read `%s'", bimFile);
 
     if (rss_younger(imFile, bimFile))   /* old bim-file: compilation needed */
         return;

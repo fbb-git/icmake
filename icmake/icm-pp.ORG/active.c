@@ -49,7 +49,7 @@ int negate_active()             /* negate the current request */
 int pop_active()                /* returns previous output_active value */
 {
     if (!sp--)
-        rss_error("%s: %d: too many lone #endif directives",
+        rss_fatal("%s: %d: too many lone #endif directives",
                 filestack[filesp].filename, filestack[filesp].lineNr);
 
     return stack[sp].d_active;

@@ -36,7 +36,7 @@ void b_chDir()
     }
 
     if (chdir(dir) && rss_checkMode(mode))    /* cd to the directory        */
-        rss_error ("builtin_chDir - can't change dir to %s", dir);  
+        rss_fatal(0, 0, "builtin_chDir - can't change dir to %s", dir);  
 
     free(dir);
     

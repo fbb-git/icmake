@@ -48,7 +48,7 @@ uint16_t rss_getVar(Variable **varDest, FILE *f, BinHeader *headerp)
         char type;
 
         if (! fread(&type, sizeof(char), 1, f))
-            rss_error("cannot read the variable section");
+            rss_fatal(0, 0, "cannot read the variable section");
 
         msg("read variable %u, offset at: %x", nVars, ftell(f));
 
@@ -57,7 +57,7 @@ uint16_t rss_getVar(Variable **varDest, FILE *f, BinHeader *headerp)
                             if more than one bit has been set (using
                             the power of 2 trick) an invalid type was read */
         if (type == e_null || type & (type - 1))
-            rss_error ("bad variable type (var #%d)\n", nVars);
+            rss_fatal(0, 0, "bad variable type (var #%d)\n", nVars);
 
                         /* initialize the new variable to 0 */
         memset(var + varIdx, 0, sizeof(Variable));

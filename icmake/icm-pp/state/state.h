@@ -16,6 +16,6 @@ void state_negate(size_t linenr); /* negates the current state, assuming the
                                    previous state was active */
 
 size_t state_size(void);
-void   state_eof(void);         /* generates error if there are open
+void   state_eof(size_t linenr); /* generates error if there are open
                                    #if(n)defs. Called by the scanner at EOF */
 #endif

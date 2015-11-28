@@ -10,7 +10,7 @@ void options(int argc, char **argv)
         if (! strcmp(argv[1], "-define"))
         {
             if (argc < 3)
-                rss_error("missing symbol after \"-define\"");
+                rss_fatal(0, 0, "missing symbol after \"-define\"");
 
             linear_add(argv[2], "1");
 
@@ -25,7 +25,7 @@ void options(int argc, char **argv)
             ++dump_symbols;
 
         else 
-            rss_error("Option `%s' not supported", argv[1]);
+            rss_fatal(0, 0, "Option `%s' not supported", argv[1]);
     
         ++argv;
         ++argc;

@@ -6,7 +6,7 @@ void parser(char **argv)
     scanner(argv[1]);
 
     if (!(gp_bin = fopen(argv[2], "w+b")))   /* open binary file  */
-        rss_error("%s Can't write `%s'", argv[2]);
+        rss_fatal(0, 0, "%s Can't write `%s'", argv[2]);
 
                                             /* malloc the gp_dead-stack */
     gp_dead = rss_realloc(NULL, sizeof(unsigned));
@@ -18,9 +18,11 @@ void parser(char **argv)
                                             /* go to first codebyte pos */
     fseek(gp_bin, sizeof(BinHeader), SEEK_SET);
 
+/*
     #if YYDEBUG
         yydebug = YYDEBUG;
     #endif
+*/
 }
 
 

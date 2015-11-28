@@ -11,7 +11,7 @@ void opcodefun_setGlobalVariables()
 
                                         /* return array of global vars */
     if (nvars == (int16_t)-1)
-        rss_error("invalid bim-file, cannot read variable section");
+        rss_fatal(0, 0, "invalid bim-file, cannot read variable section");
 
         /* global string/list variables haven't been initialized by */
         /*  the compiler, so that's icm-exec's job                  */

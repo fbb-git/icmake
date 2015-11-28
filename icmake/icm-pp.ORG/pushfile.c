@@ -42,7 +42,7 @@ char *name;
     filestack = rss_realloc(filestack, (filesp + 1) * sizeof(FILESTACK_));
     filestack[filesp].filename = rss_strdup(name);
     if (! (filestack[filesp].file = fopen(name, "r")) )
-        rss_error("cannot open #include file %s", name);
+        rss_fatal("cannot open #include file %s", name);
     filestack[filesp].lineNr = 1;
 
     if (! nofileinfo)

@@ -15,7 +15,7 @@ void o_mod ()
     int value = int_value(stack_top());
 
     if (!value)
-        rss_error ("division by zero at %s", aux_offset());
+        rss_fatal(0, 0, "division by zero at %s", aux_offset());
 
     stack_pop();
     value = int_value(stack_top()) % value;

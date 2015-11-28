@@ -46,8 +46,9 @@ char **eb_exeCmd(char **cmd, int mode)
     
                             /* if non-zero return and */
     if (ret && rss_checkMode(mode))      /* if checking requested.. */
-        rss_error("builtin_execute - program indicates failure (status %d)", 
-                                                                        ret);
+        rss_fatal(0, 0, 
+                    "builtin_execute - program indicates failure (status %d)", 
+                    ret);
 
     intcons_int(eb_releaseReg(), ret);     /* return exit status */
     return cmd;

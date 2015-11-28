@@ -49,20 +49,23 @@ BinHeader *rss_readHeader(FILE *f, size_t v)
     int32_t f_size;
     
     if (! fread(&header, sizeof (BinHeader), 1, f) )
-        rss_error("cannot read header from binary file, corrupted?");
+        rss_fatal(0, 0, "cannot read header from binary file, corrupted?");
 
     if ((size_t)header.version[0] % 100 < v % 100)
-        rss_error(
+        rss_fatal(0, 0,
             "The binary file was created with an older version of icmake.\n"
             "Remake the binary file.");
-    else if ((size_t)header.version[0] < v )
-        fprintf(stderr, "The binary file was created with an older version "
+
+    if ((size_t)header.version[0] < v )
+        rss_fatal(0, 0, "The binary file was created with an older version "
                 "of icmake.\n"
-                "It is advised to recompile the original script.\n");
-    else if ((size_t)header.version[0] > v)
-        rss_error("This program does not support the version which is indicated"
-               " by the binary\n"
-               "file. Upgrade to a newer `icmake' version.");
+                "Recompile the original script.\n");
+
+    if ((size_t)header.version[0] > v)
+        rss_fatal(0, 0,
+                "This program does not support the version which is indicated"
+                                                            " by the binary\n"
+                "file. Upgrade to a newer `icmake' version.");
 
     fstat(fileno(f), &buffer);
     f_size = buffer.st_size;
@@ -70,7 +73,7 @@ BinHeader *rss_readHeader(FILE *f, size_t v)
     for (idx = 0; idx != 4; ++idx)
     {
         if (header.offset[idx] >= f_size)
-            rss_error("invalid .bim file, corrupted?");
+            rss_fatal(0, 0, "invalid .bim file, corrupted?");
     }
 
     return &header;

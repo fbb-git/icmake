@@ -30,7 +30,7 @@ void *rss_realloc (void *ptr, size_t size)
                     malloc (size);
 
     if (! newptr)
-        rss_error ("out of memory");
+        rss_fatal(0, 0, "out of memory");
 
     return newptr;
 }

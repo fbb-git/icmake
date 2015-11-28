@@ -22,12 +22,12 @@ int main (int argc, char **argv)
                         rss_changeExt(argv[1], bimext);
 
     if (! (infile = fopen(infname, "r")) )
-        rss_error("cannot open %s for reading", infname);
+        rss_fatal(0, 0, "cannot open %s for reading", infname);
 
     headerp = rss_readHeader(infile, (size_t)version [0]);
 
     if ((int16_t)(nvar = rss_getVar(&var, infile, headerp)) == -1 )
-        rss_error("invalid macro file, cannot read variable section");
+        rss_fatal(0, 0, "invalid macro file, cannot read variable section");
 
     process();
 

@@ -1,10 +1,8 @@
 #include "parser.ih"
 
-char *p_quotedName(char const *name)
+char const *p_quotedName(char *name)
 {
-    char *cp = rss_strdup(name);
+    name[strlen(name) - 1] = 0;             /* remove the last character */
 
-    cp[strlen(cp) - 1] = 0;             /* remove the last character */
-
-    return cp;
+    return name;
 }

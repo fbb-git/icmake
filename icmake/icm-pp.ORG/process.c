@@ -66,7 +66,7 @@ void process(LEXER_ token)
     {
         case l_eof:
             if (! output_active)
-                rss_error("%s: end-of-file inside #if(n)def",
+                rss_fatal("%s: end-of-file inside #if(n)def",
                    filestack[filesp].filename);
             nlCount = 0;
             popfile();

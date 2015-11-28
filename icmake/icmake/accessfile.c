@@ -16,7 +16,7 @@ char *accessFile(char const *file, char const *ext)
     ret = rss_changeExt(file, ext);     /* file.ext */
 
     if (access(ret, R_OK) != 0)         /* File.ext doesn't exist   */
-        rss_error("can't read `%s' or `%s'", file, ret);
+        rss_fatal(0, 0, "can't read `%s' or `%s'", file, ret);
     
     return ret;
 }

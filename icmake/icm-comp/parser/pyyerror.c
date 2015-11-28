@@ -22,18 +22,16 @@ static char *err_msg[] =
 
 int yyerror(char *s)
 {
-    util_incError();
-    printf ("[%s] Line %d", util_sourceName(), yylineno);
-
     if (!yytext[0])
-        puts (": Unexpected end of file.");
-    else
-        printf(" at '%s': '%s'%s\n", yytext, err_msg[gp_parse_error],
-            gp_parse_error == err_in_expression ?
-                ""
-            :
-                " expected"
-        );
+        rss_fatal(util_sourceName(), yylineno, 
+                    "Unexpected end of file.");
 
+    rss_error(util_sourceName(), yylineno,
+                "at '%s': '%s'%s", 
+                yytext, err_msg[gp_parse_error],
+                gp_parse_error == err_in_expression ?
+                    ""
+                :
+                    " expected");
     return 0;
 }

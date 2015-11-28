@@ -27,7 +27,7 @@ int opcodefun_process()
         if (opcode >= op_hlt || opcode == (Opcode)-1)
         {
             fprintf(stderr, "bad opcode at %s ", aux_offset());
-            rss_error("(opcode %s)", rss_hexString(opcode, 2));
+            rss_fatal(0, 0, "(opcode %s)", rss_hexString(opcode, 2));
         }
 
         go_pRssFun[opcode]();

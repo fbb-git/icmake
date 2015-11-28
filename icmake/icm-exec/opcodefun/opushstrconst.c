@@ -19,7 +19,7 @@ void o_push_strconst()
                                            (size_t)rss_getInt16(go_infile));
     
     if (str == (char *)-1)
-        rss_error ("cannot get string, opcode at %s", aux_offset());
+        rss_fatal(0, 0, "cannot get string, opcode at %s", aux_offset());
 
                                         /* str is allocated by getstring() */
     String tmp;

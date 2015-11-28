@@ -61,7 +61,15 @@ void     rss_msg_(char const *path, char *fmt, ...); /* prints a msg to stderr.
                                         reading rss.h, and then call msg(fmt,
                                         ...) to specify a message
                                     */
-void     rss_error(char const *fmt, ...);
+
+void    rss_fatal(char const *src, size_t lineNr, char const *fmt, ...);
+void    rss_error(char const *src, size_t lineNr, char const *fmt, ...);
+void    rss_errorList(char const *src, size_t lineNr, char const *fmt, 
+                                                      va_list args);
+
+void    rss_warning(char const *src, size_t lineNr, char const *fmt, ...);
+size_t  rss_nErrors();
+
 void     rss_spawnErr(char const *program);
 
 void     *rss_realloc(void *oldPtr, size_t size_in_bytes);

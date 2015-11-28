@@ -64,18 +64,14 @@ int p_nextCall(void)
         return 0;                         /* close, but no cigar */
 
         default:
-            printf("\n"
-                  "at offset 0x%lx: @#$%%!!\n"
-                  "*INTERNAL ICM-COMP COMPILER ERROR*\n"
-                  "In function p_hiddenFunctions(): unrecognized opcode while\n"
-                  "patching up (hidden-)function calls.\n"
-                  "Found opcode: 0x%x.\n"
-                  "Please inform the ICCE ICMAKE (Z-side) support group\n"
-                  "\n"
-                  "THE BIM-FILE IS INVALID AND SHOULD *NOT* BE USED\n"
-                  , ftell(gp_bin)
-                  , opcode
-                  );
+            rss_fatal(0, 0,
+                "at offset 0x%lx:\n"
+                "*INTERNAL ICM-COMP COMPILER ERROR / INVALID BIM-FILE*\n"
+                "In function p_nextCall: unrecognized opcode "
+                                                    "0x%x encountered\n",
+                ftell(gp_bin),
+                opcode
+            );
     }
 
     return 0;

@@ -9,7 +9,7 @@ void sc_changeFile(char *s)               /* name of source file to open */
     if (*s)                                 /* any filename ? */
     {
         if (!gs_fileSp--)                          /* no more entries ? */
-            rss_error("Over 10 included files");
+            rss_fatal(0, 0, "more than 10 nested #include directives");
 
                                             /* save the name and line nr. 
                                                of the file */

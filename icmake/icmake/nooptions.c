@@ -10,7 +10,7 @@ void noOptions(char **argv)
     flags |= f_doPreProcess  | f_rmPim | f_doCompile | f_doExec;
 
     if (optind == execArgIdx)
-        rss_error("first argument must be icmake-script");
+        rss_fatal(0, 0, "first argument must be icmake-script");
 
     imFile = accessFile(argv[optind], "im");
     pimFile = rss_changeExt(imFile, "pim");

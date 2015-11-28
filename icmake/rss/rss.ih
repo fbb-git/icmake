@@ -11,6 +11,7 @@
 
 extern glob_t gr_globData;                        /* globbing struct */
 extern size_t gr_nextGlob;                     /* next name in list */
+extern size_t gr_nErrors;
 
 extern char gr_name[];
 extern char gr_dir[];
@@ -33,5 +34,8 @@ void    rs_join(void);             /* calls rss_makePath */
 int     rs_chesc(char *string, int *);
 size_t  rs_atox(char *string, int *n);
 
-char     *rs_fileFound(void);              /* test attrib/pattern  */
+char    *rs_fileFound(void);              /* test attrib/pattern  */
+
+void    rs_msg(char const *src, size_t lineNr,  /* !src: no source info */
+               char const *prefix, char const *fmt, va_list args);
 

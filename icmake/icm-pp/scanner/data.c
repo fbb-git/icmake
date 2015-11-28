@@ -1,5 +1,6 @@
 #include "scanner.ih"
 
-char *sc_definition;
-int sc_getDefine;
-void (*sc_ptr)(void);
+char    *sc_definition;
+int     sc_getDefine;
+void    (*sc_ptr)(void);
+int     sc_eof;

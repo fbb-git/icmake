@@ -27,6 +27,7 @@ SemVal *p_fprintf(ExprType type, SemVal *args)
     if (ok)
         return (p_specials(type, args));      /* return p_specials call */
 
-    util_semantic(gp_typeConflict, gp_funstring[type]); /* type p_conflict error */
-    return (args);
+                                            /* type p_conflict error */
+    util_semantic(gp_typeConflict, gp_funstring[type]); 
+    return args;
 }

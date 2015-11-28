@@ -36,7 +36,7 @@ int main(int argc, char **argv)
         else if (! strcmp(argv[1], "-define"))
         {
             if (argc < 3)
-            rss_error("missing symbol after \"-define\"");
+            rss_fatal("missing symbol after \"-define\"");
             preload(argv[2], "1");
             argv++;
             argc--;
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
         else if (! strcmp(argv[1], "-dumpsymbols"))
             dump_symbols++;
         else 
-            rss_error("no such flag \"%s\" recognized", argv[1]);
+            rss_fatal("no such flag \"%s\" recognized", argv[1]);
     
         argv++;
         argc--;
@@ -100,7 +100,7 @@ int main(int argc, char **argv)
         imdir = ".";
 
     if (!(outfile = fopen(argv[2], "w")) )
-        rss_error("cannot write output file %s", argv[2]);
+        rss_fatal("cannot write output file %s", argv[2]);
 
     pushfile(argv[1]);
     construct_active();

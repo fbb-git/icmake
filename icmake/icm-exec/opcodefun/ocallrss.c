@@ -21,7 +21,7 @@ void o_callRss()
     size_t funIdx = (size_t)rss_getOpcode(go_infile);
 
     if (funIdx >= f_hlt)
-        rss_error("unknown rss function call at %s", aux_offset());
+        rss_fatal(0, 0, "unknown rss function call at %s", aux_offset());
 
     msg("calling builtin function 0x%x", funIdx);
 

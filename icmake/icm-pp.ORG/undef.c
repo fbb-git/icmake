@@ -24,7 +24,7 @@ void undef(char *idname)
 {
     int idx = finddef(idname);
     if (idx == -1)
-        rss_error("%s: #undef %s: no symbol %s defined", filestack[filesp].filename,
+        rss_fatal("%s: #undef %s: no symbol %s defined", filestack[filesp].filename,
                                                      idname, idname);
 /*
 fprintf(stderr, "Removed `%s'\n", defined[ndefined].ident);

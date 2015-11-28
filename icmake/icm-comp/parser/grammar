@@ -1153,10 +1153,6 @@ _stm:
 
 statement:
     _stm
-    {
-        msg("saw statement(.5)");
-        util_resetSemErr();
-    }
 |
     typed_varlist
     semicol

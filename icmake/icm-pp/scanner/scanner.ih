@@ -35,7 +35,6 @@ extern int      sc_eof;
 extern void     (*sc_ptr)(void);
 
 FILE   *sc_pushFile(char const *filename);
-// FBB int     sc_space();
 void    sc_startDefinition(void);
 void    sc_appendDefinition(int cutoff);
 

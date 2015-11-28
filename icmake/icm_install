@@ -79,7 +79,7 @@ case $1 in
     ;;
 
     (man)
-        into ${MANDIR}
+        intogz ${MANDIR}
     ;;
 
     (skel)

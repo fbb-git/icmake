@@ -38,19 +38,39 @@ try cp -r usr/share/icmake/* tmp/${SKELDIR}
 echo configuration files to tmp/${CONFDIR}
 try cp -r etc/icmake/* tmp/${CONFDIR}
 
-echo man-pages to tmp/${MANDIR}/man1 and .../man7
-try cp doc/*.1 tmp/${MANDIR}/man1
-try cp doc/*.7 tmp/${MANDIR}/man7
+cd doc
 
-echo ./etc files to tmp/etc/
-try cp -r etc  tmp/
+echo man-pages to tmp/${MANDIR}/man1 and .../man7
+for x in *.1 ; do
+    gzip -9cn $x > ../tmp/${MANDIR}/man1/$x.gz || exit 1
+done
+
+for x in *.7 ; do
+    gzip -9cn $x > ../tmp/${MANDIR}/man7/$x.gz  || exit 1
+done
 
 echo documentation to tmp/${DOCDIR} and tmp/${DOCDOCDIR}
 
-try mkdir -p tmp/${DOCDIR}/
-try cp changelog tmp/${DOCDIR}/
+for x in icmake.doc icmake.ps README.icmbuild ; do
+    gzip -9cn $x > ../tmp/${DOCDOCDIR}/$x.gz  || exit 1
+done
 
-try cp -r examples doc/icmake.doc doc/icmake.ps \
-                                doc/README.icmbuild tmp/${DOCDOCDIR}
+cd ..
+
+gzip -9cn changelog > tmp/${DOCDIR}/changelog.gz || exit 1
+
+try cp -r examples tmp/${DOCDOCDIR}
+
+echo ./etc files to tmp/etc/
+try cp -r etc  tmp/ 
+
 
 echo Done.
+
+
+
+
+
+
+
+

@@ -2,16 +2,21 @@ icmake (8.00.00)
 
   * This release adds several new builtin functions, which required a
     redefinition of the builtin function codes. Because of this existing .bim
-    files must be recompiled from their .im source files
+    files must be recompiled from their .im source files. 
 
-  * Added built-in functions get_dext, length, resize, strformat, trim,
-    trimleft, trimright (see icmake(1) for details.
+  * Martin Dorwig suggested several additions to icmake's run-time support
+    functions. In particular facilities for formatted string construction and
+    formatted printf functions. Many of his suggestions were implemented in
+    version 8.00.00, which now offers several new built-in functions
+    (get_dext, length, resize, strformat, trim, trimleft, trimright (see
+    icmake(1) for details).
 
   * The functions fprintf and printf now support a format string as their
     first argument, in which %-notations refer to subsequent argument numbers
     (see icmake(1) for details). 
 
-  * The 16 bit offset limit was removed from fgets. See icmake(1) for details.
+  * The 16 bit offset limit was removed from fgets. Also, fgets's signature
+    changed. See icmake(1) for details.
 
   * Added the 'continue' statement/keyword to the flow constrol statements. It
     can be used inside while and for statements.
@@ -24,15 +29,15 @@ icmake (8.00.00)
   * Local variables can be defined and immediately initialized anywhere inside
     functions. Multiple local variables (of the same type) can be defined in
     the initialization section of a for-statement, A single variable can be
-    defined in the condition phrase of an if- and while-statement. Unless
-    initialized such variables represent a `false' condition.
+    defined in the condition clause of if- and while-statements. If not
+    explicitly initialized such variables represent a `false' condition.
 
   * Character constants are supported and are converted to single-character
     string constants. Conversely, single-character string constants can be
-    used in int-expressions. In that case their values are equal to the values
-    of their (first) characters.
+    used in int-expressions. In that case their values are equal to the
+    int-values of their (first) characters.
 
-  * Icmake scripts main() functions now by default return 0.
+  * The main() functions in icmake scripts now by default return 0.
 
   * Fixed a bug in the printf family of functions: these functions now return
     the number of printed arguments (as documented in icmake(1)'s man-page).
@@ -41,6 +46,8 @@ icmake (8.00.00)
     their resulting wasn't pushed on the stack when used in return statements,
     causing a stack underflow.
 
+  * Fixed a bug in the icm-pp precompiler: multiple #defines of the same
+    identifier are not accepted anymore. #undefine 
   * Drive specifiers are not supported anymore
 
   * The function glob() is now assumed available.

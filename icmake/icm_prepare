@@ -1,5 +1,18 @@
 #!/bin/bash
 
+if [ "$#" == "0" ] ; then
+echo "
+    Usage: icm_prepare rootdir
+
+    In standard situations specify / as rootdir. 
+
+    The physical installation dir is specified when calling icm_install,
+    but rootdir specified here is hard-coded in icmake's programs, so
+    eventually the icmake files should be available under rootdir.
+"                                     
+    exit 0
+fi
+
 try()
 {
     # echo $*
@@ -13,7 +26,8 @@ try find -name '*.o' -exec rm -f '{}' \;
 try mkdir -p tmp
 
 echo    Writing tmp/ROOT
-echo "ROOT=$1/" > tmp/ROOT
+ROOT=`echo $1 | sed 's_/$__'`
+echo "ROOT=${ROOT}/" > tmp/ROOT
  
 . scripts/conversions
 

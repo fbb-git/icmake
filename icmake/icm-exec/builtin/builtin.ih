@@ -16,6 +16,13 @@
 #include "../virtual/virtual.h"
 #include "../int/int.h"
 
+typedef enum
+{
+    TO_STRING = 1,
+    TO_STDOUT = 1,
+    TO_FILE = 2
+} FormatDest;
+
 extern Variable gb_reg;
 
 extern char      gb_orgDir[];
@@ -52,7 +59,9 @@ char    **eb_addCmd(char **, char *);
 char    **eb_exeCmd(char **, int);
 
 char    *eb_findPercent(char *begin);
-char    *eb_getArg(size_t, int *);
+char    *eb_getArg(size_t argIdx, int *listDone);   /* listDone = 1 when all
+                                                       list elements have
+                                                       been retrieved */
 char    *eb_getExecArg(size_t, int *);
 char    *eb_getLine(FILE *file);
 char    *eb_setString(char *);
@@ -64,8 +73,8 @@ int     eb_getCmdLen(char **);
 int     eb_spawnvp(int mode, char const *prog, char const **argv);
 int     eb_termCh(void);
 
-size_t  eb_formattedFprintf(FILE *f, size_t start);
-size_t  eb_formatter(void *dest, size_t start);
+size_t  eb_formattedFprintf(FILE *dest, FormatDest formatDest);
+size_t  eb_formatter(void *dest, FormatDest formatDest);
 size_t  eb_getNr(char **ptr);
 size_t  eb_noFormatting(void *dest, size_t start, size_t lastIdx);
 

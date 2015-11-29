@@ -15,9 +15,9 @@ void b_fprintf()
     FILE *outf;
 
     if (! (outf = fopen(filename, "a")) )
-        rss_fatal(0, 0, "failure to open file \"%s\"", filename);
+        rss_fatal(0, 0, "cannot append to \"%s\"", filename);
 
-    intcons_int(eb_releaseReg(), eb_formattedFprintf(outf, 2));
+    intcons_int(eb_releaseReg(), eb_formattedFprintf(outf, TO_FILE));
 
     fclose(outf);
 }

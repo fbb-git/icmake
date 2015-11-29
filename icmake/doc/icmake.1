@@ -1,6 +1,3 @@
-8\&.00\&.00
-1992\-2015
-.PP 
 .TH "icmake" "1" "1992\-2015" "icmake\&.8\&.00\&.00\&.tar\&.gz" "A program maintenance utility"
 
 .PP 
@@ -141,14 +138,15 @@ received the three arguments \fIscript arg1 arg2\fP\&.
 .br 
 displays \fBicmake\fP\(cq\&s version number, and ends \fBicmake\fP, 
 overruled by \fI\-h\fP
-.IP 
+
+.PP 
 \fBIcmun\fP:
-.IP 
+.PP 
 \fIbimfile\fP:  binary \fBicmake\fP script file\&.
-.IP 
+.PP 
 .SH "PREPROCESSOR DIRECTIVES"
 
-.IP 
+.PP 
 The following preprocessor directives are available:
 .IP o 
 comment:
@@ -252,10 +250,10 @@ affect the specification of any previously defined symbols in which
 \fIidentifier\(cq\&s\fP definition has been used\&. If \fIidentifier\fP hasn\(cq\&t
 been defined a warning is issued\&.
 
-.IP 
+.PP 
 .SH "DATA TYPES"
 
-.IP 
+.PP 
 \fBIcmake\fP supports three data types:
 .IP o 
 \fIint\fP
@@ -280,7 +278,7 @@ Text constants consisting of one single character can also be used in
 arithmetic expressions if one of the operands is an \fIint\fP\&. In those
 cases the value of the string constant equals the ascii value of its
 first character (e\&.g\&., \fI3 + \(dq\&a\(dq\&\fP and \fI\(dq\&a\(dq\& + 3\fP are both equal to
-100\&. Instead of the \fIint\fP constant any \fIint\fP expression could have
+100)\&. Instead of the \fIint\fP constant any \fIint\fP expression could have
 been used, but the single character string constant \fImust\fP cannot be
 a \fIstring\fP variable\&.
 .IP 
@@ -296,8 +294,8 @@ indicated by index 0\&.
 .br 
 Used with function definitions to indicate that the function does not
 return a value\&.
-)
-.IP 
+
+.PP 
 Variables may be defined at the global level as well as at any local level
 within functions\&. When defined inside functions, the standard \fBC\fP scoping
 and visibility rules apply\&. E\&.g\&., local variables can only be used in their
@@ -305,14 +303,14 @@ own or in more deeply nested blocks, their visibility is masked in more deeply
 nested blocks by defining an identically named variable inside those more
 deeply nested blocks\&. Variables are strongly typed\&. A variable cannot have
 type \fIvoid\fP\&.
-.IP 
+.PP 
 Variables may be initialized once they are defined\&. Initializations can
 use expressions, using predefined functions, constant values and values of
 variables that are visible at the point of definition\&. 
-.IP 
+.PP 
 .SH "PREDEFINED CONSTANTS"
 
-.IP 
+.PP 
 The following constants are predefined by \fBicmake\fP\&. All are constant \fIint\fP 
 values:
 .TS 
@@ -379,21 +377,21 @@ S_IWRITE~16~stat
 
 .TE 
 
-.IP 
+.PP 
 The following constants are architecture dependent:
 .TS 
  tab(~);
 .SH "OPERATORS"
 
-.IP 
+.PP 
 \fBint\-typed operand(s):\fP
-.IP 
+.PP 
 All \fBC\fP operators (except for pointers, as \fBicmake\fP does not support
 pointers) are supported, operating like their \fBC\fP counterparts on \fIint\fP
 expressions\&.
-.IP 
+.PP 
 \fBstring\-typed operand(s):\fP
-.IP 
+.PP 
 For \fIstring\fP type variables and/or values the following
 operators are available:
 .IP o 
@@ -476,7 +474,7 @@ The predefined function \fIeval(string cmd)\fP behaves exactly like the
 backtick operator: they are synonyms\&.
 .IP 
 \fBlist\-typed operand(s):\fP
-.IP 
+.PP 
 For \fIlist\fP type variables and/or values the following
 operators are available:
 .IP o 
@@ -524,9 +522,9 @@ will be accepted, but the following construction will not be accepted:
         
 .fi 
 
-.IP 
+.PP 
 \fBCasting:\fP
-.IP 
+.PP 
 Type\-casts may be performed using the standard \fBC\fP cast\-operator to
 cast:
 .IP o 
@@ -534,10 +532,10 @@ Strings to ints and vice versa (\fI(int)\(dq\&123\(dq\&, (string)55\fP)
 .IP o 
 Strings may be cast to lists (\fIlist lst = (list)\(dq\&hello\(dq\&\fP)
 
-.IP 
+.PP 
 .SH "FLOW CONTROL"
 
-.IP 
+.PP 
 \fBIcmake\fP offers the following subset of \fBC\fP\(cq\&s statement types\&. They can be
 used as in the \fBC\fP programming language\&.
 .IP o 
@@ -575,30 +573,8 @@ initialized within the condition\&.
 .IP o 
 \fIfor (init; condition; increment) statement\fP
 .br 
-
-Variables(ofasingletype)maybeinitialized(andoptionallybe
-defined)inthettinit--
-ll
---
-ll
-ll
-ll
-ll
-ll
-ll
---
-ll
-c.
-symbol~1 when defined on the platform, otherwise 0
-unix~Unix, usually with GNU\(cq\&s gcc compiler
-UNIX~may alternatively be available
-linux~x86 running Linux (usually with gcc)
-LINUX~may alternatively be available
-M_SYSV, M_UNIX~x86 running SCO/Unix_POSIX~_SOURCE   Unix with Posix complient compiler
-__hpux~HP\-UX, with the native HP compiler
-
-.TE 
-section\&. The \fIinit\fP, \fIcondition\fP and
+Variables (of a single type) may be initialized (and optionally be
+defined) in the \fIinit\fP section\&. The \fIinit\fP, \fIcondition\fP and
 \fIincrement\fP sections may be left empty\&. The empty condition section
 is interpreted as `always \fItrue\fP\(cq\&\&.
 .IP 
@@ -635,14 +611,14 @@ statement\&.
 To end the execution of an \fBicmake\fP\-script\&. The \fIexpression\fP must
 evaluate to an \fIint\fP value, which becomes the script\(cq\&s exit value\&.
 
-.IP 
+.PP 
 .SH "PREDEFINED FUNCTIONS"
 
-.IP 
+.PP 
 \fBIcmake\fP offers the following predefined functions, which can be used
 anywhere in \fBicmake\fP scripts\&. The function overview is ordered alphabetically
 by function name\&.
-.IP 
+.PP 
 .IP o 
 \fIvoid arghead(string h)\fP
 .br 
@@ -876,7 +852,9 @@ Appends all (comma separated) arguments to the file
 \fIfilename\fP\&. Returns the number of printed arguments\&.
 .br 
 If \fIformat\fP contains placeholders %1 \&.\&. %n the output is
-formatted (see also \fIstrformat\fP)\&.
+formatted (see also \fIstrformat\fP)\&. Note that in this case
+argument counting (also) starts beyond the format string: the
+first argument following \fIformat\fP is referred to as \fI%1\fP\&.
 .IP 
 .IP o 
 \fIstring get_base(string file)\fP
@@ -1115,7 +1093,7 @@ void main()
     int j = 20;
     string s1;
     string s2;
-                                    // traditional use:
+                                    // traditional approach:
     s1 = (string)i + \(dq\& \(dq\& + (string)j + \(dq\& \(dq\& + (string)i;
                                     // using strformat:  
     s2 = strformat(\(dq\&%1 %2 %1\(dq\&, i, j);
@@ -1157,7 +1135,7 @@ size or if \fIcount <= 0\fP, then an empty string is returned\&. If
 Executes \fIcommand\fP\&. The return value indicates the executed
 command\(cq\&s exit value\&. The string \fIcommand\fP may contain redirection
 and/or piping characters\&.
-.IP 
+.PP 
 .IP o 
 \fIint system(int checking, string command)\fP
 .br 
@@ -1165,21 +1143,43 @@ Same functionality as the previous function, but by specifying
 \fIchecking\fP as \fINOT_CHECKED\fP the function won\(cq\&t terminate the
 script\&. Rather, it will return the called command\(cq\&s exit status, or
 \fI0x7f00\fP if the command wasn\(cq\&t found\&.
-.IP 
+.PP 
 .IP o 
 \fIstring trim(string s)\fP
 .br 
 Returns a copy of \fIs\fP without leading and trailing white spaces\&.
-.IP 
+.PP 
 .IP o 
 \fIstring trimleft(string str)\fP
 .br 
 Returns a copy of \fIs\fP without leading white spaces\&.
-.IP 
+.PP 
 .IP o 
 \fIstring trim(string s)\fP
 .br 
-Returns a copy of \fIs\fP without trailing white spaces\&.
+
+Returnsacopyof\fIs\fPwithouttrailingwhitespaces\&.
+--
+ll
+--
+ll
+ll
+ll
+ll
+ll
+ll
+--
+ll
+c.
+symbol~1 when defined on the platform, otherwise 0
+unix~Unix, usually with GNU\(cq\&s gcc compiler
+UNIX~may alternatively be available
+linux~x86 running Linux (usually with gcc)
+LINUX~may alternatively be available
+M_SYSV, M_UNIX~x86 running SCO/Unix_POSIX~_SOURCE   Unix with Posix complient compiler
+__hpux~HP\-UX, with the native HP compiler
+
+.TE 
 
 .PP 
 .SH "USER DEFINED FUNCTIONS"

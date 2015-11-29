@@ -1,31 +1,18 @@
 /*
-\fucref{eb_getArg}{char $*$eb_getArg (\params)}
-    {
-        {int} {n} {{\em n}-th argument to retrieve}
-        {int} {*increment} {address of counter increment}
-    }
-    {argument in string format}
-    {rss_strdup()}
-    {}
-    {eb_getArg.c}
-    {
+    Function {\em eb_getArg()} can be called to retrieve arguments from the
+    stack (e.g., the arguments of a {\em print()} statement) in string
+    format. Parameter {\em n} specifies the argument to retrieve: 0 is the
+    last pushed argument, 1 is the argument pushed before that, etc..
 
-        Function {\em eb_getArg()} can be called to retrieve arguments from the
-        stack (e.g., the arguments of a {\em print()} statement) in string
-        format. Parameter {\em n} specifies the argument to retrieve: 0 is the
-        last pushed argument, 1 is the argument pushed before that, etc..
+    Parameter {\em increment} tells the caller whether to start retrieving
+    a next argument or not. In the case of a list argument, {\em eb_getArg()}
+    sets this flag to 0 while the list is not yet completely processed.
 
-        Parameter {\em increment} tells the caller whether to start retrieving
-        a next argument or not. In the case of a list argument, {\em eb_getArg()}
-        sets this flag to 0 while the list is not yet completely processed.
+    When a list argument is processed or when the retrieved argument is not
+    a list, the flag value is set to 1.
 
-        When a list argument is processed or when the retrieved argument is not
-        a list, the flag value is set to 1.
-
-        The return value points to a string duplicate. The caller should free
-        this memory when it is no longer needed.
-
-    }
+    The return value points to a string duplicate. The caller should free
+    this memory when it is no longer needed.
 */
 
 #include "builtin.ih"

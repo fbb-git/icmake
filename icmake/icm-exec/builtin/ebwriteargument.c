@@ -1,5 +1,4 @@
-/*#define msg
-*/
+#define msgx
 
 #include "builtin.ih"
 
@@ -12,6 +11,8 @@ void eb_writeArgument(void *dest, size_t idx)
     do
     {
         char *string = eb_getArg(idx, &stop);
+
+        msg("argument = `%s', length = %u", string, strlen(string));
 
         (*gb_pDestWrite)(dest, string, string + strlen(string));
 

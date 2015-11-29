@@ -1,12 +1,12 @@
-/*#define msg
-*/
+#define msgx
 
 #include "builtin.ih"
 
-size_t eb_formattedFprintf(FILE *out, size_t start)
+size_t eb_formattedFprintf(FILE *out, FormatDest formatDest)
 {
-    gb_pDestWrite = eb_fileWrite;
+    gb_pDestWrite = eb_fileWrite;               /* write to file or string:
+                                                    here: to file */
 
-    return eb_formatter(out, start);
+    return eb_formatter(out, formatDest);
 }
 

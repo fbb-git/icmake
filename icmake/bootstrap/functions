@@ -28,13 +28,23 @@ build()
         let NR=${NR}+1
     done
 
+
     echo -n .
 
     try ${CC} ${CFLAGS} -c *.c
 
-    try ${CC} -o ../tmp/${LIBDIR}/${program} *.o \ */*.o ../tmp/libicrss.a \
-                                                                ${LDFLAGS}
-    rm *.o */*.o
+    echo -n .
+
+    try ar crs ../tmp/lib${program}.a */*.o
+
+    echo -n .
+
+    try ${CC} -o ../tmp/${LIBDIR}/${program} *.o -l${program} -licrss \
+                                                          -L../tmp ${LDFLAGS}
+    echo -n .
+
+    rm *.o */*.o ../tmp/lib${program}.a
+
     echo .
 }
 

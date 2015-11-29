@@ -14,7 +14,7 @@ void b_strFormat(void)
 
     gb_pDestWrite = eb_stringWrite;     /* write to a string */
     
-    eb_formatter(&ptr, 1);
+    eb_formatter(&ptr, TO_STRING);
 
     stringcons_charPtr(eb_releaseReg(), ptr);
 

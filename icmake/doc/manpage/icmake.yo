@@ -102,7 +102,7 @@ be specified:
         is removed on exit. By default tt(/tmp) is used, unless tt(/tmp) is
         not a writable directory, in which case the current user's tt($HOME)
         directory is used. Implicit temporary filenames always start with the
-        process id of the current icm() process.
+        process id of the current icm() process.)
     sop(t)()(the argument following tt(-t) is the name of a temporary tt(.bim)
         file, which is removed after icm()'s call. The next argument is the
         name of the icm() script, and all additional arguments are passed as
@@ -229,7 +229,7 @@ manpagesection(DATA TYPES)
         arithmetic expressions if one of the operands is an tt(int). In those
         cases the value of the string constant equals the ascii value of its
         first character (e.g., tt(3 + "a") and tt("a" + 3) are both equal to
-        100. Instead of the tt(int) constant any tt(int) expression could have
+        100). Instead of the tt(int) constant any tt(int) expression could have
         been used, but the single character string constant em(must) cannot be
         a tt(string) variable.
         
@@ -453,7 +453,7 @@ used as in the bf(C) programming language.
 
     itt(for (init; condition; increment) statement)nl() 
        Variables (of a single type) may be initialized (and optionally be
-        defined) in the tt)init) section. The tt(init), tt(condition) and
+        defined) in the tt(init) section. The tt(init), tt(condition) and
         tt(increment) sections may be left empty. The empty condition section
         is interpreted as `always tt(true)'.
 
@@ -658,7 +658,9 @@ by function name.
        Appends all (comma separated) arguments to the file
         tt(filename). Returns the number of printed arguments.nl()
        If tt(format) contains placeholders %1 .. %n the output is
-            formatted (see also tt(strformat)).
+            formatted (see also tt(strformat)). Note that in this case
+            argument counting (also) starts beyond the format string: the
+            first argument following tt(format) is referred to as tt(%1).
 
     itt(string get_base(string file))nl()
         Returns the base name of tt(file). The base name is the file without

@@ -11,7 +11,7 @@
 
 void b_printf(void)
 {
-    intcons_int(eb_releaseReg(), eb_formattedFprintf(stdout, 1));
+    intcons_int(eb_releaseReg(), eb_formattedFprintf(stdout, TO_STDOUT));
 }
 
 

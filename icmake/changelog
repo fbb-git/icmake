@@ -9,7 +9,7 @@ icmake (8.00.00)
     formatted printf functions. Many of his suggestions were implemented in
     version 8.00.00, which now offers several new built-in functions
     (get_dext, length, resize, strformat, trim, trimleft, trimright (see
-    icmake(1) for details).
+    icmake(1) for details)).
 
   * The functions fprintf and printf now support a format string as their
     first argument, in which %-notations refer to subsequent argument numbers
@@ -47,7 +47,10 @@ icmake (8.00.00)
     causing a stack underflow.
 
   * Fixed a bug in the icm-pp precompiler: multiple #defines of the same
-    identifier are not accepted anymore. #undefine 
+    identifier are not accepted anymore. Multple #undefines are OK, but
+    an #undefine generates a warning if it doesn't refer to a currently 
+    #defined identifier. 
+
   * Drive specifiers are not supported anymore
 
   * The function glob() is now assumed available.

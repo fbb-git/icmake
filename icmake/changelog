@@ -57,10 +57,10 @@ icmake (8.00.00)
 
   * The internal code organization in the rss, icm-pp, icm-comp, and icm-exec
     directories was significantly changed. Code belonging together is now
-    collected in their own subdirectory, where the subdir-name is used as
+    collected in its own subdirectory, where the subdir-name is used as
     first part of the name of `public' functions (but their source names do
     not start with the subdir name. E.g. symtab_push is found in
-    symtab/push.c). Support functions within a directory start with an
+    symtab/push.c). Support functions inside a directories start with an
     abbreviated subdir-name, both in their names and in their source filenames
     (e.g., st_addVar is found in symtab/staddvar.c). Also, within
     subdirectories 'dirname.ih' files contain all declarations that are
@@ -80,9 +80,9 @@ icmake (8.00.00)
     actions are going to be performed.
 
  *  The -T flag can be used to specify a non-default destination directory for
-    temporary files (by default /tmp or $HOME is used).
-    actions are going to be performed.
+    temporary files (by default /tmp or (if not available) $HOME is used).
 
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 29 Nov 2015 18:35:22 +0100
 
 icmake (7.23.02)
 

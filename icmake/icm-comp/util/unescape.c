@@ -1,5 +1,4 @@
-/*#define msg
-*/
+#define msgx
 
 #include "util.ih"
 

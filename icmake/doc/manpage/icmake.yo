@@ -294,11 +294,12 @@ manpagesection(PREDEFINED CONSTANTS)
         row(cell(UNIX)  cell(may alternatively be available))
         row(cell(linux) cell(x86 running Linux (usually with gcc)))
         row(cell(LINUX)  cell(may alternatively be available))
-        row(cell(M_SYSV, M_UNIX) cell(x86 running SCO/Unix)
+        row(cell(M_SYSV, M_UNIX) cell(x86 running SCO/Unix))
         row(cell(_POSIX)cell(_SOURCE   Unix with Posix complient compiler))
         row(cell(__hpux)cell(HP-UX, with the native HP compiler))
         rowline()
     )
+
 manpagesection(OPERATORS)
 
 bf(int-typed operand(s):)
@@ -850,7 +851,7 @@ void main()
 
     itt(int system(string command))nl()
        Executes tt(command). The return value indicates the executed
-        command's exit value. The string tt(command)) may contain redirection
+        command's exit value. The string tt(command) may contain redirection
         and/or piping characters.
 
     itt(int system(int checking, string command))nl()

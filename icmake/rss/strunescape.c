@@ -1,6 +1,4 @@
-/*
-#define msg
-*/
+#define msgx
 
 #include "rss.ih"
 
@@ -25,8 +23,13 @@ char *rss_strUnescape(char *source)  /* unescapes and returns source */
         *dest++ = convRet;                        /* Set destination */
 
         if (convRet == 0)                         /* terminating 0 ? */
+        {
+            *dest = 0;
             return ret;                     /* then OK out */
+        }
 
         source += nProcessed;               /* Skip to next char to convert */
     }
 }
+
+

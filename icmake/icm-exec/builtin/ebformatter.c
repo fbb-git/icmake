@@ -28,6 +28,9 @@ size_t eb_formatter(void *dest, FormatDest startIdx)    /* idx of 1st arg */
     msg("Got a format string: `%s' startIdx = %u, endIdx = %u", fmt, startIdx,\
             endIdx);
 
+    errno = 0;                                  /* make sure we're not      
+                                                   bothered by a previous
+                                                   errno */
 
     while (1)                                   /* process the fmt string   */
     {

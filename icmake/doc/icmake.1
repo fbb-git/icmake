@@ -1,3 +1,6 @@
+8\&.00\&.00
+1992\-2015
+.PP 
 .TH "icmake" "1" "1992\-2015" "icmake\&.8\&.00\&.00\&.tar\&.gz" "A program maintenance utility"
 
 .PP 
@@ -381,6 +384,42 @@ S_IWRITE~16~stat
 The following constants are architecture dependent:
 .TS 
  tab(~);
+
+
+
+
+
+
+
+
+
+
+
+
+--
+ll
+--
+ll
+ll
+ll
+ll
+ll
+ll
+ll
+--
+c.
+symbol~1 when defined on the platform, otherwise 0
+unix~Unix, usually with GNU\(cq\&s gcc compiler
+UNIX~may alternatively be available
+linux~x86 running Linux (usually with gcc)
+LINUX~may alternatively be available
+M_SYSV, M_UNIX~x86 running SCO/Unix
+_POSIX~_SOURCE   Unix with Posix complient compiler
+__hpux~HP\-UX, with the native HP compiler
+
+.TE 
+
+.PP 
 .SH "OPERATORS"
 
 .PP 
@@ -1135,7 +1174,7 @@ size or if \fIcount <= 0\fP, then an empty string is returned\&. If
 Executes \fIcommand\fP\&. The return value indicates the executed
 command\(cq\&s exit value\&. The string \fIcommand\fP may contain redirection
 and/or piping characters\&.
-.PP 
+.IP 
 .IP o 
 \fIint system(int checking, string command)\fP
 .br 
@@ -1143,43 +1182,21 @@ Same functionality as the previous function, but by specifying
 \fIchecking\fP as \fINOT_CHECKED\fP the function won\(cq\&t terminate the
 script\&. Rather, it will return the called command\(cq\&s exit status, or
 \fI0x7f00\fP if the command wasn\(cq\&t found\&.
-.PP 
+.IP 
 .IP o 
 \fIstring trim(string s)\fP
 .br 
 Returns a copy of \fIs\fP without leading and trailing white spaces\&.
-.PP 
+.IP 
 .IP o 
 \fIstring trimleft(string str)\fP
 .br 
 Returns a copy of \fIs\fP without leading white spaces\&.
-.PP 
+.IP 
 .IP o 
 \fIstring trim(string s)\fP
 .br 
-
-Returnsacopyof\fIs\fPwithouttrailingwhitespaces\&.
---
-ll
---
-ll
-ll
-ll
-ll
-ll
-ll
---
-ll
-c.
-symbol~1 when defined on the platform, otherwise 0
-unix~Unix, usually with GNU\(cq\&s gcc compiler
-UNIX~may alternatively be available
-linux~x86 running Linux (usually with gcc)
-LINUX~may alternatively be available
-M_SYSV, M_UNIX~x86 running SCO/Unix_POSIX~_SOURCE   Unix with Posix complient compiler
-__hpux~HP\-UX, with the native HP compiler
-
-.TE 
+Returns a copy of \fIs\fP without trailing white spaces\&.
 
 .PP 
 .SH "USER DEFINED FUNCTIONS"

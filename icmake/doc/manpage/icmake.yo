@@ -213,15 +213,15 @@ manpagesection(DATA TYPES)
     itt(ASCII character constants)nl() 
        ASCII character constants consist of one character, surrounded by
         single or double quotes. Single characters (e.g., tt('a')) represent
-        the character itself. Standard escape sequences (e.g., tt('\n') are
+        the character itself. Standard escape sequences (e.g., tt('\n')) are
         supported and represent their standard converted value (e.g., tt('\n')
         represents ascii value 10 (decimal)). Non-standard escape sequences
-        (e.g., tt('\x') represent the ascii character following the escape
+        (e.g., tt('\x')) represent the ascii character following the escape
         character (so tt('\x') equals tt('x')). Escape sequences consisting of
         three octal digits represent the ascii character corresponding to the
-        octal value modulo 256. Escape sequences consisting of an x followed
-        by two hexadecimal digits represent the ascii character corresponding
-        to the hexadecimal value.
+        octal value modulo 256 (e.g., tt('\123')). Escape sequences consisting
+        of an x followed by two hexadecimal digits represent the ascii
+        character corresponding to the hexadecimal value (e.g., tt('\xa4')).
 
     itt(int)nl() 
        Integral values, ranging from tt(-0x8000) through tt(0x7fff). tt(int)
@@ -231,11 +231,12 @@ manpagesection(DATA TYPES)
         or more hexadecimal digits) or as tt(ASCII) character constants.
 
     itt(string)nl()
-       Text variables. Text constants are delimited by double quotes. Multiple
-        text constants may be concatenated, but a single text constant may not
-        extend over multiple lines (concatenation of strings over multiple
-        lines is OK. To indicate an end-of-line in a text constant use the
-        tt(\n) escape sequence. 
+       Text variables. String constants are delimited by double
+        quotes. Multiple string constants may be concatenated, but a single
+        string constant may not extend over multiple lines. String constants
+        separated by white space only (i.e., blanks, newlines, comment) are
+        concatenated and represent one single string constant. To indicate an
+        end-of-line in a string constant use the tt(\n) escape sequence.
 
         ASCII character constants surrounded by double quotes can also be used
         in arithmetic expressions if one of the operands is an tt(int). The
@@ -384,8 +385,6 @@ as well) as so-called em(rvalue). Therefore, constructions like:
             )
         The predefined function tt(eval(string cmd)) behaves exactly like the
         backtick operator: they are synonyms.
-
-
     )
 
 bf(list-typed operand(s):)

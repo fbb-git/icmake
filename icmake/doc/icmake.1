@@ -259,31 +259,46 @@ been defined a warning is issued\&.
 .PP 
 \fBIcmake\fP supports three data types:
 .IP o 
+\fIASCII character constants\fP
+.br 
+ASCII character constants consist of one character, surrounded by
+single or double quotes\&. Single characters (e\&.g\&., \fI\(cq\&a\(cq\&\fP) represent
+the character itself\&. Standard escape sequences (e\&.g\&., \fI\(cq\&\en\(cq\&\fP) are
+supported and represent their standard converted value (e\&.g\&., \fI\(cq\&\en\(cq\&\fP
+represents ascii value 10 (decimal))\&. Non\-standard escape sequences
+(e\&.g\&., \fI\(cq\&\ex\(cq\&\fP) represent the ascii character following the escape
+character (so \fI\(cq\&\ex\(cq\&\fP equals \fI\(cq\&x\(cq\&\fP)\&. Escape sequences consisting of
+three octal digits represent the ascii character corresponding to the
+octal value modulo 256 (e\&.g\&., \fI\(cq\&\e123\(cq\&\fP)\&. Escape sequences consisting
+of an x followed by two hexadecimal digits represent the ascii
+character corresponding to the hexadecimal value (e\&.g\&., \fI\(cq\&\exa4\(cq\&\fP)\&.
+.IP 
+.IP o 
 \fIint\fP
 .br 
 Integral values, ranging from \fI\-0x8000\fP through \fI0x7fff\fP\&. \fIint\fP
-constants may be specified as decimal numbers, hexadecimal numbers or
-as \fIASCII\fP character constants (e\&.g\&., \fI\(cq\&x\(cq\&\fP), in which case the
-ascii\-value of the character constants is used\&.
+constants may be specified as decimal numbers (starting with digits 1
+through 9), octal numbers (starting with 0, followed by one or more
+octal digits) hexadecimal numbers (starting with 0x, followed by one
+or more hexadecimal digits) or as \fIASCII\fP character constants\&.
 .IP 
 .IP o 
 \fIstring\fP
 .br 
-Text variables\&. Text constants are delimited by double quotes\&. Multiple
-text constants may be concatenated, but a text constant may not extend
-over multiple lines\&. To indicate an end\-of\-line in a text constant use
-the \fI\en\fP escape sequence\&. The escape sequences \fI\ea \eb \ef \en \er\fP
-and \fI\et\fP are available\&. Otherwise, \fI\ex\fP is interpreted as a
-literal \fIx\fP\&. So, use \fI\e\e\fP to indicate \fI\e\fP within a text
-constant\&.
+Text variables\&. String constants are delimited by double
+quotes\&. Multiple string constants may be concatenated, but a single
+string constant may not extend over multiple lines\&. String constants
+separated by white space only (i\&.e\&., blanks, newlines, comment) are
+concatenated and represent one single string constant\&. To indicate an
+end\-of\-line in a string constant use the \fI\en\fP escape sequence\&.
 .IP 
-Text constants consisting of one single character can also be used in
-arithmetic expressions if one of the operands is an \fIint\fP\&. In those
-cases the value of the string constant equals the ascii value of its
-first character (e\&.g\&., \fI3 + \(dq\&a\(dq\&\fP and \fI\(dq\&a\(dq\& + 3\fP are both equal to
-100)\&. Instead of the \fIint\fP constant any \fIint\fP expression could have
-been used, but the single character string constant \fImust\fP cannot be
+ASCII character constants surrounded by double quotes can also be used
+in arithmetic expressions if one of the operands is an \fIint\fP\&. The
+single character string constant \fImust\fP be a constant, and cannot be
 a \fIstring\fP variable\&.
+.IP 
+Likewise, ASCII character constants surrounded by single quotes may be
+used in situations where a string operand is expected\&.
 .IP 
 .IP o 
 \fIlist\fP
@@ -511,7 +526,8 @@ collect the standard error stream\(cq\&s output as well\&. Example:
 .fi 
 The predefined function \fIeval(string cmd)\fP behaves exactly like the
 backtick operator: they are synonyms\&.
-.IP 
+
+.PP 
 \fBlist\-typed operand(s):\fP
 .PP 
 For \fIlist\fP type variables and/or values the following

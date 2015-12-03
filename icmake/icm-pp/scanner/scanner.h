@@ -11,5 +11,6 @@ size_t scanner_lineNr();
 size_t scanner_length();
 void scanner_pushFile(char const *filename);
 int  scanner_eof(void);
+size_t scanner_lastLineNr(void);
 
 #endif

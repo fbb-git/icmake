@@ -29,6 +29,7 @@ extern char    *yytext;
 extern size_t   yyleng;
 extern int      yylineno;
 
+extern size_t   sc_lastLineNr;
 extern char    *sc_definition;
 extern int      sc_getDefine;
 extern int      sc_eof;

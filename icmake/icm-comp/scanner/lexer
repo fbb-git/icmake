@@ -5,6 +5,8 @@
 
 %}
 
+%option 8bit
+
 %x str
 
 %%

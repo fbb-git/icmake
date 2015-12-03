@@ -16,6 +16,7 @@
 #include "tokens.h"
 
 extern int yynerrs;
+extern char *p_filename;
 extern char *p_text;
 extern char *p_im;
 extern char p_dirsep[];

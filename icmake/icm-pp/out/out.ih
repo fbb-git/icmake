@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "../../rss/rss.h"
 #include "../state/state.h"
@@ -11,6 +12,7 @@ extern FILE    *o_file;
 extern int      o_space;
 extern size_t   o_nl;   
 extern int      o_atBOL;
+extern char    *o_outFilename;
 
 void o_newLines(void);
 void o_close(void);

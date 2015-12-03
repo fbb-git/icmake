@@ -5,8 +5,9 @@ void parser(char **argv)
     p_im = rss_strdup(getenv("IM"));
 
     state_init();
-    out_init(argv[1], argv[2]);
-    scanner(argv[1], out_atEOF());
+    p_filename = rss_strdup(argv[1]);
+    out_init(p_filename, argv[2]);
+    scanner(p_filename, out_atEOF());
 }
 
 

@@ -3,6 +3,7 @@
 int sc_popFile()
 {
     yypop_buffer_state();
+    sc_lastLineNr = yylineno;
     yylineno = filestack_tos()->popLineNr;
     filestack_pop();
     msg("returning to previous file");

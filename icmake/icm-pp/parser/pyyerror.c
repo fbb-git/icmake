@@ -3,7 +3,7 @@
 int yyerror(char *s)
 {
     if (scanner_eof())
-        rss_fatal(filestack_tos()->filename, scanner_lineNr(),
+        rss_fatal(p_filename, scanner_lastLineNr(),
                     "Unexpected end of file");
 
     rss_error(filestack_tos()->filename, scanner_lineNr(), 

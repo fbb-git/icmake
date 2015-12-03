@@ -42,6 +42,12 @@ ident       [[:alpha:]_][[:alnum:]_]*
                         }
 <string>"\\".|.         yymore();
 
+<string>\n              {
+                            rss_error(filestack_tos()->filename, yylineno,
+                                "double quote at end of string not found");
+                            BEGIN INITIAL;
+                        }
+
 #define                 return DEFINE;
 #else                   return ELSE;
 #endif                  return ENDIF;

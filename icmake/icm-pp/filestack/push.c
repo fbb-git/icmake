@@ -1,3 +1,4 @@
+#define msgx
 #include "filestack.ih"
 
 void filestack_push(size_t currentLineNr, char const *fname)
@@ -9,6 +10,8 @@ void filestack_push(size_t currentLineNr, char const *fname)
     
     fs_stack[fs_size].filename = rss_strdup(fname);
     fs_stack[fs_size].popLineNr = currentLineNr;
+
+    msg("Pushed file %u: `%s'", fs_size, fname);
 
     ++fs_size;
 }

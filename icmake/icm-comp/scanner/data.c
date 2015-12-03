@@ -1,5 +1,6 @@
 #include "scanner.ih"
 
+char gs_char[2];
 char *gs_filenames;
 char *gs_savedText;
 size_t   gs_savedLineNr;

@@ -20,10 +20,16 @@
                             util_catString(yytext);
                         }
 
-<str>\\x[[:xdigit:]]{2} |
-<str>\\[0-7]{3}         |
+<str>\\x[[:xdigit:]]{2} {
+                            util_catString(sc_scan("%x", yytext + 2));
+                        }
+
+<str>\\[0-7]{3}         {
+                            util_catString(sc_scan("%o", yytext + 1));
+                        }
+
 <str>\\.                {  
-                            util_catString(sc_escapedValue(1, yyleng);
+                            util_catString(sc_escapedChar(yytext[1]));
                         }
 
 [ \t]                   ;
@@ -38,14 +44,22 @@
                             sc_popFile();
                         }
 '.'                     {
-                            util_charConst();
+                            sc_charConst();
                             return STRING;
                         }
 
-'\\[0-7]{3}'         |
-'\\x[[:xdigit:]]{2}' |
+'\\[0-7]{3}'            {
+                            util_setString(sc_scan("%o", yytext + 2));
+                            return STRING;
+                        }
+
+'\\x[[:xdigit:]]{2}'    {
+                            util_setString(sc_scan("%x", yytext + 3));
+                            return STRING;
+                        }
+
 '\\.'                   {
-                            util_setString(sc_escapedValue(2, yyleng - 1));
+                            util_setString(sc_escapedChar(yytext[2]));
                             return STRING;
                         }
 
@@ -58,16 +72,13 @@
                             return NUMBER;
                         }
 0x[[:xdigit:]]+         {
-                            util_printf("%x", yytext + 2);
+                            util_scan("%x", yytext + 2);
                             return NUMBER;
                         }
 
 \"                      {
-                            util_setString(""); BEGIN str;
-                        }
-'.'                     {
-                            util_printf("%d%c", yytext[1], 0);
-                            return NUMBER;
+                            util_setString(""); 
+                            BEGIN str;
                         }
 
 arghead                 {

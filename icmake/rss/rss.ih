@@ -32,10 +32,10 @@ int     rs_globerr(char const *path, int errnr);
 void    rs_split(char const *n);   /* calls rss_split */
 void    rs_join(void);             /* calls rss_makePath */
 
-// size_t  rs_atox(char *string, int *n);
-
 char    *rs_fileFound(void);              /* test attrib/pattern  */
 
 void    rs_msg(char const *src, size_t lineNr,  /* !src: no source info */
                char const *prefix, char const *fmt, va_list args);
+
+
 

@@ -992,17 +992,17 @@ case 2:
 YY_RULE_SETUP
 #line 13 "lexer"
 {  
-                            util_catString(yytext);
+                            sc_handleEscape();
                         }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 16 "lexer"
 {
+                            /* having read a "string", unescape it 
+                               the returned string does not have surrounding
+                               double quotes */
                             BEGIN 0;
-                            if (! util_unescape())
-                                util_semantic(
-                                        "illegal escape sequence in string");
                             return STRING;
                         }
 	YY_BREAK

@@ -52,4 +52,6 @@ void sc_changeFile(char *s);        /* name of source file to open */
 void sc_popFile();
 
 void sc_saveInfo(void);             /* saves yylineno and yytext */    
-void sc_setLineNr();                /* updates yylineno at #<nr>\n lines */
+void sc_setLineNr(void);            /* updates yylineno at #<nr>\n lines */
+void sc_handleEscape(int idx);      /* convert + add escaped char */
+void sc_escapeWarning(int ch);      /* warns about non-standard escape seq. */

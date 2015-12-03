@@ -46,7 +46,8 @@ char     *rss_hexString (size_t, size_t);
                                         /* make programname from argv[0] */
 char const *rss_programName(char const *argv0);  
 
-char     *rss_strUnescape(char *);
+// char     *rss_strUnescape(char *);
+// int         rss_escapeChar(int chr);
 
 char     *rss_strdup(char const *str);      /* duplicates 'str ? str : ""'  */
 

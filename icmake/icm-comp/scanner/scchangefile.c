@@ -29,3 +29,4 @@ void sc_changeFile(char *s)               /* name of source file to open */
 
     util_setSourceName(gs_fileStack[gs_fileSp].fname);
 }
+

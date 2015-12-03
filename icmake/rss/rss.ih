@@ -31,8 +31,8 @@ int     rs_globerr(char const *path, int errnr);
 
 void    rs_split(char const *n);   /* calls rss_split */
 void    rs_join(void);             /* calls rss_makePath */
-int     rs_chesc(char *string, int *);
-size_t  rs_atox(char *string, int *n);
+
+// size_t  rs_atox(char *string, int *n);
 
 char    *rs_fileFound(void);              /* test attrib/pattern  */
 

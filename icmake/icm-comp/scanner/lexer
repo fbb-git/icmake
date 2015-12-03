@@ -9,17 +9,23 @@
 
 %%
 
-<str>[^"]   |
-<str>\\.                {  
-                            util_catString(yytext);
-                        }
 <str>\"                 {
+                            /* having read a "string", unescape it 
+                               the returned string does not have surrounding
+                               double quotes */
                             BEGIN 0;
-                            if (! util_unescape())
-                                util_semantic(
-                                        "illegal escape sequence in string");
                             return STRING;
                         }
+<str>.                  {
+                            util_catString(yytext);
+                        }
+
+<str>\\x[[:xdigit:]]{2} |
+<str>\\[0-7]{3}         |
+<str>\\.                {  
+                            util_catString(sc_escapedValue(1, yyleng);
+                        }
+
 [ \t]                   ;
 \n                      ++yylineno;
 ^#[0-9]+\n              {
@@ -31,13 +37,31 @@
 ^#$                     {
                             sc_popFile();
                         }
-'[^\\]'             |
-'\\.'               |
-'\\0[0-8]{2}'       |
-'\\x[[:xdigit:]]{2}     {   
-                            util_charString(yyleng, yytext); 
+'.'                     {
+                            util_charConst();
                             return STRING;
                         }
+
+'\\[0-7]{3}'         |
+'\\x[[:xdigit:]]{2}' |
+'\\.'                   {
+                            util_setString(sc_escapedValue(2, yyleng - 1));
+                            return STRING;
+                        }
+
+[1-9][0-9]*             {
+                            util_scan("%u", yytext);
+                            return NUMBER;
+                        }
+0[0-7]*                 {
+                            util_scan("%o", yytext);
+                            return NUMBER;
+                        }
+0x[[:xdigit:]]+         {
+                            util_printf("%x", yytext + 2);
+                            return NUMBER;
+                        }
+
 \"                      {
                             util_setString(""); BEGIN str;
                         }

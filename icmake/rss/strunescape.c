@@ -2,8 +2,15 @@
 
 #include "rss.ih"
 
-char *rss_strUnescape(char *source)  /* unescapes and returns source */
+char *rss_strUnescape(char *source)         /* returns unescaped source */
 {
+    char *begin = source;
+    char *end = source + strlen(source);    /* points to end-of-string */
+
+    while (begin = strchr(begin, '/'))      /* while there are escape chars */
+    {
+        int 
+
     register int convRet;
     int nProcessed;
 

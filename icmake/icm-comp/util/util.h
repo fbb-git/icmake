@@ -3,9 +3,12 @@
 
 #include <stdio.h>
 
-char const *util_sourceName();
+char const *util_sourceName(void);
 char const *util_string(void);
-char const *util_unescape();
+
+//char const *util_unescape(void);
+int         util_catEscape(int escapedChar);
+
 int         util_printf(char const *fmt, ...);  /* fill gu_lexstring */
 
 void        util_catString(char const *txt);
@@ -14,7 +17,8 @@ void        util_resetSemErr(void);
 void        util_semantic(char const *s, ...);
 void        util_setSourceName(char const *txt);
 void        util_setString(char const *txt);
-void        util_charString(size_t length, char const *txt);
+// void        util_charString(size_t length, char const *txt);
+int         util_catEscape(int ch);
 
 #endif
 

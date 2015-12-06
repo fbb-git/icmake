@@ -1,8 +1,11 @@
+#define msgx
 #include "parser.ih"
 
 SemVal *p_twoArgs(ExprType type, SemVal *larg, SemVal *rarg)
 {
     register int ok;
+
+    msg("start");
 
     p_expr2stack(larg);                             /* arg to stack */
     p_expr2stack(rarg);                             /* arg to stack */
@@ -49,6 +52,15 @@ SemVal *p_twoArgs(ExprType type, SemVal *larg, SemVal *rarg)
     {
         util_semantic(gp_typeConflict, gp_funstring[type]);
         p_discard(larg);
+        rarg = p_stackFrame(e_null);
     }
-    return (rarg);
+    msg("leaving");
+    return rarg;
 }
+
+
+
+
+
+
+

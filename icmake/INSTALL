@@ -1,26 +1,27 @@
 INSTALLING ICMAKE
 =================
 
-                          Version 7.12 (and beyond)
+                          Version 8.00.00 (and beyond)
 
 1. Unpack the archive:
 ======================
 
 The installation files for Icmake comes as an archive, e.g.,
-"icmake_7.12.tar.gz". These archives unpack to several directories and files.
+"icmake_8.00.00.tar.gz". These archives unpack to several directories and
+files.
 
-Starting with distribution icmake_7.12.tar.gz, the archive unpacks to a
-directory icmake-7.12 below the current directory. The version number in this
-directory may change to newer release versions.
+The archive unpacks to a directory icmake-8.00.00 below the current
+directory. The version number in this directory may change to newer release
+versions.
 
-So, if you unpack icmake_7.12.tar.gz (or later versions) in the directory
-/usr/local/src, a directory /usr/local/src/icmake/icmake-7.12 is created, as
-well as other subdirectories below /usr/local/src/icmake/icmake-7.12
+So, if you unpack icmake_8.00.00.tar.gz (or later versions) in the directory
+/usr/local/src, a directory /usr/local/src/icmake/icmake-8.00.00 is created, as
+well as other subdirectories below /usr/local/src/icmake/icmake-8.00.00
 
 To unpack the archives, create an appropriate directory (e.g.,
 `/usr/local/src/icmake' E.g,
 
-                         tar xvzf icmake_7.12.tar.gz
+                         tar xvzf icmake_8.00.00.tar.gz
 
 The extraction of files from the archive should yield a lot of C source files
 in various directories. Icmake's default distribution does not contain
@@ -32,7 +33,7 @@ makefiles for the Unix-utility `make' anymore.
 
 Change to the directory into which the sources were unpacked. E.g., do
 
-                                cd icmake-7.12
+                                cd icmake-8.00.00
 
 This directory should contain this file (i.e., INSTALL). Icmake uses several
 support programs, which do not have to be stored in the PATH
@@ -69,28 +70,35 @@ mentioned in ./def/programs (they should be available on any Unix(like)
 systems). 
 
 
+    - Prepare for the program construction by running the shell-script
+        `icm_prepare' as follows: 
+
+                            ./icm_prepare /
+
+      (this assumes that you want to prepend all base locations mentioned in
+INSTALL.im with /; other base locations are also possible, e.g., 
+        ./icm_prepare /tmp 
+prepares for installation of all files in the specified locations, all below
+/tmp.
+
     - Next run the shell-script `icm_bootstrap' as follows:
 
-                            ./icm_bootstrap /
+                            ./icm_bootstrap x
 
-This constructs the icmake distribution under the ./tmp directory, preparing
-for an installation from the root directory. It puts all icmake related files
-in
+This constructs the icmake files under the ./tmp directory, preparing for an
+installation under the directory specified at ./icm_prepare. It puts all
+icmake related files in
     tmp/$BINDIR, tmp/$SKELDIR, tmp/$MANDIR, tmp/$LIBDIR, tmp/$CONFDIR,
     tmp/$DOCDIR, tmp/$DOCDOCDIR
 
 NOTE:
 
-There have been reports about failing compilations of the file ./comp/lexer.c.
-This is usually caused by incompatibilities between the existing lexer.c file
-and the lex(1) run-time library. These problems are commonly solved after
-running in the directory ./comp the command
+There have been reports about failing compilations of the file
+./icm-comp/lexer.c.  This is usually caused by incompatibilities between the
+existing lexer.c file and the lex(1) run-time library. These problems are
+commonly solved after running in the directory ./icm-comp the command
 
-        flex -c lexer.c lexer 
-
-and by declaring yyleng in comp/iccomp.h as
-
-        extern size_t yyleng;            /* strlen(yytext) */
+        ./updatescanner
 
 
 3. Install the files
@@ -98,7 +106,7 @@ and by declaring yyleng in comp/iccomp.h as
 
     You probably must do this as `root':
 
-                            ./icm_install [strip] all /
+                            ./icm_install [strip] all
 
     This installs all files under the root directory (which was initially
 specied when calling icm_bootstrap) When providing the strip arguments
@@ -118,15 +126,6 @@ binaries will be stripped.
            ./icm_install docdoc /        -  installs the extended docs and
                                                  examples 
 
-The directory / mentioned in the examples usually matches the directory
-specified with icm_bootstrap. The latter directory is assumed to be the
-installation directory. By specifying another directory with icm_install the
-software will be installed under the specified directory. It might not run
-from those locations because of paths built into the software at compile-time,
-but it can be used to create a temporary directory under which the software is
-installed, then, e.g., tar the contents of that directory to be untarred at a
-later moment in time at its final destination.
-
 4. Clean up the garbage
 =======================
 
@@ -135,13 +134,12 @@ later moment in time at its final destination.
 5. Predefined symbols
 =====================
 
-        Icmake does not require special modifications. However, you may wish to
-take a look at the file pp/loadsym.c. In this file the function 'loadsym()'
-of the preprocessor icm-pp is found. The preloaded symbols of Icmake are 
-defined in this function. E.g., MSDOS is defined as 1 when an MSDOS platform 
-is used, linux is defined as 1 when Icmake is compiled for Linux, etc.. 
-If you plan to use these predefined symbols in your Icmake scripts, make sure 
-that the conditional code in the file pp/loadsym.c recognizes your platform.
+        Icmake does not require special modifications. However, you may wish
+to take a look at the file icm-pp/loadsymbols.c. In this file the function
+'loadSymbols()' of the preprocessor icm-pp is found. The preloaded symbols of
+Icmake are defined in this function. If you plan to use these predefined
+symbols in your Icmake scripts, make sure that the conditional code in the
+file pp/loadsym.c recognizes your platform.
 
         If you are unsure whether this code recognizes your compiler, build
 Icmake as distributed and try out the sample icmake file examples/defines.im
@@ -161,7 +159,6 @@ Currently the following symbols are predefined:
         --------------------------------------------------------------
         symbol          1 when defined on the platform ... otherwise 0
         --------------------------------------------------------------
-        MSDOS           MS-DOS platform (with MSC 7.00 compiler)
         unix            Unix, usually with GNU's gcc compiler
         UNIX            same
         linux           '386 or '486 running Linux (usually with gcc)
@@ -174,149 +171,4 @@ Currently the following symbols are predefined:
 
 If you want to modify something here which hasn't been done before, please
 email me about it, and I'll include it in the standard distribution.
-
-
-
-The following section is not actively maintained anymore. It is kept for
-reasons of backward compatibility.
-
-Hand-compiling icmake
-=====================
-
-Alternatively, you can compile icmake yourself. If you prefer doing this, you
-could act as follows:
-
-(a) Note that even though grammar definition and lexical scanner definition
-    files (parser and lexer) are found at several subdirectories, the bison
-    and flex programs should *NOT* be used. The parser.c and lexer.c files are
-    already available, and you might run into name-resolution problems if you
-    try to create parser.c or lexer.c with the bison/flex found at your site.
-    The parser and lexer files were included for documentation purposes only,
-    don't feed them to bison or flex
-
-(b) With some files the (GNU-C) compiler generates warnings. These warnings
-    fall into two categories: 'default' entry proints in switches cause the
-    compiler to complain about undefined enumeration values inside the switch,
-    and these warnings can safely be ignored.
-
-    Then, with the lexer.c and parser.c files the compiler may complain about
-    variables which were defined but not used. Again: no harm done, and you can
-    safely ignore these warnings as well.
-
-(c) Change-dir to the directory "rss". This directory contains sourcefiles for
-    the Runtime Support System. These functions are used in all the programs of
-    the Icmake family.
-
-    Compile all files, using the appropriate compiler flags which cause your
-    compiler to compile-only.
-    On segmented architectures (e.g. MS-DOS computers), choose the "small"
-    model. 
-
-    E.g., the compiler flags for Gnu's gcc compiler are:
-
-                              gcc -c -DHAVE_GLOB
-
-    NOTE:
-    =====
-    = This note is only relevant for the compilation of icmake under MS-DOS,
-    = and can be ignored in all other cases.
-    = 
-    = Below the ICMAKE\RSS subdirectory the subdirectory ASM is found. In this
-    = directory the files REDIRECT.ASM and REDIRECT.OBJ are stored.
-    = 
-    = The REDIRECT.OBJ file is included in the ICRSS.LIB library by the
-    = DOS-MSC icmake-script, and is not removed thereafter.
-    = 
-    = The file REDIRECT.ASM is included for reference purposes only.
-    = REDIRECT.ASM could be assembled 'by hand' using the ML-assembler, using
-    = the following commands:
-    = 
-    =     set ml=-c -Cp -DMM='S'
-    =     ml redirect.asm
-    = 
-    = The file icmake\rss\asm\redirect.obj must be added to the icrss.lib
-    = library in icmake\rss. E.g., in the directory icmake\rss the following
-    = command could be given:
-    = 
-    =     lib icrss -+asm\redirect ;
-    
-    NOTE:
-    =====
-    The flag -DHAVE_GLOB causes the function glob() to be included in the
-    code, which expands a filename with wildcards to a list of names. The flag
-    is not needed for MSDOS compilations. If you do NOT have this function,
-    OMIT the -DHAVE_GLOB specification. This is further discussed below.
-
-    While compiling, you may need other special definition flags to produce
-    workable code for other systems. Please check the section below to see
-    if you need any special flags.
-
-    Next, place the produced object files into one library. A suggested name is
-    "libicrss.a" for Unix systems, or "icrss.lib" for DOS systems. See the
-    documentation of your library manager ("ar" or "lib") for the required
-    command line.
-
-
-    Next, for Unix systems run:
-
-                            ar rsv libicrss.a *.o
-
-
-(d) The following directories were also created from the archive:
-            make,
-            pp,
-            comp,
-            exec,
-            un.
-
-    The directories hold respectively the files needed for the top-level
-    program "icmake", for the preprocessor "icm-pp", for the compiler
-    "icm-comp", for the executor "icm-exec" and for the unassembler "icmun".
-    These program names are on Unix-based systems without extension; supply
-    ".exe" for DOS.
-
-    Change-dir to each of these directories in turn and compile and link all
-    .c files into the appropriate program. E.g., for a Unix system you might
-    type: 
-
-            cd make
-            gcc -DHAVE_GLOB -o bin/icmake *.c ../rss/libicrss.a
-
-            cd ../pp
-            gcc -DHAVE_GLOB -o bin/icm-pp *.c ../rss/libicrss.a
-
-            cd ../comp
-            gcc -DHAVE_GLOB -o bin/icm-comp *.c ../rss/libicrss.a
-
-            cd ../exec
-            gcc -DHAVE_GLOB -o bin/icm-exec *.c ../rss/libicrss.a
-
-            cd ../un
-            gcc -DHAVE_GLOB -o bin/icmun *.c ../rss/libicrss.a
-
-            cd ..
-
-
-    Next continue with the installation at point 3 (sh install) above.
-
-
-
-Special flags while compiling
------------------------------
-
-        A large part of the source code of Icmake should compile on any
-platform. The exceptions we have encountered so far are the following:
-
-(a) On MSDOS platforms, the constant MSDOS must be defined. This symbol is
-by default defined by the Microsoft compiler. For other compilers on DOS
-systems, a flag "-DMSDOS" may be necessary when invoking the compilations.
-Non-DOS systems should, obviously, *not* have a defined symbol MSDOS.
-
-(b) Many systems which are based on GNU software, such as the Linux
-operating system, have a function glob() to expand wildcards to filenames.
-Icmake should be compiled with the symbol HAVE_GLOB (flag -DHAVE_GLOB on the
-compiler command line) when this function is available.
-
-When Icmake is compiled without this flag, wildcards are expanded using a
-`poor mans solution' (PMS). See the file rss/dosfind.c for further details.
 

@@ -194,19 +194,20 @@ SemVal *p_insertArg(SemVal *insert, SemVal *mult);
 SemVal *p_lCast(SemVal *e);
 SemVal *p_nullFrame(SemVal *e);
 SemVal *p_sCast(SemVal *e);
-int     p_conflict(SemVal *lval, SemVal *rval, Opcode opcode);
-int     p_testBinOp(Opcode opcode, SemVal *lval, SemVal *rval);
+int     p_conflict(SemVal **lval, SemVal *rval, Opcode opcode);
+int     p_testBinOp(Opcode opcode, SemVal **lval, SemVal *rval);
 int     p_testOperand(SemVal *e, Opcode opcode);
 int     yyerror(char *s);
 size_t  p_findString(char *s);
-size_t  p_rmJmpZero(register size_t codelen, unsigned *list, register size_t listlen);
+size_t  p_rmJmpZero(register size_t codelen, unsigned *list, 
+                                                    register size_t listlen);
 void    p_addPatch(unsigned *list, size_t len, register size_t value);
 void    p_bool2int(SemVal *e);
 void    p_callHidden(register int fun, SemVal *rarg);
 void    p_callRss(SemVal *e, FunNr funnr, ...);
 void    p_catArgs(SemVal *arr);
 void    p_catStrings(SemVal *lval, SemVal *rval);
-void    p_clearOperands(SemVal *lval, SemVal *rval);
+void    p_clearOperands(SemVal **lval, SemVal *rval);   /* *lval: zeroFrame */
 void    p_popVar(SemVal *e);
 void    p_binOp(SemVal *lval, SemVal *rval, Opcode opcode);
 void    p_defineVar(void);        /* parameter or local var */

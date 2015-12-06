@@ -5,9 +5,9 @@ SemVal *p_ternary(SemVal *cond, SemVal *ifTrue, SemVal *ifFalse)
     if ((ifTrue->type & ifFalse->type & e_typeMask) == 0)
     {
         util_semantic(gp_typeConflict, "?:");
-        p_clearOperands(ifTrue, ifFalse);
+        p_clearOperands(&ifTrue, ifFalse);
         
-        return cond;
+        return ifTrue;
     }
 
     if (test_type(cond, e_const))      /* constant: true or false  */

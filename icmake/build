@@ -1,20 +1,43 @@
 #!/bin/bash
 
-if [ "$1" == "clean" ] ; then
+action=$1
+if [ "$action" == "distclean" ] ; then
+    rm -rf tmp
+    action=clean
+fi
 
-    rm -f icmake/tmp/lib* icmake/tmp/main.o
-    for dir in rss icm-comp icm-exec icm-pp icmun
+if [ "$action" == "clean" ] ; then
+    for dir in rss icm-comp icm-exec icm-pp icmun icmake
     do
         cd $dir
+	echo -n "cd $dir; "
         build clean
         cd ..
     done
     exit 0
 fi
 
+if [ ! -e tmp/INSTALL.im ] ; then
+
+    if [ "$action" == "" ] ; then
+        echo "
+First run ./icm_prepare, specifying a base directory for icmake, or restart 
+$0, and specify a base directory as its first command-line argument
+"
+        exit 1;
+    fi
+
+    ./icm_prepare $action
+fi
+
 for dir in rss icm-comp icm-exec icm-pp icmun
 do
     cd $dir
+    echo $dir
     build || exit 1
     cd ..
 done
+
+
+
+

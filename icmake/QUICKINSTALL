@@ -1,17 +1,34 @@
-0. After unpacking the icmake_X.YY.tar.gzicmake archive, make your current
+0. After unpacking the icmake_X.YY.tar.gz icmake archive, make your current
    working directory equal to the directory in which you found this file.
 
 1. Inspect and modify if necessary the current locations in INSTALL.im.
 
 2. If you want the compiler to insert debugging code in the icmake programs
    then define a CFLAGS environment variable. E.g., 
-                   CFLAGS="-Wall -O2 -g"
+                CFLAGS="-Wall -O2 -g"
 
-3. Create the icmake installation files:
-                   ./icm_bootstrap /
+3. To prepare for the compilations of the programs, run 
+                ./icm_prepare /
 
-4. To install, do as root:
-                    ./icm_install strip all /
+3. Compile the various programs:
+                ./icm_bootstrap x
+
+4. As root: install the programs and documentation:
+                ./icm_install strip all
                     
 5. Remove intermediate construction area:
-                    rm -rf tmp
+                rm -rf tmp
+
+
+
+Following these commands (referring to the #defines in INSTALL.im):
+    
+    icmake is in /BINDIR
+    skeleton files, installed by icmstart, are in /SKELDIR
+    manual pages are in /MANDIR/man{1,7}
+    icmake support programs are in /LIBDIR
+    confguration files, specifying which skeleton commands to install, are in
+        /CONFDIR
+    icmake documentation is installed in /DOCDIR and /DOCDOCDIR
+
+

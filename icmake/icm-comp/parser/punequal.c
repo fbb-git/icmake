@@ -2,11 +2,11 @@
 
 SemVal *p_unequal(SemVal *lval, SemVal *rval)
 {
-    p_bool2int(lval);                             /* convert boolean to i */
+    p_bool2int(lval);                           /* convert boolean to i */
     p_bool2int(rval);
 
-    if (p_conflict(lval, rval, op_neq))       /* test type p_conflict */
-        return(lval);
+    if (p_conflict(&lval, rval, op_neq))        /* test type p_conflict */
+        return lval;
 
     if ((lval->type & rval->type & (size_t)~e_typeMask) == e_const)
     {
@@ -27,5 +27,5 @@ SemVal *p_unequal(SemVal *lval, SemVal *rval)
     else
         p_binOp(lval, rval, op_neq);
 
-    return (lval);                          /* return new expression */
+    return lval;                            /* return new expression */
 }

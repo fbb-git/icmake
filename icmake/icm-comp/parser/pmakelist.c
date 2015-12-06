@@ -25,7 +25,7 @@ SemVal *p_makeList(SemVal *args, ExprType type)
     )
     {
         util_semantic(gp_typeConflict, gp_funstring[f_makelist]);
-        return (args);
+        return p_stackFrame(e_list);
     }
 
     p_catArgs(args);                          /* catenate all arguments */
@@ -35,7 +35,7 @@ SemVal *p_makeList(SemVal *args, ExprType type)
     else
         p_callRss(args, f_makelist);
 
-    return (args);                          /* return called function code */
+    return args;                          /* return called function code */
 }
 
 

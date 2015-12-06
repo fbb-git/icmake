@@ -2,11 +2,11 @@
 
 SemVal *p_smEqual(SemVal *lval, SemVal *rval)
 {
-    p_bool2int(lval);                             /* convert boolean to i */
+    p_bool2int(lval);                           /* convert boolean to i */
     p_bool2int(rval);
 
-    if (p_conflict(lval, rval, op_smeq))      /* test type p_conflict */
-        return(lval);
+    if (p_conflict(&lval, rval, op_smeq))       /* test type p_conflict */
+        return lval;
 
     if ((lval->type & rval->type & (size_t)~e_typeMask) == e_const)
     {

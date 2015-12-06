@@ -4,14 +4,14 @@ SemVal *p_subtract(SemVal *lval, SemVal *rval)
 {
     register ExprType type;
 
-    if (p_testBinOp(op_sub, lval, rval))
-        return (lval);                      /* test for correct types */
+    if (p_testBinOp(op_sub, &lval, rval))
+        return lval;                        /* test for correct types */
 
-    p_bool2int(lval);                             /* convert pending booleans */
+    p_bool2int(lval);                       /* convert pending booleans */
     p_bool2int(rval);
 
-    if (p_conflict(lval, rval, op_sub))       /* test type p_conflict */
-        return(lval);
+    if (p_conflict(&lval, rval, op_sub))    /* test type p_conflict */
+        return lval;
 
     type = lval->type;                      /* remember the type */
 
@@ -23,5 +23,5 @@ SemVal *p_subtract(SemVal *lval, SemVal *rval)
         set_type(lval, type & (e_typeMask | e_stack));
     }
 
-    return (lval);                          /* return new expression */
+    return lval;                            /* return new expression */
 }

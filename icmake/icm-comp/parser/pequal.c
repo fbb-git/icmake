@@ -1,15 +1,11 @@
-/*
-                            E Q U A L . C
-*/
-
 #include "parser.ih"
 
 SemVal *p_equal(SemVal *lval, SemVal *rval)
 {
-    p_bool2int(lval);                             /* convert boolean to i */
+    p_bool2int(lval);                           /* convert boolean to i */
     p_bool2int(rval);
 
-    if (p_conflict(lval, rval, op_eq))        /* test type p_conflict */
+    if (p_conflict(&lval, rval, op_eq))         /* test type p_conflict */
         return lval;
 
     if ((lval->type & rval->type & (size_t)~e_typeMask) == e_const)

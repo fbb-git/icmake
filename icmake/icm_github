@@ -7,7 +7,7 @@ read yesno
 
 [ "$yesno" == "y" ] || exit 0
 
-. icm_prepare
+. icm_prepare /
 
 
 cp doc/*.1 tmp/${MANDIR}/man1

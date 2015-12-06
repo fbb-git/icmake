@@ -192,11 +192,15 @@ SemVal *p_execute(SemVal *arr);
 SemVal *p_iCast(SemVal *e);
 SemVal *p_insertArg(SemVal *insert, SemVal *mult);
 SemVal *p_lCast(SemVal *e);
-SemVal *p_nullFrame(SemVal *e);
+
+SemVal *p_nullFrame3(SemVal *e1, SemVal *e2, SemVal *e3);    /* e3 may be
+                                        NULL, discards all e*s, returns
+                                        pointer to p_stackFrame(e_null).    */
 SemVal *p_sCast(SemVal *e);
-int     p_conflict(SemVal **lval, SemVal *rval, Opcode opcode);
-int     p_testBinOp(Opcode opcode, SemVal **lval, SemVal *rval);
-int     p_testOperand(SemVal *e, Opcode opcode);
+int     p_conflict(SemVal *lval, SemVal *rval, Opcode opcode);
+int     p_testBinOp(Opcode opcode, SemVal *lval, SemVal *rval); /* 0 return
+                                                            means no errors */
+int     p_testOperand(SemVal *e, Opcode opcode);  /* 0 ret. means no error */
 int     yyerror(char *s);
 size_t  p_findString(char *s);
 size_t  p_rmJmpZero(register size_t codelen, unsigned *list, 
@@ -207,7 +211,7 @@ void    p_callHidden(register int fun, SemVal *rarg);
 void    p_callRss(SemVal *e, FunNr funnr, ...);
 void    p_catArgs(SemVal *arr);
 void    p_catStrings(SemVal *lval, SemVal *rval);
-void    p_clearOperands(SemVal **lval, SemVal *rval);   /* *lval: zeroFrame */
+//FBB void    p_clearOperands(SemVal **lval, SemVal *rval);   /* *lval: zeroFrame */
 void    p_popVar(SemVal *e);
 void    p_binOp(SemVal *lval, SemVal *rval, Opcode opcode);
 void    p_defineVar(void);        /* parameter or local var */
@@ -240,3 +244,9 @@ void    p_listlen(void);
 int     p_trySIconvert(SemVal *lval, SemVal *rval); /* convert single char 
                                                 const. string (rval) to int if
                                                 lval is an int */
+
+inline SemVal *p_nullFrame(SemVal *e1, SemVal *e2)
+{
+    return p_nullFrame3(e1, e2, NULL);
+}
+

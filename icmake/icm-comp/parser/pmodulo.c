@@ -2,23 +2,23 @@
 
 SemVal *p_modulo(SemVal *lval, SemVal *rval)
 {
-    if (p_testBinOp(op_mod, &lval, rval))
-        return lval;                        /* test for correct types */
+    if (p_testBinOp(op_mod, lval, rval))
+        return p_nullFrame(lval, rval);     /* test for correct types */
 
     p_bool2int(lval);                       /* convert pending booleans */
     p_bool2int(rval);
 
-    if (p_conflict(&lval, rval, op_mod))    /* test type p_conflict */
-        return lval;
+    if (p_conflict(lval, rval, op_mod))     /* test type p_conflict */
+        return p_nullFrame(lval, rval);
 
     if (test_type(rval, e_const))
     {
         if (!rval->evalue)                   /* no "E / 0" */
         {
             util_semantic("p_modulo 0: undefined");
-            p_clearOperands(&lval, rval);
-            return lval;
+            return p_nullFrame(lval, rval);
         }
+
         if (test_type(lval, e_const))
         {
             lval->evalue %= rval->evalue;

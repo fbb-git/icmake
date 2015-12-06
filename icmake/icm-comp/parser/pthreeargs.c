@@ -24,8 +24,13 @@ SemVal *p_threeArgs(ExprType type, SemVal *larg, SemVal *marg, SemVal *rarg)
         p_catCode(rarg, marg);                /* make one code vector */
         p_catCode(rarg, larg);                /* make one code vector */
         p_callRss(rarg, type);
-        return (rarg);
+        return rarg;
     }
+
     util_semantic(gp_typeConflict, gp_funstring[type]);
-    return p_nullFrame(larg);
+    return p_nullFrame3(larg, marg, rarg);
 }
+
+
+
+

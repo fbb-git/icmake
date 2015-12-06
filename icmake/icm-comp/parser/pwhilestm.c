@@ -12,14 +12,11 @@ SemVal *p_while(SemVal *expr, SemVal *stmnt, int pureWhile)
 
     if (test_type(expr, e_const))       /* constant: never xeq */
     {
-        if (expr->evalue)
-            expr->evalue = 0;           /* no value = no code for p_catCode */
-                                        /* MAYBE CODELEN = 0 ?? */
-        else
-        {
-            p_clearOperands(&expr, stmnt);
-            return expr;
-        }
+        if (expr->evalue == 0)          /* value 0? ignore the while */
+            return p_nullFrame(expr, stmnt);
+
+        expr->evalue = 0;               /* no value means no code for */
+                                        /*  p_catCode */
     }
 
     p_patchupTrue(expr, 1);             /* patch to EOC */

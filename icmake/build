@@ -2,6 +2,7 @@
 
 action=$1
 if [ "$action" == "distclean" ] ; then
+    echo rm -rf tmp
     rm -rf tmp
     action=clean
 fi

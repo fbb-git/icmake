@@ -4,14 +4,14 @@ SemVal *p_addition(SemVal *lval, SemVal *rval)
 {
     register ExprType type;
 
-    if (p_testBinOp(op_add, &lval, rval))
-        return lval;                        /* test for correct types */
+    if (p_testBinOp(op_add, lval, rval))
+        return p_nullFrame(lval, rval);     /* test for correct types */
 
     p_bool2int(lval);                       /* convert pending booleans */
     p_bool2int(rval);
 
-    if (p_conflict(&lval, rval, op_add))    /* test type p_conflict */
-        return lval;
+    if (p_conflict(lval, rval, op_add))     /* test type p_conflict */
+        return p_nullFrame(lval, rval);
 
     type = lval->type;                      /* keep type for later */
 

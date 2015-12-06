@@ -1,3 +1,89 @@
+icmake (8.00.00)
+
+  * This release adds several new builtin functions, which required a
+    redefinition of the builtin function codes. Because of this existing .bim
+    files must be recompiled from their .im source files. 
+
+  * Martin Dorwig suggested several additions to icmake's run-time support
+    functions. In particular facilities for formatted string construction and
+    formatted printf functions. Many of his suggestions were implemented in
+    version 8.00.00, which now offers several new built-in functions
+    (get_dext, length, resize, strformat, trim, trimleft, trimright (see
+    icmake(1) for details)).
+
+  * The functions fprintf and printf now support a format string as their
+    first argument, in which %-notations refer to subsequent argument numbers
+    (see icmake(1) for details). 
+
+  * The 16 bit offset limit was removed from fgets. Also, fgets's signature
+    changed. See icmake(1) for details.
+
+  * Added the 'continue' statement/keyword to the flow constrol statements. It
+    can be used inside while and for statements.
+
+  * Added the ternary operator (?:) to the set of supported operators. 
+
+  * Global variable initialization can now use expression statements, not just
+    constant expressions.
+
+  * Local variables can be defined and immediately initialized anywhere inside
+    functions. Multiple local variables (of the same type) can be defined in
+    the initialization section of a for-statement, A single variable can be
+    defined in the condition clause of if- and while-statements. If not
+    explicitly initialized such variables represent a `false' condition.
+
+  * Character constants are supported and are converted to single-character
+    string constants. Conversely, single-character string constants can be
+    used in int-expressions. In that case their values are equal to the
+    int-values of their (first) characters.
+
+  * The main() functions in icmake scripts now by default return 0.
+
+  * Fixed a bug in the printf family of functions: these functions now return
+    the number of printed arguments (as documented in icmake(1)'s man-page).
+
+  * Fixed a bug in handling decrement and increment operators: previously
+    their resulting wasn't pushed on the stack when used in return statements,
+    causing a stack underflow.
+
+  * Fixed a bug in the icm-pp precompiler: multiple #defines of the same
+    identifier are not accepted anymore. Multple #undefines are OK, but
+    an #undefine generates a warning if it doesn't refer to a currently 
+    #defined identifier. 
+
+  * Drive specifiers are not supported anymore
+
+  * The function glob() is now assumed available.
+
+  * The internal code organization in the rss, icm-pp, icm-comp, and icm-exec
+    directories was significantly changed. Code belonging together is now
+    collected in its own subdirectory, where the subdir-name is used as
+    first part of the name of `public' functions (but their source names do
+    not start with the subdir name. E.g. symtab_push is found in
+    symtab/push.c). Support functions inside a directories start with an
+    abbreviated subdir-name, both in their names and in their source filenames
+    (e.g., st_addVar is found in symtab/staddvar.c). Also, within
+    subdirectories 'dirname.ih' files contain all declarations that are
+    required only by the sources in that directory, while 'dirname.h' files
+    contain all declarations required by other parts of icmake programs that
+    use the subdirectory's `public' functions. Because of this reorganization
+    several old files (like rss/ic*h files) became obsolete and were removed.
+
+ *  The -q and -b options are not supported anymore.
+
+ *  The -e option replaces the previously defined -b option.
+
+ *  The -v option shows icmake's version to the standard output stream
+    (terminating icmake).
+
+ *  The -F flag shows which files, and flags are used by icmake, and which 
+    actions are going to be performed.
+
+ *  The -T flag can be used to specify a non-default destination directory for
+    temporary files (by default /tmp or (if not available) $HOME is used).
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 29 Nov 2015 18:35:22 +0100
+
 icmake (7.23.02)
 
   * Wow! After > 20 years being used, Martin Dorwig found a bug in icm_pp's
@@ -196,8 +282,8 @@ icmake (7.14.0)
     (comp/callfun.c) 
 
   * Removed compiler warning about dangerous casts from comp/outcode.c and 
-    comp/patchup.c by defining a union for char[2] and INT16, rather than
-    casting the char[2] to INT16.
+    comp/patchup.c by defining a union for char[2] and int16_t, rather than
+    casting the char[2] to int16_t.
 
   * Defined icm_prepare, called from icm_bootstrap and rss/build to prepare
     the tmp/ directory

@@ -26,7 +26,7 @@ extern FILE *yyin;
 extern FILE *yyout;
 
 extern char    *yytext;
-extern unsigned   yyleng;
+extern size_t   yyleng;
 extern int      yylineno;
 
 extern unsigned   sc_lastLineNr;

@@ -43,7 +43,7 @@ extern char *gs_filenames;
 extern char *gs_savedText;
 extern unsigned   gs_savedLineNr;
 
-extern unsigned   yyleng;
+extern size_t   yyleng;
 
 extern FILE *yyin;
 extern FILE *yyout;

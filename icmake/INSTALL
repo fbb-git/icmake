@@ -165,7 +165,7 @@ Currently the following symbols are predefined:
         LINUX           same
         M_SYSV, M_UNIX  '386 or '486 running SCO/Unix (usually with
                         Microsoft C)
-        _POSIX_SOURCE   Unix with Posix complient compiler
+        _POSIX_SOURCE   Unix with Posix compliant compiler
         __hpux          HP-UX, with the native HP compiler
         --------------------------------------------------------------
 

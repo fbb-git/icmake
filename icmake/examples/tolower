@@ -1,4 +1,4 @@
-#!/usr/local/bin/icmake -qi
+#!/usr/bin/icmake -qi
 
 /*
     tolower: Icmake script to rename files to lower case. 

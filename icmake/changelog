@@ -2,6 +2,8 @@ icmake (8.00.01)
 
   * Fixed size_t / unsigned mismatches on amd64 architectures.
 
+  * Applied patches provided by Tony Mancill. Thanks, Tony :-)
+
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 08 Dec 2015 10:55:36 +0100
 
 icmake (8.00.00)

@@ -1,4 +1,4 @@
-#!/usr/local/bin/icmake -qi
+#!/usr/bin/icmake -qi
 
 /*
     Example of the Icmake 'stat()' function. This simple makefile prints

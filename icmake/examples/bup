@@ -1,4 +1,4 @@
-#!/usr/local/bin/icmake -qi
+#!/usr/bin/icmake -qi
 
 #define ETCDIR		"/usr/local/etc"
 

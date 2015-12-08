@@ -17,7 +17,7 @@ void testCompile()
     if (rss_younger(imFile, bimFile))   /* old bim-file: compilation needed */
         return;
                                         /* also check files used for .bim */
-    hdr = *rss_readHeader(fdest, (size_t)version[0]);
+    hdr = *rss_readHeader(fdest, (unsigned)version[0]);
 
     fseek(fdest, hdr.offset[2], SEEK_SET);  /* go to filenames area */
 

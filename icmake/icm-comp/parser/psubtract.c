@@ -15,7 +15,7 @@ SemVal *p_subtract(SemVal *lval, SemVal *rval)
 
     type = lval->type;                      /* remember the type */
 
-    if ((lval->type & rval->type & (size_t)~e_typeMask) == e_const)
+    if ((lval->type & rval->type & (unsigned)~e_typeMask) == e_const)
         lval->evalue -= rval->evalue;
     else
     {

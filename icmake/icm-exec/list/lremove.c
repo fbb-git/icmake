@@ -1,9 +1,9 @@
 #include "list.ih"
 
-size_t l_remove(ListVariable *list, char const *txt)
+unsigned l_remove(ListVariable *list, char const *txt)
 {
-    size_t idx = l_size(list);
-    size_t nRemoved = 0;
+    unsigned idx = l_size(list);
+    unsigned nRemoved = 0;
 
     while (idx--)
     {

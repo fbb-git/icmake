@@ -18,7 +18,7 @@
 
 void o_callRss()
 {
-    size_t funIdx = (size_t)rss_getOpcode(go_infile);
+    unsigned funIdx = (unsigned)rss_getOpcode(go_infile);
 
     if (funIdx >= f_hlt)
         rss_fatal(0, 0, "unknown rss function call at %s", aux_offset());

@@ -32,9 +32,9 @@ typedef struct
 {
     char *name;                      /* name of the hidden fun */
     char *source;                   /* source of the hidden function */
-    size_t type;                    /* returntype */
-    size_t this;                    /* set to 1 if called */
-    size_t nargs;                   /* # of arguments */
+    unsigned type;                    /* returntype */
+    unsigned this;                    /* set to 1 if called */
+    unsigned nargs;                   /* # of arguments */
 } HiddenFunction;
 
 typedef struct
@@ -78,9 +78,9 @@ typedef enum
 } JMP_COND_;
 
 extern int      gp_parse_error;
-extern size_t   gp_breakOK;
-extern size_t   gp_nestLevel;
-extern size_t   gp_stringsize;
+extern unsigned   gp_breakOK;
+extern unsigned   gp_nestLevel;
+extern unsigned   gp_stringsize;
 
 extern char     gp_typeConflict[];
 extern char    *gp_funstring[];
@@ -97,14 +97,14 @@ extern ExprType gp_opType[];
 
 extern Opcode gp_lastOp;
 
-extern size_t   gp_dead_sp;
-extern size_t  *gp_dead;
+extern unsigned   gp_dead_sp;
+extern unsigned  *gp_dead;
 extern FILE    *gp_bin;
 
-extern size_t   gp_hidden_called;
+extern unsigned   gp_hidden_called;
 extern HiddenFunction gp_hiddenFun[];
 
-extern size_t   gp_nStrings;
+extern unsigned   gp_nStrings;
 extern StringTable *gp_stringTable;
 
 extern SemVal gp_init;                  /* code initializing globals */
@@ -202,10 +202,10 @@ int     p_testBinOp(Opcode opcode, SemVal *lval, SemVal *rval); /* 0 return
                                                             means no errors */
 int     p_testOperand(SemVal *e, Opcode opcode);  /* 0 ret. means no error */
 int     yyerror(char *s);
-size_t  p_findString(char *s);
-size_t  p_rmJmpZero(register size_t codelen, unsigned *list, 
-                                                    register size_t listlen);
-void    p_addPatch(unsigned *list, size_t len, register size_t value);
+unsigned  p_findString(char *s);
+unsigned  p_rmJmpZero(register unsigned codelen, unsigned *list, 
+                                                    register unsigned listlen);
+void    p_addPatch(unsigned *list, unsigned len, register unsigned value);
 void    p_bool2int(SemVal *e);
 void    p_callHidden(register int fun, SemVal *rarg);
 void    p_callRss(SemVal *e, FunNr funnr, ...);
@@ -222,7 +222,7 @@ void    p_forceExpr2Bool(SemVal *e);
 void    p_generateCode(SemVal *e, Opcode opcode, ...);
 void    p_lastStmnt(SemVal *lval);
 void    p_beginFunction(void);
-void    p_outCode(SemVal *ep, int value, register size_t size);
+void    p_outCode(SemVal *ep, int value, register unsigned size);
 void    p_patchContinue(SemVal *e);
 void    p_patchFalse(SemVal *e);
 void    p_patchTrue(SemVal *e);
@@ -230,14 +230,14 @@ void    p_patchTrue(SemVal *e);
     /* 'pos' == 0 means: jump back to the begin of the code,
         otherwise jump forward to the end of the code
     */
-void    p_patchup(int8_t *code, size_t len, unsigned *list, size_t listlen, int
+void    p_patchup(int8_t *code, unsigned len, unsigned *list, unsigned listlen, int
                 pos); 
 void    p_patchupContinue(SemVal *e, int pos);
 void    p_patchupFalse(SemVal *e, int pos);
 void    p_patchupTrue(SemVal *e, int pos);
 
 int     p_functionIdx(void);
-void    p_checkArgumentTypes(size_t nParams, size_t funIdx, SemVal *a);
+void    p_checkArgumentTypes(unsigned nParams, unsigned funIdx, SemVal *a);
 void    p_hiddenFunctions(void);
 int     p_nextCall(void);
 void    p_listlen(void);

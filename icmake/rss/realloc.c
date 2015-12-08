@@ -13,7 +13,7 @@
 
 #include "rss.ih"
 
-void *rss_realloc (void *ptr, size_t size)
+void *rss_realloc (void *ptr, unsigned size)
 {
     register void *newptr;
 

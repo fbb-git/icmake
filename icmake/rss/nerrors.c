@@ -1,6 +1,6 @@
 #include "rss.ih"
 
-size_t rss_nErrors()
+unsigned rss_nErrors()
 {
     return gr_nErrors;
 }

@@ -1,6 +1,6 @@
 #include "rss.ih"
 
-void rss_fatal(char const *src, size_t lineNr, char const *fmt, ...)
+void rss_fatal(char const *src, unsigned lineNr, char const *fmt, ...)
 {
     va_list args;
 

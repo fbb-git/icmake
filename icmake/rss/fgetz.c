@@ -1,8 +1,8 @@
 #include "rss.ih"
 
-char *rss_fgetz (char *buf, size_t maxlen, FILE *f)
+char *rss_fgetz (char *buf, unsigned maxlen, FILE *f)
 {
-    register size_t
+    register unsigned
         i;
 
     if (! maxlen)

@@ -1,9 +1,9 @@
 #define msg
 #include "parser.ih"
 
-void p_checkArgumentTypes(size_t nParams, size_t funIdx, SemVal *a)
+void p_checkArgumentTypes(unsigned nParams, unsigned funIdx, SemVal *a)
 {
-    register size_t idx;
+    register unsigned idx;
 
     for (idx = 0; idx != nParams; ++idx, ++a)
     {

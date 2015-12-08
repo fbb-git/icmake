@@ -2,7 +2,7 @@
 
 SemVal *p_notBoolean(SemVal *e)
 {
-    size_t len;
+    unsigned len;
     unsigned *list;
 
     if (test_type(e, e_const))                  /* immediate value */

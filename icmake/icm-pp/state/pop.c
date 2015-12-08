@@ -1,7 +1,7 @@
 #define msgx
 #include "state.ih"
 
-void state_pop(size_t linenr)
+void state_pop(unsigned linenr)
 {
     msg("%s %u size = %u, before pop", \
         filestack_tos()->filename, linenr, st_size);

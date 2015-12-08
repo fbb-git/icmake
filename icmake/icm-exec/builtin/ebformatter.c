@@ -1,9 +1,9 @@
 #define msgx
 #include "builtin.ih"
 
-size_t eb_formatter(void *dest, FormatDest startIdx)    /* idx of 1st arg */
+unsigned eb_formatter(void *dest, FormatDest startIdx)    /* idx of 1st arg */
 {
-    size_t endIdx = 1 + int_value(stack_top());    /* the idx beyond the
+    unsigned endIdx = 1 + int_value(stack_top());    /* the idx beyond the
                                                       idx of the last arg */
     msg("last idx = %u", endIdx);
 
@@ -12,7 +12,7 @@ size_t eb_formatter(void *dest, FormatDest startIdx)    /* idx of 1st arg */
 
     char *end = eb_findPercent(fmt);                /* 'end' at 0 or %<nr> */
 
-    size_t ret;
+    unsigned ret;
 
     if (*end == 0)                              /* no % in the first str    */
     {
@@ -42,7 +42,7 @@ size_t eb_formatter(void *dest, FormatDest startIdx)    /* idx of 1st arg */
         begin = end;                            /* begin -> %<nr>           */
                                                 /* end -> %<nr>             */
 
-        size_t idx = eb_getNr(&end);            /* idx: the idx of %<nr>    */
+        unsigned idx = eb_getNr(&end);            /* idx: the idx of %<nr>    */
 
         if (errno == 0 && idx > 0 && idx < endIdx) /* if idx OK             */
         {

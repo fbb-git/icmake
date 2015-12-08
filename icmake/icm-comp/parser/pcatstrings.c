@@ -3,7 +3,7 @@
 void p_catStrings(SemVal *lval, SemVal *rval)
 {
     char *cp;
-    register size_t
+    register unsigned
         l_len,
         r_len;
 

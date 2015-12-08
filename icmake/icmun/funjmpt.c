@@ -6,5 +6,5 @@ void fun_jmp_true ()
 
     dumpint ( (uint16_t) offs);
     printf ("jmp true [%s]\n",
-            rss_hexString ((size_t) (ftell (infile) + offs), 4));
+            rss_hexString ((unsigned) (ftell (infile) + offs), 4));
 }

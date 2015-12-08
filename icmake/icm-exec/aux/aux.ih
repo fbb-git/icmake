@@ -6,6 +6,6 @@
 #include "../../rss/rss.h"
 
 extern char         *ga_bimname;
-extern size_t       ga_offset;
+extern unsigned       ga_offset;
 
 

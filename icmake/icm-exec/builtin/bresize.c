@@ -7,8 +7,8 @@ void b_resize()
 {
     char const *str = string_charp(stack_top());
 
-    size_t oldLen = strlen(str);
-    size_t newLen = int_value(stack_top() - 1);
+    unsigned oldLen = strlen(str);
+    unsigned newLen = int_value(stack_top() - 1);
 
     if ((int)newLen < 0)
         newLen = 0;

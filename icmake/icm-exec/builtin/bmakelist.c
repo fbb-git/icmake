@@ -25,7 +25,7 @@ void b_makeList()
             ext[MAX_PATHLEN],
             newname[MAX_PATHLEN];
 
-        size_t attrib = int_value(stack_top());   /* attribute to scan for */
+        unsigned attrib = int_value(stack_top());   /* attribute to scan for */
 
                                         /* find a first name */
         char *namefound = rss_findFirst (name, attrib);

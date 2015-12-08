@@ -6,7 +6,7 @@ SemVal *p_compoundAss(SemVal *lval, SemVal *rval,
 {
     register ExprType
         ltype;
-    register size_t
+    register unsigned
         evalue;
 
     ltype = lval->type;

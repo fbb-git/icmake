@@ -2,7 +2,7 @@
 
 int list_contains(ListVariable *lhs, char const *str)
 {
-    size_t idx;
+    unsigned idx;
 
     for (idx = *l_sizePtr(lhs); idx--; )
     {

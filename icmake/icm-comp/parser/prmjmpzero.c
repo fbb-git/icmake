@@ -1,7 +1,7 @@
 #include "parser.ih"
 
-size_t p_rmJmpZero(register size_t codelen, unsigned *list, 
-                   register size_t listlen)
+unsigned p_rmJmpZero(register unsigned codelen, unsigned *list, 
+                   register unsigned listlen)
 {
     return
         listlen && (list[listlen - 1] == codelen) ?

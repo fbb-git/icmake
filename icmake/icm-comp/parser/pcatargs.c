@@ -2,7 +2,7 @@
 
 void p_catArgs(SemVal *arr)
 {
-    register size_t count;
+    register unsigned count;
     SemVal *ep;
     SemVal e;
 

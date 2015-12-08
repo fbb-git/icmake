@@ -5,7 +5,7 @@
 
 void opcodefun_setGlobalVariables()
 {
-    size_t nvars = rss_getVar(&go_globalVar, go_infile, go_header);
+    unsigned nvars = rss_getVar(&go_globalVar, go_infile, go_header);
 
     msg("N global vars: %u", nvars);
 

@@ -12,8 +12,8 @@ TextData *l_new(void);
 void    l_incSize(ListVariable *list);
 void    l_addText(ListVariable *list, char *txt);
 
-size_t  l_remove(ListVariable *list, char const *txt);
-void    l_cleanup(ListVariable *list, size_t toRemove);
+unsigned  l_remove(ListVariable *list, char const *txt);
+void    l_cleanup(ListVariable *list, unsigned toRemove);
 
 inline List *l_listPtr(Variable *var)
 {

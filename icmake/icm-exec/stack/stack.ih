@@ -8,6 +8,6 @@
 void s_testUnderflow(void);
 
 extern Variable *gs_stack;
-extern size_t gs_sp;
-extern size_t gs_bp;
+extern unsigned gs_sp;
+extern unsigned gs_bp;
 

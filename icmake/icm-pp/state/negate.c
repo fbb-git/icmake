@@ -1,6 +1,6 @@
 #include "state.ih"
 
-void state_negate(size_t linenr)
+void state_negate(unsigned linenr)
 {
     State *sp = st_stack + st_size - 1;
 

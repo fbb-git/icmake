@@ -17,7 +17,7 @@
 
 #include "builtin.ih"
 
-char *eb_getArg(size_t idx, int *flag)
+char *eb_getArg(unsigned idx, int *flag)
 {
     char convbuf [50];
 

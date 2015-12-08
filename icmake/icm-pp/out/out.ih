@@ -10,7 +10,7 @@
 
 extern FILE    *o_file;
 extern int      o_space;
-extern size_t   o_nl;   
+extern unsigned   o_nl;   
 extern int      o_atBOL;
 extern char    *o_outFilename;
 

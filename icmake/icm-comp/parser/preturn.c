@@ -12,7 +12,7 @@ SemVal *p_return(ExprType op, SemVal *e)
     if (!test_type(e, e_stack))
         p_expr2stack(e);
 
-    size_t funIdx = symtab_lastFunction();
+    unsigned funIdx = symtab_lastFunction();
 
     if ((Opcode)op == op_ret)              /* return opcode received */
     {

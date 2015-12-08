@@ -2,7 +2,7 @@
 
 SemVal *p_if(SemVal *cond, SemVal *trueStmnt, SemVal *falseStmnt)
 {
-    register size_t len;
+    register unsigned len;
     unsigned *list;
 
     gp_nestLevel--;                     /* reduce nesting level */

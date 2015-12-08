@@ -1,7 +1,7 @@
 #define msgx
 #include "filestack.ih"
 
-void filestack_push(size_t currentLineNr, char const *fname)
+void filestack_push(unsigned currentLineNr, char const *fname)
 {
     fs_stack = rss_realloc(fs_stack, (fs_size + 1) * sizeof(FileStack));
 

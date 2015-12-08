@@ -1,9 +1,9 @@
 #include "parser.ih"
 
-static void patchadd(register size_t value, unsigned **dest, 
-                     size_t *dlen, unsigned *source, size_t slen)
+static void patchadd(register unsigned value, unsigned **dest, 
+                     unsigned *dlen, unsigned *source, unsigned slen)
 {
-    register size_t idx;
+    register unsigned idx;
 
     if (!*dlen)
         *dest = NULL;                       /* no memory for dest as yet */
@@ -21,8 +21,8 @@ static void patchadd(register size_t value, unsigned **dest,
 
 SemVal *p_catCode(SemVal *lval, SemVal *rval)
 {
-    register size_t l;
-    register size_t r;
+    register unsigned l;
+    register unsigned r;
 
     r = rval->codelen;                      /* sizeof rval code */
     l = lval->codelen;                      /* sizeof lval code */

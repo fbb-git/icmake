@@ -6,8 +6,8 @@
 
 void list_add(ListVariable *dest, ListVariable const *rhs)
 {
-    size_t idx;
-    size_t nRhs = l_size(rhs);
+    unsigned idx;
+    unsigned nRhs = l_size(rhs);
 
     if (nRhs)                      /* something to add   */
     {

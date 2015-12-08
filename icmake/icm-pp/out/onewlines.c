@@ -5,7 +5,7 @@
 
 void o_newLines()
 {
-    size_t lineNr = scanner_lineNr();
+    unsigned lineNr = scanner_lineNr();
 
     msg("lineNr: %u, o_nl: %u", lineNr, o_nl);
 

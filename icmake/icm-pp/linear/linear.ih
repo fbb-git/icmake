@@ -15,7 +15,7 @@ enum
 
 extern Linear  *l_table;
 extern size_t   l_size; 
-extern size_t   l_capacity;
+extern unsigned   l_capacity;
 
 int l_compare(const void *ident, const void *item);
 char *l_replaceDefines(char *definition);

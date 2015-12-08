@@ -23,7 +23,7 @@ void        string_add(String *lhs, String const *rhs);
 int         string_bool(String const *lhs);      /* returns 0 if empty */
 
 char const *string_charp(String const *lhs);
-void    string_reduce(String *str, size_t length);  /* reduce length */
+void    string_reduce(String *str, unsigned length);  /* reduce length */
 
 void string_trimLeft(String *lhs, String const *str);
 void string_trimRight(String *lhs, String const *str);

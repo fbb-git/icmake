@@ -8,6 +8,6 @@ int yylex();
 char const *scanner_filenames();
 
 char const *scanner_savedText(void);
-size_t      scanner_savedLineNr(void);
+unsigned      scanner_savedLineNr(void);
 
 #endif

@@ -1,6 +1,6 @@
 #include "icmake.ih"
 
-size_t dashesIndex(char **begin, char **end)
+unsigned dashesIndex(char **begin, char **end)
 {
     char **start = begin;
 

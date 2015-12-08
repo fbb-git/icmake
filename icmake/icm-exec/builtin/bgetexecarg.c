@@ -10,7 +10,7 @@
 
 #include "builtin.ih"
 
-char *eb_getExecArg (size_t n, int *flag)
+char *eb_getExecArg (unsigned n, int *flag)
 {
     register char
         *arg,

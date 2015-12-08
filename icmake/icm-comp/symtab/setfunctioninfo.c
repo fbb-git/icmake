@@ -1,7 +1,7 @@
 #include "symtab.ih"
                                 /* set the details of the function that's
                                    currently being defined */
-size_t symtab_setFunctionInfo(size_t address)        
+unsigned symtab_setFunctionInfo(unsigned address)        
 {
                                 /* pointer to its FunInfo record */
     st_lastFunInfo()->address = address;

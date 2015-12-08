@@ -2,6 +2,6 @@
 
 Variable   *gs_stack;
 
-size_t  gs_sp;
-size_t  gs_bp;
+unsigned  gs_sp;
+unsigned  gs_bp;
 

@@ -2,7 +2,7 @@
 
 SemVal *p_specials(ExprType type, SemVal *marg)  /* array of arguments */
 {
-    register size_t count;
+    register unsigned count;
 
     if ((FunNr)type == f_execute)
         return(p_execute(marg));              /* full list of arguments */

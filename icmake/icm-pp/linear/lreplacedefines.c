@@ -3,7 +3,7 @@
 char *l_replaceDefines(char *definition)
 {
     char *begin = definition;
-    size_t replacement = 0;
+    unsigned replacement = 0;
 
     while ((begin = strstr(begin, "${")))   /* find the opening characters  */
     {

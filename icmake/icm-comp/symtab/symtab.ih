@@ -17,7 +17,7 @@ typedef struct
 {
     char        *name;
     uint16_t    address;
-    size_t      nParams;
+    unsigned      nParams;
     ExprType    *paramType;     /* nParams elements */
     ExprType    returnType;
 } FunInfo;
@@ -25,8 +25,8 @@ typedef struct
 typedef struct
 {
     FunInfo *info;
-    size_t nFunctions;
-    size_t capacity;
+    unsigned nFunctions;
+    unsigned capacity;
 } FunInfoTab;
    
 extern FunInfoTab gs_functions; /* symbol table for functions */
@@ -43,26 +43,26 @@ typedef struct
 typedef struct
 {
     VarInfo *info;
-    size_t nVars;
-    size_t capacity;
+    unsigned nVars;
+    unsigned capacity;
 } VarTab;
 
 typedef struct
 {
-    size_t *index;
-    size_t nVars;
-    size_t capacity;
+    unsigned *index;
+    unsigned nVars;
+    unsigned capacity;
 } VarIndices;
    
 typedef struct
 {
     VarTab *varTab;             /* points to global [0] or local [1] vars */
 
-    size_t nParams;             /* the number of parameters of the function 
+    unsigned nParams;             /* the number of parameters of the function 
                                     currently being defined */
     VarIndices *varIndices;     /* level 0 holds indices of global vars */
-    size_t nLevels;             /* at least 1: the global level */
-    size_t capacity;
+    unsigned nLevels;             /* at least 1: the global level */
+    unsigned capacity;
 } VarRef;
 
 
@@ -83,38 +83,38 @@ extern VarRef gs_vars;     /*
                                 */
 
 
-size_t st_nextFunIdx(void);      /* idx of an uninitialized record of a 
+unsigned st_nextFunIdx(void);      /* idx of an uninitialized record of a 
                                     function */
 
 FunInfo *st_lastFunInfo();      /* ptr to the last FunInfo record */
 
-size_t       st_nestingOffset(void);
+unsigned       st_nestingOffset(void);
 
 VarIndices  *st_topLevel(void);
 
-VarTab      *st_varTab(size_t nesting); /* vartab to use, given nestinglevel */
+VarTab      *st_varTab(unsigned nesting); /* vartab to use, given nestinglevel */
 
 int st_compareVars(void const *key, void const *idxPtr);    /* compare key 
                                                 to entry in gs_compareTable */
 
-int         st_findVar(size_t nesting); /* find util_string() in vars indexed
+int         st_findVar(unsigned nesting); /* find util_string() in vars indexed
                                             at gs_vars.indices[nesting].
                                             return idx in VarTab.info or -1 */
 
 VarIndex st_addVar(ExprType type);   /* add variable to the topmost symbol 
                                             table */
 
-size_t st_nextVarIdx(VarInfo **vi); /* return idx of next variable, and set
+unsigned st_nextVarIdx(VarInfo **vi); /* return idx of next variable, and set
                                         a ptr to its record using RBA */
 
-ExprType st_paramType(size_t idx);  /* returns type of parameter idx */
+ExprType st_paramType(unsigned idx);  /* returns type of parameter idx */
 
-size_t *st_newIdxPtr(void);   /* pointer to the next available index[] */
+unsigned *st_newIdxPtr(void);   /* pointer to the next available index[] */
 
-size_t st_newVarIdx(void);    /* idx of an uninitialized record of a new 
+unsigned st_newVarIdx(void);    /* idx of an uninitialized record of a new 
                                         variable */
 
-VarTab *st_varTab(size_t nesting); /* return the variable table matching the 
+VarTab *st_varTab(unsigned nesting); /* return the variable table matching the 
                                    currrent nesting level (global or local) */
 
 void st_deleteVars(VarTab *varTab); /* delete all info allocated by VarInfo

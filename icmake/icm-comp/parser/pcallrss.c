@@ -6,7 +6,7 @@
 void p_callRss(SemVal *e, FunNr funnr, ...)
 {
     register ExprType type = e_reg | e_int; /* default return type: intreg */
-    register size_t args = 1;              /* most f()s having 1 argument */
+    register unsigned args = 1;              /* most f()s having 1 argument */
     va_list marker;
 
     va_start(marker, funnr);
@@ -84,11 +84,11 @@ void p_callRss(SemVal *e, FunNr funnr, ...)
         case f_exec:
         case f_fprintf:
         case f_printf:
-            args = va_arg(marker, size_t);
+            args = va_arg(marker, unsigned);
         break;
 
         case f_strformat:
-            args = va_arg(marker, size_t);
+            args = va_arg(marker, unsigned);
             type = e_str | e_reg;
         break;
 

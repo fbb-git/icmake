@@ -2,7 +2,7 @@
 
 SemVal *p_for(SemVal *init, SemVal *cond, SemVal *inc, SemVal *stmnt)
 {
-    size_t codelen = stmnt->codelen;
+    unsigned codelen = stmnt->codelen;
 
     p_patchupContinue(stmnt, codelen);
 

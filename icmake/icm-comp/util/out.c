@@ -1,6 +1,6 @@
 #include "util.ih"
 
-void util_out(FILE *bin, void const *source, size_t size)
+void util_out(FILE *bin, void const *source, unsigned size)
 {
     if
     (

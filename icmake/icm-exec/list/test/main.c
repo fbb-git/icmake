@@ -63,7 +63,7 @@ int main()
 
     list_sub(arr, &l2);
     
-    for (size_t idx = 0; idx != list_size(arr); ++idx)
+    for (unsigned idx = 0; idx != list_size(arr); ++idx)
         printf("%s ", list_at(arr, idx));
     putchar('\n');
 

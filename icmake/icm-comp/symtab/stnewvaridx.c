@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-size_t st_newVarIdx()   /* return the index of a (unitialized) var. record */
+unsigned st_newVarIdx()   /* return the index of a (unitialized) var. record */
 {
     VarTab *vt = st_varTab(st_nestingOffset());
 

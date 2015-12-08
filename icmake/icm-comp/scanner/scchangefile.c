@@ -1,6 +1,6 @@
 #include "scanner.ih"
 
-static size_t filenames_len;
+static unsigned filenames_len;
 
 void sc_changeFile(char *s)               /* name of source file to open */
 {

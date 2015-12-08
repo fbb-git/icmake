@@ -2,7 +2,7 @@
 
 SemVal *p_multipleArgs(SemVal *left, SemVal *right)
 {
-    register size_t count;
+    register unsigned count;
 
     count = ++left->type;                   /* get/increase # of args */
                                             /* room for extra SemVal */

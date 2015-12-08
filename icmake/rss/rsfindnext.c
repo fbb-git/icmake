@@ -1,6 +1,6 @@
 #include "rss.ih"
 
-size_t rs_findNext(struct find_t_ * fileinfo)
+unsigned rs_findNext(struct find_t_ * fileinfo)
 {
     if (gr_nextGlob >= gr_globData.gl_pathc)             /* done with list ? */
     {

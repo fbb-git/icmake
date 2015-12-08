@@ -12,7 +12,7 @@
 
 void b_element()
 {
-    size_t idx = int_value(stack_top());
+    unsigned idx = int_value(stack_top());
 
     stringcons_charPtr(
         eb_releaseReg(),

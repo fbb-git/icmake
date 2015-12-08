@@ -25,7 +25,7 @@
 
 #include "rss.ih"
 
-char *rss_hexString(size_t val, size_t len)
+char *rss_hexString(unsigned val, unsigned len)
 {
     register int dlen = len;    /* until %zd format is generally available */
     static char retbuf[10];

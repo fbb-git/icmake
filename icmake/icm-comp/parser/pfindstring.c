@@ -4,11 +4,11 @@
 
 #include "parser.ih"
 
-static size_t n_allocated;
+static unsigned n_allocated;
 
-size_t p_findString(char *s)
+unsigned p_findString(char *s)
 {
-    register size_t idx;
+    register unsigned idx;
 
     for (idx = 0; idx < gp_nStrings; idx++)
         if (!strcmp(gp_stringTable[idx].string, s)) /* string found ? */

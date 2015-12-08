@@ -59,11 +59,11 @@ void b_exec ()
     char *nextarg = NULL;
     char **cmd = initcmd(NULL);
 
-    size_t nextarglen;
-    size_t cmdlen;
+    unsigned nextarglen;
+    unsigned cmdlen;
 
-    size_t i = 3;
-    size_t nargs = int_value(stack_top());
+    unsigned i = 3;
+    unsigned nargs = int_value(stack_top());
     int mode = int_value(stack_top() - 1);
 
     while (i <= nargs)

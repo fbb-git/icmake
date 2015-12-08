@@ -12,7 +12,7 @@ SemVal *p_shl(SemVal *lval, SemVal *rval)
         return p_nullFrame(lval, rval);   
 
 
-    if ((lval->type & rval->type & (size_t)~e_typeMask) == e_const)
+    if ((lval->type & rval->type & (unsigned)~e_typeMask) == e_const)
         lval->evalue <<= rval->evalue;
     else
         p_binOp(lval, rval, op_shl);

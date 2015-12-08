@@ -11,9 +11,9 @@ typedef struct              /* yylex itself maintains its own YY_BUFFERs */
 } FileStack;
 
 
-void filestack_push(size_t currentLineNr, char const *fname);
+void filestack_push(unsigned currentLineNr, char const *fname);
 void filestack_pop();
 FileStack const *filestack_tos();
-size_t filestack_size();
+unsigned filestack_size();
 
 #endif

@@ -11,7 +11,7 @@ SemVal *p_shr(SemVal *lval, SemVal *rval)
     if (p_conflict(lval, rval, op_shr))     /* test type p_conflict */
         return p_nullFrame(lval, rval);
 
-    if ((lval->type & rval->type & (size_t)~e_typeMask) == e_const)
+    if ((lval->type & rval->type & (unsigned)~e_typeMask) == e_const)
         lval->evalue >>= rval->evalue;
     else
         p_binOp(lval, rval, op_shr);

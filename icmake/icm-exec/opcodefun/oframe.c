@@ -19,9 +19,9 @@
 
 void o_frame()
 {
-    size_t nlocals = rss_getOpcode(go_infile);
+    unsigned nlocals = rss_getOpcode(go_infile);
 
-    size_t idx;
+    unsigned idx;
     for (idx = 0; idx != nlocals; ++idx)
     {
         Variable frame;

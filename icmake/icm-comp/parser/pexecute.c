@@ -12,7 +12,7 @@
 
 SemVal *p_execute(SemVal *arr)
 {
-    register size_t count;
+    register unsigned count;
     SemVal
         tmp,
         *argp,                              /* pointer to args */

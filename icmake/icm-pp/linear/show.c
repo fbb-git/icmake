@@ -2,7 +2,7 @@
 
 void linear_show()
 {
-    printf("Defined symbols: %u\n", l_size);
+    printf("Defined symbols: %u\n", (unsigned)l_size);
 
     Linear const *item = l_table;
     Linear const *end = l_table + l_size;

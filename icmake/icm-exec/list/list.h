@@ -34,7 +34,7 @@ typedef Variable    ListVariable;
     */
 
 void listcons(ListVariable *list);        
-void listcons_size_charPtrPtr(ListVariable *list, size_t argc, char **argv);
+void listcons_size_charPtrPtr(ListVariable *list, unsigned argc, char **argv);
 void listcons_charPtr(ListVariable *list, char const *argv);
 void listcons_charPtrPtr(ListVariable *list, char **args);
 void listcopycons(ListVariable *list, ListVariable const *other);
@@ -50,8 +50,8 @@ void        list_add(ListVariable *lhs, ListVariable const *rhs);
 void        list_sub(ListVariable *lhs, ListVariable const *rhs);
 int         list_bool(ListVariable const *lhs);
 int         list_contains(ListVariable *lhs, char const *str);
-size_t      list_size(ListVariable const *list);
-char const *list_at(ListVariable const *list, size_t idx);
+unsigned      list_size(ListVariable const *list);
+char const *list_at(ListVariable const *list, unsigned idx);
 void        list_sort(ListVariable *list);
 
 #endif

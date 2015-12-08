@@ -1,6 +1,6 @@
 #include "scanner.ih"
 
-size_t scanner_lineNr()
+unsigned scanner_lineNr()
 {
     return yylineno;
 }

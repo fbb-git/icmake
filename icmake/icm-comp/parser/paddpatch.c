@@ -1,8 +1,8 @@
 #include "parser.ih"
 
-void p_addPatch(unsigned *list, size_t len, register size_t value)
+void p_addPatch(unsigned *list, unsigned len, register unsigned value)
 {
-    register size_t idx;
+    register unsigned idx;
 
     for (idx = 0; idx < len; idx++)
         list[idx] += value;

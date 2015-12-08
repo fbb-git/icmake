@@ -20,7 +20,7 @@
 
 void o_asp ()
 {
-    register size_t idx = (size_t)rss_getOpcode(go_infile);
+    register unsigned idx = (unsigned)rss_getOpcode(go_infile);
 
     for ( ; idx--; )
         stack_pop();

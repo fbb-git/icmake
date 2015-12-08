@@ -2,7 +2,7 @@
 
 SemVal *p_insertArg(SemVal *insert, SemVal *mult)
 {
-    register size_t count;
+    register unsigned count;
 
     count = ++mult->type;                   /* get/increase # of args */
                                             /* room for extra SemVal */

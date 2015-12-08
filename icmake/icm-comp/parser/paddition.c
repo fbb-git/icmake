@@ -15,7 +15,7 @@ SemVal *p_addition(SemVal *lval, SemVal *rval)
 
     type = lval->type;                      /* keep type for later */
 
-    if ((type & rval->type & (size_t)~e_typeMask) == e_const)
+    if ((type & rval->type & (unsigned)~e_typeMask) == e_const)
     {
         if (test_type(lval, e_int))
             lval->evalue += rval->evalue;

@@ -9,6 +9,6 @@ char **aux_testRmBim(int *argcp, char **argv);
 void aux_unlinkBim(void);
 
 char const *aux_offset();           /* returns 4 char. hexstring of offset */
-void    aux_set(size_t offset);
+void    aux_set(unsigned offset);
     
 #endif

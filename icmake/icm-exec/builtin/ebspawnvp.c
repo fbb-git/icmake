@@ -2,7 +2,7 @@
 
 int eb_spawnvp(int mode, char const *prog, char const **av)
 {
-    size_t length = strlen(prog);   /* determine length of required buffer */
+    unsigned length = strlen(prog);   /* determine length of required buffer */
 
     char const **begin = av + 1;        
     while (*begin)

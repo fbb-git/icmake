@@ -5,7 +5,7 @@
 
 SemVal *p_incDec(PREPOST_ pp, Opcode opcode, SemVal *e)
 {
-    register size_t varnr;
+    register unsigned varnr;
 
     if (p_testOperand(e, opcode))
     {

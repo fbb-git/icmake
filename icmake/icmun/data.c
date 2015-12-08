@@ -79,7 +79,7 @@ FILE *infile;
 
 int8_t *local_types;
 
-size_t
+unsigned
     curoffs,
     nvar;
 

@@ -1,6 +1,6 @@
 #include "scanner.ih"
 
-size_t scanner_savedLineNr()
+unsigned scanner_savedLineNr()
 {
     return gs_savedLineNr;
 }

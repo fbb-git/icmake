@@ -4,7 +4,7 @@
 
 static char separator[] = {' ', 0};
 
-void eb_writeArgument(void *dest, size_t idx)
+void eb_writeArgument(void *dest, unsigned idx)
 {
     int stop;
 

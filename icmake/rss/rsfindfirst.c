@@ -1,6 +1,6 @@
 #include "rss.ih"
 
-size_t rs_findFirst(char const * fspec, size_t attrib,
+unsigned rs_findFirst(char const * fspec, unsigned attrib,
                                         struct find_t_ * fileinfo)
 {
     gr_nextGlob = 1;                               /* next globbed name */

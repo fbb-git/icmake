@@ -15,7 +15,7 @@
 
 char *rs_fileFound()
 {
-    register size_t
+    register unsigned
         request,
         received;
 

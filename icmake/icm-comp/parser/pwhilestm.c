@@ -2,7 +2,7 @@
 
 SemVal *p_while(SemVal *expr, SemVal *stmnt, int pureWhile)
 {
-    register size_t len;
+    register unsigned len;
     unsigned *list;
 
     gp_nestLevel--;                     /* reduce nesting level */

@@ -22,7 +22,7 @@
 
 uint16_t rss_getVar(Variable **varDest, FILE *f, BinHeader *headerp)
 {
-    register size_t varIdx = 0;
+    register unsigned varIdx = 0;
     register Variable *var = NULL;
     int32_t curoffs;
 
@@ -33,7 +33,7 @@ uint16_t rss_getVar(Variable **varDest, FILE *f, BinHeader *headerp)
     if (fseek(f, headerp->offset[1], SEEK_SET))
         return (uint16_t)-1;
 
-    size_t nVars = 0;
+    unsigned nVars = 0;
 
     msg("begin offset: %x, end offset: %x", headerp->offset[1], \
                                         headerp->offset[2]);

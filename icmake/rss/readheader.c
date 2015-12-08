@@ -42,7 +42,7 @@
 
 static BinHeader header;
 
-BinHeader *rss_readHeader(FILE *f, size_t v)
+BinHeader *rss_readHeader(FILE *f, unsigned v)
 {
     struct stat buffer;
     int idx;
@@ -51,17 +51,17 @@ BinHeader *rss_readHeader(FILE *f, size_t v)
     if (! fread(&header, sizeof (BinHeader), 1, f) )
         rss_fatal(0, 0, "cannot read header from binary file, corrupted?");
 
-    if ((size_t)header.version[0] % 100 < v % 100)
+    if ((unsigned)header.version[0] % 100 < v % 100)
         rss_fatal(0, 0,
             "The binary file was created with an older version of icmake.\n"
             "Remake the binary file.");
 
-    if ((size_t)header.version[0] < v )
+    if ((unsigned)header.version[0] < v )
         rss_fatal(0, 0, "The binary file was created with an older version "
                 "of icmake.\n"
                 "Recompile the original script.\n");
 
-    if ((size_t)header.version[0] > v)
+    if ((unsigned)header.version[0] > v)
         rss_fatal(0, 0,
                 "This program does not support the version which is indicated"
                                                             " by the binary\n"

@@ -4,7 +4,7 @@ SemVal *p_callFunction(int funIdx, SemVal *e)
 {
     msg("calling function 0x%x", funIdx);
 
-    register size_t nParams;
+    register unsigned nParams;
 
 /*
     fprintf(stderr,
@@ -31,7 +31,7 @@ SemVal *p_callFunction(int funIdx, SemVal *e)
 
     nParams = symtab_fun_nParams(funIdx);    /* then check correct # of args */
               
-    if ((size_t)e->type == nParams)
+    if ((unsigned)e->type == nParams)
         p_checkArgumentTypes(nParams, funIdx, (SemVal *)e->code);
     else
         util_semantic("Function '%s()' requires %u arguments",

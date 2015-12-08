@@ -29,7 +29,7 @@ void rss_makePath(char *path, char const *dir, char const *fname,
 
         if (dir[strlen(dir) - 1] != DIRSEP)
         {
-            size_t l;
+            unsigned l;
 
             path[l = strlen(path)] = DIRSEP;
             path[++l] = 0;              /*  make it an asciiz   */

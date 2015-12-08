@@ -8,7 +8,7 @@ SemVal *p_smaller(SemVal *lval, SemVal *rval)
     if (p_conflict(lval, rval, op_sm))      /* test type p_conflict */
         return p_nullFrame(lval, rval);
 
-    if ((lval->type & rval->type & (size_t)~e_typeMask) == e_const)
+    if ((lval->type & rval->type & (unsigned)~e_typeMask) == e_const)
     {
         if (test_type(lval, e_int))
             lval->evalue = (lval->evalue < rval->evalue);

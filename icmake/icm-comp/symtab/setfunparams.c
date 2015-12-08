@@ -19,7 +19,7 @@ void symtab_setFunParams()
     info->paramType = rss_realloc(NULL, gs_vars.nParams * sizeof(ExprType));
 
                                 /* assign the parameter types */
-    for (size_t idx = 0; idx != gs_vars.nParams; ++idx)
+    for (unsigned idx = 0; idx != gs_vars.nParams; ++idx)
         info->paramType[idx] = st_paramType(idx);
 }    
 

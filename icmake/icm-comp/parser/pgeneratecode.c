@@ -9,7 +9,7 @@ void p_generateCode(SemVal *e, Opcode opcode, ...)
 {
     msg("BEGIN");
 
-    register size_t idx;
+    register unsigned idx;
     int marker_value;
     va_list marker;
 
@@ -66,7 +66,7 @@ void p_generateCode(SemVal *e, Opcode opcode, ...)
 
         case op_frame:
         {
-            size_t nLocalVars = symtab_nLocals();
+            unsigned nLocalVars = symtab_nLocals();
 
             p_outCode(e, (int)nLocalVars, sizeof(char));
 

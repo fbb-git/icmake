@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-static size_t size = 1;
+static unsigned size = 1;
 
 void p_pushDead()                        /* dead_sp: lastused, dead[0] = 0 */
 {

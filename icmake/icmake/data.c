@@ -11,4 +11,4 @@ char *bimFile;
 
 FILE *fdest;
 FLAGS_ flags;
-size_t execArgIdx;
+unsigned execArgIdx;

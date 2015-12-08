@@ -5,7 +5,7 @@ char         gb_orgDir[MAX_PATHLEN];
 Variable            gb_reg;
 
 int gb_echo = 1;
-size_t gb_listIndex;           /* eb_getArg.c, noformatting.c */
+unsigned gb_listIndex;           /* eb_getArg.c, noformatting.c */
 
 char           *gb_argHead;
 char           *gb_argTail;

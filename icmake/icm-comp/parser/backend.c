@@ -18,7 +18,7 @@ static int8_t opcall = op_call;
 
 int parser_backend()
 {
-    size_t nErrors = rss_nErrors();
+    unsigned nErrors = rss_nErrors();
 
     if (nErrors)                            /* backend if no errors */
     {

@@ -4,8 +4,8 @@ void listCompare(ListVariable *lhs, ListVariable const *rhs)
 {
     int ret = 0;
 
-    size_t idx;
-    size_t size = l_size(lhs);
+    unsigned idx;
+    unsigned size = l_size(lhs);
 
     if (size != l_size(rhs))
     {

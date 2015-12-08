@@ -2,9 +2,9 @@
 
 void list_sub(ListVariable *dest, ListVariable const *rhs)
 {
-    size_t idx;
-    size_t nRhs = l_size(rhs);
-    size_t nRemoved = 0;
+    unsigned idx;
+    unsigned nRhs = l_size(rhs);
+    unsigned nRemoved = 0;
 
     if (nRhs)                      /* something to add   */
     {

@@ -1,10 +1,10 @@
 #include "parser.ih"
 
 int gp_parse_error = err_code_or_vars_expected;
-size_t  gp_breakOK;
-size_t  gp_nestLevel;
-size_t  gp_stringsize;
-size_t  gp_hidden_called;
+unsigned  gp_breakOK;
+unsigned  gp_nestLevel;
+unsigned  gp_stringsize;
+unsigned  gp_hidden_called;
 HiddenFunction gp_hiddenFun[he_];
 
 char *gp_funstring[] =                          /* only one_arg  */
@@ -184,12 +184,12 @@ ExprType gp_varType;
 
 Opcode gp_lastOp = op_hlt;
 
-size_t  gp_dead_sp;
-size_t *gp_dead;
+unsigned  gp_dead_sp;
+unsigned *gp_dead;
 
 FILE *gp_bin;
 
-size_t  gp_nStrings;
+unsigned  gp_nStrings;
 StringTable *gp_stringTable;
 
 SemVal gp_init;                     /* code initializing globals */

@@ -16,7 +16,7 @@
 void o_push_strconst()
 {
     register char *str = rss_getString(go_infile, go_header->offset[0], 
-                                           (size_t)rss_getInt16(go_infile));
+                                           (unsigned)rss_getInt16(go_infile));
     
     if (str == (char *)-1)
         rss_fatal(0, 0, "cannot get string, opcode at %s", aux_offset());

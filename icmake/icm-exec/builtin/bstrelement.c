@@ -15,7 +15,7 @@ static char buf[2];
 
 void b_strElement()
 {
-    size_t idx = int_value(stack_top());
+    unsigned idx = int_value(stack_top());
     char const *str = string_charp(stack_top() - 1);
 
     buf[0] = idx >= strlen(str) ? 0 : str[idx];

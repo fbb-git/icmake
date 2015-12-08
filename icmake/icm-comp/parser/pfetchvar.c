@@ -34,7 +34,7 @@ SemVal *p_fetchVar()
 
     if (vi.type != st_global)
     {
-        register size_t nParams = symtab_nParams();
+        register unsigned nParams = symtab_nParams();
 
         if (idx < nParams)
             idx += 0xc002;                  /* offset of a parameter */

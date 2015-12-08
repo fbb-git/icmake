@@ -5,7 +5,7 @@ char const *sc_scan(char const *fmt, char const *text)
 {
     msg("saw %s", text);
 
-    size_t value = 0;
+    unsigned value = 0;
     sscanf(text, fmt, &value);
 
     value %= 0x100;

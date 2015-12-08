@@ -1,6 +1,6 @@
 #include "list.ih"
 
-void l_cleanup(ListVariable *list, size_t toRemove)
+void l_cleanup(ListVariable *list, unsigned toRemove)
 {
     if (l_size(list) == toRemove) /* remove all ? */
     {

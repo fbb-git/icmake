@@ -1,9 +1,9 @@
 #include "parser.ih"
 
-void p_patchup(int8_t *code, size_t len, unsigned *list, size_t listlen, int pos)
+void p_patchup(int8_t *code, unsigned len, unsigned *list, unsigned listlen, int pos)
 {                                           /* list, listlen: list of */
-    register size_t idx;                    /* offsets to p_patchup     */
-    register size_t beyond_jump;
+    register unsigned idx;                    /* offsets to p_patchup     */
+    register unsigned beyond_jump;
     char *cp;                               /* codepointer */
 
     union

@@ -4,7 +4,7 @@ VarIndex symtab_findVar() /* util_string() holds the name of an existing   */
 {                           /* variable, returns -1 if not found            */
     VarIndex ret;
 
-    for (size_t nesting = gs_vars.nLevels; nesting--; )
+    for (unsigned nesting = gs_vars.nLevels; nesting--; )
     {
         int idx = st_findVar(nesting);
 

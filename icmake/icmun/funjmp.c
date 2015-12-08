@@ -8,5 +8,5 @@ void fun_jmp ()
     offs = rss_getInt16 (infile);
     dumpint ( (uint16_t) offs);
     printf ("jmp [%s]\n",
-            rss_hexString ((size_t)(ftell(infile) + offs), 4));
+            rss_hexString ((unsigned)(ftell(infile) + offs), 4));
 }

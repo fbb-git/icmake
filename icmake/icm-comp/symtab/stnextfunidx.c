@@ -1,6 +1,6 @@
 #include "symtab.ih"
 
-size_t st_nextFunIdx()          /* idx of an uninitialized record of a */
+unsigned st_nextFunIdx()          /* idx of an uninitialized record of a */
 {                               /* function */
     if (gs_functions.nFunctions == gs_functions.capacity)
         gs_functions.info = rss_realloc(gs_functions.info, 

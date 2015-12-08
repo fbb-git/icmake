@@ -28,7 +28,7 @@ char *l_updateDefinition(char *def, char **begin, char *end, char const *repl)
     **begin = 0;                        /* end curr. def. at ${...}     */
 
                                         /* length of the processed section */
-    size_t doneLength = *begin - def + strlen(repl);                     
+    unsigned doneLength = *begin - def + strlen(repl);                     
 
     def = rss_strcat(def, new);         /* append replacement + org tail*/
     free(new);

@@ -1,9 +1,9 @@
 #include "rss.ih"
 
 glob_t gr_globData;                            /* globbing struct */
-size_t gr_nextGlob;                         /* next name in list */
+unsigned gr_nextGlob;                         /* next name in list */
 
-size_t gr_nErrors;
+unsigned gr_nErrors;
 
 char gr_name[MAX_PATHLEN];
 char gr_dir[MAX_PATHLEN];

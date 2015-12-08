@@ -29,19 +29,19 @@ char *rss_changePath(char const *path, char const *newDirs);
 
 void    rss_copyright(char const *program);     /* copyright message */
 
-char   *rss_findFirst(char const *fspec, size_t attrib);
+char   *rss_findFirst(char const *fspec, unsigned attrib);
 char   *rss_findNext(void);             /* remaining matching entries   */
 
-char   *rss_fgetz (char *, size_t, FILE *);
+char   *rss_fgetz (char *, unsigned, FILE *);
 
 char const *rss_getExt(char const *path);
 char const *rss_getDext(char const *path);
 char const *rss_getBase(char const *path);
 char const *rss_getPath (char const *path);
 
-char     *rss_getString(FILE *, int32_t, size_t);
+char     *rss_getString(FILE *, int32_t, unsigned);
 
-char     *rss_hexString (size_t, size_t);
+char     *rss_hexString (unsigned, unsigned);
 
                                         /* make programname from argv[0] */
 char const *rss_programName(char const *argv0);  
@@ -60,17 +60,17 @@ void     rss_msg_(char const *path, char *fmt, ...); /* prints a msg to stderr.
                                         ...) to specify a message
                                     */
 
-void    rss_fatal(char const *src, size_t lineNr, char const *fmt, ...);
-void    rss_error(char const *src, size_t lineNr, char const *fmt, ...);
-void    rss_errorList(char const *src, size_t lineNr, char const *fmt, 
+void    rss_fatal(char const *src, unsigned lineNr, char const *fmt, ...);
+void    rss_error(char const *src, unsigned lineNr, char const *fmt, ...);
+void    rss_errorList(char const *src, unsigned lineNr, char const *fmt, 
                                                       va_list args);
 
-void    rss_warning(char const *src, size_t lineNr, char const *fmt, ...);
-size_t  rss_nErrors();
+void    rss_warning(char const *src, unsigned lineNr, char const *fmt, ...);
+unsigned  rss_nErrors();
 
 void     rss_spawnErr(char const *program);
 
-void     *rss_realloc(void *oldPtr, size_t size_in_bytes);
+void     *rss_realloc(void *oldPtr, unsigned size_in_bytes);
 
 int      rss_exists(char const *path);  /* 0 is returned if path exists.
                                             path can be NULL */
@@ -84,7 +84,7 @@ Opcode  rss_getOpcode (FILE *);
 
 uint16_t    rss_getVar(Variable **varVector, FILE *bimFile, BinHeader *hdr);
 
-BinHeader *rss_readHeader(FILE *f, size_t v);
+BinHeader *rss_readHeader(FILE *f, unsigned v);
 
     /* to activate msg(...) calls do '#define msg' before reading rssh.h */
 

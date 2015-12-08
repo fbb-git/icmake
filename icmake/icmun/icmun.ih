@@ -18,8 +18,8 @@ extern FILE *infile;
 
 extern int8_t *local_types;
 
-extern size_t curoffs;
-extern size_t nvar;
+extern unsigned curoffs;
+extern unsigned nvar;
 
 extern Variable *var;
 

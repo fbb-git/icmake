@@ -5,9 +5,9 @@
 
 #include "parser.ih"
 
-void p_outCode(SemVal *ep, int value, register size_t size)
+void p_outCode(SemVal *ep, int value, register unsigned size)
 {
-    register size_t codelen;
+    register unsigned codelen;
 
     union
     {

@@ -3,7 +3,7 @@
 */
 #include "symtab.ih"
 
-int st_findVar(size_t nesting)   /* find util_string() via gs_vars[nesting] */
+int st_findVar(unsigned nesting)   /* find util_string() via gs_vars[nesting] */
 {
                                 /* variable table to use when looking for
                                     util_string() */
@@ -13,8 +13,9 @@ int st_findVar(size_t nesting)   /* find util_string() via gs_vars[nesting] */
                                                             index vector */
 
                                                     /* find the var's index */
-    void *size_tPtr = lfind(util_string(), indices->index, &indices->nVars,
-                            sizeof(size_t), st_compareVars);
+    size_t nmemb = indices->nVars;
+    void *unsignedPtr = lfind(util_string(), indices->index, &nmemb,
+                            sizeof(unsigned), st_compareVars);
 
-    return size_tPtr == NULL ? -1 : *(int *)size_tPtr;
+    return unsignedPtr == NULL ? -1 : *(int *)unsignedPtr;
 }

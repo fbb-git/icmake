@@ -34,7 +34,7 @@ extern char     *gb_cmdTail;
 
 extern int      gb_echo;
 
-extern size_t   gb_listIndex;
+extern unsigned   gb_listIndex;
 
 extern void (*gb_pBuiltinFun[])(void);
 
@@ -59,10 +59,10 @@ char    **eb_addCmd(char **, char *);
 char    **eb_exeCmd(char **, int);
 
 char    *eb_findPercent(char *begin);
-char    *eb_getArg(size_t argIdx, int *listDone);   /* listDone = 1 when all
+char    *eb_getArg(unsigned argIdx, int *listDone);   /* listDone = 1 when all
                                                        list elements have
                                                        been retrieved */
-char    *eb_getExecArg(size_t, int *);
+char    *eb_getExecArg(unsigned, int *);
 char    *eb_getLine(FILE *file);
 char    *eb_setString(char *);
 char    *eb_strLower(char *str);
@@ -73,16 +73,16 @@ int     eb_getCmdLen(char **);
 int     eb_spawnvp(int mode, char const *prog, char const **argv);
 int     eb_termCh(void);
 
-size_t  eb_formattedFprintf(FILE *dest, FormatDest formatDest);
-size_t  eb_formatter(void *dest, FormatDest formatDest);
-size_t  eb_getNr(char **ptr);
-size_t  eb_noFormatting(void *dest, size_t start, size_t lastIdx);
+unsigned  eb_formattedFprintf(FILE *dest, FormatDest formatDest);
+unsigned  eb_formatter(void *dest, FormatDest formatDest);
+unsigned  eb_getNr(char **ptr);
+unsigned  eb_noFormatting(void *dest, unsigned start, unsigned lastIdx);
 
 void    eb_fgetsStatus(char const *status);
 void    eb_fileWrite(void *dest, char const *begin, char const *end);
 void    eb_stringWrite(void *dest, char const *begin, char const *end);
 void    eb_updateFgets(FILE *inf, char *dest);
-void    eb_writeArgument(void *dest, size_t idx);
+void    eb_writeArgument(void *dest, unsigned idx);
 
 Variable *eb_releaseReg(void);
     

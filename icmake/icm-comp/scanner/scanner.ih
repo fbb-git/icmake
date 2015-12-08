@@ -37,13 +37,13 @@ typedef struct
 } FileStack;
 
 extern FileStack gs_fileStack[];
-extern size_t gs_fileSp;
+extern unsigned gs_fileSp;
 extern char gs_char[];
 extern char *gs_filenames;
 extern char *gs_savedText;
-extern size_t   gs_savedLineNr;
+extern unsigned   gs_savedLineNr;
 
-extern size_t   yyleng;
+extern unsigned   yyleng;
 
 extern FILE *yyin;
 extern FILE *yyout;

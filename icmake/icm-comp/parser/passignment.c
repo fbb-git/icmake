@@ -3,8 +3,8 @@
 SemVal *p_assignment(SemVal *lval, SemVal *rval, char *opstr)
 {
     SemVal *tmp;
-    size_t type;
-    size_t value;
+    unsigned type;
+    unsigned value;
 
     if (!test_type(lval, e_var))
     {

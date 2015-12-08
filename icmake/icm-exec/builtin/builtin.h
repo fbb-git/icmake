@@ -4,7 +4,7 @@
 #include "../../rss/rss.h"
 
 void        builtin(void);     /* prepare initial data, call only once */
-void        builtin_call(size_t funIdx);
+void        builtin_call(unsigned funIdx);
 void        builtin_popReg(void);
 
 Variable const *builtin_regPtr();

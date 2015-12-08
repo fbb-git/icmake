@@ -7,7 +7,7 @@
 #include "../int/int.h"
 #include "../string/string.h"
 
-static  size_t stackSize;
+static  unsigned stackSize;
 
 void stack_push(Variable const *varEl)
 {

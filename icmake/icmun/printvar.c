@@ -7,7 +7,7 @@ char *printvar(int idx)
     register int16_t i;
 
     if ((uint16_t)idx < 0x8000 )            /* pure variable number */
-        strcpy(buffer + 1, rss_hexString ((size_t)idx, 4));
+        strcpy(buffer + 1, rss_hexString ((unsigned)idx, 4));
     else
     {
         i = idx - 0xc000;           /* correct for BP pos */
@@ -20,7 +20,7 @@ char *printvar(int idx)
         }
         else
             strcat (buffer, "+");
-        strcat (buffer, rss_hexString ((size_t)i, 4));
+        strcat (buffer, rss_hexString ((unsigned)i, 4));
     }
     strcat (buffer, "]");
     return (buffer);

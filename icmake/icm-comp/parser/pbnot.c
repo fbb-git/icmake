@@ -12,7 +12,7 @@ SemVal *p_not(SemVal *e)                   /* expression so far */
         return e;
     }
 
-    if ((e->type & (size_t)~e_typeMask) == e_const)   /* immediate value */
+    if ((e->type & (unsigned)~e_typeMask) == e_const)   /* immediate value */
         e->evalue = ~e->evalue;
     else
     {

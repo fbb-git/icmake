@@ -24,7 +24,7 @@ int main (int argc, char **argv)
     if (! (infile = fopen(infname, "r")) )
         rss_fatal(0, 0, "cannot open %s for reading", infname);
 
-    headerp = rss_readHeader(infile, (size_t)version [0]);
+    headerp = rss_readHeader(infile, (unsigned)version [0]);
 
     if ((int16_t)(nvar = rss_getVar(&var, infile, headerp)) == -1 )
         rss_fatal(0, 0, "invalid macro file, cannot read variable section");

@@ -51,10 +51,10 @@ extern char *bimFile;
 
 extern FILE *fdest;
 extern FLAGS_ flags;
-extern size_t execArgIdx;
+extern unsigned execArgIdx;
                                                 
 void noOptions(char **argv);
-size_t dashesIndex(char **begin, char **end);
+unsigned dashesIndex(char **begin, char **end);
 
 void optCompile(char **argv);
 void optExecute();

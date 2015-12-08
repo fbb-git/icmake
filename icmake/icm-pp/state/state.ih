@@ -11,8 +11,8 @@ typedef struct
 } State;
 
 extern State *st_stack;
-extern size_t st_size;
-extern size_t st_capacity;
+extern unsigned st_size;
+extern unsigned st_capacity;
 
 void st_available();            /* make sure there's enough room available */
 

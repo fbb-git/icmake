@@ -5,7 +5,7 @@
             TextData *data: a pointer to a allocated TextData, containing
                   nShared:    the share-count
                   
-                    size_t size: the number of strings, stored in the list
+                    unsigned size: the number of strings, stored in the list
                     char **element: a pointer to pointers to allocated 
                                           NTBSs
 
@@ -22,7 +22,7 @@
 
 void listDestructor(ListVariable const *var)
 {
-    size_t idx;
+    unsigned idx;
 
     if (var_decShared(var) == 0)
     {

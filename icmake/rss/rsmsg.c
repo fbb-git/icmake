@@ -1,6 +1,6 @@
 #include "rss.ih"
 
-void rs_msg(char const *src, size_t lineNr, 
+void rs_msg(char const *src, unsigned lineNr, 
             char const *prefix, char const *fmt, va_list args)
 {
     if (src)

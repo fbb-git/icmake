@@ -158,7 +158,8 @@ void scanner()
 
 int find(string needle, list haystack)
 {
-    for (int idx = listlen(haystack); idx--; )
+    int idx;
+    for (idx = listlen(haystack); idx--; )
     {
         if (needle == haystack[idx])
             break;

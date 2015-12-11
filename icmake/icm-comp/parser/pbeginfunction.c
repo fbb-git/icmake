@@ -1,13 +1,11 @@
 
-/* #define msg 
-*/
-
+#define msgx
 #include "parser.ih"
 
 void p_beginFunction()
 {
                                     /* test if function name already exists */
-    if (symtab_addFunction(gp_varType) != 0)
+    if (symtab_addFunction(gp_varType, ftell(gp_bin)) != 0)
     {
         util_semantic("%s p_multiply defined", util_string());
         return;

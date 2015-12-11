@@ -1,7 +1,5 @@
 
-
-/* #define msg
-*/
+#define msg
 
 #include "parser.ih"
 
@@ -14,8 +12,7 @@ void p_endFunction(SemVal *funStmnt)
     gp_nestLevel = 0;       /* function completed: writing code to gp_bin 
                                 now OK */
 
-    p_makeFrame();           /* make the frame, defining the local variables */
-                            /* and define the function's first address      */
+    p_makeFrame();          /* make the frame, defining the local variables */
 
     p_lastStmnt(funStmnt);   /* add the function's statements, patching 
                                funStmnnt's false list */

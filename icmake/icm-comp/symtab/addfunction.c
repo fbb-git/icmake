@@ -3,7 +3,8 @@
 
 #include "symtab.ih"
 
-int symtab_addFunction(ExprType type) /* 0: function added, -1: already def'd */
+int symtab_addFunction(ExprType type,   /* 0: function added, */
+                        long offset)    /*  -1: already def'd */
 {
     if (symtab_findFun() != -1)
         return -1;                          /* already defined */
@@ -15,6 +16,8 @@ int symtab_addFunction(ExprType type) /* 0: function added, -1: already def'd */
     memset(next, 0, sizeof(FunInfo));
     next->name = rss_strdup(util_string());
     next->returnType = type | e_reg;
+    next->address = offset;
+
 
     msg("gs_vars.nParams is %u", gs_vars.nParams);
 

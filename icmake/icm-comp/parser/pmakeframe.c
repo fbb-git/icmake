@@ -12,7 +12,7 @@
 
 void p_makeFrame()
 {
-    if (symtab_setFunctionInfo(ftell(gp_bin)))
+    if (symtab_nLocals())
     {
         SemVal e = *p_stackFrame(0);         /* initialize empty frame */
 

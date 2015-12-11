@@ -1,7 +1,9 @@
 icmake (8.00.03)
 
- * Fixed a erroneously placed variable definition in icmbuild.in
+ * Fixed an erroneously placed variable definition in icmbuild.in
 
+ * Fixed too late assignment of a function's address into its symtab record
+   due to which functions could not recursively be called.
 
 
 icmake (8.00.02)

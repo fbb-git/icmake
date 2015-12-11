@@ -22,7 +22,7 @@ void        symtab(void);   /* initializes the symbol table data structure.
                             call only once (not checked) */
 
                                 /* 0: function added, -1: already def'd */
-int         symtab_addFunction(ExprType type);
+int         symtab_addFunction(ExprType type, long offset);
 
 int         symtab_findFun(void); /* util_string() holds the name of a function 
                                 returns its idx or -1 if not found       */
@@ -45,10 +45,6 @@ unsigned      symtab_lastFunction(void);  /* index of last defined function */
 
 void        symtab_setFunParams();      /* set nparams & types of the function
                                             that's currently being defined */
-
-unsigned      symtab_setFunctionInfo(unsigned nParams); /* initializes the fields 
-                                                 of the last defined function;
-                                                 returns # local variables */
 
 VarIndex    symtab_findVar(void);   /* idx and type of var. g_lextring, 
                                         or -1 */

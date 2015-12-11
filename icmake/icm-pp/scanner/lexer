@@ -9,7 +9,7 @@
 
 %}
 
-%option 8bit  yylineno
+%option 8bit yylineno
 
 %x string comment pointed
 
@@ -20,8 +20,11 @@ ident       [[:alpha:]_][[:alnum:]_]*
 "//".*                      /* ignore eoln comment  */
 ^[ \t]*"#"[ \t]*"!".*       /* ignore #! lines      */
 
-"\\"\n  |
-[ \t]+                  return ' ';
+[ \t]*"\\"\n  |
+[ \t]+                  {
+                            strcpy(yytext, " ");
+                            return ' ';
+                        }
 
 "/*"                    BEGIN comment; 
 

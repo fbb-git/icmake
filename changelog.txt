@@ -1,3 +1,31 @@
+icmake (8.00.04)
+
+ * Fixed handling of line continuation backslashes (\$) in icm-pp
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 11 Dec 2015 22:01:51 +0100
+
+icmake (8.00.03)
+
+ * Fixed an erroneously placed variable definition in icmbuild.in
+
+ * Fixed too late assignment of a function's address into its symtab record
+   due to which functions could not recursively be called.
+
+
+icmake (8.00.02)
+
+  * Fixed a leftover size_t / unsigned mismatch on amd64 architectures.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 08 Dec 2015 19:23:40 +0100
+
+icmake (8.00.01)
+
+  * Fixed size_t / unsigned mismatches on amd64 architectures.
+
+  * Applied patches provided by Tony Mancill. Thanks, Tony :-)
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 08 Dec 2015 10:55:36 +0100
+
 icmake (8.00.00)
 
   * This release adds several new builtin functions, which required a

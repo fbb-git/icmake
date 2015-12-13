@@ -8,10 +8,10 @@
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
 <body text="#27408B" bgcolor="#FFFAF0">
-<hr>
-<h1>icmstart</h1>
-<h2>icmake.8.00.00.tar.gz</h2>
-<h2>1992-2015</h2>
+<hr/>
+<h1 id="title">icmstart</h1>
+<h2 id="author">icmake.8.00.04.tar.gz</h2>
+<h2 id="date">1992-2015</h2>
 
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
@@ -24,8 +24,8 @@
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
 <body text="#27408B" bgcolor="#FFFAF0">
-<hr>
-<h1></h1>
+<hr/>
+<h1 id="title"></h1>
 
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
@@ -41,10 +41,10 @@
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
 <body text="#27408B" bgcolor="#FFFAF0">
-<hr>
-<h1>icmstart(1)</h1>
-<h2>icmake.8.00.00.tar.gz starts icmbuild program maintenance</h2>
-<h2>1992-2015</h2>
+<hr/>
+<h1 id="title">icmstart(1)</h1>
+<h2 id="author">icmake.8.00.04.tar.gz starts icmbuild program maintenance</h2>
+<h2 id="date">1992-2015</h2>
 
 
 <p>
@@ -76,19 +76,19 @@ script may be used for program maintenance.
 <em>Icmstart</em> may be called with the following options, which (if specified)
     must be the first arguments of <em>icmstart</em>:
     <ul>
-    <li><em>-b</em><br>
+    <li><em>-b</em><br/>
        Basic installation: the files VERSION, usage.cc and version.cc are not
         installed, and the #define USE_VERSION entry in icmconf is commented
         out.
-    <li><em>-c confpath</em><br> Use the configuration files (<em>icmstart.rc, AUTHOR,
+    <li><em>-c confpath</em><br/> Use the configuration files (<em>icmstart.rc, AUTHOR,
         YEARS</em> and <em>VERSION</em>) if found in `confpath' rather than in
         <em>~/.icmake</em> and/or <em>/etc/icmake/</em>. Once a file is found it is used
         allowing partial overrides of the default files provided by
         <strong>icmake</strong>(1).
-    <li><em>-d</em><br>
+    <li><em>-d</em><br/>
        Do not execute any commands, but show the commands that would have been
         executed on the standard output.
-    <li><em>-I</em><br>
+    <li><em>-I</em><br/>
        Do not install files. 
     <li><em>-r</em> 
        Unconditionally replace existing files. If <em>-r</em> is not
@@ -96,7 +96,7 @@ script may be used for program maintenance.
         file must
         be overwritten. If a skeleton specification refers to a directory, the
         full directory and its subdirectories will be replaced.
-    <li><em>-s skeleton-path</em> <br> 
+    <li><em>-s skeleton-path</em> <br/> 
        By default skeleton files are listed in the skeleton resource file
         <em>/usr/share/icmake/icmstart.rc</em>. Alternatively, the skeleton
         resource file may be specified by the <em>ICM</em> environment variable,

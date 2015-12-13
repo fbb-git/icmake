@@ -8,10 +8,10 @@
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
 <body text="#27408B" bgcolor="#FFFAF0">
-<hr>
-<h1>icmake</h1>
-<h2>icmake.8.00.00.tar.gz</h2>
-<h2>1992-2015</h2>
+<hr/>
+<h1 id="title">icmake</h1>
+<h2 id="author">icmake.8.00.04.tar.gz</h2>
+<h2 id="date">1992-2015</h2>
 
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
@@ -24,8 +24,8 @@
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
 <body text="#27408B" bgcolor="#FFFAF0">
-<hr>
-<h1></h1>
+<hr/>
+<h1 id="title"></h1>
 
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
@@ -41,10 +41,10 @@
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
 <body text="#27408B" bgcolor="#FFFAF0">
-<hr>
-<h1>icmake(1)</h1>
-<h2>icmake.8.00.00.tar.gz A program maintenance utility</h2>
-<h2>1992-2015</h2>
+<hr/>
+<h1 id="title">icmake(1)</h1>
+<h2 id="author">icmake.8.00.04.tar.gz A program maintenance utility</h2>
+<h2 id="date">1992-2015</h2>
 
 
 <p>
@@ -94,7 +94,7 @@ interpreted. See also the <strong>icmconf</strong>(7) man-page for further detai
     <li><em>source</em>: <strong>icmake</strong> script source file (default extension: <em>.im</em>).
     <li><em>dest</em>:  binary <strong>icmake</strong> script file (default:  <em>`source'.bim</em>).
     <li><em>--</em>:  <strong>icmake</strong> arguments separator for arguments passed to
-            <em>icm-exec</em><br> 
+            <em>icm-exec</em><br/> 
         <em>args</em>:  arguments following <em>--</em> are passed to <em>icm-exec</em> as-is
         as its arguments, and are available from <strong>icmake</strong>-sctipt's 
             <em>main()</em> function's <em>list argv</em> parameter (see below at
@@ -106,26 +106,26 @@ options, the <em>-a</em> option overrules all other options except for <em>-h</e
 the remaining action options (<em>-b, -c, -e, -i, -p</em> and <em>-t</em>) only one may
 be specified:
     <ul>
-    <li> <strong>-a</strong>  <br>show information about <strong>icmake</strong>, overruled by <em>-h</em>
-    <li> <strong>-b</strong>  <br>discontinued. Option -e can be used instead
-    <li> <strong>-c</strong>  <br>the <strong>icmake</strong> source file is compiled
-    <li> <strong>-e</strong>  <br>execute the <strong>icmake</strong> .bim file, given as first argument
-    <li> <strong>-F</strong>  <br>the filenames and flags as well as an overview of all actions to
+    <li> <strong>-a</strong>  <br/>show information about <strong>icmake</strong>, overruled by <em>-h</em>
+    <li> <strong>-b</strong>  <br/>discontinued. Option -e can be used instead
+    <li> <strong>-c</strong>  <br/>the <strong>icmake</strong> source file is compiled
+    <li> <strong>-e</strong>  <br/>execute the <strong>icmake</strong> .bim file, given as first argument
+    <li> <strong>-F</strong>  <br/>the filenames and flags as well as an overview of all actions to
         be performed by <strong>icmake</strong> are shown on the standard output stream
-    <li> <strong>-i</strong>  <br>the first argument is the <strong>icmake</strong> source file, the default
+    <li> <strong>-i</strong>  <br/>the first argument is the <strong>icmake</strong> source file, the default
         binary file is constructed if necessary and all additional
         arguments are passed to <em>icm-exec</em> `as is'.
-    <li> <strong>-p</strong>  <br>the <strong>icmake</strong> source file is only preprocessed, output is the
+    <li> <strong>-p</strong>  <br/>the <strong>icmake</strong> source file is only preprocessed, output is the
                 preprocessed only the preprocessor is activated
-    <li> <strong>-q</strong>  <br>ignored
-    <li> <strong>-T</strong>  <br>this option must be provided with the name of a directory which
+    <li> <strong>-q</strong>  <br/>ignored
+    <li> <strong>-T</strong>  <br/>this option must be provided with the name of a directory which
         is used to store temporary files. E.g., when compiling an <strong>icmake</strong>
         script, the output of <strong>icmake</strong>'s preprocessor is a temporary file which
         is removed on exit. By default <em>/tmp</em> is used, unless <em>/tmp</em> is
         not a writable directory, in which case the current user's <em>$HOME</em>
         directory is used. Implicit temporary filenames always start with the
         process id of the current <strong>icmake</strong> process.
-    <li> <strong>-t</strong>  <br>the argument following <em>-t</em> is the name of a temporary <em>.bim</em>
+    <li> <strong>-t</strong>  <br/>the argument following <em>-t</em> is the name of a temporary <em>.bim</em>
         file, which is removed after <strong>icmake</strong>'s call. The next argument is the
         name of the <strong>icmake</strong> script, and all additional arguments are passed as
         arguments to the <strong>icmake</strong> script. After making an <strong>icmake</strong>-script executable
@@ -147,7 +147,7 @@ be specified:
         in which case the <strong>icmake</strong> script <em>`script'</em> is executed while it
         received the three arguments <em>script arg1 arg2</em>.
 <p>
-<li> <strong>-v</strong>  <br>displays <strong>icmake</strong>'s version number, and ends <strong>icmake</strong>, 
+<li> <strong>-v</strong>  <br/>displays <strong>icmake</strong>'s version number, and ends <strong>icmake</strong>, 
             overruled by <em>-h</em>
     </ul>
 <p>
@@ -159,7 +159,7 @@ be specified:
 <p>
 The following preprocessor directives are available:
     <ul>
-    <li> comment:<br>
+    <li> comment:<br/>
        standard <strong>C</strong> comment (all between <em>/*</em> and <em>*/</em>) as well as
         comment-to-end-of-line (all line contents following <em>//</em>) are
         ignored.
@@ -200,14 +200,14 @@ E.g., if the first line of an (executable) icmakefile 'icm'
 
        In this case the binary file is removed on exit. The PID extension being
         the process-id of the <strong>icmake</strong> program executing <em>icm</em>.
-    <li><em>#include "filename"</em><br>
+    <li><em>#include "filename"</em><br/>
         The file <em>filename</em> is included at the location of the directive
-    <li><em>#include &lt;filename&gt;</em><br> The file <em>filename</em> is included at the
+    <li><em>#include &lt;filename&gt;</em><br/> The file <em>filename</em> is included at the
         location of the <em>#include</em> directive; <em>filename</em> is searched in
         the colon-separated directories specified by the <em>IM</em> environment
         variable. The first occurrence of <em>filename</em> in the directories
         specified by the <em>IM</em> environment variable is used.
-    <li><em>#define identifier [definition]</em><br> The text <em>identifier</em> will be
+    <li><em>#define identifier [definition]</em><br/> The text <em>identifier</em> will be
         replaced by <em>definition</em>. The definition may contain references to
         already defined identifiers, using the <em>${identifier}</em> format. If
         the <em>${identifier}</em> hasn't been defined (yet), the text
@@ -223,22 +223,22 @@ Definitions
 A definition is optional. If omitted, the macro is defined, so it can
         be used in <em>#if(n)def</em> directives (see below), but in they are not
         replaced by any text in <strong>icmake</strong> code statements.
-    <li><em>#ifdef identifier</em><br>
+    <li><em>#ifdef identifier</em><br/>
         If the <em>identifier</em> macro was defined the next block of code (until
         a matching <em>#else</em> or <em>#endif</em> directive was detected) is
         byte-compiled. Otherwise, the block of code is ignored.
-    <li><em>#ifndef identifier</em><br> 
+    <li><em>#ifndef identifier</em><br/> 
         If the <em>identifier</em> macro was <em>not</em> defined the next block of code
         (until a matching <em>#else</em> or <em>#endif</em> directive was detected) is
         byte-compiled. Otherwise, the block of code is ignored.
-    <li><em>#else</em><br>
+    <li><em>#else</em><br/>
         Terminates a <em>#ifdef</em> and <em>#ifndef</em> directive, reversing the
         acceptance decision about  the following code. Only one <em>#else</em>
         directive can be associated with <em>#if(n)def</em> directives.
-    <li><em>#endif</em><br>
+    <li><em>#endif</em><br/>
         Terminates the preprocessor block starting at the matching 
         <em>#ifdef</em>, <em>#ifndef</em> or <em>#else</em> directive.
-    <li><em>#undef identifier</em> <br>
+    <li><em>#undef identifier</em> <br/>
         Remove <em>identifier</em> from the set of defined symbols. This does not
         affect the specification of any previously defined symbols in which
         <em>identifier's</em> definition has been used. If <em>identifier</em> hasn't
@@ -249,7 +249,7 @@ A definition is optional. If omitted, the macro is defined, so it can
 <p>
 <strong>Icmake</strong> supports three data types:
     <ul>
-    <li><em>ASCII character constants</em><br> 
+    <li><em>ASCII character constants</em><br/> 
        ASCII character constants consist of one character, surrounded by
         single or double quotes. Single characters (e.g., <em>'a'</em>) represent
         the character itself. Standard escape sequences (e.g., <em>'\n'</em>) are
@@ -262,14 +262,14 @@ A definition is optional. If omitted, the macro is defined, so it can
         of an x followed by two hexadecimal digits represent the ascii
         character corresponding to the hexadecimal value (e.g., <em>'\xa4'</em>).
 <p>
-<li><em>int</em><br> 
+<li><em>int</em><br/> 
        Integral values, ranging from <em>-0x8000</em> through <em>0x7fff</em>. <em>int</em>
         constants may be specified as decimal numbers (starting with digits 1
         through 9), octal numbers (starting with 0, followed by one or more
         octal digits) hexadecimal numbers (starting with 0x, followed by one
         or more hexadecimal digits) or as <em>ASCII</em> character constants.
 <p>
-<li><em>string</em><br>
+<li><em>string</em><br/>
        Text variables. String constants are delimited by double
         quotes. Multiple string constants may be concatenated, but a single
         string constant may not extend over multiple lines. String constants
@@ -285,12 +285,12 @@ ASCII character constants surrounded by double quotes can also be used
 Likewise, ASCII character constants surrounded by single quotes may be
         used in situations where a string operand is expected.
 <p>
-<li><em>list</em><br>
+<li><em>list</em><br/>
        A data structure containing a series of individually accessible
         <em>string</em> values. When a list contains elements, its first element is
         indicated by index 0.
 <p>
-<li><em>void</em><br>
+<li><em>void</em><br/>
        Used with function definitions to indicate that the function does not
         return a value.
     </ul>
@@ -313,7 +313,7 @@ The following constants are predefined by <strong>icmake</strong>. All are const
         values:
     <table>
 
-        <td colspan=3><hr></td>
+        <td colspan=3><hr/></td>
 
         
 <tr>
@@ -321,7 +321,7 @@ The following constants are predefined by <strong>icmake</strong>. All are const
  
 </tr>
 
-        <td colspan=3><hr></td>
+        <td colspan=3><hr/></td>
 
         
 <tr>
@@ -347,7 +347,7 @@ The following constants are predefined by <strong>icmake</strong>. All are const
  
 </tr>
 
-        <td colspan=3><hr></td>
+        <td colspan=3><hr/></td>
 
         
 <tr>
@@ -361,7 +361,7 @@ The following constants are predefined by <strong>icmake</strong>. All are const
  
 </tr>
 
-        <td colspan=3><hr></td>
+        <td colspan=3><hr/></td>
 
         
 <tr>
@@ -375,7 +375,7 @@ The following constants are predefined by <strong>icmake</strong>. All are const
  
 </tr>
 
-        <td colspan=3><hr></td>
+        <td colspan=3><hr/></td>
 
         
 <tr>
@@ -413,7 +413,7 @@ The following constants are predefined by <strong>icmake</strong>. All are const
  
 </tr>
 
-        <td colspan=3><hr></td>
+        <td colspan=3><hr/></td>
 
     
 </table>
@@ -421,7 +421,7 @@ The following constants are predefined by <strong>icmake</strong>. All are const
 The following constants are architecture dependent:
     <table>
 
-        <td colspan=2><hr></td>
+        <td colspan=2><hr/></td>
 
         
 <tr>
@@ -429,7 +429,7 @@ The following constants are architecture dependent:
  
 </tr>
 
-        <td colspan=2><hr></td>
+        <td colspan=2><hr/></td>
 
         
 <tr>
@@ -463,7 +463,7 @@ The following constants are architecture dependent:
 
         
 <tr>
-<td> _POSIX</td><td> _SOURCE   Unix with Posix complient compiler</td>
+<td> _POSIX</td><td> _SOURCE   Unix with Posix compliant compiler</td>
  
 </tr>
 
@@ -473,7 +473,7 @@ The following constants are architecture dependent:
  
 </tr>
 
-        <td colspan=2><hr></td>
+        <td colspan=2><hr/></td>
 
     
 </table>
@@ -543,7 +543,7 @@ as well) as so-called <em>rvalue</em>. Therefore, constructions like:
 </pre>
 
 <p>
-<li> The `backtick` operator (<em>`string cmd`</em>)<br>
+<li> The `backtick` operator (<em>`string cmd`</em>)<br/>
         A string placed between two backticks is executed by the <em>popen</em>(3)
         function. The standard output gererated by the command that is stored
         in the string argument is returned as a list. An empty list indicates
@@ -624,15 +624,15 @@ cast:
 <strong>Icmake</strong> offers the following subset of <strong>C</strong>'s statement types. They can be
 used as in the <strong>C</strong> programming language.
     <ul>
-    <li><em>expression ;</em><br>
+    <li><em>expression ;</em><br/>
         The plain expression statement;
 <p>
-<li> The compound statement <br>
+<li> The compound statement <br/>
         Variables of any type may be defined and initialized anywhere inside
         any compound statement. The <em>visibility</em> of a variable starts at its
         point of definition.
 <p>
-<li><em>if (condition) statement</em><br>
+<li><em>if (condition) statement</em><br/>
         A variable may be defined and initialized within the condition. E.g,
             <pre>
 
@@ -645,35 +645,35 @@ used as in the <strong>C</strong> programming language.
         empty string. The variable <em>str</em> does not exist either before or
         after the <em>if</em> statement.
 <p>
-<li><em>if (condition) statement else statement</em><br>
+<li><em>if (condition) statement else statement</em><br/>
         As with the previous statement, a variable may be defined and
         initialized within the condition. 
 <p>
-<li><em>for (init; condition; increment) statement</em><br> 
+<li><em>for (init; condition; increment) statement</em><br/> 
        Variables (of a single type) may be initialized (and optionally be
         defined) in the <em>init</em> section. The <em>init</em>, <em>condition</em> and
         <em>increment</em> sections may be left empty. The empty condition section
         is interpreted as `always <em>true</em>'.
 <p>
-<li><em>while (condition) statement</em><br>
-        A variable may be defined and initialized within the condition.<br>
+<li><em>while (condition) statement</em><br/>
+        A variable may be defined and initialized within the condition.<br/>
         A complementary  <em>do ... while()</em> statement is not available.
 <p>
-<li><em>return</em><br>
+<li><em>return</em><br/>
        Plain <em>return</em> statements can be used for <em>void</em> functions,
         and <em>return expression</em> statements are used for other
         functions. The function <em>main</em> by default returns 0; other functions
         do not use default return values.
 <p>
-<li><em>break</em><br>
+<li><em>break</em><br/>
         To leave <em>for</em> and <em>while</em> statements, overruling the statement's
         condition.
 <p>
-<li><em>continue</em><br>
+<li><em>continue</em><br/>
         To continue with the next iteration of a <em>for</em> or <em>while</em>
         statement.
 <p>
-<li><em>exit(expression)</em><br>
+<li><em>exit(expression)</em><br/>
        To end the execution of an <strong>icmake</strong>-script. The <em>expression</em> must
         evaluate to an <em>int</em> value, which becomes the script's exit value.
     </ul>    
@@ -685,25 +685,25 @@ anywhere in <strong>icmake</strong> scripts. The function overview is ordered al
 by function name.
 <p>
 <ul>
-    <li><em>void arghead(string h)</em><br>
+    <li><em>void arghead(string h)</em><br/>
        Helper function of <em>exec()</em> (see also below at <em>exec()</em>):
         defines the `argument head', to be used with <em>exec()</em>. By default,
         the `argument head' is an empty string.
 <p>
-<li><em>void argtail (string t)</em><br>
+<li><em>void argtail (string t)</em><br/>
        Helper function of <em>exec()</em> (see also below at <em>exec()</em>): defines
         the `argument tail', to be used with <em>exec()</em>. By default, the
         `argument tail' is an empty string.
 <p>
-<li><em>int ascii(string s)</em><br>
+<li><em>int ascii(string s)</em><br/>
         Returns the first character of <em>s</em> as an int; e.g.,
         <em>ascii("A")</em> returns 65;
 <p>
-<li><em>string ascii(int i)</em><br>
+<li><em>string ascii(int i)</em><br/>
         Returns <em>i</em> as a string, e.g., <em>ascii(65)</em> returns the string
         <em>"A"</em>;
 <p>
-<li> The `backtick` operator (<em>`</em>)<br>
+<li> The `backtick` operator (<em>`</em>)<br/>
         A string placed between two backticks is executed by the <em>popen</em>(3)
         function. The standard output gererated by the command that is stored
         in the string argument is returned as a list. An empty list indicates
@@ -723,59 +723,59 @@ by function name.
         The predefined function <em>eval(string cmd)</em> behaves exactly like the
         backtick operator: they are synonyms.
 <p>
-<li><em>string change_base(string file, string newbase)</em><br>
+<li><em>string change_base(string file, string newbase)</em><br/>
         Changes the basename of <em>file</em>, returns the changed name. E.g, 
         <em>change_base("/path/demo.im", "out")</em> returns <em>"/path/out.im"</em>;
 <p>
-<li><em>string change_ext(string file, string newext)</em><br>
+<li><em>string change_ext(string file, string newext)</em><br/>
         Changes the extension of <em>file</em>, returns the changed name. E.g, 
         <em>rss_changeExt("source.cc", "o")</em> returns <em>"source.o"</em>;
 <p>
-<li><em>string change_path(string file, string newpath)</em><br>
+<li><em>string change_path(string file, string newpath)</em><br/>
          Changes the path specification of <em>file</em>, returns the changed name.
         E.g, <em>change_path("tmp/binary", "/usr/bin")</em> returns 
         <em>"/usr/bin/binary"</em>. Note that the <em>/</em>-separator is inserted if
         required. 
 <p>
-<li><em>string chdir(string newdir)</em><br>
+<li><em>string chdir(string newdir)</em><br/>
        Changes the script's working directory, returns the previous dir as an
-        absolute path.<br>
+        absolute path.<br/>
        Use <em>chdir(".")</em> to get current working directory, <em>chdir("")</em> may
         be used to obtain the startup working directory (this functionality
         was broken in releases before than 7.00, but is now operational). The
         function terminates the <strong>icmake</strong>-script if the specified <em>newdir</em> does
         not exist.
 <p>
-<li><em>string chdir(int checking, string newdir)</em><br>
+<li><em>string chdir(int checking, string newdir)</em><br/>
        Same functionality as the previous function, but by specifying
         <em>checking</em> as <em>P_NOCHECK</em>. the function won't terminate the
         script. Rather, it will return the script's current working directory.
 <p>
-<li><em>cmdhead(string h)</em><br>
+<li><em>cmdhead(string h)</em><br/>
        Helper function of <em>exec()</em> (see also below at <em>exec()</em>):
         Defines a `command head', to be used with <em>exec()</em>. By default,
         the `command head' is an empty string.
 <p>
-<li><em>cmdtail(string t)</em><br>
+<li><em>cmdtail(string t)</em><br/>
        Helper function of <em>exec()</em> (see also below at <em>exec()</em>):
         Defines a `command tail', to be used with <em>exec()</em>. By default,
         the `command tail' is an empty string.
 <p>
-<li><em>echo(int opt)</em><br> 
+<li><em>echo(int opt)</em><br/> 
        Controls echoing of called programs (and their arguments), specify
         <em>OFF</em> if echoing is not requested. By default <em>ON</em> is active.
 <p>
-<li><em>string element(int index, list lst)</em><br>
+<li><em>string element(int index, list lst)</em><br/>
        Returns string <em>index</em> (0-based) from <em>lst</em>. An empty string is
         returned if an unavailable index value is provided. See also the
         <em>[]</em> operator in the section <strong>OPERATORS</strong>.
 <p>
-<li><em>string element(int index, string str)</em><br>
+<li><em>string element(int index, string str)</em><br/>
        Returns character <em>index</em> (0-based) from <em>str</em>. An empty string is
         returned if an unavailable index value is provided. See also the
         <em>[]</em> operator in the section <strong>OPERATORS</strong>.
 <p>
-<li><em>list eval(string str)</em><br>
+<li><em>list eval(string str)</em><br/>
        This function acts identically to the backtick operator. The example
         shown at the description of the backtick operator could therefore also
         have been written like this:
@@ -787,7 +787,7 @@ by function name.
 </pre>
 
 <p>
-<li><em>exec(string cmd, ...)</em><br>
+<li><em>exec(string cmd, ...)</em><br/>
        Executes command with arguments. Each argument will be prefixed by
         <em>arghead()</em>'s argument and postfixed by <em>argtail()</em>'s
         argument. Note that no blanks are inserted between <em>arghead()</em>'s
@@ -799,14 +799,14 @@ by function name.
         (again, separated by a single blank). <em>PATH</em> is searched to locate
         <em>cmd</em>. 0 is returned.
 <p>
-<li><em>exec(int checkcmd, string cmd, ...)</em><br>
+<li><em>exec(int checkcmd, string cmd, ...)</em><br/>
        Same functionality as the previous function, but by specifying
         <em>checking</em> as <em>NOT_CHECKED</em> the function won't terminate the
         script. Rather, it will return the called command's exit status, or
         <em>0x7f00</em> if the command wasn't found.
 <p>
 <li><em>execute(string cmd, string cmdhd,
-            string arghd, ..., string argtl, string cmdtl)</em><br>
+            string arghd, ..., string argtl, string cmdtl)</em><br/>
        Same as <em>exec()</em>, but command head/tail and argument
         head/tail must be specified. 
         The actually executed command starts with <em>cmd</em>, followed by 
@@ -815,19 +815,19 @@ by function name.
         with <em>cmdtl</em>. 0 is returned
 <p>
 <li><em>execute(int checking, string cmd, string cmdhd,
-            string arghd, ..., string argtl, string cmdtl)</em><br>
+            string arghd, ..., string argtl, string cmdtl)</em><br/>
        Same functionality as the previous function, but by specifying
         <em>checking</em> as <em>NOT_CHECKED</em> the function won't terminate the
         script. Rather, it will return the called command's exit status, or
         <em>0x7f00</em> if the command wasn't found.
 <p>
-<li><em>int exists(string file)</em><br>
+<li><em>int exists(string file)</em><br/>
        Returns a non-zero value if <em>file</em> exists, otherwise 0 is returned. 
 <p>
-<li><em>list fgets(string file, list offset)</em><br>
+<li><em>list fgets(string file, list offset)</em><br/>
        <strong>NOTE:</strong> the prototype of this function changed from 
         <em>fgets(string file, int offset)</em> to <em>fgets(string file, list
-            offset)</em> at version 8.00.00.<br>
+            offset)</em> at version 8.00.00.<br/>
 <p>
 The next line found at offet <em>offset</em> is read from <em>file</em>.  It
         returns a list <em>retlist</em> containing as its first element the
@@ -836,7 +836,7 @@ The next line found at offet <em>offset</em> is read from <em>file</em>.  It
         its third element the string <em>OK</em> if a line was successfully read,
         <em>FAIL</em> if reading from file failed. At EOF an empty list is
         returned. The list may contain additional elements, which are
-        internally used by <em>fgets</em>.<br>
+        internally used by <em>fgets</em>.<br/>
 <p>
 To read multiple lines, start by passing an empty list as <em>gets's</em>
         second argument. To read subsequent lines, pass the previously
@@ -857,19 +857,19 @@ Here is an example showing how to read a complete file:
 </pre>
 
 <p>
-<li><em>int fprintf(string filename, ...)</em><br>
+<li><em>int fprintf(string filename, ...)</em><br/>
        Appends all (comma separated) arguments to the file
         <em>filename</em>. Returns the number of printed arguments.
 <p>
-<li><em>int fprintf(string filename, string format, ...)</em><br>
+<li><em>int fprintf(string filename, string format, ...)</em><br/>
        Appends all (comma separated) arguments to the file
-        <em>filename</em>. Returns the number of printed arguments.<br>
+        <em>filename</em>. Returns the number of printed arguments.<br/>
        If <em>format</em> contains placeholders %1 .. %n the output is
             formatted (see also <em>strformat</em>). Note that in this case
             argument counting (also) starts beyond the format string: the
             first argument following <em>format</em> is referred to as <em>%1</em>.
 <p>
-<li><em>string get_base(string file)</em><br>
+<li><em>string get_base(string file)</em><br/>
         Returns the base name of <em>file</em>. The base name is the file without
         its path prefix and without its extension. The extension is all
         information starting at the final dot in the filename. If no final dot
@@ -877,72 +877,72 @@ Here is an example showing how to read a complete file:
         <em>a.b</em> equals <em>a</em>, the base name of <em>a.b.c</em> equals <em>a.b</em>, the
         base name of <em>a/b/c</em> equals <em>c</em>. 
 <p>
-<li><em>string getch()</em><br>
+<li><em>string getch()</em><br/>
         Returns the next pressed key as a string (no `Enter' required for
         ms-dos and unix (incl. linux) systems).
 <p>
-<li><em>string get_dext(string file)</em><br>
+<li><em>string get_dext(string file)</em><br/>
        Returns the extension of <em>file</em>, including the separating dot. The
         extension is all information starting at the final dot
         in the filename. 
 <p>
 If no final dot is found, an empty string is returned.
 <p>
-<li><em>list getenv(string envvar)</em><br>
+<li><em>list getenv(string envvar)</em><br/>
        Returns the value of environment variable <em>envvar</em> in a list
         containing two elements:
 <p>
 the first element indicates whether the environment variable was
-        defined (value <em>"1"</em>) or not (value <em>"0"</em>);<br> the second element
+        defined (value <em>"1"</em>) or not (value <em>"0"</em>);<br/> the second element
         indicates the value of the environment variable.
 <p>
 Enivironment variables are of the form <em>variable=value</em>, and if
         defined the list's second element contains <em>value</em>. If the value is
         empty, the variable is defined, but has no text associated with it.
 <p>
-<li><em>string get_ext(string file)</em><br>
+<li><em>string get_ext(string file)</em><br/>
        Returns the extension of <em>file</em>, except for the separating dot. The
         extension is all information starting at the final dot
         in the filename. 
 <p>
 If no final dot is found, an empty string is returned.
 <p>
-<li><em>int getpid()</em><br>
+<li><em>int getpid()</em><br/>
         Returns the process-id (UNIX) of the icmake byte
         code interpreter <strong>icm-exec</strong>.
 <p>
-<li><em>string gets()</em><br>
+<li><em>string gets()</em><br/>
         Returns the next line read from the keyboard as a <em>string</em>. The line
         entered on the keyboard must be terminated by an `Enter' key, which is
         not stored in the returned string.
 <p>
-<li><em>string get_path(string file)</em><br> 
+<li><em>string get_path(string file)</em><br/> 
        Returns the path-prefix of <em>file</em>. The path prefix is all information
         up to (and including) the final directory separator (which is,
         depending on the operating system, a forward- or backslash).
 <p>
 If no path is found, an empty strring is returned.
 <p>
-<li><em>int listlen(list l)</em><br>
+<li><em>int listlen(list l)</em><br/>
         Returns the number of elements in <em>list</em>.
 <p>
-<li><em>list makelist(string mask)</em><br>
+<li><em>list makelist(string mask)</em><br/>
         Returns a list of all files matching <em>mask</em>. E.g.,
         <em>makelist("*.c")</em> returns a list containing all files ending in
         <em>.c</em>. 
-    <li><em>list makelist(type, string mask)</em><br>
+    <li><em>list makelist(type, string mask)</em><br/>
         Same as the previous function, but the type of the directory elements
         may be specified as its first argument:
     <table>
 
-        <td colspan=0><hr></td>
+        <td colspan=0><hr/></td>
 
         
 <tr>
 <td> symbol</td><td> meaning</td> 
 </tr>
 
-        <td colspan=0><hr></td>
+        <td colspan=0><hr/></td>
 
         
 <tr>
@@ -964,44 +964,44 @@ If no path is found, an empty strring is returned.
 <td> IS_SUBDIR</td><td> obtain all subdirectories</td> 
 </tr>
 
-        <td colspan=0><hr></td>
+        <td colspan=0><hr/></td>
 
     
 </table>
     Note that the pattern <em>*</em> will not match hidden entries under Unix-type
         operating systems. Use <em>.*</em> for that.
 <p>
-<li><em>list makelist(string mask, newer, string comparefile)</em><br>
+<li><em>list makelist(string mask, newer, string comparefile)</em><br/>
         Returns list of all files matching mask which are newer
         than a provided comparefile. Operator <em>younger</em> may be used instead
         of <em>newer</em>. Note that <em>newer</em> and <em>younger</em> are operators, not
         strings. 
 <p>
 <li><em>list makelist([int = IS_FILE,] string mask, newer,
-             string comparefile)</em><br>
+             string comparefile)</em><br/>
         Same as the previous function, but <em>type</em> may be specified as in
         <em>list makelist(type, string mask)</em>.
 <p>
-<li><em>makelist(string mask, older, string comparefile)</em><br>
+<li><em>makelist(string mask, older, string comparefile)</em><br/>
         See above; returns a list of files that are older than the 
         comparefile.
 <p>
-<li><em>makelist(type, string mask, older, string comparefile)</em><br>
+<li><em>makelist(type, string mask, older, string comparefile)</em><br/>
         Same as the previous function, but <em>type</em> may be specified as in
         <em>list makelist(type, string mask)</em>.
 <p>
-<li><em>int printf(...)</em><br>
+<li><em>int printf(...)</em><br/>
        Shows all (comma separated) arguments to screen (i.e., the standard
         output stream). Returns the number of printed arguments.
 <p>
-<li><em>int printf(string format, ...)</em><br>
+<li><em>int printf(string format, ...)</em><br/>
        Shows all (comma separated) arguments to screen (i.e., the standard
         output stream). Returns the number of printed arguments (the
-        <em>format</em> string counts as one argument).<br>
+        <em>format</em> string counts as one argument).<br/>
        If <em>format</em> contains placeholders %1 .. %n the output is 
             formatted (see also <em>strformat</em>).
 <p>
-<li><em>int putenv(string envvar)</em><br>
+<li><em>int putenv(string envvar)</em><br/>
         Adds <em>envvar</em> to the current (<strong>icmake</strong>) environment
         Use the format: "VAR=value". Returns 0.
 <p>
@@ -1011,13 +1011,13 @@ If no path is found, an empty strring is returned.
         <em>newlength</em> exceeds <em>str's</em> length then the newly added characters
         are initialized to blank spaces.
 <p>
-<li><em>int sizeof(list l)</em><br>
+<li><em>int sizeof(list l)</em><br/>
         Deprecated: use <em>listlen</em>.
 <p>
-<li><em>int sizeoflist(list l)</em><br>
+<li><em>int sizeoflist(list l)</em><br/>
         Deprecated: use <em>listlen</em>.
 <p>
-<li><em>list stat(string entry)</em><br>
+<li><em>list stat(string entry)</em><br/>
         Returns <strong>stat</strong>(2) information of directory entry <em>entry</em> as 
         a list. The returned list has two elements: element 0 is the
         <em>attribute value</em>, element 1 contains the size of the file.
@@ -1033,23 +1033,23 @@ Attributes are  returned as bit-flags, composed from the
 
         See the <strong>stat</strong>(2) manual page for the meanings of these constants.
 <p>
-<li><em>list stat(checking, string entry)</em><br>
+<li><em>list stat(checking, string entry)</em><br/>
        Same as the previous function, but by specifying <em>checking</em> as
         <em>P_NOCHECK</em> the function won't terminate the script. Rather, it 
         returns <strong>stat</strong>(2)'s return value.
 <p>
-<li><em>int strlen(string s)</em><br>
+<li><em>int strlen(string s)</em><br/>
         Returns the number of characters in <em>s</em> (not counting the final 0).
 <p>
-<li><em>int strfind(string haystack, string needle)</em><br>
+<li><em>int strfind(string haystack, string needle)</em><br/>
         Returns index in <em>haystack</em> where <em>needle</em> is found, or -1 if 
-        <em>needle</em> is not contained in <em>haystack</em>.<br>
+        <em>needle</em> is not contained in <em>haystack</em>.<br/>
         <strong>This function was called strstr() in versions before 7.00</strong>.
 <p>
-<li><em>int strformat(string format,...)</em><br>
+<li><em>int strformat(string format,...)</em><br/>
         Returns a formatted string using placeholders %1 .. %2 to address
-        arguments following format.<br> 
-        Example:<br>
+        arguments following format.<br/> 
+        Example:<br/>
         <pre>
 
 void main()
@@ -1068,42 +1068,42 @@ void main()
 </pre>
 
 <p>
-<li><em>string strlwr(string s)</em><br>
+<li><em>string strlwr(string s)</em><br/>
         Returns a lower-case duplicate of <em>s</em>.
 <p>
-<li><em>list strtok(string str, string separators)</em><br>
+<li><em>list strtok(string str, string separators)</em><br/>
         Returns a list containing all substrings of <em>str</em> separated by one
         or more (consecutive) characters in <em>separators</em>. E.g.,
         <em>strtok("hello icmake's+world", " +")</em> returns the list containing
         the three strings <em>"hello"</em>, <em>"icmake's"</em>, and <em>"world"</em>.
 <p>
-<li><em>string strupr(string s)</em><br>
+<li><em>string strupr(string s)</em><br/>
         Returns an upper-case duplicate of <em>s</em>.
 <p>
-<li><em>string substr(string text, int offset, int count)</em><br>
+<li><em>string substr(string text, int offset, int count)</em><br/>
         Returns a substring of <em>text</em>, starting at <em>offset</em>, consisting of
         <em>count</em> characters. If <em>offset</em> exceeds (or equals) the string's
         size or if <em>count &lt;= 0</em>, then an empty string is returned. If
         <em>offset</em> is less than 0 then 0 is used. 
 <p>
-<li><em>int system(string command)</em><br>
+<li><em>int system(string command)</em><br/>
        Executes <em>command</em>. The return value indicates the executed
         command's exit value. The string <em>command</em> may contain redirection
         and/or piping characters.
 <p>
-<li><em>int system(int checking, string command)</em><br>
+<li><em>int system(int checking, string command)</em><br/>
        Same functionality as the previous function, but by specifying
         <em>checking</em> as <em>NOT_CHECKED</em> the function won't terminate the
         script. Rather, it will return the called command's exit status, or
         <em>0x7f00</em> if the command wasn't found.
 <p>
-<li><em>string trim(string s)</em><br>
+<li><em>string trim(string s)</em><br/>
         Returns a copy of <em>s</em> without leading and trailing white spaces.
 <p>
-<li><em>string trimleft(string str)</em><br>
+<li><em>string trimleft(string str)</em><br/>
         Returns a copy of <em>s</em> without leading white spaces.
 <p>
-<li><em>string trim(string s)</em><br>
+<li><em>string trim(string s)</em><br/>
         Returns a copy of <em>s</em> without trailing white spaces.
     </ul>
 <p>

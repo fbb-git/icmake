@@ -8,10 +8,10 @@
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
 <body text="#27408B" bgcolor="#FFFAF0">
-<hr>
-<h1>icmstart.rc</h1>
-<h2>icmake.8.00.00.tar.gz</h2>
-<h2>1992-2015</h2>
+<hr/>
+<h1 id="title">icmstart.rc</h1>
+<h2 id="author">icmake.8.00.04.tar.gz</h2>
+<h2 id="date">1992-2015</h2>
 
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
@@ -24,8 +24,8 @@
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
 <body text="#27408B" bgcolor="#FFFAF0">
-<hr>
-<h1></h1>
+<hr/>
+<h1 id="title"></h1>
 
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
@@ -41,10 +41,10 @@
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
 <body text="#27408B" bgcolor="#FFFAF0">
-<hr>
-<h1>icmstart.rc(7)</h1>
-<h2>icmake.8.00.00.tar.gz icmstart resource file</h2>
-<h2>1992-2015</h2>
+<hr/>
+<h1 id="title">icmstart.rc(7)</h1>
+<h2 id="author">icmake.8.00.04.tar.gz icmstart resource file</h2>
+<h2 id="date">1992-2015</h2>
 
 
 <p>
@@ -104,36 +104,36 @@ If a destination is omitted, the source is installed as specified below
 <p>
 The following entries can be used in an <em>icmstart.rc</em> file:
     <ul>
-    <li> <em>source</em><br>
+    <li> <em>source</em><br/>
         `Source' must be in the skeleton directory visited by <strong>icmstart(1)</strong>
 and is installed as <em>source</em> in the destination directory specified when
 calling <strong>icmstart</strong>(1).
-    <li> <em>source dest</em><br>
+    <li> <em>source dest</em><br/>
         `Source' must be in the skeleton directory visited by <strong>icmstart(1)</strong>
 and is installed as <em>dest</em> in the destination directory specified when
 calling <strong>icmstart</strong>(1).
-    <li> <em>~/path</em><br>
+    <li> <em>~/path</em><br/>
         `~/path' is installed as <em>~/path</em> in the destination directory
 specified when calling <strong>icmstart</strong>(1). The <em>~</em>-character is expanded to the
 user's home directory.
-    <li> <em>~/path dest</em><br>
+    <li> <em>~/path dest</em><br/>
         `~/path' is installed as <em>dest</em> in the destination directory
 specified when calling <strong>icmstart</strong>(1). The <em>~</em>-characteris expanded to the
 user's home directory.
-    <li> <em>/path</em><br>
+    <li> <em>/path</em><br/>
         `/path' is installed as <em>./path</em> in the destination directory
 specified when calling <strong>icmstart</strong>(1).
-    <li> <em>/path dest</em><br>
+    <li> <em>/path dest</em><br/>
         `/path' is installed as <em>dest</em> in the destination directory
-    <li> <em>? source</em><br>
+    <li> <em>? source</em><br/>
         The user must confirm the installation of <em>source</em>.
-    <li> <em>? source dest</em><br>
+    <li> <em>? source dest</em><br/>
         The user must confirm the installation of <em>source</em> as <em>dest</em> in
 the destination directory specified when calling <strong>icmstart</strong>(1).
-    <li> <em># text</em><br>
+    <li> <em># text</em><br/>
         Interpreted as comment and ignored. The <em>#</em>-character must be the
         first character on the line.
-    <li> an empty line<br>
+    <li> an empty line<br/>
         Empty lines are skipped.
     </ul>
 <p>

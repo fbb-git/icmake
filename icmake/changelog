@@ -1,3 +1,8 @@
+ * Fixed typo in the icmconf manpage: 
+        #define PRECOMP           "-x c++-headers" 
+   must be
+        #define PRECOMP           "-x c++-header"
+
 icmake (8.00.04)
 
  * Fixed handling of line continuation backslashes (\$) in icm-pp

@@ -232,7 +232,7 @@ manpagesection(ICMCONF PARAMETERS)
        The name of the parser specification file. This file is
         expected in the directory specified at tt(PARSER_DIR).
 
-    itb(//#define PRECOMP           "-x c++-headers")
+    itb(//#define PRECOMP           "-x c++-header")
        When activated internal header files (see tt(#define IH)) are
         precompiled when they are more recent than their precompiled
         versions. They are removed again by tt(icmbuild clean). To specify

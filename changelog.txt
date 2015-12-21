@@ -1,3 +1,18 @@
+icmake (8.00.05)
+
+ * Fixed typo in the icmconf manpage: 
+        #define PRECOMP           "-x c++-headers" 
+   must be
+        #define PRECOMP           "-x c++-header"
+
+ * Fixed a bug in the implementation of the '#undef IDENTIFIER' preprocessor
+   directive causing intermittend errors on amd64 architectures: instead of
+   removing the entry from the table of defined identifiers the id of the 
+   item to undefine is simply changed into an empty string. A bit of a kludge,
+   but it solves the problem.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 21 Dec 2015 14:12:03 +0100
+
 icmake (8.00.04)
 
  * Fixed handling of line continuation backslashes (\$) in icm-pp

@@ -2,6 +2,8 @@
 
 PROJECT=icmake
 
+cd ~/git/${PROJECT}/src
+
 ./manpages
 
 if [ -e /usr/share/common-licenses/GPL ] ; then

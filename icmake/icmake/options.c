@@ -55,8 +55,9 @@ void options(int argc, char **argv)
             break;
 
             case 't':
-                optTmpBim(argv);
-            break;
+                optTmpBim(argv);        // FBB 2016/1/6 WIP
+                inspectFlags(program, argv);
+            return;
 
             case 'p':
                 optPreProcess(argv);

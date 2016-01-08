@@ -6,7 +6,7 @@ void usage(char const *program)
 
     printf
     (
-        "%s%s%s%s%s",
+        "%s%s%s%s%s%s%s%s%s%s%s",
 
         "Usage: ",
             program,
@@ -16,16 +16,19 @@ void usage(char const *program)
         "      -a     : information about ",
             program,
         "\n"
-        "      -b     : blunt execution of the destinationfile, which is\n"
-        "               provided as `source'\n"
         "      -c     : the destination file is compiled (even if it's "
                                                             "up-to-date)\n"
+        "      -e     : execute the .bim file, which is provided as "
+                                                            "`source'\n"
         "      -f     : the icmake source file is recompiled (even if the\n"
         "               .bim file is up-to-date) either when no other "
                                                                 "options\n"
         "               are specified, or when in combination with options\n"
         "               -i and -t\n"
         "      -F     : show filenames, flags, and actions to perform\n"
+        "      -h     : provide this help and end ",
+            program,
+                    "\n"
         "      -i     : the first argument is the icmake source file to\n"
         "               process (default extension: .im), the default\n"
         "               .bim-filename is used and the .bim file is kept;\n"
@@ -44,6 +47,11 @@ void usage(char const *program)
                                                                 "HOME\n"
         "               directory if /tmp is not writable. When used, -T is\n"
         "               usually specified as icmake's first option\n"
+        "      -v     : display ",
+            program,
+                   "'s version number and end ",
+            program,
+                    "\n"
         "\n"
         "    source: icmake source file to process (default extension: .im,\n"
         "            with -b the default extension is .bim)\n"
@@ -57,3 +65,6 @@ void usage(char const *program)
 
     exit(0);
 }
+
+
+

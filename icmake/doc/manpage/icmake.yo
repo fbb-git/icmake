@@ -90,19 +90,13 @@ be specified:
     sop(e)()(execute the icm() .bim file, given as first argument)
     sop(F)()(the filenames and flags as well as an overview of all actions to
         be performed by icm() are shown on the standard output stream)
+    sop(h)()(provide usage info and end icm())
     sop(i)()(the first argument is the icm() source file, the default
         binary file is constructed if necessary and all additional
         arguments are passed to tt(icm-exec) `as is'.)
     sop(p)()(the icm() source file is only preprocessed, output is the
                 preprocessed only the preprocessor is activated)
     sop(q)()(ignored)
-    sop(T)()(this option must be provided with the name of a directory which
-        is used to store temporary files. E.g., when compiling an icm()
-        script, the output of icm()'s preprocessor is a temporary file which
-        is removed on exit. By default tt(/tmp) is used, unless tt(/tmp) is
-        not a writable directory, in which case the current user's tt($HOME)
-        directory is used. Implicit temporary filenames always start with the
-        process id of the current icm() process.)
     sop(t)()(the argument following tt(-t) is the name of a temporary tt(.bim)
         file, which is removed after icm()'s call. The next argument is the
         name of the icm() script, and all additional arguments are passed as
@@ -119,6 +113,13 @@ be specified:
         in which case the icm() script tt(`script') is executed while it
         received the three arguments tt(script arg1 arg2).
         ) 
+    sop(T)()(this option must be provided with the name of a directory which
+        is used to store temporary files. E.g., when compiling an icm()
+        script, the output of icm()'s preprocessor is a temporary file which
+        is removed on exit. By default tt(/tmp) is used, unless tt(/tmp) is
+        not a writable directory, in which case the current user's tt($HOME)
+        directory is used. Implicit temporary filenames always start with the
+        process id of the current icm() process.)
     sop(v)()(displays icm()'s version number, and ends icm(), 
             overruled by tt(-h))
     )

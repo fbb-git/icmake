@@ -1,5 +1,5 @@
 #include "builtin.ih"
 
-void eb_
+void b_()
 {
 }

@@ -39,7 +39,9 @@
     IF
     INT
     LIST
+    LISTFIND
     LISTLEN
+    LISTMERGE
     MAKELIST
     ECHO_TOKEN
     NUMBER
@@ -47,6 +49,7 @@
     PUTENV
     RETURN
     STAT
+    STRCHR
     STRING
     STRINGTYPE
     STRLEN
@@ -759,21 +762,27 @@ _one_arg_funs:
 ;
 
 _two_arg_funs:
-    C_EXT                               /* string, string */
+    C_EXT                           /* string, string */
 |
     C_BASE
 |
     C_PATH
 |
-    ELEMENT                             /* int, list | int, string */
+    ELEMENT                         /* int, list | int, string */
 |
-    FGETS                               /* list fgets(string, int) */
+    FGETS                           /* list fgets(string, int) */
 |
-    FIELDS                              /* string, string */
+    FIELDS                          /* string, string */
 |
-    STRFIND                              /* string, string */
+    LISTFIND                        /* list, string */
 |
-    RESIZE                           /* string, int */
+    LISTMERGE                       /* list, list | list, string */
+|
+    STRCHR                          /* string, string */
+|
+    STRFIND                         /* string, string */
+|
+    RESIZE                          /* string, int */
 ;
 
 _optint_string:

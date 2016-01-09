@@ -31,9 +31,9 @@ void showFlags(char **argv)
         (flags & f_rmBim) != 0,       
         (flags & f_force) != 0,       
 
-        imFile,                       
-        pimFile,                      
-        bimFile,
+        imFile ? imFile :   "--",
+        pimFile ? pimFile : "--",
+        bimFile ? bimFile : "--",
         tmpDir
     );
 }

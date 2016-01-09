@@ -2,13 +2,11 @@
 
 int list_contains(ListVariable *lhs, char const *str)
 {
-    unsigned idx;
-
-    for (idx = *l_sizePtr(lhs); idx--; )
+    for (int idx = 0, end = *l_sizePtr(lhs); idx != end; ++idx)
     {
         if (strcmp(str, l_element(lhs)[idx]) == 0)
-            return 1;
+            return idx;
     }
 
-    return 0;
+    return -1;
 }

@@ -4,10 +4,8 @@ SemVal *p_compoundAss(SemVal *lval, SemVal *rval,
                     SemVal *(*fun)(SemVal *, SemVal *),
                     char *opstr)
 {
-    register ExprType
-        ltype;
-    register unsigned
-        evalue;
+    register ExprType ltype;
+    register unsigned evalue;
 
     ltype = lval->type;
     evalue = lval->evalue;

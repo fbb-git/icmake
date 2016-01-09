@@ -18,7 +18,7 @@ void list_add(ListVariable *dest, ListVariable const *rhs)
         {
             char const *cp = l_constElement(rhs)[idx];
 
-            if (!list_contains(&copy, cp))
+            if (list_contains(&copy, cp) == -1)
                 list_add_charPtr(&copy, cp);
         }
 

@@ -214,6 +214,21 @@ list                    {
                             yylval.type = e_list;
                             return LIST;
                         }
+listfind                {
+                            yylval.type = f_listfind;
+                            return LISTFIND;
+                        }
+listmerge               {
+                            yylval.type = f_listmerge;
+                            return LISTMERGE;
+                        }
+listlen         |
+sizeof          |
+sizeoflist              {
+                            sc_saveInfo();
+                            yylval.type = f_listlen;
+                            return LISTLEN;
+                        }
 makelist                {
                             yylval.type = f_makelist;
                             return MAKELIST;
@@ -239,16 +254,13 @@ return                  {
                             yylval.type = op_ret;
                             return RETURN;
                         }
-listlen         |
-sizeof          |
-sizeoflist              {
-                            sc_saveInfo();
-                            yylval.type = f_listlen;
-                            return LISTLEN;
-                        }
 stat                    {
                             yylval.type = f_stat;
                             return STAT;
+                        }
+strchr                  {
+                            yylval.type = f_strchr;
+                            return STRCHR;
                         }
 string                  {
                             yylval.type = e_str;
@@ -365,16 +377,6 @@ younger                 {
                         }
 "<<"                    {
                             return SHL;
-                        }
-0x[0-9A-Fa-f]+          {
-                            unsigned value;
-                            sscanf(yytext + 2, "%x", &value);
-                            util_printf("%d", (int)value);
-                            return NUMBER;
-                        }
-[0-9]+                  {
-                            util_setString(yytext);
-                            return NUMBER;
                         }
 OFF         |
 P_CHECK                 {

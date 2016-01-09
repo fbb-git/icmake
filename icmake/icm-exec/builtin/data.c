@@ -90,9 +90,11 @@ void (*gb_pBuiltinFun[])(void) =
        /* added later without having to change the */
        /* binary code                              */
 
-    b_empty,
-    b_empty,
-    b_empty,
+    b_strChr,
+    b_listFind,
+    b_listMerge,
+
+    /* 30 */
     b_empty,
     b_empty,
     b_empty,

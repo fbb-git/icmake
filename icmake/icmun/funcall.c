@@ -1,6 +1,6 @@
 #include "icmun.ih"
 
-void fun_call ()
+void fun_call()
 {
     int offs = rss_getInt16 (infile);
     dumpint(offs);

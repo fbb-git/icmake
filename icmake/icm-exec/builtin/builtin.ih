@@ -134,5 +134,6 @@ void b_system(void);
 void b_trim(void);
 void b_trimLeft(void);
 void b_trimRight(void);
-
-
+void b_strChr(void);
+void b_listFind(void);
+void b_listMerge(void);

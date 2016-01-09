@@ -1,3 +1,20 @@
+icmake (8.01.00)
+
+ * Added builtin functions 'strchr', 'listfind', and 'listmerge'. See 'man
+   icmake' for details.
+
+* Fixed a bug in icmake's option handling due to which options could not be 
+  forwarded to called scripts.
+
+* The 'icmstart' script was modified, improving control over which files
+  should initially be installed (see 'man icmstart' and 'man icmstart.rc' for
+  details. 
+
+* Updated the manpages
+
+
+
+
 icmake (8.00.05)
 
  * Fixed typo in the icmconf manpage: 

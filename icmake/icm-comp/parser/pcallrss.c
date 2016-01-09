@@ -49,9 +49,11 @@ void p_callRss(SemVal *e, FunNr funnr, ...)
             type = e_list | e_reg;
         break;
                                             /* 2 arguments, returning int */
+        case f_listfind:
         case f_strfind:
+        case f_strchr:
         case f_system:
-            args++;
+            ++args;
         break;
                                             /* 2 args, returning string */
         case f_chdir:
@@ -61,9 +63,10 @@ void p_callRss(SemVal *e, FunNr funnr, ...)
         case f_str_el:
         case f_element:
         case f_resize:
-            args++;                         /* two arguments */
+            ++args;                         /* two arguments */
             type = e_str | e_reg;           /* returning string */
         break;
+
 
                                             /* 3 args, returning string */
         case f_substr:
@@ -72,11 +75,12 @@ void p_callRss(SemVal *e, FunNr funnr, ...)
         break;
 
                                             /* 2 args, returning list */
+        case f_listmerge:
         case f_stat:
         case f_fgets:                       /* list fgets(string, int) */
         case f_strtok:                      /* list strtok(string, string) */
         case f_makelist:                    /* list p_makeList(int, string)  */
-            args++;
+            ++args;
             type = e_list | e_reg;
         break;
                                             /* # args passed as argument */

@@ -73,6 +73,9 @@ char
 
         /* 2c */
         "trimright",
+        "strchr",
+        "listfind",
+        "listmerge"
     };
 
 FILE *infile;

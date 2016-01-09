@@ -32,8 +32,17 @@ SemVal *p_twoArgs(ExprType type, SemVal *larg, SemVal *rarg)
             ok = test_type(larg, e_str) && test_type(rarg, e_int);
         break;
 
+        case f_listfind:
+            ok = test_type(larg, e_list) && test_type(rarg, e_str);
+        break;
+
+        case f_listmerge:
+            ok = test_type(larg, e_list) && test_type(rarg, e_str | e_list);
+        break;
+
         default:
             /*
+                case f_strchr:
                 case f_strtok:
                 case f_c_ext:
                 case f_c_base:

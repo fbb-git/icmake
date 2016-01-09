@@ -13,11 +13,13 @@ void options(int argc, char **argv)
     if (argc == 1)
         usage(program);
     
-    execArgIdx = dashesIndex(argv, argv + argc);
+    execArgIdx = dashesIndex(argv, argv + argc);    /* beyond -- */
 
     setTmpDir();
+
+    int ready = 0;
     
-    while (1)
+    while (!ready)
     {
         int c = getopt(argc, argv, "ac:e:fFhi:t:T:p:qv");
 
@@ -33,6 +35,7 @@ void options(int argc, char **argv)
 
             case 'e':
                 optExecute();
+                ready = 1;
             break;
 
             case 'h':
@@ -48,6 +51,7 @@ void options(int argc, char **argv)
 
             case 'i':
                 optIm(argv);
+                ready = 1;
             break;
 
             case 'T':
@@ -55,10 +59,10 @@ void options(int argc, char **argv)
             break;
 
             case 't':
-                optTmpBim(argv);        // FBB 2016/1/6 WIP
-                inspectFlags(program, argv);
-            return;
-
+                optTmpBim(argv);
+                ready = 1;
+            break;
+        
             case 'p':
                 optPreProcess(argv);
             break;
@@ -72,14 +76,16 @@ void options(int argc, char **argv)
             exit(0);
 
             case -1:
-                inspectFlags(program, argv);
-            return;
+                ready = 1;
+            break;
 
             case '?':
             rss_fatal(0, 0, "option -%c not supported", optopt);
 
         } /* switch */
     } /* while */
+
+    inspectFlags(program, argv);
 }
 
 

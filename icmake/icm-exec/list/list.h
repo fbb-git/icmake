@@ -47,10 +47,16 @@ void        list_add_charPtr(ListVariable *list, char const *txt);
 void        list_add_grab_charPtr(ListVariable *list, char *txt);
 void        list_add(ListVariable *lhs, ListVariable const *rhs);
 
+                                                    /* -1 if not found */
+int         list_contains(ListVariable *lhs, char const *str); 
+/* int list_findListElement(ListVariable *lhs, ListVariable const *rhs); */
+
+void        list_mergeStr(ListVariable *list, char const *txt);
+void        list_mergeList(ListVariable *list, ListVariable const *src);
+
 void        list_sub(ListVariable *lhs, ListVariable const *rhs);
 int         list_bool(ListVariable const *lhs);
-int         list_contains(ListVariable *lhs, char const *str);
-unsigned      list_size(ListVariable const *list);
+unsigned    list_size(ListVariable const *list);
 char const *list_at(ListVariable const *list, unsigned idx);
 void        list_sort(ListVariable *list);
 

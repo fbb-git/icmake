@@ -144,8 +144,12 @@ typedef enum                                /* names of rss-functions */
 
     /* 2c */
     f_trimright,
+    
+    f_strchr,
+    f_listfind,
+    f_listmerge,
 
-    /* 20 left for new opcodes until f_hlt */
+    /* 17 left for new opcodes until f_hlt */
 
     f_hlt = f_trimright + 21                /* dummy marker for non-existing */
 } FunNr;

@@ -27,27 +27,28 @@ void b_stat()
     {                                           /* failure to stat? */
         if (rss_checkMode (mode))                 /* if mode indicates abort..*/
             rss_fatal(0, 0, "stat - unable to stat file %s", fname);
-
-        return;                                 /* no checking: return */
+        statbuf.st_size = -1;
     }                                           /* empty list */
-
-    if (statbuf.st_mode & S_IREAD)              /* set file attribute int */
-        fileatt |= IS_IREAD;
-
-    if (statbuf.st_mode & S_IWRITE)
-        fileatt |= IS_IWRITE;
-
-    if (statbuf.st_mode & S_IEXEC)
-        fileatt |= IS_IEXEC;
-
-    if (statbuf.st_mode & S_IFDIR)
-        fileatt |= IS_IFDIR;
-
-    if (statbuf.st_mode & S_IFCHR)
-        fileatt |= IS_IFCHR;
-
-    if (statbuf.st_mode & S_IFREG)
-        fileatt |= IS_IFREG;
+    else
+    {
+        if (statbuf.st_mode & S_IREAD)          /* set file attribute int */
+            fileatt |= IS_IREAD;
+    
+        if (statbuf.st_mode & S_IWRITE)
+            fileatt |= IS_IWRITE;
+    
+        if (statbuf.st_mode & S_IEXEC)
+            fileatt |= IS_IEXEC;
+    
+        if (statbuf.st_mode & S_IFDIR)
+            fileatt |= IS_IFDIR;
+    
+        if (statbuf.st_mode & S_IFCHR)
+            fileatt |= IS_IFCHR;
+    
+        if (statbuf.st_mode & S_IFREG)
+            fileatt |= IS_IFREG;
+    }
 
     listcons(eb_releaseReg());                  /* return result as list */
 

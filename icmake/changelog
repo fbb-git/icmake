@@ -10,6 +10,9 @@ icmake (8.01.00)
   should initially be installed (see 'man icmstart' and 'man icmstart.rc' for
   details. 
 
+* Icmake's predefined function stat(P_NOCHECK, entry) returns, if `entry'
+  does not exist, a list having two elements: list[0] == 0, list[1] == -1.
+
 * Updated the manpages
 
 

@@ -1,3 +1,4 @@
+#define msgx
 #include "parser.ih"
 
 SemVal *p_callFunction(int funIdx, SemVal *e)
@@ -30,7 +31,7 @@ SemVal *p_callFunction(int funIdx, SemVal *e)
         return e;                       /* nothing to do here        */
 
     nParams = symtab_fun_nParams(funIdx);    /* then check correct # of args */
-              
+
     if ((unsigned)e->type == nParams)
         p_checkArgumentTypes(nParams, funIdx, (SemVal *)e->code);
     else

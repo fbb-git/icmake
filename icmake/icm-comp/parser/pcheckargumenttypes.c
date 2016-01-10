@@ -1,15 +1,17 @@
-#define msg
+#define msgx
 #include "parser.ih"
 
-void p_checkArgumentTypes(unsigned nParams, unsigned funIdx, SemVal *a)
+void p_checkArgumentTypes(unsigned nParams, unsigned funIdx, SemVal *args)
 {
     register unsigned idx;
 
-    for (idx = 0; idx != nParams; ++idx, ++a)
+    msg("checking %d parameters", nParams);
+
+    for (idx = 0; idx != nParams; ++idx, ++args)
     {
-        if (symtab_funParameterType(funIdx, idx) != (a->type & e_typeMask))
+        if (symtab_funParameterType(funIdx, idx) != (args->type & e_typeMask))
             util_semantic("Function `%s', argument %u: type mismatch",
-                idx + 1, symtab_funName(funIdx));
+                symtab_funName(funIdx), idx + 1);
     }
 }
 

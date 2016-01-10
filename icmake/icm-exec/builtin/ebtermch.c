@@ -31,7 +31,11 @@ int eb_termCh(void)
     }
 
     key = getchar();
-    printf("%c\n", key);    
+
+    if (key == '\n')
+        putchar('\n');
+    else
+        printf("%c\n", key);    
 
     tcsetattr(STDIN_FILENO, TCSANOW, &saved);
 

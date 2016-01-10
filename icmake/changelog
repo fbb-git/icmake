@@ -17,6 +17,9 @@ icmake (8.01.00)
 * Icmake's predefined function stat(P_NOCHECK, entry) returns, if `entry'
   does not exist, a list having two elements: list[0] == 0, list[1] == -1.
 
+* The builtin function 'getch()' now prints one newline character when the
+  user presses 'Enter' (previously 2 newlines were printed).
+
 * Updated the manpages
 
 

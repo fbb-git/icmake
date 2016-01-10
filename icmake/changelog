@@ -6,6 +6,10 @@ icmake (8.01.00)
 * Fixed a bug in icmake's option handling due to which options could not be 
   forwarded to called scripts.
 
+* Fixed a bug in the compilation of ternary expressions: the condition wasn't
+  explicitly converted to bool, causing constructions like 'ret = fun() ? ...'
+  to fail.
+
 * The 'icmstart' script was modified, improving control over which files
   should initially be installed (see 'man icmstart' and 'man icmstart.rc' for
   details. 

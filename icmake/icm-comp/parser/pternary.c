@@ -23,11 +23,11 @@ SemVal *p_ternary(SemVal *cond, SemVal *ifTrue, SemVal *ifFalse)
         return ifFalse;
     }
 
+    p_expr2bool(cond);              /* convert the condition to bool */
 
     p_expr2stack(ifTrue);           /* convert the expressions to code */
     p_expr2stack(ifFalse);
 
-    p_generateCode(cond, op_jmp_false, j_falselist); /* jmp around ifTrue */
     p_patchupTrue(cond, 1);          /* destination for the ifTrue code */
 
     p_catCode(cond, ifTrue);           /* cond = cond + ifTrue */
@@ -37,6 +37,9 @@ SemVal *p_ternary(SemVal *cond, SemVal *ifTrue, SemVal *ifFalse)
     p_catCode(cond, ifFalse);       /* cond = cond + ifTrue + jmp + ifFalse */
 
     p_patchupTrue(cond, 1);         /* jump from ifTrue to the end of expr. */
+
+    set_type(cond, ifTrue->type);   /* return type must be the ifTrue/ifFalse
+                                        type */
 
     return cond;                    /* ?: return */
 }

@@ -1,6 +1,6 @@
 icmake (8.01.00)
 
- * Added builtin functions 'strchr', 'listfind', and 'listmerge'. See 'man
+ * Added builtin functions 'strchr', 'listfind', and 'listunion'. See 'man
    icmake' for details.
 
 * Fixed a bug in icmake's option handling due to which options could not be 

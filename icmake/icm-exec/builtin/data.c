@@ -92,7 +92,7 @@ void (*gb_pBuiltinFun[])(void) =
 
     b_strChr,
     b_listFind,
-    b_listMerge,
+    b_listUnion,
 
     /* 30 */
     b_empty,

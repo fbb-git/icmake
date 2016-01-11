@@ -218,9 +218,9 @@ listfind                {
                             yylval.type = f_listfind;
                             return LISTFIND;
                         }
-listmerge               {
-                            yylval.type = f_listmerge;
-                            return LISTMERGE;
+listunion               {
+                            yylval.type = f_listunion;
+                            return LISTUNION;
                         }
 listlen         |
 sizeof          |

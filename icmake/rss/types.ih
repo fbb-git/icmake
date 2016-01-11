@@ -147,7 +147,7 @@ typedef enum                                /* names of rss-functions */
     
     f_strchr,
     f_listfind,
-    f_listmerge,
+    f_listunion,
 
     /* 17 left for new opcodes until f_hlt */
 

@@ -75,7 +75,7 @@ void p_callRss(SemVal *e, FunNr funnr, ...)
         break;
 
                                             /* 2 args, returning list */
-        case f_listmerge:
+        case f_listunion:
         case f_stat:
         case f_fgets:                       /* list fgets(string, int) */
         case f_strtok:                      /* list strtok(string, string) */

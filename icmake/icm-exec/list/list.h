@@ -51,8 +51,8 @@ void        list_add(ListVariable *lhs, ListVariable const *rhs);
 int         list_contains(ListVariable *lhs, char const *str); 
 /* int list_findListElement(ListVariable *lhs, ListVariable const *rhs); */
 
-void        list_mergeStr(ListVariable *list, char const *txt);
-void        list_mergeList(ListVariable *list, ListVariable const *src);
+void        list_unionStr(ListVariable *list, char const *txt);
+void        list_unionList(ListVariable *list, ListVariable const *src);
 
 void        list_sub(ListVariable *lhs, ListVariable const *rhs);
 int         list_bool(ListVariable const *lhs);

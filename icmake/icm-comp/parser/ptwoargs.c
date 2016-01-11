@@ -36,7 +36,7 @@ SemVal *p_twoArgs(ExprType type, SemVal *larg, SemVal *rarg)
             ok = test_type(larg, e_list) && test_type(rarg, e_str);
         break;
 
-        case f_listmerge:
+        case f_listunion:
             ok = test_type(larg, e_list) && test_type(rarg, e_str | e_list);
         break;
 

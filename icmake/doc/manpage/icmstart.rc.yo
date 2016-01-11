@@ -28,8 +28,8 @@ manpagename(icmstart.rc)(The icmstart(1) resource file)
 
 manpagedescription()
 
-The bf(icmstart.rc) file defines the initial files of a program that are
-installed by bf(icmstart)(1). 
+The bf(icmstart.rc) file specifies the files that are installed by
+bf(icmstart)(1).
 
 By default bf(icmstart.rc) is found in tt(/etc/icmake/icmstart.rc), but if a
 file tt($HOME/.icmake/icmstart.rc) is found then the latter file is used by
@@ -50,65 +50,80 @@ the construction of a bf(C++) program using bf(icmbuild)(1):
 The tt(icmstart.rc) file may contain:
     itemization(
     it() empty lines, which are ignored;
+
     it() lines beginning with a hash-character (tt(#)), also ignored;
-    it() Optionally: a P (don't install with tt(icmstart xxx library)) or an L
-(don't install with tt(icmstart xxx program)), followed by a blank; see also
-bf(icmstart)(1).
-    it() Optionall: a tt(?) (followed by a blank) following the optional P or
-L in which case the installation of the element must be confirmed by the user.
-    it() Source path names. Relative path names are interpreted relative to
-the current working directory. Environment variables are not expanded, the
-initial tilde character is interpreset as the user's home directory.
-    it() Source path names followed by a destination (relative to the
-directory initialized by bf(icmstart)(1)).
+
+    it() an optional installation mode followed by a source-destination
+specification. 
     )
-    A source path may be either a file or a directory. If a directory is
-specified then all files in and below that directory will be installed.
 
-When specifying a destination a path may be specified as well. However, the
-destination path is always interpreted relative to the installation directory
-specified when calling bf(icmstart)(1).
+manpagesection(INSTALLATION MODE)
 
-If a destination is omitted, the source is installed as specified below
-bf(icmstart)(1)'s destination directory.
+    An installation mode consists of a combination of:
+    itemization(
+    it() either a P (don't install with tt(icmstart xxx library)) or an L
+(don't install with tt(icmstart xxx program));
 
-manpagesection(EXAMPLES)
+    it() a D, indicating that the source must also be installed by default,
+i.e., if neither `program' or `library' was specified as second argument.
 
-    The following entries can be used in an tt(icmstart.rc) file:
+    it() a b, indicating that the
+file must em(not) be installed if the tt(-b) (basic installation) option was
+specified when calling tt(icmstart).
+
+    it() Following the optional P, L, D, b combination a space delimited
+optional tt(?) may be specified. If specified the installation of the file or
+directory must be confirmed by the user.
+    )
+
+manpagesection(SOURCE-DESTINATION SPECIFICATIONS)
+
+    The following source-destination specifications can be used in an
+tt(icmstart.rc) file:
     itemization(
     it() tt(source)nl()
-        `Source' must be in the skeleton directory visited by bf(icmstart(1))
-and is installed as tt(source) in the destination directory specified when
-calling bf(icmstart)(1).
-    it() tt(source dest)nl()
-        `Source' must be in the skeleton directory visited by bf(icmstart(1))
-and is installed as tt(dest) in the destination directory specified when
-calling bf(icmstart)(1).
-    it() tt(~/path)nl()
-        `~/path' is installed as tt(~/path) in the destination directory
-specified when calling bf(icmstart)(1). The tt(~)-character is expanded to the
-user's home directory.
-    it() tt(~/path dest)nl()
-        `~/path' is installed as tt(dest) in the destination directory
-specified when calling bf(icmstart)(1). The tt(~)-characteris expanded to the
-user's home directory.
-    it() tt(/path)nl()
-        `/path' is installed as tt(./path) in the destination directory
-specified when calling bf(icmstart)(1).
-    it() tt(/path dest)nl()
-        `/path' is installed as tt(dest) in the destination directory
-    it() tt(? source)nl()
-        The user must confirm the installation of tt(source).
-    it() tt(? source dest)nl()
-        The user must confirm the installation of tt(source) as tt(dest) in
-the destination directory specified when calling bf(icmstart)(1).
-    it() tt(# text)nl()
-        Interpreted as comment and ignored. The tt(#)-character must be the
-        first character on the line.
-    it() an empty line+nl()
-        Empty lines are skipped.
-    )
+        A plain name must exist in the tt(icmstart's) skeleton directory. It
+is installed in the destination directory tt(`dest') specified when calling
+bf(icmstart)(1). Example:
+        verb(
+    CLASSES     
+        )
+    tt(skeletondir/CLASSES) is installed as tt(dest/CLASSES)
 
+    it() tt(pathspec)nl()
+        If `pathspec' does not begin with a slash it must exist in
+tt(icmstart's) skeleton directory.  Is installed as `pathspec' in the
+destination directory specified when calling bf(icmstart)(1). Example:
+        verb(
+    dir/file
+        )
+    tt(skeletondir/dir/file) is installed as tt(dest/dir/file)
+
+
+    it() tt(/pathspec) or tt(~/pathspec)
+        The tt(~)-character is expanded to the user's home directory. The
+pathspec's final element is installed in the destination directory specified
+when calling bf(icmstart)(1). Example:
+        verb(
+    ~/.icmake/file
+        )
+    tt($HOME/.icmake/file) is installed as tt(dest/file)
+    )
+    When the above source specifications are followed by a destination
+specification tt(destspec) (a file or non-absolute directory specification)
+then the source specification is installed as dest/destspec) below the
+destination directory specified when calling bf(icmstart)(1). Examples:
+        verb(
+    CLASSES CLASSES             # skeletondir/CLASSES is installed as 
+                                #   dest/CLASSES
+    dir/file dir/file           # skeletondir/dir/file is installed as
+                                #   dest/dir/file
+    ~/.icmake/file .icmake/file # $HOME/.icmake/file is installed as 
+                                #   dest/.icmake/file
+        )
+    Icmstart conveerts the destination specification to a full path 
+specification. If this full path specification does not begin with tt(dest's)
+full path specification an error message is displayed and tt(icmstart) ends.
 
 manpagefiles()
     The mentioned paths are sugestive only and may be installation dependent:

@@ -136,4 +136,4 @@ void b_trimLeft(void);
 void b_trimRight(void);
 void b_strChr(void);
 void b_listFind(void);
-void b_listMerge(void);
+void b_listUnion(void);

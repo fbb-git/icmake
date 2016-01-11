@@ -75,7 +75,7 @@ char
         "trimright",
         "strchr",
         "listfind",
-        "listmerge"
+        "listunion"
     };
 
 FILE *infile;

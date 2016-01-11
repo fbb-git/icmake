@@ -1413,8 +1413,8 @@ case 54:
 YY_RULE_SETUP
 #line 221 "lexer"
 {
-                            yylval.type = f_listmerge;
-                            return LISTMERGE;
+                            yylval.type = f_listunion;
+                            return LISTUNION;
                         }
 	YY_BREAK
 case 55:

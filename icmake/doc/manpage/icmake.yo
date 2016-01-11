@@ -729,13 +729,26 @@ by function name.
 
         If no path is found, an empty strring is returned.
 
+    itt(int listfind(list lst, string str))nl()
+       Returns the first index in tt(lst) where the string tt(str) is found,
+        or -1 if tt(lst) does not contain tt(str).
+
     itt(int listlen(list l))nl()
         Returns the number of elements in tt(list).
+
+    itt(list listunion(list lhs, list rhs))nl()
+       Returns a list containing the union of the elements in 
+        tt(lhs) and tt(rhs).
+
+    itt(list listunion(list lst, string str))nl()
+       Returns a list containing the union of the elements in 
+        tt(lst) and tt(str).
 
     itt(list makelist(string mask))nl()
         Returns a list of all files matching tt(mask). E.g.,
         tt(makelist("*.c")) returns a list containing all files ending in
         tt(.c). 
+
     itt(list makelist(type, string mask))nl()
         Same as the previous function, but the type of the directory elements
         may be specified as its first argument:
@@ -815,6 +828,11 @@ by function name.
        Same as the previous function, but by specifying tt(checking) as
         tt(P_NOCHECK) the function won't terminate the script. Rather, it 
         returns bf(stat)(2)'s return value.
+
+    itt(int strchr(string str, string chars))nl()
+       Returns the first index in tt(str) where any of the characters in
+        tt(chars) is found, or -1 if tt(str) does not contain any of the
+        characters in tt(char).
 
     itt(int strlen(string s))nl()
         Returns the number of characters in tt(s) (not counting the final 0).

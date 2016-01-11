@@ -81,7 +81,7 @@ extern int yydebug;
     LIST = 291,
     LISTFIND = 292,
     LISTLEN = 293,
-    LISTMERGE = 294,
+    LISTUNION = 294,
     MAKELIST = 295,
     ECHO_TOKEN = 296,
     NUMBER = 297,

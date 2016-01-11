@@ -41,7 +41,7 @@
     LIST
     LISTFIND
     LISTLEN
-    LISTMERGE
+    LISTUNION
     MAKELIST
     ECHO_TOKEN
     NUMBER
@@ -776,7 +776,7 @@ _two_arg_funs:
 |
     LISTFIND                        /* list, string */
 |
-    LISTMERGE                       /* list, list | list, string */
+    LISTUNION                       /* list, list | list, string */
 |
     STRCHR                          /* string, string */
 |

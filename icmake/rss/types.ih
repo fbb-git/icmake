@@ -70,9 +70,11 @@ typedef enum
 
 
     /* when the ordering or entries of the following enum changes, update
-        icmun/data.c, icm-comp/parser/data.c and icm-exec/builtin/data.c as
-        well en rebuild all programs. It will also change the contents of the
-        .bim file, so it also requires at least a minor version upgrade.
+            icmun/data.c, 
+            icm-comp/parser/data.c and 
+            icm-exec/builtin/data.c 
+        as well en rebuild all programs. It will also change the contents of
+        the .bim file, so it also requires at least a minor version upgrade.
     */
 typedef enum                                /* names of rss-functions */
 {
@@ -148,6 +150,8 @@ typedef enum                                /* names of rss-functions */
     f_strchr,
     f_listfind,
     f_listunion,
+
+    /* 30 */
 
     /* 17 left for new opcodes until f_hlt */
 

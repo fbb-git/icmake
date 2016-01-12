@@ -52,6 +52,8 @@ SemVal *p_twoArgs(ExprType type, SemVal *larg, SemVal *rarg)
             ok = larg->type & rarg->type & e_str;
     }
 
+    msg("types test %d, funstring: %x", ok, type);
+
     if (ok)
     {
         p_catCode(rarg, larg);                /* make one code vector */

@@ -77,6 +77,11 @@ char *gp_funstring[] =                          /* only one_arg  */
 
     /* 2c */
     "trimright",
+    "strchr",
+    "listfind",
+    "listunion"
+
+    /* 30 */
 };
 
 ExprType gp_opType[] =

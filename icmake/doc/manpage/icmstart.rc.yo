@@ -92,7 +92,7 @@ bf(icmstart)(1). Example:
 
     it() tt(pathspec)nl()
         If `pathspec' does not begin with a slash it must exist in
-tt(icmstart's) skeleton directory.  Is installed as `pathspec' in the
+tt(icmstart's) skeleton directory.  It is installed as `pathspec' in the
 destination directory specified when calling bf(icmstart)(1). Example:
         verb(
     dir/file

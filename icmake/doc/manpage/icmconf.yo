@@ -30,7 +30,7 @@ manpagename(icmconf)(Configuration file for the bf(icmbuild)(1)
 manpagedescription()
 
 The bf(icmconf) configuration file is used to specify and tailor the
-characteristics of program maintenance performed by the bf(icmbuild)(1) icmake
+characteristics of program maintenance performed by the bf(icmbuild)(1) 
 script. It can be used to activate and specify various directives that
 determine how the program or library maintenance will proceed. 
 

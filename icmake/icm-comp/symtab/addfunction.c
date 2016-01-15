@@ -18,6 +18,8 @@ int symtab_addFunction(ExprType type,   /* 0: function added, */
     next->returnType = type | e_reg;
     next->address = offset;
 
+    if (strcmp("main", next->name) == 0 && (type & e_typeMask))
+        util_semantic("`main(...)' must have 'void' return type");
 
     msg("gs_vars.nParams is %u", gs_vars.nParams);
 

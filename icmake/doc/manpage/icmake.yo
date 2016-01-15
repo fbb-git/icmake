@@ -52,17 +52,17 @@ involved in (complex) program maintenance. For this, icm() offers various
 special operators as well as a set of support functions that have proven to be
 useful in program maintenance.
 
-    The program bf(icmun)(1) can be used to disassemble the compiled 
-byte-code (.bim) file. tt(Icmun) is primarily used for illustration, education
-and debugging.
+    The program bf(icmun)(1) can be used to disassemble the compiled byte-code
+(.bim) file. tt(Icmun) is primarily used for illustration, education, and
+debugging.
 
 Traditional make-utilities recompile sources once header files are
 modified. In the context of bf(C++) program development this is often a bad
 idea, as adding a new member to a class does not normally require you to
-recompile the class's sources. To handle class dependencies in a more sensible
-way, bf(icmbuld)(1) may inspect tt(CLASSES) files that can be used to define
-dependencies among classes. By default, class-dependencies are not
-interpreted. See also the bf(icmconf)(7) man-page for further details.
+recompile the class's sources. To handle class dependencies bf(icmbuld)(1) may
+inspect tt(CLASSES) files that can be used to define dependencies among
+classes. By default, class-dependencies are not interpreted. Refer to the
+bf(icmconf)(7) man-page for further details.
 
 manpageoptions()
 
@@ -70,48 +70,53 @@ manpageoptions()
 
     itemization(
     itt(source): icm() script source file (default extension: tt(.im)).
-    itt(dest):  binary icm() script file (default:  tt(`source'.bim)).
-    itt(--):  icm() arguments separator for arguments passed to
-            tt(icm-exec)nl() 
-        tt(args):  arguments following tt(--) are passed to tt(icm-exec) as-is
-        as its arguments, and are available from icm()-sctipt's 
-            tt(main()) function's tt(list argv) parameter (see below at
-            section bf(USER DEFINED FUNCTIONS)).
+    itt(dest):  binary icm() script file (default:  tt(`source'.bim), called
+            the `.bim file' below).
+    itt(--):  icm() arguments separator separating icm() arguments from 
+            arguments passed to the .bim filenl()
+        tt(args): arguments following tt(--) are passed to the .bim file
+            as-is, and are available from the tt(list argv) parameter defined
+            as the icm() script's tt(main) function's second parameter (see
+            below at section bf(USER DEFINED FUNCTIONS)). For some options
+            (see below) the tt(--) separator is not required.
     )
 
-    the following options are available. The tt(-h) option overrules all other
-options, the tt(-a) option overrules all other options except for tt(-h). Of
-the remaining action options (tt(-b, -c, -e, -i, -p) and tt(-t)) only one may
-be specified:
+    Icm() supports various options, described next. The tt(-h) option
+overrules all other options, the tt(-a) option overrules all other options
+except for tt(-h). Of the remaining action options (tt(-b, -c, -e, -i, -p) and
+tt(-t)) only one may be specified:
     itemization(
-    sop(a)()(show information about icm(), overruled by tt(-h))
-    sop(b)()(discontinued. Option -e can be used instead)
-    sop(c)()(the icm() source file is compiled)
-    sop(e)()(execute the icm() .bim file, given as first argument)
+    sop(a)()(show information about icm(), overruled by tt(-h);)
+    sop(b)()(discontinued: use option -e instead;)
+    sop(c)()(the icm() source file is compiled, generating a .bim file;)
+    sop(e)()(execute the icm() .bim file, given as icm()'s first file
+        argument. Any additional arguments are passed to the .bim file as-is,
+        and tt(--) should not be specified;) 
     sop(F)()(the filenames and flags as well as an overview of all actions to
-        be performed by icm() are shown on the standard output stream)
-    sop(h)()(provide usage info and end icm())
-    sop(i)()(the first argument is the icm() source file, the default
-        binary file is constructed if necessary and all additional
-        arguments are passed to tt(icm-exec) `as is'.)
-    sop(p)()(the icm() source file is only preprocessed, output is the
-                preprocessed only the preprocessor is activated)
-    sop(q)()(ignored)
+        be performed by icm() are shown on the standard output stream;)
+    sop(h)()(provide usage info and end icm();)
+    sop(i)()(the first argument is the icm() source file, the default binary
+        file is constructed if necessary. Any additional arguments are passed
+        to the .bim file as-is, and tt(--) should not be specified;
+    sop(p)()(the icm() source file is only preprocessed, and the preprocessed
+        file is written to icm()'s second
+        file argument (by default tt(`source'.pim));)
+    sop(q)()(ignored, will be removed in a future icm() version;)
     sop(t)()(the argument following tt(-t) is the name of a temporary tt(.bim)
         file, which is removed after icm()'s call. The next argument is the
-        name of the icm() script, and all additional arguments are passed as
-        arguments to the icm() script. After making an icm()-script executable
-        (tt(chmod +x script)), and providing it with an initial line like
-        this: 
+        name of the icm() source script. Any additional arguments are passed
+        to the .bim file as-is, and tt(--) should not be specified; After
+        setting the source script file's executable flag (tt(chmod +x
+        script)), and providing it with an initial line like this: 
             verb(
-    #!/usr/bin/icmake -t /tmp/script
+    #!/usr/bin/icmake -t /tmp/xxx
             )
-        the script can directly be called:
+        the icm() script can directly be called:
             verb(
     script arg1 arg2 
             )
         in which case the icm() script tt(`script') is executed while it
-        received the three arguments tt(script arg1 arg2).
+        receives the arguments tt(script arg1 arg2).
         ) 
     sop(T)()(this option must be provided with the name of a directory which
         is used to store temporary files. E.g., when compiling an icm()
@@ -120,7 +125,7 @@ be specified:
         not a writable directory, in which case the current user's tt($HOME)
         directory is used. Implicit temporary filenames always start with the
         process id of the current icm() process.)
-    sop(v)()(displays icm()'s version number, and ends icm(), 
+    sop(v)()(display icm()'s version number, and end icm(), 
             overruled by tt(-h))
     )
 
@@ -146,62 +151,75 @@ The following preprocessor directives are available:
        E.g., if the first line of an (executable) icmakefile 'icm'
                   (without extension) contains
         verb(
-            #!/usr/bin/icmake -qi
+            #!/usr/bin/icmake -i
         )
        then tt(icm) may be issued as a command, thus executing
         verb(
-            /usr/bin/icmake -qi icm ...
+            /usr/bin/icmake -i icm ...
         )
        Alternatively, 
         verb(
-            #! /usr/bin/icmake -qt /tmp/icm
+            #!/usr/bin/icmake -t /tmp/icm
         )
        may be used, resulting in the execution of
         verb(
-            #! /usr/bin/icmake -qt /tmp/icm icm ...
+            #!/usr/bin/icmake -t /tmp/icm icm ...
         )
-       In this case the binary file is removed on exit. The PID extension being
-        the process-id of the icm() program executing tt(icm).
+       In this case the binary file is removed on exit.
+
     itt(#include "filename")nl()
         The file tt(filename) is included at the location of the directive
-    itt(#include <filename>)nl() The file tt(filename) is included at the
-        location of the tt(#include) directive; tt(filename) is searched in
-        the colon-separated directories specified by the tt(IM) environment
-        variable. The first occurrence of tt(filename) in the directories
-        specified by the tt(IM) environment variable is used.
-    itt(#define identifier [definition])nl() The text tt(identifier) will be
-        replaced by tt(definition). The definition may contain references to
-        already defined identifiers, using the tt(${identifier}) format. If
-        the tt(${identifier}) hasn't been defined (yet), the text
-        tt(${identifier}) is literally kept. To prevent infinite recursion at
-        most 100 tt(${identifier}) replacements are allowed.  
 
-        Definitions
-        continue at the next line if the last character on a line is a
-        backslash (tt(\)) (which is not included in the definition). Double
-        quoted strings in definitions are kept as is. Multiple blanks in
-        definitions are contracted to a single blank space.
+    itt(#include <filename>)nl() 
+       The file tt(filename) is included at the location of the tt(#include)
+        directive; tt(filename) is searched in the colon-separated directories
+        specified by the tt(IM) environment variable. The first occurrence of
+        tt(filename) in the directories specified by the tt(IM) environment
+        variable is used.
 
-        A definition is optional. If omitted, the macro is defined, so it can
-        be used in tt(#if(n)def) directives (see below), but in they are not
-        replaced by any text in icm() code statements.
-    itt(#ifdef identifier)nl()
-        If the tt(identifier) macro was defined the next block of code (until
-        a matching tt(#else) or tt(#endif) directive was detected) is
+    itt(#define identifier [definition])nl() 
+       The text tt(identifier) will be replaced by tt(definition). The
+        definition may contain references to already defined identifiers,
+        using the tt(${identifier}) format. If the tt(${identifier}) hasn't
+        been defined (yet), the text tt(${identifier}) is literally kept. To
+        prevent infinite recursion at most 100 tt(${identifier}) replacements
+        are allowed.
+
+        Definitions continue at the next line if the last character on a line
+        is a backslash (tt(\)).  (which is not included in the
+        definition). The preprocessor concatenates double-quuted strings, and
+        double quoted strings may not span multiple lines. Multiple blanks
+        (outside of double quoted strings) in definitions are contracted to a
+        single blank space.
+
+        The definition following the tt(#define's) identifier is optional. If
+        omitted, the macro is defined, so it can be used in tt(#if(n)def)
+        directives (see below), but they are not replaced by any text in
+        icm() code statements.
+
+    itt(#ifdef identifier)nl() 
+       If the tt(identifier) macro was defined the next block of code (until a
+        matching tt(#else) or tt(#endif) directive was read) is
         byte-compiled. Otherwise, the block of code is ignored.
+
     itt(#ifndef identifier)nl() 
         If the tt(identifier) macro was em(not) defined the next block of code
         (until a matching tt(#else) or tt(#endif) directive was detected) is
         byte-compiled. Otherwise, the block of code is ignored.
+
     itt(#else)nl()
-        Terminates a tt(#ifdef) and tt(#ifndef) directive, reversing the
-        acceptance decision about  the following code. Only one tt(#else)
+       Terminates a tt(#ifdef) and tt(#ifndef) directive, reversing the
+        acceptance decision about the following code. Only one tt(#else)
         directive can be associated with tt(#if(n)def) directives.
+
     itt(#endif)nl()
-        Terminates the preprocessor block starting at the matching 
-        tt(#ifdef), tt(#ifndef) or tt(#else) directive.
+       Terminates the preprocessor block starting at the matching 
+        tt(#ifdef), tt(#ifndef) or tt(#else) directive. The tt(#endif)
+        directory and its matching tt(#if(n)def) directive must be specified
+        in the same file.
+
     itt(#undef identifier) nl()
-        Remove tt(identifier) from the set of defined symbols. This does not
+       Remove tt(identifier) from the set of defined symbols. This does not
         affect the specification of any previously defined symbols in which
         tt(identifier's) definition has been used. If tt(identifier) hasn't
         been defined a warning is issued.
@@ -209,7 +227,7 @@ The following preprocessor directives are available:
 
 manpagesection(DATA TYPES)
 
-    Icm() supports three data types:
+    Icm() supports these data types:
     itemization(
     itt(ASCII character constants)nl() 
        ASCII character constants consist of one character, surrounded by
@@ -234,7 +252,7 @@ manpagesection(DATA TYPES)
     itt(string)nl()
        Text variables. String constants are delimited by double
         quotes. Multiple string constants may be concatenated, but a single
-        string constant may not extend over multiple lines. String constants
+        string constant may not span multiple lines. String constants
         separated by white space only (i.e., blanks, newlines, comment) are
         concatenated and represent one single string constant. To indicate an
         end-of-line in a string constant use the tt(\n) escape sequence.
@@ -247,7 +265,6 @@ manpagesection(DATA TYPES)
         Likewise, ASCII character constants surrounded by single quotes may be
         used in situations where a string operand is expected.
         
-
     itt(list)nl()
        A data structure containing a series of individually accessible
         tt(string) values. When a list contains elements, its first element is
@@ -258,17 +275,17 @@ manpagesection(DATA TYPES)
         return a value.
     )
     
-    Variables may be defined at the global level as well as at any local level
-within functions. When defined inside functions, the standard bf(C) scoping
+    Variables can be defined at the global level as well as at any local level
+inside functions. When defined inside functions, the standard bf(C) scoping
 and visibility rules apply. E.g., local variables can only be used in their
 own or in more deeply nested blocks, their visibility is masked in more deeply
 nested blocks by defining an identically named variable inside those more
-deeply nested blocks. Variables are strongly typed. A variable cannot have
+deeply nested blocks. Variables are strongly typed, and cannot have
 type tt(void).
 
-    Variables may be initialized once they are defined. Initializations can
-use expressions, using predefined functions, constant values and values of
-variables that are visible at the point of definition. 
+    Variables may be initialized when they are defined. Initializations are
+expressions, that can use pre- or user-defined functions, constant values, and
+values of variables that are visible at the point of definition.
 
 
 manpagesection(PREDEFINED CONSTANTS)
@@ -318,21 +335,24 @@ manpagesection(OPERATORS)
 
 bf(int-typed operand(s):)
 
-    All bf(C) operators (except for pointers, as icm() does not support
-pointers) are supported, operating like their bf(C) counterparts on tt(int)
-expressions.
+    All bf(C) operators are available (except for pointer operators, as icm()
+does not support pointers). They operate like their bf(C)-programming language
+counterparts.
 
 bf(string-typed operand(s):)
 
-    For tt(string) type variables and/or values the following
-operators are available:
+    For tt(string) type variables and/or constants the following
+operators are available (tt(a) and tt(b) represent tt(string) variables or
+constants): 
+
     itemization(
     itt(a + b): returns a new tt(string) value containing the concatenation of
 tt(string) values tt(a) and tt(b). Note that tt(string) constants may be
-concatetated without using the tt(+) operator, e.g.,
+directly concatetated (without using the tt(+) operator), e.g., the following
+two lines both define the string tt("hello world"):
         verb(
-    "hello "   "world"
-    "hello " + "world"
+"hello "   "world"
+"hello " + "world"
         )
 
     itt(a += b): tt(a) must be a  tt(string) variable, to which the tt(string)
@@ -341,48 +361,52 @@ variable or value tt(b) is appended.
     it() string comparisons: operators tt(== != <= >= < > !=) and tt(==) may
 be applied to tt(string) values or variables, returning 1 if the comparison
 succeeds, otherwise 0. Comparison is case sensitively, and follows the
-tt(ASCII) character set.
+ordering or characters as defined in the tt(ASCII) character set.
 
-    itt(!a): the boolean tt(!) operator returns 1 if the tt(string a) is
+    itt(!a): the boolean tt(!) (not) operator returns 1 if the tt(string a) is
 empty, otherwise 0 is returned.
 
     itt(a younger b, a newer b): returns 1 if file tt(a) is more recent than
-file tt(b). E.g., tt("source.cc" newer "source.o"). If tt(b) doesn't exist, 1
-is returned; if tt(a) doesn't exist 0 is returned; if neither tt(a) nor tt(b)
-exists, 0 is returned; if they are of the same age, 0 is returned. Explicit
-tests for the existence of a file can be performed using the tt(exists())
-predefined function (see below, section bf(PREDEFINED FUNCTIONS)).
+file tt(b). E.g., tt("source.cc" newer "source.o"). The files tt(a) and tt(b)
+do not have to exist: if both don't exist 0 is returned; if tt(b) doesn't
+exist, 1 is returned; if tt(a) doesn't exist 0 is returned; if they are
+equally old 0 is returned. (the tt(exists()) predefined function (see below,
+section bf(PREDEFINED FUNCTIONS)) can be used to test explicity whether a file
+exists).
 
     itt(a older b): turns 1 if file tt(a) is older than file tt(b). E.g.,
-tt("libprog.a" older "source.o"). If tt(a) doesn't exist, 1 is returned; if
-tt(b) doesn't exist 0 is returned; if neither tt(a) nor tt(b) exists, 0 is
-returned; if they are of the same age, 0 is returned.
+tt("libprog.a" older "source.o"). The files tt(a) and tt(b) do not have to
+exist: if both don't exist 0 is returned; if tt(a) doesn't exist, 1 is
+returned; if tt(b) doesn't exist 0 is returned; if they are equally old 0 is
+returned.
 
-    itt([]): the index operator is defined as an alternative to the built-in
-function tt(element). It can only be applied (as holds true for tt(element())
-as well) as so-called em(rvalue). Therefore, constructions like:
+    itt([]): the index operator retrieves a character from a string variable
+or constant: it returns a string as an em(rvalue). Therefore, the following
+statement compiles OK:
         verb(
-        // assume str1 and str2 are strings
-    str1 = str2[3]
+    // assume str1 and str2 are strings
+str1 = str2[3];
         )
-    will be accepted, but the following construction will not be accepted:
+    but the following statement won't compile:
         verb(
-    str2[3] = str; // won't compile
+str2[3] = "a"; 
         )
+
+        An empty string is returned if an invalid index value is provided.
 
     it() The `backtick` operator (tt(`string cmd`))nl()
-        A string placed between two backticks is executed by the tt(popen)(3)
+       A string placed between two backticks is executed by the tt(popen)(3)
         function. The standard output gererated by the command that is stored
         in the string argument is returned as a list. An empty list indicates
         that the command could not be executed. A command that could be
         executed but did not produce any output returns a list containing one
         empty element. The command's standard error stream output is not
-        automatically collected. Standard shell redirection could be used to
-        collect the standard error stream's output as well. Example:
-            verb(
-        string s = "ls";
-        printf(`s`);        // prints the elements in the current
-                            // directory
+        collected by the backtick operator. However, standard shell
+        redirection could be used to collect the standard error stream's
+        output. Example:
+       verb(
+printf(`"ls"`);     // prints the elements in 
+                    // the current directory
             )
         The predefined function tt(eval(string cmd)) behaves exactly like the
         backtick operator: they are synonyms.
@@ -396,36 +420,40 @@ operators are available:
     itt(a + b): returns a new tt(list) value containing the concatenation of
 tt(list) values tt(a) and tt(b). This is em(not) a set operation: if an
 element appears both in tt(a) and in tt(b), they will appear twice in the
-resulting list.
+resulting list (set-addition is provided by the built-in function
+tt(listunion)).
 
     itt(a - b): returns a new tt(list) value containing the elements in tt(a)
-that are not present in tt(b). This em(is) a set operation.
+that are not present in tt(b). This em(is) a set-difference operation: the
+returned list contains all elements in tt(a) that are not elements of tt(b).
 
     itt(a += b): elements in tt(b) are added to the elements in tt(a), which 
 must be a  tt(list) variable.  This is em(not) a set operation.
 
     itt(a -= b): elements in tt(b) are removed from the elements in tt(a),
-which must be a tt(list) variable.  This em(is) a set operation.
+which must be a tt(list) variable.  This em(is) a set operation: all elements
+of tt(a) that are found in tt(b) are removed from tt(a).
 
     it() list equality comparisons: operators tt(!=) and tt(==) may be applied
 to tt(list) values or variables. Operator tt(==) returns 1 if both lists have
-element-by-element identical elements, 0 otherwise. Operator tt(!=) reverses
-the result of tt(==).
+element-by-element identical elements, otherwise 0 is returned. Operator
+tt(!=) reverses the result of tt(==).
 
     itt(!a): the boolean tt(!) operator returns 1 if the tt(list a) is
 empty, otherwise 0 is returned.
 
-    itt([]): the index operator is defined as an alternative to the built-in
-function tt(element). It can only be applied (as holds true for tt(element())
-as well) as so-called em(rvalue). Therefore, constructions like:
+    itt([]): the index operator retrieves a list element from a list variable:
+it returns a string as an em(rvalue). Therefore, the following statement
+compiles OK:
         verb(
-        // assume lst is a list, str is a string
-    str = lst[3]
+    // assume lst is a list, str is a string
+str = lst[3];
         )
-    will be accepted, but the following construction will not be accepted:
+    but the following statement won't compile:
         verb(
-    lst[3] = str; // won't compile
+lst[3] = str;
         )
+        An empty string is returned if an invalid index value is provided.
     )
 
 bf(Casting:)
@@ -434,12 +462,12 @@ bf(Casting:)
 cast:
     itemization(
     it() Strings to ints and vice versa (tt((int)"123", (string)55))
-    it() Strings may be cast to lists (tt(list lst = (list)"hello"))
+    it() Strings to lists (tt(list lst = (list)"hello"))
     )
 
 manpagesection(FLOW CONTROL)
 
-    Icm() offers the following subset of bf(C)'s statement types. They can be
+    Icm() offers the following subset of bf(C)'s statements. They can be
 used as in the bf(C) programming language.
     itemization(
     itt(expression ;)nl()
@@ -451,7 +479,7 @@ used as in the bf(C) programming language.
         point of definition.
 
     itt(if (condition) statement)nl()
-        A variable may be defined and initialized within the condition. E.g,
+        Inside the condition a variable may be defined and initialized. E.g,
             verb(
     if (string str = getText())
         process(str);
@@ -461,42 +489,55 @@ used as in the bf(C) programming language.
         after the tt(if) statement.
 
     itt(if (condition) statement else statement)nl()
-        As with the previous statement, a variable may be defined and
-        initialized within the condition. 
+        As with the previous statement, inside the condition a variable may be
+        defined and initialized. 
 
     itt(for (init; condition; increment) statement)nl() 
        Variables (of a single type) may be initialized (and optionally be
         defined) in the tt(init) section. The tt(init), tt(condition) and
-        tt(increment) sections may be left empty. The empty condition section
+        tt(increment) sections may remain empty. The empty condition section
         is interpreted as `always tt(true)'.
 
     itt(while (condition) statement)nl()
-        A variable may be defined and initialized within the condition.nl()
-        A complementary  tt(do ... while()) statement is not available.
+        Inside the condition a variable may be defined and initialized.nl()
+        A complementary  tt(do ... while()) statement is not available. Note
+        that defining a variable, using an initialization expression means
+        that the intialization expressing is executed at each iteration of the
+        tt(while) statement. So the following statement will never end, and
+        will display a never ending stream of values 10:
+       verb(
+while (int x = 10)
+    printf(x--, "\n");
+        )
 
-    itt(return)nl()
-       Plain tt(return) statements can be used for tt(void) functions,
-        and tt(return expression) statements are used for other
-        functions. The function tt(main) by default returns 0; other functions
-        do not use default return values.
+    itt(return;), and tt(return expression;)nl()
+       Plain tt(return) statements can be used in tt(void) functions,
+        and tt(return expression) statements are used in other type of 
+        functions. The function tt(main) has return type tt(void) and so in
+        tt(main) only plain tt(return) statements can be used. 
+        By default an icm() script's exit value equals 0. Use the built-in
+        function tt(exit) (see below) to specify any other exit value. 
+
+        bf(Be advised: ) the behavior of non-void functions not returning
+        values is undefined.
 
     itt(break)nl()
-        To leave tt(for) and tt(while) statements, overruling the statement's
+       Leaves tt(for) and tt(while) statements, overruling the statement's
         condition.
 
     itt(continue)nl()
-        To continue with the next iteration of a tt(for) or tt(while)
+       Continues with the next iteration of a tt(for) or tt(while)
         statement.
 
     itt(exit(expression))nl()
-       To end the execution of an icm()-script. The tt(expression) must
+       Ends the execution of an icm()-script. The tt(expression) must
         evaluate to an tt(int) value, which becomes the script's exit value.
     )    
 
 manpagesection(PREDEFINED FUNCTIONS)
 
     Icm() offers the following predefined functions, which can be used
-anywhere in icm() scripts. The function overview is ordered alphabetically
+anywhere in icm() scripts. The following overview is ordered alphabetically
 by function name.
 
     itemization(
@@ -518,23 +559,6 @@ by function name.
         Returns tt(i) as a string, e.g., tt(ascii(65)) returns the string
         tt("A");
 
-    it() The `backtick` operator (tt(`))nl()
-        A string placed between two backticks is executed by the tt(popen)(3)
-        function. The standard output gererated by the command that is stored
-        in the string argument is returned as a list. An empty list indicates
-        that the command could not be executed. A command that could be
-        executed but did not produce any output returns a list containing one
-        empty element. The command's standard error stream output is not
-        automatically collected. Standard shell redirection could be used to
-        collect the standard error stream's output as well. Example:
-            verb(
-        string s = "ls";
-        printf(`s`);        // prints the elements in the current
-                            // directory
-            )
-        The predefined function tt(eval(string cmd)) behaves exactly like the
-        backtick operator: they are synonyms.
-
     itt(string change_base(string file, string newbase))nl()
         Changes the basename of tt(file), returns the changed name. E.g, 
         tt(change_base("/path/demo.im", "out")) returns tt("/path/out.im");
@@ -551,12 +575,13 @@ by function name.
 
     itt(string chdir(string newdir))nl()
        Changes the script's working directory, returns the previous dir as an
-        absolute path.nl()
-       Use tt(chdir(".")) to get current working directory, tt(chdir("")) may
-        be used to obtain the startup working directory (this functionality
-        was broken in releases before than 7.00, but is now operational). The
-        function terminates the icm()-script if the specified tt(newdir) does
-        not exist.
+        absolute path.
+
+       Use tt(chdir(".")) to obtain the current working directory,
+        tt(chdir("")) may be used to obtain the startup working directory
+        (this functionality was broken in releases before than 7.00, but is
+        now operational). The function terminates the icm()-script if the
+        specified tt(newdir) does not exist.
 
     itt(string chdir(int checking, string newdir))nl()
        Same functionality as the previous function, but by specifying
@@ -575,25 +600,19 @@ by function name.
 
     itt(echo(int opt))nl() 
        Controls echoing of called programs (and their arguments), specify
-        tt(OFF) if echoing is not requested. By default tt(ON) is active.
+        tt(OFF) if echoing is not requested. By default tt(echo(ON)) is used.
 
-    itt(string element(int index, list lst))nl()
-       Returns string tt(index) (0-based) from tt(lst). An empty string is
-        returned if an unavailable index value is provided. See also the
-        tt([]) operator in the section bf(OPERATORS).
-
-    itt(string element(int index, string str))nl()
-       Returns character tt(index) (0-based) from tt(str). An empty string is
-        returned if an unavailable index value is provided. See also the
-        tt([]) operator in the section bf(OPERATORS).
+    itt(string element(int index, list (or string) var))nl()
+       Acts identical to the index operator: refer to the index (tt([]))
+        operator in the section bf(OPERATORS).
 
     itt(list eval(string str))nl()
        This function acts identically to the backtick operator. The example
-        shown at the description of the backtick operator could therefore also
+        provided with the backtick operator could therefore also
         have been written like this:
        verb( 
-    printf(eval("ls")); // prints the elements in the current 
-                        // directory 
+printf(eval("ls")); // prints the elements in the current 
+                    // directory 
         )
 
     itt(exec(string cmd, ...))nl()
@@ -616,12 +635,13 @@ by function name.
 
     itt(execute(string cmd, string cmdhd,
             string arghd, ..., string argtl, string cmdtl))nl()
-       Same as tt(exec()), but command head/tail and argument
-        head/tail must be specified. 
-        The actually executed command starts with tt(cmd), followed by 
-        tt(cmdhd). Next is a series of arguments follows, each 
-        enclosed by tt(arghd) and tt(argtl). The command terminates 
-        with tt(cmdtl). 0 is returned
+       Same as tt(exec()), but command head/tail and argument head/tail must
+        be specified.
+
+       The actually executed command starts with tt(cmd), followed by
+        tt(cmdhd). Next is a series of arguments follows, each enclosed by
+        tt(arghd) and tt(argtl). The command terminates with tt(cmdtl). 0 is
+        returned
 
     itt(execute(int checking, string cmd, string cmdhd,
             string arghd, ..., string argtl, string cmdtl))nl()
@@ -634,18 +654,21 @@ by function name.
        Returns a non-zero value if tt(file) exists, otherwise 0 is returned. 
 
     itt(list fgets(string file, list offset))nl()
-       bf(NOTE:) the prototype of this function changed from 
-        tt(fgets(string file, int offset)) to tt(fgets(string file, list
-            offset)) at version 8.00.00.nl()
+       bf(NOTE:) in icm() version 8.00.00 the prototype of this function was
+        changed from tt(list fgets(string file, int offset)) to
+        tt(list fgets(string file, list offset)).
 
-        The next line found at offet tt(offset) is read from tt(file).  It
-        returns a list tt(retlist) containing as its first element the
-        contents of the read line (without the tt(\n) line terminator), as its
-        second element the line's terminator `tt(\n)' (if encountered), and as
-        its third element the string tt(OK) if a line was successfully read,
-        tt(FAIL) if reading from file failed. At EOF an empty list is
-        returned. The list may contain additional elements, which are
-        internally used by tt(fgets).nl()
+        The next line found at the offset contained in tt(offset) is read from
+        tt(file). Pass an empty list to tt(fgets) to read tt(file) from its
+        beginning.
+
+       It returns a list containing as its first element the contents of the
+        read line (without the tt(\n) line terminator), as its second element
+        the line's terminator `tt(\n)' (if encountered), and as its third
+        element the string tt(OK) if a line was successfully read, tt(FAIL) if
+        reading from file failed. When reading at EOF an empty list is
+        returned. The returned list may contain additional elements, which are
+        internally used by tt(fgets) when reading the next line.
 
         To read multiple lines, start by passing an empty list as tt(gets's)
         second argument. To read subsequent lines, pass the previously
@@ -653,14 +676,14 @@ by function name.
 
         Here is an example showing how to read a complete file:
             verb(
-        list ret;
-        while (1)
-        {
-            ret = fgets("filename", ret);
-            if (!ret)
-                break;
-            process(ret[0], ret[1]);
-        }
+list ret;
+while (1)
+{
+    ret = fgets("filename", ret);
+    if (!ret)
+        break;
+    process(ret[0], ret[1]);
+}
             )
 
     itt(int fprintf(string filename, ...))nl()
@@ -669,11 +692,12 @@ by function name.
 
     itt(int fprintf(string filename, string format, ...))nl()
        Appends all (comma separated) arguments to the file
-        tt(filename). Returns the number of printed arguments.nl()
-       If tt(format) contains placeholders %1 .. %n the output is
-            formatted (see also tt(strformat)). Note that in this case
-            argument counting (also) starts beyond the format string: the
-            first argument following tt(format) is referred to as tt(%1).
+        tt(filename). Returns the number of printed arguments.
+
+       If tt(format) contains placeholders %1 .. %n the output is formatted
+        (see also tt(strformat)). Note that in this case argument counting
+        (also) starts beyond the format string: the first argument following
+        tt(format) is referred to as tt(%1).
 
     itt(string get_base(string file))nl()
         Returns the base name of tt(file). The base name is the file without
@@ -684,13 +708,12 @@ by function name.
         base name of tt(a/b/c) equals tt(c). 
 
     itt(string getch())nl()
-        Returns the next pressed key as a string (no `Enter' required for
-        ms-dos and unix (incl. linux) systems).
+       Returns the next pressed key as a string (pressing `Enter' is not
+        required).
 
     itt(string get_dext(string file))nl()
        Returns the extension of tt(file), including the separating dot. The
-        extension is all information starting at the final dot
-        in the filename. 
+        extension is all information starting at the filename's final dot.
 
         If no final dot is found, an empty string is returned.
 
@@ -699,8 +722,8 @@ by function name.
         containing two elements:
 
        the first element indicates whether the environment variable was
-        defined (value tt("1")) or not (value tt("0"));nl() the second element
-        indicates the value of the environment variable.
+        defined (value tt("1")) or not (value tt("0"));nl() 
+       the second element indicates the value of the environment variable.
 
         Enivironment variables are of the form tt(variable=value), and if
         defined the list's second element contains tt(value). If the value is
@@ -708,17 +731,17 @@ by function name.
 
     itt(string get_ext(string file))nl()
        Returns the extension of tt(file), except for the separating dot. The
-        extension is all information starting at the final dot
-        in the filename. 
+        extension is all information starting at the final dot in the
+        filename.
 
         If no final dot is found, an empty string is returned.
 
-    itt(int getpid())nl()
-        Returns the process-id (UNIX) of the icmake byte
-        code interpreter bf(icm-exec).
+    itt(int getpid())nl() 
+       Returns the process-id of the icmake byte code interpreter
+        bf(icm-exec).
 
     itt(string gets())nl()
-        Returns the next line read from the keyboard as a tt(string). The line
+       Returns the next line read from the keyboard as a tt(string). The line
         entered on the keyboard must be terminated by an `Enter' key, which is
         not stored in the returned string.
 
@@ -737,12 +760,12 @@ by function name.
         Returns the number of elements in tt(list).
 
     itt(list listunion(list lhs, list rhs))nl()
-       Returns a list containing the union of the elements in 
-        tt(lhs) and tt(rhs).
+       Returns a list containing the union of the elements in tt(lhs) and
+        tt(rhs).
 
     itt(list listunion(list lst, string str))nl()
-       Returns a list containing the union of the elements in 
-        tt(lst) and tt(str).
+       Returns a list containing the union of the elements in tt(lst) and
+        tt(str).
 
     itt(list makelist(string mask))nl()
         Returns a list of all files matching tt(mask). E.g.,
@@ -791,13 +814,14 @@ by function name.
     itt(int printf(string format, ...))nl()
        Shows all (comma separated) arguments to screen (i.e., the standard
         output stream). Returns the number of printed arguments (the
-        tt(format) string counts as one argument).nl()
+        tt(format) string counts as one argument).
+
        If tt(format) contains placeholders %1 .. %n the output is 
             formatted (see also tt(strformat)).
 
     itt(int putenv(string envvar))nl()
-        Adds tt(envvar) to the current (bf(icmake)) environment
-        Use the format: "VAR=value". Returns 0.
+       Adds tt(envvar) to the current (bf(icmake)) environment Use the format:
+        "VAR=value". Returns 0.
 
     itt(string resize(string str, int newlength)) 
        Returns a copy of string tt(str), resized to tt(newlength) characters.
@@ -812,15 +836,15 @@ by function name.
         Deprecated: use tt(listlen).
 
     itt(list stat(string entry))nl()
-        Returns bf(stat)(2) information of directory entry tt(entry) as 
-        a list. The returned list has two elements: element 0 is the
+       Returns bf(stat)(2) information of directory entry tt(entry) as a
+        list. The returned list has two elements: element 0 is the
         em(attribute value), element 1 contains the size of the file.
 
         Attributes are  returned as bit-flags, composed from the
         following predefined constants: 
         verb(
-            S_IFCHR     S_IFDIR     S_IFREG
-            S_IREAD     S_IWRITE    S_IEXEC
+S_IFCHR     S_IFDIR     S_IFREG
+S_IREAD     S_IWRITE    S_IEXEC
         )
         See the bf(stat)(2) manual page for the meanings of these constants.
 
@@ -832,15 +856,15 @@ by function name.
     itt(int strchr(string str, string chars))nl()
        Returns the first index in tt(str) where any of the characters in
         tt(chars) is found, or -1 if tt(str) does not contain any of the
-        characters in tt(char).
+        characters in tt(chars).
 
-    itt(int strlen(string s))nl()
-        Returns the number of characters in tt(s) (not counting the final 0).
+    itt(int strlen(string str))nl()
+       Returns the number of characters in tt(str) (not counting the final 0).
 
     itt(int strfind(string haystack, string needle))nl()
-        Returns index in tt(haystack) where tt(needle) is found, or -1 if 
-        tt(needle) is not contained in tt(haystack).nl()
-        bf(This function was called strstr() in versions before 7.00).
+       Returns index in tt(haystack) where tt(needle) is found, or -1 if
+        tt(needle) is not contained in tt(haystack).nl() bf(This function was
+        called strstr() in versions before 7.00).
 
     itt(int strformat(string format,...))nl()
         Returns a formatted string using placeholders %1 .. %2 to address
@@ -916,8 +940,8 @@ is (note: bf(void) return type):
     itemization(
     itt(argc) represents the number of elements in tt(argv);
 
-    itt(argv) contains the arguments, with element 0 the compiled icm() script
-(the `tt(.bim)' file);
+    itt(argv) contains the arguments, with element 0 being equal to the
+        name of the .bim file;
 
     itt(envp) contains the `environment' variables. The function tt(listlen)
 can be used to determine the number of its elements. Elements in tt(envp) have
@@ -942,7 +966,6 @@ used to retrieve a specific environment variable immediately.
             if (getenv("dryrun")[0] == "0")
                 linking(element(2, argv));
         }
-        exit (0);
     }    
         )
 
@@ -959,14 +982,15 @@ not supported indirect recursion is not supported either.
 
 User-defined functions must have the following elements:
     itemization(
-    it() The function's return type. One of the available types must be
-used explicitly, e.g., tt(void). There is no default type. 
+    it() The function's return type, which must be one of tt(void, int,
+        string) or tt(list).  There is no default type. 
 
     it() The function's name, e.g., tt(compile).
 
     it() A parameter list, defining zero or more comma-separated
-parameters. The parameters themselves consist of a type name followed by the
-parameter's identifier. E.g., tt((string outfile, string source)).
+        parameters. The parameters themselves consist of a type name (tt(int,
+        string), or tt(list)) followed by the parameter's identifier. E.g.,
+        tt((string outfile, string source)).
 
     it() A em(body) surrounded by a pair of curly braces (tt({) and tt(})).
     )
@@ -984,10 +1008,13 @@ statements (cf. section bf(FLOW CONTROL)). Note that variables may be defined
 (and optionally initialized) anywhere inside functions, and also in tt(if,
 for) and tt(while) statements.
 
+    The behavior of icm()-scripts using non-void functions that do not return
+values is not defined. 
 
 manpagefiles()
 
-    The mentioned paths are sugestive only and may be installation dependent:
+    The mentioned paths are sugestive only and may vary over different
+icm()-installations:
     itemization(
     it() bf(/usr/bin/icmake): the main icm() program;
     it() bf(/usr/bin/icmun): the icm() unassembler;

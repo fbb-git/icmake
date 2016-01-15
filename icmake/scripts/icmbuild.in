@@ -63,7 +63,6 @@ void setGcompiler()
 #ifdef CXX
     g_compiler = setOpt(CXX, "CXX") + " " + setOpt(CXXFLAGS, "CXXFLAGS");
 #else
-
     #ifdef CC
         g_compiler = setOpt(CC, "CC") + " " + setOpt(CFLAGS, "CFLAGS");
     #else
@@ -311,12 +310,12 @@ void setClasses()
 list inspect(string destDir, 
              int prefix, string srcDir, list srcList, string library)
 {
+    string oprefix = destDir + "/" + (string)prefix;
+    srcDir += "/";
+
 #ifdef USE_ALL
     string all = srcDir + USE_ALL;
 #endif
-
-    string oprefix = destDir + "/" + (string)prefix;
-    srcDir += "/";
 
     for (int idx = listlen(srcList); idx--; )
     {

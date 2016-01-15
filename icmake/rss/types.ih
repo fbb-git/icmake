@@ -50,22 +50,22 @@ typedef enum
     e_null          = 0,
 
     /* rss + compiler: */
-    e_int           = (1 << 0),             /* int-type    expression */
-    e_str           = (1 << 1),             /* string-type expression */
-    e_list          = (1 << 2),             /* list-type   expression */
+    e_int           = (1 << 0),     /* 1: int-type    expression */
+    e_str           = (1 << 1),     /* 2: string-type expression */
+    e_list          = (1 << 2),     /* 4: list-type   expression */
 
     /* compiler only: */
-    e_bool          = (1 << 3),             /* bool-type   expression */
+    e_bool          = (1 << 3),     /* 8: bool-type   expression */
 
     e_typeMask      = (e_int | e_list | e_str | e_bool),
 
-    e_const         = (1 << 4),             /* immediate value */
-    e_var           = (1 << 5),             /* variable */
-    e_reg           = (1 << 6),             /* register */
-    e_stack         = (1 << 7),             /* value available on the stack */
+    e_const         = (1 << 4),     /* 0x10 immediate value */
+    e_var           = (1 << 5),     /* 0x20 variable */
+    e_reg           = (1 << 6),     /* 0x40 register */
+    e_stack         = (1 << 7),     /* 0x80 value available on the stack */
 
-    e_pre_inc_dec   = (1 << 8),             /* pre-inc or pre-dec        */
-    e_post_inc_dec  = (1 << 9)              /* post-inc or post-dec      */
+    e_pre_inc_dec   = (1 << 8),     /* pre-inc or pre-dec        */
+    e_post_inc_dec  = (1 << 9)      /* post-inc or post-dec      */
 } ExprType;
 
 

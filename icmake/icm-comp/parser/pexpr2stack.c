@@ -1,3 +1,5 @@
+#define msgx
+
 /*
                    Push an expression value on the stack
 */

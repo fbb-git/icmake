@@ -1,16 +1,15 @@
-
-
-/* #define msg
-*/
+#define msgx
 
 #include "parser.ih"
 
 SemVal *p_return(ExprType op, SemVal *e)
 {
-    msg("BEGIN");
+    msg("BEGIN 0x%x", e->type);
 
-    if (!test_type(e, e_stack))
+    if (test_type(e, e_bool) || !test_type(e, e_stack))
         p_expr2stack(e);
+
+    msg("NEXT 0x%x", e->type);
 
     unsigned funIdx = symtab_lastFunction();
 
@@ -40,7 +39,7 @@ SemVal *p_return(ExprType op, SemVal *e)
                                                     symtab_funName(funIdx));
     }
 
-    msg("poping the pushed return value and returning");
+    msg("popping the pushed return value and returning");
 
     p_generateCode(e, op_pop_reg);
     p_generateCode(e, op);

@@ -155,24 +155,10 @@ void scanner()
 
 #ifdef USE_ALL
 
-int find(string needle, list haystack)
-{
-    int idx;
-    for (idx = listlen(haystack); idx--; )
-    {
-        if (needle == haystack[idx])
-            break;
-    }
-    return idx;
-}
-
 void touch(string dir)
 {
     echo(OFF);
-
-    if (!exists(dir + "/" USE_ALL))
-        system("touch " + dir + "/" USE_ALL);
-
+    system("touch " + dir + "/" USE_ALL);
     echo(USE_ECHO);
 }
             
@@ -182,8 +168,8 @@ void touch(string dir)
     //  file and inspect their dependencies.
 void dependenciesOf(string thisClass)
 {
-    if (find(thisClass, g_inspected) != -1) // this class already inspected
-        return;                             // then done with this class
+    if (listfind(g_inspected, thisClass) != -1) // this class already 
+        return;                             // inspected? then ready: return
 
     g_base = 1;                             // recompile the base's files
 
@@ -195,7 +181,7 @@ void dependenciesOf(string thisClass)
     {
         list hit = strtok(g_classLines[idx], " \t");
 
-        if (find(thisClass, hit) > 0)
+        if (listfind(hit, thisClass) > 0)
         {
             touch(hit[0]);
             dependenciesOf(hit[0]);
@@ -219,19 +205,15 @@ void checkALL()
     
 #endif  // USE_ALL
 
-int isEmpty(string line)
+int isEmpty(string line)        // needs stripped line
 {
-    list parts = strtok(line, " \t");
-    
-    return (int)(listlen(parts) == 0 ||
-                parts[0][0] == "#" || strfind(parts[0], "//") == 0);
+    return strlen(line) == 0 || line[0] == "#" || strfind(line, "//") == 0;
 }
-
     
 int lineRead()
 {
     g_classLine = fgets("CLASSES", g_classLine);
-    return (int)(listlen(g_classLine) && g_classLine[2] == "OK");
+    return listlen(g_classLine) && g_classLine[2] == "OK";
 }
 
 list nextCLASSESline() // return entries of CLASSES as a list
@@ -283,19 +265,9 @@ void setClasses()
 
     list class;
     while (listlen(class = nextCLASSESline()))
-    {
-        string dir = class[0];
+        g_classes = listunion(g_classes, class[0]);
 
-        if 
-        (
-            dir != SCANNER_DIR          // SCANNER_DIR is already there
-            &&
-            dir != PARSER_DIR           // PARSER_DIR is already there
-        )
-            g_classes += (list)dir;     // add this dir.
-    }
-
-    // classLines contains the full lines of the CLASSES file, and thus
+    // g_classLines contains the full lines of the CLASSES file, and thus
     // stores its dependencies.
 
     g_nClasses = listlen(g_classes);
@@ -767,13 +739,13 @@ void main(int argc, list argv, list envp)
 #ifdef USE_ALL
         rmUSE_ALLfiles();
 #endif
-        exit(0);
+        return;
     }
 
     if (g_command == "strip-shared")
     {
         strip_shared();      
-        exit(0);
+        return;
     }
 
     string prog = change_ext(change_path(argv[0], ""), "");
@@ -806,6 +778,4 @@ void main(int argc, list argv, list envp)
         "        install shared base - install the shared library under "
                                                                 "`base'\n"
     );
-
-    exit(0);
 }

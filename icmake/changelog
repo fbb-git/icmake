@@ -23,6 +23,15 @@ icmake (8.01.00)
 * The main() function must have return type 'void' (this was already required
   in earlier versions, but is now enforced).
 
+* When PARSER-related specifications are not used, they can all be removed
+  from 'icmconf' files.
+
+* When SCANNER-related specifications are not used, they can all be removed
+  from 'icmconf' files.
+
+* Support for using 'grambuild' (superfluous since 2008) was removed from
+  'icmbuild' 
+
 * Updated the manpages
 
 

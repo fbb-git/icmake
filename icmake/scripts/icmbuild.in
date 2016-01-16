@@ -21,7 +21,6 @@ string  g_libs;         // the extra libraries
 list    g_classes;      // all class-directories
 int     g_nClasses;     // number of class-directories
 int     g_compiled;     // any source compiled (but main)?
-int     g_keepGramspec; // keep the gramspec directory
 list    g_classLines;   // list of all lines in CLASSES
 list    g_classLine;    // line of the CLASSES file
 list    g_inspected;    // list of classes whose dependencies have been 
@@ -89,69 +88,65 @@ list patternList(string pattern)
     return ret;
 }
 
-void parser()
-{
-    chdir(PARSER_DIR);
-
-    list gramfiles = makelist(PARSSPEC);
-
-#ifdef PARSFILES
-    gramfiles += makelist(PARSFILES);
-#else
-    #ifdef GRAMBUILD
-        chdir("gramspec");
-        showCd(PARSER_DIR "gramspec");
-
-        system("./grambuild");
-        chdir("..");
+#ifdef PARSER_DIR
+    void parser()
+    {
+        chdir(PARSER_DIR);
+    
+        list gramfiles = makelist(PARSSPEC);
+    
+    #ifdef PARSFILES
+        gramfiles += makelist(PARSFILES);
     #endif
-#endif
-
-    for (int idx = listlen(gramfiles); idx--; )
-    {
-        if (gramfiles[idx] younger PARSOUT)    // need new parser
-        {
-            showCd(PARSER_DIR);
-            if (USE_ECHO)
-                printf("New parser: `", gramfiles[idx], "' changed\n");
-            system(PARSGEN " " PARSFLAGS " " PARSSPEC);
-            break;
-        }
-    }
-    chdir("..");
-}
-
-void scanner()
-{
-    chdir(SCANNER_DIR);
-
-    int rerun = PARSER_DIR != "" && 
-                "../"PARSER_DIR"/"PARSOUT  younger SCANOUT;
-
-    if (!rerun)
-    {
-        list scanfiles = makelist(PARSSPEC) + makelist(SCANSPEC);
     
-        #ifdef SCANFILES
-            scanfiles += makelist(SCANFILES);
-        #endif
-    
-        for (int idx = listlen(scanfiles); idx--; )
+        for (int idx = listlen(gramfiles); idx--; )
         {
-            if (scanfiles[idx]  younger SCANOUT)
+            if (gramfiles[idx] younger PARSOUT)    // need new parser
             {
-                showCd(SCANNER_DIR);
-                rerun = 1;
+                showCd(PARSER_DIR);
+                if (USE_ECHO)
+                    printf("New parser: `", gramfiles[idx], "' changed\n");
+                system(PARSGEN " " PARSFLAGS " " PARSSPEC);
                 break;
             }
         }
+        chdir("..");
     }
+#endif
 
-    if (rerun)
-        system(SCANGEN " " SCANFLAGS " " SCANSPEC);
-
-    chdir("..");
-}
+#ifdef SCANNER_DIR
+    void scanner()
+    {
+        chdir(SCANNER_DIR);
+    
+        int rerun = PARSER_DIR != "" && 
+                    "../"PARSER_DIR"/"PARSOUT  younger SCANOUT;
+    
+        if (!rerun)
+        {
+            list scanfiles = makelist(PARSSPEC) + makelist(SCANSPEC);
+        
+            #ifdef SCANFILES
+                scanfiles += makelist(SCANFILES);
+            #endif
+        
+            for (int idx = listlen(scanfiles); idx--; )
+            {
+                if (scanfiles[idx]  younger SCANOUT)
+                {
+                    showCd(SCANNER_DIR);
+                    rerun = 1;
+                    break;
+                }
+            }
+        }
+    
+        if (rerun)
+            system(SCANGEN " " SCANFLAGS " " SCANSPEC);
+    
+        chdir("..");
+    }
+#endif
 
 #ifdef USE_ALL
 
@@ -254,14 +249,19 @@ list nextCLASSESline() // return entries of CLASSES as a list
     
 void setClasses()
 {
+
+#ifdef SCANNER_DIR
                                         // make sure that scanner/parser
                                         // directories come first, so they
                                         // don't get reordered
     if (SCANNER_DIR != "")
         g_classes = (list)SCANNER_DIR;  // add the scanner-dir
+#endif
 
+#ifdef PARSER_DIR
     if (PARSER_DIR != "")
         g_classes += (list)PARSER_DIR;
+#endif
 
     list class;
     while (listlen(class = nextCLASSESline()))
@@ -436,11 +436,15 @@ void build_libraries()
     g_sources = SOURCES;
     g_compiled = 0;
 
+#ifdef PARSER_DIR
     if (PARSER_DIR != "")
         parser();
+#endif
 
+#ifdef SCANNER_DIR
     if (SCANNER_DIR != "")
         scanner();
+#endif
 
     if 
     (
@@ -664,6 +668,42 @@ void clearScreen(int cls)
         system("tput clear");
 }
 
+void usage(string prog)
+{
+    printf("Usage: ", prog, " [-h] [-c] args\n"
+        "   -h              - Disply this help-information and end ",
+                                                    prog, "\n"
+        "   -c              - Do 'tput clear' (clear screen) just before\n"
+        "                     processing 'args'\n"
+        "   args - select from:\n"
+        "        clean           - clean up remnants of previous activities\n"
+
+    #ifdef LIBRARY
+        "        library         - build the static library " TMP_DIR "/lib"
+                                                            LIBRARY  ".a\n"
+        "                          optionally (SHARED in icmconf) build a\n"
+        "                          shared library as well\n"
+    #endif
+
+    #ifdef SHARED
+        "        strip-shared    - strip a shared library\n"
+    #endif
+
+        "   When building a program:\n"
+        "        program         - build " TMP_DIR "/binary\n"
+        "        program strip   - build stripped " TMP_DIR "/binary\n"
+        "        install program path - to install the binary at `path'\n"
+        "                         (provide the full path-name)\n"
+        "   When building a library:\n"
+        "        install static base - install the static library under "
+                                                                "`base'\n"
+        "        install shared base - install the shared library under "
+                                                                "`base'\n"
+    );
+
+    exit(0);
+}
+
 void main(int argc, list argv, list envp)
 {
     echo(USE_ECHO);
@@ -671,6 +711,11 @@ void main(int argc, list argv, list envp)
     setGcompiler();
 
     g_command = argv[1];
+
+    string prog = change_ext(change_path(argv[0], ""), "");
+
+    if (g_command == "-h")
+        usage(prog);
 
     int cls;
     if (g_command == "-c")
@@ -692,25 +737,6 @@ void main(int argc, list argv, list envp)
         g_command = argv[1];
     }
 #endif
-
-#ifdef KEEPGRAMSPEC
-    g_keepGramspec = 1;
-#endif
-    
-#ifdef PARSFILES
-    if (exists(PARSER_DIR "/gramspec") && !g_keepGramspec)
-    {
-        printf("Remove superfluous directory `" PARSER_DIR 
-                                            "/gramspec' [yN] ? ");
-        if (getch() == "y")
-            system("rm -rf " PARSER_DIR "/gramspec");
-        else
-            fprintf("icmconf", "\n"
-                        "\n"
-                        "    // Do not remove\n"
-                        "#define KEEPGRAMSPEC\n");
-    }
-#endif                
 
     if (g_command == "clean")
         clean();
@@ -748,34 +774,5 @@ void main(int argc, list argv, list envp)
         return;
     }
 
-    string prog = change_ext(change_path(argv[0], ""), "");
-
-    printf("Usage: ", prog, " [-c] cmd\n"
-        "   -c              - Does 'tput clear' (clear screen) just before\n"
-        "                     starting 'program' or 'library'\n"
-        "   cmd: command to execute:\n"
-        "        clean           - clean up remnants of previous activities\n"
-
-    #ifdef LIBRARY
-        "        library         - build the static library " TMP_DIR "/lib"
-                                                            LIBRARY  ".a\n"
-        "                          optionally (SHARED in icmconf) build a\n"
-        "                           shared library as well\n"
-    #endif
-
-    #ifdef SHARED
-        "        strip-shared    - strip a shared library\n"
-    #endif
-
-        "   When building a program:\n"
-        "        program         - build " TMP_DIR "/binary\n"
-        "        program strip   - build stripped " TMP_DIR "/binary\n"
-        "        install program path - to install the binary at `path'\n"
-        "                         (provide the full path-name)\n"
-        "   When building a library:\n"
-        "        install static base - install the static library under "
-                                                                "`base'\n"
-        "        install shared base - install the shared library under "
-                                                                "`base'\n"
-    );
+    usage(prog);
 }

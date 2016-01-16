@@ -25,6 +25,9 @@ list    g_classLines;   // list of all lines in CLASSES
 list    g_classLine;    // line of the CLASSES file
 list    g_inspected;    // list of classes whose dependencies have been 
                         // inspected (used with USE_ALL)
+
+list    g_buildprog = strtok("program strip", " ");
+
 int     g_base;         // compile the sources in the base directory
 int     g_chdir;        // display chdirs to directories without sources to
                         // compile
@@ -746,14 +749,14 @@ void main(int argc, list argv, list envp)
 
     string option;
 
-    if (g_command == "program")
+    if (listfind(g_buildprog, g_command) != -1)
     {
         clearScreen(cls);
-        if (argv[2] == "strip")
+        if (g_command == "strip")
+        {
+            g_command = "program";
             option = "-s";
-        else
-            option = "";
-
+        }
         program(option);        // exits
     }
 

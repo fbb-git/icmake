@@ -1,6 +1,4 @@
-
-/* #define msg
-*/
+#define msgx
 
 #include "icmake.ih"
 
@@ -10,6 +8,9 @@ void optTmpBim(char **argv)
                         f_rmPim | f_rmBim;
 
     bimFile = rss_trimLeft(optarg);
+
+    if (strcmp(bimFile, ".") == 0)                  // replace . by 
+        bimFile = rss_strjoin(tmpDir, ".bim");      // /tmpDir/`pid`.bim
 
     msg("optarg = `%s', bimfile = `%s'", optarg, bimFile);
 

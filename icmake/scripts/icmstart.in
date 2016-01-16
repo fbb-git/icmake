@@ -1,23 +1,31 @@
-#!@BINDIR@/icmake -t/tmp/icmstart
+#!@BINDIR@/icmake -t.
 
-string g_confpath;
-string g_userHome = getenv("HOME")[1];
-string g_home = g_userHome + "/.icmake";
-string g_skelpath = "@SKELDIR@";
-string g_program;
-string g_defaultcommand = "";
-string g_defaultcommandArg;
-string g_destpath;
+string g_confPath;
+string g_home = getenv("HOME")[1] + "/.icmake";
+string g_skelPath = "@SKELDIR@";
+string g_program = "icmstart";
+string g_defaultCommand;
+string g_defaultCommandArg;
+list g_defaultCommands = strtok("program library", " ");
+string g_destPath;
+string g_destSpec;
 string g_cwd = chdir("");
-list   g_mkdir;
+string g_icmconf;
 
-int g_confirminstall = 0;
+list g_mkdir;
+list g_installed;
+list g_actions = strtok("b P L D PD Pb bP DP pL Lp LD DL", " ");  
+                                                    // possible initial 
+                                                    // actions on rc-file 
+                                                    // lines
+  
+int g_confirmInstall = 0;
 int g_skeletons = 1;
 int g_replace = 0;
 int g_debug = 0;
-int g_askreplace = 1;
-int g_basic = 0;
+int g_askReplace = 1;
 int g_version = 1;
+int g_basic = 0;
 
 void usage()
 {
@@ -34,8 +42,8 @@ void usage()
         "         that would have been executed\n"
         "     -I: do NOT install any files.\n"
         "     -r: replace existing files/directories\n"
-        "     -s skelpath: Read the skeleton information from the directory\n"
-        "                  `skelpath' rather than @SKELDIR@\n"
+        "     -s skelPath: Read the skeleton information from the directory\n"
+        "                  `skelPath' rather than @SKELDIR@\n"
         "   dir: the directory to install the files into\n"
         "   program, library: command passed by default to the icmbuild "
                                                                     "script\n"
@@ -60,6 +68,11 @@ int isFile(string s)
     return (int)stat(P_NOCHECK, s)[0] & S_IFREG;
 }
 
+void ignore(string dest)
+{
+    g_installed += (list)(g_destPath + dest);
+}
+
 void syscall(string command)
 {
     if (g_debug)
@@ -82,23 +95,58 @@ void md(string dir)
     g_mkdir += (list)dir;
 }
 
+string readlink(string name)
+{
+    name = eval("readlink -f " + name)[0];
+    return resize(name, strlen(name) - 1);
+}
+
 string absPath(string arg)
 {
     if (arg[0] != "/")
         arg = g_cwd + arg;
 
-    if (arg[strlen(arg) - 1] != "/")
-        arg += "/";
-
-    return arg;
+    return readlink(arg) + "/";
 }
+
+string absSource(string source)
+{
+    int abs = strchr(source, "~/") == 0;
+
+    if (abs == 0)
+        source = g_skelPath + source;
+
+    source = readlink(source);
+
+    if (abs == 0 && strfind(source, g_skelPath) != 0)
+        die("source: `" + source + "' not in `" + g_skelPath + "'");
+
+    if (!isFileOrDir(source))
+        die("Can't find file or dir. `" + source + "'");
+
+    return source;
+}
+
+string absDest(string dest)
+{
+    if (strchr(dest, "~/") == 0)          // absolute path name
+        die("absolute destination specifications (`" + dest + 
+                                                "') not supported");
+
+    dest = readlink(g_destPath + dest);
+    if (strfind(dest, g_destPath) != 0)
+        die("dest: `" + dest + "' not in `" + g_destPath + "'");
+    
+    return dest;
+}
+
 
 void arguments(int argc, list argv)
 {
     list icm = getenv("ICM");           // ICM environment var defined?
 
     if ((int)icm[0] == 1)                
-        g_skelpath = icm[1];            // then re-assign skelpath
+        g_skelPath = icm[1];            // then re-assign skelPath
 
     int cmdidx = 1;
     while (cmdidx < argc)
@@ -113,7 +161,7 @@ void arguments(int argc, list argv)
             g_basic = 1;
             g_version = 0;
         }
-        else if (arg[1] == "c")         // -c: re-assign g_confpath
+        else if (arg[1] == "c")         // -c: re-assign g_confPath
         {
             arg = substr(arg, 2, 999);  // get all beyond -c
 
@@ -124,7 +172,7 @@ void arguments(int argc, list argv)
 
                 arg = argv[++cmdidx];
             }
-            g_confpath = absPath(arg);  // reassign confpath
+            g_confPath = absPath(arg);  // reassign confpath
         }
         else if (arg[1] == "d")         // -d: debug
             g_debug = 1;
@@ -132,10 +180,10 @@ void arguments(int argc, list argv)
             g_skeletons = 0;
         else if (arg[1] == "r")         // -r: replace existing file(s)
         {
-            g_askreplace = 0;
+            g_askReplace = 0;
             g_replace = 1;
         }
-        else if (arg[1] == "s")         // -s: re-assign g_skelpath
+        else if (arg[1] == "s")         // -s: re-assign g_skelPath
         {
             arg = substr(arg, 2, 999);  // get all beyond -s
 
@@ -146,160 +194,113 @@ void arguments(int argc, list argv)
 
                 arg = argv[++cmdidx];
             }
-            g_skelpath = arg;           // reassign skelpath
+            g_skelPath = arg;           // reassign skelPath
         }
         else
-            printf("[Warning] ignoring unkown option ", arg, "\n");
+            die("Option `" + arg + "' not supported\n");
 
         ++cmdidx;
     }
 
-    g_skelpath = absPath(g_skelpath);
-    g_destpath = argv[cmdidx];
-    if (g_destpath[strlen(g_destpath) - 1] != "/")
-        g_destpath += "/";
+    g_skelPath = absPath(g_skelPath);
+    g_destSpec = argv[cmdidx];
+    g_destPath = absPath(g_destSpec);
 
-    md(g_destpath);                       // install the target dir
-
-
-
-    if (!g_debug)
-        g_destpath = chdir(g_destpath);
+    g_icmconf = g_destPath + "icmconf";
 
     if (++cmdidx < argc)
     {
-        g_defaultcommandArg = argv[cmdidx];
-        if 
-        (
-            g_defaultcommandArg == "program" 
-            || 
-            g_defaultcommandArg == "library"
-        )
+        g_defaultCommandArg = argv[cmdidx];
+
+        if (listfind(g_defaultCommands, g_defaultCommandArg) == -1)
         {
-            g_defaultcommand = 
-                        "#define DEFCOM \"" + g_defaultcommandArg + "\"\n";
-            if (g_defaultcommandArg == "library")
-                g_version = 0;
+            printf("Initial command `", g_defaultCommandArg, 
+                                                        "' not supported\n");
+            exit(1);
         }
-        else
-            printf("Ignored initial command `", g_defaultcommandArg, 
-                                                        "' for icmbuild\n");
+
+        if (g_defaultCommandArg == "library")
+            g_version = 0;
+
+        g_defaultCommand = 
+                "\n"
+                "#define DEFCOM     \"" + g_defaultCommandArg + "\"\n";
     }
+
+    md(g_destPath);                       // install the target dir
 }
 
 int replace(string target)
 {
-    while (g_askreplace)
+    while (g_askReplace)
     {
         printf("`", target, "' exists.\n"
-               "Replace [?akNy] ? ");
+               "Replace [?akNqy] ? ");
         string answer = getch();
 
         if (answer == "a")
         {
             g_replace = 1;
-            g_askreplace = 0;
+            g_askReplace = 0;
             break;
         }
 
         if (answer == "k")
         {
-            g_askreplace = 0;
+            g_askReplace = 0;
             break;
         }
 
         if (answer == "y")
             return 1;
 
+        if (answer == "q")
+            exit(0);
+
         if (answer == "n" || answer == "\n")
             return 0;
 
-        printf("Press `a' to replace all,\n"
-               "      `k' to keep all current versions\n"
-               "      `n' to keep current version (default)\n"
-               "      `?' shows this help\n");
+        printf("Press `a' : replace ", target, " and ALL remaining files,\n"
+               "      `k' : KEEP ", target, " and all remaining files\n"
+               "      `n' : (or press Enter) do NOT replace ", target, 
+                                                                " (default)\n"
+               "      `q' : QUIT (do NOT replace ", target, 
+                                                ", and END icmstart NOW)\n"
+               "      'y' : REPLACE ", target, "\n"
+               "      `?' : show this help\n");
     }
     return g_replace;
 }
 
-int install(string target)
+int install(string dest, string target)
 {
-    return (int)(!exists(target) || replace(target));
+    return (int)(!exists(target) || replace(dest));
 }
 
-int install_dest(string source, string dest)
+int install_file(string realSource, string dest, string realDest)
 {
-    if (!isFileOrDir(source))
-        die("Can't find `" + source + "'\n");
+    if (!install(dest, realDest))
+        return 0;
 
-    if (dest == "")
-        dest = change_path(source, g_destpath);
-    else    
-        dest = g_destpath + dest;
-
-    int idx = strlen(dest) - 1;
-
-    if (dest[idx] == "/")
-        dest = resize(dest, idx);
-
-    if (install(dest))
-    {
-        md(get_path(dest));
-        syscall("cp -rd " + source + " " + dest);
-        return 1;
-    }
-
-    return 0;
-}
-
-    // a line in the conffile may be organized as follows (except for empty
-    // lines and comment lines starting at # in column 0)
-    // name is either a file or a directory; directories are copied
-    // completely. 
-    //  name                - skelpath/name is installed as destpath/name
-    //  ./path/name         - $cwd/path/name is installed as destpath/name
-    //  /path/name          - /path/name is installed as destpath/name
-    // a second entry may be dest (path OK): destpath/dest will be the
-    // destination. E.g.:
-    //  name  one/two       - skelpath/name is installed as destpath/one/two
-    // All lines may start with a P (+space) or L (+space).
-    // A source at a P-line is not installed when using 'icmstart xxx library'
-    // A source at an L-line is not installed when using 'icmstart xxx
-    // program' If omitted the source is installed unconditionally.
-    // Following P or L (+space) an optional ? (+ space) may be specificed 
-    // in which case the installation must be confirmed by the user
-int install_file(string source, string dest)
-{
-    if (source[0] == ".")
-        source = g_cwd + source;
-    else
-    {
-        int idx = strfind(source, "/");
-
-        if (idx == -1)
-            source = g_skelpath + source;
-        else if (idx > 0)
-            source = g_cwd + source;
-    }
-    return install_dest(source, dest);
+    md(get_path(realDest));
+    syscall("cp -rd " + realSource + " " + realDest);
+    g_installed += (list)realDest;
+    return 1;
 }
 
 string find(string path, string file)
 {
     string ret = path + "/" + file;
 
-    if (exists(ret))
-        return ret;
-
-    return "";
+    return exists(ret) ? ret : "";
 }
 
 string findFile(string file)
 {
     string ret;
 
-    if (g_confpath != "")                   // locate file in -c path
-        ret = find(g_confpath, file);
+    if (g_confPath != "")                   // locate file in -c path
+        ret = find(g_confPath, file);
 
     if (ret == "")                          // not found, locate in $HOME
         ret = find(g_home, file);
@@ -317,9 +318,9 @@ void install_conf(string file, string default)
         string ret = findFile(file);
 
         if (ret != "")
-            system("cat " + ret + " >> " + g_destpath + "VERSION");
+            system("cat " + ret + " >> " + g_destPath + "VERSION");
         else
-            fprintf(g_destpath + "VERSION", 
+            fprintf(g_destPath + "VERSION", 
                         "#define ", file, " \"", default, "\"\n");
     }
 }    
@@ -329,11 +330,11 @@ void install_version()
     if (!g_version)
         return;
 
-    string str = g_destpath + "VERSION";
+    string str = g_destPath + "VERSION";
 
-    if (install(str))
+    if (install("VERSION", str))
     {
-        system(P_NOCHECK, "rm -f " + g_destpath + "VERSION");
+        system(P_NOCHECK, "rm -f " + str);
         install_conf("AUTHOR",  "");
         install_conf("VERSION", "0.00.00");
 
@@ -343,49 +344,38 @@ void install_version()
     }
 }
 
-void install_std()
+void defaultCommand()
 {
-    install_version();
                                         // install a default command if 
-                                        // provided as last arg.
-    if (install_file("icmconf", "") && g_defaultcommand != "")
-        fprintf(g_destpath + "icmconf", g_defaultcommand);
+    if (g_defaultCommand != "")         // provided as last arg.
+        fprintf(g_icmconf, g_defaultCommand);
 
                                         // for libraries: uncomment the
                                         // #define LIBRARY spec, and
                                         // comment out #define MAIN
-    if (strfind(g_defaultcommand, "library") != -1)
+    if (strfind(g_defaultCommand, "library") != -1)
         syscall("sed -i '\n"
             "s?^//\\(#define LIBRARY\\)?\\1?\n"
             "s?^\\(#define MAIN\\)?//\\1?\n"
-            "' " + g_destpath + "icmconf");
+            "' " + g_icmconf);
 
     if (!g_version)                     // uncomment
         syscall("sed -i '\n"            // #define USE_VERSION
                 "s?^\\(#define USE_VERSION\\)?//\\1?\n"
-            "' " + g_destpath + "icmconf");
+            "' " + g_icmconf);
 }
 
-int confirminstall(string source, string dest)
+int confirmInstall(string source, string dest)
 {
-    if (g_confirminstall)
-    {
-        if (source == dest)
-            printf("Install `", dest, "' [yN] ? ");
-        else
-            printf("Install `", source, "' as `", dest, "' [yN] ? ");
-        return getch() == "y";
-    }
+    if (!g_confirmInstall)
+        return 1;
 
-    return 1;
-}
+    if (source == dest)
+        printf("Install `", dest, "' [yN] ? ");
+    else
+        printf("Install `", source, "' as `", dest, "' [yN] ? ");
 
-string check_home(string source)
-{
-    if (source[0] != "~")
-        return source;
-
-    return g_userHome + substr(source, 1, strlen(source));
+    return getch() == "y";
 }
 
 list shift(list source)     // shift away the first element
@@ -398,76 +388,91 @@ list shift(list source)     // shift away the first element
     return ret;
 }
 
+        // ignore 'P' for library construction, 
+        // ignore 'L' for program construction
+        // do not ignore the 'D' specificied entries
+int ignoreEntry(string install)
+{
+    return
+        (int)
+        (
+            g_basic && strchr(install, "b") != -1
+            ||
+            strchr(install, "D") == -1          // not by default
+            &&
+            (
+                g_defaultCommandArg == "library" && strchr(install, "P") != -1
+                ||
+                g_defaultCommandArg == "program" && strchr(install, "L") != -1
+            )
+        );
+}
     
     // a line in the conffile may be organized as follows (name is either
     //  a file or a directory; directories are copied completely):
-    //  name        - name is located in skelpath and installed at destpath
-    //  name  dest  - name is located in skelpath and installed at destpath/name
+    //  name        - name is located in skelPath and installed at destPath
+    //  name  dest  - name is located in skelPath and installed at destPath/name
     //                if name is a directory then the destination will be
-    //                destpath/dest/name. dest may also be /dest
+    //                destPath/dest/name. dest may also be /dest
     //  path/name   - relative or absolute path's name will be installed at
-    //                destpath. Relative is relative to the startup directory
+    //                destPath. Relative is relative to the startup directory
     //  path/name dest - relative or absolute path's name will be installed
-    //                at destpath/dest. dest may also be /dest
-    // All lines may start with a P (+space) or L (+space).
-    // A source at a P-line is not installed when using 'icmstart xxx library'
-    // A source at an L-line is not installed when using 'icmstart xxx
-    // program' If omitted the source is installed unconditionally.
-    // Following P or L (+space) an optional ? (+ space) may be specificed 
-    // in which case the installation must be confirmed by the user
-
+    //                at destPath/dest. dest may also be /dest
+    // All lines may start with a P, L, D, or b.
+    // b and D may also be added to P or L
+    // A source at a P-line is installed when using 'icmstart xxx program'
+    // A source at an L-line is installed when using 'icmstart xxx library'
+    // A source at a D line, or a source withoug P,L,D prefixes is 
+    // unconditionally installed.
+    // A source at a b-line is ignored with the -b (basic) flag
+    // Following a P,L,D,b combination (+space) an optional ? (+ space) may be
+    // specificed in which case installation of the source must be confirmed
+    // by the user
 void install_line(string confline)
 {
     list fields = strtok(confline, " \t\n");
     string source = fields[0];
 
-                                            // empty line or comment
+        // ignore empty line or comment
     if (listlen(fields) == 0 || source[0] == "#")
         return;
 
+        // remove any P/L/D flags
     string install = source;
-    if (install == "P" || install == "L")
+    if (listfind(g_actions, install) == -1)
+        install = "";
+    else
     {
-        fields = shift(fields);             // rm the P/L-flag
+        fields = shift(fields);
         source = fields[0];
     }
-    else
-        install = "";
 
-    g_confirminstall = source == "?";       // need confirmation ?
+    g_confirmInstall = source == "?";       // need confirmation ?
 
-    if (g_confirminstall)
+    if (g_confirmInstall)
     {
         fields = shift(fields);             // rm the ?-mark
         source = fields[0];
     }
 
-    if 
-    (
-        g_defaultcommandArg == "library" && install == "P"
-        ||
-        g_defaultcommandArg == "program" && install == "L"
-    )
-        return;                             // no P with libs, no L with progs
-
-    string dest = listlen(fields) > 1 ? fields[1] : source;
-
-    source = check_home(source);
-    dest   = check_home(dest);
-
-    if (!g_replace && !g_askreplace && exists(g_destpath + dest))
+    if (ignoreEntry(install))
         return;
 
-    if (!confirminstall(source, dest))
+    string realSource = absSource(source);
+
+    string dest = listlen(fields) > 1 ? fields[1] : source;
+    string realDest = absDest(dest);
+
+    if (listfind(g_installed, realDest) != -1) // already processed 'dest'
+        return;
+
+    if (!g_replace && !g_askReplace && exists(realDest))
+        return;
+
+    if (!confirmInstall(source, dest))
             return;
 
-    install_file(source, dest);
-}
-
-int last(string haystack, string needle)
-{
-    list entry = strtok(haystack, " \t\n");
-    return entry[listlen(entry) - 1] == needle;
+    install_file(realSource, dest, realDest);
 }
 
 void install_rc()
@@ -478,36 +483,24 @@ void install_rc()
         die("Can't find configuration file `icmstart.rc'");
     
     while (list line = fgets(conffile, line))
-    {
-        string file = line[0];
+        install_line(line[0]);
 
-        if
-        (
-            !(
-                g_basic &&          // don't install version/usage for basic
-                (last(file, "version.cc") || last(file, "usage.cc"))
-            )
-        )
-            install_line(file);
-    }
+    install_version();
+    defaultCommand();
 }
 
-int main(int argc, list argv)
+void main(int argc, list argv)
 {
     echo(OFF);
-
-    g_program = get_base(argv[0]);
 
     if (argc == 1)
         usage();
 
     arguments(argc, argv);
 
-    install_std();              // install CLASSES VERSION and icmconf
-
     install_rc();               // install .rc file elements
 
-    printf("Done. Don't forget to inspect the #defines in\n"
-            "'", g_destpath, "icmconf'\n");
+    printf("Done. Don't forget to inspect the #defines in "
+            "'", g_destSpec + "/icmconf'\n\n");
 }
 

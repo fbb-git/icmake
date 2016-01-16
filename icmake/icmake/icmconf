@@ -8,17 +8,7 @@
 #define ADD_LIBRARY_PATHS  "../../tmp"
 #define REFRESH
 #define CLS
-#define SCANNER_DIR         ""  
-#define SCANGEN             ""
-#define SCANFLAGS           ""
-#define SCANSPEC            ""
-#define SCANOUT             ""
-#define PARSER_DIR          ""
-#define PARSGEN             ""
-#define PARSSPEC            ""
-#define PARSFLAGS           ""
-#define PARSOUT             ""
 #define TMP_DIR             "tmp"
 #define LIBRARY             "modules"
 #define OBJ_EXT             ".o"
-#define DEFCOM "program"
+#define DEFCOM      "program"

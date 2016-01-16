@@ -1,6 +1,4 @@
-
-/* #define msg
-*/
+#define msgx
 
 #include "icmake.ih"
 
@@ -11,5 +9,10 @@ void optTmpDir()
 
     if (tmpDir[strlen(tmpDir) - 1] != '/')      /* tmpDir must end in / */
         tmpDir = rss_strcat(tmpDir, "/");
+
+    char pidStr[20];
+    snprintf(pidStr, 20, "%u", getpid());
+
+    tmpDir = rss_strcat(tmpDir, pidStr);
 }
     

@@ -23,6 +23,11 @@ icmake (8.01.00)
 * The main() function must have return type 'void' (this was already required
   in earlier versions, but is now enforced).
 
+* When defining executable icmake scripts using 
+        #!/usr/bin/icmake -t
+  -t. indicates that the temporary .bim file must be defined in icmake's
+  temporary directory, using icmake's pid and the .bim suffix as its filename.
+
 * When PARSER-related specifications are not used, they can all be removed
   from 'icmconf' files.
 

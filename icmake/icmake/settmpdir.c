@@ -5,7 +5,7 @@ void setTmpDir()
     struct stat buf;
 
     char pidStr[20];
-    sprintf(pidStr, "%u", getpid());
+    snprintf(pidStr, 20, "%u", getpid());
 
     tmpDir = rss_strcat(
                 rss_strjoin(

@@ -102,14 +102,18 @@ tt(-t)) only one may be specified:
         file is written to icm()'s second
         file argument (by default tt(`source'.pim));)
     sop(q)()(ignored, will be removed in a future icm() version;)
-    sop(t)()(the argument following tt(-t) is the name of a temporary tt(.bim)
-        file, which is removed after icm()'s call. The next argument is the
-        name of the icm() source script. Any additional arguments are passed
+    sop(t)()(the argument following tt(-t) is the name of a temporary .bim
+        file, which is removed after icm()'s call. When tt(.) is specified as
+        the name of the temporary .bim file then the default temporary
+        directory, followed by icm()'s process-id, followed by tt(.bim) is
+        used.
+
+        Following the name of the temporary .bim file the name of the icm()
+        source script must be specified. Any additional arguments are passed
         to the .bim file as-is, and tt(--) should not be specified; After
         setting the source script file's executable flag (tt(chmod +x
-        script)), and providing it with an initial line like this: 
-            verb(
-    #!/usr/bin/icmake -t /tmp/xxx
+        script)), and providing it with an initial line like this: verb(
+    #!/usr/bin/icmake -t.
             )
         the icm() script can directly be called:
             verb(

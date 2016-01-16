@@ -16,8 +16,8 @@ DEFINEMACRO(itb)(1)(\
     it()bf(ARG1)nl()\
 )
 
-DEFINEMACRO(icm)(0)(bf(icmbuild))
-DEFINEMACRO(Icm)(0)(bf(Icmbuild))
+DEFINEMACRO(icb)(0)(bf(icmbuild))
+DEFINEMACRO(Icb)(0)(bf(Icmbuild))
 
 DELETEMACRO(tt)
 DEFINEMACRO(tt)(1)(em(ARG1))
@@ -31,58 +31,59 @@ manpagename(icmbuild)(A generic, easy configurable, program maintenance script)
 
 COMMENT( all other: add after () )
 manpagesynopsis()
-       icm() tt(mode)
+       icb() [-h] [-c] tt(args)
 
 manpagedescription()
 
-The icm() script is a generic script that can be used to do program
+The icb() script is a generic script that can be used to do program
 maintenance using bf(icmake)(1). 
 
-The script expects two files to be available in the directory where program
-maintenance is required, and the icm() script should be available in your
-path or it should be started as, e.g., tt(./icmbuild)
+Icb() requires that the  file tt(icmconf) is available in the directory where
+program maintenance is requested.
 
-Icm() assumes that your sources exist in and below a directory in which the
-files tt(icmconf) and tt(CLASSES) live. The file tt(CLASSES) contains the
-names of all subdirectories in which class-specific sources are kept. The file
-tt(icmconf) in bf(icmake)(1)'s distribution offers an example of the
-configuration parameters that are used for program maintenance. In this latter
-file it is assumed that bf(C++) sources are maintained, but the icm() script
-is not restricted to do maintenance for bf(C++) programs.
+Icb() assumes that your sources exist in and below the current working
+directory. The file tt(icmconf) in bf(icmake)(1)'s distribution provides an
+example of an tt(icmconf) file that can be used by icb(). In that example
+tt(icmconf) file it is assumed that bf(C++) sources are maintained, but
+program maintenance for, e.g., bf(C) sources can easily be configured.
 
-Icm() compiles all sources in each of the subdirectories named in the file
-tt(CLASSES), and then compiles all sources in the current working directory
-(except for the source containing tt(main())).
+Icb()() compiles all sources in each of the subdirectories named in the file
+tt(CLASSES), and then compiles all sources in the current working directory.
 
-The compiled sources result in object modules which are then kept in a
+The compiled sources result in object modules which may be kept in a
 library, against which the main-object module is linked. It is also possible
 to specify additional libraries against which the program must be linked.
 
-Once a library is constructed it is kept up to date by the script. Changing a
-source will result in replacing its former module by its new module in the
-library. 
+If a library is constructed it is kept up to date by icb(). When a source is
+successfully compiled its new object module will replace the old one that is
+found in the library. At that point the object files are no longer required
+and are removed by icb().
 
 manpagesection(KICK-STARTING ICMBUILD)
 
-Normally, icm() is installed and used as follows:
+To use icb() do as follows:
     itemization(
-    it()  Install icm() in your path;
-    it() copy tt(icmconf) and tt(CLASSES) to your project's base directory
-       (i.e., the directory in which and where below the project's sources are
-       found);
+    it()  Install icb() in your path;
+    it() copy tt(icmconf) (and probably the file tt(CLASSES)) to your
+       project's base directory (i.e., the directory in which and where below
+       the project's sources are found);
     it() Modify the tt(#defines) in the file tt(icmconf) to taste;
-    it() List the subdirectories containing sources in the file tt(CLASSES)
+    it() Enter the names of subdirectories containing sources on separate
+       lines in the file tt(CLASSES)
 
-       Note that the order of the classes mentioned in classes em(is) relevant
-       here.  It's no problem to add new class (subdirectory) names, but
-       reordering should be prevented. If reordering is required, recompile
-       the library, as the final object files contain class order-numbers.
-       These class-order numbers prevent file-name collisions and thus prevent
-       replacing file tt(x.o) from class tt(A) by file tt(x.o) from class
-       tt(B);
+       Note that the order of the classes mentioned in tt(CLASSES) em(is)
+       relevant.  New class (subdirectory) names can always be added, but
+       reordering the lines in the tt(CLASSES) file should be avoided. If
+       reordering is necessary, then first run the command tt(icmbuild clean)
+       to remove all files thus far created by icb(). Recompilation is
+       necessary as the names of the object files contain class order-numbers
+       for identification.  These class-order numbers prevent file-name
+       collisions (e.g., two classes might use a file tt(data.cc)) and thus
+       replacement of a file tt(x.o) from class tt(A) by file tt(x.o) from
+       class tt(B) is prevented;
     it() Now simply run 
         verb(
-            icmbuild 
+            icmbuild -h
         )
        from the project's base directory and let the help-info tell you
        what your options are. See the next section for the modes of operation.
@@ -90,43 +91,59 @@ Normally, icm() is installed and used as follows:
 
 manpageoptions()
 
-    Icm() may be called with the following operational modes:
+    Icb() recognizes two options, at most one should be specified:
+    itemization(
+    itt(-h): Provide a short usage overview.
+    itt(-c): Clear the screen (using tt(tput clear)) before starting the
+       compilation process
+    )
+
+    Following the optional tt(-c)  icb()() the following arguments may be
+       passed to icb():
     itemization(
     itt(clean)nl()
         clean up remnants of previous activities
-    itt(help)nl()
-        provide help and exit (default when called without arguments)
     itt(library)nl()
         build the library (static and optionally the dynamic library)
     itt(program)nl()
         build the binary program
     itt(program strip)nl()
         build the stripped binary program
-    itt(install <base>)
-        install the software in the locations defined in the tt(icmconf)
-         file, optionally below the directory tt(<base>)
+    itt(install program path)
+        install the constructed program in the specified path (to be used
+       after issuing icb() tt(program))
+    itt(install static path) 
+       install the constructed static library in the specified path (to be
+        used after issuing icb() tt(library))
+    itt(install shared path) 
+       install the constructed shared library in the specified path (to be
+        used after issuing icb() tt(library))
     )
-    The bf(icmconf) file may be given a line defining tt(DEFCOM) containing
-the default operational mode to use when none is specified. E.g.,
+    After adding a line to tt(icmconf) containing
         verb(
     #define DEFCOM "program"
         )
-    constructs the program when the command `tt(icmbuild)' is
-entered. tt(DEFCOM) may also contain combined options, like 
+    icb() by default uses the argument tt(program). After adding 
         verb(
-    #define DEFCOM "program strip"
+    #define DEFCOM "strip"
         )
-    Note that tt(DEFCOM) is ignored when an explicit operational mode is
-provided to the icm() script.
+    icb() by default uses the argument tt(strip). After adding 
+        verb(
+    #define DEFCOM "library"
+        )
+    icb() by default uses the argument tt(library).
+
+    tt(DEFCOM) is ignored when an explicit operational mode is passed to
+        icb().
 
 manpagefiles()
 
     The mentioned paths are sugestive only and may be installation dependent:
     itemization(
     it() bf(/usr/share/icmake/icmconf)
-        Example of a icm() configuration file;
+        Example of a icb() configuration file;
     it() bf(/usr/share/icmake/CLASSES)
-        Example of a icm() tt(CLASSES) file.
+        Example of a icb() tt(CLASSES) file.
     )
 
 manpagesection(EXAMPLES)

@@ -41,7 +41,8 @@ void b_chDir()
     free(dir);
     
                                         /* at the new destination: obtain   */
-    getcwd(newdir, MAX_PATHLEN);   /* its absolute pathname            */
+    if (getcwd(newdir, MAX_PATHLEN) == NULL)
+        rss_fatal(0, 0, "getcwd($s) fails"); /* its absolute pathname       */
 
     if (newdir[strlen(newdir) - 1] != DIRSEP)   /* and append a DIRSEP      */
         strcat(newdir, dirsep);

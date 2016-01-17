@@ -97,7 +97,7 @@ tt(-t)) only one may be specified:
     sop(h)()(provide usage info and end icm();)
     sop(i)()(the first argument is the icm() source file, the default binary
         file is constructed if necessary. Any additional arguments are passed
-        to the .bim file as-is, and tt(--) should not be specified;
+        to the .bim file as-is, and tt(--) should not be specified;)
     sop(p)()(the icm() source file is only preprocessed, and the preprocessed
         file is written to icm()'s second
         file argument (by default tt(`source'.pim));)

@@ -1,4 +1,4 @@
-#!@BINDIR@/icmake -t/tmp/icmbuild
+#!@BINDIR@/icmake -t.
 
 #include "icmconf"
 

@@ -1,11 +1,11 @@
-.TH "icmbuild" "1" "1992\-2015" "icmake\&.8\&.00\&.05\&.tar\&.gz" "A generic program maintenance script"
+.TH "icmbuild" "1" "1992\-2016" "icmake\&.8\&.01\&.00\&.tar\&.gz" "A generic program maintenance script"
 
 .PP 
 .SH "NAME"
 icmbuild \- A generic, easy configurable, program maintenance script
 .PP 
 .SH "SYNOPSIS"
-\fBicmbuild\fP \fImode\fP
+\fBicmbuild\fP [\-h] [\-c] \fIargs\fP
 .PP 
 .SH "DESCRIPTION"
 
@@ -13,57 +13,58 @@ icmbuild \- A generic, easy configurable, program maintenance script
 The \fBicmbuild\fP script is a generic script that can be used to do program
 maintenance using \fBicmake\fP(1)\&. 
 .PP 
-The script expects two files to be available in the directory where program
-maintenance is required, and the \fBicmbuild\fP script should be available in your
-path or it should be started as, e\&.g\&., \fI\&./icmbuild\fP
+\fBIcmbuild\fP requires that the  file \fIicmconf\fP is available in the directory where
+program maintenance is requested\&.
 .PP 
-\fBIcmbuild\fP assumes that your sources exist in and below a directory in which the
-files \fIicmconf\fP and \fICLASSES\fP live\&. The file \fICLASSES\fP contains the
-names of all subdirectories in which class\-specific sources are kept\&. The file
-\fIicmconf\fP in \fBicmake\fP(1)\(cq\&s distribution offers an example of the
-configuration parameters that are used for program maintenance\&. In this latter
-file it is assumed that \fBC++\fP sources are maintained, but the \fBicmbuild\fP script
-is not restricted to do maintenance for \fBC++\fP programs\&.
+\fBIcmbuild\fP assumes that your sources exist in and below the current working
+directory\&. The file \fIicmconf\fP in \fBicmake\fP(1)\(cq\&s distribution provides an
+example of an \fIicmconf\fP file that can be used by \fBicmbuild\fP\&. In that example
+\fIicmconf\fP file it is assumed that \fBC++\fP sources are maintained, but
+program maintenance for, e\&.g\&., \fBC\fP sources can easily be configured\&.
 .PP 
-\fBIcmbuild\fP compiles all sources in each of the subdirectories named in the file
-\fICLASSES\fP, and then compiles all sources in the current working directory
-(except for the source containing \fImain()\fP)\&.
+\fBIcmbuild\fP() compiles all sources in each of the subdirectories named in the file
+\fICLASSES\fP, and then compiles all sources in the current working directory\&.
 .PP 
-The compiled sources result in object modules which are then kept in a
+The compiled sources result in object modules which may be kept in a
 library, against which the main\-object module is linked\&. It is also possible
 to specify additional libraries against which the program must be linked\&.
 .PP 
-Once a library is constructed it is kept up to date by the script\&. Changing a
-source will result in replacing its former module by its new module in the
-library\&. 
+If a library is constructed it is kept up to date by \fBicmbuild\fP\&. When a source is
+successfully compiled its new object module will replace the old one that is
+found in the library\&. At that point the object files are no longer required
+and are removed by \fBicmbuild\fP\&.
 .PP 
 .SH "KICK\-STARTING ICMBUILD"
 
 .PP 
-Normally, \fBicmbuild\fP is installed and used as follows:
+To use \fBicmbuild\fP do as follows:
 .IP o 
 Install \fBicmbuild\fP in your path;
 .IP o 
-copy \fIicmconf\fP and \fICLASSES\fP to your project\(cq\&s base directory
-(i\&.e\&., the directory in which and where below the project\(cq\&s sources are
-found);
+copy \fIicmconf\fP (and probably the file \fICLASSES\fP) to your
+project\(cq\&s base directory (i\&.e\&., the directory in which and where below
+the project\(cq\&s sources are found);
 .IP o 
 Modify the \fI#defines\fP in the file \fIicmconf\fP to taste;
 .IP o 
-List the subdirectories containing sources in the file \fICLASSES\fP
+Enter the names of subdirectories containing sources on separate
+lines in the file \fICLASSES\fP
 .IP 
-Note that the order of the classes mentioned in classes \fIis\fP relevant
-here\&.  It\(cq\&s no problem to add new class (subdirectory) names, but
-reordering should be prevented\&. If reordering is required, recompile
-the library, as the final object files contain class order\-numbers\&.
-These class\-order numbers prevent file\-name collisions and thus prevent
-replacing file \fIx\&.o\fP from class \fIA\fP by file \fIx\&.o\fP from class
-\fIB\fP;
+Note that the order of the classes mentioned in \fICLASSES\fP \fIis\fP
+relevant\&.  New class (subdirectory) names can always be added, but
+reordering the lines in the \fICLASSES\fP file should be avoided\&. If
+reordering is necessary, then first run the command \fIicmbuild clean\fP
+to remove all files thus far created by \fBicmbuild\fP\&. Recompilation is
+necessary as the names of the object files contain class order\-numbers
+for identification\&.  These class\-order numbers prevent file\-name
+collisions (e\&.g\&., two classes might use a file \fIdata\&.cc\fP) and thus
+replacement of a file \fIx\&.o\fP from class \fIA\fP by file \fIx\&.o\fP from
+class \fIB\fP is prevented;
 .IP o 
 Now simply run 
 .nf 
 
-            icmbuild 
+            icmbuild \-h
         
 .fi 
 from the project\(cq\&s base directory and let the help\-info tell you
@@ -73,15 +74,20 @@ what your options are\&. See the next section for the modes of operation\&.
 .SH "OPTIONS"
 
 .PP 
-\fBIcmbuild\fP may be called with the following operational modes:
+\fBIcmbuild\fP recognizes two options, at most one should be specified:
+.IP o 
+\fI\-h\fP: Provide a short usage overview\&.
+.IP o 
+\fI\-c\fP: Clear the screen (using \fItput clear\fP) before starting the
+compilation process
+
+.PP 
+Following the optional \fI\-c\fP  \fBicmbuild\fP() the following arguments may be
+passed to \fBicmbuild\fP:
 .IP o 
 \fIclean\fP
 .br 
 clean up remnants of previous activities
-.IP o 
-\fIhelp\fP
-.br 
-provide help and exit (default when called without arguments)
 .IP o 
 \fIlibrary\fP
 .br 
@@ -95,25 +101,39 @@ build the binary program
 .br 
 build the stripped binary program
 .IP o 
-\fIinstall <base>\fP
-install the software in the locations defined in the \fIicmconf\fP
-file, optionally below the directory \fI<base>\fP
-The \fBicmconf\fP file may be given a line defining \fIDEFCOM\fP containing
-the default operational mode to use when none is specified\&. E\&.g\&.,
+\fIinstall program path\fP
+install the constructed program in the specified path (to be used
+after issuing \fBicmbuild\fP \fIprogram\fP)
+.IP o 
+\fIinstall static path\fP 
+install the constructed static library in the specified path (to be
+used after issuing \fBicmbuild\fP \fIlibrary\fP)
+.IP o 
+\fIinstall shared path\fP 
+install the constructed shared library in the specified path (to be
+used after issuing \fBicmbuild\fP \fIlibrary\fP)
+After adding a line to \fIicmconf\fP containing
 .nf 
 
     #define DEFCOM \(dq\&program\(dq\&
         
 .fi 
-constructs the program when the command `\fIicmbuild\fP\(cq\& is
-entered\&. \fIDEFCOM\fP may also contain combined options, like 
+\fBicmbuild\fP by default uses the argument \fIprogram\fP\&. After adding 
 .nf 
 
-    #define DEFCOM \(dq\&program strip\(dq\&
+    #define DEFCOM \(dq\&strip\(dq\&
         
 .fi 
-Note that \fIDEFCOM\fP is ignored when an explicit operational mode is
-provided to the \fBicmbuild\fP script\&.
+\fBicmbuild\fP by default uses the argument \fIstrip\fP\&. After adding 
+.nf 
+
+    #define DEFCOM \(dq\&library\(dq\&
+        
+.fi 
+\fBicmbuild\fP by default uses the argument \fIlibrary\fP\&.
+.PP 
+\fIDEFCOM\fP is ignored when an explicit operational mode is passed to
+\fBicmbuild\fP\&.
 .PP 
 .SH "FILES"
 
@@ -201,8 +221,10 @@ program, using the library \fIlibbobcat1\fP as an additional library:
 //#define CC            \(dq\&gcc\(dq\&
 
     // The compiler options to use\&. Define CFLAGS instead if a C compiler is
-    // used\&.
-#define CXXFLAGS        \(dq\& \-\-std=c++14 \-Wall \-g \-O2\(dq\&
+    // used\&. 
+    // To suppress colored error messages add option \-fdiagnostics\-color=never
+    // To add debug\-code to object files add option  \-g
+#define CXXFLAGS        \(dq\& \-\-std=c++14 \-Wall \-O2\(dq\&
 //#define CFLAGS        \(dq\& \-Wall \-g \-O2\(dq\&
 
     // The extension of internal header files\&. See PRECOMP below
@@ -235,14 +257,16 @@ program, using the library \fIlibbobcat1\fP as an additional library:
 // DEFINES RELATED TO USING A PARSER GENERATOR
 // ===========================================
 
+    // The subdirectory containing the parser\(cq\&s specification file
+    // If this directive is REMOVED, then all parser\-related #defines
+    // can also be removed from icmconf\&.
+#define PARSER_DIR          \(dq\&\(dq\&
+
     // What is the program generating a parser?
 #define PARSGEN             \(dq\&bisonc++\(dq\&
 
     // Flags to pass to PARSGEN:
 #define PARSFLAGS           \(dq\&\-V\(dq\&
-
-    // The subdirectory containing the parser\(cq\&s specification file
-#define PARSER_DIR          \(dq\&\(dq\&
 
     // What is the top\-level (or only) grammar specification file?
 #define PARSSPEC            \(dq\&grammar\(dq\&
@@ -259,14 +283,16 @@ program, using the library \fIlibbobcat1\fP as an additional library:
 // DEFINES RELATED TO USING A SCANNER GENERATOR
 // ============================================
 
+    // The subdirectory containing the scanner\(cq\&s specification file
+    // If this directive is REMOVED, then all scanner\-related #defines
+    // can also be removed from icmconf\&.
+#define SCANNER_DIR         \(dq\&\(dq\&  
+
     // What is the program generating the lexical scanner?
 #define SCANGEN             \(dq\&flexc++\(dq\&
 
     // Flags to provide SCANGEN with:
 #define SCANFLAGS           \(dq\&\(dq\&
-
-    // The subdirectory containing the scanner\(cq\&s specification file
-#define SCANNER_DIR         \(dq\&\(dq\&  
 
     // Name of the lexical scanner specification file
 #define SCANSPEC            \(dq\&lexer\(dq\&

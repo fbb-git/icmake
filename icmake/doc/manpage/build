@@ -1,4 +1,4 @@
-#!/usr/bin/icmake -qt /tmp/icmake-man
+#!/usr/bin/icmake -t.
 
 void yodl(string dest, string src)
 {

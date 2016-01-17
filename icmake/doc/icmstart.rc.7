@@ -1,4 +1,4 @@
-.TH "icmstart\&.rc" "7" "1992\-2015" "icmake\&.8\&.00\&.05\&.tar\&.gz" "icmstart resource file"
+.TH "icmstart\&.rc" "7" "1992\-2016" "icmake\&.8\&.01\&.00\&.tar\&.gz" "icmstart resource file"
 
 .PP 
 .SH "NAME"
@@ -7,8 +7,8 @@ icmstart\&.rc \- The icmstart(1) resource file
 .SH "DESCRIPTION"
 
 .PP 
-The \fBicmstart\&.rc\fP file defines the initial files of a program that are
-installed by \fBicmstart\fP(1)\&. 
+The \fBicmstart\&.rc\fP file specifies the files that are installed by
+\fBicmstart\fP(1)\&.
 .PP 
 By default \fBicmstart\&.rc\fP is found in \fI/etc/icmake/icmstart\&.rc\fP, but if a
 file \fI$HOME/\&.icmake/icmstart\&.rc\fP is found then the latter file is used by
@@ -31,88 +31,97 @@ the construction of a \fBC++\fP program using \fBicmbuild\fP(1):
 The \fIicmstart\&.rc\fP file may contain:
 .IP o 
 empty lines, which are ignored;
+.IP 
 .IP o 
 lines beginning with a hash\-character (\fI#\fP), also ignored;
+.IP 
 .IP o 
-Optionally: a P (don\(cq\&t install with \fIicmstart xxx library\fP) or an L
-(don\(cq\&t install with \fIicmstart xxx program\fP), followed by a blank; see also
-\fBicmstart\fP(1)\&.
-.IP o 
-Optionall: a \fI?\fP (followed by a blank) following the optional P or
-L in which case the installation of the element must be confirmed by the user\&.
-.IP o 
-Source path names\&. Relative path names are interpreted relative to
-the current working directory\&. Environment variables are not expanded, the
-initial tilde character is interpreset as the user\(cq\&s home directory\&.
-.IP o 
-Source path names followed by a destination (relative to the
-directory initialized by \fBicmstart\fP(1))\&.
-A source path may be either a file or a directory\&. If a directory is
-specified then all files in and below that directory will be installed\&.
-.PP 
-When specifying a destination a path may be specified as well\&. However, the
-destination path is always interpreted relative to the installation directory
-specified when calling \fBicmstart\fP(1)\&.
-.PP 
-If a destination is omitted, the source is installed as specified below
-\fBicmstart\fP(1)\(cq\&s destination directory\&.
-.PP 
-.SH "EXAMPLES"
+an optional installation mode followed by a source\-destination
+specification\&. 
 
 .PP 
-The following entries can be used in an \fIicmstart\&.rc\fP file:
+.SH "INSTALLATION MODE"
+
+.PP 
+An installation mode consists of a combination of:
+.IP o 
+either a P (don\(cq\&t install with \fIicmstart xxx library\fP) or an L
+(don\(cq\&t install with \fIicmstart xxx program\fP);
+.IP 
+.IP o 
+a D, indicating that the source must also be installed by default,
+i\&.e\&., if neither `program\(cq\& or `library\(cq\& was specified as second argument\&.
+.IP 
+.IP o 
+a b, indicating that the
+file must \fInot\fP be installed if the \fI\-b\fP (basic installation) option was
+specified when calling \fIicmstart\fP\&.
+.IP 
+.IP o 
+Following the optional P, L, D, b combination a space delimited
+optional \fI?\fP may be specified\&. If specified the installation of the file or
+directory must be confirmed by the user\&.
+
+.PP 
+.SH "SOURCE\-DESTINATION SPECIFICATIONS"
+
+.PP 
+The following source\-destination specifications can be used in an
+\fIicmstart\&.rc\fP file:
 .IP o 
 \fIsource\fP
 .br 
-`Source\(cq\& must be in the skeleton directory visited by \fBicmstart(1)\fP
-and is installed as \fIsource\fP in the destination directory specified when
-calling \fBicmstart\fP(1)\&.
-.IP o 
-\fIsource dest\fP
-.br 
-`Source\(cq\& must be in the skeleton directory visited by \fBicmstart(1)\fP
-and is installed as \fIdest\fP in the destination directory specified when
-calling \fBicmstart\fP(1)\&.
-.IP o 
-\fI~/path\fP
-.br 
-`~/path\(cq\& is installed as \fI~/path\fP in the destination directory
-specified when calling \fBicmstart\fP(1)\&. The \fI~\fP\-character is expanded to the
-user\(cq\&s home directory\&.
-.IP o 
-\fI~/path dest\fP
-.br 
-`~/path\(cq\& is installed as \fIdest\fP in the destination directory
-specified when calling \fBicmstart\fP(1)\&. The \fI~\fP\-characteris expanded to the
-user\(cq\&s home directory\&.
-.IP o 
-\fI/path\fP
-.br 
-`/path\(cq\& is installed as \fI\&./path\fP in the destination directory
-specified when calling \fBicmstart\fP(1)\&.
-.IP o 
-\fI/path dest\fP
-.br 
-`/path\(cq\& is installed as \fIdest\fP in the destination directory
-.IP o 
-\fI? source\fP
-.br 
-The user must confirm the installation of \fIsource\fP\&.
-.IP o 
-\fI? source dest\fP
-.br 
-The user must confirm the installation of \fIsource\fP as \fIdest\fP in
-the destination directory specified when calling \fBicmstart\fP(1)\&.
-.IP o 
-\fI# text\fP
-.br 
-Interpreted as comment and ignored\&. The \fI#\fP\-character must be the
-first character on the line\&.
-.IP o 
-an empty line
-.br 
-Empty lines are skipped\&.
+A plain name must exist in the \fIicmstart\(cq\&s\fP skeleton directory\&. It
+is installed in the destination directory \fI`dest\(cq\&\fP specified when calling
+\fBicmstart\fP(1)\&. Example:
+.nf 
 
+    CLASSES     
+        
+.fi 
+\fIskeletondir/CLASSES\fP is installed as \fIdest/CLASSES\fP
+.IP 
+.IP o 
+\fIpathspec\fP
+.br 
+If `pathspec\(cq\& does not begin with a slash it must exist in
+\fIicmstart\(cq\&s\fP skeleton directory\&.  It is installed as `pathspec\(cq\& in the
+destination directory specified when calling \fBicmstart\fP(1)\&. Example:
+.nf 
+
+    dir/file
+        
+.fi 
+\fIskeletondir/dir/file\fP is installed as \fIdest/dir/file\fP
+.IP 
+.IP o 
+\fI/pathspec\fP or \fI~/pathspec\fP
+The \fI~\fP\-character is expanded to the user\(cq\&s home directory\&. The
+pathspec\(cq\&s final element is installed in the destination directory specified
+when calling \fBicmstart\fP(1)\&. Example:
+.nf 
+
+    ~/\&.icmake/file
+        
+.fi 
+\fI$HOME/\&.icmake/file\fP is installed as \fIdest/file\fP
+When the above source specifications are followed by a destination
+specification \fIdestspec\fP (a file or non\-absolute directory specification)
+then the source specification is installed as dest/destspec) below the
+destination directory specified when calling \fBicmstart\fP(1)\&. Examples:
+.nf 
+
+    CLASSES CLASSES             # skeletondir/CLASSES is installed as 
+                                #   dest/CLASSES
+    dir/file dir/file           # skeletondir/dir/file is installed as
+                                #   dest/dir/file
+    ~/\&.icmake/file \&.icmake/file # $HOME/\&.icmake/file is installed as 
+                                #   dest/\&.icmake/file
+        
+.fi 
+Icmstart conveerts the destination specification to a full path 
+specification\&. If this full path specification does not begin with \fIdest\(cq\&s\fP
+full path specification an error message is displayed and \fIicmstart\fP ends\&.
 .PP 
 .SH "FILES"
 The mentioned paths are sugestive only and may be installation dependent:

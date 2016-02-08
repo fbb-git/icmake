@@ -308,10 +308,11 @@ generator creating a parser class from a grammar specification:
 
     itemization(
     itb(#define PARSER_DIR          "")
-       The subdirectory containing the parser's specification file. Leave
-        empty if no parser class is used and if no parser is generated. 
-        The following directives, beginning with tt(PARS), are only
-        interpreted when tt(PARSER_DIR) is defined as a non-empty string.
+       The subdirectory containing the parser's specification file. 
+
+        If parser maintenance is not required, then this directive can be
+        omitted. If omitted, then all other directives, that begin with
+        tt(PARS), can also be omitted.
 
     itb(#define PARSFILES           "")
        If the parser specification file named at tt(PARSSPEC) itself includes
@@ -345,10 +346,11 @@ generator creating a lexical scanner class from a set of regular expressions:
 
     itemization(
     itb(#define SCANNER_DIR         "")
-       The subdirectory containing the scanner's specification file. Leave
-        empty if no scanner class is used and if no lexical scanner is
-        generated. The following directives, beginning with tt(SCAN), are only
-        interpreted when tt(SCANNER_DIR) is defined as a non-empty string.
+       The subdirectory containing the scanner's specification file. 
+
+        If lexical scanner maintenance is not required, then this directive
+        can be omitted. If omitted, then all other directives, that begin with
+        tt(SCAN), can also be omitted.
 
     itb(#define SCANFILES            "")
        If the lexical scanner specification file named at tt(SCANSPEC) itself

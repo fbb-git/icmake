@@ -1,4 +1,4 @@
-#!/usr/bin/icmake -qt /tmp/initialization
+#!/usr/bin/icmake -t.
 
 
 int main()

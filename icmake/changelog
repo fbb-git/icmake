@@ -1,6 +1,6 @@
 icmake (8.01.00)
 
- * Added builtin functions 'strchr', 'listfind', and 'listunion'. See 'man
+* Added builtin functions 'strchr', 'listfind', and 'listunion'. See 'man
    icmake' for details.
 
 * Fixed a bug in icmake's option handling due to which options could not be 
@@ -37,9 +37,10 @@ icmake (8.01.00)
 * Support for using 'grambuild' (superfluous since 2008) was removed from
   'icmbuild' 
 
-* Updated the manpages
+* Updated the manpages and examples (examples now use -t. 
+    rather than -qt /tmp/...)
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 17 Jan 2016 14:31:41 +0100
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 13 Feb 2016 13:40:10 +0100
 
 icmake (8.00.05)
 

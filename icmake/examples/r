@@ -1,4 +1,4 @@
-#!/usr/bin/icmake -qt /tmp/r
+#!/usr/bin/icmake -t.
 
 /* 
     This simple icmake script starts a given command in the current

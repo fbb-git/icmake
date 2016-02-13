@@ -1,13 +1,9 @@
-#! /usr/bin/icmake -qt /tmp/am
+#! /usr/bin/icmake -t.
 
-/*
-                            AM
+// This script implements a non-destructive rm (am: attic move)
 
-       This script is used to implement a non-destructive rm
-*/
-
-#define YEAR    "1994--1995"
-#define VERSION "1.14"
+#define YEAR    "1994--2016"
+#define VERSION "1.14.01"
 
 #define ATTIC_DIR   "/.attic"	    // append after $HOME
 #define ATTIC_ZIP   "attic.zip"	    // the zip-name

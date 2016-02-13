@@ -1,4 +1,4 @@
-#!/usr/bin/icmake -qt /tmp/defines
+#!/usr/bin/icmake -t.
 
 #define FIRST   "This text"
 #define SECOND  "will be printed, starting with: " ${FIRST}

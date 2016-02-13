@@ -1,4 +1,4 @@
-#!/usr/bin/icmake -qt /tmp/nesteddirectives
+#!/usr/bin/icmake -t.
 
 /* 
     This simple icmake script illustrates the use of nested directives

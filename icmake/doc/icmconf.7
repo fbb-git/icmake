@@ -359,10 +359,11 @@ generator creating a parser class from a grammar specification:
 .IP o 
 \fB#define PARSER_DIR          \(dq\&\(dq\&\fP
 .br 
-The subdirectory containing the parser\(cq\&s specification file\&. Leave
-empty if no parser class is used and if no parser is generated\&. 
-The following directives, beginning with \fIPARS\fP, are only
-interpreted when \fIPARSER_DIR\fP is defined as a non\-empty string\&.
+The subdirectory containing the parser\(cq\&s specification file\&. 
+.IP 
+If parser maintenance is not required, then this directive can be
+omitted\&. If omitted, then all other directives, that begin with
+\fIPARS\fP, can also be omitted\&.
 .IP 
 .IP o 
 \fB#define PARSFILES           \(dq\&\(dq\&\fP
@@ -408,10 +409,11 @@ generator creating a lexical scanner class from a set of regular expressions:
 .IP o 
 \fB#define SCANNER_DIR         \(dq\&\(dq\&\fP
 .br 
-The subdirectory containing the scanner\(cq\&s specification file\&. Leave
-empty if no scanner class is used and if no lexical scanner is
-generated\&. The following directives, beginning with \fISCAN\fP, are only
-interpreted when \fISCANNER_DIR\fP is defined as a non\-empty string\&.
+The subdirectory containing the scanner\(cq\&s specification file\&. 
+.IP 
+If lexical scanner maintenance is not required, then this directive
+can be omitted\&. If omitted, then all other directives, that begin with
+\fISCAN\fP, can also be omitted\&.
 .IP 
 .IP o 
 \fB#define SCANFILES            \(dq\&\(dq\&\fP

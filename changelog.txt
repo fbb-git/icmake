@@ -1,3 +1,47 @@
+icmake (8.01.00)
+
+* Added builtin functions 'strchr', 'listfind', and 'listunion'. See 'man
+   icmake' for details.
+
+* Fixed a bug in icmake's option handling due to which options could not be 
+  forwarded to called scripts.
+
+* Fixed a bug in the compilation of ternary expressions: the condition wasn't
+  explicitly converted to bool, causing constructions like 'ret = fun() ? ...'
+  to fail.
+
+* The 'icmstart' script was modified, improving control over which files
+  should initially be installed (see 'man icmstart' and 'man icmstart.rc' for
+  details. 
+
+* Icmake's predefined function stat(P_NOCHECK, entry) returns, if `entry'
+  does not exist, a list having two elements: list[0] == 0, list[1] == -1.
+
+* The builtin function 'getch()' now prints one newline character when the
+  user presses 'Enter' (previously 2 newlines were printed).
+
+* The main() function must have return type 'void' (this was already required
+  in earlier versions, but is now enforced).
+
+* When defining executable icmake scripts using 
+        #!/usr/bin/icmake -t
+  -t. indicates that the temporary .bim file must be defined in icmake's
+  temporary directory, using icmake's pid and the .bim suffix as its filename.
+
+* When PARSER-related specifications are not used, they can all be removed
+  from 'icmconf' files.
+
+* When SCANNER-related specifications are not used, they can all be removed
+  from 'icmconf' files.
+
+* Support for using 'grambuild' (superfluous since 2008) was removed from
+  'icmbuild' 
+
+* Updated the manpages and examples (examples now use -t. 
+    rather than -qt /tmp/...)
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 13 Feb 2016 13:40:10 +0100
+
 icmake (8.00.05)
 
  * Fixed typo in the icmconf manpage: 

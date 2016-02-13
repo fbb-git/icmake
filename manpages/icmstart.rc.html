@@ -10,8 +10,8 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmstart.rc</h1>
-<h2 id="author">icmake.8.00.05.tar.gz</h2>
-<h2 id="date">1992-2015</h2>
+<h2 id="author">icmake.8.01.00.tar.gz</h2>
+<h2 id="date">1992-2016</h2>
 
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
@@ -43,8 +43,8 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmstart.rc(7)</h1>
-<h2 id="author">icmake.8.00.05.tar.gz icmstart resource file</h2>
-<h2 id="date">1992-2015</h2>
+<h2 id="author">icmake.8.01.00.tar.gz icmstart resource file</h2>
+<h2 id="date">1992-2016</h2>
 
 
 <p>
@@ -53,8 +53,8 @@
 <p>
 <h2>DESCRIPTION</h2>
 <p>
-The <strong>icmstart.rc</strong> file defines the initial files of a program that are
-installed by <strong>icmstart</strong>(1). 
+The <strong>icmstart.rc</strong> file specifies the files that are installed by
+<strong>icmstart</strong>(1).
 <p>
 By default <strong>icmstart.rc</strong> is found in <em>/etc/icmake/icmstart.rc</em>, but if a
 file <em>$HOME/.icmake/icmstart.rc</em> is found then the latter file is used by
@@ -78,64 +78,91 @@ the construction of a <strong>C++</strong> program using <strong>icmbuild</stron
 The <em>icmstart.rc</em> file may contain:
     <ul>
     <li> empty lines, which are ignored;
-    <li> lines beginning with a hash-character (<em>#</em>), also ignored;
-    <li> Optionally: a P (don't install with <em>icmstart xxx library</em>) or an L
-(don't install with <em>icmstart xxx program</em>), followed by a blank; see also
-<strong>icmstart</strong>(1).
-    <li> Optionall: a <em>?</em> (followed by a blank) following the optional P or
-L in which case the installation of the element must be confirmed by the user.
-    <li> Source path names. Relative path names are interpreted relative to
-the current working directory. Environment variables are not expanded, the
-initial tilde character is interpreset as the user's home directory.
-    <li> Source path names followed by a destination (relative to the
-directory initialized by <strong>icmstart</strong>(1)).
+<p>
+<li> lines beginning with a hash-character (<em>#</em>), also ignored;
+<p>
+<li> an optional installation mode followed by a source-destination
+specification. 
     </ul>
-    A source path may be either a file or a directory. If a directory is
-specified then all files in and below that directory will be installed.
 <p>
-When specifying a destination a path may be specified as well. However, the
-destination path is always interpreted relative to the installation directory
-specified when calling <strong>icmstart</strong>(1).
+<h2>INSTALLATION MODE</h2>
 <p>
-If a destination is omitted, the source is installed as specified below
-<strong>icmstart</strong>(1)'s destination directory.
+An installation mode consists of a combination of:
+    <ul>
+    <li> either a P (don't install with <em>icmstart xxx library</em>) or an L
+(don't install with <em>icmstart xxx program</em>);
 <p>
-<h2>EXAMPLES</h2>
+<li> a D, indicating that the source must also be installed by default,
+i.e., if neither `program' or `library' was specified as second argument.
 <p>
-The following entries can be used in an <em>icmstart.rc</em> file:
+<li> a b, indicating that the
+file must <em>not</em> be installed if the <em>-b</em> (basic installation) option was
+specified when calling <em>icmstart</em>.
+<p>
+<li> Following the optional P, L, D, b combination a space delimited
+optional <em>?</em> may be specified. If specified the installation of the file or
+directory must be confirmed by the user.
+    </ul>
+<p>
+<h2>SOURCE-DESTINATION SPECIFICATIONS</h2>
+<p>
+The following source-destination specifications can be used in an
+<em>icmstart.rc</em> file:
     <ul>
     <li> <em>source</em><br/>
-        `Source' must be in the skeleton directory visited by <strong>icmstart(1)</strong>
-and is installed as <em>source</em> in the destination directory specified when
-calling <strong>icmstart</strong>(1).
-    <li> <em>source dest</em><br/>
-        `Source' must be in the skeleton directory visited by <strong>icmstart(1)</strong>
-and is installed as <em>dest</em> in the destination directory specified when
-calling <strong>icmstart</strong>(1).
-    <li> <em>~/path</em><br/>
-        `~/path' is installed as <em>~/path</em> in the destination directory
-specified when calling <strong>icmstart</strong>(1). The <em>~</em>-character is expanded to the
-user's home directory.
-    <li> <em>~/path dest</em><br/>
-        `~/path' is installed as <em>dest</em> in the destination directory
-specified when calling <strong>icmstart</strong>(1). The <em>~</em>-characteris expanded to the
-user's home directory.
-    <li> <em>/path</em><br/>
-        `/path' is installed as <em>./path</em> in the destination directory
-specified when calling <strong>icmstart</strong>(1).
-    <li> <em>/path dest</em><br/>
-        `/path' is installed as <em>dest</em> in the destination directory
-    <li> <em>? source</em><br/>
-        The user must confirm the installation of <em>source</em>.
-    <li> <em>? source dest</em><br/>
-        The user must confirm the installation of <em>source</em> as <em>dest</em> in
-the destination directory specified when calling <strong>icmstart</strong>(1).
-    <li> <em># text</em><br/>
-        Interpreted as comment and ignored. The <em>#</em>-character must be the
-        first character on the line.
-    <li> an empty line<br/>
-        Empty lines are skipped.
+        A plain name must exist in the <em>icmstart's</em> skeleton directory. It
+is installed in the destination directory <em>`dest'</em> specified when calling
+<strong>icmstart</strong>(1). Example:
+        <pre>
+
+    CLASSES     
+        
+</pre>
+
+    <em>skeletondir/CLASSES</em> is installed as <em>dest/CLASSES</em>
+<p>
+<li> <em>pathspec</em><br/>
+        If `pathspec' does not begin with a slash it must exist in
+<em>icmstart's</em> skeleton directory.  It is installed as `pathspec' in the
+destination directory specified when calling <strong>icmstart</strong>(1). Example:
+        <pre>
+
+    dir/file
+        
+</pre>
+
+    <em>skeletondir/dir/file</em> is installed as <em>dest/dir/file</em>
+<p>
+<li> <em>/pathspec</em> or <em>~/pathspec</em>
+        The <em>~</em>-character is expanded to the user's home directory. The
+pathspec's final element is installed in the destination directory specified
+when calling <strong>icmstart</strong>(1). Example:
+        <pre>
+
+    ~/.icmake/file
+        
+</pre>
+
+    <em>$HOME/.icmake/file</em> is installed as <em>dest/file</em>
     </ul>
+    When the above source specifications are followed by a destination
+specification <em>destspec</em> (a file or non-absolute directory specification)
+then the source specification is installed as dest/destspec) below the
+destination directory specified when calling <strong>icmstart</strong>(1). Examples:
+        <pre>
+
+    CLASSES CLASSES             # skeletondir/CLASSES is installed as 
+                                #   dest/CLASSES
+    dir/file dir/file           # skeletondir/dir/file is installed as
+                                #   dest/dir/file
+    ~/.icmake/file .icmake/file # $HOME/.icmake/file is installed as 
+                                #   dest/.icmake/file
+        
+</pre>
+
+    Icmstart conveerts the destination specification to a full path 
+specification. If this full path specification does not begin with <em>dest's</em>
+full path specification an error message is displayed and <em>icmstart</em> ends.
 <p>
 <h2>FILES</h2>
     The mentioned paths are sugestive only and may be installation dependent:

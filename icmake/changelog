@@ -1,5 +1,11 @@
 icmake (8.01.00)
 
+* Changed references to IS_* into O_* in icmake(1)'s man-page. The IS_ entries
+  were already unavailable, but the man-page still referred to them. Now
+  fixed. 
+
+icmake (8.01.00)
+
 * Added builtin functions 'strchr', 'listfind', and 'listunion'. See 'man
    icmake' for details.
 

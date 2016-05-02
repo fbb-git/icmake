@@ -50,6 +50,7 @@ void usage(char const *program)
                                                                 "HOME\n"
         "               directory if /tmp is not writable. When used, -T is\n"
         "               usually specified as icmake's first option\n"
+        "      -u     : call icmall, passing it the remaining arguments\n"
         "      -v     : display ",
             program,
                    "'s version number and end ",

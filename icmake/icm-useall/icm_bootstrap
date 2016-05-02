@@ -1,0 +1,17 @@
+#!/bin/bash
+
+. ../bootstrap/functions
+. ../bootstrap/flags
+
+echo Creating tmp/${LIBDIR}/icm-useall
+build icm-useall util options process
+
+
+
+
+
+
+
+
+
+

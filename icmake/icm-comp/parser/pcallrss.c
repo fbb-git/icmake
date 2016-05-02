@@ -79,11 +79,18 @@ void p_callRss(SemVal *e, FunNr funnr, ...)
         case f_stat:
         case f_fgets:                       /* list fgets(string, int) */
         case f_strtok:                      /* list strtok(string, string) */
-        case f_makelist:                    /* list p_makeList(int, string)  */
+//    case f_makelist:                    /* list p_makeList(int, string)  */
             ++args;
             type = e_list | e_reg;
         break;
                                             /* # args passed as argument */
+
+        case f_makelist:                    /* list p_makeList(int, string)  */
+            args = va_arg(marker, unsigned);
+            type = e_list | e_reg;
+        break;
+                                            /* # args passed as argument */
+
         case f_execute:
         case f_exec:
         case f_fprintf:

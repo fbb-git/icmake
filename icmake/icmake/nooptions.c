@@ -7,6 +7,7 @@
 void noOptions(char **argv)
 {
     msg("starting");
+
     flags |= f_doPreProcess  | f_rmPim | f_doCompile | f_doExec;
 
     if (optind == execArgIdx)

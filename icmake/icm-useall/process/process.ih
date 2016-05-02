@@ -1,0 +1,27 @@
+#include "process.h"
+
+#include <sys/types.h>
+#include <dirent.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+#include "../../rss/rss.h"
+#include "../util/util.h"
+
+void closure(Process *process, int idx);
+int appendValue(Process *process, int keyIdx, char const *includedDir);
+char **store(int *size, char **storage, char const *entry);
+int find(int size, char **storage, char const *key);
+char const *replaceDollar(char const *arg, char const *subdir);
+int includesSearch(Process *process, int keyIdx, char const *subdir, 
+                    char const *header);
+void insert(Process *process, char *matched);
+void inspectDir(Process *process, char const *subdir, char const *headerBase);
+void toCwd(Process const *process, char const *subdir);
+void touch(Process *process, char const *subdir);
+void tryChdir(char const *subdir);
+void visitSubdirs(Process *process);
+
+
+

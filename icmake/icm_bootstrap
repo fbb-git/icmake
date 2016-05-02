@@ -21,7 +21,7 @@ fi
 . tmp/INSTALL.sh
 
 
-for target in rss icmake icmun icm-pp icm-comp icm-exec
+for target in rss icmake icmun icm-pp icm-comp icm-exec icm-useall
 do
     cd $target
     ./icm_bootstrap

@@ -3,12 +3,14 @@
         1- p_makeList(int, string)
         2- p_makeList(int, string, older, string)     -- younger ok too
 
-    The parser may have inserted the int-argument as int IS_FILE
+    The parser may insert the int-argument as int IS_FILE
 
 */
 
 #include "parser.ih"
 
+                                // op_hlt indicates not younger or older
+                                // otherwise it's younger or older
 SemVal *p_makeList(SemVal *args, ExprType type)
 {
     if
@@ -28,14 +30,25 @@ SemVal *p_makeList(SemVal *args, ExprType type)
         return p_stackFrame(e_list);
     }
 
-    p_catArgs(args);                          /* catenate all arguments */
+    SemVal function;
+    int nArgs = 3 + ((Opcode)type != op_hlt);
 
-    if ((Opcode)type != op_hlt)            /* hidden function called */
-        p_callHidden((Opcode)type == op_younger, args);
-    else
-        p_callRss(args, f_makelist);
+    memset(&function, 0, sizeof(SemVal));
+    function.type = e_int | e_const;            // set the opcode value
+    function.evalue = (Opcode)type;
 
-    return args;                          /* return called function code */
+    args = p_multipleArgs(args, &function);     // make room
+                                                // shift upwards
+    memmove(args->code + sizeof(SemVal), args->code, 
+        ((int)args->type - 1) * sizeof(SemVal));
+
+    *(SemVal *)args->code = function;            // put op_xxx first
+
+    p_catArgs(args);                          // catenate all arguments
+
+    p_callRss(args, f_makelist, nArgs);
+
+    return args;                          // return called function code
 }
 
 

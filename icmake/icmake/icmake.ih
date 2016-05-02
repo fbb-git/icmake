@@ -24,22 +24,24 @@ typedef enum
     f_im            =   (1 << 3),
     f_tmpBim        =   (1 << 4),
                                         /* selects all command-line actions */
-    f_commandMask   =   ((1 << 5) - 1),
+    f_commandMask   =   ((1 << 6) - 1),
 
-    f_about         =   (1 << 5),       /* command-line info requests */
-    f_help          =   (1 << 6),
+    f_about         =   (1 << 6),       /* command-line info requests */
+    f_help          =   (1 << 7),
 
-    f_rmBim         =   (1 << 7),       /* removal flags        */
-    f_rmPim         =   (1 << 8),
+    f_rmBim         =   (1 << 8),       /* removal flags        */
+    f_rmPim         =   (1 << 9),
 
-    f_doPreProcess  =   (1 <<  9),      /* action flags         */
-    f_doCompile     =   (1 << 10),
-    f_doExec        =   (1 << 11),
-    f_force         =   (1 << 12),
-    f_showFlags     =   (1 << 13)
+    f_doPreProcess  =   (1 << 10),      /* action flags         */
+    f_doCompile     =   (1 << 11),
+    f_doExec        =   (1 << 12),
+    f_doUseAll      =   (1 << 13),
+    f_force         =   (1 << 14),
+    f_showFlags     =   (1 << 15)
 
 } FLAGS_;
 
+extern char icm_useall[];
 extern char icm_comp[];
 extern char icm_exec[];
 extern char icm_pp[];
@@ -72,6 +74,7 @@ void    about(char const *program);         /* about icmake */
 void    execute(char **argv);
 void    preProcess(void);
 void    compile(void);
+void    useAll(char **argv);
 
 char   *accessFile(char const *file, char const *ext); /* returns copy of file
                                                 or file.ext, or error if 

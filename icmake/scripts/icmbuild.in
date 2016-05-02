@@ -23,8 +23,6 @@ int     g_nClasses;     // number of class-directories
 int     g_compiled;     // any source compiled (but main)?
 list    g_classLines;   // list of all lines in CLASSES
 list    g_classLine;    // line of the CLASSES file
-list    g_inspected;    // list of classes whose dependencies have been 
-                        // inspected (used with USE_ALL)
 
 list    g_buildprog = strtok("program strip", " ");
 
@@ -151,57 +149,6 @@ list patternList(string pattern)
     }
 #endif
 
-#ifdef USE_ALL
-
-void touch(string dir)
-{
-    echo(OFF);
-    system("touch " + dir + "/" USE_ALL);
-    echo(USE_ECHO);
-}
-            
-    //  g_classes[idx] has USE_ALL set. 
-    //  find all classes that depend on g_classes[idx], 
-    //  if those classes haven't been inspected yet, then set their USE_ALL 
-    //  file and inspect their dependencies.
-void dependenciesOf(string thisClass)
-{
-    if (listfind(g_inspected, thisClass) != -1) // this class already 
-        return;                             // inspected? then ready: return
-
-    g_base = 1;                             // recompile the base's files
-
-    printf("RECOMPILE: ", thisClass, "\n");
-    g_inspected += (list)thisClass;         // now inspected
-
-        // find all classes depending on thisClass
-    for (int idx = 0; idx != g_nClasses; ++idx)
-    {
-        list hit = strtok(g_classLines[idx], " \t");
-
-        if (listfind(hit, thisClass) > 0)
-        {
-            touch(hit[0]);
-            dependenciesOf(hit[0]);
-        }
-    }
-}            
-    
-void checkALL()
-{
-    for (int idx = 0; idx != g_nClasses; ++idx)
-    {
-        string all = g_classes[idx] + "/" USE_ALL;
-
-        if (exists(all))
-            dependenciesOf(g_classes[idx]);
-    }
-
-    if (g_base)
-        touch(".");
-}
-    
-#endif  // USE_ALL
 
 int isEmpty(string line)        // needs stripped line
 {
@@ -249,6 +196,20 @@ list nextCLASSESline() // return entries of CLASSES as a list
 
     return strtok(ret, " \t");
 }
+
+#ifdef USE_ALL
+void checkALL()
+{
+    #ifdef ICMALL
+        if (! ICMALL)       // empty ICMALL definition: no go
+            return;
+
+        exec(P_NOCHECK, "icmake -u " ICMALL);
+    #else
+        exec(P_NOCHECK, "icmake -u  @.h @.ih");
+    #endif // ICMALL
+}   
+#endif  // USE_ALL
     
 void setClasses()
 {
@@ -313,7 +274,7 @@ list inspect(string destDir,
         // So, it doesn't have to be compiled if s older o or s older l.
                                             // redo if file has changed
 #ifdef USE_ALL
-        if (ofile older all && library older all)
+        if (ofile older all)
             srcList += (list)file;
         else 
 #endif
@@ -404,7 +365,14 @@ void precompile(string class)
 {
 #ifdef PRECOMP
     string classIH = class + IH;
-    if (classIH younger class + IH ".gch")
+    string classGCH = classIH + ".gch";
+
+    #ifdef USE_ALL
+        if (exists(USE_ALL))
+            system(P_NOCHECK, "rm -f " + classGCH);
+    #endif
+
+    if (class + ".h" younger classGCH || classIH younger classGCH)
         system(g_compiler + " " PRECOMP " " + classIH);
 #endif
 }
@@ -580,12 +548,7 @@ void strip_shared()
 void rmUSE_ALLfiles()
 {
     echo(OFF);
-
-    for (int idx = listlen(g_inspected); idx--; )
-        system("rm -f " + g_inspected[idx] + "/" USE_ALL);
-    if (listlen(g_inspected))
-        system("rm -f " USE_ALL);
-
+        system("rm -f */" USE_ALL " " USE_ALL);
     echo(USE_ECHO);
 }
 #endif

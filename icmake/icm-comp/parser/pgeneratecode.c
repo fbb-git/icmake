@@ -1,5 +1,4 @@
 
-
 /* #define msg
 */
 
@@ -61,7 +60,8 @@ void p_generateCode(SemVal *e, Opcode opcode, ...)
 
         case op_push_strconst:              /* write idx of the const */
             p_outCode(e, 
-                (int)gp_stringTable[va_arg(marker, int)].index, sizeof(int16_t));
+                (int)gp_stringTable[va_arg(marker, int)].index, 
+                                                            sizeof(int16_t));
         break;
 
         case op_frame:

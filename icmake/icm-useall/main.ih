@@ -1,0 +1,11 @@
+#include <stdlib.h>
+
+#include "../rss/rss.h"
+
+#include "options/options.h"
+#include "process/process.h"
+
+extern char version[];
+extern char years[];
+extern char author[];
+

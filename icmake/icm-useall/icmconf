@@ -1,0 +1,21 @@
+#define CLS
+//#define LIBRARY           "modules"
+#define MAIN                "main.c"
+#define SOURCES             "*.c"
+#define OBJ_EXT             ".o"
+//#define SHARED
+#define SHAREDREQ           ""
+#define TMP_DIR             "tmp"
+#define USE_ALL             "a"
+#define USE_ECHO              ON
+#define CXX                 "gcc"
+#define CXXFLAGS            " -O2" \
+                            " -fdiagnostics-color=never "
+//#define IH                  ".ih"
+//#define PRECOMP             "-x c++-header"
+#define REFRESH             
+#define LDFLAGS             ""
+#define ADD_LIBRARIES       "icrss"
+#define ADD_LIBRARY_PATHS   "/home/frank/src/icmake/rss/tmp"
+//#define ICMALL            "@.h @.ih"
+#define DEFCOM     "program"

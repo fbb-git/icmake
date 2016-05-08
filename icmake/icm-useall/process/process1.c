@@ -17,7 +17,6 @@ void ProcessCons(Process *process, Options *options)
 
     process->include = process->includes;
                 
-    process->cwd = dirfd(opendir("."));
 
     process->nSearch = 0;
     process->search = NULL;

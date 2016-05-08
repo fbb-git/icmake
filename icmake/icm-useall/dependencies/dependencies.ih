@@ -1,0 +1,38 @@
+#include "dependencies.h"
+
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdint.h>
+
+//#include <sys/types.h>
+//#include <sys/stat.h>
+//#include <glob.h>
+
+#include "../../rss/rss.ih"
+#include "../util/util.h"
+#include "../vector/vector.h"
+
+void readClasses(Dependencies *dep);
+
+void findDependencies(Dependencies *dep);
+void iniTable(Dependencies *dep);
+int **allocTable(int size);
+void transpose(int **dest, int **src, int size);
+void impliedDependencies(int **data, int size);
+void closure(int *indicator, int row, int **data, int size);
+void fillTable(Dependencies *dep);
+void inspectIH(Dependencies *dep, int idx, char const *ihFile);
+void inspectFile(Dependencies *dep, int idx, Vector *toDo, int toDoIdx);
+
+void handleInclude(Dependencies *dep, int idx, Vector *toDo, 
+                   char const *line);
+
+char const *ihFile(Dependencies *dep, int idx);
+
+void fillProvides(Dependencies *dep);
+
+void showTable(char const *label, 
+               Dependencies *dep, int *const *const indices);
+
+//void inspectGlob(Dependencies *dep, int idx, char const *pattern);

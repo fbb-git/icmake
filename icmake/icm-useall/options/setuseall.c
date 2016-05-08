@@ -2,27 +2,47 @@
 
 void setUseAll(Options *options)
 {
-        // at this point, d_useAll contains the name of the icmconf file
+        // at this point, d_useAll holds the name of the icmconf file
 
     FILE *in = openFile(options->useAll, "r");
 
+    free(options->useAll);
+    options->useAll = NULL;
+
     char *line;
+    int count = 0;
+
     while ((line = getLine(in)))
     {
-        char *cp = regMatch(&options->useAllRE, line);
-
-        if (cp)
+        Vector const *vector = regMatch(&options->useAllRE, line);
+        free(line);
+ 
+        if (vector)                // match
         {
-            free(options->useAll);
-            options->useAll = cp;
-            return;
+            char const *cp = at(vector, 1);
+
+            if (strcmp("PRECOMP", cp) == 0)
+                options->precomp = 1;
+            else 
+            {
+                char const *value = at(vector, 2);
+
+                if (strcmp("IH", cp) == 0)
+                    options->ih = rss_strdup(value);
+
+                else if (strcmp("USE_ALL", cp) == 0)
+                    options->useAll = rss_strdup(value);
+
+                else if (strcmp("PARSER_DIR", cp) == 0)
+                   options->parser = rss_strdup(value);
+
+                else if (strcmp("SCANNER_DIR", cp) == 0)
+                    options->scanner = rss_strdup(value);
+            }
         }
     }
 
-    if (options->verbose != 0)
-        printf("no USE_ALL activated in %s\n", options->useAll);
-
-    exit(0);
+    fclose(in);
 }
 
 

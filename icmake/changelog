@@ -1,8 +1,18 @@
-icmake (8.01.00)
+icmake (9.00.00)
 
 * Changed references to IS_* into O_* in icmake(1)'s man-page. The IS_ entries
   were already unavailable, but the man-page still referred to them. Now
   fixed. 
+
+ * Contents of lines in CLASSES beyond the first word are no longer
+   interpreted.
+
+ * Added /usr/lib/icmake/icm-useall to compute class dependencies, and (if
+   icmconf defined USE_ALL) to touch USE_ALL files in directories depending on
+   directories containing USE_ALL files.
+
+ * Added ICMALL entry to icmconf 
+
 
 icmake (8.01.00)
 

@@ -2,14 +2,17 @@
 
 int main(int argc, char **argv)
 {
-    Options options;
-    OptionsCons(&options, argc, argv);
+    UtilInit();
 
-    Process process;
-    ProcessCons(&process, &options);
+    Options *options = OptionsCons(argc, argv);
 
-    dependencies(&process);
-    writeCLASSESdep(&process);
+    Dependencies *dependencies = DependenciesCons(options);
+
+//    Process process;
+//    ProcessCons(&process, &options);
+//
+//    dependencies(&process);
+//    writeCLASSESdep(&process);
 }
 
 

@@ -1,21 +1,31 @@
 #include "util.ih"
 
-static  regmatch_t subExpr[2];
-
-char *regMatch(regex_t *regex, char const *line)
+enum 
 {
-    if (regexec(regex, line, 2, subExpr, 0) != 0)
+    NSUB = 5
+};
+
+static  regmatch_t subExpr[NSUB];
+
+Vector const *regMatch(regex_t *regex, char const *line)
+{
+    if (regexec(regex, line, NSUB, subExpr, 0) != 0)
         return NULL;
 
-    
-    int begin = subExpr[1].rm_so;
-    if (begin == -1)        // not found
-        return NULL;
+    for (int idx = 0; idx != NSUB; ++idx)
+    {
+        int begin = subExpr[idx].rm_so;
+//fprintf(stderr, "   idx: $d, begin = %d\n", idx, begin);
 
-    int length =  subExpr[1].rm_eo - begin;
-    char *ret = (char *)rss_realloc(0, length + 1);
-    memcpy(ret, line + begin, length);
-    ret[length] = 0;
+        if (begin == -1)        // not found
+        {
+            erase(&s_vector, idx);
+            continue;
+        }
 
-    return ret;
+        int length =  subExpr[idx].rm_eo - begin;
+        replaceN(&s_vector, idx, line + begin, length);
+    }
+
+    return &s_vector;
 }

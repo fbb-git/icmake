@@ -2,5 +2,10 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "../../rss/rss.h"
+#include "../util/util.h"
+
+extern int s_cwd;
+extern Vector s_vector;

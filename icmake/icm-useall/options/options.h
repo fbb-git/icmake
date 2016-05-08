@@ -5,12 +5,19 @@
 
 typedef struct 
 {
-    char const *classes;
-    char const *mainBase;
+    char *parser;
+    char *scanner;
+
+    char *classes;
     char *useAll;
 
-    int gchDep;
+    char *ih;
+    char *mainih;
+
+    int remove;
     int verbose;
+
+    int precomp;
 
     int nArgs;
     char **arg;
@@ -18,7 +25,37 @@ typedef struct
     regex_t useAllRE;
 } Options;
         
-void OptionsCons(Options *options, int argc, char **argv);
+Options  *OptionsCons(int argc, char **argv);
+
+inline char const *oClasses(Options *options)
+{
+    return options->classes;
+}
+
+inline char const *oParser(Options *options)
+{
+    return options->parser;
+}
+
+inline char const *oScanner(Options *options)
+{
+    return options->scanner;
+}
+
+inline char const *oMainih(Options *options)
+{
+    return options->mainih;
+}
+
+inline int oVerbose(Options *options)
+{
+    return options->verbose;
+}
+
+inline char const *oIH(Options *options)
+{
+    return options->ih;
+}
 
 #endif
 

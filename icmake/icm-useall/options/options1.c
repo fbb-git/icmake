@@ -2,49 +2,69 @@
 
 static struct option longOpts[] = 
 {
-    {"classes", required_argument, NULL, 'c'},
-    {"mainBase", required_argument, NULL, 'm'},
-    {"icmconf", required_argument, NULL, 'i'},
-    {"gch", no_argument, NULL, 'g'},
+    {"classes", required_argument, NULL, 'C'},
+    {"icmconf", required_argument, NULL, 'c'},
+    {"precomp", no_argument, NULL, 'p'},
+    {"mainih",  required_argument, NULL, 'm'},
+    {"rm",      no_argument, NULL, 'r'},            // no -r option
     {"help", no_argument, NULL, 'h'},
     {"verbose", no_argument, NULL, 'V'},
     {"version", no_argument, NULL, 'v'},
     {NULL}
 };
 
-void OptionsCons(Options *options, int argc, char **argv)
+Options *OptionsCons(int argc, char **argv)
 {
-    regComp(&options->useAllRE, 
-            "^[ \t]*#define[ \t]*USE_ALL[ \t]*\"([^\"]+)\"");
+    Options *options = rss_realloc(0, sizeof(Options));
 
+    regComp(&options->useAllRE, 
+            "^[ \t]*#define[ \t]*"
+                    "([^ \t]+)"     //      #1: key 
+                    "[ \t]*\""
+                    "([^\"]+)?"     //      #2: value (opt)
+                    "\"");        
+
+    options->parser = NULL;
+    options->scanner = NULL;
+
+    options->ih = rss_strdup(".ih");
     options->classes = rss_strdup("CLASSES");
-    options->mainBase = rss_strdup("main");
     options->useAll = rss_strdup("icmconf");
+    options->mainih = rss_strdup("main.ih");
     options->verbose = 0;
-    options->gchDep = 0;
+    options->remove = 0;
+    options->precomp = 0;
 
     int showVersion = 0;
 
     while (1)
     {
-        int opt = getopt_long(argc, argv, "ghvV", longOpts, NULL);
+        int opt = getopt_long(argc, argv, "gmhvV", longOpts, NULL);
 
         switch (opt)
         {
-            case 'c':
+            case 'C':
                 options->classes = rss_strdup(optarg);
             break;
 
-            case 'm':
-                options->mainBase = rss_strdup(optarg);
-            break;
-
-            case 'i':
+            case 'c':
                 options->useAll = rss_strdup(optarg);
             break;
 
-            case 'g':
-                options->gchDep = 1;
+            case 'i':
+//                options->inspect = rss_strdup(optarg);
+            break;
+
+            case 'p':
+                options->precomp = 1; // rss_strdup(optarg);
+            break;
+
+            case 'm':
+                options->mainih = rss_strdup(optarg);
+            break;
+
+            case 'r':
+                options->remove = 1;
             break;
 
             case 'h':
@@ -76,8 +96,7 @@ void OptionsCons(Options *options, int argc, char **argv)
                 setUseAll(options);
 
                 options->arg = argv + optind;
-            return;
+            return options;
         }
     }
 }
-

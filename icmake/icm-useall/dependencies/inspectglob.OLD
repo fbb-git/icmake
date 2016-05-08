@@ -1,0 +1,36 @@
+#include "dependencies.ih"
+
+void inspectGlob(Dependencies *dep, int idx, char const *pattern)
+{
+    glob_t globStruct;
+
+    int ret = glob(pattern, 0, NULL, &globStruct);
+
+    if (ret == GLOB_NOMATCH)
+    {
+        globfree(&globStruct);
+        return;
+    }
+
+    if (ret != 0)
+    {
+        printf("Globbing %s faled\n", dirNames->dir[idx]);
+        exit(1);
+    }
+
+                                        // inspect all readable files
+    for (size_t idx = 0; idx != globStruct.gl_pathc; ++idx)
+    {
+        struct stat buf;
+        if (
+            stat(globStruct.gl_pathv[idx], &buf) != 0 || !S_IFREG(buf.st_mode)
+            || (buf.st_mode & S_IRUSR) == 0
+        )
+            continue;
+        
+        inspectFile(dep, idx, globStruct.gl_pathv[idx], &buf);
+    }
+
+    globfree(&globStruct);
+
+}

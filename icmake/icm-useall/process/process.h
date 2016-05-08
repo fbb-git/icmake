@@ -7,6 +7,7 @@
 
 typedef struct 
 {
+    regex_t 
     regex_t includes[2];
     regex_t *include;
                     

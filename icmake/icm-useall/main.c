@@ -8,11 +8,8 @@ int main(int argc, char **argv)
 
     Dependencies *dependencies = DependenciesCons(options);
 
-//    Process process;
-//    ProcessCons(&process, &options);
-//
-//    dependencies(&process);
-//    writeCLASSESdep(&process);
+    Process *process = ProcessCons(options, dependencies);
+    actions(process);
 }
 
 

@@ -13,6 +13,7 @@ Vector *VectorCons();
 void VectorDestructor(Vector *vector);
 
 void add(Vector *vector, char const *txt);      // set operation: only once
+void assign(Vector *vector, int idx, char const *txt);
 void resize(Vector *vector, int newSize);
 void replaceN(Vector *vector, int idx, char const *txt, int size);
 void erase(Vector *vector, int idx);

@@ -5,24 +5,21 @@
 
 typedef struct 
 {
-    char *parser;
-    char *scanner;
+    regex_t icmconfRE;
 
     char *classes;
-    char *useAll;
-
-    char *ih;
+    char *icmconf;
     char *mainih;
+    char *ih;
+    char *use_all;
 
-    int remove;
+
+    int dry;
+    int rm;
     int verbose;
 
-    int precomp;
-
-    int nArgs;
-    char **arg;
-
-    regex_t useAllRE;
+    char *parser;
+    char *scanner;
 } Options;
         
 Options  *OptionsCons(int argc, char **argv);
@@ -47,14 +44,30 @@ inline char const *oMainih(Options *options)
     return options->mainih;
 }
 
+inline char const *oIH(Options *options)
+{
+    return options->ih;
+}
+
+inline char const *oUseAll(Options *options)
+{
+    return options->use_all;
+}
+
+
 inline int oVerbose(Options *options)
 {
     return options->verbose;
 }
 
-inline char const *oIH(Options *options)
+inline int oRm(Options *options)
 {
-    return options->ih;
+    return options->rm;
+}
+
+inline int oDry(Options *options)
+{
+    return options->dry;
 }
 
 #endif

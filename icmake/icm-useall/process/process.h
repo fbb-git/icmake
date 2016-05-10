@@ -4,36 +4,21 @@
 #include <regex.h>
 
 #include "../options/options.h"
+#include "../dependencies/dependencies.h"
 
 typedef struct 
 {
-    regex_t 
-    regex_t includes[2];
-    regex_t *include;
-                    
-    Options *options;       // Options struct
+    Dependencies *dep;      // Dependencies struct
 
-    char const *classes;    // name of the CLASSES file
-    char const *useAll;     // name of the useAll file
-    char const *mainBase;   // name of the main header base name
-
-    char **search;          // directories visited so far
-    int nSearch;
-
-    char **key;             // gch dependencies directory keys
-    char **value;     
-    int nKey;
-    int nValue;
-
-    int visitTouch;
-
-    int cwd;                // FD of current working directory
-    int verbose;            // show files being touched.
+    int size;    
+    int dry;
+    int rm;
+    char const *use_all;
+    int verbose;
 } Process;
 
-void ProcessCons(Process *process, Options *options);
-void dependencies(Process *process);
-void writeCLASSESdep(Process *process);
+Process *ProcessCons(Options *options, Dependencies *dep);
+void actions(Process *process);
 
 #endif
 

@@ -4,5 +4,5 @@ void iniTable(Dependencies *dep)
 {
     int size = dep->size;
 
-    dep->dependsOn = allocTable(size);
+    dep->dependent = allocTable(size);
 }

@@ -1,29 +1,16 @@
 #include "process.ih"
 
-void ProcessCons(Process *process, Options *options)
+Process *ProcessCons(Options *options, Dependencies *dep)
 {
-    process->options = options;
-    
-    process->classes =  options->classes;
-    process->useAll =   options->useAll;
-    process->mainBase = options->mainBase;
-    process->verbose =  options->verbose;
+    Process *process = rss_realloc(0, sizeof(Process));
 
-    regComp(&process->includes[0],
-            "^[ \\t]*#include[ \\t]*\"\\.\\./([^/\"]+)/[^/\"]+\"");
-                
-    regComp(&process->includes[1],
-            "^[ \t]*#include[ \t]*\"([^/\"]+)/[^/\"]+\"");
+    process->dep = dep;
 
-    process->include = process->includes;
-                
+    process->size    = size(dep);
+    process->dry     = oDry(options);    
+    process->rm      = oRm(options);    
+    process->use_all = oUseAll(options);    
+    process->verbose = oVerbose(options);    
 
-    process->nSearch = 0;
-    process->search = NULL;
-
-    
-    process->nKey = 0;
-    process->key = NULL;
-    process->nValue = 0;
-    process->value = NULL;
+    return process;
 }

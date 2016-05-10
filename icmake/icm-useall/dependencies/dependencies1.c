@@ -30,7 +30,31 @@ Dependencies *DependenciesCons(Options *options)
     //                                    (#1       #2: NULL  #3: NULL   #4)
 
     readClasses(dep);                   // assigns 'size'
-    findDependencies(dep);
+
+    dep->rm = oRm(dep->options);
+    dep->useAll = oUseAll(dep->options);
+    dep->gch = rss_realloc(0, MAX_PATHLEN);
+
+    dep->gchIndicator = allocRow(dep->size);
+    dep->useAllIndicator = allocRow(dep->size);
+
+    findDependents(dep);
+
+//    printf("gch files must be compiled for: ");
+//    for (int idx = 0, end = dep->size; idx != end; ++idx)
+//    {
+//        if (dep->gchIndicator[idx])
+//            printf("%s ", at(dep->dirNames, idx));
+//    }
+//    printf("\n");
+//
+//    printf("classes haing USE_ALL files: ");
+//    for (int idx = 0, end = dep->size; idx != end; ++idx)
+//    {
+//        if (dep->useAllIndicator[idx])
+//            printf("%s ", at(dep->dirNames, idx));
+//    }
+//    printf("\n");
 
     return dep;
 }

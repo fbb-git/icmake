@@ -11,9 +11,9 @@ void inspectFile(Dependencies *dep, int idx, Vector *toDo, int toDoIdx)
         return;
     }
     
+    inspectGch(dep, idx, hdr);
+    
     FILE *file = openFile(toDo->txt[toDoIdx], "r");
-
-//    fprintf(stderr, "\nInspecting %s\n", toDo->txt[toDoIdx]);
 
     char *line;
     while ((line = getLine(file)))

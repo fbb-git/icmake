@@ -2,43 +2,32 @@
 
 void setUseAll(Options *options)
 {
-        // at this point, d_useAll holds the name of the icmconf file
-
-    FILE *in = openFile(options->useAll, "r");
-
-    free(options->useAll);
-    options->useAll = NULL;
+    FILE *in = openFile(options->icmconf, "r");
 
     char *line;
     int count = 0;
 
     while ((line = getLine(in)))
     {
-        Vector const *vector = regMatch(&options->useAllRE, line);
+        Vector const *vector = regMatch(&options->icmconfRE, line);
         free(line);
  
         if (vector)                // match
         {
-            char const *cp = at(vector, 1);
+            char const *key   = at(vector, 1);
+            char const *value = at(vector, 2);
 
-            if (strcmp("PRECOMP", cp) == 0)
-                options->precomp = 1;
-            else 
-            {
-                char const *value = at(vector, 2);
+            if (strcmp("IH", key) == 0)
+                options->ih = rss_strdup(value);
 
-                if (strcmp("IH", cp) == 0)
-                    options->ih = rss_strdup(value);
+            else if (strcmp("USE_ALL", key) == 0)
+                options->use_all = rss_strdup(value);
 
-                else if (strcmp("USE_ALL", cp) == 0)
-                    options->useAll = rss_strdup(value);
+            else if (strcmp("PARSER_DIR", key) == 0)
+               options->parser = rss_strdup(value);
 
-                else if (strcmp("PARSER_DIR", cp) == 0)
-                   options->parser = rss_strdup(value);
-
-                else if (strcmp("SCANNER_DIR", cp) == 0)
-                    options->scanner = rss_strdup(value);
-            }
+            else if (strcmp("SCANNER_DIR", key) == 0)
+                options->scanner = rss_strdup(value);
         }
     }
 

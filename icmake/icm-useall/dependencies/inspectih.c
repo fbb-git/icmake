@@ -7,6 +7,10 @@ void inspectIH(Dependencies *dep, int idx, char const *ihFile)
     Vector *toDo = VectorCons();
     add(toDo, ihFile);
 
+    statGch(dep, idx, ihFile);
+
+    checkUseAll(dep, idx);
+
     int next = 0;
     while (next < vSize(toDo))              // as long as there are files to
     {

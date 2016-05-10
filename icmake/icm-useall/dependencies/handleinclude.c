@@ -7,30 +7,23 @@ void handleInclude(Dependencies *dep, int idx, Vector *toDo, char const *line)
     if (vector == NULL)
         return;                         // no match
 
-//     fprintf(stderr, "     %s\n", line);
-
     char const *class = at(vector, 3);
 
     if (at(vector, 1) == NULL)    // local header, or main subhdr
     {
         if (class  == NULL)             // local header included
         {
-//    fprintf(stderr, "Including local header: %s\n", vectorAt(vector, 4));
             add(toDo, at(vector, 4));
             return;
         }
     }
 
     if (idx == 0 && at(vector, 1) != NULL)
-    {
-//        printf("Parents of main ignored: %s\n", at(vector, 1));
-        return;
-    }
+        return;                         // parent dirs of main are ignored
 
     if (class == NULL)                  // include a main header
     {
-//        fprintf(stderr, "depending on  a top-level header\n");
-        dep->dependsOn[idx][0] = 1;  
+        dep->dependent[idx][0] = 1;     // depending on a top level header
         return;
     }
 
@@ -42,9 +35,7 @@ void handleInclude(Dependencies *dep, int idx, Vector *toDo, char const *line)
         return;
     }
 
-//    fprintf(stderr, "depending on a header in %s: idx = %d, classidx = %d\n", 
-//class, idx, classIdx);
-    dep->dependsOn[idx][classIdx] = 1;    
+    dep->dependent[idx][classIdx] = 1;  // depending on a local header
 }
 
 

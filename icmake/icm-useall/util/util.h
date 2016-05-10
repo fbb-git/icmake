@@ -18,5 +18,9 @@ void toCwd();
 void tryChdir(char const *subdir);
 void UtilInit();
 
+int **allocTable(int size);
+int *allocRow(int size);
+void freeTable(int **table, int size);
+
 
 #endif

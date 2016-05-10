@@ -26,7 +26,7 @@ void inspectFile(Dependencies *dep, int idx, Vector *toDo, int toDoIdx);
 void inspectGch(Dependencies *dep, int idx, char const *hdr);
 void handleInclude(Dependencies *dep, int idx, Vector *toDo, 
                    char const *line);
-void statGch(Dependencies *dep, int idx, char const *ihFile);
+void statGch(Dependencies *dep, int idx);
 char const *ihFile(Dependencies *dep, int idx);
 void checkUseAll(Dependencies *dep, int idx);
 

@@ -1,9 +1,10 @@
 #include "process.ih"
 
-void touch(char const *path, int verbose)
+void touch(Process *process, char const *path)
 {
-    fclose(openFile(path, "w"));
+    if (!process->dry)
+        fclose(openFile(path, "w"));
 
-    if (verbose != 0)
+    if (process->dry || process->verbose != 0)
         printf("touch %s\n", path);
 }

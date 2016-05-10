@@ -8,8 +8,12 @@
 
 void useAll(Process *process);
 void inspectUseAll(Process *process, int idx);
-char *allPath(Process *process, int idx);
+char const *allPath(Process *process, int idx);
 
-void touch(char const *path, int verbose);
+void touch(Process *process, char const *path);
+
+void unlinkGch(Process *process, int idx);
+void rmGch(Process *process);
+void pInspectGch(Process *process, int idx);
 
 

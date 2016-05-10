@@ -7,14 +7,17 @@ void inspectIH(Dependencies *dep, int idx, char const *ihFile)
     Vector *toDo = VectorCons();
     add(toDo, ihFile);
 
-    statGch(dep, idx, ihFile);
+    assign(dep->gchPaths, idx,              // create gch file path names
+                    strcatN(4, dDir(dep, idx), "/", ihFile, ".gch"));
+
+    statGch(dep, idx);                      // try to stat the file
 
     checkUseAll(dep, idx);
 
     int next = 0;
     while (next < vSize(toDo))              // as long as there are files to
-    {
-        inspectFile(dep, idx, toDo, next); // inspect, do so.
+    {                                       // inspect included headers,
+        inspectFile(dep, idx, toDo, next);  // and possibly .gch files
         ++next;
     }
 

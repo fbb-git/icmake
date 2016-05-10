@@ -1,16 +1,14 @@
 #include "dependencies.ih"
 
-void statGch(Dependencies *dep, int idx, char const *ihFile)
+void statGch(Dependencies *dep, int idx)
 {
     if (!dep->rm)
-        dep->gch[0] = 0;
+        dep->gchExists = 0;
     else
     {
-        strcat(strcpy(dep->gch, ihFile), ".gch");   // make the dir's gch file
-        if (stat(dep->gch, &dep->gchStat) == 0)     // and determine its stats.
-        {
-            dep->gch[0] = 0;                    // no stat: no need to check
-            dep->gchIndicator[idx] = 1;         // but recompile req'ed
-        }
+        dep->gchExists = stat(dGch(dep, idx), &dep->gchStat) == 0;
+
+        if (dep->gchExists == 0)            // can't stat .gch-file
+            dep->gchIndicator[idx] = 1;     // so recompilation required
     }
 }

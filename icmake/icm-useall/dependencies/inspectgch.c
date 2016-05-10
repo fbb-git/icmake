@@ -19,5 +19,7 @@ void inspectGch(Dependencies *dep, int idx, char const *hdr)
     }
 
                                 // recompile if gch is older than a req'd hdr
-    dep->gchIndicator[idx] = dep->gchStat.st_mtime < hdrStat.st_mtime;
+                                // or if the .gch file does not yet exist
+    dep->gchIndicator[idx] = dep->gchExists == 0 
+                                || dep->gchStat.st_mtime < hdrStat.st_mtime;
 }

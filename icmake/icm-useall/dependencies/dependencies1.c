@@ -31,14 +31,19 @@ Dependencies *DependenciesCons(Options *options)
 
     readClasses(dep);                   // assigns 'size'
 
+    resize(dep->gchPaths, dep->size);
+
     dep->rm = oRm(dep->options);
     dep->useAll = oUseAll(dep->options);
-    dep->gch = rss_realloc(0, MAX_PATHLEN);
 
     dep->gchIndicator = allocRow(dep->size);
     dep->useAllIndicator = allocRow(dep->size);
 
+    
     findDependents(dep);
+
+    return dep;
+}
 
 //    printf("gch files must be compiled for: ");
 //    for (int idx = 0, end = dep->size; idx != end; ++idx)
@@ -55,9 +60,6 @@ Dependencies *DependenciesCons(Options *options)
 //            printf("%s ", at(dep->dirNames, idx));
 //    }
 //    printf("\n");
-
-    return dep;
-}
 
 
 

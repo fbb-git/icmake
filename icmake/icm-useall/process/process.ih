@@ -2,18 +2,31 @@
 
 #include <string.h>
 #include <unistd.h>
+#include <regex.h>
 
 #include "../../rss/rss.h"
 #include "../util/util.h"
+#include "../options/options.h"
+#include "../dependencies/dependencies.h"
 
-void useAll(Process *process);
-void inspectUseAll(Process *process, int idx);
-char const *allPath(Process *process, int idx);
+typedef struct 
+{
+    int size;    
+    int dry;
+    int rm;
+    char const *use_all;
+} Process;
 
-void touch(Process *process, char const *path);
 
-void unlinkGch(Process *process, int idx);
-void rmGch(Process *process);
-void pInspectGch(Process *process, int idx);
+extern Process s_Process;
+
+void p_useAll();
+void p_inspectUseAll(int idx);
+char const *p_allPath(int idx);
+void p_touch(char const *path);
+
+void p_rmGch();
+void p_inspectGch(int idx);
+void p_unlinkGch(int idx);
 
 

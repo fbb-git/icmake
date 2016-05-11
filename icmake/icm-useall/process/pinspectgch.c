@@ -1,25 +1,25 @@
 #include "process.ih"
 
-void pInspectGch(Process *process, int idx)
+void p_inspectGch(int idx)
 {
-    int *indicator = gchInfo(process->dep);
+    int *indicator = depGchIndicator();
 
     if (indicator[idx] == 0)
         return;
 
                                             // get classes depending on idx
-    int const *dep = dependent(process->dep, idx);
+    int const *dep = depDependent(idx);
 
     indicator[idx] = 0;
-    unlinkGch(process, idx);                // try to unlink the gch file 
+    p_unlinkGch(idx);                       // try to unlink the gch file 
 
                                             // and unlink dep. gch files
-    for (idx = 0; idx != process->size; ++idx)
+    for (idx = 0; idx != s_Process.size; ++idx)
     {
         if (dep[idx])
         {
             indicator[idx] = 0;
-            unlinkGch(process, idx);
+            p_unlinkGch(idx);
         }
-        }
+    }
 }

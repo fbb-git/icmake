@@ -1,16 +1,41 @@
 #include "options.h"
 
+#include <stdarg.h>
 #include <unistd.h>
 #include <getopt.h>
 #include <stdlib.h>
 #include <string.h>
+#include <regex.h>
 
 #include "../../rss/rss.h"
 #include "../util/util.h"
+
+typedef struct 
+{
+    regex_t icmconfRE;
+
+    char *classes;
+    char *icmconf;
+    char *mainih;
+    char *ih;
+    char *use_all;
+
+
+    int dry;
+    int rm;
+    int verbose;
+
+    char *parser;
+    char *scanner;
+} Options;
+        
 
 extern char version[];
 extern char years[];
 extern char author[];
 
-void setUseAll(Options *options);
+extern Options s_Options;
+
+void oIcmconf();
 void usage(char *progName);
+void vmsg(int level, char const *fmt, ...);

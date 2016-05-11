@@ -14,29 +14,29 @@ static struct option longOpts[] =
     {NULL}
 };
 
-Options *OptionsCons(int argc, char **argv)
-{
-    Options *options = rss_realloc(0, sizeof(Options));
+Options s_Options;
 
-    regComp(&options->icmconfRE, 
+void OptionsCons(int argc, char **argv)
+{
+    regComp(&s_Options.icmconfRE, 
             "^[ \t]*#define[ \t]*"
                     "([^ \t]+)"     //      #1: key 
                     "[ \t]*\""
                     "([^\"]+)?"     //      #2: value (opt)
                     "\"");        
 
-    options->classes    = "CLASSES";
-    options->icmconf    = "icmconf";
-    options->mainih     = "main.ih";
-    options->ih         = ".ih";
-    options->use_all    = NULL;
+    s_Options.classes    = "CLASSES";
+    s_Options.icmconf    = "icmconf";
+    s_Options.mainih     = "main.ih";
+    s_Options.ih         = ".ih";
+    s_Options.use_all    = NULL;
 
-    options->dry        = 0;
-    options->rm         = 0;
-    options->verbose    = 0;
+    s_Options.dry        = 0;
+    s_Options.rm         = 0;
+    s_Options.verbose    = 0;
 
-    options->parser     = NULL;
-    options->scanner    = NULL;
+    s_Options.parser     = NULL;
+    s_Options.scanner    = NULL;
 
     int showVersion = 0;
 
@@ -47,27 +47,27 @@ Options *OptionsCons(int argc, char **argv)
         switch (opt)
         {
             case 'c':
-                options->classes = rss_strdup(optarg);
+                s_Options.classes = rss_strdup(optarg);
             break;
 
             case 'i':
-                options->icmconf = rss_strdup(optarg);
+                s_Options.icmconf = rss_strdup(optarg);
             break;
 
             case 'm':
-                options->mainih = rss_strdup(optarg);
+                s_Options.mainih = rss_strdup(optarg);
             break;
 
             case 'd':
-                options->dry = 1;
+                s_Options.dry = 1;
             break;
 
             case 'r':
-                options->rm = 1;
+                s_Options.rm = 1;
             break;
 
             case 'u':
-                options->use_all = rss_strdup(optarg);
+                s_Options.use_all = rss_strdup(optarg);
             break;
 
             case 'h':
@@ -79,7 +79,7 @@ Options *OptionsCons(int argc, char **argv)
             break;
 
             case 'V':
-                ++options->verbose;
+                ++s_Options.verbose;
             break;
 
             case '?':
@@ -94,12 +94,12 @@ Options *OptionsCons(int argc, char **argv)
                     exit(0);
                 }
 
-                if (options->rm == 0 && options->use_all == 0)
+                if (s_Options.rm == 0 && s_Options.use_all == 0)
                     usage(argv[0]);
 
-                setUseAll(options);
+                oIcmconf();
 
-            return options;
+            return;
         }
     }
 }

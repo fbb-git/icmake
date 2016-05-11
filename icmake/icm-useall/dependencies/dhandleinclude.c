@@ -1,8 +1,8 @@
 #include "dependencies.ih"
 
-void handleInclude(Dependencies *dep, int idx, Vector *toDo, char const *line)
+void d_handleInclude(int idx, Vector *toDo, char const *line)
 {
-    Vector const *vector = regMatch(&dep->includeRegex, line);
+    Vector const *vector = regMatch(&s_Dependencies.includeRegex, line);
 
     if (vector == NULL)
         return;                         // no match
@@ -22,20 +22,20 @@ void handleInclude(Dependencies *dep, int idx, Vector *toDo, char const *line)
         return;                         // parent dirs of main are ignored
 
     if (class == NULL)                  // include a main header
-    {
-        dep->dependent[idx][0] = 1;     // depending on a top level header
+    {                                   // depending on a top level header:
+        s_Dependencies.dependent[idx][0] = 1;  
         return;
     }
 
-    int classIdx = find(dep->dirNames, class);
+    int classIdx = find(s_Dependencies.dirNames, class);
+
     if (classIdx < 0)
     {
-        if (oVerbose(dep->options))
-            fprintf(stderr, "no class '%s' reference in '%s'\n", class, line);
+        vmsg(1, "no class '%s' reference in '%s'\n", class, line);
         return;
     }
-
-    dep->dependent[idx][classIdx] = 1;  // depending on a local header
+                                        // depending on a local header
+    s_Dependencies.dependent[idx][classIdx] = 1;  
 }
 
 

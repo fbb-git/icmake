@@ -12,25 +12,51 @@
 #include "../../rss/rss.ih"
 #include "../util/util.h"
 #include "../vector/vector.h"
+#include "../options/options.h"
 
-void readClasses(Dependencies *dep);
+#include <regex.h>
+#include <sys/stat.h>
 
-void findDependents(Dependencies *dep);
-void iniTable(Dependencies *dep);
-void transpose(int **dest, int **src, int size);
-void impliedDependencies(int **data, int size);
-void closure(int *indicator, int row, int **data, int size);
-void fillTable(Dependencies *dep);
-void inspectIH(Dependencies *dep, int idx, char const *ihFile);
-void inspectFile(Dependencies *dep, int idx, Vector *toDo, int toDoIdx);
-void inspectGch(Dependencies *dep, int idx, char const *hdr);
-void handleInclude(Dependencies *dep, int idx, Vector *toDo, 
-                   char const *line);
-void statGch(Dependencies *dep, int idx);
-char const *ihFile(Dependencies *dep, int idx);
-void checkUseAll(Dependencies *dep, int idx);
+#include "../vector/vector.h"
 
-void showTable(char const *label, 
-               Dependencies *dep, int *const *const indices);
+typedef struct
+{
+    regex_t includeRegex;
 
-//void inspectGlob(Dependencies *dep, int idx, char const *pattern);
+    Vector *dirNames;   // names of directories, first is main's dir. as "."
+    Vector *gchPaths;   // paths to gch files, from the project's base dir.
+    int size;
+
+    struct stat gchStat;
+
+    int rm;                 // rm old or implied gch files
+    int gchExists;          // gch in class-dir exits
+    char const *useAll;     // touch useAll files
+
+    int *gchIndicator;      // indicators of gch files to recompile
+    int *useAllIndicator;   // indicators of touched useAllFiles
+
+    int **dependent;    // X-table of dependencies: the column classes depend 
+                        // on the row classes.
+
+} Dependencies;
+
+extern Dependencies s_Dependencies;
+
+char const *d_ihFile(int idx);
+
+void d_checkUseAll(int idx);
+void d_closure(int *indicator, int row, int **data, int size);
+void d_fillTable();
+void d_findDependents();
+void d_handleInclude(int idx, Vector *toDo, char const *line);
+void d_impliedDependencies(int **data, int size);
+void d_iniTable();
+void d_inspectFile(int idx, Vector *toDo, int toDoIdx);
+void d_inspectGch(int idx, char const *hdr);
+void d_inspectIH(int idx, char const *ihFile);
+void d_readClasses();
+void d_showTable(char const *label, int *const *const indices);
+void d_statGch(int idx);
+void d_transpose(int **dest, int **src, int size);
+

@@ -1,13 +1,13 @@
 #include "dependencies.ih"
 
-void impliedDependencies(int **data, int size)
+void d_impliedDependencies(int **data, int size)
 {
     int indicator[size];
 
     for (int row = 0; row != size; ++row)
     {
         memset(indicator, 0, size * sizeof(int));
-        closure(indicator, row, data, size);
+        d_closure(indicator, row, data, size);
         memcpy(data[row], indicator, size * sizeof(int));
     }
 

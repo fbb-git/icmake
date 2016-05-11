@@ -1,16 +1,11 @@
 #include "process.ih"
 
-Process *ProcessCons(Options *options, Dependencies *dep)
+Process s_Process;
+
+void ProcessCons()
 {
-    Process *process = rss_realloc(0, sizeof(Process));
-
-    process->dep = dep;
-
-    process->size    = size(dep);
-    process->dry     = oDry(options);    
-    process->rm      = oRm(options);    
-    process->use_all = oUseAll(options);    
-    process->verbose = oVerbose(options);    
-
-    return process;
+    s_Process.size    = depSize();
+    s_Process.dry     = optDry();    
+    s_Process.rm      = optRm();    
+    s_Process.use_all = optUseAll();    
 }

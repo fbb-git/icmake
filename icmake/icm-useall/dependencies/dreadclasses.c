@@ -1,18 +1,18 @@
 #include "dependencies.ih"
 
-void readClasses(Dependencies *dep)
+void d_readClasses()
 {
-    FILE *classes = openFile(oClasses(dep->options), "r");
+    FILE *classes = openFile(optClasses(), "r");
 
-    dep->dirNames = VectorCons();
-    add(dep->dirNames, ".");
+    s_Dependencies.dirNames = VectorCons();
+    add(s_Dependencies.dirNames, ".");
 
     char const *cp;
-    if (cp = oParser(dep->options))
-        add(dep->dirNames, cp);
+    if (cp = optParser())
+        add(s_Dependencies.dirNames, cp);
 
-    if (cp = oScanner(dep->options))
-        add(dep->dirNames, cp);
+    if (cp = optScanner())
+        add(s_Dependencies.dirNames, cp);
 
     char *line;
     while (line = getLine(classes))                // get line from CLASSES
@@ -24,12 +24,12 @@ void readClasses(Dependencies *dep)
             &&                                      // starting at #, /
             strchr("#/", *class) == NULL
         )   
-            add(dep->dirNames, class);
+            add(s_Dependencies.dirNames, class);
 
         free(line);
     }
 
-    dep->size = vSize(dep->dirNames);
+    s_Dependencies.size = vSize(s_Dependencies.dirNames);
 
     fclose(classes);
 }

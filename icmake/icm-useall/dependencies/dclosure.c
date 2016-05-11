@@ -1,6 +1,6 @@
 #include "dependencies.ih"
 
-void closure(int *indicator, int row, int **data, int size)
+void d_closure(int *indicator, int row, int **data, int size)
 {
     for (int idx = 0; idx != size; ++idx)   // visit row elements
     {
@@ -13,6 +13,6 @@ void closure(int *indicator, int row, int **data, int size)
             continue;                           // then try the next one
                                                 
         indicator[idx] = 1;                     // dependent on element idx
-        closure(indicator, idx, data, size);    // add closure of elem. idx
+        d_closure(indicator, idx, data, size);  // add closure of elem. idx
      }
 }

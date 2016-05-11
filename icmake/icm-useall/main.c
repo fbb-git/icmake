@@ -4,12 +4,12 @@ int main(int argc, char **argv)
 {
     UtilInit();
 
-    Options *options = OptionsCons(argc, argv);
+    OptionsCons(argc, argv);
 
-    Dependencies *dependencies = DependenciesCons(options);
+    DependenciesCons();
 
-    Process *process = ProcessCons(options, dependencies);
-    actions(process);
+    ProcessCons();
+    processActions();
 }
 
 

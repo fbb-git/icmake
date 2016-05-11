@@ -1,12 +1,10 @@
 #include "dependencies.ih"
 
-Dependencies *DependenciesCons(Options *options)
+Dependencies s_Dependencies;
+
+void DependenciesCons()
 {
-    Dependencies *dep = rss_realloc(0, sizeof(Dependencies));
-
-    dep->options = options;
-
-    regComp(&dep->includeRegex,
+    regComp(&s_Dependencies.includeRegex,
             "^[ \\t]*#include[ \\t]*\""     // #include "
                         "(\\.\\./)?"        // #1:   ../          (opt)
                         "(([^/\"]+)/)?"     // #2, #3: ((class)/) (opt)
@@ -29,35 +27,35 @@ Dependencies *DependenciesCons(Options *options)
     // #include "../whatever"           - include a main-header
     //                                    (#1       #2: NULL  #3: NULL   #4)
 
-    readClasses(dep);                   // assigns 'size'
+    d_readClasses();                      // assigns 'size'
 
-    resize(dep->gchPaths, dep->size);
+    resize(s_Dependencies.gchPaths, s_Dependencies.size);
 
-    dep->rm = oRm(dep->options);
-    dep->useAll = oUseAll(dep->options);
+    s_Dependencies.rm = optRm();
+    s_Dependencies.useAll = optUseAll();
 
-    dep->gchIndicator = allocRow(dep->size);
-    dep->useAllIndicator = allocRow(dep->size);
-
+    s_Dependencies.gchIndicator = allocRow(s_Dependencies.size);
+    s_Dependencies.useAllIndicator = allocRow(s_Dependencies.size);
     
-    findDependents(dep);
-
-    return dep;
+    d_findDependents();
 }
 
+
+
+
 //    printf("gch files must be compiled for: ");
-//    for (int idx = 0, end = dep->size; idx != end; ++idx)
+//    for (int idx = 0, end = s_Dependencies.size; idx != end; ++idx)
 //    {
-//        if (dep->gchIndicator[idx])
-//            printf("%s ", at(dep->dirNames, idx));
+//        if (s_Dependencies.gchIndicator[idx])
+//            printf("%s ", at(s_Dependencies.dirNames, idx));
 //    }
 //    printf("\n");
 //
 //    printf("classes haing USE_ALL files: ");
-//    for (int idx = 0, end = dep->size; idx != end; ++idx)
+//    for (int idx = 0, end = s_Dependencies.size; idx != end; ++idx)
 //    {
-//        if (dep->useAllIndicator[idx])
-//            printf("%s ", at(dep->dirNames, idx));
+//        if (s_Dependencies.useAllIndicator[idx])
+//            printf("%s ", at(s_Dependencies.dirNames, idx));
 //    }
 //    printf("\n");
 

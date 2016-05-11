@@ -2,7 +2,7 @@
 
 void inspectDepending(Process *process, int idx, int *indicator, int size)
 {
-//    int *inspect = depending(process->dep, idx);    // get depending
+//    int *inspect = depending(idx);    // get depending
                                                     // directories 
 //
 //    for (int depIdx = 0; depIdx != size; ++depIdx)  // visit all dep. dirs.

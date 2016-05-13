@@ -12,12 +12,11 @@ void resize(Vector *vector, int newSize)
         for (int idx = newSize, end = vector->size; idx != end; ++idx)
             free(vector->txt[idx]);
     }
-        
+     
     vector->size = newSize;
     vector->txt = rss_realloc(vector->txt, newSize * sizeof(char *));
 
     if (newSize > currentSize)
-        memset(vector->txt + currentSize, 
-               (newSize - currentSize) * sizeof(char *),
-               0);
+        memset(vector->txt + currentSize * sizeof(char *), 
+               0, (newSize - currentSize) * sizeof(char *));
 }

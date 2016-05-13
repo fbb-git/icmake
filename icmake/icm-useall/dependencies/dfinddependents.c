@@ -7,7 +7,7 @@ void d_findDependents()
 
     int size = s_Dependencies.size;
 
-    int **reversed = allocTable(size);
+    int **reversed = initTable(size);
     d_transpose(reversed, s_Dependencies.dependent, size);
 
     d_showTable("Dependents:", reversed);
@@ -19,7 +19,6 @@ void d_findDependents()
     s_Dependencies.dependent = reversed;
 
     d_showTable("Dependents (complete):", s_Dependencies.dependent);
-
 }
 
 

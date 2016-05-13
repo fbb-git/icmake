@@ -18,8 +18,8 @@ void toCwd();
 void tryChdir(char const *subdir);
 void UtilInit();
 
-int **allocTable(int size);
-int *allocRow(int size);
+int **initTable(int size);
+int *initRow(int size);
 void freeTable(int **table, int size);
 char const *strcatN(int count, ...);    // all char const *args are cat-ed and
                                         // the result is returned as a NTBS

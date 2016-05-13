@@ -2,15 +2,17 @@
 
 void d_inspectIH(int idx, char const *ihFile)
 {
-    printf("Inspect %s\n", ihFile);
+    char *ih = rss_strdup(ihFile);
+
+    vmsg(1, "Inspect %s\n", ih);
 
     Vector *toDo = VectorCons();
-    add(toDo, ihFile);
+    add(toDo, ih);
 
     assign(s_Dependencies.gchPaths, idx,    // create gch file path names
-                    strcatN(4, depDir(idx), "/", ihFile, ".gch"));
+                    strcatN(4, depDir(idx), "/", ih, ".gch"));
 
-    d_statGch(idx);                         // try to stat the file
+//    d_statGch(idx);                         // try to stat the file
 
     d_checkUseAll(idx);
 
@@ -22,4 +24,7 @@ void d_inspectIH(int idx, char const *ihFile)
     }
 
     VectorDestructor(toDo);
+    free(ih);
 }
+
+

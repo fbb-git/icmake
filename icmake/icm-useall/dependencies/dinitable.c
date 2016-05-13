@@ -4,5 +4,5 @@ void d_iniTable()
 {
     int size = s_Dependencies.size;
 
-    s_Dependencies.dependent = allocTable(size);
+    s_Dependencies.dependent = initTable(size);
 }

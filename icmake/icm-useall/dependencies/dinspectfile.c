@@ -4,7 +4,7 @@ void d_inspectFile(int idx, Vector *toDo, int toDoIdx)
 {
     char const *hdr = toDo->txt[toDoIdx];
 
-    if (access(hdr, R_OK) != 0)
+    if (!rss_exists(hdr))
     {
         vmsg(2, "skipping non-existing %s\n", hdr);
         return;

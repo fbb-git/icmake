@@ -4,6 +4,12 @@ void p_inspectGch(int idx)
 {
     int *indicator = depGchIndicator();
 
+    printf("gch indicator: ");
+    for (int idx = 0; idx != s_Process.size; ++idx)
+        printf("%d ", indicator[idx]);
+    putchar('\n');
+    
+
     if (indicator[idx] == 0)
         return;
 

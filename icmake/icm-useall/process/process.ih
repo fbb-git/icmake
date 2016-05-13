@@ -21,8 +21,8 @@ typedef struct
 extern Process s_Process;
 
 void p_useAll();
-void p_inspectUseAll(int idx);
-char const *p_allPath(int idx);
+void p_inspectUseAll(int *done, int classIdx);
+//char const *p_allPath(int idx);
 void p_touch(char const *path);
 
 void p_rmGch();

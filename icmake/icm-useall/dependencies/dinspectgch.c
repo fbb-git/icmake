@@ -10,18 +10,11 @@ void d_inspectGch(int idx, char const *hdr)
     )
         return;
 
-    struct stat hdrStat;
-
-    if (stat(hdr, &hdrStat) != 0)
+    if (!rss_exists(hdr))
     {
-        printf("Can't stat `%s'\n", hdr);
+        printf("`%s' does not exist\n", hdr);
         exit(1);
     }
-
                                 // recompile if gch is older than a req'd hdr
-                                // or if the .gch file does not yet exist
-    s_Dependencies.gchIndicator[idx] = 
-            s_Dependencies.gchExists == 0 
-            || 
-            s_Dependencies.gchStat.st_mtime < hdrStat.st_mtime;
+    s_Dependencies.gchIndicator[idx] = rss_older(depGch(idx), hdr);
 }

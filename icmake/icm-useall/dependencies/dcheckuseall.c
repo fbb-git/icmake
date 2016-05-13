@@ -5,6 +5,6 @@ void d_checkUseAll(int idx)
     if (s_Dependencies.useAll == NULL)
         return;
 
-    if (access(s_Dependencies.useAll, R_OK) == 0)
-        s_Dependencies.useAllIndicator[idx] = 1;
+    if (rss_exists(s_Dependencies.useAll))
+        s_Dependencies.useAllExists[idx] = 1;
 }

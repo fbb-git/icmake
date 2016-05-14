@@ -1,22 +1,13 @@
 #include "dependencies.h"
 
 #include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdint.h>
-
-//#include <sys/types.h>
-//#include <sys/stat.h>
-
+#include <regex.h>
 
 #include "../../rss/rss.ih"
+
 #include "../util/util.h"
 #include "../vector/vector.h"
 #include "../options/options.h"
-
-#include <regex.h>
-#include <sys/stat.h>
-
 #include "../vector/vector.h"
 
 typedef struct
@@ -28,8 +19,9 @@ typedef struct
     Vector *useAllPaths;// paths to gch files, from the project's base dir.
     int size;
 
-    int rm;                 // rm old or implied gch files
+    int gch;                // rm old or implied gch files
     char const *useAll;     // touch useAll files
+    char *currentGch;
 
     int *gchIndicator;      // indicators of gch files to recompile
     int *useAllExists;   // indicators of existing useAllFiles
@@ -54,6 +46,5 @@ void d_inspectGch(int idx, char const *hdr);
 void d_inspectIH(int idx, char const *ihFile);
 void d_readClasses();
 void d_showTable(char const *label, int *const *const indices);
-//void d_statGch(int idx);
 void d_transpose(int **dest, int **src, int size);
 

@@ -17,19 +17,19 @@ void oIcmconf()
             char const *key   = at(vector, 1);
             char const *value = at(vector, 2);
 
-            if (strcmp("PRECOMP", key) == 0)
-                s_Options.rm = 1;
+//            if (s_Options.no_gch == 0 && strcmp("PRECOMP", key) == 0)
+//                s_Options.gch = 1;
 
-            else if (strcmp("IH", key) == 0)
+            if (strcmp("IH", key) == 0)
                 s_Options.ih = rss_strdup(value);
 
-            else if (strcmp("USE_ALL", key) == 0)
+            else if (s_Options.no_use_all == 0 && strcmp("USE_ALL", key) == 0)
                 s_Options.use_all = rss_strdup(value);
 
-            else if (strcmp("PARSER_DIR", key) == 0)
-               s_Options.parser = rss_strdup(value);
+            else if (strcmp("PARSER_DIR", key) == 0 && value)
+                s_Options.parser = rss_strdup(value);
 
-            else if (strcmp("SCANNER_DIR", key) == 0)
+            else if (strcmp("SCANNER_DIR", key) == 0 && value)
                 s_Options.scanner = rss_strdup(value);
         }
     }

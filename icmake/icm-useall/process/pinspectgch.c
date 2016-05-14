@@ -1,31 +1,21 @@
 #include "process.ih"
 
-void p_inspectGch(int idx)
-{
-    int *indicator = depGchIndicator();
-
-    printf("gch indicator: ");
-    for (int idx = 0; idx != s_Process.size; ++idx)
-        printf("%d ", indicator[idx]);
-    putchar('\n');
+//    printf("gch indicator: ");
+//    for (int idx = 0; idx != s_Process.size; ++idx)
+//        printf("%d ", indicator[idx]);
+//    putchar('\n');
     
 
-    if (indicator[idx] == 0)
-        return;
+void p_inspectGch(int *toRm, int idx)
+{
+    int const *dep = depDependent(idx);     // get classes depending on idx
+    char const *gch = depGch(idx);          // get name of gch to compare with
 
-                                            // get classes depending on idx
-    int const *dep = depDependent(idx);
-
-    indicator[idx] = 0;
-    p_unlinkGch(idx);                       // try to unlink the gch file 
-
+    toRm[idx] = 1;
                                             // and unlink dep. gch files
     for (idx = 0; idx != s_Process.size; ++idx)
     {
-        if (dep[idx])
-        {
-            indicator[idx] = 0;
-            p_unlinkGch(idx);
-        }
+        if (dep[idx] && rss_younger(gch, depGch(idx)))
+            toRm[idx] = 1;
     }
 }

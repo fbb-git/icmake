@@ -2,15 +2,18 @@
 
 static struct option longOpts[] = 
 {
-    {"classes", required_argument,  NULL, 'c'},
-    {"dry",     no_argument,        NULL, 'd'},            // no -d option
-    {"help",    no_argument,        NULL, 'h'},
-    {"icmconf", required_argument,  NULL, 'i'},
-    {"mainih",  required_argument,  NULL, 'm'},
-    {"rm",      no_argument,        NULL, 'r'},            // no -r option
-    {"use_all", no_argument,        NULL, 'u'},            // no -u option
-    {"verbose", no_argument,        NULL, 'V'},
-    {"version", no_argument,        NULL, 'v'},
+    {"classes",     required_argument,  NULL, 'c'},
+    {"dry",         no_argument,        NULL, 'd'},        // no -d option
+    {"go",          no_argument,        NULL, 'g'},        // no -g option
+    {"help",        no_argument,        NULL, 'h'},
+    {"icmconf",     required_argument,  NULL, 'i'},
+    {"mainih",      required_argument,  NULL, 'm'},
+    {"gch",         no_argument,        NULL, 'p'},        // no -p option
+    {"no-gch",      no_argument,        NULL, 'G'},        // no -G option
+    {"use-all",     no_argument,        NULL, 'u'},        // no -u option
+    {"no-use-all",  no_argument,        NULL, 'U'},        // no -U option
+    {"verbose",     no_argument,        NULL, 'V'},
+    {"version",     no_argument,        NULL, 'v'},
     {NULL}
 };
 
@@ -29,14 +32,6 @@ void OptionsCons(int argc, char **argv)
     s_Options.icmconf    = "icmconf";
     s_Options.mainih     = "main.ih";
     s_Options.ih         = ".ih";
-    s_Options.use_all    = NULL;
-
-    s_Options.dry        = 0;
-    s_Options.rm         = 0;
-    s_Options.verbose    = 0;
-
-    s_Options.parser     = NULL;
-    s_Options.scanner    = NULL;
 
     int showVersion = 0;
 
@@ -50,6 +45,26 @@ void OptionsCons(int argc, char **argv)
                 s_Options.classes = rss_strdup(optarg);
             break;
 
+            case 'd':
+                s_Options.dry = 1;
+            break;
+
+            case 'g':
+                s_Options.go = 1;
+            break;
+
+            case 'p':
+                s_Options.gch = 1;
+            break;
+
+            case 'G':
+                s_Options.gch = 0;
+            break;
+
+            case 'h':
+                usage(argv[0]);
+            break;                  // usage exits
+
             case 'i':
                 s_Options.icmconf = rss_strdup(optarg);
             break;
@@ -58,21 +73,13 @@ void OptionsCons(int argc, char **argv)
                 s_Options.mainih = rss_strdup(optarg);
             break;
 
-            case 'd':
-                s_Options.dry = 1;
-            break;
-
-            case 'r':
-                s_Options.rm = 1;
-            break;
-
             case 'u':
-                s_Options.use_all = rss_strdup(optarg);
+                s_Options.no_use_all = 0;
             break;
 
-            case 'h':
-                usage(argv[0]);
-            break;                  // usage exits
+            case 'U':
+                s_Options.no_use_all = 1;
+            break;
 
             case 'v':
                 showVersion = 1;
@@ -94,8 +101,11 @@ void OptionsCons(int argc, char **argv)
                     exit(0);
                 }
 
-                if (s_Options.rm == 0 && s_Options.use_all == 0)
+                if (s_Options.go == 0 && s_Options.dry == 0)
                     usage(argv[0]);
+
+                if (s_Options.dry)
+                    s_Options.go = 0;
 
                 oIcmconf();
 

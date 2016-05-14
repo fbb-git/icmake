@@ -18,11 +18,16 @@ typedef struct
     char *icmconf;
     char *mainih;
     char *ih;
-    char *use_all;
 
+    int  gch;               // inspect gch files
+    char *use_all;          // inspect USE_ALL files
 
-    int dry;
-    int rm;
+    int dry;                // --dry
+    int go;                 // --go
+
+    int no_use_all;         // --no-use-all
+    int no_gch;             // --no-gch
+
     int verbose;
 
     char *parser;

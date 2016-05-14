@@ -10,7 +10,7 @@ char const *optMainih();
 char const *optIH();
 char const *optUseAll();
 int optVerbose();
-int optRm();
+int optGch();
 int optDry();
 void vmsg(int requiredLevel, char const *fmt, ...);
 

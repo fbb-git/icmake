@@ -32,7 +32,7 @@ void DependenciesCons()
     s_Dependencies.gchPaths = VectorCons();
     resize(s_Dependencies.gchPaths, s_Dependencies.size);
 
-    s_Dependencies.rm = optRm();
+    s_Dependencies.gch = optGch();
     
     if ((s_Dependencies.useAll = optUseAll()))
     {

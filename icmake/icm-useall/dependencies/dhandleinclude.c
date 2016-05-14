@@ -2,7 +2,7 @@
 
 void d_handleInclude(int idx, Vector *toDo, char const *line)
 {
-    Vector const *vector = regMatch(&s_Dependencies.includeRegex, line);
+    Vector const *vector = regMatch(&sdep.includeRegex, line);
 
     if (vector == NULL)
         return;                         // no match
@@ -23,11 +23,11 @@ void d_handleInclude(int idx, Vector *toDo, char const *line)
 
     if (class == NULL)                  // include a main header
     {                                   // depending on a top level header:
-        s_Dependencies.dependent[idx][0] = 1;  
+        sdep.dependent[idx][0] = 1;  
         return;
     }
 
-    int classIdx = find(s_Dependencies.dirNames, class);
+    int classIdx = find(sdep.dirNames, class);
 
     if (classIdx < 0)
     {
@@ -35,7 +35,7 @@ void d_handleInclude(int idx, Vector *toDo, char const *line)
         return;
     }
                                         // depending on a local header
-    s_Dependencies.dependent[idx][classIdx] = 1;  
+    sdep.dependent[idx][classIdx] = 1;  
 }
 
 

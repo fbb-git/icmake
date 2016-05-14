@@ -2,5 +2,5 @@
 
 char const *optIH()
 {
-    return s_Options.ih;
+    return sopts.ih;
 }

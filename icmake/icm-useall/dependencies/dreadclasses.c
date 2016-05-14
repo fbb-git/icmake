@@ -4,15 +4,15 @@ void d_readClasses()
 {
     FILE *classes = openFile(optClasses(), "r");
 
-    s_Dependencies.dirNames = VectorCons();
-    add(s_Dependencies.dirNames, ".");
+    sdep.dirNames = VectorCons();
+    add(sdep.dirNames, ".");
 
     char const *cp;
     if (cp = optParser())
-        add(s_Dependencies.dirNames, cp);
+        add(sdep.dirNames, cp);
 
     if (cp = optScanner())
-        add(s_Dependencies.dirNames, cp);
+        add(sdep.dirNames, cp);
 
     char *line;
     while (line = getLine(classes))                // get line from CLASSES
@@ -24,12 +24,12 @@ void d_readClasses()
             &&                                      // starting at #, /
             strchr("#/", *class) == NULL
         )   
-            add(s_Dependencies.dirNames, class);
+            add(sdep.dirNames, class);
 
         free(line);
     }
 
-    s_Dependencies.size = vSize(s_Dependencies.dirNames);
+    sdep.size = vSize(sdep.dirNames);
 
     fclose(classes);
 }

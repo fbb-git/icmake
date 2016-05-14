@@ -1,10 +1,10 @@
 #include "dependencies.ih"
 
-Dependencies s_Dependencies;
+Dependencies sdep;
 
 void DependenciesCons()
 {
-    regComp(&s_Dependencies.includeRegex,
+    regComp(&sdep.includeRegex,
             "^[ \\t]*#include[ \\t]*\""     // #include "
                         "(\\.\\./)?"        // #1:   ../          (opt)
                         "(([^/\"]+)/)?"     // #2, #3: ((class)/) (opt)
@@ -29,24 +29,24 @@ void DependenciesCons()
 
     d_readClasses();                      // assigns 'size'
 
-    s_Dependencies.gchPaths = VectorCons();
-    resize(s_Dependencies.gchPaths, s_Dependencies.size);
+    sdep.gchPaths = VectorCons();
+    resize(sdep.gchPaths, sdep.size);
 
-    s_Dependencies.gch = optGch();
+    sdep.gch = optGch();
     
-    if ((s_Dependencies.useAll = optUseAll()))
+    if ((sdep.useAll = optUseAll()))
     {
-        s_Dependencies.useAllPaths = VectorCons();
-        resize(s_Dependencies.useAllPaths, s_Dependencies.size);
+        sdep.useAllPaths = VectorCons();
+        resize(sdep.useAllPaths, sdep.size);
 
-        for (int idx = 0; idx != s_Dependencies.size; ++idx)
-            assign(s_Dependencies.useAllPaths, idx, 
-                strcatN(3, depDir(idx), "/", s_Dependencies.useAll)
+        for (int idx = 0; idx != sdep.size; ++idx)
+            assign(sdep.useAllPaths, idx, 
+                strcatN(3, depDir(idx), "/", sdep.useAll)
             );
     }
 
-    s_Dependencies.gchIndicator = initRow(s_Dependencies.size);
-    s_Dependencies.useAllExists = initRow(s_Dependencies.size);
+    sdep.gchIndicator = initRow(sdep.size);
+    sdep.useAllExists = initRow(sdep.size);
     
     d_findDependents();
 }
@@ -55,18 +55,18 @@ void DependenciesCons()
 
 
 //    printf("gch files must be compiled for: ");
-//    for (int idx = 0, end = s_Dependencies.size; idx != end; ++idx)
+//    for (int idx = 0, end = sdep.size; idx != end; ++idx)
 //    {
-//        if (s_Dependencies.gchIndicator[idx])
-//            printf("%s ", at(s_Dependencies.dirNames, idx));
+//        if (sdep.gchIndicator[idx])
+//            printf("%s ", at(sdep.dirNames, idx));
 //    }
 //    printf("\n");
 //
 //    printf("classes haing USE_ALL files: ");
-//    for (int idx = 0, end = s_Dependencies.size; idx != end; ++idx)
+//    for (int idx = 0, end = sdep.size; idx != end; ++idx)
 //    {
-//        if (s_Dependencies.useAllExists[idx])
-//            printf("%s ", at(s_Dependencies.dirNames, idx));
+//        if (sdep.useAllExists[idx])
+//            printf("%s ", at(sdep.dirNames, idx));
 //    }
 //    printf("\n");
 

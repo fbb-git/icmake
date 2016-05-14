@@ -8,30 +8,30 @@ static struct option longOpts[] =
     {"help",        no_argument,        NULL, 'h'},
     {"icmconf",     required_argument,  NULL, 'i'},
     {"mainih",      required_argument,  NULL, 'm'},
-    {"gch",         no_argument,        NULL, 'p'},        // no -p option
-    {"no-gch",      no_argument,        NULL, 'G'},        // no -G option
-    {"use-all",     no_argument,        NULL, 'u'},        // no -u option
-    {"no-use-all",  no_argument,        NULL, 'U'},        // no -U option
+    {"gch",         required_argument,  NULL, 'G'},        // no -G option
+    {"use-all",     required_argument,  NULL, 'u'},        // no -u option
     {"verbose",     no_argument,        NULL, 'V'},
     {"version",     no_argument,        NULL, 'v'},
     {NULL}
 };
 
-Options s_Options;
+Options sopts;
 
 void OptionsCons(int argc, char **argv)
 {
-    regComp(&s_Options.icmconfRE, 
+    regComp(&sopts.icmconfRE, 
             "^[ \t]*#define[ \t]*"
                     "([^ \t]+)"     //      #1: key 
                     "[ \t]*\""
                     "([^\"]+)?"     //      #2: value (opt)
                     "\"");        
 
-    s_Options.classes    = "CLASSES";
-    s_Options.icmconf    = "icmconf";
-    s_Options.mainih     = "main.ih";
-    s_Options.ih         = ".ih";
+    sopts.classes    = "CLASSES";
+    sopts.icmconf    = "icmconf";
+    sopts.mainih     = "main.ih";
+    sopts.ih         = ".ih";
+    sopts.use_all    = "i";        // by default: read icmconf
+    sopts.gch        = 'i';
 
     int showVersion = 0;
 
@@ -42,23 +42,19 @@ void OptionsCons(int argc, char **argv)
         switch (opt)
         {
             case 'c':
-                s_Options.classes = rss_strdup(optarg);
+                sopts.classes = rss_strdup(optarg);
             break;
 
             case 'd':
-                s_Options.dry = 1;
+                sopts.dry = 1;
             break;
 
             case 'g':
-                s_Options.go = 1;
-            break;
-
-            case 'p':
-                s_Options.gch = 1;
+                sopts.go = 1;
             break;
 
             case 'G':
-                s_Options.gch = 0;
+                sopts.gch = optarg[0] == 'y';
             break;
 
             case 'h':
@@ -66,19 +62,15 @@ void OptionsCons(int argc, char **argv)
             break;                  // usage exits
 
             case 'i':
-                s_Options.icmconf = rss_strdup(optarg);
+                sopts.icmconf = rss_strdup(optarg);
             break;
 
             case 'm':
-                s_Options.mainih = rss_strdup(optarg);
+                sopts.mainih = rss_strdup(optarg);
             break;
 
             case 'u':
-                s_Options.no_use_all = 0;
-            break;
-
-            case 'U':
-                s_Options.no_use_all = 1;
+                sopts.use_all = optarg[0] == '/' ? NULL : rss_strdup(optarg);
             break;
 
             case 'v':
@@ -86,7 +78,7 @@ void OptionsCons(int argc, char **argv)
             break;
 
             case 'V':
-                ++s_Options.verbose;
+                ++sopts.verbose;
             break;
 
             case '?':
@@ -101,11 +93,11 @@ void OptionsCons(int argc, char **argv)
                     exit(0);
                 }
 
-                if (s_Options.go == 0 && s_Options.dry == 0)
+                if (sopts.go == 0 && sopts.dry == 0)
                     usage(argv[0]);
 
-                if (s_Options.dry)
-                    s_Options.go = 0;
+                if (sopts.dry)
+                    sopts.go = 0;
 
                 oIcmconf();
 

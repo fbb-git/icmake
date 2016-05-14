@@ -1,7 +1,7 @@
 #include "process.ih"
 
 //    printf("use_all indicator: ");
-//    for (int idx = 0; idx != s_Process.size; ++idx)
+//    for (int idx = 0; idx != sproc.size; ++idx)
 //        printf("%d ", indicator[idx]);
 //    putchar('\n');
     
@@ -11,7 +11,7 @@ void p_inspectUseAll(int *done, int classIdx)
     int const *dep = depDependent(classIdx);
     char const *useAll = depUseAll(classIdx);
 
-    for (int idx = 0; idx != s_Process.size; ++idx)
+    for (int idx = 0; idx != sproc.size; ++idx)
     {
         if (done[idx] == 0 && dep[idx] && rss_younger(useAll, depUseAll(idx)))
         {

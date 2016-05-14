@@ -2,5 +2,5 @@
 
 char const *depGch(int idx)
 {
-    return at(s_Dependencies.gchPaths, idx);
+    return at(sdep.gchPaths, idx);
 }

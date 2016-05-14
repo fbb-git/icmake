@@ -2,7 +2,7 @@
 
 void d_iniTable()
 {
-    int size = s_Dependencies.size;
+    int size = sdep.size;
 
-    s_Dependencies.dependent = initTable(size);
+    sdep.dependent = initTable(size);
 }

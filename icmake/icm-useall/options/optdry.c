@@ -2,5 +2,5 @@
 
 int optDry()
 {
-    return s_Options.dry;
+    return sopts.dry;
 }

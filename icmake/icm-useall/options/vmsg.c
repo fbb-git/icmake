@@ -2,7 +2,7 @@
 
 void vmsg(int requiredLevel, char const *fmt, ...)
 {
-    if (s_Options.verbose < requiredLevel)
+    if (sopts.verbose < requiredLevel)
         return;
 
     va_list args;

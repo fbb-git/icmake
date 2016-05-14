@@ -16,13 +16,13 @@ void d_showTable(char const *label, int *const *const indices)
 
     printf("%s\n", label);
 
-    int size = s_Dependencies.size;
+    int size = sdep.size;
 
     numberLine(size);
 
     for (int row = 0; row != size; ++row)
     {
-        printf("%15s %2d ", at(s_Dependencies.dirNames, row), row + 1);
+        printf("%15s %2d ", at(sdep.dirNames, row), row + 1);
         
         for (int col = 0; col != size; ++col)
             printf(indices[row][col] ?  " 1 " : "   ");

@@ -2,6 +2,6 @@
 
 char const *optParser()
 {
-    return s_Options.parser;
+    return sopts.parser;
 }
 

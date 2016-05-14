@@ -2,5 +2,5 @@
 
 char const *depDir(int idx)
 {
-    return at(s_Dependencies.dirNames, idx);
+    return at(sdep.dirNames, idx);
 }

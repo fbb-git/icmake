@@ -2,5 +2,5 @@
 
 int const *depUseAllExists()
 {
-    return s_Dependencies.useAllExists;
+    return sdep.useAllExists;
 }

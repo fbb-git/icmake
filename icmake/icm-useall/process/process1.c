@@ -1,11 +1,11 @@
 #include "process.ih"
 
-Process s_Process;
+Process sproc;
 
 void ProcessCons()
 {
-    s_Process.size    = depSize();
-    s_Process.dry     = optDry();    
-    s_Process.gch      = optGch();    
-    s_Process.use_all = optUseAll();    
+    sproc.size    = depSize();
+    sproc.dry     = optDry();    
+    sproc.gch      = optGch();    
+    sproc.use_all = optUseAll();    
 }

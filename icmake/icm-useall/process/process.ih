@@ -19,7 +19,7 @@ typedef struct
 } Process;
 
 
-extern Process s_Process;
+extern Process sproc;
 
 void p_useAll();
 void p_inspectUseAll(int *done, int classIdx);

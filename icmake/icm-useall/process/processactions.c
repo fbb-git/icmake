@@ -2,9 +2,9 @@
 
 void processActions()
 {
-    if (s_Process.use_all)
+    if (sproc.use_all)
         p_useAll();
 
-    if (s_Process.gch)
+    if (sproc.gch)
         p_gch();
 }

@@ -2,9 +2,9 @@
 
 void d_checkUseAll(int idx)
 {
-    if (s_Dependencies.useAll == NULL)
+    if (sdep.useAll == NULL)
         return;
 
-    if (rss_exists(s_Dependencies.useAll))
-        s_Dependencies.useAllExists[idx] = 1;
+    if (rss_exists(sdep.useAll))
+        sdep.useAllExists[idx] = 1;
 }

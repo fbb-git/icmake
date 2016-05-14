@@ -30,7 +30,7 @@ typedef struct
                         // on the row classes.
 } Dependencies;
 
-extern Dependencies s_Dependencies;
+extern Dependencies sdep;
 
 char const *d_ihFile(int idx);
 

@@ -5,13 +5,13 @@ void p_useAll()
     int const *exists = depUseAllExists();
 
 //    printf("use_all at: ");
-//    for (int idx = 0; idx != s_Process.size; ++idx)
+//    for (int idx = 0; idx != sproc.size; ++idx)
 //        printf("%d ", exists[idx]);
 //    putchar('\n');
 
-    int *done = initRow(s_Process.size);
+    int *done = initRow(sproc.size);
 
-    for (int idx = 0; idx != s_Process.size; ++idx)
+    for (int idx = 0; idx != sproc.size; ++idx)
     {
         if (exists[idx])
             p_inspectUseAll(done, idx);
@@ -21,7 +21,7 @@ void p_useAll()
 
 //
 //    printf("use_all indicator: ");
-//    for (int idx = 0; idx != s_Process.size; ++idx)
+//    for (int idx = 0; idx != sproc.size; ++idx)
 //        printf("%d ", accumulate[idx]);
 //    putchar('\n');
 

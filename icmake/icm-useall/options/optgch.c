@@ -2,5 +2,5 @@
 
 int optGch()
 {
-    return s_Options.gch;
+    return sopts.gch;
 }

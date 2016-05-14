@@ -25,9 +25,6 @@ typedef struct
     int dry;                // --dry
     int go;                 // --go
 
-    int no_use_all;         // --no-use-all
-    int no_gch;             // --no-gch
-
     int verbose;
 
     char *parser;
@@ -39,7 +36,7 @@ extern char version[];
 extern char years[];
 extern char author[];
 
-extern Options s_Options;
+extern Options sopts;
 
 void oIcmconf();
 void usage(char *progName);

@@ -2,5 +2,5 @@
 
 char const *depUseAll(int idx)
 {
-    return at(s_Dependencies.useAllPaths, idx);
+    return at(sdep.useAllPaths, idx);
 }

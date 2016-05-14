@@ -5,20 +5,20 @@ void d_findDependents()
     d_iniTable();
     d_fillTable();
 
-    int size = s_Dependencies.size;
+    int size = sdep.size;
 
     int **reversed = initTable(size);
-    d_transpose(reversed, s_Dependencies.dependent, size);
+    d_transpose(reversed, sdep.dependent, size);
 
     d_showTable("Dependents:", reversed);
 
-    d_impliedDependencies(s_Dependencies.dependent, size);
-    d_transpose(reversed, s_Dependencies.dependent, size);
+    d_impliedDependencies(sdep.dependent, size);
+    d_transpose(reversed, sdep.dependent, size);
 
-    freeTable(s_Dependencies.dependent, size);
-    s_Dependencies.dependent = reversed;
+    freeTable(sdep.dependent, size);
+    sdep.dependent = reversed;
 
-    d_showTable("Dependents (complete):", s_Dependencies.dependent);
+    d_showTable("Dependents (complete):", sdep.dependent);
 }
 
 

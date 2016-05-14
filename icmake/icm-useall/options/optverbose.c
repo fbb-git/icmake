@@ -2,5 +2,5 @@
 
 int optVerbose()
 {
-    return s_Options.verbose;
+    return sopts.verbose;
 }

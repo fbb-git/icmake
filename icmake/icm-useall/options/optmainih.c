@@ -2,5 +2,5 @@
 
 char const *optMainih()
 {
-    return s_Options.mainih;
+    return sopts.mainih;
 }

@@ -4,7 +4,7 @@ void p_unlinkGch(int idx)
 {
     char const *path = depGch(idx);
 
-    if (s_Process.dry)
+    if (sproc.dry)
         printf("unlink(%s)\n", path);
     else
         unlink(path);

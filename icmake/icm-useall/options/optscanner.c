@@ -2,5 +2,5 @@
 
 char const *optScanner()
 {
-    return s_Options.scanner;
+    return sopts.scanner;
 }

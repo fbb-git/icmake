@@ -2,5 +2,5 @@
 
 int *depGchIndicator()
 {
-    return s_Dependencies.gchIndicator;
+    return sdep.gchIndicator;
 }

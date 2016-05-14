@@ -2,5 +2,5 @@
 
 char const *optUseAll()
 {
-    return s_Options.use_all;
+    return sopts.use_all;
 }

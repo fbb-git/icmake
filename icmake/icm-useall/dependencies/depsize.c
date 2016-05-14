@@ -2,5 +2,5 @@
 
 int depSize()
 {
-    return s_Dependencies.size;
+    return sdep.size;
 }

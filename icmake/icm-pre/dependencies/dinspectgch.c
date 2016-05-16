@@ -4,7 +4,7 @@ void dInspectGch(int idx, char const *hdr)
 {
     if 
     (
-        sdep.d_gch == 0                // no gch tests
+        sdep.d_gch == NO_GCH          // no gch tests
         ||
         sdep.d_gchIndicator[idx] == 1 // or already decided to recomp.
     )
@@ -16,7 +16,12 @@ void dInspectGch(int idx, char const *hdr)
         exit(1);
     }
 
-    if (rss_older(sdep.d_currentGch, hdr))
+    if (!rss_exists(sdep.d_currentGch))
+    {
+        optMsg(2, "compile non-existing %s", sdep.d_currentGch);
+        sdep.d_gchIndicator[idx] = 1;
+    }
+    else if (rss_older(sdep.d_currentGch, hdr))
     {
         optMsg(2, "%s older %s", sdep.d_currentGch, hdr);
                                 // recompile if gch is older than a req'd hdr

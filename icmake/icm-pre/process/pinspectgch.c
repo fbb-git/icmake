@@ -12,9 +12,16 @@ void pInspectGch(int *rm, int idx)
         if (!dep[idx] || rm[idx])
             continue;
 
-        if (!rss_exists(gch) || rss_younger(gch, depGch(idx)))
+        char const *dependent = depGch(idx);
+
+        if (!rss_exists(dependent))
         {
-            optMsg(2, "recompile %s (older %s)", gch, depGch(idx));
+            optMsg(2, "compile non-existing %s", dependent);
+            rm[idx] = 1;
+        }
+        else if (rss_younger(gch, dependent))
+        {
+            optMsg(2, "recompile %s (older %s)", gch, dependent);
             rm[idx] = 1;
         }
     }

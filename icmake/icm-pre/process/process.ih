@@ -1,0 +1,30 @@
+#include "process.h"
+
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <regex.h>
+
+#include "../../rss/rss.h"
+#include "../util/util.h"
+#include "../options/options.h"
+#include "../dependencies/dependencies.h"
+
+typedef struct 
+{
+    int d_size;    
+    int d_go;
+    int d_gch;
+    char const *d_use_all;
+} Process;
+
+
+extern Process sproc;
+
+void pUseAll();
+void pInspectUseAll(int *touch, int classIdx);
+void pTouch(char const *path);
+
+void pGch();
+void pInspectGch(int *rm, int idx);
+void pUnlinkGch(int idx);

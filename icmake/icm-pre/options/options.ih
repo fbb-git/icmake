@@ -1,0 +1,41 @@
+#include "options.h"
+
+#include <stdarg.h>
+#include <unistd.h>
+#include <getopt.h>
+#include <stdlib.h>
+#include <string.h>
+#include <regex.h>
+
+#include "../../rss/rss.h"
+#include "../util/util.h"
+
+typedef struct 
+{
+    regex_t d_icmconfRE;
+
+    char *d_classes;
+    char *d_icmconf;
+    char *d_mainih;
+    char *d_ih;
+
+    int  d_gch;               // inspect gch files
+    char *d_use_all;          // inspect USE_ALL files
+
+    int d_go;                
+        
+    int d_verbose;
+
+    char *d_parser;
+    char *d_scanner;
+} Options;
+        
+
+extern char version[];
+extern char years[];
+extern char author[];
+
+extern Options sopts;
+
+void oIcmconf(char *argv0);
+void usage(char *progName);

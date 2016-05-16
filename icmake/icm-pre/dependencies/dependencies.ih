@@ -1,0 +1,50 @@
+#include "dependencies.h"
+
+#include <string.h>
+#include <regex.h>
+
+#include "../../rss/rss.ih"
+
+#include "../util/util.h"
+#include "../vector/vector.h"
+#include "../options/options.h"
+#include "../vector/vector.h"
+
+typedef struct
+{
+    regex_t d_includeRegex;
+
+    Vector *d_dirNames;   // names of directories, first is main's dir. as "."
+    Vector *d_gchPaths;   // paths to gch files, from the project's base dir.
+    Vector *d_useAllPaths;// paths to gch files, from the project's base dir.
+    int d_size;
+
+    int d_gch;                // rm old or implied gch files
+    char const *d_useAll;     // touch useAll files
+    char *d_currentGch;
+
+    int *d_gchIndicator;      // indicators of gch files to recompile
+    int *d_useAllExists;   // indicators of existing useAllFiles
+
+    int **d_dependent;    // X-table of dependencies: the column classes depend 
+                        // on the row classes.
+} Dependencies;
+
+extern Dependencies sdep;
+
+char const *dIhFile(int idx);
+
+void dCheckUseAll(int idx);
+void dClosure(int *indicator, int row, int **data, int size);
+void dFillTable();
+void dFindDependents();
+void dHandleInclude(int idx, Vector *toDo, char const *line, char const *hdr);
+void dImpliedDependencies(int **data, int size);
+void dIniTable();
+void dInspectFile(int idx, Vector *toDo, int toDoIdx);
+void dInspectGch(int idx, char const *hdr);
+void dInspectIH(int idx, char const *ihFile);
+void dReadClasses();
+void dShowTable(char const *label, int *const *const indices);
+void dTranspose(int **dest, int **src, int size);
+

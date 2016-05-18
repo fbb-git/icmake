@@ -905,7 +905,7 @@ void main()
         Returns a substring of tt(text), starting at tt(offset), consisting of
         tt(count) characters. If tt(offset) exceeds (or equals) the string's
         size or if tt(count <= 0), then an empty string is returned. If
-        tt(offset) is less than 0 then 0 is used. 
+        tt(offset) is less than 0 then tt(offset = 0) is used. 
 
     itt(int system(string command))nl()
        Executes tt(command). The return value indicates the executed

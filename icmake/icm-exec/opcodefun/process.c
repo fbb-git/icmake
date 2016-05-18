@@ -8,7 +8,8 @@
         is taken until an {\em op\_ret} opcode is encountered.
 */
 
-/* #define msg
+/* 
+#define msg
 */
 
 #include "opcodefun.ih"

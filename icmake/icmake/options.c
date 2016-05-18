@@ -21,7 +21,7 @@ void options(int argc, char **argv)
     
     while (!ready)
     {
-        int c = getopt(argc, argv, "ac:e:fFhi:t:T:p:quv");
+        int c = getopt(argc, argv, "ac:e:fFhi:t:T:p:Pqv");
 
         switch (c)
         {
@@ -67,13 +67,13 @@ void options(int argc, char **argv)
                 optPreProcess(argv);
             break;
 
+            case 'P':
+                flags |= f_doIcmPre;
+            return;
+
             case 'q':
                 /* ignored, but kept to prevent breaking existing scripts */
             break;
-
-            case 'u':
-                flags |= f_doUseAll;
-            return;
 
             case 'v':
                 printf("%s V%s\n", program, version);

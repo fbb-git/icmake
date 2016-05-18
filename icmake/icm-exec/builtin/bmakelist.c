@@ -22,6 +22,10 @@
 
 */
 
+/*
+#define msg
+*/
+
 #include "builtin.ih"
 
 static  int accept(char const *lhs, char const *rhs) 
@@ -31,6 +35,8 @@ static  int accept(char const *lhs, char const *rhs)
 
 void b_makeList()
 {
+    msg("starting");
+
     int opcode = int_value(stack_top());    // op_hlt/op_younger/op_older
     
     char const *name = string_charp(stack_top() - 2);   // filemask string 
@@ -44,6 +50,8 @@ void b_makeList()
             fname[MAX_PATHLEN],
             ext[MAX_PATHLEN],
             newname[MAX_PATHLEN];
+
+        msg("name is %s", name);
 
         unsigned attrib = int_value(stack_top() - 1); // attribute to match
 
@@ -75,5 +83,6 @@ void b_makeList()
         }
         list_sort(&gb_reg);
     }
+    msg("ending");
 }
 

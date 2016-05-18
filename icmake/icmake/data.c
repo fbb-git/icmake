@@ -1,6 +1,6 @@
 #include "icmake.ih"
 
-char icm_useall[]   = LIBDIR "/icm-useall";
+char icm_pre[]   = LIBDIR "/icm-pre";
 char icm_comp[]     = LIBDIR "/icm-comp";
 char icm_exec[]     = LIBDIR "/icm-exec";
 char icm_pp[]       = LIBDIR "/icm-pp";

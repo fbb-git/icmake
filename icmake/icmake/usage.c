@@ -36,6 +36,7 @@ void usage(char const *program)
         "               .bim-filename is used and the .bim file is kept;\n"
         "               remaining arguments are passed to icm-exec\n"
         "      -p     : only the preprocessor is activated\n"
+        "      -P     : call icm-pre, passing it the remaining arguments\n"
         "      -t     : the filename following -t is the name of the "
                                                                 "compiled\n"
         "               .bim-file (removed on exit). The first argument is "
@@ -50,7 +51,6 @@ void usage(char const *program)
                                                                 "HOME\n"
         "               directory if /tmp is not writable. When used, -T is\n"
         "               usually specified as icmake's first option\n"
-        "      -u     : call icmall, passing it the remaining arguments\n"
         "      -v     : display ",
             program,
                    "'s version number and end ",

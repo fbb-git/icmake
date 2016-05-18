@@ -2,10 +2,10 @@
 
 #include "icmake.ih"
 
-void useAll(char **argv)
+void icmPre(char **argv)
 {
-    *argv = icm_useall;
+    *argv = icm_pre;
     execvp(*argv, (char *const *)argv);
 
-    rss_spawnErr(icm_useall);
+    rss_spawnErr(icm_pre);
 }

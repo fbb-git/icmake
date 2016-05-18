@@ -11,7 +11,8 @@
     pointers, files {\em opcodefun.ih} and {\em data.c}).
 */
 
-/* #define msg
+/* 
+#define msg
 */
 
 #include "opcodefun.ih"

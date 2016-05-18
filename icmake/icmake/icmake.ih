@@ -35,13 +35,13 @@ typedef enum
     f_doPreProcess  =   (1 << 10),      /* action flags         */
     f_doCompile     =   (1 << 11),
     f_doExec        =   (1 << 12),
-    f_doUseAll      =   (1 << 13),
+    f_doIcmPre      =   (1 << 13),
     f_force         =   (1 << 14),
     f_showFlags     =   (1 << 15)
 
 } FLAGS_;
 
-extern char icm_useall[];
+extern char icm_pre[];
 extern char icm_comp[];
 extern char icm_exec[];
 extern char icm_pp[];
@@ -74,7 +74,7 @@ void    about(char const *program);         /* about icmake */
 void    execute(char **argv);
 void    preProcess(void);
 void    compile(void);
-void    useAll(char **argv);
+void    icmPre(char **argv);
 
 char   *accessFile(char const *file, char const *ext); /* returns copy of file
                                                 or file.ext, or error if 

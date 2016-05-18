@@ -8,8 +8,8 @@ int main(int argc, char **argv)
 {
     options(argc, argv);
 
-    if (flags & f_doUseAll)
-        useAll(argv + optind - 1);
+    if (flags & f_doIcmPre)
+        icmPre(argv + optind - 1);
 
     atexit(cleanup);
 

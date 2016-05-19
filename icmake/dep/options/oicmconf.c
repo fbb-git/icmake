@@ -10,8 +10,6 @@ void oIcmconf(char *argv0)
     FILE *in = openFile(sopts.d_icmconf, "r");
 
     char *line;
-    int count = 0;
-
     while ((line = getLine(in)))
     {
         Vector const *vector = regMatch(&sopts.d_icmconfRE, line);

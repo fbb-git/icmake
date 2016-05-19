@@ -36,7 +36,7 @@ void usage(char const *program)
         "               .bim-filename is used and the .bim file is kept;\n"
         "               remaining arguments are passed to icm-exec\n"
         "      -p     : only the preprocessor is activated\n"
-        "      -P     : call icm-pre, passing it the remaining arguments\n"
+        "      -P     : call icm-dep, passing it the remaining arguments\n"
         "      -t     : the filename following -t is the name of the "
                                                                 "compiled\n"
         "               .bim-file (removed on exit). The first argument is "

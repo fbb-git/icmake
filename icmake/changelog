@@ -1,5 +1,8 @@
 icmake (9.00.00)
 
+* Added support program icm-dep computing dependencies for USE_ALL classes and
+  precompiled headers, called from /usr/bin/icmbuild
+
 * Changed references to IS_* into O_* in icmake(1)'s man-page. The IS_ entries
   were already unavailable, but the man-page still referred to them. Now
   fixed. 
@@ -7,11 +10,6 @@ icmake (9.00.00)
  * Contents of lines in CLASSES beyond the first word are no longer
    interpreted.
 
- * Added /usr/lib/icmake/icm-useall to compute class dependencies, and (if
-   icmconf defined USE_ALL) to touch USE_ALL files in directories depending on
-   directories containing USE_ALL files.
-
- * Added ICMALL entry to icmconf 
 
 
 icmake (8.01.00)

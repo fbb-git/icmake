@@ -74,7 +74,7 @@ void    about(char const *program);         /* about icmake */
 void    execute(char **argv);
 void    preProcess(void);
 void    compile(void);
-void    icmPre(char **argv);
+void    icmDep(char **argv);
 
 char   *accessFile(char const *file, char const *ext); /* returns copy of file
                                                 or file.ext, or error if 

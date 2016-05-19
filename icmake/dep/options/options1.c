@@ -111,6 +111,12 @@ void OptionsCons(int argc, char **argv)
                 if (sopts.d_go == UNSPECIFIED)
                     usage(argv[0]);
 
+                if (!rss_exists(sopts.d_classes))
+                {
+                    optMsg(1, "No file '%s'", sopts.d_classes);
+                    exit(0);
+                }
+
                 oIcmconf(argv[0]);
             return;
         }

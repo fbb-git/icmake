@@ -8,14 +8,14 @@ void dReadClasses()
     add(sdep.d_dirNames, ".");
 
     char const *cp;
-    if (cp = optParser())
+    if ((cp = optParser()))
         add(sdep.d_dirNames, cp);
 
-    if (cp = optScanner())
+    if ((cp = optScanner()))
         add(sdep.d_dirNames, cp);
 
     char *line;
-    while (line = getLine(classes))                // get line from CLASSES
+    while ((line = getLine(classes)))               // get line from CLASSES
     {
         char *class = strtok(line, " \t");          // pick the first word
 

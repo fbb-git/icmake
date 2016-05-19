@@ -21,13 +21,13 @@ fi
 . tmp/INSTALL.sh
 
 
-for target in rss icmake icmun icm-pp icm-comp icm-exec icm-useall
+# build icmake and its support programs
+for target in rss icmake un pp comp exec dep
 do
     cd $target
     ./icm_bootstrap
     cd ..
 done
-
 
 echo ./scripts to ./tmp
 cp scripts/icmbuild.in scripts/icmstart.in tmp/

@@ -9,7 +9,7 @@ int main(int argc, char **argv)
     options(argc, argv);
 
     if (flags & f_doIcmPre)
-        icmPre(argv + optind - 1);
+        icmDep(argv + optind - 1);
 
     atexit(cleanup);
 

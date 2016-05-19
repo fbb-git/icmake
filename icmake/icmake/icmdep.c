@@ -2,7 +2,7 @@
 
 #include "icmake.ih"
 
-void icmPre(char **argv)
+void icmDep(char **argv)
 {
     *argv = icm_pre;
     execvp(*argv, (char *const *)argv);

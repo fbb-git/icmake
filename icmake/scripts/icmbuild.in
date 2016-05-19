@@ -149,7 +149,6 @@ list patternList(string pattern)
     }
 #endif
 
-
 int isEmpty(string line)        // needs stripped line
 {
     return strlen(line) == 0 || line[0] == "#" || strfind(line, "//") == 0;
@@ -197,20 +196,6 @@ list nextCLASSESline() // return entries of CLASSES as a list
     return strtok(ret, " \t");
 }
 
-#ifdef USE_ALL
-void checkALL()
-{
-    #ifdef ICMALL
-        if (! ICMALL)       // empty ICMALL definition: no go
-            return;
-
-        exec(P_NOCHECK, "icmake -u " ICMALL);
-    #else
-        exec(P_NOCHECK, "icmake -u  @.h @.ih");
-    #endif // ICMALL
-}   
-#endif  // USE_ALL
-    
 void setClasses()
 {
 
@@ -235,12 +220,6 @@ void setClasses()
     // stores its dependencies.
 
     g_nClasses = listlen(g_classes);
-
-    // g_classes has been defined. checkALL creates the file ALL in all 
-    // directories depending on classes containing the file ALL
-    #ifdef USE_ALL
-        checkALL();
-    #endif
 }
 
 list inspect(string destDir, 
@@ -365,14 +344,7 @@ void precompile(string class)
 {
 #ifdef PRECOMP
     string classIH = class + IH;
-    string classGCH = classIH + ".gch";
-
-    #ifdef USE_ALL
-        if (exists(USE_ALL))
-            system(P_NOCHECK, "rm -f " + classGCH);
-    #endif
-
-    if (class + ".h" younger classGCH || classIH younger classGCH)
+    if (!exists(classIH + ".gch"))
         system(g_compiler + " " PRECOMP " " + classIH);
 #endif
 }
@@ -548,7 +520,7 @@ void strip_shared()
 void rmUSE_ALLfiles()
 {
     echo(OFF);
-        system("rm -f */" USE_ALL " " USE_ALL);
+    exec("find ./ -name " + USE_ALL + " -exec rm '{}' \\;");
     echo(USE_ECHO);
 }
 #endif
@@ -710,8 +682,9 @@ void main(int argc, list argv, list envp)
     if (g_command == "install")
         install(argv[2], argv[3]);
 
-    string option;
+    exec("/usr/lib/icmake/icm-dep", "-V", "--go");
 
+    string option;
     if (listfind(g_buildprog, g_command) != -1)
     {
         clearScreen(cls);

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+. ../bootstrap/functions
+. ../bootstrap/flags
+
+echo Creating tmp/${LIBDIR}/icm-dep
+build icm-dep vector util options dependencies process
+
+
+
+
+
+
+
+
+
+

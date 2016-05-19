@@ -10,7 +10,8 @@
 3. To prepare for the compilations of the programs, run 
                 ./icm_prepare /
 
-3. Compile the various programs:
+3. Compile the various programs (x is a dummy argument required by
+   ./icm_bootstrap to run):
                 ./icm_bootstrap x
 
 4. As root: install the programs and documentation:

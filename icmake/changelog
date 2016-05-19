@@ -1,7 +1,11 @@
 icmake (9.00.00)
 
 * Added support program icm-dep computing dependencies for USE_ALL classes and
-  precompiled headers, called from /usr/bin/icmbuild
+  precompiled headers, called from /usr/bin/icmbuild, or directly using
+  icmake's option --icm-dep (-d)
+
+ * Icmake supports several long options in addition to the standard short
+   options. See icmake(1) for details.
 
 * Changed references to IS_* into O_* in icmake(1)'s man-page. The IS_ entries
   were already unavailable, but the man-page still referred to them. Now
@@ -10,7 +14,13 @@ icmake (9.00.00)
  * Contents of lines in CLASSES beyond the first word are no longer
    interpreted.
 
+ * Option -b was removed from icmake.
 
+ * The built-in function makelist(mask, [younger,older], referencefile) is now
+   operational (was mentioned in icmake's man-page, but wasn't implemented
+   before).
+
+ * Repaired a bug in substr that could segfault.
 
 icmake (8.01.00)
 

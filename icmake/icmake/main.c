@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 {
     options(argc, argv);
 
-    if (flags & f_doIcmPre)
+    if (flags & f_doIcmDep)
         icmDep(argv + optind - 1);
 
     atexit(cleanup);

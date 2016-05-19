@@ -5,6 +5,7 @@
 #include <signal.h>
 #include <string.h>
 #include <stdlib.h>
+#include <getopt.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -35,7 +36,7 @@ typedef enum
     f_doPreProcess  =   (1 << 10),      /* action flags         */
     f_doCompile     =   (1 << 11),
     f_doExec        =   (1 << 12),
-    f_doIcmPre      =   (1 << 13),
+    f_doIcmDep      =   (1 << 13),
     f_force         =   (1 << 14),
     f_showFlags     =   (1 << 15)
 

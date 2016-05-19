@@ -8,6 +8,15 @@ DEFINEMACRO(sop)(3)(\
     it() bf(-ARG1) ARG2 nl()ARG3\
 )
 
+DEFINEMACRO(lsoption)(3)(\
+    bf(--ARG1) (bf(-ARG2))nl()ARG3)\
+)
+
+COMMENT(
+DEFINEMACRO(lsoption)(4)(\
+    bf(--ARG1)=tt(ARG3) (bf(-ARG2))nl()ARG4)\
+END)
+
 DEFINEMACRO(itt)(1)(\
     it()tt(ARG1)\
 )
@@ -86,22 +95,29 @@ overrules all other options, the tt(-a) option overrules all other options
 except for tt(-h). Of the remaining action options (tt(-b, -c, -e, -i, -p) and
 tt(-t)) only one may be specified:
     itemization(
-    sop(a)()(show information about icm(), overruled by tt(-h);)
-    sop(b)()(discontinued: use option -e instead;)
-    sop(c)()(the icm() source file is compiled, generating a .bim file;)
-    sop(e)()(execute the icm() .bim file, given as icm()'s first file
+    lsoption(about)(a)(show information about icm(), overruled by tt(-h);)
+    lsoption(compile)(c)
+            (the icm() source file is compiled, generating a .bim file;)
+    lsoption(execute)(e)
+            (execute the icm() .bim file, given as icm()'s first file
         argument. Any additional arguments are passed to the .bim file as-is,
         and tt(--) should not be specified;) 
-    sop(F)()(the filenames and flags as well as an overview of all actions to
+    lsoption(icm-dep)(d)
+            (calls tt(/usr/lib/icmake/icm-dep), passing it all remaining
+        arguments. If no additional arguments are specified tt(icm-dep's)
+        short usage information is shown to the std. output stream)
+    lsoption(summary)(F)
+            (the filenames and flags as well as an overview of all actions to
         be performed by icm() are shown on the standard output stream;)
-    sop(h)()(provide usage info and end icm();)
-    sop(i)()(the first argument is the icm() source file, the default binary
+    lsoption(help)(h)(provide usage info and end icm();)
+    lsoption(source)(i)
+            (the first argument is the icm() source file, the default binary
         file is constructed if necessary. Any additional arguments are passed
         to the .bim file as-is, and tt(--) should not be specified;)
-    sop(p)()(the icm() source file is only preprocessed, and the preprocessed
+    lsoption(preprocess)(p)
+            (the icm() source file is only preprocessed, and the preprocessed
         file is written to icm()'s second
         file argument (by default tt(`source'.pim));)
-    sop(q)()(ignored, will be removed in a future icm() version;)
     sop(t)()(the argument following tt(-t) is the name of a temporary .bim
         file, which is removed after icm()'s call. When tt(.) is specified as
         the name of the temporary .bim file then the default temporary
@@ -129,7 +145,7 @@ tt(-t)) only one may be specified:
         not a writable directory, in which case the current user's tt($HOME)
         directory is used. Implicit temporary filenames always start with the
         process id of the current icm() process.)
-    sop(v)()(display icm()'s version number, and end icm(), 
+    lsoption(version)(v)(display icm()'s version number, and end icm(), 
             overruled by tt(-h))
     )
 

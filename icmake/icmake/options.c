@@ -2,6 +2,20 @@
 
 #include "icmake.ih"
 
+static struct option longOpts[] = 
+{
+    {"about",       no_argument,        NULL, 'a'},
+    {"compile",     required_argument,  NULL, 'c'},
+    {"execute",     required_argument,  NULL, 'e'},
+    {"icm-dep",     no_argument,        NULL, 'd'},
+    {"help",        no_argument,        NULL, 'h'},
+    {"preprocess",  required_argument,  NULL, 'p'},
+    {"source",      required_argument,  NULL, 'i'},
+    {"summary",     no_argument,        NULL, 'F'},
+    {"version",     no_argument,        NULL, 'v'},
+    {NULL}
+};
+
     /*
         process all std options or perform -h and -a actions
         see README.options for an overview of actions
@@ -21,7 +35,8 @@ void options(int argc, char **argv)
     
     while (!ready)
     {
-        int c = getopt(argc, argv, "ac:e:fFhi:t:T:p:Pqv");
+        int c = getopt_long(argc, argv, "ac:de:fFhi:p:qt:T:v",
+                            longOpts, NULL);
 
         switch (c)
         {
@@ -32,6 +47,10 @@ void options(int argc, char **argv)
             case 'c':
                 optCompile(argv);
             break;
+
+            case 'd':
+                flags |= f_doIcmDep;
+            return;
 
             case 'e':
                 optExecute();
@@ -66,10 +85,6 @@ void options(int argc, char **argv)
             case 'p':
                 optPreProcess(argv);
             break;
-
-            case 'P':
-                flags |= f_doIcmPre;
-            return;
 
             case 'q':
                 /* ignored, but kept to prevent breaking existing scripts */

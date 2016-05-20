@@ -40,6 +40,11 @@ progs()
     try mkdir -p $INSTALLDIR/${BINDIR} $INSTALLDIR/${LIBDIR}
 
     try cp -r tmp/${BINDIR}/icmake tmp/${BINDIR}/icmun $INSTALLDIR/${BINDIR}
+
+    if [ -e $INSTALLDIR/${LIBDIR}/icm-exec ] ; then
+	try rm $INSTALLDIR/${LIBDIR}/icm-exec 
+    fi
+
     try cp -r tmp/${LIBDIR}/* $INSTALLDIR/${LIBDIR}
 }
 

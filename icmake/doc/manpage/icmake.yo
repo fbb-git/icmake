@@ -9,13 +9,8 @@ DEFINEMACRO(sop)(3)(\
 )
 
 DEFINEMACRO(lsoption)(3)(\
-    bf(--ARG1) (bf(-ARG2))nl()ARG3)\
+    bf(--ARG1) (bf(-ARG2))nl()ARG3\
 )
-
-COMMENT(
-DEFINEMACRO(lsoption)(4)(\
-    bf(--ARG1)=tt(ARG3) (bf(-ARG2))nl()ARG4)\
-END)
 
 DEFINEMACRO(itt)(1)(\
     it()tt(ARG1)\
@@ -394,7 +389,7 @@ file tt(b). E.g., tt("source.cc" newer "source.o"). The files tt(a) and tt(b)
 do not have to exist: if both don't exist 0 is returned; if tt(b) doesn't
 exist, 1 is returned; if tt(a) doesn't exist 0 is returned; if they are
 equally old 0 is returned. (the tt(exists()) predefined function (see below,
-section bf(PREDEFINED FUNCTIONS)) can be used to test explicity whether a file
+section bf(PREDEFINED FUNCTIONS)) can be used to test explicitly whether a file
 exists).
 
     itt(a older b): turns 1 if file tt(a) is older than file tt(b). E.g.,
@@ -525,7 +520,7 @@ used as in the bf(C) programming language.
         Inside the condition a variable may be defined and initialized.nl()
         A complementary  tt(do ... while()) statement is not available. Note
         that defining a variable, using an initialization expression means
-        that the intialization expressing is executed at each iteration of the
+        that the initialization expressing is executed at each iteration of the
         tt(while) statement. So the following statement will never end, and
         will display a never ending stream of values 10:
        verb(

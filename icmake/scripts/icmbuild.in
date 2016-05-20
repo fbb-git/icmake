@@ -606,11 +606,11 @@ void clearScreen(int cls)
         system("tput clear");
 }
 
-void usage(string prog)
+void usage()
 {
-    printf("Usage: ", prog, " [-h] [-c] args\n"
-        "   -h              - Disply this help-information and end ",
-                                                    prog, "\n"
+    printf("Usage: icmbuild [-h] [-c] args\n"
+        "   -h              - Disply this help-information and end "
+                                                            "icmbuild\n"
         "   -c              - Do 'tput clear' (clear screen) just before\n"
         "                     processing 'args'\n"
         "   args - select from:\n"
@@ -650,10 +650,8 @@ void main(int argc, list argv, list envp)
 
     g_command = argv[1];
 
-    string prog = change_ext(change_path(argv[0], ""), "");
-
     if (g_command == "-h")
-        usage(prog);
+        usage();
 
     int cls;
     if (g_command == "-c")
@@ -713,5 +711,5 @@ void main(int argc, list argv, list envp)
         return;
     }
 
-    usage(prog);
+    usage();
 }

@@ -57,21 +57,24 @@ operation mode, it calls the following programs:
 
     Icm() allows programmers to use a programming language (closely resembling
 the well-known bf(C)-programming language) to define the actions that are
-involved in (complex) program maintenance. For this, icm() offers various
-special operators as well as a set of support functions that have proven to be
-useful in program maintenance.
+required for (complex) program maintenance. For this, icm() offers various
+special operators as well as a set of support functions that have shown their
+usefulness in program maintenance.
 
     The program bf(icmun)(1) can be used to disassemble the compiled byte-code
-(.bim) file. tt(Icmun) is primarily used for illustration, education, and
+(.bim) file. tt(Icmun) is mainly used for illustration, education, and
 debugging.
 
 Traditional make-utilities recompile sources once header files are
-modified. In the context of bf(C++) program development this is often a bad
-idea, as adding a new member to a class does not normally require you to
-recompile the class's sources. To handle class dependencies bf(icmbuld)(1) may
-inspect tt(CLASSES) files that can be used to define dependencies among
-classes. By default, class-dependencies are not interpreted. Refer to the
-bf(icmconf)(7) man-page for further details.
+modified. When developing bf(C++) programs this is often a bad idea, as adding
+a new member to a class does not normally require you to recompile all of the
+class's source files. To handle class dependencies bf(icmbuld)(1) may inspect
+class dependencies, (re)compiling sources of dependent classes whenever
+necessary.  By default, class-dependencies are not interpreted. Refer to the
+bf(icmconf)(7) man-page for further details. In addition, precompiled header
+files may be used. Precompiled header files dramatically reduce the time that
+is required for compiling classes' source files. Again: by default precompiled
+header files are not used.
 
 manpageoptions()
 
@@ -1038,9 +1041,12 @@ icm()-installations:
     itemization(
     it() bf(/usr/bin/icmake): the main icm() program;
     it() bf(/usr/bin/icmun): the icm() unassembler;
-    it() bf(/usr/lib/icm-pp): the preprocessor called by icm();
-    it() bf(/usr/lib/icm-comp): the compiler called by icm();
-    it() bf(/usr/lib/icm-exec): the byte-code interpreter called by icm();
+    it() bf(/usr/lib/icmake/icm-dep): the support program handling class- and
+            precompiled header dependencies;
+    it() bf(/usr/lib/icmake/icm-pp): the preprocessor called by icm();
+    it() bf(/usr/lib/icmake/icm-comp): the compiler called by icm();
+    it() bf(/usr/lib/icmake/icm-exec): the byte-code interpreter called by
+            icm(); 
     )
 
 manpagesection(EXAMPLES)

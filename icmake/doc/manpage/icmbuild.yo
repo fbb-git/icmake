@@ -55,9 +55,9 @@ library, against which the main-object module is linked. It is also possible
 to specify additional libraries against which the program must be linked.
 
 If a library is constructed it is kept up to date by icb(). When a source is
-successfully compiled its new object module will replace the old one that is
-found in the library. At that point the object files are no longer required
-and are removed by icb().
+successfully compiled its new object module replaces the old one that is found
+in the library. At that point the object files are no longer required and are
+removed by icb().
 
 manpagesection(KICK-STARTING ICMBUILD)
 
@@ -81,7 +81,7 @@ To use icb() do as follows:
        collisions (e.g., two classes might use a file tt(data.cc)) and thus
        replacement of a file tt(x.o) from class tt(A) by file tt(x.o) from
        class tt(B) is prevented;
-    it() Now simply run 
+    it() Now (after configuring tt(icmconf)) simply run 
         verb(
             icmbuild -h
         )

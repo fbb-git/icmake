@@ -1,4 +1,4 @@
-.TH "icmconf" "7" "1992\-2016" "icmake\&.8\&.01\&.00\&.tar\&.gz" "configuration file for \fBicmbuild\fP(1)"
+.TH "icmconf" "7" "1992\-2016" "icmake\&.9\&.00\&.00\&.tar\&.gz" "configuration file for \fBicmbuild\fP(1)"
 
 .PP 
 .SH "NAME"
@@ -9,9 +9,9 @@ program maintenance script
 
 .PP 
 The \fIicmconf\fP configuration file is used to specify and fine\-tune the
-characteristics of program maintenance performed by the \fBicmbuild\fP(1) 
-script\&. It can be used to activate and specify various directives that
-determine how the program or library maintenance is performed\&. 
+program maintenance performed by the \fBicmbuild\fP(1) script\&. It can be used to
+activate and specify various directives that determine how the program or
+library maintenance is performed\&.
 .PP 
 The directives are biased towards the construction of a \fBC++\fP program, but
 program maintenance for other languages (e\&.g\&., \fBC\fP) can also easily be
@@ -32,92 +32,24 @@ adding a new member function to a class does not require you to recompile
 already existing source files\&. Recompilation \fIis\fP required when modifying
 the data member organization of classes\&. 
 .PP 
-To handle class dependencies in a more sensible way, \fBicmake\fP(1)\(cq\&s
-\fICLASSES\fP file may define dependencies among classes\&.
+To handle class dependencies in a more sensible way, \fBicmake\fP(1) checks
+class dependencies using its support program \fI/usr/lib/icmake/icm\-dep\fP,
+visiting the classes listed in the \fICLASSES\fP file if \fIicmconf\(cq\&s USE_ALL\fP
+directive was specified\&. If a directory mentioned in the \fICLASSES\fP file
+contains a file having a name that\(cq\&s equal to the name specified at the
+\fIUSE_ALL\fP parameter, then all sources of classes that depend on that
+particular class are also recompiled\&.
 .PP 
-By default, class\-dependencies are not interpreted\&. To activate
-class\-dependencoes recognition then the line
-.nf 
-
-//#define USE_ALL             \(dq\&a\(dq\&
-    
-.fi 
-in the \fIicmconf\fP file must be uncommented:
-.nf 
-
-#define USE_ALL             \(dq\&a\(dq\&
-    
-.fi 
-
+Likewise, if the \fIPRECOMP\fP parameter was specified, then a similar action is
+performed for the precompiled headers: if a local header file that\(cq\&s (directly
+or indirectly) included by a class\(cq\&s internal header file has changed, then
+that class\(cq\&s precompiled header as well as all precompiled headers of
+dependent classes are recompiled\&.
 .PP 
-If a class Y depends on class X as in:
-.nf 
-
-  class Y: public X
-    {
-        \&.\&.\&.
-    };
-        
-.fi 
-or as in:
-.nf 
-
-    class Y 
-    { 
-        X d_y; 
-        \&.\&.\&.
-    };
-        
-.fi 
-then the sources of class Y should be recompiled if X\(cq\&s data organization
-has changed\&. In such cases Y depends on X\&. 
-.PP 
-Such class dependencies can be specified in the CLASSES file using the
-form: 
-.nf 
-
-  y   x
-    
-.fi 
-where x and y are the names of the directories in which the respective class
-sources are found\&. If \fIicmconf\fP contains a line
-.nf 
-
-#define USE_ALL \(dq\&a\(dq\&
-    
-.fi 
-then, after modifying X\(cq\&s data organization, do \(cq\&touch x/a\(cq\&, followed by
-\(cq\&icmbuild program\(cq\&\&. Icmbuild now compiles all of x\(cq\&s sources as well as
-the sources in directories (in)directly depending on x (in the example: the
-sources in the y directory)\&.
-.PP 
-Multiple dependencies can also be specified\&. If the class organization looks
-like this:
-.nf 
-
-    class Z: public Y
-    {
-        X d_x;
-    };
-        
-.fi 
-then Z depends on both Y and X\&. In the CLASSES file this is configured
-like this:
-.nf 
-
-    z   x   y
-        
-.fi 
-Indirect dependencies are automatically recognized\&. After changing X\(cq\&s data
-organization where CLASSES contains the lines
-.nf 
-
-    x
-    y   x
-    z   y
-        
-.fi 
-then \fIicmbuild\fP recompiles all source files in directories x, y and z\&.
+The \fBicmbuild\fP(1) script itself does not inspect these dependencies, but
+calls \fI/usr/lib/icmake/icm\-dep\fP to perform the requird tests\&. The program
+\fIicm\-dep\(cq\&s\fP short usage summary is written to the standard output stream
+when calling \fIicmake \-d\fP (or directly: \fI/usr/lib/icmake/icm\-dep\fP)\&.
 .PP 
 .SH "ICMCONF PARAMETERS"
 
@@ -242,7 +174,11 @@ The extension of object modules created by the compiler\&.
 .br 
 When activated internal header files (see \fI#define IH\fP) are
 precompiled when they are more recent than their precompiled
-versions\&. They are removed again by \fIicmbuild clean\fP\&. To specify
+versions\&. Also, when a precompiled header file is (re)compiled the
+precompiled header files of all dependent classes are also
+recompiled\&. 
+.IP 
+Precompiled headers are removed by \fIicmbuild clean\fP\&. To specify
 internal header files for other languages change the \fI\-x\fP
 specification accordingly\&. By default this \fI#define\fP is not active\&.
 .IP 
@@ -295,45 +231,17 @@ current working directory unless an absolute path is specified\&.
 .IP o 
 \fB#define USE_ALL     \(dq\&a\(dq\&\fP
 .br 
-After defining this directive (by default it is \fInot\fP defined) a
-class dependency setup defined in the CLASSES file is interpreted\&. In
-this case, when a directory contains a file named at the \fIUSE_ALL\fP
-directive, then all sources of that class as well as all sources of
-all classes depending on it are (re)compiled\&. The program\(cq\&s root
-directory is assumed to depend on all other directories\&.
+After defining this directive (by default it is \fInot\fP defined) class
+dependencies are interpreted\&. In this case, when a directory contains
+a file having a name that\(cq\&s equal to the name specified at the
+\fIUSE_ALL\fP directive, then all sources of that class as well as all
+sources of classes that depend on it are (re)compiled\&. 
 .IP 
-Class dependencies in CLASSES consist of the class name (as the first
-word on a line) optionally followed by additional class names, which
-are the classes on which the line\(cq\&s first class name depends\&. 
+Following the successful recompilations the \fBs\fP specified at
+\fI#define USE_ALL\fP are removed\&.
 .IP 
-Assuming that a program uses five classes \fIOne, Two, Three, Four\fP
-and \fIFive\fP, whose sources are in, respectively, directories \fIone,
-two, three, four\fP, and \fIfive\fP\&. If class \fIThree\fP depends on class
-\fITwo\fP, which in turn depends on class \fIOne\fP, while class \fIFive\fP
-depends on \fIThree\fP and \fIFour\fP, then the file \fICLASSES\fP may
-reflect these dependencies as follows:
-.nf 
-
-    one
-    two     one
-    three   two
-    four
-    five three four 
-       
-.fi 
-Afer touching (creating) the file \fItwo/a\fP (using e\&.g\&., the command
-\fItouch two/a\fP) all sources of the classes \fITwo, Three\fP and \fIFive\fP
-as well as all the sources in the program\(cq\&s root directory are recompiled:
-\fITwo\fP is recompiled because of the existence of \fItwo/a\fP, \fIThree\fP is
-recompiled because it depends on \fITwo\fP, \fIFive\fP is recompiled because it
-depends on \fIThree\fP, the sources in the program\(cq\&s root directory are
-recompiled because at least one directory was recompiled\&.
-.IP 
-Following the recompilations the \fBs\fP specified at \fI#define USE_ALL\fP are
-removed\&.
-.IP 
-When the \fIUSE_ALL\fP directive was defined the command \fIicmbuild clean\fP also
-removes any leftover \fIUSE_ALL\fP files from the program\(cq\&s direct
+When the \fIUSE_ALL\fP directive was specified the command \fIicmbuild
+clean\fP also removes any leftover \fIUSE_ALL\fP files from the program\(cq\&s
 subdirectories\&.
 .IP 
 .IP o 

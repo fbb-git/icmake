@@ -30,9 +30,9 @@ manpagename(icmconf)(Configuration file for the bf(icmbuild)(1)
 manpagedescription()
 
 The tt(icmconf) configuration file is used to specify and fine-tune the
-characteristics of program maintenance performed by the bf(icmbuild)(1) 
-script. It can be used to activate and specify various directives that
-determine how the program or library maintenance is performed. 
+program maintenance performed by the bf(icmbuild)(1) script. It can be used to
+activate and specify various directives that determine how the program or
+library maintenance is performed.
 
 The directives are biased towards the construction of a bf(C++) program, but
 program maintenance for other languages (e.g., bf(C)) can also easily be
@@ -52,74 +52,24 @@ adding a new member function to a class does not require you to recompile
 already existing source files. Recompilation em(is) required when modifying
 the data member organization of classes. 
 
-To handle class dependencies in a more sensible way, bf(icmake)(1)'s
-tt(CLASSES) file may define dependencies among classes.
+To handle class dependencies in a more sensible way, bf(icmake)(1) checks
+class dependencies using its support program tt(/usr/lib/icmake/icm-dep),
+visiting the classes listed in the tt(CLASSES) file if tt(icmconf's USE_ALL)
+directive was specified. If a directory mentioned in the tt(CLASSES) file
+contains a file having a name that's equal to the name specified at the
+tt(USE_ALL) parameter, then all sources of classes that depend on that
+particular class are also recompiled.
 
-By default, class-dependencies are not interpreted. To activate
-class-dependencoes recognition then the line
-    verb(
-//#define USE_ALL             "a"
-    )
-    in the tt(icmconf) file must be uncommented:
-    verb(
-#define USE_ALL             "a"
-    )
+Likewise, if the tt(PRECOMP) parameter was specified, then a similar action is
+performed for the precompiled headers: if a local header file that's (directly
+or indirectly) included by a class's internal header file has changed, then
+that class's precompiled header as well as all precompiled headers of
+dependent classes are recompiled.
 
-
-If a class Y depends on class X as in:
-        verb(
-  class Y: public X
-    {
-        ...
-    };
-        )
- or as in:
-        verb(
-    class Y 
-    { 
-        X d_y; 
-        ...
-    };
-        )
-    then the sources of class Y should be recompiled if X's data organization
-has changed. In such cases Y depends on X. 
-
-    Such class dependencies can be specified in the CLASSES file using the
-form: 
-    verb(
-  y   x
-    ) 
- where x and y are the names of the directories in which the respective class
-sources are found. If tt(icmconf) contains a line
-    verb(
-#define USE_ALL "a"
-    ) 
- then, after modifying X's data organization, do 'touch x/a', followed by
-'icmbuild program'. Icmbuild now compiles all of x's sources as well as
-the sources in directories (in)directly depending on x (in the example: the
-sources in the y directory).
-
-Multiple dependencies can also be specified. If the class organization looks
-like this:
-        verb(
-    class Z: public Y
-    {
-        X d_x;
-    };
-        )
-    then Z depends on both Y and X. In the CLASSES file this is configured
-like this:
-        verb(
-    z   x   y
-        )
-    Indirect dependencies are automatically recognized. After changing X's data
-organization where CLASSES contains the lines
-        verb(
-    x
-    y   x
-    z   y
-        )
-    then tt(icmbuild) recompiles all source files in directories x, y and z.
+The bf(icmbuild)(1) script itself does not inspect these dependencies, but
+calls tt(/usr/lib/icmake/icm-dep) to perform the requird tests. The program
+tt(icm-dep's) short usage summary is written to the standard output stream
+when calling tt(icmake -d) (or directly: tt(/usr/lib/icmake/icm-dep)).
 
 manpagesection(ICMCONF PARAMETERS)
 
@@ -211,7 +161,11 @@ manpagesection(ICMCONF PARAMETERS)
     itb(//#define PRECOMP           "-x c++-header")
        When activated internal header files (see tt(#define IH)) are
         precompiled when they are more recent than their precompiled
-        versions. They are removed again by tt(icmbuild clean). To specify
+        versions. Also, when a precompiled header file is (re)compiled the
+        precompiled header files of all dependent classes are also
+        recompiled. 
+
+        Precompiled headers are removed by tt(icmbuild clean). To specify
         internal header files for other languages change the tt(-x)
         specification accordingly. By default this tt(#define) is not active.
 
@@ -252,44 +206,18 @@ manpagesection(ICMCONF PARAMETERS)
         current working directory unless an absolute path is specified.
 
     itb(#define USE_ALL     "a")
-       After defining this directive (by default it is em(not) defined) a
-        class dependency setup defined in the CLASSES file is interpreted. In
-        this case, when a directory contains a file named at the tt(USE_ALL)
-        directive, then all sources of that class as well as all sources of
-        all classes depending on it are (re)compiled. The program's root
-        directory is assumed to depend on all other directories.
+       After defining this directive (by default it is em(not) defined) class
+        dependencies are interpreted. In this case, when a directory contains
+        a file having a name that's equal to the name specified at the
+        tt(USE_ALL) directive, then all sources of that class as well as all
+        sources of classes that depend on it are (re)compiled. 
 
-        Class dependencies in CLASSES consist of the class name (as the first
-        word on a line) optionally followed by additional class names, which
-        are the classes on which the line's first class name depends. 
+        Following the successful recompilations the file(s) specified at
+        tt(#define USE_ALL) are removed.
 
-        Assuming that a program uses five classes tt(One, Two, Three, Four)
-        and tt(Five), whose sources are in, respectively, directories tt(one,
-        two, three, four), and tt(five). If class tt(Three) depends on class
-        tt(Two), which in turn depends on class tt(One), while class tt(Five)
-        depends on tt(Three) and tt(Four), then the file tt(CLASSES) may
-        reflect these dependencies as follows:
-       verb(
-    one
-    two     one
-    three   two
-    four
-    five three four 
-       ) 
-    Afer touching (creating) the file tt(two/a) (using e.g., the command
-tt(touch two/a)) all sources of the classes tt(Two, Three) and tt(Five)
-as well as all the sources in the program's root directory are recompiled:
-tt(Two) is recompiled because of the existence of tt(two/a), tt(Three) is
-recompiled because it depends on tt(Two), tt(Five) is recompiled because it
-depends on tt(Three), the sources in the program's root directory are
-recompiled because at least one directory was recompiled.
-
-Following the recompilations the file(s) specified at tt(#define USE_ALL) are
-removed.
-
-When the tt(USE_ALL) directive was defined the command tt(icmbuild clean) also
-removes any leftover tt(USE_ALL) files from the program's direct
-subdirectories.
+        When the tt(USE_ALL) directive was specified the command tt(icmbuild
+        clean) also removes any leftover tt(USE_ALL) files from the program's
+        subdirectories.
 
     itb(#define USE_ECHO              ON)
         When specified as tt(ON) (rather than tt(OFF)) commands executed by

@@ -8,7 +8,7 @@ if [ "$action" == "distclean" ] ; then
 fi
 
 if [ "$action" == "clean" ] ; then
-    for dir in rss icm-comp icm-exec icm-pp icmun icmake
+    for dir in rss comp exec pp dep un icmake
     do
         cd $dir
 	echo -n "cd $dir; "
@@ -31,7 +31,7 @@ $0, and specify a base directory as its first command-line argument
     ./icm_prepare $action
 fi
 
-for dir in rss icm-comp icm-exec icm-pp icmun icmake
+for dir in rss comp exec pp dep un icmake
 do
     cd $dir
     echo $dir

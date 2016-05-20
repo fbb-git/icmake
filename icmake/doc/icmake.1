@@ -1,4 +1,6 @@
-.TH "icmake" "1" "1992\-2016" "icmake\&.8\&.01\&.00\&.tar\&.gz" "A program maintenance utility"
+)
+.PP 
+.TH "icmake" "1" "1992\-2016" "icmake\&.9\&.00\&.00\&.tar\&.gz" "A program maintenance utility"
 
 .PP 
 .SH "NAME"
@@ -25,21 +27,24 @@ operation mode, it calls the following programs:
 .PP 
 \fBIcmake\fP allows programmers to use a programming language (closely resembling
 the well\-known \fBC\fP\-programming language) to define the actions that are
-involved in (complex) program maintenance\&. For this, \fBicmake\fP offers various
-special operators as well as a set of support functions that have proven to be
-useful in program maintenance\&.
+required for (complex) program maintenance\&. For this, \fBicmake\fP offers various
+special operators as well as a set of support functions that have shown their
+usefulness in program maintenance\&.
 .PP 
 The program \fBicmun\fP(1) can be used to disassemble the compiled byte\-code
-(\&.bim) file\&. \fIIcmun\fP is primarily used for illustration, education, and
+(\&.bim) file\&. \fIIcmun\fP is mainly used for illustration, education, and
 debugging\&.
 .PP 
 Traditional make\-utilities recompile sources once header files are
-modified\&. In the context of \fBC++\fP program development this is often a bad
-idea, as adding a new member to a class does not normally require you to
-recompile the class\(cq\&s sources\&. To handle class dependencies \fBicmbuld\fP(1) may
-inspect \fICLASSES\fP files that can be used to define dependencies among
-classes\&. By default, class\-dependencies are not interpreted\&. Refer to the
-\fBicmconf\fP(7) man\-page for further details\&.
+modified\&. When developing \fBC++\fP programs this is often a bad idea, as adding
+a new member to a class does not normally require you to recompile all of the
+class\(cq\&s source files\&. To handle class dependencies \fBicmbuld\fP(1) may inspect
+class dependencies, (re)compiling sources of dependent classes whenever
+necessary\&.  By default, class\-dependencies are not interpreted\&. Refer to the
+\fBicmconf\fP(7) man\-page for further details\&. In addition, precompiled header
+files may be used\&. Precompiled header files dramatically reduce the time that
+is required for compiling classes\(cq\& source files\&. Again: by default precompiled
+header files are not used\&.
 .PP 
 .SH "OPTIONS"
 
@@ -65,49 +70,39 @@ below at section \fBUSER DEFINED FUNCTIONS\fP)\&. For some options
 overrules all other options, the \fI\-a\fP option overrules all other options
 except for \fI\-h\fP\&. Of the remaining action options (\fI\-b, \-c, \-e, \-i, \-p\fP and
 \fI\-t\fP) only one may be specified:
-.IP o 
-\fB\-a\fP  
+\fB\-\-about\fP (\fB\-a\fP)
 .br 
 show information about \fBicmake\fP, overruled by \fI\-h\fP;
-.IP o 
-\fB\-b\fP  
-.br 
-discontinued: use option \-e instead;
-.IP o 
-\fB\-c\fP  
+\fB\-\-compile\fP (\fB\-c\fP)
 .br 
 the \fBicmake\fP source file is compiled, generating a \&.bim file;
-.IP o 
-\fB\-e\fP  
+\fB\-\-execute\fP (\fB\-e\fP)
 .br 
 execute the \fBicmake\fP \&.bim file, given as \fBicmake\fP\(cq\&s first file
 argument\&. Any additional arguments are passed to the \&.bim file as\-is,
 and \fI\-\-\fP should not be specified; 
-.IP o 
-\fB\-F\fP  
+\fB\-\-icm\-dep\fP (\fB\-d\fP)
+.br 
+calls \fI/usr/lib/icmake/icm\-dep\fP, passing it all remaining
+arguments\&. If no additional arguments are specified \fIicm\-dep\(cq\&s\fP
+short usage information is shown to the std\&. output stream
+\fB\-\-summary\fP (\fB\-F\fP)
 .br 
 the filenames and flags as well as an overview of all actions to
 be performed by \fBicmake\fP are shown on the standard output stream;
-.IP o 
-\fB\-h\fP  
+\fB\-\-help\fP (\fB\-h\fP)
 .br 
 provide usage info and end \fBicmake\fP;
-.IP o 
-\fB\-i\fP  
+\fB\-\-source\fP (\fB\-i\fP)
 .br 
 the first argument is the \fBicmake\fP source file, the default binary
 file is constructed if necessary\&. Any additional arguments are passed
 to the \&.bim file as\-is, and \fI\-\-\fP should not be specified;
-.IP o 
-\fB\-p\fP  
+\fB\-\-preprocess\fP (\fB\-p\fP)
 .br 
 the \fBicmake\fP source file is only preprocessed, and the preprocessed
 file is written to \fBicmake\fP\(cq\&s second
 file argument (by default \fI`source\(cq\&\&.pim\fP);
-.IP o 
-\fB\-q\fP  
-.br 
-ignored, will be removed in a future \fBicmake\fP version;
 .IP o 
 \fB\-t\fP  
 .br 
@@ -146,8 +141,7 @@ is removed on exit\&. By default \fI/tmp\fP is used, unless \fI/tmp\fP is
 not a writable directory, in which case the current user\(cq\&s \fI$HOME\fP
 directory is used\&. Implicit temporary filenames always start with the
 process id of the current \fBicmake\fP process\&.
-.IP o 
-\fB\-v\fP  
+\fB\-\-version\fP (\fB\-v\fP)
 .br 
 display \fBicmake\fP\(cq\&s version number, and end \fBicmake\fP, 
 overruled by \fI\-h\fP
@@ -1056,10 +1050,10 @@ ll
 
 c.
 symbol~meaning~
-IS_ALL~obtain all directory entries~
-IS_DIR~obtain all directories, including \&. and \&.\&.~
-IS_FILE~obtain a list of files~
-IS_SUBDIR~obtain all subdirectories~
+O_ALL~obtain all directory entries~
+O_DIR~obtain all directories, including \&. and \&.\&.~
+O_FILE~obtain a list of files~
+O_SUBDIR~obtain all subdirectories~
 
 .TE 
 Note that the pattern \fI*\fP will not match hidden entries under Unix\-type
@@ -1226,7 +1220,7 @@ Returns an upper\-case duplicate of \fIs\fP\&.
 Returns a substring of \fItext\fP, starting at \fIoffset\fP, consisting of
 \fIcount\fP characters\&. If \fIoffset\fP exceeds (or equals) the string\(cq\&s
 size or if \fIcount <= 0\fP, then an empty string is returned\&. If
-\fIoffset\fP is less than 0 then 0 is used\&. 
+\fIoffset\fP is less than 0 then \fIoffset = 0\fP is used\&. 
 .IP 
 .IP o 
 \fIint system(string command)\fP
@@ -1365,11 +1359,15 @@ The mentioned paths are sugestive only and may vary over different
 .IP o 
 \fB/usr/bin/icmun\fP: the \fBicmake\fP unassembler;
 .IP o 
-\fB/usr/lib/icm\-pp\fP: the preprocessor called by \fBicmake\fP;
+\fB/usr/lib/icmake/icm\-dep\fP: the support program handling class\- and
+precompiled header dependencies;
 .IP o 
-\fB/usr/lib/icm\-comp\fP: the compiler called by \fBicmake\fP;
+\fB/usr/lib/icmake/icm\-pp\fP: the preprocessor called by \fBicmake\fP;
 .IP o 
-\fB/usr/lib/icm\-exec\fP: the byte\-code interpreter called by \fBicmake\fP;
+\fB/usr/lib/icmake/icm\-comp\fP: the compiler called by \fBicmake\fP;
+.IP o 
+\fB/usr/lib/icmake/icm\-exec\fP: the byte\-code interpreter called by
+\fBicmake\fP; 
 
 .PP 
 .SH "EXAMPLES"

@@ -1,4 +1,4 @@
-.TH "icmbuild" "1" "1992\-2016" "icmake\&.8\&.01\&.00\&.tar\&.gz" "A generic program maintenance script"
+.TH "icmbuild" "1" "1992\-2016" "icmake\&.9\&.00\&.00\&.tar\&.gz" "A generic program maintenance script"
 
 .PP 
 .SH "NAME"
@@ -30,9 +30,9 @@ library, against which the main\-object module is linked\&. It is also possible
 to specify additional libraries against which the program must be linked\&.
 .PP 
 If a library is constructed it is kept up to date by \fBicmbuild\fP\&. When a source is
-successfully compiled its new object module will replace the old one that is
-found in the library\&. At that point the object files are no longer required
-and are removed by \fBicmbuild\fP\&.
+successfully compiled its new object module replaces the old one that is found
+in the library\&. At that point the object files are no longer required and are
+removed by \fBicmbuild\fP\&.
 .PP 
 .SH "KICK\-STARTING ICMBUILD"
 
@@ -61,7 +61,7 @@ collisions (e\&.g\&., two classes might use a file \fIdata\&.cc\fP) and thus
 replacement of a file \fIx\&.o\fP from class \fIA\fP by file \fIx\&.o\fP from
 class \fIB\fP is prevented;
 .IP o 
-Now simply run 
+Now (after configuring \fIicmconf\fP) simply run 
 .nf 
 
             icmbuild \-h

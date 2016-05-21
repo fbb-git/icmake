@@ -2,17 +2,19 @@
 
 #include "icmconf"
 
+#ifndef SHAREDREQ
+#define SHAREDREQ   ""
+#endif
+
 #ifdef USE_VERSION
 #include "VERSION"
 #else
 #define VERSION "0.00.00"
 #endif
 
-#ifndef SHAREDREQ
-#define SHAREDREQ   ""
+#ifndef ICM_DEP
+#define ICM_DEP     "-V --go"
 #endif
-
-//                      NO CONFIGURABLE PARTS BELOW THIS LINE
 
 string  g_command;      // command to execute
 string  g_sources;      // Pattern for the sources to use
@@ -367,6 +369,19 @@ void build_libraries()
 {
     setClasses();
 
+#ifdef PARSER_DIR
+    if (PARSER_DIR != "")
+        parser();
+#endif
+
+#ifdef SCANNER_DIR
+    if (SCANNER_DIR != "")
+        scanner();
+#endif
+
+    if (strlen(ICM_DEP))
+        system("icmake -d " ICM_DEP);
+
 #ifdef PRECOMP
     precompileHeaders();
 
@@ -378,16 +393,6 @@ void build_libraries()
 
     g_sources = SOURCES;
     g_compiled = 0;
-
-#ifdef PARSER_DIR
-    if (PARSER_DIR != "")
-        parser();
-#endif
-
-#ifdef SCANNER_DIR
-    if (SCANNER_DIR != "")
-        scanner();
-#endif
 
     if 
     (
@@ -679,8 +684,6 @@ void main(int argc, list argv, list envp)
 
     if (g_command == "install")
         install(argv[2], argv[3]);
-
-    exec("/usr/lib/icmake/icm-dep", "-V", "--go");
 
     string option;
     if (listfind(g_buildprog, g_command) != -1)

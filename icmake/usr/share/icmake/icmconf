@@ -41,10 +41,16 @@
     // Class dependencies are indicated by the class name (as the first
     // word on a line) optionally followed by additional class names, which
     // are the classes directly depending on the line's first class name.
-//#define USE_ALL             "a"
+//#define USE_ALL           "a"
+
+    // By default dependencies are determined by icm-dep (via icmake -d),
+    // passing it the following options. If icm-dep should not be called,
+    // activate ICM_DEP as an empty string. Alternatively specify your own
+    // icm-dep options
+//#define /ICM_DEP          "-V --go"
 
     // should commands be echoed (ON) or not (OFF) ?
-#define USE_ECHO              ON
+#define USE_ECHO            ON
 
     //  Use the VERSION file
 #define USE_VERSION

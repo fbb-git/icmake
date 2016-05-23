@@ -1,19 +1,20 @@
 #include "process.ih"
 
-void pInspectUseAll(int *touch, int classIdx)
+void pInspectUseAll(int *toTouch, int classIdx)
 {
     int const *dep = depDependent(classIdx);
-    char const *useAll = depUseAll(classIdx);
 
     for (int idx = 0; idx != sproc.d_size; ++idx)
     {
-        if (!dep[idx] || touch[idx] == 1)
+        if (!dep[idx] || toTouch[idx] == 1)
             continue;
 
-        if (rss_younger(useAll, depUseAll(idx)))
+        char const *useAll = depUseAll(idx);
+
+        if ( !rss_exists(useAll) )
         {
-            optMsg(2, "touch %s (younger %s)", depUseAll(idx), useAll);
-            touch[idx] = 1;
+            optMsg(2, "touch %s", useAll);
+            toTouch[idx] = 1;
         }
     }
 }

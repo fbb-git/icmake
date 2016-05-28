@@ -20,6 +20,10 @@ operation mode, it calls the following programs:
 .IP o 
 \fIicm\-comp\fP   to byte\-code compile the \fBicmake\fP  \fBs\fP
 .IP o 
+\fIicm\-dep\fP to handle class\-dependencies (see section \fBICM\-DEP\fP
+in \fBicmbuild\fP(1)\(cq\&s man\-page for more information about
+\fIicm\-dep\fP)\&.
+.IP o 
 \fIicm\-exec\fP   to execute the byte\-code file
 
 .PP 
@@ -83,7 +87,9 @@ and \fI\-\-\fP should not be specified;
 .br 
 calls \fI/usr/lib/icmake/icm\-dep\fP, passing it all remaining
 arguments\&. If no additional arguments are specified \fIicm\-dep\(cq\&s\fP
-short usage information is shown to the std\&. output stream
+short usage information is shown to the std\&. output stream\&. See 
+section \fBICM\-DEP\fP in \fBicbuild\fP(1)\(cq\&s man\-page for more information
+about the \fIicm\-dep\fP support program\&.
 \fB\-\-summary\fP (\fB\-F\fP)
 .br 
 the filenames and flags as well as an overview of all actions to

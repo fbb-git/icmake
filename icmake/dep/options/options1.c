@@ -3,9 +3,7 @@
 static struct option longOpts[] = 
 {
     {"classes",     required_argument,  NULL, 'c'},
-    {"dry",         no_argument,        NULL, 'd'},        // no -d option
     {"gch",         no_argument,        NULL, 'G'},        // no -G option
-    {"go",          no_argument,        NULL, 'g'},        // no -g option
     {"help",        no_argument,        NULL, 'h'},
     {"icmconf",     required_argument,  NULL, 'i'},
     {"mainih",      required_argument,  NULL, 'm'},
@@ -38,25 +36,18 @@ void OptionsCons(int argc, char **argv)
     sopts.d_go         = UNSPECIFIED;
 
     int showVersion = 0;
+    int sawOptions = 0;
 
     while (1)
     {
         int opt = getopt_long(argc, argv, "cdimhvV", longOpts, NULL);
 
+        sawOptions |= opt != -1;
+
         switch (opt)
         {
             case 'c':
                 sopts.d_classes = rss_strdup(optarg);
-            break;
-
-            case 'd':
-                sopts.d_go = DRY;
-                optMsg(2, "dry run (no actions)");
-            break;
-
-            case 'g':
-                sopts.d_go = GO;
-                optMsg(2, "%s active", argv[0]);
             break;
 
             case 'G':
@@ -108,12 +99,18 @@ void OptionsCons(int argc, char **argv)
                     exit(0);
                 }
 
-                if (sopts.d_go == UNSPECIFIED)
-                    usage(argv[0]);
+                if (argc != optind)
+                    sopts.d_go = strcmp(argv[optind], "go") == 0 ? GO : DRY;
+                else
+                {
+                    if (!sawOptions)
+                        usage(argv[0]);
+                    sopts.d_go = DRY;
+                }
 
                 if (!rss_exists(sopts.d_classes))
                 {
-                    optMsg(1, "No file '%s'", sopts.d_classes);
+                    optMsg(2, "No file '%s'", sopts.d_classes);
                     exit(0);
                 }
 

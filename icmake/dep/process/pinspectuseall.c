@@ -13,7 +13,7 @@ void pInspectUseAll(int *toTouch, int classIdx)
 
         if ( !rss_exists(useAll) )
         {
-            optMsg(2, "touch %s", useAll);
+            optMsg(1, "touch %s", useAll);
             toTouch[idx] = 1;
         }
     }

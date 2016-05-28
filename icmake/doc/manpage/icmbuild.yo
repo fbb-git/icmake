@@ -136,6 +136,81 @@ manpageoptions()
     tt(DEFCOM) is ignored when an explicit operational mode is passed to
         icb().
 
+manpagesection(ICM-DEP)
+
+    Class dependencies are handled by tt(icmake)'s support program
+tt(icm-dep). It can be called from tt(icmake) by passing it the option
+tt(-d). All options and arguments following tt(-d) are forwared to
+tt(icm-dep).
+
+    The program tt(icm-dep) is automatically called by tt(icmbuild) to handle
+class dependencies. Consider two classes tt(Options) and tt(Process). If
+tt(Process) uses tt(Options) and if precompiled header files are used, then in
+addition to tt(Option's) header file, tt(Process's) header must also be
+precompiled if tt(Option's) header file changes. Likewise, if tt(Option's)
+data organization is changed and tt(Option) defines inline members used by
+tt(Process) or tt(Process) defines an tt(Option) data member then, in addition
+to tt(Option's) sources sources tt(Process's) sources must also be
+compiled. For the latter case tt(icmconf) uses the tt(USE_ALL) specification:
+if a tt(`USE_ALL') file exists in a directory, then all sources of that
+directory are recompiled. 
+
+    The program tt(icm_dep) determines all such class dependencies, and will
+recompile class header files of all classes depending on classes whose header
+files must be recompiled. Furthermore, if a tt(`USE_ALL') file exists in a
+directory then all sources of classes depending on that directory's class are
+also recompiled. 
+
+tt(Icm-dep) recognizes various options:
+    itemization(
+    it() By default, it inspects dependencies of the classes mentioned in the
+tt(CLASSES) file (including tt(parser) and tt(scanner) classes, if used). 
+Option tt(--classes filename) (or tt(-c filename)) can be provided to specify
+an alternate file.
+    it() By default the contents of an tt(icmconf) file is inspected, looking
+for tt(USE_ALL) and tt(PRECOMP) specifications. The option tt(--icmconf file)
+(or tt(-i file)) option can be provided to specify an alternate file.
+    it() The tt(icmconf) file uses the tt(#define IH) parameter to specify the
+suffix of class header files that should be precompiled, their filenames being
+equal to the names of the classes mentioned in the tt(CLASSES)
+file. tt(CLASSES) does not specify a top-level directory. The name of the
+top-level header file to precompile can be specified using the option
+tt(--mainih filename) (or tt(-m filename)) specification. By default this is
+tt(main.ih). 
+    it() By default precompiled header files are inspected if tt(icmconf)
+contains a tt(#define PRECOMP) specification. If it does not, but precompiled
+headers should nonetheless be inspected, the option tt(--gch) can be
+specified. Conversely, if precompiled headers should em(not) be inspected, the
+option tt(--no-gch) can be specified.
+    it() By default files named at the tt(#define USE_ALL) specification are
+inspected if tt(icmconf) contains such a specification. If it
+does not, but tt(`USE_ALL') files  should nonetheless be inspected, the option
+tt(--use-all file) can be specified. Conversely, if such files should em(not)
+be inspected, the option tt(--no-use-all) can be specified.
+    it() Options tt(--verbose) (or tt(-V)) can be specified to increase
+tt(icm_dep's) verbosity. If none is specified, tt(icm_dep) silently performs
+its duties. If specified once, then tt(icm_dep) reports to the standard output
+what actions it performs; if specified twice it reports the options it
+encountered; if specified three times it also reports the class
+dependencies; if specified more often it reports what files it encountered and
+what situations caused it to make its decisions.
+    it() Option tt(--version) (or tt(-v)) ends tt(icm_dep) after reporting its
+version number to the standard output.
+    it() Option tt(--help) (or tt(-h)) ends tt(icm_dep) after writing a
+summary of its usage to the standard output.
+    )
+    To start its work, tt(icm_dep) needs one command-line argument:
+tt(go). Any other argument results in tt(icm_dep) performing a `dry run': it
+will perform all its duties (and verbose messages are displayed as if tt(go)
+had been specified), but no files (precompiled headers or tt(USE_ALL) files)
+will be touched or removed. If neither options nor arguments are specified
+tt(icm_dep) writes its usage summary to the standard output.
+
+    By default tt(icmbuild) calls tt(icmake -d -V go): tt(icm_dep) is called to
+perform its duties and to show its actions on the standard output stream. By
+specifying a tt(#define ICM_DEP) parameter in the tt(icmconf) file this
+default can be overruled (cf. bf(icmconf)(7)).
+
 manpagefiles()
 
     The mentioned paths are sugestive only and may be installation dependent:

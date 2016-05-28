@@ -10,7 +10,8 @@ void dFindDependents()
     int **reversed = initTable(size);
     dTranspose(reversed, sdep.d_dependent, size);
 
-    dShowTable("Dependents:", reversed);
+    if (optVerbose() > 3)
+        dShowTable("Dependents (initial):", reversed);
 
     dImpliedDependencies(sdep.d_dependent, size);
     dTranspose(reversed, sdep.d_dependent, size);
@@ -18,7 +19,10 @@ void dFindDependents()
     freeTable(sdep.d_dependent, size);
     sdep.d_dependent = reversed;
 
-    dShowTable("Dependents (complete):", sdep.d_dependent);
+    if (optVerbose() < 3)
+        return;
+
+    dShowTable("Dependents:", sdep.d_dependent);
 }
 
 

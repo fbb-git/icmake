@@ -5,18 +5,14 @@ void usage(char const *progname)
     rss_copyright(progname = rss_programName(progname));
 
     printf(
-    "Usage: %s [options] args\n"
+    "Usage: %s [options] [go]\n"
     "Where:\n"
     "   [options] - optional arguments (short options between parentheses):\n"
     "      --classes (-c) file  - file defining the class-subdirectories ("
                                                             "CLASSES)\n"
-    "      --dry                - show actions rather than performing them\n"
     "      --gch                - inspect/remove .gch precompiled headers,\n"
     "                             otherwise: don't handle precompiled "
                                                             "headers.\n"
-    "      --go                 - perform actions as configured (overruled "
-                                                            "by\n"
-    "                             --dry)\n"
     "      --help (-h)          - provide this help (also if neither --dry\n"
     "                             nor --go was specified)\n"
     "      --icmconf (-i) file  - icmconf file to use (icmconf)\n"
@@ -37,6 +33,10 @@ void usage(char const *progname)
     "is used;\n"
     "When neither --use-all nor --no-use-all is specified icmonf's USE_ALL\n"
     "specification is used.\n"
+    "\n"
+    "Files are only changed if the program argument 'go' (without the "
+                                                                "quotes)\n"
+    "is provided\n"
     "\n",
     progname);
 
@@ -44,23 +44,6 @@ void usage(char const *progname)
 }
 
 /****************************************
---precomp @.ih,main.ih
---inspect *.h,*.ih
-
-First all files specified with --inspect are inspected for includes of headers
-in the directories specified in CLASSES, resulting in this data structure:
-
-                            Includes
-    CLASSES dir:    dir-A dir-B dir-C ...
-        dir-A                x
-        dir-B                     x
-        dir-C
-
-    From this two closuresets are computed for each directory: containing per
-dierectory the set of directories included by that  directory and the
-opposite: the set of directories including that directory
-
-Using the comma-separated patterns speficied at --inspect, a 
 All directories mentioned in CLASSES and cwd are inspected for USE_ALL
 (defined in icmconf) files.  If a directory contains a USE_ALL file then a
 USE_ALL file is also created in all directories including that directory's .h

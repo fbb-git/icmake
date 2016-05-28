@@ -13,7 +13,7 @@
 #endif
 
 #ifndef ICM_DEP
-#define ICM_DEP     "-V --go"
+#define ICM_DEP     "-V go"
 #endif
 
 string  g_command;      // command to execute

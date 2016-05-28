@@ -47,6 +47,9 @@ operation mode, it calls the following programs:
     itemization(
         itt(icm-pp)  to preprocess the icmake file 
         itt(icm-comp)   to byte-code compile the icm()  file(s)
+        it()tt(icm-dep) to handle class-dependencies (see section bf(ICM-DEP)
+            in bf(icmbuild)(1)'s man-page for more information about
+            tt(icm-dep)).
         it()tt(icm-exec)   to execute the byte-code file
     )
 
@@ -103,7 +106,9 @@ tt(-t)) only one may be specified:
     lsoption(icm-dep)(d)
             (calls tt(/usr/lib/icmake/icm-dep), passing it all remaining
         arguments. If no additional arguments are specified tt(icm-dep's)
-        short usage information is shown to the std. output stream)
+        short usage information is shown to the std. output stream). See 
+        section bf(ICM-DEP) in bf(icbuild)(1)'s man-page for more information
+        about the tt(icm-dep) support program.
     lsoption(summary)(F)
             (the filenames and flags as well as an overview of all actions to
         be performed by icm() are shown on the standard output stream;)

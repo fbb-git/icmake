@@ -1,6 +1,5 @@
 #include "dependencies.ih"
 
-
 void dHandleInclude(int idx, Vector *toDo, char const *line, char const *hdr)
 {
     Vector const *vector = regMatch(&sdep.d_includeRegex, line);
@@ -32,7 +31,7 @@ void dHandleInclude(int idx, Vector *toDo, char const *line, char const *hdr)
 
     if (classIdx < 0)
     {
-        optMsg(2, "'%s' not in '%s' ('%s': `%s')", class, optClasses(),
+        optMsg(4, "'%s' not in '%s' ('%s': `%s')", class, optClasses(),
                                                    hdr, line);
         return;
     }

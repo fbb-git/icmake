@@ -24,7 +24,7 @@ void oIcmconf(char *argv0)
             {
                 if (sopts.d_gch == UNSPECIFIED)
                 {
-                    optMsg(2, "inspecting .gch files");
+                    optMsg(1, "inspecting precompiled headers (.gch files)");
                     sopts.d_gch = GCH;
                 }
             }
@@ -39,7 +39,7 @@ void oIcmconf(char *argv0)
             {
                 if (sopts.d_use_all == (char *)UNSPECIFIED)
                 {
-                    optMsg(2, "USE_ALL filename: %s", value);
+                    optMsg(1, "inspecting USE_ALL files: %s", value);
                     sopts.d_use_all = rss_strdup(value);
                 }
             }
@@ -64,13 +64,13 @@ void oIcmconf(char *argv0)
 
     if (sopts.d_gch == UNSPECIFIED)
     {
-        optMsg(2, "not inspecting .gch files");
+        optMsg(1, "not inspecting .gch files");
         sopts.d_gch = NO_GCH;
     }
 
     if (sopts.d_use_all == (char *)UNSPECIFIED)
     {
-        optMsg(2, "not inspecting USE_ALL files");
+        optMsg(1, "not inspecting USE_ALL files");
         sopts.d_use_all = NULL;
     }
 }

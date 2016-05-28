@@ -135,6 +135,86 @@ After adding a line to \fIicmconf\fP containing
 \fIDEFCOM\fP is ignored when an explicit operational mode is passed to
 \fBicmbuild\fP\&.
 .PP 
+.SH "ICM\-DEP"
+
+.PP 
+Class dependencies are handled by \fIicmake\fP\(cq\&s support program
+\fIicm\-dep\fP\&. It can be called from \fIicmake\fP by passing it the option
+\fI\-d\fP\&. All options and arguments following \fI\-d\fP are forwared to
+\fIicm\-dep\fP\&.
+.PP 
+The program \fIicm\-dep\fP is automatically called by \fIicmbuild\fP to handle
+class dependencies\&. Consider two classes \fIOptions\fP and \fIProcess\fP\&. If
+\fIProcess\fP uses \fIOptions\fP and if precompiled header files are used, then in
+addition to \fIOption\(cq\&s\fP header file, \fIProcess\(cq\&s\fP header must also be
+precompiled if \fIOption\(cq\&s\fP header file changes\&. Likewise, if \fIOption\(cq\&s\fP
+data organization is changed and \fIOption\fP defines inline members used by
+\fIProcess\fP or \fIProcess\fP defines an \fIOption\fP data member then, in addition
+to \fIOption\(cq\&s\fP sources sources \fIProcess\(cq\&s\fP sources must also be
+compiled\&. For the latter case \fIicmconf\fP uses the \fIUSE_ALL\fP specification:
+if a \fI`USE_ALL\(cq\&\fP file exists in a directory, then all sources of that
+directory are recompiled\&. 
+.PP 
+The program \fIicm_dep\fP determines all such class dependencies, and will
+recompile class header files of all classes depending on classes whose header
+files must be recompiled\&. Furthermore, if a \fI`USE_ALL\(cq\&\fP file exists in a
+directory then all sources of classes depending on that directory\(cq\&s class are
+also recompiled\&. 
+.PP 
+\fIIcm\-dep\fP recognizes various options:
+.IP o 
+By default, it inspects dependencies of the classes mentioned in the
+\fICLASSES\fP file (including \fIparser\fP and \fIscanner\fP classes, if used)\&. 
+Option \fI\-\-classes filename\fP (or \fI\-c filename\fP) can be provided to specify
+an alternate file\&.
+.IP o 
+By default the contents of an \fIicmconf\fP file is inspected, looking
+for \fIUSE_ALL\fP and \fIPRECOMP\fP specifications\&. The option \fI\-\-icmconf file\fP
+(or \fI\-i file\fP) option can be provided to specify an alternate file\&.
+.IP o 
+The \fIicmconf\fP file uses the \fI#define IH\fP parameter to specify the
+suffix of class header files that should be precompiled, their filenames being
+equal to the names of the classes mentioned in the \fICLASSES\fP
+file\&. \fICLASSES\fP does not specify a top\-level directory\&. The name of the
+top\-level header file to precompile can be specified using the option
+\fI\-\-mainih filename\fP (or \fI\-m filename\fP) specification\&. By default this is
+\fImain\&.ih\fP\&. 
+.IP o 
+By default precompiled header files are inspected if \fIicmconf\fP
+contains a \fI#define PRECOMP\fP specification\&. If it does not, but precompiled
+headers should nonetheless be inspected, the option \fI\-\-gch\fP can be
+specified\&. Conversely, if precompiled headers should \fInot\fP be inspected, the
+option \fI\-\-no\-gch\fP can be specified\&.
+.IP o 
+By default files named at the \fI#define USE_ALL\fP specification are
+inspected if \fIicmconf\fP contains such a specification\&. If it
+does not, but \fI`USE_ALL\(cq\&\fP files  should nonetheless be inspected, the option
+\fI\-\-use\-all file\fP can be specified\&. Conversely, if such files should \fInot\fP
+be inspected, the option \fI\-\-no\-use\-all\fP can be specified\&.
+.IP o 
+Options \fI\-\-verbose\fP (or \fI\-V\fP) can be specified to increase
+\fIicm_dep\(cq\&s\fP verbosity\&. If none is specified, \fIicm_dep\fP silently performs
+its duties\&. If specified once, then \fIicm_dep\fP reports to the standard output
+what actions it performs; if specified twice it also reports the class
+dependencies; if specified more often it reports what files it encountered and
+what situations caused it to make its decisions\&.
+.IP o 
+Option \fI\-\-version\fP (or \fI\-v\fP) ends \fIicm_dep\fP after reporting its
+version number to the standard output\&.
+.IP o 
+Option \fI\-\-help\fP (or \fI\-h\fP) ends \fIicm_dep\fP after writing a
+summary of its usage to the standard output\&.
+To start its work, \fIicm_dep\fP needs one command\-line argument:
+\fIgo\fP\&. Any other argument results in \fIicm_dep\fP performing a `dry run\(cq\&: it
+will perform all its duties, but no files (precompiled headers or \fIUSE_ALL\fP
+files) will be modified\&. If neither options nor arguments are specified
+\fIicm_dep\fP writes its usage summary to the standard output\&.
+.PP 
+By default \fIicmbuild\fP calls \fIicmake \-d \-V go\fP: \fIicm_dep\fP is called to
+perform its duties and to show its actions on the standard output stream\&. By
+specifying a \fI#define ICM_DEP\fP parameter in the \fIicmconf\fP file this
+default can be overruled (cf\&. \fBicmconf\fP(7))\&.
+.PP 
 .SH "FILES"
 
 .PP 
@@ -197,10 +277,16 @@ program, using the library \fIlibbobcat1\fP as an additional library:
     // Class dependencies are indicated by the class name (as the first
     // word on a line) optionally followed by additional class names, which
     // are the classes directly depending on the line\(cq\&s first class name\&.
-//#define USE_ALL             \(dq\&a\(dq\&
+//#define USE_ALL           \(dq\&a\(dq\&
+
+    // By default dependencies are determined by icm\-dep (via icmake \-d),
+    // passing it the following options\&. If icm\-dep should not be called,
+    // activate ICM_DEP as an empty string\&. Alternatively specify your own
+    // icm\-dep options
+//#define ICM_DEP           \(dq\&\-V go\(dq\&
 
     // should commands be echoed (ON) or not (OFF) ?
-#define USE_ECHO              ON
+#define USE_ECHO            ON
 
     //  Use the VERSION file
 #define USE_VERSION

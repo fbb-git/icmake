@@ -1,6 +1,6 @@
-# This file contains the names of all subdirectories containing sources to
-# compile. Each directory should be specified on a line of its own. Initial
-# blanks are ok. Compilation is 1-level deep. 
+# This file is used by icmbuild(1) and should contains the names of all
+# 1-level deep subdirectories containing sources to compile. Each directory
+# should be specified on a line of its own. Initial blanks are ok. 
 
 # If a parser or scanner is used, (see icmconfig's USE_PARSER and USE_SCANNER
 # defines) then those directories are automatically included (although they
@@ -8,20 +8,11 @@
 
 # Lines starting with # or with // are ignored, as are empty lines.
 
-# sources in the current (i.e., this) directory are also compiled.
+# Sources in the current (i.e., this) directory are also compiled.
 
-# If a class Y depends on class X as in:
-#   class Y: public X
-# or:
-#   class Y 
-#   { 
-#       X d_y; 
-#   };
-# then specify the dependency here using the form
-#   y   x
-# where x and y are the directories holding the resp. class sources. Multiple
-#   dependencies are OK. Then, when altering X's data organization, do 'touch
-#   x/a', followed by 'icmbuild program': x's sources as well as the sources in 
-#   directories (in)directly depending on x (e.g., y) are then automatically 
-#   recompiled by icmbuild.
+# Class dependencies are handled by icm_dep, called from icmake using option
+# -d (enter   icmake -d   for short usage info, or see the section on icm_dep 
+# in icmake(1)'s man-page
+
+
 

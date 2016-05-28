@@ -6,11 +6,11 @@ void dInspectFile(int idx, Vector *toDo, int toDoIdx)
 
     if (!rss_exists(hdr))
     {
-        optMsg(2, "%s does not exist: skipped", hdr);
+        optMsg(4, "%s does not exist: skipped", hdr);
         return;
     }
 
-    optMsg(2, "%s...", hdr);
+    optMsg(4, "%s...", hdr);
     
     dInspectGch(idx, hdr);
     

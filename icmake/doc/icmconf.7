@@ -67,7 +67,8 @@ specification is:
     #define ADD_LIBRARIES   \(dq\&bobcat\(dq\&
     
 .fi 
-
+If your program is linked against multiple libraries, then use a
+blank\-separated list of libraries (like \fI\(dq\&math bobcat\(dq\&\fP)
 .IP 
 .IP o 
 \fB#define ADD_LIBRARY_PATHS  \(dq\&\(dq\&\fP
@@ -126,6 +127,17 @@ Alternatively it may also be defined as:
        
 .fi 
 in which case \fIicmbuild\fP does library maintenance\&. 
+.IP 
+.IP o 
+\fB//#define ICM_DEP           \(dq\&\-V go\(dq\&\fP
+.br 
+The existence and implied existence of \fIUSE_ALL\fP files (see the
+description of the \fIUSE_ALL\fP directive), as well as the correct ages
+of precompiled headers can be checked by \fIicmake\(cq\&s\fP support program
+\fIicm_dep\fP\&. By default \fIicm_dep\fP is called with the shown
+default arguments\&. If \fIicm_dep\fP should not be called define
+\fIICM_DEP\fP as an empty string (\fI\(dq\&\(dq\&\fP)\&. \fBIcmake\fP(1)\(cq\&s man\-page
+contains a separate section about the \fIicm_dep\fP support program\&.
 .IP 
 .IP o 
 \fB#define IH                  \(dq\&\&.ih\(dq\&\fP

@@ -83,6 +83,8 @@ manpagesection(ICMCONF PARAMETERS)
     verb(
     #define ADD_LIBRARIES   "bobcat"
     )
+        If your program is linked against multiple libraries, then use a
+    blank-separated list of libraries (like tt("math bobcat"))
 
     itb(#define ADD_LIBRARY_PATHS  "")
        When the additional libraries (specified at tt(ADD_LIBRARIES)) are
@@ -125,6 +127,15 @@ manpagesection(ICMCONF PARAMETERS)
     #define DEFCOM  "library"
        )
         in which case tt(icmbuild) does library maintenance. 
+
+    itb(//#define ICM_DEP           "-V go")
+       The existence and implied existence of tt(USE_ALL) files (see the
+        description of the tt(USE_ALL) directive), as well as the correct ages
+        of precompiled headers can be checked by tt(icmake's) support program
+        tt(icm_dep). By default tt(icm_dep) is called with the shown
+        default arguments. If tt(icm_dep) should not be called define
+        tt(ICM_DEP) as an empty string (tt("")). bf(Icmake)(1)'s man-page
+        contains a separate section about the tt(icm_dep) support program.
 
     itb(#define IH                  ".ih")
        The extension used for internal header files. See tt(#define PRECOMP)

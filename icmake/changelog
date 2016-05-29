@@ -22,6 +22,11 @@ icmake (9.00.00)
 
  * Repaired a bug in substr that could segfault.
 
+ * Man-pages updated. Icmbuild(1) contains a description of the icm-dep
+   program. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 28 May 2016 17:23:18 +0200
+
 icmake (8.01.00)
 
 * Added builtin functions 'strchr', 'listfind', and 'listunion'. See 'man

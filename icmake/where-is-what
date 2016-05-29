@@ -13,11 +13,12 @@ icm_prepare     script installing path-definitions: also called by
                 icm_bootstrap
 
 doc/            documentation and man-pages (including Yodl manpage sources)
-icm-comp/       sources of the icm-comp icmake compiler    
-icm-exec/       sources of the icm-exec interpreter
-icm-pp/         sources of the icm-pp preprocessor
+comp/           sources of the icm-comp icmake compiler    
+dep/            sources of the icm-dep dependency inspecting program
+exec/           sources of the icm-exec interpreter
+pp/             sources of the icm-pp preprocessor
 icmake/         sources of the icmake shell program
-icmun/          sources of the icmun unassembler
+un/             sources of the icmun unassembler
 rss/            sources of functions shared by the icmake programs
 
 scripts/        scripts used to build icmake, source texts of icm* scripts

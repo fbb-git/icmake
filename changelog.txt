@@ -1,3 +1,34 @@
+icmake (9.00.00)
+
+* Added support program icm-dep computing dependencies for USE_ALL classes and
+  precompiled headers, called from /usr/bin/icmbuild, or directly using
+  icmake's option --icm-dep (-d)
+
+ * Icmake supports several long options in addition to the standard short
+   options. See icmake(1) for details.
+
+* Changed references to IS_* into O_* in icmake(1)'s man-page. The IS_ entries
+  were already unavailable, but the man-page still referred to them. Now
+  fixed. 
+
+ * Contents of lines in CLASSES beyond the first word are no longer
+   interpreted.
+
+ * Added new option NO_PRECOMP_WARNING to icmconf
+
+ * Option -b was removed from icmake.
+
+ * The built-in function makelist(mask, [younger,older], referencefile) is now
+   operational (was mentioned in icmake's man-page, but wasn't implemented
+   before).
+
+ * Repaired a bug in substr that could segfault.
+
+ * Man-pages updated. Icmbuild(1) contains a description of the icm-dep
+   program. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 23 Jul 2016 20:55:33 +0200
+
 icmake (8.01.00)
 
 * Added builtin functions 'strchr', 'listfind', and 'listunion'. See 'man

@@ -10,7 +10,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmbuild</h1>
-<h2 id="author">icmake.8.01.00.tar.gz</h2>
+<h2 id="author">icmake.9.00.00.tar.gz</h2>
 <h2 id="date">1992-2016</h2>
 
 <!DOCTYPE html><html><head>
@@ -43,67 +43,67 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmbuild(1)</h1>
-<h2 id="author">icmake.8.01.00.tar.gz A generic program maintenance script</h2>
+<h2 id="author">icmake.9.00.00.tar.gz A generic program maintenance script</h2>
 <h2 id="date">1992-2016</h2>
 
 
 <p>
 
-<h2>NAME</h2>icmbuild - A generic, easy configurable, program maintenance script
+<h2 >NAME</h2>icmbuild - A generic, easy configurable, program maintenance script
 <p>
 
-<h2>SYNOPSIS</h2>
-       <strong>icmbuild</strong> [-h] [-c] <em>args</em>
+<h2 >SYNOPSIS</h2>
+       <strong >icmbuild</strong> [-h] [-c] <em >args</em>
 <p>
-<h2>DESCRIPTION</h2>
+<h2 >DESCRIPTION</h2>
 <p>
-The <strong>icmbuild</strong> script is a generic script that can be used to do program
-maintenance using <strong>icmake</strong>(1). 
+The <strong >icmbuild</strong> script is a generic script that can be used to do program
+maintenance using <strong >icmake</strong>(1). 
 <p>
-<strong>Icmbuild</strong> requires that the  file <em>icmconf</em> is available in the directory where
+<strong >Icmbuild</strong> requires that the  file <em >icmconf</em> is available in the directory where
 program maintenance is requested.
 <p>
-<strong>Icmbuild</strong> assumes that your sources exist in and below the current working
-directory. The file <em>icmconf</em> in <strong>icmake</strong>(1)'s distribution provides an
-example of an <em>icmconf</em> file that can be used by <strong>icmbuild</strong>. In that example
-<em>icmconf</em> file it is assumed that <strong>C++</strong> sources are maintained, but
-program maintenance for, e.g., <strong>C</strong> sources can easily be configured.
+<strong >Icmbuild</strong> assumes that your sources exist in and below the current working
+directory. The file <em >icmconf</em> in <strong >icmake</strong>(1)'s distribution provides an
+example of an <em >icmconf</em> file that can be used by <strong >icmbuild</strong>. In that example
+<em >icmconf</em> file it is assumed that <strong >C++</strong> sources are maintained, but
+program maintenance for, e.g., <strong >C</strong> sources can easily be configured.
 <p>
-<strong>Icmbuild</strong>() compiles all sources in each of the subdirectories named in the file
-<em>CLASSES</em>, and then compiles all sources in the current working directory.
+<strong >Icmbuild</strong>() compiles all sources in each of the subdirectories named in the file
+<em >CLASSES</em>, and then compiles all sources in the current working directory.
 <p>
 The compiled sources result in object modules which may be kept in a
 library, against which the main-object module is linked. It is also possible
 to specify additional libraries against which the program must be linked.
 <p>
-If a library is constructed it is kept up to date by <strong>icmbuild</strong>. When a source is
-successfully compiled its new object module will replace the old one that is
-found in the library. At that point the object files are no longer required
-and are removed by <strong>icmbuild</strong>.
+If a library is constructed it is kept up to date by <strong >icmbuild</strong>. When a source is
+successfully compiled its new object module replaces the old one that is found
+in the library. At that point the object files are no longer required and are
+removed by <strong >icmbuild</strong>.
 <p>
-<h2>KICK-STARTING ICMBUILD</h2>
+<h2 >KICK-STARTING ICMBUILD</h2>
 <p>
-To use <strong>icmbuild</strong> do as follows:
+To use <strong >icmbuild</strong> do as follows:
     <ul>
-    <li>  Install <strong>icmbuild</strong> in your path;
-    <li> copy <em>icmconf</em> (and probably the file <em>CLASSES</em>) to your
+    <li>  Install <strong >icmbuild</strong> in your path;
+    <li> copy <em >icmconf</em> (and probably the file <em >CLASSES</em>) to your
        project's base directory (i.e., the directory in which and where below
        the project's sources are found);
-    <li> Modify the <em>#defines</em> in the file <em>icmconf</em> to taste;
+    <li> Modify the <em >#defines</em> in the file <em >icmconf</em> to taste;
     <li> Enter the names of subdirectories containing sources on separate
-       lines in the file <em>CLASSES</em>
+       lines in the file <em >CLASSES</em>
 <p>
-Note that the order of the classes mentioned in <em>CLASSES</em> <em>is</em>
+Note that the order of the classes mentioned in <em >CLASSES</em> <em >is</em>
        relevant.  New class (subdirectory) names can always be added, but
-       reordering the lines in the <em>CLASSES</em> file should be avoided. If
-       reordering is necessary, then first run the command <em>icmbuild clean</em>
-       to remove all files thus far created by <strong>icmbuild</strong>. Recompilation is
+       reordering the lines in the <em >CLASSES</em> file should be avoided. If
+       reordering is necessary, then first run the command <em >icmbuild clean</em>
+       to remove all files thus far created by <strong >icmbuild</strong>. Recompilation is
        necessary as the names of the object files contain class order-numbers
        for identification.  These class-order numbers prevent file-name
-       collisions (e.g., two classes might use a file <em>data.cc</em>) and thus
-       replacement of a file <em>x.o</em> from class <em>A</em> by file <em>x.o</em> from
-       class <em>B</em> is prevented;
-    <li> Now simply run 
+       collisions (e.g., two classes might use a file <em >data.cc</em>) and thus
+       replacement of a file <em >x.o</em> from class <em >A</em> by file <em >x.o</em> from
+       class <em >B</em> is prevented;
+    <li> Now (after configuring <em >icmconf</em>) simply run 
         <pre>
 
             icmbuild -h
@@ -114,78 +114,153 @@ Note that the order of the classes mentioned in <em>CLASSES</em> <em>is</em>
        what your options are. See the next section for the modes of operation.
     </ul>
 <p>
-<h2>OPTIONS</h2>
+<h2 >OPTIONS</h2>
 <p>
-<strong>Icmbuild</strong> recognizes two options, at most one should be specified:
+<strong >Icmbuild</strong> recognizes two options, at most one should be specified:
     <ul>
-    <li><em>-h</em>: Provide a short usage overview.
-    <li><em>-c</em>: Clear the screen (using <em>tput clear</em>) before starting the
+    <li><em >-h</em>: Provide a short usage overview.
+    <li><em >-c</em>: Clear the screen (using <em >tput clear</em>) before starting the
        compilation process
     </ul>
 <p>
-Following the optional <em>-c</em>  <strong>icmbuild</strong>() the following arguments may be
-       passed to <strong>icmbuild</strong>:
+Following the optional <em >-c</em>  <strong >icmbuild</strong>() the following arguments may be
+       passed to <strong >icmbuild</strong>:
     <ul>
-    <li><em>clean</em><br/>
+    <li><em >clean</em><br/>
         clean up remnants of previous activities
-    <li><em>library</em><br/>
+    <li><em >library</em><br/>
         build the library (static and optionally the dynamic library)
-    <li><em>program</em><br/>
+    <li><em >program</em><br/>
         build the binary program
-    <li><em>program strip</em><br/>
+    <li><em >program strip</em><br/>
         build the stripped binary program
-    <li><em>install program path</em>
+    <li><em >install program path</em>
         install the constructed program in the specified path (to be used
-       after issuing <strong>icmbuild</strong> <em>program</em>)
-    <li><em>install static path</em> 
+       after issuing <strong >icmbuild</strong> <em >program</em>)
+    <li><em >install static path</em> 
        install the constructed static library in the specified path (to be
-        used after issuing <strong>icmbuild</strong> <em>library</em>)
-    <li><em>install shared path</em> 
+        used after issuing <strong >icmbuild</strong> <em >library</em>)
+    <li><em >install shared path</em> 
        install the constructed shared library in the specified path (to be
-        used after issuing <strong>icmbuild</strong> <em>library</em>)
+        used after issuing <strong >icmbuild</strong> <em >library</em>)
     </ul>
-    After adding a line to <em>icmconf</em> containing
+    After adding a line to <em >icmconf</em> containing
         <pre>
 
     #define DEFCOM "program"
         
 </pre>
 
-    <strong>icmbuild</strong> by default uses the argument <em>program</em>. After adding 
+    <strong >icmbuild</strong> by default uses the argument <em >program</em>. After adding 
         <pre>
 
     #define DEFCOM "strip"
         
 </pre>
 
-    <strong>icmbuild</strong> by default uses the argument <em>strip</em>. After adding 
+    <strong >icmbuild</strong> by default uses the argument <em >strip</em>. After adding 
         <pre>
 
     #define DEFCOM "library"
         
 </pre>
 
-    <strong>icmbuild</strong> by default uses the argument <em>library</em>.
+    <strong >icmbuild</strong> by default uses the argument <em >library</em>.
 <p>
-<em>DEFCOM</em> is ignored when an explicit operational mode is passed to
-        <strong>icmbuild</strong>.
+<em >DEFCOM</em> is ignored when an explicit operational mode is passed to
+        <strong >icmbuild</strong>.
 <p>
-<h2>FILES</h2>
+<h2 >ICM-DEP</h2>
+<p>
+Class dependencies are handled by <em >icmake</em>'s support program
+<em >icm-dep</em>. It can be called from <em >icmake</em> by passing it the option
+<em >-d</em>. All options and arguments following <em >-d</em> are forwared to
+<em >icm-dep</em>.
+<p>
+The program <em >icm-dep</em> is automatically called by <em >icmbuild</em> to handle
+class dependencies. Consider two classes <em >Options</em> and <em >Process</em>. If
+<em >Process</em> uses <em >Options</em> and if precompiled header files are used, then in
+addition to <em >Option's</em> header file, <em >Process's</em> header must also be
+precompiled if <em >Option's</em> header file changes. Likewise, if <em >Option's</em>
+data organization is changed and <em >Option</em> defines inline members used by
+<em >Process</em> or <em >Process</em> defines an <em >Option</em> data member then, in addition
+to <em >Option's</em> sources sources <em >Process's</em> sources must also be
+compiled. For the latter case <em >icmconf</em> uses the <em >USE_ALL</em> specification:
+if a <em >`USE_ALL'</em> file exists in a directory, then all sources of that
+directory are recompiled. 
+<p>
+The program <em >icm_dep</em> determines all such class dependencies, and will
+recompile class header files of all classes depending on classes whose header
+files must be recompiled. Furthermore, if a <em >`USE_ALL'</em> file exists in a
+directory then all sources of classes depending on that directory's class are
+also recompiled. 
+<p>
+<em >Icm-dep</em> recognizes various options:
+    <ul>
+    <li> By default, it inspects dependencies of the classes mentioned in the
+<em >CLASSES</em> file (including <em >parser</em> and <em >scanner</em> classes, if used). 
+Option <em >--classes filename</em> (or <em >-c filename</em>) can be provided to specify
+an alternate file.
+    <li> By default the contents of an <em >icmconf</em> file is inspected, looking
+for <em >USE_ALL</em> and <em >PRECOMP</em> specifications. The option <em >--icmconf file</em>
+(or <em >-i file</em>) option can be provided to specify an alternate file.
+    <li> The <em >icmconf</em> file uses the <em >#define IH</em> parameter to specify the
+suffix of class header files that should be precompiled, their filenames being
+equal to the names of the classes mentioned in the <em >CLASSES</em>
+file. <em >CLASSES</em> does not specify a top-level directory. The name of the
+top-level header file to precompile can be specified using the option
+<em >--mainih filename</em> (or <em >-m filename</em>) specification. By default this is
+<em >main.ih</em>. 
+    <li> By default precompiled header files are inspected if <em >icmconf</em>
+contains a <em >#define PRECOMP</em> specification. If it does not, but precompiled
+headers should nonetheless be inspected, the option <em >--gch</em> can be
+specified. Conversely, if precompiled headers should <em >not</em> be inspected, the
+option <em >--no-gch</em> can be specified.
+    <li> By default files named at the <em >#define USE_ALL</em> specification are
+inspected if <em >icmconf</em> contains such a specification. If it
+does not, but <em >`USE_ALL'</em> files  should nonetheless be inspected, the option
+<em >--use-all file</em> can be specified. Conversely, if such files should <em >not</em>
+be inspected, the option <em >--no-use-all</em> can be specified.
+    <li> Options <em >--verbose</em> (or <em >-V</em>) can be specified to increase
+<em >icm_dep's</em> verbosity. If none is specified, <em >icm_dep</em> silently performs
+its duties. If specified once, then <em >icm_dep</em> reports to the standard output
+what actions it performs; if specified twice it reports the options it
+encountered; if specified three times it also reports the class
+dependencies; if specified more often it reports what files it encountered and
+what situations caused it to make its decisions.
+    <li> Option <em >--version</em> (or <em >-v</em>) ends <em >icm_dep</em> after reporting its
+version number to the standard output.
+    <li> Option <em >--help</em> (or <em >-h</em>) ends <em >icm_dep</em> after writing a
+summary of its usage to the standard output.
+    </ul>
+    To start its work, <em >icm_dep</em> needs one command-line argument:
+<em >go</em>. Any other argument results in <em >icm_dep</em> performing a `dry run': it
+will perform all its duties (and verbose messages are displayed as if <em >go</em>
+had been specified), but no files (precompiled headers or <em >USE_ALL</em> files)
+will be touched or removed. If neither options nor arguments are specified
+<em >icm_dep</em> writes its usage summary to the standard output.
+<p>
+By default <em >icmbuild</em> calls <em >icmake -d -V go</em>: <em >icm_dep</em> is called to
+perform its duties and to show its actions on the standard output stream. By
+specifying a <em >#define ICM_DEP</em> parameter in the <em >icmconf</em> file this
+default can be overruled (cf. <strong >icmconf</strong>(7)).
+<p>
+<h2 >FILES</h2>
 <p>
 The mentioned paths are sugestive only and may be installation dependent:
     <ul>
-    <li> <strong>/usr/share/icmake/icmconf</strong>
-        Example of a <strong>icmbuild</strong> configuration file;
-    <li> <strong>/usr/share/icmake/CLASSES</strong>
-        Example of a <strong>icmbuild</strong> <em>CLASSES</em> file.
+    <li> <strong >/usr/share/icmake/icmconf</strong>
+        Example of a <strong >icmbuild</strong> configuration file;
+    <li> <strong >/usr/share/icmake/CLASSES</strong>
+        Example of a <strong >icmbuild</strong> <em >CLASSES</em> file.
     </ul>
 <p>
-<h2>EXAMPLES</h2>
+<h2 >EXAMPLES</h2>
 <p>
-Here is an example of the configuration file <em>icmconf</em> for a concrete
-       program, using the library <em>libbobcat1</em> as an additional library:
+Here is an example of the configuration file <em >icmconf</em> for a concrete
+       program, using the library <em >libbobcat1</em> as an additional library:
 <p>
-<pre>
+<pre >
     // Inspect the following #defines. Change them to taste. If you don't
     // need a particular option, change its value into an empty string
 
@@ -229,10 +304,16 @@ Here is an example of the configuration file <em>icmconf</em> for a concrete
     // Class dependencies are indicated by the class name (as the first
     // word on a line) optionally followed by additional class names, which
     // are the classes directly depending on the line's first class name.
-//#define USE_ALL             "a"
+//#define USE_ALL           "a"
+
+    // By default dependencies are determined by icm-dep (via icmake -d),
+    // passing it the following options. If icm-dep should not be called,
+    // activate ICM_DEP as an empty string. Alternatively specify your own
+    // icm-dep options
+//#define ICM_DEP           "-V go"
 
     // should commands be echoed (ON) or not (OFF) ?
-#define USE_ECHO              ON
+#define USE_ECHO            ON
 
     //  Use the VERSION file
 #define USE_VERSION
@@ -266,6 +347,11 @@ Here is an example of the configuration file <em>icmconf</em> for a concrete
     // header files are precompiled when they are more recent than their 
     // precompiled versions. PRECOMP requires IH
 //#define PRECOMP "-x c++-header"
+
+    // Uncomment to suppress warnings about non-existing IH files in 
+    // class-directories. This option is only interpreted when PRECOMP has
+    // also been defined
+//#define NO_PRECOMP_WARNING
 
     // Uncomment to relink the binary, even when no sources were changed 
 //#define REFRESH
@@ -345,16 +431,16 @@ Here is an example of the configuration file <em>icmconf</em> for a concrete
 </pre>
 
 <p>
-<h2>SEE ALSO</h2>
-    <strong>icmake</strong>(1), <strong>icmconf</strong>(7), <strong>icmstart</strong>(1), <strong>icmstart.rc</strong>(7)
+<h2 >SEE ALSO</h2>
+    <strong >icmake</strong>(1), <strong >icmconf</strong>(7), <strong >icmstart</strong>(1), <strong >icmstart.rc</strong>(7)
 <p>
-<h2>BUGS</h2>
+<h2 >BUGS</h2>
     None reported
 <p>
-<h2>COPYRIGHT</h2>
+<h2 >COPYRIGHT</h2>
     This is free software, distributed under the terms of the 
     GNU General Public License (GPL).
 <p>
-<h2>AUTHOR</h2>
-    Frank B. Brokken (<strong>f.b.brokken@rug.nl</strong>).
+<h2 >AUTHOR</h2>
+    Frank B. Brokken (<strong >f.b.brokken@rug.nl</strong>).
 <p>

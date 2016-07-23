@@ -10,7 +10,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmstart.rc</h1>
-<h2 id="author">icmake.8.01.00.tar.gz</h2>
+<h2 id="author">icmake.9.00.00.tar.gz</h2>
 <h2 id="date">1992-2016</h2>
 
 <!DOCTYPE html><html><head>
@@ -43,26 +43,26 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmstart.rc(7)</h1>
-<h2 id="author">icmake.8.01.00.tar.gz icmstart resource file</h2>
+<h2 id="author">icmake.9.00.00.tar.gz icmstart resource file</h2>
 <h2 id="date">1992-2016</h2>
 
 
 <p>
 
-<h2>NAME</h2>icmstart.rc - The icmstart(1) resource file
+<h2 >NAME</h2>icmstart.rc - The icmstart(1) resource file
 <p>
-<h2>DESCRIPTION</h2>
+<h2 >DESCRIPTION</h2>
 <p>
-The <strong>icmstart.rc</strong> file specifies the files that are installed by
-<strong>icmstart</strong>(1).
+The <strong >icmstart.rc</strong> file specifies the files that are installed by
+<strong >icmstart</strong>(1).
 <p>
-By default <strong>icmstart.rc</strong> is found in <em>/etc/icmake/icmstart.rc</em>, but if a
-file <em>$HOME/.icmake/icmstart.rc</em> is found then the latter file is used by
-<strong>icmstart</strong>(1). <em>$HOME/.icmake/icmstart.rc</em> in turn is overruled by
-specifying a <em>-c</em> option when invoking <strong>icmstart</strong>(1).
+By default <strong >icmstart.rc</strong> is found in <em >/etc/icmake/icmstart.rc</em>, but if a
+file <em >$HOME/.icmake/icmstart.rc</em> is found then the latter file is used by
+<strong >icmstart</strong>(1). <em >$HOME/.icmake/icmstart.rc</em> in turn is overruled by
+specifying a <em >-c</em> option when invoking <strong >icmstart</strong>(1).
 <p>
 The default resource file contains the following specifications, preparing for
-the construction of a <strong>C++</strong> program using <strong>icmbuild</strong>(1):
+the construction of a <strong >C++</strong> program using <strong >icmbuild</strong>(1):
         <pre>
 
     CLASSES
@@ -75,80 +75,80 @@ the construction of a <strong>C++</strong> program using <strong>icmbuild</stron
         
 </pre>
 
-The <em>icmstart.rc</em> file may contain:
+The <em >icmstart.rc</em> file may contain:
     <ul>
     <li> empty lines, which are ignored;
 <p>
-<li> lines beginning with a hash-character (<em>#</em>), also ignored;
+<li> lines beginning with a hash-character (<em >#</em>), also ignored;
 <p>
 <li> an optional installation mode followed by a source-destination
 specification. 
     </ul>
 <p>
-<h2>INSTALLATION MODE</h2>
+<h2 >INSTALLATION MODE</h2>
 <p>
 An installation mode consists of a combination of:
     <ul>
-    <li> either a P (don't install with <em>icmstart xxx library</em>) or an L
-(don't install with <em>icmstart xxx program</em>);
+    <li> either a P (don't install with <em >icmstart xxx library</em>) or an L
+(don't install with <em >icmstart xxx program</em>);
 <p>
 <li> a D, indicating that the source must also be installed by default,
 i.e., if neither `program' or `library' was specified as second argument.
 <p>
 <li> a b, indicating that the
-file must <em>not</em> be installed if the <em>-b</em> (basic installation) option was
-specified when calling <em>icmstart</em>.
+file must <em >not</em> be installed if the <em >-b</em> (basic installation) option was
+specified when calling <em >icmstart</em>.
 <p>
 <li> Following the optional P, L, D, b combination a space delimited
-optional <em>?</em> may be specified. If specified the installation of the file or
+optional <em >?</em> may be specified. If specified the installation of the file or
 directory must be confirmed by the user.
     </ul>
 <p>
-<h2>SOURCE-DESTINATION SPECIFICATIONS</h2>
+<h2 >SOURCE-DESTINATION SPECIFICATIONS</h2>
 <p>
 The following source-destination specifications can be used in an
-<em>icmstart.rc</em> file:
+<em >icmstart.rc</em> file:
     <ul>
-    <li> <em>source</em><br/>
-        A plain name must exist in the <em>icmstart's</em> skeleton directory. It
-is installed in the destination directory <em>`dest'</em> specified when calling
-<strong>icmstart</strong>(1). Example:
+    <li> <em >source</em><br/>
+        A plain name must exist in the <em >icmstart's</em> skeleton directory. It
+is installed in the destination directory <em >`dest'</em> specified when calling
+<strong >icmstart</strong>(1). Example:
         <pre>
 
     CLASSES     
         
 </pre>
 
-    <em>skeletondir/CLASSES</em> is installed as <em>dest/CLASSES</em>
+    <em >skeletondir/CLASSES</em> is installed as <em >dest/CLASSES</em>
 <p>
-<li> <em>pathspec</em><br/>
+<li> <em >pathspec</em><br/>
         If `pathspec' does not begin with a slash it must exist in
-<em>icmstart's</em> skeleton directory.  It is installed as `pathspec' in the
-destination directory specified when calling <strong>icmstart</strong>(1). Example:
+<em >icmstart's</em> skeleton directory.  It is installed as `pathspec' in the
+destination directory specified when calling <strong >icmstart</strong>(1). Example:
         <pre>
 
     dir/file
         
 </pre>
 
-    <em>skeletondir/dir/file</em> is installed as <em>dest/dir/file</em>
+    <em >skeletondir/dir/file</em> is installed as <em >dest/dir/file</em>
 <p>
-<li> <em>/pathspec</em> or <em>~/pathspec</em>
-        The <em>~</em>-character is expanded to the user's home directory. The
+<li> <em >/pathspec</em> or <em >~/pathspec</em>
+        The <em >~</em>-character is expanded to the user's home directory. The
 pathspec's final element is installed in the destination directory specified
-when calling <strong>icmstart</strong>(1). Example:
+when calling <strong >icmstart</strong>(1). Example:
         <pre>
 
     ~/.icmake/file
         
 </pre>
 
-    <em>$HOME/.icmake/file</em> is installed as <em>dest/file</em>
+    <em >$HOME/.icmake/file</em> is installed as <em >dest/file</em>
     </ul>
     When the above source specifications are followed by a destination
-specification <em>destspec</em> (a file or non-absolute directory specification)
+specification <em >destspec</em> (a file or non-absolute directory specification)
 then the source specification is installed as dest/destspec) below the
-destination directory specified when calling <strong>icmstart</strong>(1). Examples:
+destination directory specified when calling <strong >icmstart</strong>(1). Examples:
         <pre>
 
     CLASSES CLASSES             # skeletondir/CLASSES is installed as 
@@ -161,30 +161,30 @@ destination directory specified when calling <strong>icmstart</strong>(1). Examp
 </pre>
 
     Icmstart conveerts the destination specification to a full path 
-specification. If this full path specification does not begin with <em>dest's</em>
-full path specification an error message is displayed and <em>icmstart</em> ends.
+specification. If this full path specification does not begin with <em >dest's</em>
+full path specification an error message is displayed and <em >icmstart</em> ends.
 <p>
-<h2>FILES</h2>
+<h2 >FILES</h2>
     The mentioned paths are sugestive only and may be installation dependent:
     <ul>
-    <li> <strong>/usr/share/icmake/icmconf</strong>
-        Example of an <strong>icmbuild</strong> configuration file;
-    <li> <strong>/usr/share/icmake/CLASSES</strong>
-        Example of an <strong>icmbuild</strong> <em>CLASSES</em> file.
-    <li> <strong>/usr/share/icmake/icmstart.rc</strong>
+    <li> <strong >/usr/share/icmake/icmconf</strong>
+        Example of an <strong >icmbuild</strong> configuration file;
+    <li> <strong >/usr/share/icmake/CLASSES</strong>
+        Example of an <strong >icmbuild</strong> <em >CLASSES</em> file.
+    <li> <strong >/usr/share/icmake/icmstart.rc</strong>
         Default skeleton resource file.
     </ul>
 <p>
-<h2>SEE ALSO</h2>
-    <strong>icmake</strong>(1), <strong>icmbuild</strong>(1), <strong>icmconf</strong>(7), <strong>icmstart</strong>(1)
+<h2 >SEE ALSO</h2>
+    <strong >icmake</strong>(1), <strong >icmbuild</strong>(1), <strong >icmconf</strong>(7), <strong >icmstart</strong>(1)
 <p>
-<h2>BUGS</h2>
+<h2 >BUGS</h2>
     None reported
 <p>
-<h2>COPYRIGHT</h2>
+<h2 >COPYRIGHT</h2>
     This is free software, distributed under the terms of the 
     GNU General Public License (GPL).
 <p>
-<h2>AUTHOR</h2>
-    Frank B. Brokken (<strong>f.b.brokken@rug.nl</strong>).
+<h2 >AUTHOR</h2>
+    Frank B. Brokken (<strong >f.b.brokken@rug.nl</strong>).
 <p>

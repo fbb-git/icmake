@@ -85,6 +85,11 @@
     // precompiled versions. PRECOMP requires IH
 //#define PRECOMP "-x c++-header"
 
+    // Uncomment to suppress warnings about non-existing IH files in 
+    // class-directories. This option is only interpreted when PRECOMP has
+    // also been defined
+//#define NO_PRECOMP_WARNING
+
     // Uncomment to relink the binary, even when no sources were changed 
 //#define REFRESH
 

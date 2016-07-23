@@ -166,6 +166,12 @@ manpagesection(ICMCONF PARAMETERS)
         bf(icmbuild)(1) is used for library maintenance rather than program
         maintenance.
 
+    itb(//#define NO_PRECOMP_WARNING")
+       When tt(PRECOMP) is defined (see below) a warning is issued when a
+        class-directory does not contain a tt(IH) file. Such warnings are
+        suppressed when defining tt(NO_PRECOMP_WARNING). This option is
+        ignored unless tt(PRECOMP) has been defined.
+
     itb(#define OBJ_EXT             ".o")
         The extension of object modules created by the compiler.
 

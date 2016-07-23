@@ -195,7 +195,8 @@ be inspected, the option \fI\-\-no\-use\-all\fP can be specified\&.
 Options \fI\-\-verbose\fP (or \fI\-V\fP) can be specified to increase
 \fIicm_dep\(cq\&s\fP verbosity\&. If none is specified, \fIicm_dep\fP silently performs
 its duties\&. If specified once, then \fIicm_dep\fP reports to the standard output
-what actions it performs; if specified twice it also reports the class
+what actions it performs; if specified twice it reports the options it
+encountered; if specified three times it also reports the class
 dependencies; if specified more often it reports what files it encountered and
 what situations caused it to make its decisions\&.
 .IP o 
@@ -206,8 +207,9 @@ Option \fI\-\-help\fP (or \fI\-h\fP) ends \fIicm_dep\fP after writing a
 summary of its usage to the standard output\&.
 To start its work, \fIicm_dep\fP needs one command\-line argument:
 \fIgo\fP\&. Any other argument results in \fIicm_dep\fP performing a `dry run\(cq\&: it
-will perform all its duties, but no files (precompiled headers or \fIUSE_ALL\fP
-files) will be modified\&. If neither options nor arguments are specified
+will perform all its duties (and verbose messages are displayed as if \fIgo\fP
+had been specified), but no files (precompiled headers or \fIUSE_ALL\fP files)
+will be touched or removed\&. If neither options nor arguments are specified
 \fIicm_dep\fP writes its usage summary to the standard output\&.
 .PP 
 By default \fIicmbuild\fP calls \fIicmake \-d \-V go\fP: \fIicm_dep\fP is called to
@@ -320,6 +322,11 @@ program, using the library \fIlibbobcat1\fP as an additional library:
     // header files are precompiled when they are more recent than their 
     // precompiled versions\&. PRECOMP requires IH
 //#define PRECOMP \(dq\&\-x c++\-header\(dq\&
+
+    // Uncomment to suppress warnings about non\-existing IH files in 
+    // class\-directories\&. This option is only interpreted when PRECOMP has
+    // also been defined
+//#define NO_PRECOMP_WARNING
 
     // Uncomment to relink the binary, even when no sources were changed 
 //#define REFRESH

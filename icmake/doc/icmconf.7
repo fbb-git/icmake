@@ -177,6 +177,14 @@ specification may be left as\-is or may completely be removed if
 maintenance\&.
 .IP 
 .IP o 
+\fB//#define NO_PRECOMP_WARNING\(dq\&\fP
+.br 
+When \fIPRECOMP\fP is defined (see below) a warning is issued when a
+class\-directory does not contain a \fIIH\fP file\&. Such warnings are
+suppressed when defining \fINO_PRECOMP_WARNING\fP\&. This option is
+ignored unless \fIPRECOMP\fP has been defined\&.
+.IP 
+.IP o 
 \fB#define OBJ_EXT             \(dq\&\&.o\(dq\&\fP
 .br 
 The extension of object modules created by the compiler\&.

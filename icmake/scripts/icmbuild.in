@@ -346,6 +346,14 @@ void precompile(string class)
 {
 #ifdef PRECOMP
     string classIH = class + IH;
+    if (!exists(classIH))
+    {
+#ifndef NO_PRECOMP_WARNING
+        printf("[Warning] CAN'T PRECOMPILE ", class, "/", classIH, 
+                " (unavailable)\n");
+#endif
+        return;
+    }
     if (!exists(classIH + ".gch"))
         system(g_compiler + " " PRECOMP " " + classIH);
 #endif

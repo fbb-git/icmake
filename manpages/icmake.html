@@ -10,7 +10,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmake</h1>
-<h2 id="author">icmake.9.00.00.tar.gz</h2>
+<h2 id="author">icmake.9.01.00.tar.gz</h2>
 <h2 id="date">1992-2016</h2>
 
 <!DOCTYPE html><html><head>
@@ -43,7 +43,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmake(1)</h1>
-<h2 id="author">icmake.9.00.00.tar.gz A program maintenance utility</h2>
+<h2 id="author">icmake.9.01.00.tar.gz A program maintenance utility</h2>
 <h2 id="date">1992-2016</h2>
 
 
@@ -94,50 +94,70 @@ header files are not used.
 <p>
 <h2 >OPTIONS</h2>
 <p>
-<strong >Icmake</strong> uses the following files and options:
+Where available, single letter options are listed between parentheses
+beyond their associated long-option variants. 
 <p>
-<ul>
-    <li><em >source</em>: <strong >icmake</strong> script source file (default extension: <em >.im</em>).
-    <li><em >dest</em>:  binary <strong >icmake</strong> script file (default:  <em >`source'.bim</em>, called
-            the `.bim file' below).
-    <li><em >--</em>:  <strong >icmake</strong> arguments separator separating <strong >icmake</strong> arguments from 
-            arguments passed to the .bim filenl()
-        <em >args</em>: arguments following <em >--</em> are passed to the .bim file
-            as-is, and are available from the <em >list argv</em> parameter defined
-            as the <strong >icmake</strong> script's <em >main</em> function's second parameter (see
-            below at section <strong >USER DEFINED FUNCTIONS</strong>). For some options
-            (see below) the <em >--</em> separator is not required.
+The <em >--</em> option is special:
+    <ul>
+    <li><em >--</em>: <strong >icmake</strong> arguments separator separating <strong >icmake</strong> arguments from
+            arguments passed to the .bim filenl(). Those arguments are passed
+            to the .bim file as-is, and are available from the <em >list argv</em>
+            parameter available from the <strong >icmake</strong> script's <em >main</em> function's
+            second parameter (see below at section <strong >USER DEFINED
+            FUNCTIONS</strong>). For some options (see below) the <em >--</em> separator is
+            not required.
     </ul>
 <p>
-<strong >Icmake</strong> supports various options, described next. The <em >-h</em> option
-overrules all other options, the <em >-a</em> option overrules all other options
-except for <em >-h</em>. Of the remaining action options (<em >-b, -c, -e, -i, -p</em> and
-<em >-t</em>) only one may be specified:
-    <ul>
-    <strong >--about</strong> (<strong >-a</strong>)<br/>show information about <strong >icmake</strong>, overruled by <em >-h</em>;
-    <strong >--compile</strong> (<strong >-c</strong>)<br/>the <strong >icmake</strong> source file is compiled, generating a .bim file;
-    <strong >--execute</strong> (<strong >-e</strong>)<br/>execute the <strong >icmake</strong> .bim file, given as <strong >icmake</strong>'s first file
+<strong >Icmake</strong> supports various options, and only one of these can be specified
+when <strong >icmake</strong> is invocated.
+<p>
+<ul>
+    <li> <strong >--about</strong> (<strong >-a</strong>)<br/>
+        Show information about <strong >icmake</strong> and terminate.
+<p>
+<li> <strong >--compile</strong> (<strong >-c</strong>)<br/>
+        The <strong >icmake</strong> source file is compiled, generating a .bim file.
+<p>
+<li> <strong >--execute</strong> (<strong >-e</strong>)<br/>
+        Execute the <strong >icmake</strong> .bim file, given as <strong >icmake</strong>'s first file
         argument. Any additional arguments are passed to the .bim file as-is,
-        and <em >--</em> should not be specified; 
-    <strong >--icm-dep</strong> (<strong >-d</strong>)<br/>calls <em >/usr/lib/icmake/icm-dep</em>, passing it all remaining
+        and <em >--</em> should not be specified.
+<p>
+<li> <strong >--force</strong> (<strong >-f</strong>)<br/>
+       The icmake source file is recompiled (even if the <em >.bim</em> file is
+        up-to-date) either when no other options are specified, or when in
+        combination with options <em >--source</em> and <em >--tmpbin</em>.
+<p>
+<li> <strong >--help</strong> (<strong >-h</strong>)<br/>
+        Provide usage info and terminate.
+<p>
+<li> <strong >--icm-dep</strong> (<strong >-d</strong>)<br/>
+        Calls <em >/usr/lib/icmake/icm-dep</em>, passing it all remaining
         arguments. If no additional arguments are specified <em >icm-dep's</em>
         short usage information is shown to the std. output stream. See 
         section <strong >ICM-DEP</strong> in <strong >icbuild</strong>(1)'s man-page for more information
-        about the <em >icm-dep</em> support program.
-    <strong >--summary</strong> (<strong >-F</strong>)<br/>the filenames and flags as well as an overview of all actions to
-        be performed by <strong >icmake</strong> are shown on the standard output stream;
-    <strong >--help</strong> (<strong >-h</strong>)<br/>provide usage info and end <strong >icmake</strong>;
-    <strong >--source</strong> (<strong >-i</strong>)<br/>the first argument is the <strong >icmake</strong> source file, the default binary
-        file is constructed if necessary. Any additional arguments are passed
-        to the .bim file as-is, and <em >--</em> should not be specified;
-    <strong >--preprocess</strong> (<strong >-p</strong>)<br/>the <strong >icmake</strong> source file is only preprocessed, and the preprocessed
+        about the <em >icm-dep</em> support program. An overview of <em >icm-dep's</em>
+            option follows below, next to this overview of <strong >icmake</strong>'s options.
+<p>
+<li> <strong >--preprocess</strong> (<strong >-p</strong>)<br/>
+        The <strong >icmake</strong> source file is only preprocessed, and the preprocessed
         file is written to <strong >icmake</strong>'s second
-        file argument (by default <em >`source'.pim</em>);
-    <li> <strong >-t</strong>  <br/>the argument following <em >-t</em> is the name of a temporary .bim
-        file, which is removed after <strong >icmake</strong>'s call. When <em >.</em> is specified as
-        the name of the temporary .bim file then the default temporary
-        directory, followed by <strong >icmake</strong>'s process-id, followed by <em >.bim</em> is
-        used.
+        file argument (by default <em >`source'.pim</em>).
+<p>
+<li> <strong >--source</strong> (<strong >-i</strong>)<br/>
+        The first argument is the <strong >icmake</strong> source file, the default binary
+        file is constructed if necessary. Any additional arguments are passed
+        to the .bim file as-is, and <em >--</em> should not be specified.
+<p>
+<li> <strong >--summary</strong> (<strong >-F</strong>)<br/>
+        The filenames and flags as well as an overview of all actions to
+        be performed by <strong >icmake</strong> are shown on the standard output stream.
+<p>
+<li> <strong >-t</strong> <em >tmpbim</em><br/> 
+       The <em >tmpbim</em> argument following <em >-t</em> is the name of a temporary
+        .bim file, which is removed after <strong >icmake</strong>'s call. When <em >.</em> is
+        specified for <em >tmpbim</em> then the default temporary directory,
+        followed by <strong >icmake</strong>'s process-id, followed by <em >.bim</em> is used.
 <p>
 Following the name of the temporary .bim file the name of the <strong >icmake</strong>
         source script must be specified. Any additional arguments are passed
@@ -159,20 +179,101 @@ Following the name of the temporary .bim file the name of the <strong >icmake</s
         in which case the <strong >icmake</strong> script <em >`script'</em> is executed while it
         receives the arguments <em >script arg1 arg2</em>.
 <p>
-<li> <strong >-T</strong>  <br/>this option must be provided with the name of a directory which
-        is used to store temporary files. E.g., when compiling an <strong >icmake</strong>
-        script, the output of <strong >icmake</strong>'s preprocessor is a temporary file which
-        is removed on exit. By default <em >/tmp</em> is used, unless <em >/tmp</em> is
-        not a writable directory, in which case the current user's <em >$HOME</em>
-        directory is used. Implicit temporary filenames always start with the
-        process id of the current <strong >icmake</strong> process.
-    <strong >--version</strong> (<strong >-v</strong>)<br/>display <strong >icmake</strong>'s version number, and end <strong >icmake</strong>, 
-            overruled by <em >-h</em>
+<li> <strong >-T</strong> <em >directory</em><br/> 
+       The specified directory is used to store temporary files. E.g., when
+        compiling an <strong >icmake</strong> script, the output of <strong >icmake</strong>'s preprocessor is a
+        temporary file which is removed on exit. By default <em >/tmp</em> is used,
+        unless <em >/tmp</em> is not a writable directory, in which case the current
+        user's <em >$HOME</em> directory is used. Implicit temporary filenames
+        always start with the process id of the current <strong >icmake</strong> process.
+<p>
+<li> <strong >--version</strong> (<strong >-v</strong>)<br/>
+        Displays <strong >icmake</strong>'s version number, and terminates.
     </ul>
 <p>
 <strong >Icmun</strong>:
 <p>
 <em >bimfile</em>:  binary <strong >icmake</strong> script file.
+<p>
+<h2 >ICM-DEP invocation and options</h2>
+<p>
+To start its work, the dependencies-analyzer <em >icm_dep</em> needs one
+command-line argument: <em >go</em>. Any other argument results in <em >icm_dep</em>
+performing a `dry run': it will perform all its duties (and verbose messages
+are displayed as if <em >go</em> had been specified), but no files (precompiled
+headers or <em >USE_ALL</em> files) will be touched or removed. If neither options
+nor arguments are specified <em >icm_dep</em> writes its usage summary to the
+standard output.
+<p>
+Options of <em >icm-dep</em> can be specified immediately following <strong >icmake</strong>'s
+<em >--icm-dep</em> option. The following options are recognized by <em >icm-dep</em>:
+    <ul>
+    <li> <strong >--classes</strong>=<em >filename</em> (<strong >-c</strong>)<br/>
+       By default, <em >icm-dep</em> inspects dependencies of the classes whose
+        directories are mentioned in the file <em >CLASSES</em>. If specified in the
+        <strong >icmconf</strong>(7) file, it will also consider dependencies of the
+        classes <em >Parser</em> (directory <em >parser</em>) and <em >Scanner</em> (directory
+        <em >scanner</em>), or it uses their actual names as defined in the
+        <strong >icmconf</strong>(7) file. Use this option if instead of <em >CLASSES</em> another
+        file should be inspected.
+<p>
+<li> <strong >--help</strong> (<strong >-h</strong>)<br/>
+       <em >Icm-dep</em> writes a summary of its usage to the standard output and
+        terminates.
+<p>
+<li> <strong >--icmconf</strong>=<em >filename</em> (<strong >-i</strong>)<br/> 
+       By default <em >icm-dep</em> inspects the contents of an <em >icmconf</em> file,
+        looking for the <em >USE_ALL</em> and <em >PRECOMP</em> specifications. Use this
+        option if instead of <em >icmconf</em> another file should be inspected.
+<p>
+<li> <strong >--mainih</strong>=<em >mainheader</em> (<strong >-m</strong>)<br/>
+       The <em >icmconf</em> file uses the <em >#define IH</em> parameter to specify the
+        suffix of class header files that should be precompiled, their
+        filenames being equal to the names of the classes mentioned in the
+        <em >CLASSES</em> file. <em >CLASSES</em> does not specify a top-level
+        directory. The name of the top-level header file to precompile can be
+        specified using this option. By default it is <em >main.ih</em>. 
+<p>
+<li> <strong >--gch</strong><br/> 
+       By default precompiled header files are inspected if <em >icmconf</em>
+        contains a <em >#define PRECOMP</em> specification. If it does not, but
+        precompiled headers should nonetheless be inspected, the option
+        <em >--gch</em> can be specified. 
+<p>
+<li> <strong >--no-gch</strong><br/> 
+       By default precompiled header files are inspected if <em >icmconf</em>
+        contains a <em >#define PRECOMP</em> specification. If so, but precompiled
+        headers should <em >not</em> be inspected, the option <em >--no-gch</em> can be
+        specified.
+<p>
+<li> <strong >--no-use-all</strong><br/>
+       By default files named at the <em >#define USE_ALL</em> specification are
+        inspected if <em >icmconf</em> contains such a specification. If it does,
+        but the <em >`USE_ALL'</em> files should not be inspected, this
+        option can be specified.
+<p>
+<li> <strong >--use-all</strong>=<em >filename</em><br/>
+       By default files named at the <em >#define USE_ALL</em> specification are
+        inspected if <em >icmconf</em> contains such a specification. If it does
+        not, but <em >`USE_ALL'</em> files should nonetheless be inspected, this
+        option can be specified, together with the name of files (existing in
+        one or more directories that indicate that all the directory's source
+        files must be recompiled).
+<p>
+<li> <strong >--verbose</strong> (<strong >-V</strong>)<br/> 
+       This option can be specified multiple times. The number of times it is
+        specified defines <em >icm_dep's</em> verbosity. If none is specified,
+        <em >icm_dep</em> silently performs its duties. If specified once, then
+        <em >icm_dep</em> reports to the standard output what actions it performs;
+        if specified twice it reports the options it encountered; if specified
+        three times it also reports the class dependencies; if specified more
+        often it reports what files it encountered and what situations caused
+        it to make its decisions.
+<p>
+<li> <strong >--version</strong> (<strong >-v</strong>)<br/> 
+        <em >Icm_dep</em> reports  its version number to the standard output and
+        terminates. 
+    </ul>
 <p>
 <h2 >PREPROCESSOR DIRECTIVES</h2>
 <p>

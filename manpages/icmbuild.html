@@ -10,7 +10,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmbuild</h1>
-<h2 id="author">icmake.9.00.00.tar.gz</h2>
+<h2 id="author">icmake.9.01.00.tar.gz</h2>
 <h2 id="date">1992-2016</h2>
 
 <!DOCTYPE html><html><head>
@@ -43,7 +43,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmbuild(1)</h1>
-<h2 id="author">icmake.9.00.00.tar.gz A generic program maintenance script</h2>
+<h2 id="author">icmake.9.01.00.tar.gz A generic program maintenance script</h2>
 <h2 id="date">1992-2016</h2>
 
 
@@ -195,45 +195,9 @@ files must be recompiled. Furthermore, if a <em >`USE_ALL'</em> file exists in a
 directory then all sources of classes depending on that directory's class are
 also recompiled. 
 <p>
-<em >Icm-dep</em> recognizes various options:
-    <ul>
-    <li> By default, it inspects dependencies of the classes mentioned in the
-<em >CLASSES</em> file (including <em >parser</em> and <em >scanner</em> classes, if used). 
-Option <em >--classes filename</em> (or <em >-c filename</em>) can be provided to specify
-an alternate file.
-    <li> By default the contents of an <em >icmconf</em> file is inspected, looking
-for <em >USE_ALL</em> and <em >PRECOMP</em> specifications. The option <em >--icmconf file</em>
-(or <em >-i file</em>) option can be provided to specify an alternate file.
-    <li> The <em >icmconf</em> file uses the <em >#define IH</em> parameter to specify the
-suffix of class header files that should be precompiled, their filenames being
-equal to the names of the classes mentioned in the <em >CLASSES</em>
-file. <em >CLASSES</em> does not specify a top-level directory. The name of the
-top-level header file to precompile can be specified using the option
-<em >--mainih filename</em> (or <em >-m filename</em>) specification. By default this is
-<em >main.ih</em>. 
-    <li> By default precompiled header files are inspected if <em >icmconf</em>
-contains a <em >#define PRECOMP</em> specification. If it does not, but precompiled
-headers should nonetheless be inspected, the option <em >--gch</em> can be
-specified. Conversely, if precompiled headers should <em >not</em> be inspected, the
-option <em >--no-gch</em> can be specified.
-    <li> By default files named at the <em >#define USE_ALL</em> specification are
-inspected if <em >icmconf</em> contains such a specification. If it
-does not, but <em >`USE_ALL'</em> files  should nonetheless be inspected, the option
-<em >--use-all file</em> can be specified. Conversely, if such files should <em >not</em>
-be inspected, the option <em >--no-use-all</em> can be specified.
-    <li> Options <em >--verbose</em> (or <em >-V</em>) can be specified to increase
-<em >icm_dep's</em> verbosity. If none is specified, <em >icm_dep</em> silently performs
-its duties. If specified once, then <em >icm_dep</em> reports to the standard output
-what actions it performs; if specified twice it reports the options it
-encountered; if specified three times it also reports the class
-dependencies; if specified more often it reports what files it encountered and
-what situations caused it to make its decisions.
-    <li> Option <em >--version</em> (or <em >-v</em>) ends <em >icm_dep</em> after reporting its
-version number to the standard output.
-    <li> Option <em >--help</em> (or <em >-h</em>) ends <em >icm_dep</em> after writing a
-summary of its usage to the standard output.
-    </ul>
-    To start its work, <em >icm_dep</em> needs one command-line argument:
+<em >Icm-dep's</em> options are described in <strong >icmake</strong>(1)'s man-page.
+<p>
+To start its work, <em >icm_dep</em> needs one command-line argument:
 <em >go</em>. Any other argument results in <em >icm_dep</em> performing a `dry run': it
 will perform all its duties (and verbose messages are displayed as if <em >go</em>
 had been specified), but no files (precompiled headers or <em >USE_ALL</em> files)
@@ -368,7 +332,7 @@ Here is an example of the configuration file <em >icmconf</em> for a concrete
 #define ADD_LIBRARIES       ""
 
     // additional paths (other than the standard paths) to locate additional
-    // libraries:
+    // libraries (specify absolute paths or relative to TMP_DIR):
 #define ADD_LIBRARY_PATHS   ""
 
 

@@ -1,4 +1,4 @@
-.TH "icmake" "1" "1992\-2016" "icmake\&.9\&.00\&.00\&.tar\&.gz" "A program maintenance utility"
+.TH "icmake" "1" "1992\-2016" "icmake\&.9\&.01\&.00\&.tar\&.gz" "A program maintenance utility"
 
 .PP 
 .SH "NAME"
@@ -51,70 +51,89 @@ header files are not used\&.
 .SH "OPTIONS"
 
 .PP 
-\fBIcmake\fP uses the following files and options:
+Where available, single letter options are listed between parentheses
+beyond their associated long\-option variants\&. 
 .PP 
+The \fI\-\-\fP option is special:
 .IP o 
-\fIsource\fP: \fBicmake\fP script source file (default extension: \fI\&.im\fP)\&.
-.IP o 
-\fIdest\fP:  binary \fBicmake\fP script file (default:  \fI`source\(cq\&\&.bim\fP, called
-the `\&.bim file\(cq\& below)\&.
-.IP o 
-\fI\-\-\fP:  \fBicmake\fP arguments separator separating \fBicmake\fP arguments from 
-arguments passed to the \&.bim filenl()
-\fIargs\fP: arguments following \fI\-\-\fP are passed to the \&.bim file
-as\-is, and are available from the \fIlist argv\fP parameter defined
-as the \fBicmake\fP script\(cq\&s \fImain\fP function\(cq\&s second parameter (see
-below at section \fBUSER DEFINED FUNCTIONS\fP)\&. For some options
-(see below) the \fI\-\-\fP separator is not required\&.
+\fI\-\-\fP: \fBicmake\fP arguments separator separating \fBicmake\fP arguments from
+arguments passed to the \&.bim filenl()\&. Those arguments are passed
+to the \&.bim file as\-is, and are available from the \fIlist argv\fP
+parameter available from the \fBicmake\fP script\(cq\&s \fImain\fP function\(cq\&s
+second parameter (see below at section \fBUSER DEFINED
+FUNCTIONS\fP)\&. For some options (see below) the \fI\-\-\fP separator is
+not required\&.
 
 .PP 
-\fBIcmake\fP supports various options, described next\&. The \fI\-h\fP option
-overrules all other options, the \fI\-a\fP option overrules all other options
-except for \fI\-h\fP\&. Of the remaining action options (\fI\-b, \-c, \-e, \-i, \-p\fP and
-\fI\-t\fP) only one may be specified:
+\fBIcmake\fP supports various options, and only one of these can be specified
+when \fBicmake\fP is invocated\&.
+.PP 
+.IP o 
 \fB\-\-about\fP (\fB\-a\fP)
 .br 
-show information about \fBicmake\fP, overruled by \fI\-h\fP;
+Show information about \fBicmake\fP and terminate\&.
+.IP 
+.IP o 
 \fB\-\-compile\fP (\fB\-c\fP)
 .br 
-the \fBicmake\fP source file is compiled, generating a \&.bim file;
+The \fBicmake\fP source file is compiled, generating a \&.bim file\&.
+.IP 
+.IP o 
 \fB\-\-execute\fP (\fB\-e\fP)
 .br 
-execute the \fBicmake\fP \&.bim file, given as \fBicmake\fP\(cq\&s first file
+Execute the \fBicmake\fP \&.bim file, given as \fBicmake\fP\(cq\&s first file
 argument\&. Any additional arguments are passed to the \&.bim file as\-is,
-and \fI\-\-\fP should not be specified; 
+and \fI\-\-\fP should not be specified\&.
+.IP 
+.IP o 
+\fB\-\-force\fP (\fB\-f\fP)
+.br 
+The icmake source file is recompiled (even if the \fI\&.bim\fP file is
+up\-to\-date) either when no other options are specified, or when in
+combination with options \fI\-\-source\fP and \fI\-\-tmpbin\fP\&.
+.IP 
+.IP o 
+\fB\-\-help\fP (\fB\-h\fP)
+.br 
+Provide usage info and terminate\&.
+.IP 
+.IP o 
 \fB\-\-icm\-dep\fP (\fB\-d\fP)
 .br 
-calls \fI/usr/lib/icmake/icm\-dep\fP, passing it all remaining
+Calls \fI/usr/lib/icmake/icm\-dep\fP, passing it all remaining
 arguments\&. If no additional arguments are specified \fIicm\-dep\(cq\&s\fP
 short usage information is shown to the std\&. output stream\&. See 
 section \fBICM\-DEP\fP in \fBicbuild\fP(1)\(cq\&s man\-page for more information
-about the \fIicm\-dep\fP support program\&.
-\fB\-\-summary\fP (\fB\-F\fP)
-.br 
-the filenames and flags as well as an overview of all actions to
-be performed by \fBicmake\fP are shown on the standard output stream;
-\fB\-\-help\fP (\fB\-h\fP)
-.br 
-provide usage info and end \fBicmake\fP;
-\fB\-\-source\fP (\fB\-i\fP)
-.br 
-the first argument is the \fBicmake\fP source file, the default binary
-file is constructed if necessary\&. Any additional arguments are passed
-to the \&.bim file as\-is, and \fI\-\-\fP should not be specified;
+about the \fIicm\-dep\fP support program\&. An overview of \fIicm\-dep\(cq\&s\fP
+option follows below, next to this overview of \fBicmake\fP\(cq\&s options\&.
+.IP 
+.IP o 
 \fB\-\-preprocess\fP (\fB\-p\fP)
 .br 
-the \fBicmake\fP source file is only preprocessed, and the preprocessed
+The \fBicmake\fP source file is only preprocessed, and the preprocessed
 file is written to \fBicmake\fP\(cq\&s second
-file argument (by default \fI`source\(cq\&\&.pim\fP);
+file argument (by default \fI`source\(cq\&\&.pim\fP)\&.
+.IP 
 .IP o 
-\fB\-t\fP  
+\fB\-\-source\fP (\fB\-i\fP)
 .br 
-the argument following \fI\-t\fP is the name of a temporary \&.bim
-file, which is removed after \fBicmake\fP\(cq\&s call\&. When \fI\&.\fP is specified as
-the name of the temporary \&.bim file then the default temporary
-directory, followed by \fBicmake\fP\(cq\&s process\-id, followed by \fI\&.bim\fP is
-used\&.
+The first argument is the \fBicmake\fP source file, the default binary
+file is constructed if necessary\&. Any additional arguments are passed
+to the \&.bim file as\-is, and \fI\-\-\fP should not be specified\&.
+.IP 
+.IP o 
+\fB\-\-summary\fP (\fB\-F\fP)
+.br 
+The filenames and flags as well as an overview of all actions to
+be performed by \fBicmake\fP are shown on the standard output stream\&.
+.IP 
+.IP o 
+\fB\-t\fP \fItmpbim\fP
+.br 
+The \fItmpbim\fP argument following \fI\-t\fP is the name of a temporary
+\&.bim file, which is removed after \fBicmake\fP\(cq\&s call\&. When \fI\&.\fP is
+specified for \fItmpbim\fP then the default temporary directory,
+followed by \fBicmake\fP\(cq\&s process\-id, followed by \fI\&.bim\fP is used\&.
 .IP 
 Following the name of the temporary \&.bim file the name of the \fBicmake\fP
 source script must be specified\&. Any additional arguments are passed
@@ -136,24 +155,124 @@ in which case the \fBicmake\fP script \fI`script\(cq\&\fP is executed while it
 receives the arguments \fIscript arg1 arg2\fP\&.
 .IP 
 .IP o 
-\fB\-T\fP  
+\fB\-T\fP \fIdirectory\fP
 .br 
-this option must be provided with the name of a directory which
-is used to store temporary files\&. E\&.g\&., when compiling an \fBicmake\fP
-script, the output of \fBicmake\fP\(cq\&s preprocessor is a temporary file which
-is removed on exit\&. By default \fI/tmp\fP is used, unless \fI/tmp\fP is
-not a writable directory, in which case the current user\(cq\&s \fI$HOME\fP
-directory is used\&. Implicit temporary filenames always start with the
-process id of the current \fBicmake\fP process\&.
+The specified directory is used to store temporary files\&. E\&.g\&., when
+compiling an \fBicmake\fP script, the output of \fBicmake\fP\(cq\&s preprocessor is a
+temporary file which is removed on exit\&. By default \fI/tmp\fP is used,
+unless \fI/tmp\fP is not a writable directory, in which case the current
+user\(cq\&s \fI$HOME\fP directory is used\&. Implicit temporary filenames
+always start with the process id of the current \fBicmake\fP process\&.
+.IP 
+.IP o 
 \fB\-\-version\fP (\fB\-v\fP)
 .br 
-display \fBicmake\fP\(cq\&s version number, and end \fBicmake\fP, 
-overruled by \fI\-h\fP
+Displays \fBicmake\fP\(cq\&s version number, and terminates\&.
 
 .PP 
 \fBIcmun\fP:
 .PP 
 \fIbimfile\fP:  binary \fBicmake\fP script file\&.
+.PP 
+.SH "ICM\-DEP invocation and options"
+
+.PP 
+To start its work, the dependencies\-analyzer \fIicm_dep\fP needs one
+command\-line argument: \fIgo\fP\&. Any other argument results in \fIicm_dep\fP
+performing a `dry run\(cq\&: it will perform all its duties (and verbose messages
+are displayed as if \fIgo\fP had been specified), but no files (precompiled
+headers or \fIUSE_ALL\fP files) will be touched or removed\&. If neither options
+nor arguments are specified \fIicm_dep\fP writes its usage summary to the
+standard output\&.
+.PP 
+Options of \fIicm\-dep\fP can be specified immediately following \fBicmake\fP\(cq\&s
+\fI\-\-icm\-dep\fP option\&. The following options are recognized by \fIicm\-dep\fP:
+.IP o 
+\fB\-\-classes\fP=\fIfilename\fP (\fB\-c\fP)
+.br 
+By default, \fIicm\-dep\fP inspects dependencies of the classes whose
+directories are mentioned in the file \fICLASSES\fP\&. If specified in the
+\fBicmconf\fP(7) file, it will also consider dependencies of the
+classes \fIParser\fP (directory \fIparser\fP) and \fIScanner\fP (directory
+\fIscanner\fP), or it uses their actual names as defined in the
+\fBicmconf\fP(7) file\&. Use this option if instead of \fICLASSES\fP another
+file should be inspected\&.
+.IP 
+.IP o 
+\fB\-\-help\fP (\fB\-h\fP)
+.br 
+\fIIcm\-dep\fP writes a summary of its usage to the standard output and
+terminates\&.
+.IP 
+.IP o 
+\fB\-\-icmconf\fP=\fIfilename\fP (\fB\-i\fP)
+.br 
+By default \fIicm\-dep\fP inspects the contents of an \fIicmconf\fP file,
+looking for the \fIUSE_ALL\fP and \fIPRECOMP\fP specifications\&. Use this
+option if instead of \fIicmconf\fP another file should be inspected\&.
+.IP 
+.IP o 
+\fB\-\-mainih\fP=\fImainheader\fP (\fB\-m\fP)
+.br 
+The \fIicmconf\fP file uses the \fI#define IH\fP parameter to specify the
+suffix of class header files that should be precompiled, their
+filenames being equal to the names of the classes mentioned in the
+\fICLASSES\fP file\&. \fICLASSES\fP does not specify a top\-level
+directory\&. The name of the top\-level header file to precompile can be
+specified using this option\&. By default it is \fImain\&.ih\fP\&. 
+.IP 
+.IP o 
+\fB\-\-gch\fP
+.br 
+By default precompiled header files are inspected if \fIicmconf\fP
+contains a \fI#define PRECOMP\fP specification\&. If it does not, but
+precompiled headers should nonetheless be inspected, the option
+\fI\-\-gch\fP can be specified\&. 
+.IP 
+.IP o 
+\fB\-\-no\-gch\fP
+.br 
+By default precompiled header files are inspected if \fIicmconf\fP
+contains a \fI#define PRECOMP\fP specification\&. If so, but precompiled
+headers should \fInot\fP be inspected, the option \fI\-\-no\-gch\fP can be
+specified\&.
+.IP 
+.IP o 
+\fB\-\-no\-use\-all\fP
+.br 
+By default files named at the \fI#define USE_ALL\fP specification are
+inspected if \fIicmconf\fP contains such a specification\&. If it does,
+but the \fI`USE_ALL\(cq\&\fP files should not be inspected, this
+option can be specified\&.
+.IP 
+.IP o 
+\fB\-\-use\-all\fP=\fIfilename\fP
+.br 
+By default files named at the \fI#define USE_ALL\fP specification are
+inspected if \fIicmconf\fP contains such a specification\&. If it does
+not, but \fI`USE_ALL\(cq\&\fP files should nonetheless be inspected, this
+option can be specified, together with the name of files (existing in
+one or more directories that indicate that all the directory\(cq\&s source
+files must be recompiled)\&.
+.IP 
+.IP o 
+\fB\-\-verbose\fP (\fB\-V\fP)
+.br 
+This option can be specified multiple times\&. The number of times it is
+specified defines \fIicm_dep\(cq\&s\fP verbosity\&. If none is specified,
+\fIicm_dep\fP silently performs its duties\&. If specified once, then
+\fIicm_dep\fP reports to the standard output what actions it performs;
+if specified twice it reports the options it encountered; if specified
+three times it also reports the class dependencies; if specified more
+often it reports what files it encountered and what situations caused
+it to make its decisions\&.
+.IP 
+.IP o 
+\fB\-\-version\fP (\fB\-v\fP)
+.br 
+\fIIcm_dep\fP reports  its version number to the standard output and
+terminates\&. 
+
 .PP 
 .SH "PREPROCESSOR DIRECTIVES"
 

@@ -1,4 +1,4 @@
-.TH "icmconf" "7" "1992\-2016" "icmake\&.9\&.00\&.00\&.tar\&.gz" "configuration file for \fBicmbuild\fP(1)"
+.TH "icmconf" "7" "1992\-2016" "icmake\&.9\&.01\&.00\&.tar\&.gz" "configuration file for \fBicmbuild\fP(1)"
 
 .PP 
 .SH "NAME"
@@ -77,6 +77,11 @@ When the additional libraries (specified at \fIADD_LIBRARIES\fP) are
 located in non\-standard library locations (e\&.g\&., not in \fI/lib\fP and
 \fI/usr/lib\fP) then these additional paths are (blank space separated)
 specified here\&. Specify only the paths, not the \fI\-L\fP flags\&.
+.IP 
+It is stronly advised to specify full pathnames here, or remember that
+normally the location of the \fIicmconf\fP file is not the location
+where the compilation actually takes place, which is the location
+specified at the \fITMP_DIR\fP parameter (see below)\&.
 .IP 
 .IP o 
 \fB#define CLS\fP

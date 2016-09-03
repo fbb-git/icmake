@@ -1,3 +1,10 @@
+icmake (9.01.00)
+
+* Man-pages weren't properly updated at 9.00.00. This was fixed in this
+release. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 03 Sep 2016 15:10:43 +0200
+
 icmake (9.00.00)
 
 * Added support program icm-dep computing dependencies for USE_ALL classes and

@@ -161,44 +161,8 @@ files must be recompiled. Furthermore, if a tt(`USE_ALL') file exists in a
 directory then all sources of classes depending on that directory's class are
 also recompiled. 
 
-tt(Icm-dep) recognizes various options:
-    itemization(
-    it() By default, it inspects dependencies of the classes mentioned in the
-tt(CLASSES) file (including tt(parser) and tt(scanner) classes, if used). 
-Option tt(--classes filename) (or tt(-c filename)) can be provided to specify
-an alternate file.
-    it() By default the contents of an tt(icmconf) file is inspected, looking
-for tt(USE_ALL) and tt(PRECOMP) specifications. The option tt(--icmconf file)
-(or tt(-i file)) option can be provided to specify an alternate file.
-    it() The tt(icmconf) file uses the tt(#define IH) parameter to specify the
-suffix of class header files that should be precompiled, their filenames being
-equal to the names of the classes mentioned in the tt(CLASSES)
-file. tt(CLASSES) does not specify a top-level directory. The name of the
-top-level header file to precompile can be specified using the option
-tt(--mainih filename) (or tt(-m filename)) specification. By default this is
-tt(main.ih). 
-    it() By default precompiled header files are inspected if tt(icmconf)
-contains a tt(#define PRECOMP) specification. If it does not, but precompiled
-headers should nonetheless be inspected, the option tt(--gch) can be
-specified. Conversely, if precompiled headers should em(not) be inspected, the
-option tt(--no-gch) can be specified.
-    it() By default files named at the tt(#define USE_ALL) specification are
-inspected if tt(icmconf) contains such a specification. If it
-does not, but tt(`USE_ALL') files  should nonetheless be inspected, the option
-tt(--use-all file) can be specified. Conversely, if such files should em(not)
-be inspected, the option tt(--no-use-all) can be specified.
-    it() Options tt(--verbose) (or tt(-V)) can be specified to increase
-tt(icm_dep's) verbosity. If none is specified, tt(icm_dep) silently performs
-its duties. If specified once, then tt(icm_dep) reports to the standard output
-what actions it performs; if specified twice it reports the options it
-encountered; if specified three times it also reports the class
-dependencies; if specified more often it reports what files it encountered and
-what situations caused it to make its decisions.
-    it() Option tt(--version) (or tt(-v)) ends tt(icm_dep) after reporting its
-version number to the standard output.
-    it() Option tt(--help) (or tt(-h)) ends tt(icm_dep) after writing a
-summary of its usage to the standard output.
-    )
+    tt(Icm-dep's) options are described in bf(icmake)(1)'s man-page.
+
     To start its work, tt(icm_dep) needs one command-line argument:
 tt(go). Any other argument results in tt(icm_dep) performing a `dry run': it
 will perform all its duties (and verbose messages are displayed as if tt(go)

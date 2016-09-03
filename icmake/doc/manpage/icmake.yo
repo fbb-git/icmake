@@ -4,12 +4,23 @@ htmlbodyopt(text)(#27408B)
 htmlbodyopt(bgcolor)(#FFFAF0)
 whenhtml(mailto(Frank B. Brokken: f.b.brokken@rug.nl))
 
-DEFINEMACRO(sop)(3)(\
-    it() bf(-ARG1) ARG2 nl()ARG3\
+DEFINEMACRO(lsvoption)(3)(\
+    bf(--ARG1)=tt(ARG3) (bf(-ARG2))\
 )
-
-DEFINEMACRO(lsoption)(3)(\
-    bf(--ARG1) (bf(-ARG2))nl()ARG3\
+DEFINEMACRO(lsoption)(2)(\
+    bf(--ARG1) (bf(-ARG2))\
+)
+DEFINEMACRO(lvoption)(2)(\
+    bf(--ARG1)=tt(ARG2)\
+)
+DEFINEMACRO(loption)(1)(\
+    bf(--ARG1)\
+)
+DEFINEMACRO(svoption)(2)(\
+    bf(-ARG1) tt(ARG2)\
+)
+DEFINEMACRO(soption)(1)(\
+    bf(-ARG1)\
 )
 
 DEFINEMACRO(itt)(1)(\
@@ -76,56 +87,70 @@ header files are not used.
 
 manpageoptions()
 
-    Icm() uses the following files and options:
+    Where available, single letter options are listed between parentheses
+beyond their associated long-option variants. 
 
+    The tt(--) option is special:
     itemization(
-    itt(source): icm() script source file (default extension: tt(.im)).
-    itt(dest):  binary icm() script file (default:  tt(`source'.bim), called
-            the `.bim file' below).
-    itt(--):  icm() arguments separator separating icm() arguments from 
-            arguments passed to the .bim filenl()
-        tt(args): arguments following tt(--) are passed to the .bim file
-            as-is, and are available from the tt(list argv) parameter defined
-            as the icm() script's tt(main) function's second parameter (see
-            below at section bf(USER DEFINED FUNCTIONS)). For some options
-            (see below) the tt(--) separator is not required.
+    itt(--): icm() arguments separator separating icm() arguments from
+            arguments passed to the .bim filenl(). Those arguments are passed
+            to the .bim file as-is, and are available from the tt(list argv)
+            parameter available from the icm() script's tt(main) function's
+            second parameter (see below at section bf(USER DEFINED
+            FUNCTIONS)). For some options (see below) the tt(--) separator is
+            not required.
     )
 
-    Icm() supports various options, described next. The tt(-h) option
-overrules all other options, the tt(-a) option overrules all other options
-except for tt(-h). Of the remaining action options (tt(-b, -c, -e, -i, -p) and
-tt(-t)) only one may be specified:
+    Icm() supports various options, and only one of these can be specified
+when icm() is invocated.
+
     itemization(
-    lsoption(about)(a)(show information about icm(), overruled by tt(-h);)
-    lsoption(compile)(c)
-            (the icm() source file is compiled, generating a .bim file;)
-    lsoption(execute)(e)
-            (execute the icm() .bim file, given as icm()'s first file
+    it() lsoption(about)(a)nl()
+        Show information about icm() and terminate.
+
+    it() lsoption(compile)(c)nl()
+        The icm() source file is compiled, generating a .bim file.
+
+    it() lsoption(execute)(e)nl()
+        Execute the icm() .bim file, given as icm()'s first file
         argument. Any additional arguments are passed to the .bim file as-is,
-        and tt(--) should not be specified;) 
-    lsoption(icm-dep)(d)
-            (calls tt(/usr/lib/icmake/icm-dep), passing it all remaining
+        and tt(--) should not be specified.
+
+    it() lsoption(force)(f)nl()
+       The icmake source file is recompiled (even if the tt(.bim) file is
+        up-to-date) either when no other options are specified, or when in
+        combination with options tt(--source) and tt(--tmpbin).
+
+    it() lsoption(help)(h)nl()
+        Provide usage info and terminate.
+
+    it() lsoption(icm-dep)(d)nl()
+        Calls tt(/usr/lib/icmake/icm-dep), passing it all remaining
         arguments. If no additional arguments are specified tt(icm-dep's)
-        short usage information is shown to the std. output stream). See 
+        short usage information is shown to the std. output stream. See 
         section bf(ICM-DEP) in bf(icbuild)(1)'s man-page for more information
-        about the tt(icm-dep) support program.
-    lsoption(summary)(F)
-            (the filenames and flags as well as an overview of all actions to
-        be performed by icm() are shown on the standard output stream;)
-    lsoption(help)(h)(provide usage info and end icm();)
-    lsoption(source)(i)
-            (the first argument is the icm() source file, the default binary
-        file is constructed if necessary. Any additional arguments are passed
-        to the .bim file as-is, and tt(--) should not be specified;)
-    lsoption(preprocess)(p)
-            (the icm() source file is only preprocessed, and the preprocessed
+        about the tt(icm-dep) support program. An overview of tt(icm-dep's)
+            option follows below, next to this overview of icm()'s options.
+
+    it() lsoption(preprocess)(p)nl()
+        The icm() source file is only preprocessed, and the preprocessed
         file is written to icm()'s second
-        file argument (by default tt(`source'.pim));)
-    sop(t)()(the argument following tt(-t) is the name of a temporary .bim
-        file, which is removed after icm()'s call. When tt(.) is specified as
-        the name of the temporary .bim file then the default temporary
-        directory, followed by icm()'s process-id, followed by tt(.bim) is
-        used.
+        file argument (by default tt(`source'.pim)).
+
+    it() lsoption(source)(i)nl()
+        The first argument is the icm() source file, the default binary
+        file is constructed if necessary. Any additional arguments are passed
+        to the .bim file as-is, and tt(--) should not be specified.
+
+    it() lsoption(summary)(F)nl()
+        The filenames and flags as well as an overview of all actions to
+        be performed by icm() are shown on the standard output stream.
+
+    it() svoption(t)(tmpbim)nl() 
+       The tt(tmpbim) argument following tt(-t) is the name of a temporary
+        .bim file, which is removed after icm()'s call. When tt(.) is
+        specified for tt(tmpbim) then the default temporary directory,
+        followed by icm()'s process-id, followed by tt(.bim) is used.
 
         Following the name of the temporary .bim file the name of the icm()
         source script must be specified. Any additional arguments are passed
@@ -140,23 +165,106 @@ tt(-t)) only one may be specified:
             )
         in which case the icm() script tt(`script') is executed while it
         receives the arguments tt(script arg1 arg2).
-        ) 
-    sop(T)()(this option must be provided with the name of a directory which
-        is used to store temporary files. E.g., when compiling an icm()
-        script, the output of icm()'s preprocessor is a temporary file which
-        is removed on exit. By default tt(/tmp) is used, unless tt(/tmp) is
-        not a writable directory, in which case the current user's tt($HOME)
-        directory is used. Implicit temporary filenames always start with the
-        process id of the current icm() process.)
-    lsoption(version)(v)(display icm()'s version number, and end icm(), 
-            overruled by tt(-h))
+
+
+    it() svoption(T)(directory)nl() 
+       The specified directory is used to store temporary files. E.g., when
+        compiling an icm() script, the output of icm()'s preprocessor is a
+        temporary file which is removed on exit. By default tt(/tmp) is used,
+        unless tt(/tmp) is not a writable directory, in which case the current
+        user's tt($HOME) directory is used. Implicit temporary filenames
+        always start with the process id of the current icm() process.
+
+    it() lsoption(version)(v)nl()
+        Displays icm()'s version number, and terminates.
     )
 
     bf(Icmun):
 
     tt(bimfile):  binary icm() script file.
 
-    
+manpagesection(ICM-DEP invocation and options)
+
+    To start its work, the dependencies-analyzer tt(icm_dep) needs one
+command-line argument: tt(go). Any other argument results in tt(icm_dep)
+performing a `dry run': it will perform all its duties (and verbose messages
+are displayed as if tt(go) had been specified), but no files (precompiled
+headers or tt(USE_ALL) files) will be touched or removed. If neither options
+nor arguments are specified tt(icm_dep) writes its usage summary to the
+standard output.
+
+
+    Options of tt(icm-dep) can be specified immediately following icm()'s
+tt(--icm-dep) option. The following options are recognized by tt(icm-dep):
+    itemization(
+    it() lsvoption(classes)(c)(filename)nl()
+       By default, tt(icm-dep) inspects dependencies of the classes whose
+        directories are mentioned in the file tt(CLASSES). If specified in the
+        bf(icmconf)(7) file, it will also consider dependencies of the
+        classes tt(Parser) (directory tt(parser)) and tt(Scanner) (directory
+        tt(scanner)), or it uses their actual names as defined in the
+        bf(icmconf)(7) file. Use this option if instead of tt(CLASSES) another
+        file should be inspected.
+
+    it() lsoption(help)(h)nl()
+       tt(Icm-dep) writes a summary of its usage to the standard output and
+        terminates.
+
+    it() lsvoption(icmconf)(i)(filename)nl() 
+       By default tt(icm-dep) inspects the contents of an tt(icmconf) file,
+        looking for the tt(USE_ALL) and tt(PRECOMP) specifications. Use this
+        option if instead of tt(icmconf) another file should be inspected.
+
+    it() lsvoption(mainih)(m)(mainheader)nl()
+       The tt(icmconf) file uses the tt(#define IH) parameter to specify the
+        suffix of class header files that should be precompiled, their
+        filenames being equal to the names of the classes mentioned in the
+        tt(CLASSES) file. tt(CLASSES) does not specify a top-level
+        directory. The name of the top-level header file to precompile can be
+        specified using this option. By default it is tt(main.ih). 
+
+    it() loption(gch)nl() 
+       By default precompiled header files are inspected if tt(icmconf)
+        contains a tt(#define PRECOMP) specification. If it does not, but
+        precompiled headers should nonetheless be inspected, the option
+        tt(--gch) can be specified. 
+
+    it() loption(no-gch)nl() 
+       By default precompiled header files are inspected if tt(icmconf)
+        contains a tt(#define PRECOMP) specification. If so, but precompiled
+        headers should em(not) be inspected, the option tt(--no-gch) can be
+        specified.
+
+    it() loption(no-use-all)nl()
+       By default files named at the tt(#define USE_ALL) specification are
+        inspected if tt(icmconf) contains such a specification. If it does,
+        but the tt(`USE_ALL') files should not be inspected, this
+        option can be specified.
+
+    it() lvoption(use-all)(filename)nl()
+       By default files named at the tt(#define USE_ALL) specification are
+        inspected if tt(icmconf) contains such a specification. If it does
+        not, but tt(`USE_ALL') files should nonetheless be inspected, this
+        option can be specified, together with the name of files (existing in
+        one or more directories that indicate that all the directory's source
+        files must be recompiled).
+
+    it() lsoption(verbose)(V)nl() 
+       This option can be specified multiple times. The number of times it is
+        specified defines tt(icm_dep's) verbosity. If none is specified,
+        tt(icm_dep) silently performs its duties. If specified once, then
+        tt(icm_dep) reports to the standard output what actions it performs;
+        if specified twice it reports the options it encountered; if specified
+        three times it also reports the class dependencies; if specified more
+        often it reports what files it encountered and what situations caused
+        it to make its decisions.
+
+    it() lsoption(version)(v)nl() 
+        tt(Icm_dep) reports  its version number to the standard output and
+        terminates. 
+    )
+
+
 manpagesection(PREPROCESSOR DIRECTIVES)
 
 The following preprocessor directives are available:

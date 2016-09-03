@@ -92,6 +92,11 @@ manpagesection(ICMCONF PARAMETERS)
         tt(/usr/lib)) then these additional paths are (blank space separated)
         specified here. Specify only the paths, not the tt(-L) flags.
 
+        It is stronly advised to specify full pathnames here, or remember that
+        normally the location of the tt(icmconf) file is not the location
+        where the compilation actually takes place, which is the location
+        specified at the tt(TMP_DIR) parameter (see below).
+
     itb(#define CLS)
        The em(clear screen) directive. If defined tt(tput clear) is called to
         clear the terminal screen before starting the compilation. By default

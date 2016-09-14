@@ -16,8 +16,9 @@ void usage(char const *program)
         "      --about (-a)     : information about ",
             program,
         "\n"
-        "      --compile (-c)   : the destination file is compiled "
-                                                "(even if it's up-to-date)\n"
+        "      --compile (-c)   : the destination file is compiled (even if "
+                                                                "it's\n"
+        "                         up-to-date)\n"
 
         "      --directory (-T) : the directory name following -T is used "
                                                 "for icmake's\n"
@@ -40,7 +41,7 @@ void usage(char const *program)
         "               --source and --tmpbin\n"
 
         "      --help (-h)      : provide this help and end ",
-                                                                program,
+                                                                program, "\n"
 
         "      --icm-dep (-d)   : call icm-dep, passing it any remaining "
                                                 "arguments\n"

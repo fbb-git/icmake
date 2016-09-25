@@ -16,18 +16,18 @@ DEFINEMACRO(itb)(1)(\
     it()bf(ARG1)nl()\
 )
 
-DEFINEMACRO(icb)(0)(bf(icmbuild))
-DEFINEMACRO(Icb)(0)(bf(Icmbuild))
+DEFINEMACRO(icb)(0)(tt(icmbuild))
+DEFINEMACRO(Icb)(0)(tt(Icmbuild))
 
 DELETEMACRO(tt)
 DEFINEMACRO(tt)(1)(em(ARG1))
 
 COMMENT( man-request, section, date, distribution file, general name)
 manpage(icmbuild)(1)(_CurYrs_)(icmake._CurVers_.tar.gz)
-        (A generic program maintenance script)
+        (Icmake's generic program maintenance facility)
 
 COMMENT( man-request, larger title )
-manpagename(icmbuild)(A generic, easy configurable, program maintenance script)
+manpagename(icmbuild)(A generic, C++/C program maintenance facility)
 
 COMMENT( all other: add after () )
 manpagesynopsis()
@@ -35,106 +35,168 @@ manpagesynopsis()
 
 manpagedescription()
 
-The icb() script is a generic script that can be used to do program
-maintenance using bf(icmake)(1). 
+Icb() is a small bf(C) program calling bf(icmake)(1) to do program maintenance
+as defined in the tt(icmbuild) script that's (commonly) found in
+tt(/usr/lib/icmake).
 
-Icb() requires that the  file tt(icmconf) is available in the directory where
-program maintenance is requested.
+tt(Icmbuild's) actions are tailored through a configuration file (tt(icmconf))
+which must be present in the directory where program maintenance is
+requested. This file is automatically installed by bf(icmstart)(1). Refer to
+bf(icmconf)(7)'s man-page for details about this file.
 
 Icb() assumes that your sources exist in and below the current working
 directory. The file tt(icmconf) in bf(icmake)(1)'s distribution provides an
 example of an tt(icmconf) file that can be used by icb(). In that example
 tt(icmconf) file it is assumed that bf(C++) sources are maintained, but
-program maintenance for, e.g., bf(C) sources can easily be configured.
+program maintenance for, e.g., bf(C) sources can easily be configured. If
+icb() is called, but tt(icmconf) is not available it displays a usage-summary
+after which icm() ends.
 
-Icb()() compiles all sources in each of the subdirectories named in the file
-tt(CLASSES), and then compiles all sources in the current working directory.
+Icb()() handles the maintenance for all sources in each of the subdirectories
+named in the file tt(CLASSES), and in addition the maintenance of all sources
+in the current working directory. `Maintenance' involves compiling all as yet
+uncompiled source files, recompilation of modified source files, and
+optionally library maintenance and the pre-compilation of header files, which
+commonly results in a marked reduction of source compilation times.
 
-The compiled sources result in object modules which may be kept in a
-library, against which the main-object module is linked. It is also possible
-to specify additional libraries against which the program must be linked.
+When source files are compiled object modules are produced which may be stored
+in a library, against which the object module of the program's tt(main)
+function is linked. It is also possible to specify additional libraries
+against which the program must be linked.
 
 If a library is constructed it is kept up to date by icb(). When a source is
 successfully compiled its new object module replaces the old one that is found
-in the library. At that point the object files are no longer required and are
-removed by icb().
+in the library. At that point the separate object files are no longer required
+and are removed by icb().
+
+Up to tt(icmake) version 9.01.00 icb() was installed as an executable
+tt(icmake) script in (commonly) tt(/usr/bin). The dependency of this script on
+the file tt(icmconf) made it difficult to provide usage information if
+tt(icmconf) was absent. Since version 9.02.00 the tt(icmbuild) script has been
+moved to (commonly) tt(/usr/lib/icmake), and tt(icmbuild) now is a little
+bf(C) program providing the usage information when necessary or requested, but
+otherwise executes tt(icmake) to process the tt(icmbuild) script.
 
 manpagesection(KICK-STARTING ICMBUILD)
 
 To use icb() do as follows:
     itemization(
-    it()  Install icb() in your path;
-    it() copy tt(icmconf) (and probably the file tt(CLASSES)) to your
+    it()  Install icb() in your path (tt(icmake's) installation procedure
+        should already have taken care of that);
+    it() Copy tt(icmconf) (and probably a file tt(CLASSES)) to your
        project's base directory (i.e., the directory in which and where below
-       the project's sources are found);
+       the project's sources are found). Usually this has already been taken
+        care of by the tt(icmstart) script;
+    )
+
+Next:
+    itemization(
     it() Modify the tt(#defines) in the file tt(icmconf) to taste;
     it() Enter the names of subdirectories containing sources on separate
        lines in the file tt(CLASSES)
 
        Note that the order of the classes mentioned in tt(CLASSES) em(is)
-       relevant.  New class (subdirectory) names can always be added, but
-       reordering the lines in the tt(CLASSES) file should be avoided. If
-       reordering is necessary, then first run the command tt(icmbuild clean)
-       to remove all files thus far created by icb(). Recompilation is
-       necessary as the names of the object files contain class order-numbers
-       for identification.  These class-order numbers prevent file-name
-       collisions (e.g., two classes might use a file tt(data.cc)) and thus
-       replacement of a file tt(x.o) from class tt(A) by file tt(x.o) from
-       class tt(B) is prevented;
-    it() Now (after configuring tt(icmconf)) simply run 
-        verb(
-            icmbuild -h
-        )
-       from the project's base directory and let the help-info tell you
-       what your options are. See the next section for the modes of operation.
-    )
+        relevant in that new class (subdirectory) names can always be added at
+        the end of the file tt(CLASSES), but reordering the lines in the
+        tt(CLASSES) file should be avoided. 
+
+        If reordering is necessary, then first run the command tt(icmbuild
+        clean) to remove all files that were thus far created by
+        icb(). Recompilation is necessary as the names of the object files
+        contain class order-numbers for identification.  These class-order
+        numbers prevent file-name collisions (e.g., two classes might use a
+        file tt(data.cc)) and because of the number-prefixes replacement of a
+        file tt(x.o) from class tt(A) by file tt(x.o) from class tt(B) is
+        prevented;
+    it() Start tt(icmbuild).
+    )    
+
+    The next section covers tt(icmbuild's)  modes of operation.
 
 manpageoptions()
 
-    Icb() recognizes two options, at most one should be specified:
+    Icb() supports two options, at most one should be specified:
     itemization(
-    itt(-h): Provide a short usage overview.
+    itt(-h): Display a usage summary (also automatically shown when the
+        current directory does not contain a file tt(icmconf));
     itt(-c): Clear the screen (using tt(tput clear)) before starting the
-       compilation process
+       maintenance process.
     )
 
-    Following the optional tt(-c)  icb()() the following arguments may be
-       passed to icb():
+    Next (after optionally specifying tt(-c)) icb() can be provided with the
+        following arguments:
     itemization(
-    itt(clean)nl()
-        clean up remnants of previous activities
-    itt(library)nl()
-        build the library (static and optionally the dynamic library)
-    itt(program)nl()
-        build the binary program
-    itt(program strip)nl()
-        build the stripped binary program
-    itt(install program path)
-        install the constructed program in the specified path (to be used
-       after issuing icb() tt(program))
-    itt(install static path) 
-       install the constructed static library in the specified path (to be
-        used after issuing icb() tt(library))
-    itt(install shared path) 
-       install the constructed shared library in the specified path (to be
-        used after issuing icb() tt(library))
-    )
-    After adding a line to tt(icmconf) containing
+    it() No arguments at all: 
+       if tt(icmconf) contains the line 
         verb(
     #define DEFCOM "program"
         )
-    icb() by default uses the argument tt(program). After adding 
+        then this is quivalent to the command icb() tt(program);nl()
+       if tt(icmconf) contains the line 
         verb(
     #define DEFCOM "strip"
         )
-    icb() by default uses the argument tt(strip). After adding 
+        then this is quivalent to the command icb() tt(strip);nl()
+       if if tt(icmconf) contains the line 
         verb(
     #define DEFCOM "library"
         )
-    icb() by default uses the argument tt(library).
+       then this is quivalent to the command icb() tt(library).nl() (these
+        commands are further elaborated in this section.)
+       tt(DEFCOM) specifications are ignored when an explicit argument is
+        passed to icb().
 
-    tt(DEFCOM) is ignored when an explicit operational mode is passed to
-        icb().
+    itt(clean)nl()
+        clean up remnants of previous actions;
+
+    itt(install program <path>)nl()
+       install the constructed program in the specified tt(<path>) (to be used
+        after issuing icb() tt(program), see below). Example:
+            verb(
+    icmbuild install ~/bin/program
+            )
+       This installs the constructed binary program in the user's tt(bin)
+        direcotry with the name tt(program);
+
+    itt(install static <path>)nl()
+       install the constructed static library in the specified path (to be
+        used after issuing icb() tt(library), see below). Example:
+            verb(
+    icmbuild static /usr/lib/
+            )
+       This installs the constructed static library (e.g. tt(libspecial.a)) in
+        tt(/usr/lib) as tt(/usr/lib/libspecial.a).nl()
+
+    itt(install shared path) 
+       install the constructed shared library in the specified path (to be
+        used after issuing icb() tt(library)), when tt(icmconf) defines
+        tt(SHARED) (cf. bf(icmconf)(7)). Example:
+            verb(
+    icmbuild shared /usr/lib/
+            )
+       This installs the constructed binary shared library
+        (e.g. tt(libspecial.so)) in tt(/usr/lib) as
+        tt(/usr/lib/libspecial.so). In addition, the soft-links
+            verb(
+    libspecial.so -> libspecial.so.X
+    libspecial.so.X -> libspecial.so.X.Y.Y.Z 
+            ) 
+       are defined in tt(/usr/lib), where tt(X.Y.Z) are the major, minor and
+        subminor versions defined in the file tt(VERSION).
+
+    itt(library)nl() 
+       do library maintenance (builds a static and optionally (if tt(icmconf)
+        defines tt(SHARED)) a shared (dynamic) library); 
+
+    itt(program)nl()
+       do program maintenance (builds a program from the sources in the
+        current working directory and from the sources in the directories
+        specified in the file tt(CLASSES));
+
+    itt(program strip)nl()
+       same as tt(program), but the final program is stripped (using the
+        linker's tt(-s) option);
+    )
 
 manpagesection(ICM-DEP)
 
@@ -180,17 +242,37 @@ manpagefiles()
     The mentioned paths are sugestive only and may be installation dependent:
     itemization(
     it() bf(/usr/share/icmake/icmconf)
-        Example of a icb() configuration file;
+        Unabbreviated example of an icb() configuration file;
     it() bf(/usr/share/icmake/CLASSES)
-        Example of a icb() tt(CLASSES) file.
+        Example of an icb() tt(CLASSES) file.
     )
 
 manpagesection(EXAMPLES)
     
     Here is an example of the configuration file tt(icmconf) for a concrete
-       program, using the library tt(libbobcat1) as an additional library:
-
-    verbinclude(../../usr/share/icmake/icmconf)
+       program, using facilities of the tt(bobcat) library:
+        verb(
+    #define CLS
+    #define LIBRARY             "modules"
+    #define MAIN                "main.cc"
+    #define SOURCES             "*.cc"
+    #define OBJ_EXT             ".o"
+    #define SHAREDREQ           ""
+    #define TMP_DIR             "tmp"
+    #define USE_ALL             "a"
+    #define USE_ECHO              ON
+    #define CXX                 "g++"
+    #define CXXFLAGS            " --std=c++14 -Wall -O2 -pthread" \
+                                " -fdiagnostics-color=never "
+    #define IH                  ".ih"
+    #define PRECOMP             "-x c++-header"
+    #define REFRESH
+    #define LDFLAGS             ""
+    #define ADD_LIBRARIES       "bobcat"
+    #define ADD_LIBRARY_PATHS   ""
+    
+    #define DEFCOM              "program"
+        )
 
 manpageseealso()
     bf(icmake)(1), bf(icmconf)(7), bf(icmstart)(1), bf(icmstart.rc)(7)

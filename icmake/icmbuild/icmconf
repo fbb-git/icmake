@@ -1,0 +1,14 @@
+#define USE_ECHO              ON
+#define MAIN                "main.c"
+#define COMPILER            "gcc"
+#define COMPILER_OPTIONS    "-Wall -O2 -fdiagnostics-color=never"
+#define SOURCES             "*.c"
+#define LINKER_OPTIONS      "-s"
+#define ADD_LIBRARIES       "icrss"
+#define ADD_LIBRARY_PATHS  "../../tmp"
+#define REFRESH
+#define CLS
+#define TMP_DIR             "tmp"
+#define LIBRARY             "modules"
+#define OBJ_EXT             ".o"
+#define DEFCOM              "program"

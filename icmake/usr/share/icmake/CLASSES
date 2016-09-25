@@ -2,17 +2,18 @@
 # 1-level deep subdirectories containing sources to compile. Each directory
 # should be specified on a line of its own. Initial blanks are ok. 
 
-# If a parser or scanner is used, (see icmconfig's USE_PARSER and USE_SCANNER
+# If a parser or scanner is used, (see icmconf's USE_PARSER and USE_SCANNER
 # defines) then those directories are automatically included (although they
 # could be included here as well) 
 
 # Lines starting with # or with // are ignored, as are empty lines.
 
-# Sources in the current (i.e., this) directory are also compiled.
+# Sources in the current directory (i.e., the directory containing CLASSES) 
+# are also compiled.
 
 # Class dependencies are handled by icm_dep, called from icmake using option
 # -d (enter   icmake -d   for short usage info, or see the section on icm_dep 
-# in icmake(1)'s man-page
+# in icmake(1) and icmbuild(1)'s man-pages
 
 
 

@@ -1,4 +1,4 @@
-.TH "icmake" "1" "1992\-2016" "icmake\&.9\&.01\&.00\&.tar\&.gz" "A program maintenance utility"
+.TH "icmake" "1" "1992\-2016" "icmake\&.9\&.02\&.00\&.tar\&.gz" "A program maintenance utility"
 
 .PP 
 .SH "NAME"
@@ -13,8 +13,42 @@ icmake \- A program maintenance (\fImake\fP) utility using a
 .SH "DESCRIPTION"
 
 .PP 
-\fBIcmake\fP(1) can be used as an alternative to \fBmake\fP(1)\&. In its standard
-operation mode, it calls the following programs:
+\fBIcmake\fP(1) was designed as a generic tool that can be used as an
+alternative to \fBmake\fP(1), handling program maintenance\&. It\(cq\&s a generic tool
+in that \fIicmake\fP\-scripts, written in a language closely resembling
+the \fBC\fP programming language, can perform tasks that are traditionally the
+domain of scripting languages\&. 
+.PP 
+\fBIcmake\fP allows programmers to use a programming language (closely resembling the
+well\-known \fBC\fP\-programming language) to define the actions that are required
+for (complex) program maintenance\&. For this, \fBicmake\fP offers various special
+operators as well as a set of support functions that have shown their
+usefulness in program maintenance\&.
+.PP 
+Although \fIicmake\fP\-scripts can be written from scratch for handling program
+maintenance, often the required activities are highly comparable\&. This
+observation resulted in the construction of two \fIicmake\fP\-scripts:
+\fBicmstart\fP(1), initializing a directory for program development and
+\fBicmbuild\fP(1), handling the actual program maintenance\&. Both come predefined
+as scripts tailored to initializing and maintaining \fBC++\fP programs (or,
+after minimal adaptation, \fBC\fP programs), but can easily be adapted to
+other programming languages\&. Both \fIicmstart\fP and \fIicmbuild\fP can be run
+without explicitly calling \fIicmake\fP\&.
+.PP 
+This man\-page covers \fIicmake\fP (the program), its support programs and
+the syntax and facilities offered by \fIicmake\(cq\&s\fP scripting language\&. Refer to
+the \fBicmstart\fP(1)) man\-page for information about how a directory can be
+initialized (created) in which (by default) a \fBC++\fP or \fBC\fP program can be
+developed and refer to the \fBicmbuild\fP(1) man\-page for information about how
+\fIicmbuild\fP can be used to handle program maintenance\&.
+.PP 
+It should be stressed that \fIicmake\fP and its support programs and scripts do
+not offer an \fIIntegrated Development Environment\fP (IDE)\&. It merely performs
+tasks for which scripts can be written, and it offers just a few pre\-defined
+scripts (\fIicmstart\fP and \fIicmbuild\fP) that repeatedly have shown to be
+extremely useful when developing and maintaining programs\&. 
+.PP 
+In its standard operation mode, \fIicmake\fP calls the following programs:
 .IP o 
 \fIicm\-pp\fP  to preprocess the icmake file 
 .IP o 
@@ -27,26 +61,61 @@ in \fBicmbuild\fP(1)\(cq\&s man\-page for more information about
 \fIicm\-exec\fP   to execute the byte\-code file
 
 .PP 
-\fBIcmake\fP allows programmers to use a programming language (closely resembling
-the well\-known \fBC\fP\-programming language) to define the actions that are
-required for (complex) program maintenance\&. For this, \fBicmake\fP offers various
-special operators as well as a set of support functions that have shown their
-usefulness in program maintenance\&.
-.PP 
 The program \fBicmun\fP(1) can be used to disassemble the compiled byte\-code
 (\&.bim) file\&. \fIIcmun\fP is mainly used for illustration, education, and
-debugging\&.
+debugging\&. As it is not required for \fIicmake\fP\(cq\&s daily use it is not
+installed in a standard \fIPATH\fP directory but (since \fIicmake\(cq\&s\fP version
+9\&.02\&.00) in \fIicmake\(cq\&s\fP \fIlib\fP directory, commonly \fI/usr/lib/icmake\fP\&.
 .PP 
 Traditional make\-utilities recompile sources once header files are
 modified\&. When developing \fBC++\fP programs this is often a bad idea, as adding
 a new member to a class does not normally require you to recompile all of the
 class\(cq\&s source files\&. To handle class dependencies \fBicmbuld\fP(1) may inspect
 class dependencies, (re)compiling sources of dependent classes whenever
-necessary\&.  By default, class\-dependencies are not interpreted\&. Refer to the
-\fBicmconf\fP(7) man\-page for further details\&. In addition, precompiled header
-files may be used\&. Precompiled header files dramatically reduce the time that
-is required for compiling classes\(cq\& source files\&. Again: by default precompiled
-header files are not used\&.
+necessary\&.  By default, class\-dependencies are not interpreted, but this can
+easily be changed by activating the \fIPRECOMP\fP and/or \fIUSE_ALL\fP defines in
+\fIicmconf\fP\&. Refer to the \fBicmconf\fP(7) man\-page for further details\&. 
+.PP 
+Precompiled header files can also easily be used\&. Precompiled header files
+dramatically reduce the time that is required for compiling classes\(cq\& source
+files\&. Refer to the \fBicmconf\fP(7) man\-page (in particular the description of
+the \fIPRECOMP\fP define) for further details\&. 
+.PP 
+\fIIcmake\(cq\&s\fP  \fBC\fP\-like scripting language is described in the upcoming
+sections of this man\-page:
+.IP o 
+\fBPREPROCESSOR DIRECTIVES\fP
+.br 
+\- supported preprocessor directives, like
+\fI#include\fP and \fI#define\fP;
+.IP o 
+\fBDATA TYPES\fP
+.br 
+\- \fIint, list, string\fP, and \fIvoid\fP (for functions);
+.IP o 
+\fBPREDEFINED CONSTANTS\fP
+.br 
+\- like \fIO_FILE, OFF\fP, and \fIS_IFREG\fP;
+.IP o 
+\fBOPERATORS\fP
+.br 
+\- like \fI+, younger\fP, and casts
+.IP o 
+\fBFLOW CONTROL\fP
+.br 
+\- \fIif, for, while\fP, etc\&. (the \fIswitch\fP is not
+available);
+.IP o 
+\fBPREDEFINED FUNCTIONS\fP
+.br 
+\- executing programs, changing directories,
+operations on \fIstring\fP and \fIlist\fP type variables, etc\&.;
+.IP o 
+\fBUSER DEFINED FUNCTIONS\fP
+.br 
+\- at least \fImain\fP, with or without its
+common parameters \fIargc, argv,\fP and \fIenvp\fP\&.
+
 .PP 
 .SH "OPTIONS"
 

@@ -1,8 +1,25 @@
-icmake (9.01.01)
+icmake (9.02.00)
 
+  * icmbuild now is a small program, providing help or starting the icmbuild
+    script in LIBDIR (cf. INSTALL)
+
+  * Man-pages were updated
+  
   * Cosmetic changes to icmake --help's output
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 14 Sep 2016 13:10:56 +0200
+  * The name of the optional configuration file YEAR was changed to YEARS
+    (as it defines YEARS, not YEAR)
+
+  * `icmconf' was added to /etc/icmake/icmstart.rc
+
+  * As mentioned in icmake's man-page the program `icmun' is mainly used in 
+    some specific situations. In icmake's daily practice it isn't
+    used. Therefore it was moved from the standard binary programs directory
+    to icmake's LIB directory (commonly /usr/lib/icmake).
+
+  * The file /etc/icmake/icmake.rc was nowhere used and was removed.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 25 Sep 2016 12:36:07 +0200
 
 icmake (9.01.00)
 

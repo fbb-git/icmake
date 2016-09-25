@@ -32,24 +32,43 @@ manpagesynopsis()
 
 manpagedescription()
 
-The bf(icmstart) script is a generic script that can be used to start program
-maintenance using bf(icmake)(1) and bf(icmbuild)(1). bf(Icmstart) creates
-an initial directory tt(top-dir) and installs the files tt(CLASSES,
-VERSION) and tt(icmconf) below tt(top-dir). A second argument  `tt(program)'
-or `tt(library)' may be specified as the default mode of operation of the
-bf(icmbuild)(1) script. 
+Although tt(icmake)-scripts can be written from scratch for handling program
+maintenance, often the required actions are highly comparable. This
+observation resulted in the construction of two tt(icmake)-tools:
+bf(icmstart)(1), initializing a directory for program development and
+bf(icmbuild)(1), handling the actual program maintenance. Both come predefined
+with tt(icmake's) distribution, to initialize and maintain bf(C++) programs
+(or, after minimal adaptation, bf(C)) programs). They can also easily be
+tailored to other programming languages. The tt(icmstart) script and
+tt(icmbuild) program can directly be called: tt(icmstart) is an tt(icmake)
+script, for which the command-shell calls tt(icmake); tt(icmbuild) is a small
+bf(C) program that calls tt(icmake) to process the tt(icmbuild) script in
+(commonly) tt(/usr/lib/icmake).  
 
-Skeleton files for the main directory and subdirectories, by default listed in
-the file tt(/etc/icmake/icmstart.rc), may be installed as well
-(cf. bf(icmstart.rc)(7)).
+This man-page covers the bf(icmstart) script; refer to the bf(icmbuild)(1)
+man-page for information about how tt(icmbuild) can be used.
 
-After changing to the directory created by bf(icmstart) the bf(icmbuild)(1)
-script may be used for program maintenance.
+The bf(icmstart) script is a generic script that can be used to initialize a
+directory with a basic set of files that are commonly used when developing a
+bf(C++) or bf(C) program. 
+
+bf(Icmstart) creates an initial directory (here named `tt(top-dir)') and
+installs the files tt(CLASSES, VERSION) and tt(icmconf) below tt(top-dir). A
+second argument `tt(program)' or `tt(library)' may be specified as the default
+mode of operation of the bf(icmbuild)(1) script, usually resulting in the
+addition of additional skeleton source files. If the predefined set of files
+doesn't fit your needs, then the default set can easily be tailored to your
+needs. The default set of skeleton files is listed in the file
+tt(/etc/icmake/icmstart.rc). Refer to the bf(icmstart.rc)(7) man-page for
+information about how this file is structured and how it can be adapted.
+
+After changing to the directory created by bf(icmstart) bf(icmbuild)(1)
+may be used for program maintenance.
 
 manpageoptions()
 
-    tt(Icmstart) may be called with the following options, which (if specified)
-    must be the first arguments of tt(icmstart):
+    tt(Icmstart) supports the following options, which (when specified)
+    must be tt(icmstart's) first arguments:
     itemization(
     itt(-b)nl()
        Basic installation: the files VERSION, usage.cc and version.cc are not
@@ -66,9 +85,8 @@ manpageoptions()
     itt(-I)nl()
        Do not install files. 
     itt(-r) 
-       Unconditionally replace existing files. If tt(-r) is not
-        provided bf(icmstart) will ask the user to confirm that an existing
-        file must
+       Unconditionally replace existing files. If tt(-r) is not provided
+        bf(icmstart) will ask the user to confirm that an existing file must
         be overwritten. If a skeleton specification refers to a directory, the
         full directory and its subdirectories will be replaced.
     itt(-s skeleton-path) nl() 
@@ -89,9 +107,11 @@ Skeleton resource files may contain comment (empty lines and lines beginning
 with the hash-mark (tt(#))) which is ignored, and should otherwise contain
 specifications of resource file(s) to install.
 
-The default resource file is tt(/etc/icmake/icmstart.rc), contains
+The default resource specification file is tt(/etc/icmake/icmstart.rc),
+containing:
         verb(
     CLASSES
+    icmconf
     P main.cc 
     P main.ih 
     P usage.cc
@@ -99,61 +119,69 @@ The default resource file is tt(/etc/icmake/icmstart.rc), contains
     P ? scanner 
     P ? parser  
         )
-    This file is overruled by tt(~/.icmake/icmstart.rc). See
-bf(icmstart.rc)(7) for details about the format of the tt(icmstart.rc) file.
+    This file is overruled by tt(~/.icmake/icmstart.rc). The tt(~/.icmake)
+directory (called `configuration directory' below) can be prepared using the
+following system command:
+        verb(
+    cp -r /etc/icmake ~/.icmake
+        )
+    This directory can be provided with skeleton files. Default skeleton files
+are commonly found in tt(/usr/share/icmake), and could be copied to the
+configuration directory and referred to by the configuration directory's file
+tt(icmstart.rc).  See bf(icmstart.rc)(7) for details about how skeleton files
+can be referred to tt(icmstart.rc).
 
 manpagesection(CONFIGURATION FILES)
 
-    The configuration files tt(icmstart.rc, AUTHOR, YEARS) and tt(VERSION) are
-recognized and processed by tt(icmstart). 
+    The configuration directory's files tt(icmstart.rc, AUTHOR, YEARS) and
+tt(VERSION) are recognized as skeleton files and are, if available, processed
+by tt(icmstart).
 
 If the tt(-c) option was specified configuration files found in the path
 specified at this option are used. If not specified or if a file isn't
 found then the path tt(~/icmake) is inspected. If a configuration file isn't
 found in tt(~/icmake) either, configuration files in tt(/etc/icmake) are used.
 
-Configuration files are not required for the proper operation of tt(icmstart).
-When absent tt(icmstart) performs the following  default actions:
+Configuration files are optional; if absent  tt(icmstart) can still be used,
+but in normal cases at least tt(icmstart.rc) is provided.
 
+In addition to tt(icstart.rc) consider defining the files tt(AUTHOR, VERSION,)
+and tt(YEARS) in the configuration directory:
     itemization(
-    it() If the file tt(AUTHOR) does not exist tt(icmstart) uses tt(#define
-AUTHOR ""). 
-
-    When the file tt(AUTHOR) is defined in a configuration path it should have
-one line, defining the author of the program. E.g.,
+    it() If the file tt(AUTHOR) exists it should have one line, defining the
+author of the program. E.g.,
         verb(
     #define AUTHOR "Frank B. Brokken <f.b.brokken@rug.nl>"
         )
+    If it does not exist tt(icmstart) uses the default tt(#define AUTHOR ""). 
 
-    it() If the file tt(VERSION) does not exist tt(icmstart) uses tt(#define
-VERSION "0.00.00"). 
-
-    When the file tt(VERSION) is defined in a configuration path it should
-have one line, defining the program's initial version. E.g.,
+    it() If the file tt(VERSION) exists it should have one line, defining the
+program's version. E.g.,
         verb(
     #define VERSION "1.00.00"
         )
+    If it does not exist tt(icmstart) uses the default 
+    tt(#define VERSION "0.00.00").
 
-
-    it() If the file tt(YEAR) does not exist tt(icmstart) uses tt(#define
-YEARS "yyyy") where tt(yyyy) is the current year. 
-
-    When the file tt(YEAR) is defined in a configuration path it should have
-one line, defining the program's initial release year. E.g.,
+    it() If the file tt(YEARS) exists it should have one line, defining the
+program's initial release year or range of release years. E.g.,
         verb(
     #define YEARS "2016"
         )
-    Plural is used here since a release year usually becomes a range of years
-after some time, as with Icmake's years specification:
+    or a range of years can be defined:
         verb(
     #define YEARS "1992-2016"
         )
+    If it does not exist tt(icmstart) uses the default 
+    tt(#define YEARS "yyyy") where tt(yyyy) is the current year.
     )
 
-    it() If the file tt(icmstart.rc) does not exist (or is empty) tt(icmstart)
-will not install any of the files normally found in tt(icmstart.rc), but the
-initial project directory, tt(icmconf) and tt(VERSION) are installed.
-    )
+    The tt(AUTHOR, VERSION,) and tt(YEARS) definitions are concatenated to one
+file, called tt(VERSION), which is installed in the top-level directory.
+
+    If the file tt(icmstart.rc) does not exist (or is empty) tt(icmstart)
+merely installs the top-level directory, tt(icmconf) and tt(VERSION).
+    
 
 manpagefiles()
     The mentioned paths are sugestive only and may be installation dependent:
@@ -162,7 +190,7 @@ manpagefiles()
         Example of a bf(icmbuild) configuration file;
     it() bf(/usr/share/icmake/CLASSES)
         Example of a bf(icmbuild) tt(CLASSES) file.
-    it() bf(/usr/share/icmake/icmstart.rc)
+    it() bf(/etc/icmake/icmstart.rc)
         Default skeleton resource file.
     )
 

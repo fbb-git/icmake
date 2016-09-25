@@ -1,27 +1,27 @@
 INSTALLING ICMAKE
 =================
 
-                          Version 8.00.00 (and beyond).
+                          Version 9.02.00 (and beyond).
 
 1. Unpack the archive:
 ======================
 
 The installation files for Icmake comes as an archive, e.g.,
-"icmake_8.00.00.tar.gz". These archives unpack to several directories and
+"icmake_9.02.00.tar.gz". These archives unpack to several directories and
 files.
 
-The archive unpacks to a directory icmake-8.00.00 below the current
+The archive unpacks to a directory icmake-9.02.00 below the current
 directory. The version number in this directory may change to newer release
 versions.
 
-So, if you unpack icmake_8.00.00.tar.gz (or later versions) in the directory
-/usr/local/src, a directory /usr/local/src/icmake/icmake-8.00.00 is created, as
-well as other subdirectories below /usr/local/src/icmake/icmake-8.00.00
+So, if you unpack icmake_9.02.00.tar.gz (or later versions) in the directory
+/usr/local/src, a directory /usr/local/src/icmake/icmake-9.02.00 is created, as
+well as other subdirectories below /usr/local/src/icmake/icmake-9.02.00
 
 To unpack the archives, create an appropriate directory (e.g.,
 `/usr/local/src/icmake' E.g,
 
-                         tar xvzf icmake_8.00.00.tar.gz
+                         tar xvzf icmake_9.02.00.tar.gz
 
 The extraction of files from the archive should yield a lot of C source files
 in various directories. Icmake's default distribution does not contain
@@ -33,7 +33,7 @@ makefiles for the Unix-utility `make' anymore.
 
 Change to the directory into which the sources were unpacked. E.g., do
 
-                                cd icmake-8.00.00
+                                cd icmake-9.02.00
 
 This directory should contain this file (i.e., INSTALL). Icmake uses several
 support programs, which do not have to be stored in the PATH

@@ -3,15 +3,12 @@
 . ../bootstrap/functions
 . ../bootstrap/flags
 
-echo Creating tmp/${BINDIR}/icmun
+echo Creating tmp/${BINDIR}/icmbuild
 
 echo -n .
-try ${CC}  ${CFLAGS} -o ../tmp/${LIBDIR}/icmun *.c ../tmp/libicrss.a \
+try ${CC}  ${CFLAGS} -o ../tmp/${BINDIR}/icmbuild *.c ../tmp/libicrss.a \
                                                                 ${LDFLAGS}
 echo .
-
-
-
 
 
 

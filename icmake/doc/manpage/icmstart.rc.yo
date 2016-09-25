@@ -40,6 +40,7 @@ The default resource file contains the following specifications, preparing for
 the construction of a bf(C++) program using bf(icmbuild)(1):
         verb(
     CLASSES
+    icmconf
     P main.cc 
     P main.ih 
     P usage.cc

@@ -34,15 +34,16 @@ try()
 progs()
 {
     if [ "$STRIP" == "strip" ] ; then
-        try strip tmp/${BINDIR}/icmake tmp/${BINDIR}/icmun \
+        try strip tmp/${BINDIR}/icmake tmp/${BINDIR}/icmbuild \
                   tmp/${LIBDIR}/*
     fi
     try mkdir -p $INSTALLDIR/${BINDIR} $INSTALLDIR/${LIBDIR}
 
-    try cp -r tmp/${BINDIR}/icmake tmp/${BINDIR}/icmun $INSTALLDIR/${BINDIR}
+    try cp tmp/${BINDIR}/icmake tmp/${BINDIR}/icmbuild \
+                $INSTALLDIR/${BINDIR}
 
     if [ -e $INSTALLDIR/${LIBDIR}/icm-exec ] ; then
-	try rm $INSTALLDIR/${LIBDIR}/icm-exec 
+        try rm $INSTALLDIR/${LIBDIR}/icm-exec 
     fi
 
     try cp -r tmp/${LIBDIR}/* $INSTALLDIR/${LIBDIR}
@@ -50,12 +51,12 @@ progs()
 
 scripts()
 {
-    try mkdir -p $INSTALLDIR/${BINDIR}
+    try mkdir -p $INSTALLDIR/${BINDIR} $INSTALLDIR/${LIBDIR}
 
       #                 script   install-dest. 
-    try scripts/convert icmbuild $INSTALLDIR/$BINDIR
+    try scripts/convert icmbuild $INSTALLDIR/$LIBDIR
     try scripts/convert icmstart $INSTALLDIR/$BINDIR
-    try chmod +x $INSTALLDIR/$BINDIR/icmbuild $INSTALLDIR/$BINDIR/icmstart
+    try chmod +x $INSTALLDIR/$BINDIR/icmstart
 }
 
 into()

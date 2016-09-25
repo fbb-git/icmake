@@ -53,8 +53,42 @@ manpagesynopsis()
 
 manpagedescription()
 
-      Icm()(1) can be used as an alternative to bf(make)(1). In its standard
-operation mode, it calls the following programs:
+      Icm()(1) was designed as a generic tool that can be used as an
+alternative to bf(make)(1), handling program maintenance. It's a generic tool
+in that tt(icmake)-scripts, written in a language closely resembling
+the bf(C) programming language, can perform tasks that are traditionally the
+domain of scripting languages. 
+
+Icm() allows programmers to use a programming language (closely resembling the
+well-known bf(C)-programming language) to define the actions that are required
+for (complex) program maintenance. For this, icm() offers various special
+operators as well as a set of support functions that have shown their
+usefulness in program maintenance.
+
+Although tt(icmake)-scripts can be written from scratch for handling program
+maintenance, often the required activities are highly comparable. This
+observation resulted in the construction of two tt(icmake)-scripts:
+bf(icmstart)(1), initializing a directory for program development and
+bf(icmbuild)(1), handling the actual program maintenance. Both come predefined
+as scripts tailored to initializing and maintaining bf(C++) programs (or,
+after minimal adaptation, bf(C) programs), but can easily be adapted to
+other programming languages. Both tt(icmstart) and tt(icmbuild) can be run
+without explicitly calling tt(icmake).
+
+This man-page covers tt(icmake) (the program), its support programs and
+the syntax and facilities offered by tt(icmake's) scripting language. Refer to
+the bf(icmstart)(1)) man-page for information about how a directory can be
+initialized (created) in which (by default) a bf(C++) or bf(C) program can be
+developed and refer to the bf(icmbuild)(1) man-page for information about how
+tt(icmbuild) can be used to handle program maintenance.
+    
+It should be stressed that tt(icmake) and its support programs and scripts do
+not offer an em(Integrated Development Environment) (IDE). It merely performs
+tasks for which scripts can be written, and it offers just a few pre-defined
+scripts (tt(icmstart) and tt(icmbuild)) that repeatedly have shown to be
+extremely useful when developing and maintaining programs. 
+
+    In its standard operation mode, tt(icmake) calls the following programs:
     itemization(
         itt(icm-pp)  to preprocess the icmake file 
         itt(icm-comp)   to byte-code compile the icm()  file(s)
@@ -64,26 +98,41 @@ operation mode, it calls the following programs:
         it()tt(icm-exec)   to execute the byte-code file
     )
 
-    Icm() allows programmers to use a programming language (closely resembling
-the well-known bf(C)-programming language) to define the actions that are
-required for (complex) program maintenance. For this, icm() offers various
-special operators as well as a set of support functions that have shown their
-usefulness in program maintenance.
-
     The program bf(icmun)(1) can be used to disassemble the compiled byte-code
 (.bim) file. tt(Icmun) is mainly used for illustration, education, and
-debugging.
+debugging. As it is not required for tt(icmake)'s daily use it is not
+installed in a standard tt(PATH) directory but (since tt(icmake's) version
+9.02.00) in tt(icmake's) tt(lib) directory, commonly tt(/usr/lib/icmake).
 
 Traditional make-utilities recompile sources once header files are
 modified. When developing bf(C++) programs this is often a bad idea, as adding
 a new member to a class does not normally require you to recompile all of the
 class's source files. To handle class dependencies bf(icmbuld)(1) may inspect
 class dependencies, (re)compiling sources of dependent classes whenever
-necessary.  By default, class-dependencies are not interpreted. Refer to the
-bf(icmconf)(7) man-page for further details. In addition, precompiled header
-files may be used. Precompiled header files dramatically reduce the time that
-is required for compiling classes' source files. Again: by default precompiled
-header files are not used.
+necessary.  By default, class-dependencies are not interpreted, but this can
+easily be changed by activating the tt(PRECOMP) and/or tt(USE_ALL) defines in
+tt(icmconf). Refer to the bf(icmconf)(7) man-page for further details. 
+
+Precompiled header files can also easily be used. Precompiled header files
+dramatically reduce the time that is required for compiling classes' source
+files. Refer to the bf(icmconf)(7) man-page (in particular the description of
+the tt(PRECOMP) define) for further details. 
+
+tt(Icmake's)  bf(C)-like scripting language is described in the upcoming
+sections of this man-page:
+    itemization(
+    itb(PREPROCESSOR DIRECTIVES) - supported preprocessor directives, like
+        tt(#include) and tt(#define);
+    itb(DATA TYPES) - tt(int, list, string), and tt(void) (for functions);
+    itb(PREDEFINED CONSTANTS) - like tt(O_FILE, OFF), and tt(S_IFREG);
+    itb(OPERATORS) - like tt(+, younger), and casts
+    itb(FLOW CONTROL) - tt(if, for, while), etc. (the tt(switch) is not
+        available);
+    itb(PREDEFINED FUNCTIONS) - executing programs, changing directories,
+        operations on tt(string) and tt(list) type variables, etc.;
+    itb(USER DEFINED FUNCTIONS) - at least tt(main), with or without its
+        common parameters tt(argc, argv,) and tt(envp).
+    )
 
 manpageoptions()
 

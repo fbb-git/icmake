@@ -22,7 +22,7 @@ fi
 
 
 # build icmake and its support programs
-for target in rss icmake un pp comp exec dep
+for target in rss icmake un pp comp exec dep icmbuild
 do
     cd $target
     ./icm_bootstrap

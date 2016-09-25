@@ -1,5 +1,3 @@
-#!@BINDIR@/icmake -t.
-
 #include "icmconf"
 
 #ifndef SHAREDREQ
@@ -619,42 +617,6 @@ void clearScreen(int cls)
         system("tput clear");
 }
 
-void usage()
-{
-    printf("Usage: icmbuild [-h] [-c] args\n"
-        "   -h              - Disply this help-information and end "
-                                                            "icmbuild\n"
-        "   -c              - Do 'tput clear' (clear screen) just before\n"
-        "                     processing 'args'\n"
-        "   args - select from:\n"
-        "        clean           - clean up remnants of previous activities\n"
-
-    #ifdef LIBRARY
-        "        library         - build the static library " TMP_DIR "/lib"
-                                                            LIBRARY  ".a\n"
-        "                          optionally (SHARED in icmconf) build a\n"
-        "                          shared library as well\n"
-    #endif
-
-    #ifdef SHARED
-        "        strip-shared    - strip a shared library\n"
-    #endif
-
-        "   When building a program:\n"
-        "        program         - build " TMP_DIR "/binary\n"
-        "        program strip   - build stripped " TMP_DIR "/binary\n"
-        "        install program path - to install the binary at `path'\n"
-        "                         (provide the full path-name)\n"
-        "   When building a library:\n"
-        "        install static base - install the static library under "
-                                                                "`base'\n"
-        "        install shared base - install the shared library under "
-                                                                "`base'\n"
-    );
-
-    exit(0);
-}
-
 void main(int argc, list argv, list envp)
 {
     echo(USE_ECHO);
@@ -662,9 +624,6 @@ void main(int argc, list argv, list envp)
     setGcompiler();
 
     g_command = argv[1];
-
-    if (g_command == "-h")
-        usage();
 
     int cls;
     if (g_command == "-c")
@@ -722,5 +681,5 @@ void main(int argc, list argv, list envp)
         return;
     }
 
-    usage();
+    exec("icmbuild -h");
 }

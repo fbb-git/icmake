@@ -10,6 +10,7 @@
 # following the optional P or L.
 
     CLASSES
+    icmconf
 P   main.cc     
 P   main.ih     
 P   usage.cc

@@ -10,7 +10,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmake</h1>
-<h2 id="author">icmake.9.01.00.tar.gz</h2>
+<h2 id="author">icmake.9.02.00.tar.gz</h2>
 <h2 id="date">1992-2016</h2>
 
 <!DOCTYPE html><html><head>
@@ -43,7 +43,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmake(1)</h1>
-<h2 id="author">icmake.9.01.00.tar.gz A program maintenance utility</h2>
+<h2 id="author">icmake.9.02.00.tar.gz A program maintenance utility</h2>
 <h2 id="date">1992-2016</h2>
 
 
@@ -60,8 +60,42 @@
 <p>
 <h2 >DESCRIPTION</h2>
 <p>
-<strong >Icmake</strong>(1) can be used as an alternative to <strong >make</strong>(1). In its standard
-operation mode, it calls the following programs:
+<strong >Icmake</strong>(1) was designed as a generic tool that can be used as an
+alternative to <strong >make</strong>(1), handling program maintenance. It's a generic tool
+in that <em >icmake</em>-scripts, written in a language closely resembling
+the <strong >C</strong> programming language, can perform tasks that are traditionally the
+domain of scripting languages. 
+<p>
+<strong >Icmake</strong> allows programmers to use a programming language (closely resembling the
+well-known <strong >C</strong>-programming language) to define the actions that are required
+for (complex) program maintenance. For this, <strong >icmake</strong> offers various special
+operators as well as a set of support functions that have shown their
+usefulness in program maintenance.
+<p>
+Although <em >icmake</em>-scripts can be written from scratch for handling program
+maintenance, often the required activities are highly comparable. This
+observation resulted in the construction of two <em >icmake</em>-scripts:
+<strong >icmstart</strong>(1), initializing a directory for program development and
+<strong >icmbuild</strong>(1), handling the actual program maintenance. Both come predefined
+as scripts tailored to initializing and maintaining <strong >C++</strong> programs (or,
+after minimal adaptation, <strong >C</strong> programs), but can easily be adapted to
+other programming languages. Both <em >icmstart</em> and <em >icmbuild</em> can be run
+without explicitly calling <em >icmake</em>.
+<p>
+This man-page covers <em >icmake</em> (the program), its support programs and
+the syntax and facilities offered by <em >icmake's</em> scripting language. Refer to
+the <strong >icmstart</strong>(1)) man-page for information about how a directory can be
+initialized (created) in which (by default) a <strong >C++</strong> or <strong >C</strong> program can be
+developed and refer to the <strong >icmbuild</strong>(1) man-page for information about how
+<em >icmbuild</em> can be used to handle program maintenance.
+<p>
+It should be stressed that <em >icmake</em> and its support programs and scripts do
+not offer an <em >Integrated Development Environment</em> (IDE). It merely performs
+tasks for which scripts can be written, and it offers just a few pre-defined
+scripts (<em >icmstart</em> and <em >icmbuild</em>) that repeatedly have shown to be
+extremely useful when developing and maintaining programs. 
+<p>
+In its standard operation mode, <em >icmake</em> calls the following programs:
     <ul>
         <li><em >icm-pp</em>  to preprocess the icmake file 
         <li><em >icm-comp</em>   to byte-code compile the <strong >icmake</strong>  <strong >s</strong>
@@ -71,26 +105,41 @@ operation mode, it calls the following programs:
         <li><em >icm-exec</em>   to execute the byte-code file
     </ul>
 <p>
-<strong >Icmake</strong> allows programmers to use a programming language (closely resembling
-the well-known <strong >C</strong>-programming language) to define the actions that are
-required for (complex) program maintenance. For this, <strong >icmake</strong> offers various
-special operators as well as a set of support functions that have shown their
-usefulness in program maintenance.
-<p>
 The program <strong >icmun</strong>(1) can be used to disassemble the compiled byte-code
 (.bim) file. <em >Icmun</em> is mainly used for illustration, education, and
-debugging.
+debugging. As it is not required for <em >icmake</em>'s daily use it is not
+installed in a standard <em >PATH</em> directory but (since <em >icmake's</em> version
+9.02.00) in <em >icmake's</em> <em >lib</em> directory, commonly <em >/usr/lib/icmake</em>.
 <p>
 Traditional make-utilities recompile sources once header files are
 modified. When developing <strong >C++</strong> programs this is often a bad idea, as adding
 a new member to a class does not normally require you to recompile all of the
 class's source files. To handle class dependencies <strong >icmbuld</strong>(1) may inspect
 class dependencies, (re)compiling sources of dependent classes whenever
-necessary.  By default, class-dependencies are not interpreted. Refer to the
-<strong >icmconf</strong>(7) man-page for further details. In addition, precompiled header
-files may be used. Precompiled header files dramatically reduce the time that
-is required for compiling classes' source files. Again: by default precompiled
-header files are not used.
+necessary.  By default, class-dependencies are not interpreted, but this can
+easily be changed by activating the <em >PRECOMP</em> and/or <em >USE_ALL</em> defines in
+<em >icmconf</em>. Refer to the <strong >icmconf</strong>(7) man-page for further details. 
+<p>
+Precompiled header files can also easily be used. Precompiled header files
+dramatically reduce the time that is required for compiling classes' source
+files. Refer to the <strong >icmconf</strong>(7) man-page (in particular the description of
+the <em >PRECOMP</em> define) for further details. 
+<p>
+<em >Icmake's</em>  <strong >C</strong>-like scripting language is described in the upcoming
+sections of this man-page:
+    <ul>
+    <li><strong >PREPROCESSOR DIRECTIVES</strong><br/> - supported preprocessor directives, like
+        <em >#include</em> and <em >#define</em>;
+    <li><strong >DATA TYPES</strong><br/> - <em >int, list, string</em>, and <em >void</em> (for functions);
+    <li><strong >PREDEFINED CONSTANTS</strong><br/> - like <em >O_FILE, OFF</em>, and <em >S_IFREG</em>;
+    <li><strong >OPERATORS</strong><br/> - like <em >+, younger</em>, and casts
+    <li><strong >FLOW CONTROL</strong><br/> - <em >if, for, while</em>, etc. (the <em >switch</em> is not
+        available);
+    <li><strong >PREDEFINED FUNCTIONS</strong><br/> - executing programs, changing directories,
+        operations on <em >string</em> and <em >list</em> type variables, etc.;
+    <li><strong >USER DEFINED FUNCTIONS</strong><br/> - at least <em >main</em>, with or without its
+        common parameters <em >argc, argv,</em> and <em >envp</em>.
+    </ul>
 <p>
 <h2 >OPTIONS</h2>
 <p>

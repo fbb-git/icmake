@@ -10,7 +10,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmbuild</h1>
-<h2 id="author">icmake.9.01.00.tar.gz</h2>
+<h2 id="author">icmake.9.02.00.tar.gz</h2>
 <h2 id="date">1992-2016</h2>
 
 <!DOCTYPE html><html><head>
@@ -43,132 +43,203 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">icmbuild(1)</h1>
-<h2 id="author">icmake.9.01.00.tar.gz A generic program maintenance script</h2>
+<h2 id="author">icmake.9.02.00.tar.gz Icmake's generic program maintenance facility</h2>
 <h2 id="date">1992-2016</h2>
 
 
 <p>
 
-<h2 >NAME</h2>icmbuild - A generic, easy configurable, program maintenance script
+<h2 >NAME</h2>icmbuild - A generic, C++/C program maintenance facility
 <p>
 
 <h2 >SYNOPSIS</h2>
-       <strong >icmbuild</strong> [-h] [-c] <em >args</em>
+       <em >icmbuild</em> [-h] [-c] <em >args</em>
 <p>
 <h2 >DESCRIPTION</h2>
 <p>
-The <strong >icmbuild</strong> script is a generic script that can be used to do program
-maintenance using <strong >icmake</strong>(1). 
+<em >Icmbuild</em> is a small <strong >C</strong> program calling <strong >icmake</strong>(1) to do program maintenance
+as defined in the <em >icmbuild</em> script that's (commonly) found in
+<em >/usr/lib/icmake</em>.
 <p>
-<strong >Icmbuild</strong> requires that the  file <em >icmconf</em> is available in the directory where
-program maintenance is requested.
+<em >Icmbuild's</em> actions are tailored through a configuration file (<em >icmconf</em>)
+which must be present in the directory where program maintenance is
+requested. This file is automatically installed by <strong >icmstart</strong>(1). Refer to
+<strong >icmconf</strong>(7)'s man-page for details about this file.
 <p>
-<strong >Icmbuild</strong> assumes that your sources exist in and below the current working
+<em >Icmbuild</em> assumes that your sources exist in and below the current working
 directory. The file <em >icmconf</em> in <strong >icmake</strong>(1)'s distribution provides an
-example of an <em >icmconf</em> file that can be used by <strong >icmbuild</strong>. In that example
+example of an <em >icmconf</em> file that can be used by <em >icmbuild</em>. In that example
 <em >icmconf</em> file it is assumed that <strong >C++</strong> sources are maintained, but
-program maintenance for, e.g., <strong >C</strong> sources can easily be configured.
+program maintenance for, e.g., <strong >C</strong> sources can easily be configured. If
+<em >icmbuild</em> is called, but <em >icmconf</em> is not available it displays a usage-summary
+after which icm() ends.
 <p>
-<strong >Icmbuild</strong>() compiles all sources in each of the subdirectories named in the file
-<em >CLASSES</em>, and then compiles all sources in the current working directory.
+<em >Icmbuild</em>() handles the maintenance for all sources in each of the subdirectories
+named in the file <em >CLASSES</em>, and in addition the maintenance of all sources
+in the current working directory. `Maintenance' involves compiling all as yet
+uncompiled source files, recompilation of modified source files, and
+optionally library maintenance and the pre-compilation of header files, which
+commonly results in a marked reduction of source compilation times.
 <p>
-The compiled sources result in object modules which may be kept in a
-library, against which the main-object module is linked. It is also possible
-to specify additional libraries against which the program must be linked.
+When source files are compiled object modules are produced which may be stored
+in a library, against which the object module of the program's <em >main</em>
+function is linked. It is also possible to specify additional libraries
+against which the program must be linked.
 <p>
-If a library is constructed it is kept up to date by <strong >icmbuild</strong>. When a source is
+If a library is constructed it is kept up to date by <em >icmbuild</em>. When a source is
 successfully compiled its new object module replaces the old one that is found
-in the library. At that point the object files are no longer required and are
-removed by <strong >icmbuild</strong>.
+in the library. At that point the separate object files are no longer required
+and are removed by <em >icmbuild</em>.
+<p>
+Up to <em >icmake</em> version 9.01.00 <em >icmbuild</em> was installed as an executable
+<em >icmake</em> script in (commonly) <em >/usr/bin</em>. The dependency of this script on
+the file <em >icmconf</em> made it difficult to provide usage information if
+<em >icmconf</em> was absent. Since version 9.02.00 the <em >icmbuild</em> script has been
+moved to (commonly) <em >/usr/lib/icmake</em>, and <em >icmbuild</em> now is a little
+<strong >C</strong> program providing the usage information when necessary or requested, but
+otherwise executes <em >icmake</em> to process the <em >icmbuild</em> script.
 <p>
 <h2 >KICK-STARTING ICMBUILD</h2>
 <p>
-To use <strong >icmbuild</strong> do as follows:
+To use <em >icmbuild</em> do as follows:
     <ul>
-    <li>  Install <strong >icmbuild</strong> in your path;
-    <li> copy <em >icmconf</em> (and probably the file <em >CLASSES</em>) to your
+    <li>  Install <em >icmbuild</em> in your path (<em >icmake's</em> installation procedure
+        should already have taken care of that);
+    <li> Copy <em >icmconf</em> (and probably a file <em >CLASSES</em>) to your
        project's base directory (i.e., the directory in which and where below
-       the project's sources are found);
+       the project's sources are found). Usually this has already been taken
+        care of by the <em >icmstart</em> script;
+    </ul>
+<p>
+Next:
+    <ul>
     <li> Modify the <em >#defines</em> in the file <em >icmconf</em> to taste;
     <li> Enter the names of subdirectories containing sources on separate
        lines in the file <em >CLASSES</em>
 <p>
 Note that the order of the classes mentioned in <em >CLASSES</em> <em >is</em>
-       relevant.  New class (subdirectory) names can always be added, but
-       reordering the lines in the <em >CLASSES</em> file should be avoided. If
-       reordering is necessary, then first run the command <em >icmbuild clean</em>
-       to remove all files thus far created by <strong >icmbuild</strong>. Recompilation is
-       necessary as the names of the object files contain class order-numbers
-       for identification.  These class-order numbers prevent file-name
-       collisions (e.g., two classes might use a file <em >data.cc</em>) and thus
-       replacement of a file <em >x.o</em> from class <em >A</em> by file <em >x.o</em> from
-       class <em >B</em> is prevented;
-    <li> Now (after configuring <em >icmconf</em>) simply run 
-        <pre>
-
-            icmbuild -h
-        
-</pre>
-
-       from the project's base directory and let the help-info tell you
-       what your options are. See the next section for the modes of operation.
-    </ul>
+        relevant in that new class (subdirectory) names can always be added at
+        the end of the file <em >CLASSES</em>, but reordering the lines in the
+        <em >CLASSES</em> file should be avoided. 
+<p>
+If reordering is necessary, then first run the command <em >icmbuild
+        clean</em> to remove all files that were thus far created by
+        <em >icmbuild</em>. Recompilation is necessary as the names of the object files
+        contain class order-numbers for identification.  These class-order
+        numbers prevent file-name collisions (e.g., two classes might use a
+        file <em >data.cc</em>) and because of the number-prefixes replacement of a
+        file <em >x.o</em> from class <em >A</em> by file <em >x.o</em> from class <em >B</em> is
+        prevented;
+    <li> Start <em >icmbuild</em>.
+    </ul>    
+<p>
+The next section covers <em >icmbuild's</em>  modes of operation.
 <p>
 <h2 >OPTIONS</h2>
 <p>
-<strong >Icmbuild</strong> recognizes two options, at most one should be specified:
+<em >Icmbuild</em> supports two options, at most one should be specified:
     <ul>
-    <li><em >-h</em>: Provide a short usage overview.
+    <li><em >-h</em>: Display a usage summary (also automatically shown when the
+        current directory does not contain a file <em >icmconf</em>);
     <li><em >-c</em>: Clear the screen (using <em >tput clear</em>) before starting the
-       compilation process
+       maintenance process.
     </ul>
 <p>
-Following the optional <em >-c</em>  <strong >icmbuild</strong>() the following arguments may be
-       passed to <strong >icmbuild</strong>:
+Next (after optionally specifying <em >-c</em>) <em >icmbuild</em> can be provided with the
+        following arguments:
     <ul>
-    <li><em >clean</em><br/>
-        clean up remnants of previous activities
-    <li><em >library</em><br/>
-        build the library (static and optionally the dynamic library)
-    <li><em >program</em><br/>
-        build the binary program
-    <li><em >program strip</em><br/>
-        build the stripped binary program
-    <li><em >install program path</em>
-        install the constructed program in the specified path (to be used
-       after issuing <strong >icmbuild</strong> <em >program</em>)
-    <li><em >install static path</em> 
-       install the constructed static library in the specified path (to be
-        used after issuing <strong >icmbuild</strong> <em >library</em>)
-    <li><em >install shared path</em> 
-       install the constructed shared library in the specified path (to be
-        used after issuing <strong >icmbuild</strong> <em >library</em>)
-    </ul>
-    After adding a line to <em >icmconf</em> containing
+    <li> No arguments at all: 
+       if <em >icmconf</em> contains the line 
         <pre>
 
     #define DEFCOM "program"
         
 </pre>
 
-    <strong >icmbuild</strong> by default uses the argument <em >program</em>. After adding 
+        then this is quivalent to the command <em >icmbuild</em> <em >program</em>;<br/>
+       if <em >icmconf</em> contains the line 
         <pre>
 
     #define DEFCOM "strip"
         
 </pre>
 
-    <strong >icmbuild</strong> by default uses the argument <em >strip</em>. After adding 
+        then this is quivalent to the command <em >icmbuild</em> <em >strip</em>;<br/>
+       if if <em >icmconf</em> contains the line 
         <pre>
 
     #define DEFCOM "library"
         
 </pre>
 
-    <strong >icmbuild</strong> by default uses the argument <em >library</em>.
+       then this is quivalent to the command <em >icmbuild</em> <em >library</em>.<br/> (these
+        commands are further elaborated in this section.)
+       <em >DEFCOM</em> specifications are ignored when an explicit argument is
+        passed to <em >icmbuild</em>.
 <p>
-<em >DEFCOM</em> is ignored when an explicit operational mode is passed to
-        <strong >icmbuild</strong>.
+<li><em >clean</em><br/>
+        clean up remnants of previous actions;
+<p>
+<li><em >install program &lt;path&gt;</em><br/>
+       install the constructed program in the specified <em >&lt;path&gt;</em> (to be used
+        after issuing <em >icmbuild</em> <em >program</em>, see below). Example:
+            <pre>
+
+    icmbuild install ~/bin/program
+            
+</pre>
+
+       This installs the constructed binary program in the user's <em >bin</em>
+        direcotry with the name <em >program</em>;
+<p>
+<li><em >install static &lt;path&gt;</em><br/>
+       install the constructed static library in the specified path (to be
+        used after issuing <em >icmbuild</em> <em >library</em>, see below). Example:
+            <pre>
+
+    icmbuild static /usr/lib/
+            
+</pre>
+
+       This installs the constructed static library (e.g. <em >libspecial.a</em>) in
+        <em >/usr/lib</em> as <em >/usr/lib/libspecial.a</em>.<br/>
+<p>
+<li><em >install shared path</em> 
+       install the constructed shared library in the specified path (to be
+        used after issuing <em >icmbuild</em> <em >library</em>), when <em >icmconf</em> defines
+        <em >SHARED</em> (cf. <strong >icmconf</strong>(7)). Example:
+            <pre>
+
+    icmbuild shared /usr/lib/
+            
+</pre>
+
+       This installs the constructed binary shared library
+        (e.g. <em >libspecial.so</em>) in <em >/usr/lib</em> as
+        <em >/usr/lib/libspecial.so</em>. In addition, the soft-links
+            <pre>
+
+    libspecial.so -&gt; libspecial.so.X
+    libspecial.so.X -&gt; libspecial.so.X.Y.Y.Z 
+            
+</pre>
+ 
+       are defined in <em >/usr/lib</em>, where <em >X.Y.Z</em> are the major, minor and
+        subminor versions defined in the file <em >VERSION</em>.
+<p>
+<li><em >library</em><br/> 
+       do library maintenance (builds a static and optionally (if <em >icmconf</em>
+        defines <em >SHARED</em>) a shared (dynamic) library); 
+<p>
+<li><em >program</em><br/>
+       do program maintenance (builds a program from the sources in the
+        current working directory and from the sources in the directories
+        specified in the file <em >CLASSES</em>);
+<p>
+<li><em >program strip</em><br/>
+       same as <em >program</em>, but the final program is stripped (using the
+        linker's <em >-s</em> option);
+    </ul>
 <p>
 <h2 >ICM-DEP</h2>
 <p>
@@ -214,184 +285,37 @@ default can be overruled (cf. <strong >icmconf</strong>(7)).
 The mentioned paths are sugestive only and may be installation dependent:
     <ul>
     <li> <strong >/usr/share/icmake/icmconf</strong>
-        Example of a <strong >icmbuild</strong> configuration file;
+        Unabbreviated example of an <em >icmbuild</em> configuration file;
     <li> <strong >/usr/share/icmake/CLASSES</strong>
-        Example of a <strong >icmbuild</strong> <em >CLASSES</em> file.
+        Example of an <em >icmbuild</em> <em >CLASSES</em> file.
     </ul>
 <p>
 <h2 >EXAMPLES</h2>
 <p>
 Here is an example of the configuration file <em >icmconf</em> for a concrete
-       program, using the library <em >libbobcat1</em> as an additional library:
-<p>
-<pre >
-    // Inspect the following #defines. Change them to taste. If you don't
-    // need a particular option, change its value into an empty string
+       program, using facilities of the <em >bobcat</em> library:
+        <pre>
 
-    // For more information about this file: 'man 7 icmconf'
-
-// MAINTENANCE RELATED DEFINES THAT ARE OFTEN ADAPTED:
-// ===================================================
-
-    // Uncomment to clear the screen starting the compilation
-//#define CLS
-
-    // Uncomment to construct a library. Optionally use another name (don't
-    // use lib or an extension like .a)
-//#define LIBRARY           "modules"
-
-    // The source containing main():
-#define MAIN                "main.cc"
-
-    // The pattern locating sources in a directory:
-#define SOURCES             "*.cc"
-
-    //  The extension of object modules:
-#define OBJ_EXT             ".o"
-
-    // Uncomment to construct a shared library 
-//#define SHARED
-
-    // If the constructed shared library requires additional libraries then
-    // specify these here. E.g., if a library /usr/lib/special/libspecial.so
-    // is required then specify  "-L/usr/lib/special -lspecial" 
-    // Predefined paths (e.g., /lib, /usr/lib) do not have to be specified
-#define SHAREDREQ           ""
-
-    // Directory to contain temporary results
-#define TMP_DIR             "tmp"
-
-    // Uncomment to use the ALL facility and a class dependency setup in the
-    // CLASSES file. When a directory contains a file ALL (optionally rename
-    // this filename by providing an alternative name) then all its sources
-    // and all sources of all classes depending on it are also compiled.  
-    // Class dependencies are indicated by the class name (as the first
-    // word on a line) optionally followed by additional class names, which
-    // are the classes directly depending on the line's first class name.
-//#define USE_ALL           "a"
-
-    // By default dependencies are determined by icm-dep (via icmake -d),
-    // passing it the following options. If icm-dep should not be called,
-    // activate ICM_DEP as an empty string. Alternatively specify your own
-    // icm-dep options
-//#define ICM_DEP           "-V go"
-
-    // should commands be echoed (ON) or not (OFF) ?
-#define USE_ECHO            ON
-
-    //  Use the VERSION file
-#define USE_VERSION
-
-    // When DEFCOM "program" is specified './icmbuild' is shorthand for 
-    // './icmbuild program'
-    // When DEFCOM "library" is specified './icmbuild' is shorthand for 
-    // './icmbuild library'
-    // The icmstart script may add a DEFCOM specification to this file.
-//#define DEFCOM "program"
-//#define DEFCOM "library"
-
-// COMPILATION AND LINKING RELATED DEFINES
-// =======================================
-
-    // The compiler to use. Define CC instead if a C compiler should be used.
-#define CXX            "g++"
-//#define CC            "gcc"
-
-    // The compiler options to use. Define CFLAGS instead if a C compiler is
-    // used. 
-    // To suppress colored error messages add option -fdiagnostics-color=never
-    // To add debug-code to object files add option  -g
-#define CXXFLAGS        " --std=c++14 -Wall -O2"
-//#define CFLAGS        " -Wall -g -O2"
-
-    // The extension of internal header files. See PRECOMP below
-#define IH              ".ih"
-
-    // Uncomment to generate precompiled headers. When activated internal
-    // header files are precompiled when they are more recent than their 
-    // precompiled versions. PRECOMP requires IH
-//#define PRECOMP "-x c++-header"
-
-    // Uncomment to suppress warnings about non-existing IH files in 
-    // class-directories. This option is only interpreted when PRECOMP has
-    // also been defined
-//#define NO_PRECOMP_WARNING
-
-    // Uncomment to relink the binary, even when no sources were changed 
-//#define REFRESH
-
-
-    // Options passed to the linker:
-#define LDFLAGS         ""
-
-
-// LIBRARIES REQUIRED BY THE CONSTRUCTED PROGRAM OR LIBRARY:
-// =========================================================
-
-    // any additional libraries the program may need:
-#define ADD_LIBRARIES       ""
-
-    // additional paths (other than the standard paths) to locate additional
-    // libraries (specify absolute paths or relative to TMP_DIR):
-#define ADD_LIBRARY_PATHS   ""
-
-
-// DEFINES RELATED TO USING A PARSER GENERATOR
-// ===========================================
-
-    // The subdirectory containing the parser's specification file
-    // If this directive is REMOVED, then all parser-related #defines
-    // can also be removed from icmconf.
-#define PARSER_DIR          ""
-
-    // What is the program generating a parser?
-#define PARSGEN             "bisonc++"
-
-    // Flags to pass to PARSGEN:
-#define PARSFLAGS           "-V"
-
-    // What is the top-level (or only) grammar specification file?
-#define PARSSPEC            "grammar"
-
-    // Optionally use patterns to specify additional grammar specification 
-    // files. These files are (in)directly included by PARSSPEC. Specify
-    // patterns relative to PARSER_DIR
-//#define PARSFILES           ""
-
-    // The source file generated by the parser generator
-#define PARSOUT             "parse.cc"
-
-
-// DEFINES RELATED TO USING A SCANNER GENERATOR
-// ============================================
-
-    // The subdirectory containing the scanner's specification file
-    // If this directive is REMOVED, then all scanner-related #defines
-    // can also be removed from icmconf.
-#define SCANNER_DIR         ""  
-
-    // What is the program generating the lexical scanner?
-#define SCANGEN             "flexc++"
-
-    // Flags to provide SCANGEN with:
-#define SCANFLAGS           ""
-
-    // Name of the lexical scanner specification file
-#define SCANSPEC            "lexer"
+    #define CLS
+    #define LIBRARY             "modules"
+    #define MAIN                "main.cc"
+    #define SOURCES             "*.cc"
+    #define OBJ_EXT             ".o"
+    #define SHAREDREQ           ""
+    #define TMP_DIR             "tmp"
+    #define USE_ALL             "a"
+    #define USE_ECHO              ON
+    #define CXX                 "g++"
+    #define CXXFLAGS            " --std=c++14 -Wall -O2 -pthread" " -fdiagnostics-color=never "
+    #define IH                  ".ih"
+    #define PRECOMP             "-x c++-header"
+    #define REFRESH
+    #define LDFLAGS             ""
+    #define ADD_LIBRARIES       "bobcat"
+    #define ADD_LIBRARY_PATHS   ""
     
-    // Optionally use patterns to specify additional scanner specification 
-    // files. These files are (in)directly included by SCANSPEC. Specify
-    // patterns relative to SCANNER_DIR
-//#define SCANFILES            ""
-
-    // The source file generated by the lexical scanner
-#define SCANOUT             "lex.cc"
-
-
-
-
-
-
+    #define DEFCOM              "program"
+        
 </pre>
 
 <p>

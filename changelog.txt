@@ -1,25 +1,48 @@
+icmake (9.02.00)
+
+  * icmbuild now is a small program, providing help or starting the icmbuild
+    script in LIBDIR (cf. INSTALL)
+
+  * Man-pages were updated
+  
+  * Cosmetic changes to icmake --help's output
+
+  * The name of the optional configuration file YEAR was changed to YEARS
+    (as it defines YEARS, not YEAR)
+
+  * `icmconf' was added to /etc/icmake/icmstart.rc
+
+  * As mentioned in icmake's man-page the program `icmun' is mainly used in 
+    some specific situations. In icmake's daily practice it isn't
+    used. Therefore it was moved from the standard binary programs directory
+    to icmake's LIB directory (commonly /usr/lib/icmake).
+
+  * The file /etc/icmake/icmake.rc was nowhere used and was removed.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 25 Sep 2016 12:36:07 +0200
+
 icmake (9.01.00)
 
-* Man-pages weren't properly updated at 9.00.00. This was fixed in this
-release. 
+  * Man-pages weren't properly updated at 9.00.00. This was fixed in this
+    release. 
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 03 Sep 2016 15:10:43 +0200
 
 icmake (9.00.00)
 
-* Added support program icm-dep computing dependencies for USE_ALL classes and
-  precompiled headers, called from /usr/bin/icmbuild, or directly using
-  icmake's option --icm-dep (-d)
+  * Added support program icm-dep computing dependencies for USE_ALL classes
+    and precompiled headers, called from /usr/bin/icmbuild, or directly using
+    icmake's option --icm-dep (-d)
 
- * Icmake supports several long options in addition to the standard short
-   options. See icmake(1) for details.
+  * Icmake supports several long options in addition to the standard short
+    options. See icmake(1) for details.
 
-* Changed references to IS_* into O_* in icmake(1)'s man-page. The IS_ entries
-  were already unavailable, but the man-page still referred to them. Now
-  fixed. 
+  * Changed references to IS_* into O_* in icmake(1)'s man-page. The IS_
+    entries were already unavailable, but the man-page still referred to
+    them. Now fixed.
 
- * Contents of lines in CLASSES beyond the first word are no longer
-   interpreted.
+  * Contents of lines in CLASSES beyond the first word are no longer
+    interpreted.
 
  * Added new option NO_PRECOMP_WARNING to icmconf
 

@@ -5,7 +5,6 @@ SUBST(_image_)(icmake.jpg)
 
 includefile(../wip/release.yo)
 
-
 mailto(f.b.brokken@rug.nl)
 
 affiliation(Center for Information Technology, University of Groningen)
@@ -36,6 +35,9 @@ lurl(https://github.com/fbb-git/_project_/releases) or direct from its
 release page):
 
         itemization(
+        it() url(9.02.01)
+              (https://github.com/fbb-git/_project_/releases/tag/9.02.01)
+Nov 01, 2016;
         it() url(9.02.00)
               (https://github.com/fbb-git/_project_/releases/tag/9.02.00)
 Sep 29, 2016;
@@ -47,10 +49,7 @@ Sep 03, 2016;
 Jul 23, 2016;
         it() url(8.01.00)
               (https://github.com/fbb-git/_project_/releases/tag/8.01.00)
-Feb 13, 2016;
-        it() url(8.00.05)
-              (https://github.com/fbb-git/_project_/releases/tag/8.00.05)
-Dec 21, 2015.
+Feb 13, 2016.
         )
     COMMENT(NOTE: LAST ITEM SHOULD END IN . )
 

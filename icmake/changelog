@@ -1,3 +1,11 @@
+icmake (9.02.01)
+
+  * Fixed a flaw in [/usr/lib/icmake/]icmbuild: when DEFCOM "library" was
+    defined in icmconf, and precompiled headers were requested, then MAIN had
+    to be defined as well. This is not required anymore.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 01 Nov 2016 09:54:11 +0100
+
 icmake (9.02.00)
 
   * icmbuild now is a small program, providing help or starting the icmbuild

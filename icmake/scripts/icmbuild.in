@@ -391,8 +391,13 @@ void build_libraries()
 #ifdef PRECOMP
     precompileHeaders();
 
-    if (DEFCOM == "program")
-        precompile(get_base(MAIN));
+    string mainBase;
+#ifdef MAIN
+    mainBase = get_base(MAIN);
+#endif
+
+    if (DEFCOM == "program" && mainBase != "")
+        precompile(get_base(mainBase);
 #endif
 
     md(TMP_DIR);

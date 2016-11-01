@@ -1,3 +1,9 @@
+icmake (9.02.02)
+
+  * Fixed an annoying typo in [/usr/lib/icmake/]icmbuild. Do not use 9.02.01
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 01 Nov 2016 13:40:42 +0100
+
 icmake (9.02.01)
 
   * Fixed a flaw in [/usr/lib/icmake/]icmbuild: when DEFCOM "library" was

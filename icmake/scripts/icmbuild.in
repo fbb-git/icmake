@@ -397,7 +397,7 @@ void build_libraries()
 #endif
 
     if (DEFCOM == "program" && mainBase != "")
-        precompile(get_base(mainBase);
+        precompile(mainBase);
 #endif
 
     md(TMP_DIR);

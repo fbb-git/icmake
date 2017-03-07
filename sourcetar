@@ -36,7 +36,7 @@ case "$1" in
         if [ "$1" == "o" ]
         then
             scp ${PROJECT}_${VERSION}.tar.gz \
-	      oosix:git/${PROJECT}/tarballs/${PROJECT}_${VERSION}.orig.tar.gz
+              oosix:git/${PROJECT}/tarballs/${PROJECT}_${VERSION}.orig.tar.gz
 
             rm ${PROJECT}_${VERSION}.tar.gz
         fi
@@ -48,7 +48,7 @@ Provide arg:
     d (debian)  to create a .orig.tar.gz archive in 
                 ../tarballs/${PROJECT}/tarballs
     l (local)   to create ${PROJECT}_${VERSION}.tar.gz in this directory
-    u (upload)  same as 'l', but upload to oosix and show MD5 hash
+    o (upload)  same as 'l', but upload to oosix and show MD5 hash
 "
     exit 1
     ;;

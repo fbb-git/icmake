@@ -4,6 +4,7 @@
 #include "types.ih"
 
 #include <stdio.h>
+#include <stdarg.h>
 
 extern char version[];
 extern char release[];

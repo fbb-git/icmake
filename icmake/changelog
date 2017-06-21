@@ -1,3 +1,5 @@
+  * stdarg.h is needed in rss.h: inclusion moved from rss.ih to rss.h
+
 icmake (9.02.02)
 
   * Fixed an annoying typo in [/usr/lib/icmake/]icmbuild. Do not use 9.02.01

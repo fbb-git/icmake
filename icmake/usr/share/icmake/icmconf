@@ -11,7 +11,7 @@
 
     // Uncomment to construct a library. Optionally use another name (don't
     // use lib or an extension like .a)
-//#define LIBRARY           "modules"
+//#define LIBRARY             "modules"
 
     // The source containing main():
 #define MAIN                "main.cc"
@@ -67,23 +67,23 @@
 // =======================================
 
     // The compiler to use. Define CC instead if a C compiler should be used.
-#define CXX            "g++"
-//#define CC            "gcc"
+#define CXX                 "g++"
+//#define CC                  "gcc"
 
     // The compiler options to use. Define CFLAGS instead if a C compiler is
     // used. 
     // To suppress colored error messages add option -fdiagnostics-color=never
     // To add debug-code to object files add option  -g
-#define CXXFLAGS        " --std=c++14 -Wall -O2"
-//#define CFLAGS        " -Wall -g -O2"
+#define CXXFLAGS            " --std=c++17 -Wall -O2"
+//#define CFLAGS              " -Wall -g -O2"
 
     // The extension of internal header files. See PRECOMP below
-#define IH              ".ih"
+#define IH                  ".ih"
 
     // Uncomment to generate precompiled headers. When activated internal
     // header files are precompiled when they are more recent than their 
     // precompiled versions. PRECOMP requires IH
-//#define PRECOMP "-x c++-header"
+//#define PRECOMP           "-x c++-header"
 
     // Uncomment to suppress warnings about non-existing IH files in 
     // class-directories. This option is only interpreted when PRECOMP has
@@ -95,7 +95,7 @@
 
 
     // Options passed to the linker:
-#define LDFLAGS         ""
+#define LDFLAGS             ""
 
 
 // LIBRARIES REQUIRED BY THE CONSTRUCTED PROGRAM OR LIBRARY:
@@ -107,6 +107,10 @@
     // additional paths (other than the standard paths) to locate additional
     // libraries (specify absolute paths or relative to TMP_DIR):
 #define ADD_LIBRARY_PATHS   ""
+
+
+// IF NO SCANNER AND NO PARSER ARE USED ALL OF THE FOLLOWING DEFINES 
+// CAN BE REMOVED
 
 
 // DEFINES RELATED TO USING A PARSER GENERATOR

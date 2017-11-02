@@ -1,4 +1,10 @@
+icmake (9.02.03)
+
   * stdarg.h is needed in rss.h: inclusion moved from rss.ih to rss.h
+
+  * updated the usr/share/icmake/icmconf file
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 02 Nov 2017 09:18:16 +0100
 
 icmake (9.02.02)
 

@@ -22,8 +22,8 @@ if [ ! -e tmp/INSTALL.im ] ; then
 
     if [ "$action" == "" ] ; then
         echo "
-First run ./icm_prepare, specifying a base directory for icmake, or restart 
-$0, and specify a base directory as its first command-line argument
+First run ./icm_prepare, specifying a base directory for icmake (e.g. /), 
+or restart $0, and specify a base directory as its first command-line argument
 "
         exit 1;
     fi

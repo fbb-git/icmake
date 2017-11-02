@@ -10,19 +10,14 @@ echo -n "Continue [Yn] ? "
 read yesno
 [ "$yesno" == "y" -o "$yesno" == "" ]   ||   exit 0
 
-echo -n "Need to (re)create icmake's wip files for gh-pages [y/n] ? "
-read yesno
+git co master
 
-if [ "$yesno" == "y" ] ; then
-    git co master
+cd icmake
+icm_github
+cd ..    
+git co gh-pages
 
-    cd icmake
-    icm_github
-    cd ..    
-    git co gh-pages
-
-    cp -r ../wip/changelog.txt ../wip/manpages .
-fi
+cp -r ../wip/changelog.txt ../wip/manpages .
 
 echo
 echo -n "Check index.yo: version and last 5 releases [y/n] ? "

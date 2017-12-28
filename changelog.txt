@@ -1,3 +1,10 @@
+icmake (9.02.04)
+
+  * DEFCOM lines are not anymore appended to existing 'icmconf' files if its
+    Replace request is answered by k or N.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 10 Dec 2017 09:17:54 +0100
+
 icmake (9.02.03)
 
   * stdarg.h is needed in rss.h: inclusion moved from rss.ih to rss.h

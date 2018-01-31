@@ -602,13 +602,13 @@ void install(string what, string path)
     else if (what == "static")
     {
         md(path);
-        system("cp " TMP_DIR "/lib/lib" LIBRARY ".a " + path);
+        system("cp " TMP_DIR "/lib" LIBRARY ".a " + path);
     }
 #ifdef SHARED
     else if (what == "shared")
     {
         md(path);
-        system("cp -d " TMP_DIR "/lib/lib" LIBRARY ".so.* " + path);
+        system("cp -d " TMP_DIR "/lib" LIBRARY ".so.* " + path);
     }
 #endif      // SHARED
 #endif      // LIBRARY

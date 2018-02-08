@@ -1,5 +1,7 @@
 icmake (9.02.05)
 
+  * Removed an error (#-lines are comment) in the icmconf(7) man-page
+
   * Fixed icmbuild's install command wrt installing libraries
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 31 Jan 2018 16:17:49 +0100

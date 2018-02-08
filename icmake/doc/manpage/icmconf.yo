@@ -39,7 +39,6 @@ program maintenance for other languages (e.g., bf(C)) can also easily be
 configured.
 
 The bf(icmbuild)(1) script ignores empty lines and lines whose first non-blank
-character is a hash-mark (tt(#)) as well as lines whose first non-blank
 characters are two consecutive forward slashes (//). Long lines can be split
 over multiple lines by using a final backslash character at lines continuing
 at the next line (refer to the bf(icmake)(1) man-page for further details).

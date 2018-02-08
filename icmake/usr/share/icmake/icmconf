@@ -66,16 +66,15 @@
 // COMPILATION AND LINKING RELATED DEFINES
 // =======================================
 
-    // The compiler to use. Define CC instead if a C compiler should be used.
+    // The compiler to use. Define CC if a C compiler is used.
 #define CXX                 "g++"
 //#define CC                  "gcc"
 
-    // The compiler options to use. Define CFLAGS instead if a C compiler is
-    // used. 
+    // The compiler options to use. Define CFLAGS if a C compiler is used
     // To suppress colored error messages add option -fdiagnostics-color=never
     // To add debug-code to object files add option  -g
 #define CXXFLAGS            " --std=c++17 -Wall -O2"
-//#define CFLAGS              " -Wall -g -O2"
+//#define CFLAGS              " -Wall -O2"
 
     // The extension of internal header files. See PRECOMP below
 #define IH                  ".ih"

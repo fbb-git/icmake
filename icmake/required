@@ -5,4 +5,4 @@ explicitly mentioned, but a fairly recent one is assumed.
 Required software for building Icmake
 -------------------------------------
 
-icmake V9.02.04:    yodl 4.02.00        (for creating documentation)
+    Recent version of yodl  (for creating documentation)

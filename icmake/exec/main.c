@@ -24,6 +24,8 @@ int main(int argc, char **argv)
     if (argc == 1)
         usage(argv[0]);
 
+    tcgetattr(STDIN_FILENO, &ga_termios); /* save terminal attributes */
+
     argv = aux_testRmBim(&argc, argv);
 
     builtin();                  /* prepare builtin data */

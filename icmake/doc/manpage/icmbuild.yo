@@ -262,7 +262,7 @@ manpagesection(EXAMPLES)
     #define USE_ALL             "a"
     #define USE_ECHO              ON
     #define CXX                 "g++"
-    #define CXXFLAGS            " --std=c++14 -Wall -O2 -pthread" \
+    #define CXXFLAGS            " --std=c++17 -Wall -O2 -pthread" \
                                 " -fdiagnostics-color=never "
     #define IH                  ".ih"
     #define PRECOMP             "-x c++-header"

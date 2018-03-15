@@ -1,3 +1,14 @@
+icmake (9.02.07)
+
+  * Using ctrl-C while executing icmstart no longer requires a terminal reset
+    when using bash as command shell (in fact: icm-exec restores the initial
+    terminal (stdin) configuration when terminated by ctrl-C).
+
+  * The man-pages contain warnings that path names containing blanks are not
+    supported. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 15 Mar 2018 20:55:48 +0100
+
 icmake (9.02.06)
 
   * Fixed icmbuild's install command wrt installing libraries

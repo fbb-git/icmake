@@ -11,5 +11,7 @@
 
 void aux_abnormal(int sig, int subcode)
 {
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &ga_termios);
+
     rss_fatal(0, 0, "Abnormal termination.");
 }

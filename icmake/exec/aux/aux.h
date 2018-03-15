@@ -2,6 +2,10 @@
 #define INCLUDED_AUX_H_
 
 #include <stddef.h>
+#include <termios.h>
+#include <unistd.h>
+
+extern struct termios ga_termios; 
 
 void aux_abnormal(int sig, int subcode);
 void aux_cleanup();

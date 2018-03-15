@@ -1221,4 +1221,6 @@ manpagebugs()
     Standard comment starting  on lines containing preprocessor directives
         may not extend over multiple lines.
 
+    Path names containing blanks are not supported.
+
 includefile(trailer.inc)

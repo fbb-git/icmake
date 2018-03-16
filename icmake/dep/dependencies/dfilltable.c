@@ -5,9 +5,15 @@ void dFillTable()
                                                 // inspect all class-ih files
     for (int idx = 1, end = sdep.d_size; idx != end; ++idx)
     {
-        optMsg(4, "Inspecting '%s/'", depDir(idx));
-        chdir(depDir(idx));
-        dInspectIH(idx, dIhFile(idx));
+        char const *dir = depDir(idx);
+
+        optMsg(4, "Inspecting '%s/'", dir);
+
+        if (chdir(dir) == 0)
+            dInspectIH(idx, dIhFile(idx));
+        else
+            optMsg(4, "Cannot chdir to '%s/'", dir);
+
         toCwd();
     }
 

@@ -156,7 +156,7 @@ manpageoptions()
     icmbuild install ~/bin/program
             )
        This installs the constructed binary program in the user's tt(bin)
-        direcotry with the name tt(program);
+        directory with the name tt(program);
 
     itt(install static <path>)nl()
        install the constructed static library in the specified path (to be
